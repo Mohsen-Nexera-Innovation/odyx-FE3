@@ -1,5 +1,6 @@
 'use client';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, type FormEvent } from 'react';
+import AiChatbotIcon from './AiChatbotIcon';
 
 type Locale = 'en' | 'ar' | 'fr';
 
@@ -12,6 +13,7 @@ interface GlobalToolsCtx {
   openAi: () => void;
   locale: Locale;
   setLocale: (l: Locale) => void;
+  aiIconAnimating: boolean;
 }
 
 const GlobalToolsContext = createContext<GlobalToolsCtx | null>(null);
@@ -82,6 +84,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
     { role: 'bot', text: 'Hi! I can help you pick a product, walk the workflow, register a device, or reach support. What are you working on?' },
   ]);
   const [aiInput, setAiInput] = useState('');
+  const [conversationStarted, setConversationStarted] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const aiBodyRef = useRef<HTMLDivElement>(null);
 
@@ -100,12 +103,19 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   const askAi = useCallback((q: string) => {
     const text = q.trim();
     if (!text) return;
+    setConversationStarted(true);
     setMessages((m) => [...m, { role: 'user', text }]);
     setAiInput('');
     window.setTimeout(() => {
       setMessages((m) => [...m, { role: 'bot', text: matchAiAnswer(text) }]);
     }, 420);
   }, []);
+
+  const aiIconAnimating = !conversationStarted;
+
+  useEffect(() => {
+    if (!aiOpen) setConversationStarted(false);
+  }, [aiOpen]);
 
   useEffect(() => {
     if (searchOpen) searchRef.current?.focus();
@@ -140,7 +150,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <GlobalToolsContext.Provider value={{ openSearch, closeSearch, toggleAi, openAi, locale, setLocale }}>
+    <GlobalToolsContext.Provider value={{ openSearch, closeSearch, toggleAi, openAi, locale, setLocale, aiIconAnimating }}>
       {children}
 
       <div className={`search-ov${searchOpen ? ' open' : ''}`} onClick={(e) => { if (e.target === e.currentTarget) closeSearch(); }} role="dialog" aria-modal="true" aria-label="Site search">
@@ -157,8 +167,11 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
 
       <div className={`ai-panel${aiOpen ? ' open' : ''}`} role="dialog" aria-label="ODYX Smart Assistant">
         <div className="ai-head">
-          <h4>ODYX Smart Assistant</h4>
-          <p>Product and workflow guidance</p>
+          <AiChatbotIcon size={48} animate={aiIconAnimating && aiOpen} variant="panel" className="ai-head-icon" />
+          <div className="ai-head-copy">
+            <h4>ODYX Smart Assistant</h4>
+            <p>Product and workflow guidance</p>
+          </div>
           <button type="button" className="ai-close" onClick={() => setAiOpen(false)} aria-label="Close assistant">&times;</button>
         </div>
         <div className="ai-body" ref={aiBodyRef}>
@@ -182,8 +195,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.486 2 2 6.486 2 12c0 1.768.46 3.433 1.267 4.882L2 22l5.233-1.237A9.956 9.956 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.2a8.18 8.18 0 0 1-4.178-1.146l-.3-.178-3.1.737.737-3.023-.195-.312A8.2 8.2 0 0 1 3.8 12c0-4.535 3.665-8.2 8.2-8.2s8.2 3.665 8.2 8.2-3.665 8.2-8.2 8.2z"/></svg>
         </button>
         <button type="button" className="fab ai" title="Smart AI Assistant" aria-label="Open Smart AI Assistant" aria-expanded={aiOpen} onClick={toggleAi}>
-          <span className="ring" aria-hidden />
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M18 8a6 6 0 0 0-12 0v5l-2 3h16l-2-3zM10 21a2 2 0 0 0 4 0" /></svg>
+          <AiChatbotIcon size={56} animate={aiIconAnimating} variant="fab" className="fab-ai-icon" />
         </button>
       </div>
     </GlobalToolsContext.Provider>

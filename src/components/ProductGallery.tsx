@@ -10,6 +10,17 @@ import type { CSSProperties } from 'react';
 type Accent = 'teal' | 'orange';
 interface Product { cat: string; name: string; desc: string; chips: string[]; img: string; accent: Accent; href: string; }
 
+/* Sub-brand line: scanning/imaging → ODYX Scanners; print/cure/materials/finishing → ODYX Digital Printing */
+const BRAND_LINE: Record<string, { src: string; alt: string }> = {
+  Scanning: { src: '/brand/odyx-scanners-wide.png', alt: 'ODYX Scanners' },
+  Imaging: { src: '/brand/odyx-scanners-wide.png', alt: 'ODYX Scanners' },
+  Printing: { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' },
+  Curing: { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' },
+  'Post-Processing': { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' },
+  Materials: { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' },
+  Finishing: { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' },
+};
+
 const PRODUCTS: Product[] = [
   { cat: 'Scanning', name: 'Intraoral Scanner', desc: 'Real-time 3D digital impressions, chairside - no molds, just instant accurate data.', chips: ['~20s capture', 'Open .STL', 'Powder-free'], img: '/img/feat-scanner.jpg', accent: 'teal', href: '/products/intraoral-scanner' },
   { cat: 'Imaging', name: 'Intraoral Camera', desc: 'High-definition chairside imaging for diagnosis, documentation and patient communication.', chips: ['HD capture', 'Patient education', 'Lightweight'], img: '/img/feat-iocamera.jpg', accent: 'teal', href: '/products' },
@@ -54,7 +65,7 @@ export default function ProductGallery() {
             const o = rel(i);
             const abs = Math.abs(o);
             const style: CSSProperties = {
-              transform: `translateX(calc(${o} * 60%)) translateZ(calc(${-abs} * 130px)) rotateY(${-o * 34}deg) scale(${1 - abs * 0.13})`,
+              transform: `translateX(calc(${o} * 52%)) translateZ(calc(${-abs} * 130px)) rotateY(${-o * 34}deg) scale(${1 - abs * 0.13})`,
               opacity: abs > 2 ? 0 : 1 - abs * 0.26,
               zIndex: 20 - abs,
               pointerEvents: abs > 2 ? 'none' : 'auto',
@@ -78,6 +89,9 @@ export default function ProductGallery() {
 
       <div className="pgx-side">
         <div className="pgx-info" key={`info-${active}`}>
+          {BRAND_LINE[current.cat] && (
+            <img className="pgx-brand" src={BRAND_LINE[current.cat].src} alt={BRAND_LINE[current.cat].alt} loading="lazy" />
+          )}
           <span className="eyebrow">{current.cat}</span>
           <h3>{current.name}</h3>
           <p>{current.desc}</p>

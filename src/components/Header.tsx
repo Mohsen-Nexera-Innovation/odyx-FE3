@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { HEADER_MENUS } from '@/content/nav';
 import { LOCALE_LABEL, useGlobalTools, type Locale } from './GlobalTools';
+import AiChatbotIcon from './AiChatbotIcon';
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
 
@@ -18,7 +19,7 @@ function NavAnchor({ href, children }: { href: string; children: React.ReactNode
 }
 
 export default function Header() {
-  const { openSearch, openAi, locale, setLocale } = useGlobalTools();
+  const { openSearch, openAi, locale, setLocale, aiIconAnimating } = useGlobalTools();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -48,7 +49,7 @@ export default function Header() {
     <header id="hdr" className={scrolled ? 'scrolled' : ''}>
       <div className="wrap nav">
         <Link href="/" className="logo" aria-label="ODYX home">
-          ODY<span className="x"><svg viewBox="0 0 100 100" fill="none"><path d="M20 8 L52 50 L20 92 L42 92 L74 50 L42 8 Z" fill="#1c3052" /><path d="M40 8 L72 50 L40 92 L62 92 L94 50 L62 8 Z" fill="#FF8400" /></svg></span>
+          <img className="logo-img" src="/brand/odyx-company.png" alt="ODYX" />
         </Link>
         <nav className={`nav-menu${open ? ' open' : ''}`} aria-label="Main">
           {HEADER_MENUS.map((m) => (
@@ -64,7 +65,7 @@ export default function Header() {
           ))}
         </nav>
         <button type="button" className="nav-assist" onClick={openAi} aria-label="Open Smart AI Assistant">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M18 8a6 6 0 0 0-12 0v5l-2 3h16l-2-3zM10 21a2 2 0 0 0 4 0" /></svg>
+          <AiChatbotIcon size={28} animate={aiIconAnimating} variant="toolbar" className="nav-assist-icon" />
           Assistant
         </button>
         <div className="nav-tools">
@@ -81,8 +82,8 @@ export default function Header() {
               </div>
             )}
           </div>
-          <Link className="btn-ghost btn btn-sm nav-reg" href="/#register">Register</Link>
-          <Link className="btn-ghost btn btn-sm" href="/about">Login</Link>
+          <Link className="btn-ghost btn btn-sm nav-reg" href="/register">Register</Link>
+          <Link className="btn-ghost btn btn-sm" href="/login">Login</Link>
           <Link className="btn btn-sm" href="/#cta">Request a Demo</Link>
           <div className="burger" onClick={() => setOpen((o) => !o)}><span /><span /><span /></div>
         </div>

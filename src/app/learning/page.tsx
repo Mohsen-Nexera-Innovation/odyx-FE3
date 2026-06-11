@@ -16,11 +16,11 @@ export default function Page() {
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Learning', href: '/learning' }]}
         title="Learning Center"
         lead="Build real skill - from your first scan to advanced clinical cases. Academy content is coming online."
-        action={<Link className="btn" href="/workflows">Start with the workflow <Arrow /></Link>}
+        action={<Link className="btn" href="/register">Create account <Arrow /></Link>}
       />
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead eyebrow="Coming soon" h2="Courses and guides" p="Explore workflows and support while we publish academy content." />
+          <SecHead eyebrow="Coming soon" h2="Courses and guides" p="Clinical courses are registered-only. Create a dentist or lab account to unlock them when academy content goes live." />
           <div className="g3 build-group">
             {['Beginner Path', 'Clinical Courses', 'Videos & Guides'].map((t) => (
               <div key={t} className="card build reveal">

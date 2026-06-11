@@ -106,7 +106,8 @@ export const FOOTER_COLUMNS: { title: string; links: NavLink[] }[] = [
     title: 'Company',
     links: [
       { label: 'About', href: '/about' },
-      { label: 'News', href: '/#news' },
+      { label: 'Sign in', href: '/login' },
+      { label: 'Register', href: '/register' },
       { label: 'Contact', href: '/#cta' },
     ],
   },

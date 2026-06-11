@@ -1,0 +1,202 @@
+/* ===== ODYX light theme — off-white × company sky blue (#06a5df) =====
+   Client direction: everything lighter except the hero. The hero keeps the dark
+   cinematic video; all other sections + footer move to off-white mixed with sky blue.
+   Works by re-mapping the dark design tokens inside `.sec` / `footer` scope, so
+   cards, borders and text flip automatically; targeted patches handle hardcoded colors. */
+
+:root{
+  --sky:#06a5df; --sky-soft:#7fd0f3; --sky-deep:#0581ad; --sky-rgb:6,165,223;
+  --ink:#10283a; --ink-muted:#4f6b80; --ink-faint:#7e95a7;
+  --paper:#f5fafd; --paper-2:#e9f4fb; --paper-card:#ffffff;
+  --paper-line:rgba(10,60,100,.10); --paper-line-2:rgba(10,60,100,.18);
+}
+
+/* ---------- Header: lighter frosted glass — bridges bright hero video + light sections ---------- */
+header{
+  background:linear-gradient(180deg, rgba(248,252,255,.84), rgba(232,244,252,.74));
+  backdrop-filter:blur(22px) saturate(1.15);
+  border-bottom:1px solid rgba(255,255,255,.55);
+}
+header.scrolled{
+  background:linear-gradient(180deg, rgba(245,250,253,.94), rgba(225,240,250,.90));
+  border-bottom:1px solid rgba(6,165,223,.14);
+  box-shadow:0 8px 28px rgba(8,80,130,.08);
+}
+header .wrap.nav{padding-inline:var(--hc-pad)}
+.logo{flex:0 0 auto;margin-inline-start:calc((100vw - 2 * var(--hc-pad)) / 12)}
+.logo-img{
+  height:46px;width:auto;max-width:none;display:block;
+}
+.nav-item>a{color:#2f5168}
+.nav-item>a:hover{color:var(--ink);background:rgba(var(--sky-rgb),.12)}
+.mega{background:#fff;border-color:rgba(10,60,100,.10);box-shadow:0 24px 60px rgba(8,60,100,.22)}
+.mega a{color:#48657c}
+.mega a:hover{background:rgba(var(--sky-rgb),.10);color:var(--sky-deep)}
+.mega .mega-head{color:var(--ink-faint)}
+.tool-btn{color:#2f5168;border-color:rgba(10,60,100,.18)}
+.tool-btn:hover{border-color:var(--sky);color:var(--sky-deep)}
+.lang-drop{background:#fff;border-color:rgba(10,60,100,.10);box-shadow:0 16px 40px rgba(8,60,100,.22)}
+.lang-drop button{color:#48657c}
+.lang-drop button.active,.lang-drop button:hover{color:var(--sky-deep)}
+header .btn-ghost{color:#2f5168;border-color:rgba(10,60,100,.22)}
+header .btn-ghost:hover{color:var(--ink);border-color:var(--ink);background:rgba(var(--sky-rgb),.08)}
+header .nav-assist{
+  border-color:rgba(255,132,0,.62);background:transparent;color:#b84a00;
+  box-shadow:none;
+}
+header .nav-assist .nav-assist-icon{color:#a84300}
+header .nav-assist:hover{background:transparent;border-color:#ff8400;color:#963800}
+.burger span{background:var(--ink)}
+@media(max-width:980px){
+  .nav-menu{background:rgba(248,252,255,.97);border-top:1px solid rgba(6,165,223,.12)}
+  .nav-menu .nav-item>a{color:#2f5168}
+}
+
+/* ---------- Hero video — balanced brightness (between old 0.6 and full 1.0) ---------- */
+.hero-video .hc-video{opacity:.8}
+.hero-video .hc-veil{
+  background:
+    linear-gradient(90deg, rgba(13,26,46,.36), rgba(13,26,46,.20) 50%, rgba(13,26,46,.08)),
+    linear-gradient(0deg, rgba(13,26,46,.40), transparent 48%);
+}
+.hero-video .hc-title{color:#fff}
+.hero-video .kw{color:#fff}
+.hero-video .kw::after{background:#fff;opacity:.16}
+.hero-video .hc-lead{color:#c8c8da}
+.hero-video .hc-line{background:linear-gradient(90deg, rgba(13,150,150,.28), rgba(255,132,0,.28))}
+.hero-video .hc-node .d{background:var(--navy-deep);color:var(--grey);border-color:var(--line-2)}
+.hero-video .hc-node .l{color:var(--grey)}
+.hero-video .hc-node.on .l,
+.hero-video .hc-node:hover .l{color:#fff}
+.hero-video .btn-ghost{color:#fff;border-color:rgba(255,255,255,.32)}
+.hero-video .btn-ghost:hover{border-color:#fff}
+
+/* Hero shell */
+.hero-wrap{background:var(--navy-deep)}
+
+/* ---------- Page canvas below the hero ---------- */
+main{
+  background:
+    radial-gradient(1100px 680px at 12% 8%, rgba(var(--sky-rgb),.10), transparent 58%),
+    radial-gradient(900px 560px at 88% 18%, rgba(var(--sky-rgb),.06), transparent 55%),
+    linear-gradient(180deg, var(--paper) 0%, #eef6fc 40%, var(--paper-2) 70%, var(--paper) 100%);
+}
+
+/* ---------- Token flip inside every section + footer (hero is not .sec) ---------- */
+.sec, footer{
+  /* surfaces */
+  --navy:#e4f0f9; --navy-deep:#f5fafd; --navy-card:#ffffff; --navy-2:#eef7fc;
+  /* text */
+  --white:var(--ink); --grey:var(--ink-muted); --grey-d:var(--ink-faint);
+  /* hairlines + shadows */
+  --line:var(--paper-line); --line-2:var(--paper-line-2);
+  --shadow-card:0 18px 44px rgba(8,80,130,.10);
+  color:var(--ink);
+}
+
+/* Light section backgrounds — off-white mixed with sky blue */
+:is(#top, main) > .sec{background:var(--paper)}
+:is(#top, main) > .sec::before{
+  background:radial-gradient(900px 480px at 80% 20%, rgba(var(--sky-rgb),.08), transparent 70%);
+}
+:is(#top, main) > .sec:nth-of-type(even)::before{
+  background:radial-gradient(800px 420px at 15% 30%, rgba(var(--sky-rgb),.07), transparent 70%);
+}
+:is(#top, main) > .sec.sec-mint,
+:is(#top, main) > .sec.sec-teal{
+  background:
+    radial-gradient(1000px 560px at 50% 30%, rgba(var(--sky-rgb),.13), transparent 64%),
+    radial-gradient(700px 420px at 85% 8%, rgba(13,150,150,.07), transparent 60%),
+    linear-gradient(180deg, var(--paper) 0%, #e6f3fb 38%, #e2f1fa 58%, var(--paper) 100%);
+}
+:is(#top, main) > .sec.sec-orange{
+  background:
+    radial-gradient(1000px 560px at 50% 30%, rgba(255,132,0,.07), transparent 62%),
+    radial-gradient(700px 420px at 15% 8%, rgba(var(--sky-rgb),.09), transparent 60%),
+    linear-gradient(180deg, var(--paper) 0%, #f0f7fc 40%, #ecf5fb 58%, var(--paper) 100%);
+}
+.sec-mint .eyebrow,
+.sec-teal .eyebrow{color:var(--teal)}
+.sec-orange .eyebrow{color:var(--orange-deep)}
+
+/* Headings/copy inside light sections */
+.sec .sec-head h2{color:var(--ink)}
+.sec .sec-head p{color:var(--ink-muted)}
+
+/* ---------- Targeted patches for hardcoded dark-theme colors ---------- */
+.sec .btn-ghost{color:var(--ink);border-color:var(--paper-line-2)}
+.sec .btn-ghost:hover{border-color:var(--ink)}
+.sec .btn{color:var(--ink)}
+.sec .btn-dark{background:#10283a;color:#fff}
+.sec .pill-list a{color:var(--ink-muted)}
+.sec .wfs-caption p{color:var(--ink-muted)}
+.sec .why-row{box-shadow:0 14px 36px rgba(8,80,130,.07)}
+.sec .pgx-nav{background:rgba(255,255,255,.88);color:var(--ink);border-color:var(--paper-line-2);box-shadow:0 10px 26px rgba(8,80,130,.14)}
+.sec .pgx-card{box-shadow:0 24px 56px rgba(8,80,130,.16)}
+.sec .pgx-card.on{box-shadow:0 0 0 2px rgba(var(--acc-rgb),.9),0 32px 70px rgba(8,80,130,.22)}
+.sec .card,.sec .capp,.sec .prev,.sec .pcard,.sec .shop-card,.sec .news-item{box-shadow:0 10px 30px rgba(8,80,130,.06)}
+.sec .capp:hover,.sec .prev:hover{box-shadow:0 26px 60px rgba(8,80,130,.16)}
+.sec .news-item.on{box-shadow:0 0 0 1px rgba(255,132,0,.35),0 12px 28px rgba(8,80,130,.14)}
+
+/* Forms — dark-theme field styles use white text; flip for light panels */
+.sec .field label{color:var(--ink-muted)}
+.sec .field input,.sec .field select,.sec .field textarea{
+  background:#fff;color:var(--ink);border-color:var(--paper-line-2);
+}
+.sec .field input::placeholder,.sec .field textarea::placeholder{color:var(--ink-faint)}
+
+/* Device registration — steps, perks, panel (fix white-on-light labels) */
+.sec .reg-rail{background:rgba(10,60,100,.14)}
+.sec .reg-step-label{color:var(--ink-muted)}
+.sec .reg-step.on .reg-step-label{color:var(--orange-deep)}
+.sec .reg-step.done .reg-step-label{color:var(--ink)}
+.sec .reg-step small{color:var(--ink-faint)}
+.sec .reg-step-dot{background:#fff;color:var(--ink-muted);border-color:var(--paper-line-2)}
+.sec .reg-step.on .reg-step-dot{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+.sec .reg-step.done .reg-step-dot{background:var(--teal);border-color:var(--teal);color:#fff}
+.sec .reg-perk b{color:var(--ink)}
+.sec .reg-perk.on b{color:#0581ad}
+.sec .reg-perk span{color:var(--ink-muted)}
+.sec .reg-status h3{color:var(--ink)}
+.sec .reg-serial{color:var(--ink-muted)}
+.sec .reg-unlocks li{color:var(--ink-muted)}
+.sec .reg-hint{color:var(--ink-muted)}
+.sec .reg-msg{background:rgba(10,60,100,.05);color:var(--ink-muted);border-color:var(--paper-line-2)}
+.sec .reg-msg.pending{color:var(--orange-deep);border-color:rgba(255,132,0,.28);background:rgba(255,132,0,.10)}
+.sec .reg-msg.ok{color:#1a8f52;border-color:rgba(54,196,110,.30);background:rgba(54,196,110,.10)}
+.sec .reg-pending{color:var(--ink-muted)}
+.sec .reg-perk{background:#fff;border-color:var(--paper-line-2)}
+.sec .reg-panel{background:#fff;border-color:var(--paper-line-2);box-shadow:var(--shadow-card)}
+.sec .reg-hint code{color:var(--sky-deep);background:rgba(var(--sky-rgb),.12)}
+.sec .reg-tabs{background:rgba(10,60,100,.08);border-color:var(--paper-line-2)}
+.sec .reg-tabs button{color:var(--ink-muted)}
+.sec .reg-tabs button:hover{color:var(--ink);background:rgba(var(--sky-rgb),.08)}
+.sec .reg-tabs button.on{
+  background:linear-gradient(135deg,var(--orange),var(--orange-soft));
+  color:var(--ink);font-weight:700;
+  box-shadow:0 4px 16px rgba(255,132,0,.35),inset 0 1px 0 rgba(255,255,255,.28);
+}
+.sec .reg-tabs button.on:hover{color:var(--ink);background:linear-gradient(135deg,var(--orange),var(--orange-soft))}
+
+/* Other hardcoded light-gray copy inside sections */
+.sec .wf-benefits li{color:var(--ink-muted)}
+.sec .news-lead p{color:var(--ink-muted)}
+.sec .card p,.sec .pcard p,.sec .capp p,.sec .prev p,.sec .shop-body p{color:var(--ink-muted)}
+.sec .why-row p{color:var(--ink-muted)}
+.sec .pgx-info p{color:var(--ink-muted)}
+
+/* Story spine — light-theme tokens handled via data-theme on component */
+/* ---------- Footer: light ---------- */
+footer{background:var(--paper-2);border-top:1px solid var(--paper-line)}
+.foot-grid a{color:var(--ink-muted)}
+.foot-grid a:hover{color:var(--sky-deep)}
+.foot-bottom{color:var(--ink-faint)}
+.foot-bottom a{color:var(--ink-faint)}
+.foot-bottom a:hover{color:var(--sky-deep)}
+footer .logo-img{height:40px;filter:none}
+
+/* ---------- Sub-brand line logos (right context placement) ---------- */
+.pgx-brand{height:30px;width:auto;align-self:flex-start;margin-bottom:14px}
+.wfs-brand{display:inline-flex;align-items:center;gap:10px;margin-top:16px}
+.wfs-brand small{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+.wfs-brand img{height:24px;width:auto}

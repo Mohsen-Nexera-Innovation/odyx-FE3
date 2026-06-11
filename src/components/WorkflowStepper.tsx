@@ -6,14 +6,17 @@
 import { useEffect, useRef, useState } from 'react';
 
 type Accent = 'teal' | 'orange';
-interface WStep { no: string; label: string; product: string; desc: string; img: string; accent: Accent; }
+interface WStep { no: string; label: string; product: string; desc: string; img: string; accent: Accent; brand?: { src: string; alt: string } }
+
+const BRAND_SCANNERS = { src: '/brand/odyx-scanners-wide.png', alt: 'ODYX Scanners' };
+const BRAND_PRINTING = { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' };
 
 const STEPS: WStep[] = [
-  { no: '01', label: 'Scan', product: 'Intraoral Scanner', desc: 'A chairside intraoral scan captures the mouth in seconds, with no molds, just instant accurate 3D data.', img: '/img/feat-scanner.jpg', accent: 'teal' },
-  { no: '02', label: 'Design', product: 'Design Software', desc: 'Scan data flows into CAD, where the restoration is designed with precise, repeatable accuracy.', img: '/img/odyx/design.webp', accent: 'teal' },
-  { no: '03', label: 'Print', product: '3D Printer', desc: 'The restoration is built layer by layer on the ODYX printer using validated ODYX resin.', img: '/img/feat-printer.jpg', accent: 'orange' },
-  { no: '04', label: 'Cure', product: 'Curing Machine', desc: 'Controlled UV completes polymerization for full strength and biocompatibility.', img: '/img/feat-curing.jpg', accent: 'orange' },
-  { no: '05', label: 'Finish', product: 'Staining & Glazing', desc: 'Staining and glazing bring lifelike color and a natural gloss to the final restoration.', img: '/img/crowns.jpg', accent: 'orange' },
+  { no: '01', label: 'Scan', product: 'Intraoral Scanner', desc: 'A chairside intraoral scan captures the mouth in seconds, with no molds, just instant accurate 3D data.', img: '/img/feat-scanner.jpg', accent: 'teal', brand: BRAND_SCANNERS },
+  { no: '02', label: 'Design', product: 'Design Software', desc: 'Scan data flows into CAD, where the restoration is designed with precise, repeatable accuracy.', img: '/img/odyx/design.webp', accent: 'teal', brand: BRAND_SCANNERS },
+  { no: '03', label: 'Print', product: '3D Printer', desc: 'The restoration is built layer by layer on the ODYX printer using validated ODYX resin.', img: '/img/feat-printer.jpg', accent: 'orange', brand: BRAND_PRINTING },
+  { no: '04', label: 'Cure', product: 'Curing Machine', desc: 'Controlled UV completes polymerization for full strength and biocompatibility.', img: '/img/feat-curing.jpg', accent: 'orange', brand: BRAND_PRINTING },
+  { no: '05', label: 'Finish', product: 'Staining & Glazing', desc: 'Staining and glazing bring lifelike color and a natural gloss to the final restoration.', img: '/img/crowns.jpg', accent: 'orange', brand: BRAND_PRINTING },
   { no: '06', label: 'Deliver', product: 'Finished Smile', desc: 'A finished restoration, delivered, often same-day. One connected workflow, from scan to smile.', img: '/img/step-deliver.jpg', accent: 'orange' },
 ];
 const N = STEPS.length;
@@ -59,6 +62,12 @@ export default function WorkflowStepper() {
       <div className="wfs-caption" key={active}>
         <span className="eyebrow">Step {step.no} &middot; {step.product}</span>
         <p>{step.desc}</p>
+        {step.brand && (
+          <span className="wfs-brand" aria-label={`Powered by ${step.brand.alt}`}>
+            <small>Powered by</small>
+            <img src={step.brand.src} alt={step.brand.alt} loading="lazy" />
+          </span>
+        )}
       </div>
     </div>
   );

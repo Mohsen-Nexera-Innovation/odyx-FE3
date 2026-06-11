@@ -239,7 +239,7 @@ export default function Home() {
       <footer><div className="wrap">
         <div className="foot-grid">
           <div className="foot-brand">
-            <a href="#top" className="logo">ODY<span className="x"><svg viewBox="0 0 100 100" fill="none"><path d="M20 8 L52 50 L20 92 L42 92 L74 50 L42 8 Z" fill="#1c3052" /><path d="M40 8 L72 50 L40 92 L62 92 L94 50 L62 8 Z" fill="#FF8400" /></svg></span></a>
+            <a href="#top" className="logo"><img className="logo-img" src="/brand/odyx-company.png" alt="ODYX" /></a>
             <p>Premium digital dentistry - the complete connected workflow, from the first scan to the delivered restoration.</p>
           </div>
           {FOOTER_COLUMNS.map((col) => (

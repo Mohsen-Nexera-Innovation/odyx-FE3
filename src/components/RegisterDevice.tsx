@@ -116,8 +116,8 @@ export default function RegisterDevice() {
 
       <div className="reg-panel">
         <div className="reg-tabs" role="tablist">
-          <button type="button" role="tab" className={tab === 'register' ? ' on' : ''} aria-selected={tab === 'register'} onClick={() => setTab('register')}>Register device</button>
-          <button type="button" role="tab" className={tab === 'status' ? ' on' : ''} aria-selected={tab === 'status'} onClick={() => setTab('status')}>Check status</button>
+          <button type="button" role="tab" className={tab === 'register' ? 'on' : ''} aria-selected={tab === 'register'} onClick={() => setTab('register')}>Register device</button>
+          <button type="button" role="tab" className={tab === 'status' ? 'on' : ''} aria-selected={tab === 'status'} onClick={() => setTab('status')}>Check status</button>
         </div>
 
         {phase === 'active' ? (

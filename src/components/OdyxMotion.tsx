@@ -27,7 +27,7 @@ export default function OdyxMotion() {
 
     if (reduce) {
       document.querySelectorAll('.reveal,.build,.why-row,.news-lead,.news-item,.shop-card').forEach((e) => e.classList.add('in', 'built', 'vis'));
-      document.querySelectorAll('[data-count]').forEach((e) => { e.textContent = (e as HTMLElement).dataset.count + ((e as HTMLElement).dataset.suf || ''); });
+      document.querySelectorAll('[data-count]').forEach((e) => { e.textContent = (e as HTMLElement).dataset.count || '0'; });
       document.querySelector('.eco')?.classList.add('run');
       return () => removeEventListener('scroll', onScroll);
     }
@@ -80,9 +80,9 @@ export default function OdyxMotion() {
     // count-up
     const cio = new IntersectionObserver((es) => es.forEach((e) => {
       if (!e.isIntersecting) return;
-      const el = e.target as HTMLElement; const end = +el.dataset.count!; const suf = el.dataset.suf || '';
+      const el = e.target as HTMLElement; const end = +el.dataset.count!;
       const steps = 34; const inc = end / steps; let c = 0;
-      const iv = setInterval(() => { c += inc; if (c >= end) { c = end; clearInterval(iv); } el.textContent = Math.floor(c) + suf; }, 32);
+      const iv = setInterval(() => { c += inc; if (c >= end) { c = end; clearInterval(iv); } el.textContent = String(Math.floor(c)); }, 32);
       cio.unobserve(el);
     }), { threshold: 0.6 });
     document.querySelectorAll('[data-count]').forEach((el) => cio.observe(el));
