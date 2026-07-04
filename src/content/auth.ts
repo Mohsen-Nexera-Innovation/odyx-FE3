@@ -72,9 +72,7 @@ export function roleById(id: string | null | undefined): AuthRole | undefined {
 }
 
 export function roleDestination(role: UserRole): string {
-  if (role === 'dentist') return '/solutions/dentists';
-  if (role === 'lab') return '/solutions/labs';
-  return '/workflows';
+  return '/inbox';
 }
 
 export const AUTH_STORAGE_KEY = 'odyx_account';

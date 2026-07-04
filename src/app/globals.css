@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "./odyx.css";
 @import "./light.css";
+@import "./product-print.css";
+@import "./background-picker.css";
 
 /* ODYX design tokens — from tokens.css */
 :root{

@@ -6,15 +6,16 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 const SECTIONS: [string, string][] = [
   ['#hero', 'Start'],
   ['#path', 'Choose Path'],
-  ['#featured', 'Products'],
   ['#ecosystem', 'Ecosystem'],
+  ['#featured', 'Products'],
   ['#clinical', 'Applications'],
   ['#why', 'Why ODYX'],
-  ['#previews', 'Resources'],
+  ['#cases-preview', 'Cases'],
+  ['#learning-preview', 'Learning'],
+  ['#support-preview', 'Support'],
   ['#news', 'News'],
   ['#register', 'Register'],
   ['#shop', 'Shop'],
-  ['#cta', 'Demo'],
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;

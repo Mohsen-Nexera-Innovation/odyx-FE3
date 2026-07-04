@@ -66,7 +66,6 @@ export const SOLUTION_PATHS: SolutionPath[] = [
       { name: 'Design Software', href: '/products/design', why: 'Batch design and nesting', img: '/img/odyx/design.webp' },
       { name: '3D Printer', href: '/products/3d-printers', why: 'High-volume print capacity', img: '/img/feat-printer.jpg' },
       { name: 'Curing Machine', href: '/products/curing-machines', why: 'QA-friendly cure profiles', img: '/img/feat-curing.jpg' },
-      { name: 'Staining & Glazing', href: '/products/staining-glazing', why: 'Premium esthetic finishing', img: '/img/feat-finishing.jpg' },
       { name: 'Resins & Materials', href: '/products/resins', why: 'Full indication coverage', img: '/img/feat-resin.jpg' },
     ],
     workflowEmphasis: ['Intake digital files', 'Design at scale', 'Print production runs', 'Finish, QC and ship'],

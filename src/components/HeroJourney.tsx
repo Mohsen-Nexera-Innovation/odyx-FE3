@@ -11,7 +11,7 @@ const STEPS: JStep[] = [
   { no: '02', label: 'Design', accent: 'teal', cap: 'Scan data flows into CAD, where the restoration is designed precisely.' },
   { no: '03', label: 'Print', accent: 'orange', cap: 'Built layer-by-layer on the ODYX printer using ODYX resin.' },
   { no: '04', label: 'Cure', accent: 'orange', cap: 'Controlled UV completes polymerization for full strength.' },
-  { no: '05', label: 'Finish', accent: 'orange', cap: 'Staining and glazing bring lifelike color and natural gloss.' },
+  { no: '05', label: 'Finish', accent: 'orange', cap: 'Final polish and characterization bring lifelike color and natural gloss.' },
   { no: '06', label: 'Smile', accent: 'orange', cap: 'A finished restoration, delivered - often same-day. One connected workflow.' },
 ];
 const N = STEPS.length;
@@ -69,7 +69,8 @@ export default function HeroJourney() {
   const step = STEPS[active];
   return (
     <div className="herocard hero-video" data-accent={step.accent}>
-      <video id="bgvideo" className="hc-video" autoPlay muted loop playsInline preload="auto" aria-hidden>
+      <video id="bgvideo" className="hc-video" autoPlay muted loop playsInline preload="auto" poster="/img/feat-scanner.jpg" aria-hidden>
+        {/* Replace /video/dental-scan-animation.mp4 with official ODYX hero film when delivered */}
         <source src="/video/dental-scan-animation.mp4" type="video/mp4" />
       </video>
       <div className="hc-veil" aria-hidden />
@@ -82,7 +83,7 @@ export default function HeroJourney() {
           <p className="hc-lead">{step.cap}</p>
           <div className="hc-cta">
             <a className="btn" href="/products">Explore Products <Arrow /></a>
-            <a className="btn btn-ghost" href="#cta">Request a Demo →</a>
+            <a className="btn btn-ghost" href="/support">Request a Demo →</a>
           </div>
         </div>
       </div>

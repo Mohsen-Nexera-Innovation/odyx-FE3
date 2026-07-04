@@ -5,11 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { type FormEvent, useEffect, useMemo, useState } from 'react';
 import {
   AUTH_ROLES,
-  AUTH_STORAGE_KEY,
   roleById,
   roleDestination,
   type UserRole,
 } from '@/content/auth';
+import { initAuthStore, register } from '@/lib/auth-store';
+import { seedInboxForUser } from '@/lib/inbox-seed';
 import AuthRoleRail from './AuthRoleRail';
 
 export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: UserRole | null) => void }) {
@@ -26,9 +27,14 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
   const [country, setCountry] = useState('');
   const [terms, setTerms] = useState(false);
   const [msg, setMsg] = useState('');
+  const [error, setError] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const roleMeta = useMemo(() => roleById(role ?? undefined), [role]);
+
+  useEffect(() => {
+    initAuthStore();
+  }, []);
 
   useEffect(() => {
     const q = roleById(search.get('role'));
@@ -43,6 +49,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
     setRole(r);
     onRoleChange?.(r);
     setMsg('');
+    setError(false);
     setStep(1);
   };
 
@@ -50,40 +57,48 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
     e.preventDefault();
     if (!role) {
       setMsg('Pick a role to continue.');
+      setError(true);
       setStep(0);
       return;
     }
     if (!name.trim() || !email.trim() || password.length < 8) {
       setMsg('Name, email, and 8+ character password required.');
+      setError(true);
       return;
     }
     if (role !== 'guest' && !org.trim()) {
       setMsg(`Add your ${roleMeta?.orgLabel.toLowerCase() || 'organization'}.`);
+      setError(true);
       return;
     }
     if (!terms) {
       setMsg('Accept the terms to continue.');
+      setError(true);
       return;
     }
 
     setBusy(true);
-    localStorage.setItem(
-      AUTH_STORAGE_KEY,
-      JSON.stringify({
-        email: email.trim(),
+    setError(false);
+
+    setTimeout(() => {
+      const result = register({
         name: name.trim(),
+        email: email.trim(),
+        password,
         role,
         org: org.trim(),
         country: country.trim(),
-        createdAt: new Date().toISOString(),
-      }),
-    );
-
-    setTimeout(() => {
+      });
       setBusy(false);
-      setMsg('Account created.');
-      setTimeout(() => router.push(roleDestination(role)), 900);
-    }, 700);
+      if (!result.ok) {
+        setMsg(result.error);
+        setError(true);
+        return;
+      }
+      seedInboxForUser(result.session);
+      setMsg('Account created — inbox ready with sample cases.');
+      setTimeout(() => router.push(roleDestination(result.session.role)), 900);
+    }, 500);
   };
 
   return (
@@ -160,7 +175,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
       )}
 
       {msg && (
-        <p className={`auth-toast${msg.includes('created') ? ' ok' : ''}`} role="status">
+        <p className={`auth-toast${error ? '' : ' ok'}`} role="status">
           {msg}
         </p>
       )}

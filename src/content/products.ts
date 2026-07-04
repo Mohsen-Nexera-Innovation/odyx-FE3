@@ -14,6 +14,8 @@ export interface ProductDownload {
   href: string;
 }
 
+export type ProductLayout = 'print-line' | 'cinematic' | 'classic' | 'signature';
+
 export interface ProductContent {
   slug: string;
   name: string;
@@ -21,6 +23,7 @@ export interface ProductContent {
   tagline: string;
   overview: string;
   img: string;
+  heroImg?: string;
   accent: 'teal' | 'orange';
   workflowStep: string;
   applications: string[];
@@ -28,6 +31,7 @@ export interface ProductContent {
   specs: ProductSpec[];
   downloads: ProductDownload[];
   benefits: string[];
+  layout?: ProductLayout;
 }
 
 export const PRODUCTS: ProductContent[] = [
@@ -93,10 +97,12 @@ export const PRODUCTS: ProductContent[] = [
     slug: '3d-printers',
     name: '3D Printers',
     category: 'Printing',
+    layout: 'signature',
     tagline: 'Desktop production for clinic and lab.',
     overview:
       'ODYX printers deliver crowns, guides, models and dentures with validated resin profiles. Compact footprint, simple maintenance and workflow-linked presets keep production predictable.',
     img: '/img/feat-printer.jpg',
+    heroImg: '/img/feat-printer.jpg',
     accent: 'orange',
     workflowStep: 'print',
     applications: ['Permanent crowns', 'Surgical guides', 'Models', 'Denture bases', 'Provisionals'],
@@ -206,6 +212,29 @@ export const PRODUCTS: ProductContent[] = [
     benefits: ['Workflow-validated', 'Clear indications', 'Safety docs included', 'Shop reorder path'],
   },
 ];
+
+// Alternate presentations of the 3D Printers page. Same content, three layouts:
+// - print-line : current signature hero (two-column, masked photo)
+// - cinematic  : SprintRay-style full-bleed transparent printer
+// - classic    : standard product layout (like the Intraoral Scanner page)
+const printerBase = PRODUCTS.find((p) => p.slug === '3d-printers')!;
+
+PRODUCTS.push(
+  {
+    ...printerBase,
+    slug: '3d-printers-cinematic',
+    name: '3D Printers',
+    heroImg: '/img/feat-printer-cutout.png',
+    layout: 'cinematic',
+  },
+  {
+    ...printerBase,
+    slug: '3d-printers-classic',
+    name: '3D Printers',
+    heroImg: '/img/feat-printer.jpg',
+    layout: 'classic',
+  },
+);
 
 export function getProduct(slug: string) {
   return PRODUCTS.find((p) => p.slug === slug);

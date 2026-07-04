@@ -20,10 +20,10 @@ const PRODUCTS = [
 ];
 
 const PERKS = [
-  { t: 'Warranty & service', d: 'Repair coverage and service requests' },
-  { t: 'Software updates', d: 'Latest firmware and design libraries' },
-  { t: 'Clinical courses', d: 'Registered-only academy modules' },
-  { t: 'Case library', d: 'Submit and browse clinical cases' },
+  { t: 'Warranty & service', d: 'Repair coverage and service requests', href: '/support#warranty' },
+  { t: 'Software updates', d: 'Latest firmware and design libraries', href: '/support#updates' },
+  { t: 'Clinical courses', d: 'Registered-only academy modules', href: '/learning' },
+  { t: 'Case library', d: 'Submit and browse clinical cases', href: '/learning' },
 ];
 
 const DEMO_SERIAL = 'ODYX-DEMO-001';
@@ -107,9 +107,9 @@ export default function RegisterDevice() {
         </div>
         <div className="reg-perks">
           {PERKS.map((p) => (
-            <div key={p.t} className={`reg-perk${phase === 'active' ? ' on' : ''}`}>
+            <a key={p.t} href={p.href} className={`reg-perk${phase === 'active' ? ' on' : ''}`}>
               <b>{p.t}</b><span>{p.d}</span>
-            </div>
+            </a>
           ))}
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function RegisterDevice() {
       <div className="reg-panel">
         <div className="reg-tabs" role="tablist">
           <button type="button" role="tab" className={tab === 'register' ? 'on' : ''} aria-selected={tab === 'register'} onClick={() => setTab('register')}>Register device</button>
-          <button type="button" role="tab" className={tab === 'status' ? 'on' : ''} aria-selected={tab === 'status'} onClick={() => setTab('status')}>Check status</button>
+          <button type="button" role="tab" className={tab === 'status' ? 'on' : ''} aria-selected={tab === 'status'} onClick={() => setTab('status')}>Check warranty status</button>
         </div>
 
         {phase === 'active' ? (
@@ -133,7 +133,7 @@ export default function RegisterDevice() {
               <li>Priority technical support</li>
             </ul>
             <div className="reg-actions">
-              <a className="btn" href="#">Open support hub</a>
+              <a className="btn" href="/support">Open support hub</a>
               <button type="button" className="btn btn-ghost" onClick={reset}>Register another</button>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function RegisterDevice() {
               <label htmlFor="reg-lookup">Serial number</label>
               <input id="reg-lookup" type="text" placeholder="ODYX-XXXX-XXXX" value={lookup} onChange={(e) => setLookup(e.target.value)} />
             </div>
-            <button type="submit" className="btn">Check status</button>
+            <button type="submit" className="btn">Check warranty status</button>
           </form>
         )}
 

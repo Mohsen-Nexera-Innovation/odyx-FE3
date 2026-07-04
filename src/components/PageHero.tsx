@@ -11,11 +11,13 @@ export default function PageHero({
   title,
   lead,
   action,
+  brand,
 }: {
   crumbs: { label: string; href: string }[];
   title: string;
   lead: string;
   action?: React.ReactNode;
+  brand?: React.ReactNode;
 }) {
   return (
     <section className="page-hero">
@@ -29,6 +31,7 @@ export default function PageHero({
             </span>
           ))}
         </nav>
+        {brand}
         <h1>{title}</h1>
         <p className="lead">{lead}</p>
         {action && <div className="page-hero-actions">{action}</div>}
@@ -41,14 +44,22 @@ export function PageActions({ children }: { children: React.ReactNode }) {
   return <div className="page-hero-actions">{children}</div>;
 }
 
-export function PageCta({ title, desc }: { title: string; desc: string }) {
+export function PageCta({
+  title,
+  desc,
+  demoClassName = 'btn btn-dark',
+}: {
+  title: string;
+  desc: string;
+  demoClassName?: string;
+}) {
   return (
     <section className="sec">
       <div className="wrap">
         <div className="cta-band reveal">
           <h2>{title}</h2>
           <p>{desc}</p>
-          <Link className="btn btn-dark" href="/#cta">Request a Demo <Arrow /></Link>
+          <Link className={demoClassName} href="/support">Request a Demo <Arrow /></Link>
         </div>
       </div>
     </section>

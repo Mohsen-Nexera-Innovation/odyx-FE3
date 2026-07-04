@@ -34,7 +34,6 @@ const PRODUCTS: Product[] = [
   { cat: 'Production', name: 'Sintering Furnace', desc: 'High-temperature sintering brings milled zirconia to full density and strength.', chips: ['High-temp', 'Full density', 'Zirconia'], img: '/img/feat-furnace.jpg', accent: 'orange', href: '/products' },
   { cat: 'Materials', name: 'Resins', desc: 'Five clinical resin lines engineered for the full ODYX workflow.', chips: ['5 clinical lines', 'Validated', 'Biocompatible'], img: '/img/feat-resin.jpg', accent: 'orange', href: '/products/resins' },
   { cat: 'Materials', name: 'Zirconia & Blocks', desc: 'Premium zirconia discs and CAD/CAM blocks for milled crowns, bridges and more.', chips: ['Discs & blocks', 'High translucency', 'Durable'], img: '/img/feat-zirconia.jpg', accent: 'orange', href: '/products/resins' },
-  { cat: 'Finishing', name: 'Staining & Glazing Kit', desc: 'Stains and glazes that bring lifelike color and a natural gloss to every restoration.', chips: ['Lifelike shades', 'Natural gloss', 'Full kit'], img: '/img/feat-finishing.jpg', accent: 'orange', href: '/products/staining-glazing' },
 ];
 const N = PRODUCTS.length;
 

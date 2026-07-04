@@ -75,7 +75,7 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
     title: 'Live Support',
     desc: 'AI assistant first, human specialist when you need one.',
     items: [
-      { label: 'Open Smart Assistant', href: '#', meta: 'Instant' },
+      { label: 'Open Odyx Agent', href: '#', meta: 'Instant' },
       { label: 'WhatsApp customer care', href: '#', meta: '24/7' },
       { label: 'Technical support form', href: '/#cta', meta: 'Email follow-up' },
     ],

@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { type FormEvent, useState } from 'react';
-import { AUTH_STORAGE_KEY, roleDestination, type UserRole } from '@/content/auth';
+import { type FormEvent, useEffect, useState } from 'react';
+import { roleDestination } from '@/content/auth';
+import { DEMO_ACCOUNTS, initAuthStore, login, loginAsGuest } from '@/lib/auth-store';
+import { seedInboxForUser } from '@/lib/inbox-seed';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -11,49 +13,48 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(true);
   const [msg, setMsg] = useState('');
+  const [error, setError] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  const finishLogin = (role: UserRole, name: string) => {
-    const payload = { email, name, role, loggedInAt: new Date().toISOString() };
-    if (remember) localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(payload));
-    setMsg(`Welcome back${name ? `, ${name}` : ''}.`);
-    setTimeout(() => router.push(roleDestination(role)), 800);
+  useEffect(() => {
+    initAuthStore();
+  }, []);
+
+  const fillDemo = (demoEmail: string, demoPassword: string) => {
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    setMsg('');
+    setError(false);
   };
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
       setMsg('Email and password required.');
+      setError(true);
       return;
     }
     setBusy(true);
     setMsg('');
-
-    const saved = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (saved) {
-      try {
-        const account = JSON.parse(saved) as { email?: string; name?: string; role?: UserRole };
-        if (account.email?.toLowerCase() === email.trim().toLowerCase() && account.role) {
-          finishLogin(account.role, account.name || '');
-          return;
-        }
-      } catch {
-        /* demo */
-      }
-    }
+    setError(false);
 
     setTimeout(() => {
-      finishLogin('guest', email.split('@')[0] || 'Guest');
+      const result = login(email.trim(), password);
       setBusy(false);
-    }, 600);
+      if (!result.ok) {
+        setMsg(result.error);
+        setError(true);
+        return;
+      }
+      seedInboxForUser(result.session);
+      setMsg(`Welcome back, ${result.session.name}.`);
+      setTimeout(() => router.push(roleDestination(result.session.role)), 700);
+    }, 400);
   };
 
   const continueAsGuest = () => {
-    localStorage.setItem(
-      AUTH_STORAGE_KEY,
-      JSON.stringify({ email: '', name: 'Guest', role: 'guest', loggedInAt: new Date().toISOString() }),
-    );
-    router.push('/workflows');
+    loginAsGuest();
+    router.push('/inbox');
   };
 
   return (
@@ -93,13 +94,36 @@ export default function LoginForm() {
         </button>
       </form>
 
+      <div className="auth-demo-accounts">
+        <p className="auth-demo-label">Try a demo account</p>
+        <ul className="auth-demo-list">
+          {DEMO_ACCOUNTS.map((demo) => (
+            <li key={demo.email}>
+              <button
+                type="button"
+                className="auth-demo-btn"
+                onClick={() => fillDemo(demo.email, demo.password)}
+              >
+                <span className="auth-demo-email">{demo.email}</span>
+                <span className="auth-demo-hint">{demo.hint}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <p className="auth-demo-pass">Password for all demos: <code>demo12345</code></p>
+      </div>
+
       <div className="auth-alt">
         <button type="button" className="auth-link-btn" onClick={continueAsGuest}>
           Explore as guest →
         </button>
       </div>
 
-      {msg && <p className="auth-toast ok" role="status">{msg}</p>}
+      {msg && (
+        <p className={`auth-toast${error ? ' err' : ' ok'}`} role="status">
+          {msg}
+        </p>
+      )}
 
       <p className="auth-switch">
         No account? <Link href="/register">Create one</Link>

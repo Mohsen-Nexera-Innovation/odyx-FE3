@@ -16,7 +16,7 @@ const STEPS: WStep[] = [
   { no: '02', label: 'Design', product: 'Design Software', desc: 'Scan data flows into CAD, where the restoration is designed with precise, repeatable accuracy.', img: '/img/odyx/design.webp', accent: 'teal', brand: BRAND_SCANNERS },
   { no: '03', label: 'Print', product: '3D Printer', desc: 'The restoration is built layer by layer on the ODYX printer using validated ODYX resin.', img: '/img/feat-printer.jpg', accent: 'orange', brand: BRAND_PRINTING },
   { no: '04', label: 'Cure', product: 'Curing Machine', desc: 'Controlled UV completes polymerization for full strength and biocompatibility.', img: '/img/feat-curing.jpg', accent: 'orange', brand: BRAND_PRINTING },
-  { no: '05', label: 'Finish', product: 'Staining & Glazing', desc: 'Staining and glazing bring lifelike color and a natural gloss to the final restoration.', img: '/img/crowns.jpg', accent: 'orange', brand: BRAND_PRINTING },
+  { no: '05', label: 'Finish', product: 'Final polish', desc: 'Characterization and gloss bring lifelike color and a natural finish to the restoration.', img: '/img/crowns.jpg', accent: 'orange', brand: BRAND_PRINTING },
   { no: '06', label: 'Deliver', product: 'Finished Smile', desc: 'A finished restoration, delivered, often same-day. One connected workflow, from scan to smile.', img: '/img/step-deliver.jpg', accent: 'orange' },
 ];
 const N = STEPS.length;

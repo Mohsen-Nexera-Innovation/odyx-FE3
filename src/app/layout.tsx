@@ -4,6 +4,8 @@ import { fontVars } from "./fonts";
 import Header from "@/components/Header";
 import { GlobalToolsProvider } from "@/components/GlobalTools";
 import SiteBackground from "@/components/SiteBackground";
+import BackgroundPicker from "@/components/BackgroundPicker";
+import FontPicker from "@/components/FontPicker";
 
 export const metadata: Metadata = {
   title: "ODYX — One connected digital dentistry workflow",
@@ -19,6 +21,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <GlobalToolsProvider>
           <Header />
           <main>{children}</main>
+          <BackgroundPicker />
+          <FontPicker />
         </GlobalToolsProvider>
       </body>
     </html>

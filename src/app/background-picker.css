@@ -1,0 +1,251 @@
+/* Dev/preview tool — swap site canvas background instantly */
+.bg-picker{
+  position:fixed;
+  left:16px;
+  bottom:16px;
+  z-index:1900;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(10,60,100,.14);
+  box-shadow:0 8px 28px rgba(8,60,100,.16);
+  backdrop-filter:blur(12px);
+  font-family:var(--font-body);
+  pointer-events:auto;
+}
+.bg-picker-label{
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#48657c;
+  white-space:nowrap;
+}
+.bg-picker-select{
+  min-width:min(52vw,220px);
+  max-width:280px;
+  padding:7px 10px;
+  border-radius:8px;
+  border:1px solid rgba(10,60,100,.18);
+  background:#fff;
+  color:#10283a;
+  font-family:var(--font-body);
+  font-size:.82rem;
+  font-weight:500;
+  cursor:pointer;
+  outline:none;
+}
+.bg-picker-select:focus{
+  border-color:var(--sky,#06a5df);
+  box-shadow:0 0 0 2px rgba(6,165,223,.2);
+}
+.bg-picker-swatch{
+  width:22px;
+  height:22px;
+  border-radius:6px;
+  border:1px solid rgba(10,60,100,.16);
+  flex-shrink:0;
+}
+
+/* When preview active — show chosen canvas through transparent sections */
+html[data-bg-preview]{
+  --bg-preview-size:auto;
+}
+html[data-bg-preview] body{
+  background:var(--bg-preview)!important;
+}
+html[data-bg-preview] .site-bg{
+  background:var(--bg-preview)!important;
+  background-size:var(--bg-preview-size)!important;
+}
+html[data-bg-preview] main{
+  background:var(--bg-preview)!important;
+  background-size:var(--bg-preview-size)!important;
+}
+html[data-bg-preview] .product-page--print-line{
+  background:var(--bg-preview)!important;
+  background-size:var(--bg-preview-size)!important;
+}
+html[data-bg-pattern] main,
+html[data-bg-pattern] .site-bg,
+html[data-bg-pattern] body,
+html[data-bg-pattern] .product-page--print-line{
+  background-repeat:repeat!important;
+}
+html[data-bg-preview] :is(#top, main) > .sec,
+html[data-bg-preview] :is(#top, main) > .sec.sec-mint,
+html[data-bg-preview] :is(#top, main) > .sec.sec-teal,
+html[data-bg-preview] :is(#top, main) > .sec.sec-orange,
+html[data-bg-preview] .product-page--print-line > .sec,
+html[data-bg-preview] .product-page--print-line > .sec:nth-of-type(even),
+html[data-bg-preview] .product-page--print-line > .sec.prod-specs{
+  background:transparent!important;
+}
+html[data-bg-preview] :is(#top, main) > .sec::before,
+html[data-bg-preview] :is(#top, main) > .sec:nth-of-type(even)::before{
+  display:none;
+}
+html[data-bg-preview] footer{
+  background:transparent!important;
+  border-top-color:rgba(10,60,100,.12);
+}
+
+/* Print-line page — let picker canvas show through hero + stats */
+html[data-bg-preview] .product-page--print-line .prod-print-hero__bg,
+html[data-bg-preview] .product-page--print-line .prod-cine-hero__bg,
+html[data-bg-preview] .product-page--print-line .prod-print-stats{
+  background:transparent!important;
+}
+/* Cinematic hero — soften the stage decorations so the chosen canvas reads cleanly */
+html[data-bg-preview] .product-page--cinematic .prod-cine-hero__glow{opacity:.55}
+html[data-bg-preview][data-bg-tone="light"] .product-page--cinematic .prod-cine-hero__floor{opacity:.35}
+html[data-bg-preview][data-bg-tone="light"] .product-page--cinematic .prod-print-hero__eyebrow{
+  color:var(--sky-deep)!important;
+}
+html[data-bg-preview] .product-page--print-line .prod-print-stats{
+  border-bottom-color:rgba(10,60,100,.10);
+}
+
+/* Light picker backgrounds — readable hero + stats on 3D Printers page */
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__crumbs,
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__crumbs a{
+  color:var(--ink-faint)!important;
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__crumbs a:hover{
+  color:var(--ink)!important;
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__lead{
+  color:var(--ink);
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__desc{
+  color:var(--ink-muted);
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__ghost{
+  color:var(--ink)!important;
+  border-color:rgba(16,40,58,.22)!important;
+  background:rgba(255,255,255,.55)!important;
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__ghost:hover{
+  border-color:var(--sky)!important;
+  color:var(--sky-deep)!important;
+  background:#fff!important;
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-hero__brand{
+  content:url("/brand/odyx-digital-printing-mark.png");
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-stat{
+  background:rgba(255,255,255,.78);
+  border-color:rgba(10,60,100,.12);
+  backdrop-filter:blur(8px);
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-stat__label{
+  color:var(--ink);
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-line .prod-print-stat__desc{
+  color:var(--ink-muted);
+}
+
+/* Dark picker backgrounds — keep light hero copy on transparent canvas */
+html[data-bg-preview][data-bg-tone="dark"] .product-page--print-line .prod-print-stat{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.12);
+}
+/* Classic hero logo: dark-text mark by default (light canvas), white mark on dark canvases */
+html[data-bg-preview][data-bg-tone="dark"] .product-page--print-classic .prod-classic-hero__brand{
+  content:url("/brand/odyx-digital-printing-mark-light.png");
+}
+
+/* Signature hero — let the chosen canvas show through, like the cinematic hero */
+html[data-bg-preview] .product-page--print-signature .page-hero{
+  background:transparent!important;
+}
+html[data-bg-preview] .product-page--print-signature .page-hero .grid-bg{opacity:.15}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page-hero .crumbs,
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page-hero .crumbs a{
+  color:var(--ink-faint)!important;
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page-hero .crumbs a:hover{
+  color:var(--ink)!important;
+}
+html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page-hero .lead{
+  color:var(--ink)!important;
+}
+
+/* Font preview tool — swap site typeface + scale instantly (stacks above bg-picker) */
+.font-picker{
+  position:fixed;
+  left:16px;
+  bottom:64px;
+  z-index:1900;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(10,60,100,.14);
+  box-shadow:0 8px 28px rgba(8,60,100,.16);
+  backdrop-filter:blur(12px);
+  font-family:var(--font-body);
+  pointer-events:auto;
+}
+.font-picker-label{
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#48657c;
+  white-space:nowrap;
+}
+.font-picker-select{
+  min-width:min(46vw,190px);
+  max-width:240px;
+  padding:7px 10px;
+  border-radius:8px;
+  border:1px solid rgba(10,60,100,.18);
+  background:#fff;
+  color:#10283a;
+  font-family:var(--font-body);
+  font-size:.82rem;
+  font-weight:500;
+  cursor:pointer;
+  outline:none;
+}
+.font-picker-select--size{
+  min-width:104px;
+  max-width:140px;
+}
+.font-picker-select:focus{
+  border-color:var(--sky,#06a5df);
+  box-shadow:0 0 0 2px rgba(6,165,223,.2);
+}
+
+@media(max-width:620px){
+  .bg-picker{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    flex-wrap:wrap;
+  }
+  .bg-picker-select{
+    flex:1 1 100%;
+    max-width:none;
+  }
+  .font-picker{
+    left:10px;
+    right:10px;
+    bottom:104px;
+    flex-wrap:wrap;
+  }
+  .font-picker-select{
+    flex:1 1 100%;
+    max-width:none;
+  }
+  .font-picker-select--size{
+    flex:1 1 100%;
+    max-width:none;
+  }
+}

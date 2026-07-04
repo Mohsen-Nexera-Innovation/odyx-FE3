@@ -99,8 +99,8 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     no: '05',
     label: 'Finish',
     accent: 'orange',
-    productSlug: 'staining-glazing',
-    productName: 'Staining & Glazing',
+    productSlug: 'resins',
+    productName: 'Final polish',
     img: '/img/crowns.jpg',
     lead: 'Characterization and gloss for lifelike aesthetics.',
     whatHappens:

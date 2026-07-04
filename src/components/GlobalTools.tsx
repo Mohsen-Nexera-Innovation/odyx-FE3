@@ -1,6 +1,27 @@
 'use client';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, type FormEvent } from 'react';
+import { usePathname } from 'next/navigation';
 import AiChatbotIcon from './AiChatbotIcon';
+import { PRODUCTS } from '@/content/products';
+import { SOLUTION_PATHS } from '@/content/solutions';
+
+type DemoAccent = 'main' | 'orange' | 'teal';
+
+// The floating Request-a-Demo tab mirrors the brand accent of the current page:
+// the main logo's sky on general pages, orange on the printing family, teal on scanning/design.
+function demoAccentFor(pathname: string): DemoAccent {
+  const product = pathname.match(/^\/products\/([^/]+)/);
+  if (product) {
+    const p = PRODUCTS.find((x) => x.slug === product[1]);
+    if (p) return p.accent === 'orange' ? 'orange' : 'teal';
+  }
+  const solution = pathname.match(/^\/solutions\/([^/]+)/);
+  if (solution) {
+    const s = SOLUTION_PATHS.find((x) => x.slug === solution[1]);
+    if (s) return s.accent === 'orange' ? 'orange' : 'teal';
+  }
+  return 'main';
+}
 
 type Locale = 'en' | 'ar' | 'fr';
 
@@ -35,15 +56,7 @@ const SEARCH_ITEMS = [
   { label: 'Support Hub', href: '/support' },
   { label: 'Register your device', href: '/#register' },
   { label: 'Learning Center', href: '/learning' },
-  { label: 'Request a Demo', href: '/#cta' },
-];
-
-const AI_SUGGESTIONS = [
-  'Which resin do I use for crowns?',
-  'What printer suits a small clinic?',
-  'How does the workflow work?',
-  "I'm a dentist - where to start?",
-  'How do I register my device?',
+  { label: 'Request a Demo', href: '/support' },
 ];
 
 const AI_ANSWERS: Record<string, string> = {
@@ -72,7 +85,7 @@ function matchAiAnswer(q: string) {
   if (lower.includes('workflow') || lower.includes('scan')) return AI_ANSWERS['How does the workflow work?'];
   if (lower.includes('dentist') || lower.includes('start')) return AI_ANSWERS["I'm a dentist - where to start?"];
   if (lower.includes('register') || lower.includes('serial') || lower.includes('warranty')) return AI_ANSWERS['How do I register my device?'];
-  return 'Good question. For pricing, custom orders or clinical advice our team can help - use WhatsApp or Request a Demo and a specialist will follow up.';
+  return 'I can help with that. For pricing, custom orders, or clinical advice, our team can follow up — use WhatsApp or Request a Demo and a specialist will reach out.';
 }
 
 export function GlobalToolsProvider({ children }: { children: ReactNode }) {
@@ -80,13 +93,20 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   const [aiOpen, setAiOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [locale, setLocaleState] = useState<Locale>('en');
-  const [messages, setMessages] = useState<{ role: 'bot' | 'user'; text: string }[]>([
-    { role: 'bot', text: 'Hi! I can help you pick a product, walk the workflow, register a device, or reach support. What are you working on?' },
+  const [messages, setMessages] = useState<{ role: 'agent' | 'user'; text: string }[]>([
+    {
+      role: 'agent',
+      text: "I'm the Odyx Agent. Tell me what you're working on — products, workflow, registration, or support — and I'll guide you to the right next step.",
+    },
   ]);
   const [aiInput, setAiInput] = useState('');
   const [conversationStarted, setConversationStarted] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const aiBodyRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const demoAccent = demoAccentFor(pathname || '/');
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const openSearch = useCallback(() => setSearchOpen(true), []);
   const closeSearch = useCallback(() => { setSearchOpen(false); setQuery(''); }, []);
@@ -107,7 +127,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
     setMessages((m) => [...m, { role: 'user', text }]);
     setAiInput('');
     window.setTimeout(() => {
-      setMessages((m) => [...m, { role: 'bot', text: matchAiAnswer(text) }]);
+      setMessages((m) => [...m, { role: 'agent', text: matchAiAnswer(text) }]);
     }, 420);
   }, []);
 
@@ -165,39 +185,47 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      <div className={`ai-panel${aiOpen ? ' open' : ''}`} role="dialog" aria-label="ODYX Smart Assistant">
+      <div className={`ai-panel${aiOpen ? ' open' : ''}`} role="dialog" aria-label="Odyx Agent">
         <div className="ai-head">
-          <AiChatbotIcon size={48} animate={aiIconAnimating && aiOpen} variant="panel" className="ai-head-icon" />
+          <AiChatbotIcon size={22} animate={aiIconAnimating && aiOpen} variant="panel" className="ai-head-icon" />
           <div className="ai-head-copy">
-            <h4>ODYX Smart Assistant</h4>
-            <p>Product and workflow guidance</p>
+            <h4>Odyx Agent</h4>
+            <p>Guides your next step across the ODYX ecosystem</p>
           </div>
-          <button type="button" className="ai-close" onClick={() => setAiOpen(false)} aria-label="Close assistant">&times;</button>
+          <button type="button" className="ai-close" onClick={() => setAiOpen(false)} aria-label="Close Odyx Agent">&times;</button>
         </div>
         <div className="ai-body" ref={aiBodyRef}>
           {messages.map((m, i) => (
             <div key={i} className={`ai-msg ${m.role}`}>{m.text}</div>
           ))}
         </div>
-        <div className="ai-suggest">
-          {AI_SUGGESTIONS.map((q) => (
-            <button key={q} type="button" onClick={() => askAi(q)}>{q}</button>
-          ))}
-        </div>
+        <div className="ai-suggest" aria-hidden />
         <form className="ai-foot" onSubmit={submitAi}>
-          <input type="text" placeholder="Ask about products, workflow, support..." value={aiInput} onChange={(e) => setAiInput(e.target.value)} aria-label="Message to assistant" />
-          <button type="submit" className="btn btn-sm">Send</button>
+          <input type="text" placeholder="Describe your goal or question…" value={aiInput} onChange={(e) => setAiInput(e.target.value)} aria-label="Message to Odyx Agent" />
+          <button type="submit" className="btn btn-sm ai-send">Send</button>
         </form>
       </div>
 
-      <div className="fabs">
-        <button type="button" className="fab wa" title="WhatsApp - ODYX Customer Care" aria-label="WhatsApp customer care" onClick={() => window.open(WA_URL, '_blank', 'noopener')}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.486 2 2 6.486 2 12c0 1.768.46 3.433 1.267 4.882L2 22l5.233-1.237A9.956 9.956 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.2a8.18 8.18 0 0 1-4.178-1.146l-.3-.178-3.1.737.737-3.023-.195-.312A8.2 8.2 0 0 1 3.8 12c0-4.535 3.665-8.2 8.2-8.2s8.2 3.665 8.2 8.2-3.665 8.2-8.2 8.2z"/></svg>
-        </button>
-        <button type="button" className="fab ai" title="Smart AI Assistant" aria-label="Open Smart AI Assistant" aria-expanded={aiOpen} onClick={toggleAi}>
-          <AiChatbotIcon size={56} animate={aiIconAnimating} variant="fab" className="fab-ai-icon" />
-        </button>
+      <div className="fabs" role="complementary" aria-label="Help and support">
+        <div className="fab-stack">
+          <button type="button" className="fab wa" title="WhatsApp — ODYX Customer Care" aria-label="WhatsApp customer care" onClick={() => window.open(WA_URL, '_blank', 'noopener')}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.486 2 2 6.486 2 12c0 1.768.46 3.433 1.267 4.882L2 22l5.233-1.237A9.956 9.956 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.2a8.18 8.18 0 0 1-4.178-1.146l-.3-.178-3.1.737.737-3.023-.195-.312A8.2 8.2 0 0 1 3.8 12c0-4.535 3.665-8.2 8.2-8.2s8.2 3.665 8.2 8.2-3.665 8.2-8.2 8.2z"/></svg>
+          </button>
+          <span className="fab-caption">WhatsApp care</span>
+        </div>
+        <div className="fab-stack">
+          <button type="button" className="fab ai" title="Odyx Agent — products, workflow, support" aria-label="Open Odyx Agent" aria-expanded={aiOpen} onClick={toggleAi}>
+            <AiChatbotIcon size={22} animate={aiIconAnimating} variant="fab" className="fab-ai-icon" />
+          </button>
+          <span className="fab-caption">Odyx Agent</span>
+        </div>
       </div>
+
+      {mounted && (
+        <a className="demo-tab" data-accent={demoAccent} href="/support" aria-label="Request a Demo">
+          <span className="demo-tab__label">Request a Demo</span>
+        </a>
+      )}
     </GlobalToolsContext.Provider>
   );
 }

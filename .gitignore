@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+.venv-img/
 
 # large source videos (served from public/video/ only)
 /src/components/*.mp4

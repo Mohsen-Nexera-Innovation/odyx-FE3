@@ -40,16 +40,43 @@ const CLIN = [
   { tag: 'Prosthetic', t: 'Dentures', d: 'Digital denture workflows with a natural finish.', img: '/img/denture.jpg', accent: 'orange' },
   { tag: 'Provisional', t: 'Temporary Restorations', d: 'Fast, durable provisionals while finals are made.', img: '/img/temp.jpg', accent: 'orange' },
 ] as const;
-const PREVIEWS = [
-  { badge: 'Proof', t: 'Case Highlights', d: 'Before-and-after cases showing the mechanism used and the real clinical result.', more: 'Browse the Case Library', img: '/img/res-cases.jpg', accent: 'orange', href: '/learning' },
-  { badge: 'Learn', t: 'Learning Preview', d: 'Beginner guides, clinical courses, webinars and an academy that build real skill.', more: 'Enter the Learning Center', img: '/img/res-learning.jpg', accent: 'teal', href: '/learning' },
-  { badge: 'Help', t: 'Support Preview', d: 'Sales support, technical help and order tracking - live chat, WhatsApp and help center.', more: 'Visit Support', img: '/img/res-support.jpg', accent: 'teal', href: '/support' },
-] as const;
 const WHY = [
-  ['REASON 01', 'Precision', 'Accurate scans and prints that fit the first time - less chair time, fewer remakes.', '99', '%', 'First-fit accuracy'],
-  ['REASON 02', 'Integrated workflow', 'Every device connects, so data flows scan-to-delivery with no compatibility guesswork.', '6', '', 'Connected steps'],
-  ['REASON 03', 'Training & support', 'An academy and a team that grow with your practice, from first scan to advanced cases.', '24', '/7', 'Support access'],
-  ['REASON 04', 'Clinical confidence', 'Proven materials and validated curing for safe, durable, biocompatible results.', '5', '', 'Clinical resin lines'],
+  ['REASON 01', 'Precision', 'Accurate scans and prints that fit the first time - less chair time, fewer remakes.', '99', '%', 'First-fit accuracy', '/img/why/why-precision.png'],
+  ['REASON 02', 'Integrated workflow', 'Every device connects, so data flows scan-to-delivery with no compatibility guesswork.', '6', '', 'Connected steps', '/img/why/why-integrated.png'],
+  ['REASON 03', 'Training & support', 'An academy and a team that grow with your practice, from first scan to advanced cases.', '24', '/7', 'Support access', '/img/why/why-training.png'],
+  ['REASON 04', 'Clinical confidence', 'Proven materials and validated curing for safe, durable, biocompatible results.', '5', '', 'Clinical resin lines', '/img/why/why-clinical.png'],
+] as const;
+
+// Extra icons for the Learning + Support tiles
+const IX: Record<string, React.ReactNode> = {
+  book: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z" /><path d="M4 19V5" /></svg>,
+  cap: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 9L12 5 2 9l10 4 10-4z" /><path d="M6 11v5c0 1 2.5 2.5 6 2.5s6-1.5 6-2.5v-5" /></svg>,
+  play: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M10 9l5 3-5 3z" /></svg>,
+  award: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="9" r="6" /><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5" /></svg>,
+  whats: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21l1.6-4.5A8 8 0 1 1 8 19.4z" /><path d="M9 9c0 3 3 6 6 6l1.5-1.5-2-1.5-1 1c-1-.5-2-1.5-2.5-2.5l1-1L10.5 8z" /></svg>,
+  chat: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16v12H8l-4 4z" /><path d="M8 9h8M8 12h5" /></svg>,
+  doc: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></svg>,
+  shield: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" /><path d="M9 12l2 2 4-4" /></svg>,
+};
+
+const CASES = [
+  { badge: 'Crown & Bridge', t: 'Same-day full-contour crown', d: 'Scan, design and print a natural-looking crown in a single visit.', img: '/img/crowns.jpg', metric: '1 visit', metricLbl: 'Scan to seat' },
+  { badge: 'Surgical Guide', t: 'Guided implant placement', d: 'A printed surgical guide for confident, accurate positioning.', img: '/img/implant.jpg', metric: '0.1 mm', metricLbl: 'Positional accuracy' },
+  { badge: 'Prosthetics', t: 'Digital denture, delivered', d: 'A complete denture workflow with a natural, lifelike finish.', img: '/img/denture.jpg', metric: '3 steps', metricLbl: 'Streamlined workflow' },
+] as const;
+
+const LEARN = [
+  { ic: 'book', t: 'Beginner guides', d: 'Step-by-step onboarding to go fully digital with confidence.', meta: '20+ guides' },
+  { ic: 'cap', t: 'Clinical courses', d: 'Structured modules from the first scan to final delivery.', meta: '12 courses' },
+  { ic: 'play', t: 'Webinars & events', d: 'Live demos and Q&A with ODYX clinical specialists.', meta: 'Monthly' },
+  { ic: 'award', t: 'Certified academy', d: 'Certification paths for chairside teams and labs.', meta: 'Members' },
+] as const;
+
+const SUPPORT = [
+  { ic: 'whats', t: 'WhatsApp care', d: 'Instant help from our customer-care team, any day.', meta: '24/7' },
+  { ic: 'chat', t: 'Odyx Agent & live chat', d: 'Guided answers across the whole ODYX ecosystem.', meta: 'Online' },
+  { ic: 'doc', t: 'Help center & manuals', d: 'Setup guides, troubleshooting and firmware downloads.', meta: 'Self-service' },
+  { ic: 'shield', t: 'Warranty & service', d: 'Register devices, track repairs and coverage in one place.', meta: 'Coverage' },
 ] as const;
 
 export default function Home() {
@@ -116,13 +143,13 @@ export default function Home() {
           <div className="eco" id="ecoFlow">
             <svg className="eco-flow-svg" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
               <defs>
-                <linearGradient id="ecoGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#FF8400" /><stop offset="1" stopColor="#0D9696" /></linearGradient>
-                <radialGradient id="ecoPulseG" cx="50%" cy="50%" r="50%"><stop offset="0" stopColor="#FF8400" stopOpacity="1" /><stop offset="100%" stopColor="#FF8400" stopOpacity="0" /></radialGradient>
+                <linearGradient id="ecoGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#06a5df" /><stop offset="1" stopColor="#0D9696" /></linearGradient>
+                <radialGradient id="ecoPulseG" cx="50%" cy="50%" r="50%"><stop offset="0" stopColor="#06a5df" stopOpacity="1" /><stop offset="100%" stopColor="#06a5df" stopOpacity="0" /></radialGradient>
               </defs>
               <line className="eco-base" x1="40" y1="30" x2="960" y2="30" stroke="rgba(255,255,255,.12)" strokeWidth="2" />
               <line className="eco-draw" x1="40" y1="30" x2="960" y2="30" stroke="url(#ecoGrad)" strokeWidth="2.5" />
               <circle className="eco-pulse-glow" cx="40" cy="30" r="16" fill="url(#ecoPulseG)" />
-              <circle className="eco-pulse" cx="40" cy="30" r="5" fill="#FF8400" />
+              <circle className="eco-pulse" cx="40" cy="30" r="5" fill="#06a5df" />
             </svg>
             {ECO.map(([icon, label, step], k) => (
               <a key={label} href="#featured" className="eco-node build" data-node={k}>
@@ -135,17 +162,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Featured Products ===== */}
-      <section className="sec sec-orange" id="featured"><div className="wrap">
-        <SecHead eyebrow="Featured Products" h2="The products at the heart of the workflow" action={<a className="btn btn-ghost btn-sm" href="/products">All products →</a>} />
-        <ProductGallery />
-      </div></section>
-
       {/* ===== The ODYX Ecosystem (guided workflow stepper) ===== */}
-      <section className="sec sec-teal" id="ecosystem"><div className="wrap">
+      <section className="sec sec-orange" id="ecosystem"><div className="wrap">
         <SecHead eyebrow="The ODYX Ecosystem" h2="Everything works together" p="Each ODYX product is a connected node in one digital dentistry workflow. Walk the full sequence - interactive, with the product used at every step." />
         <WorkflowStepper />
         <div className="reveal" style={{ marginTop: 36, textAlign: 'center' }}><a className="btn" href="/workflows">Open the Workflow Hub →</a></div>
+      </div></section>
+
+      {/* ===== Featured Products ===== */}
+      <section className="sec sec-teal" id="featured"><div className="wrap">
+        <SecHead eyebrow="Featured Products" h2="The products at the heart of the workflow" action={<a className="btn btn-ghost btn-sm" href="/products">All products →</a>} />
+        <ProductGallery />
       </div></section>
 
       {/* ===== Clinical Applications ===== */}
@@ -171,22 +198,33 @@ export default function Home() {
       {/* ===== Why ODYX ===== */}
       <section className="sec sec-teal" id="why"><div className="wrap">
         <SecHead eyebrow="Why ODYX" h2="The whole picture, not the parts" p="Four reasons clinics and labs choose one connected ecosystem over a drawer of disconnected devices." />
-        <div className="why-rows build-group">
-          {WHY.map(([n, t, d, count, suf, lbl]) => (
-            <div className="why-row build" key={n}>
-              <div><div className="n">{n}</div><h3>{t}</h3><p>{d}</p></div>
-              <div className="why-vis"><div className="big"><span data-count={count} data-suf={suf}>0</span><span className="suf">{suf}</span></div><div className="lbl">{lbl}</div></div>
-            </div>
+        <div className="why-grid">
+          {WHY.map(([n, t, d, count, suf, lbl, img]) => (
+            <article className="why-card reveal" key={n}>
+              <div className="why-card__media">
+                <img src={img} alt={t} loading="lazy" />
+              </div>
+              <div className="why-card__body">
+                <div className="why-card__stat">
+                  <span className="why-card__num" data-count={count} data-suf={suf}>0</span>
+                  {suf && <span className="why-card__suf">{suf}</span>}
+                </div>
+                <div className="why-card__lbl">{lbl}</div>
+                <div className="why-card__n">{n}</div>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </div>
+            </article>
           ))}
         </div>
       </div></section>
 
-      {/* ===== Previews (Case / Learning / Support) ===== */}
-      <section className="sec sec-orange" id="previews"><div className="wrap">
-        <SecHead eyebrow="Resources" h2="Proof, learning and support" p="Explore cases, build skill in the academy, or get help when you need it." />
+      {/* ===== Case Library ===== */}
+      <section className="sec sec-orange" id="cases-preview"><div className="wrap">
+        <SecHead eyebrow="Proof" h2="Case highlights" p="Real before-and-after cases showing the mechanism used and the measurable clinical result." action={<a className="btn btn-ghost btn-sm" href="/learning">Browse all cases →</a>} />
         <div className="prev-grid build-group">
-          {PREVIEWS.map((c) => (
-            <a key={c.t} href={c.href} className={`prev build${c.accent === 'teal' ? ' teal' : ''}`}>
+          {CASES.map((c) => (
+            <a key={c.t} href="/learning" className="prev build">
               <div className="prev-art">
                 <img src={c.img} alt={c.t} loading="lazy" />
                 <span className="prev-scrim" />
@@ -195,8 +233,44 @@ export default function Home() {
               <div className="prev-body">
                 <h3>{c.t}</h3>
                 <p>{c.d}</p>
-                <span className="more">{c.more} <Arrow s={15} /></span>
+                <div className="prev-meta">
+                  <span className="prev-metric">{c.metric}</span>
+                  <span className="prev-metric-lbl">{c.metricLbl}</span>
+                </div>
+                <span className="more">View case <Arrow s={15} /></span>
               </div>
+            </a>
+          ))}
+        </div>
+      </div></section>
+
+      {/* ===== Learning Center preview ===== */}
+      <section className="sec sec-teal" id="learning-preview"><div className="wrap">
+        <SecHead eyebrow="Learn" h2="Learning center" p="Beginner guides, clinical courses, webinars and a certified academy that build real skill — from first scan to advanced cases." action={<a className="btn btn-ghost btn-sm" href="/learning">Enter academy →</a>} />
+        <div className="g4 info-grid build-group">
+          {LEARN.map((l) => (
+            <a key={l.t} href="/learning" className="card info-card build">
+              <span className="card-meta">{l.meta}</span>
+              <div className="ic">{IX[l.ic]}</div>
+              <h3>{l.t}</h3>
+              <p>{l.d}</p>
+              <span className="more">Explore <Arrow s={15} /></span>
+            </a>
+          ))}
+        </div>
+      </div></section>
+
+      {/* ===== Support preview ===== */}
+      <section className="sec sec-orange" id="support-preview"><div className="wrap">
+        <SecHead eyebrow="Help" h2="Support when you need it" p="Sales support, technical help and order tracking — human care plus self-service resources, available around the clock." action={<a className="btn btn-ghost btn-sm" href="/support">Visit support →</a>} />
+        <div className="g4 info-grid build-group">
+          {SUPPORT.map((s) => (
+            <a key={s.t} href="/support" className="card info-card build">
+              <span className="card-meta">{s.meta}</span>
+              <div className="ic">{IX[s.ic]}</div>
+              <h3>{s.t}</h3>
+              <p>{s.d}</p>
+              <span className="more">Get help <Arrow s={15} /></span>
             </a>
           ))}
         </div>
@@ -220,20 +294,13 @@ export default function Home() {
         <div className="shop-flow"><div className="pulse-line" />
           <div className="shop-grid build-group">
             {[['Clinical Resins', 'Permanent crown, ceramic, temporary, model & surgical-guide lines.', 'From $-', 'Shop resins', '/img/shop-resin.jpg'],
-            ['Accessories & Finishing', 'Glaze kits, stains, build plates and everyday consumables.', 'From $-', 'Shop accessories', '/img/shop-accessories.jpg'],
+            ['Accessories & Consumables', 'Build plates, tanks and everyday workflow consumables.', 'From $-', 'Shop accessories', '/img/shop-accessories.jpg'],
             ['Demo & Brochure', 'Book a live demo or download the full ODYX product brochure.', 'Free', 'Request a demo', '/img/shop-brochure.jpg']].map(([t, d, price, cta, img]) => (
-              <div key={t} className="shop-card build"><div className="shop-media"><div className="imgslot"><PH label={t} /><img data-isrc={img} alt={t} /></div><span className="price">{price}</span></div><div className="shop-body"><h4>{t}</h4><p>{d}</p><a className="btn btn-sm" href="#cta">{cta} <Arrow s={15} /></a></div></div>
+              <div key={t} className="shop-card build"><div className="shop-media"><div className="imgslot"><PH label={t} /><img data-isrc={img} alt={t} /></div><span className="price">{price}</span></div><div className="shop-body"><h4>{t}</h4><p>{d}</p><a className="btn btn-sm" href="/support">{cta} <Arrow s={15} /></a></div></div>
             ))}
           </div>
         </div>
       </div></section>
-
-      {/* ===== CTA band ===== */}
-      <section className="sec sec-teal" id="cta"><div className="wrap"><div className="cta-band reveal">
-        <h2>See the connected workflow in action</h2>
-        <p>Book a live demo and watch a restoration go from scan to delivery - often same-day.</p>
-        <a className="btn btn-dark" href="#">Request a Demo →</a>
-      </div></div></section>
 
       {/* ===== Footer ===== */}
       <footer><div className="wrap">
