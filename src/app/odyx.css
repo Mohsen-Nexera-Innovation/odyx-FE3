@@ -469,7 +469,11 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
   pointer-events:none;
   max-height:calc(100vh - 80px);
   overflow:visible;
+  opacity:0;visibility:hidden;
+  transition:opacity .45s ease,visibility .45s ease;
 }
+/* Revealed only after the hero (video) scrolls away */
+.spine[data-shown="true"]{opacity:1;visibility:visible}
 /* Tablet: circles only, no text */
 @media(max-width:980px){
   .spine{--spine-circle:26px;left:16px}
@@ -486,7 +490,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
   --spine-pending-border:rgba(255,255,255,.45);
   --spine-pending-num:rgba(255,255,255,.75);
   --spine-pending-title:rgba(255,255,255,.75);
-  --spine-done:var(--teal);
+  --spine-done:var(--sky-deep);
   --spine-on-bg:#fff;
   --spine-on-ring:var(--sky);
   --spine-on-num:var(--sky-deep);
@@ -499,7 +503,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
   --spine-pending-border:rgba(10,60,100,.22);
   --spine-pending-num:rgba(10,60,100,.5);
   --spine-pending-title:rgba(10,40,68,.55);
-  --spine-done:var(--teal);
+  --spine-done:var(--sky-deep);
   --spine-on-bg:#fff;
   --spine-on-ring:var(--sky);
   --spine-on-num:var(--sky-deep);

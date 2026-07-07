@@ -20,7 +20,7 @@ export default function SupportHubPage() {
 
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead eyebrow="Quick access" h2="Start here" p="Jump straight to manuals, fixes, warranty or live help." />
+          <SecHead eyebrow="Quick access" h2="Start here" />
           <div className="support-quick reveal">
             <Link href="/support#manuals" className="support-quick-card">
               <strong>Manuals</strong>

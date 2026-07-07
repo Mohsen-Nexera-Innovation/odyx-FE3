@@ -18,7 +18,6 @@ export default function WorkflowHubPage() {
           <SecHead
             eyebrow="Six steps"
             h2="Walk the full sequence"
-            p="Each step links to a product, a video moment, and the next stage in the chain."
           />
           <div className="wf-hub-grid build-group">
             {WORKFLOW_STEPS.map((s) => (
@@ -41,7 +40,6 @@ export default function WorkflowHubPage() {
           <SecHead
             eyebrow="By role"
             h2="How the workflow changes by audience"
-            p="The same six steps - emphasized differently for clinic chairside vs lab production."
           />
           <div className="pgrid build-group">
             <Link href="/solutions/dentists" className="pcard teal reveal build">

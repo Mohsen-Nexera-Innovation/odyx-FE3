@@ -15,7 +15,6 @@ type Section = {
 };
 
 const SECTIONS: Section[] = [
-  { target: '#hero', title: 'Discover', icon: 'start' },
   { target: '#path', title: 'Choose Path', icon: 'path' },
   { target: '#ecosystem', title: 'Ecosystem', icon: 'ecosystem' },
   { target: '#featured', title: 'Products', icon: 'products' },
@@ -75,7 +74,8 @@ export default function Spine() {
   const rafRef = useRef(0);
   const btnRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [activeIdx, setActiveIdx] = useState(0);
-  const [theme, setTheme] = useState<'hero' | 'light'>('hero');
+  const [theme, setTheme] = useState<'hero' | 'light'>('light');
+  const [shown, setShown] = useState(false);
   const reduce = useReducedMotion();
 
   // Smoothly scroll to a section and reflect it in the URL hash (no jump).
@@ -125,6 +125,9 @@ export default function Spine() {
       const heroRect = hero?.getBoundingClientRect();
       const inHero = !!heroRect && heroRect.bottom > vh * 0.28 && heroRect.top < vh * 0.55;
       setTheme(inHero ? 'hero' : 'light');
+      // Reveal the spine only once the hero (video) has mostly scrolled away.
+      const pastHero = !heroRect || heroRect.bottom <= vh * 0.5;
+      setShown(pastHero);
     };
     const onScroll = () => {
       if (rafRef.current) return;
@@ -173,6 +176,8 @@ export default function Spine() {
       ref={navRef}
       data-theme={theme}
       data-active={activeIdx}
+      data-shown={shown}
+      aria-hidden={!shown}
       aria-label="Page sections"
       onKeyDown={onKeyDown}
     >

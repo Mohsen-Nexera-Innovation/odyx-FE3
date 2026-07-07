@@ -18,7 +18,6 @@ export default function ProductsOverviewPage() {
           <SecHead
             eyebrow="Product families"
             h2="Everything in one connected chain"
-            p="Explore specs, models and downloads for each part of the workflow."
           />
           <div className="prod-grid build-group">
             {PRODUCTS.map((p) => (
