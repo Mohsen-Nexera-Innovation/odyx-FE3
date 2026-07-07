@@ -37,11 +37,17 @@ export default function EcosystemHighlights() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const activeRef = useRef(0);
 
-  // Smooth-scroll a slide to dead-center; native scroll-snap settles it precisely.
+  // Smooth-scroll a slide to dead-center. We scroll ONLY the horizontal track
+  // (never scrollIntoView, which would also scroll the page vertically and yank
+  // the user back to this section during auto-advance).
   const goTo = useCallback((i: number, smooth = true) => {
+    const track = trackRef.current;
     const el = slideRefs.current[i];
-    if (!el) return;
-    el.scrollIntoView({ behavior: smooth && !reduced ? 'smooth' : 'auto', inline: 'center', block: 'nearest' });
+    if (!track || !el) return;
+    const trackRect = track.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const delta = (elRect.left - trackRect.left) - (track.clientWidth - el.clientWidth) / 2;
+    track.scrollBy({ left: delta, behavior: smooth && !reduced ? 'smooth' : 'auto' });
   }, [reduced]);
 
   // Detect reduced-motion once.
