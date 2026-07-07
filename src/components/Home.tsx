@@ -4,7 +4,7 @@ import HeroJourney from "./HeroJourney";
 import NewsShowcase from "./NewsShowcase";
 import ProductGallery from "./ProductGallery";
 import RegisterDevice from "./RegisterDevice";
-import WorkflowStepper from "./WorkflowStepper";
+import EcosystemHighlights from "./EcosystemHighlights";
 import { FOOTER_COLUMNS } from "@/content/nav";
 import SecHead from "@/components/SecHead";
 
@@ -676,11 +676,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== The ODYX Ecosystem (guided workflow stepper) ===== */}
+      {/* ===== The ODYX Ecosystem (Get the highlights video slider) ===== */}
       <section className="sec sec-orange" id="ecosystem">
         <div className="wrap">
           <SecHead eyebrow="The ODYX Ecosystem" />
-          <WorkflowStepper />
+        </div>
+        <EcosystemHighlights />
+        <div className="wrap">
           <div
             className="reveal"
             style={{ marginTop: 36, textAlign: "center" }}

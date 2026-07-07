@@ -47,7 +47,6 @@ export default function Header() {
   const { session } = useAuthSession();
   const [inboxUnread, setInboxUnread] = useState(0);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [isMac, setIsMac] = useState(true);
   const [open, setOpen] = useState(false);
   const [expandedNav, setExpandedNav] = useState<string | null>(null);
@@ -80,14 +79,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    let lastY = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 40);
-      if (y > 140 && y > lastY + 4) setHidden(true);
-      else if (y < lastY - 4 || y < 140) setHidden(false);
-      lastY = y;
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -150,12 +142,8 @@ export default function Header() {
     el.style.setProperty('--my', `${e.clientY - r.top}px`);
   };
 
-  const headerClass = [scrolled ? 'scrolled' : '', hidden && !open ? 'nav-hidden' : '']
-    .filter(Boolean)
-    .join(' ');
-
   return (
-    <header id="hdr" ref={headerRef} className={headerClass} onMouseMove={onSpotlightMove}>
+    <header id="hdr" ref={headerRef} className={scrolled ? 'scrolled' : ''} onMouseMove={onSpotlightMove}>
       <div className="wrap nav">
         <Link href="/" className="logo" aria-label="ODYX home">
           <img className="logo-img" src="/brand/odyx-company.png" alt="ODYX" />
@@ -182,6 +170,7 @@ export default function Header() {
             {!session && (
               <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Login</Link>
             )}
+            <Link className="btn btn-sm nav-demo" href="/support" onClick={closeMenu}>Request a Demo</Link>
           </div>
         </nav>
         <button type="button" className="nav-assist" onClick={openAi} aria-label="Open Odyx Agent">
@@ -242,6 +231,10 @@ export default function Header() {
           ) : (
             <Link className="btn-ghost btn btn-sm nav-login" href="/login">Login</Link>
           )}
+          <Link className="btn btn-sm nav-demo" href="/support">
+            <span className="nav-label-long">Request a Demo</span>
+            <span className="nav-label-short">Demo</span>
+          </Link>
           <button
             type="button"
             className="burger"

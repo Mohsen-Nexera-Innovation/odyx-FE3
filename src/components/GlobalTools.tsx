@@ -1,27 +1,6 @@
 'use client';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, type FormEvent } from 'react';
-import { usePathname } from 'next/navigation';
 import AiChatbotIcon from './AiChatbotIcon';
-import { PRODUCTS } from '@/content/products';
-import { SOLUTION_PATHS } from '@/content/solutions';
-
-type DemoAccent = 'main' | 'orange' | 'teal';
-
-// The floating Request-a-Demo tab mirrors the brand accent of the current page:
-// the main logo's sky on general pages, orange on the printing family, teal on scanning/design.
-function demoAccentFor(pathname: string): DemoAccent {
-  const product = pathname.match(/^\/products\/([^/]+)/);
-  if (product) {
-    const p = PRODUCTS.find((x) => x.slug === product[1]);
-    if (p) return p.accent === 'orange' ? 'orange' : 'teal';
-  }
-  const solution = pathname.match(/^\/solutions\/([^/]+)/);
-  if (solution) {
-    const s = SOLUTION_PATHS.find((x) => x.slug === solution[1]);
-    if (s) return s.accent === 'orange' ? 'orange' : 'teal';
-  }
-  return 'main';
-}
 
 type Locale = 'en' | 'ar' | 'fr';
 
@@ -103,10 +82,6 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   const [conversationStarted, setConversationStarted] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const aiBodyRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const demoAccent = demoAccentFor(pathname || '/');
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
   const openSearch = useCallback(() => setSearchOpen(true), []);
   const closeSearch = useCallback(() => { setSearchOpen(false); setQuery(''); }, []);
@@ -222,12 +197,6 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
           <AiChatbotIcon size={26} animate={aiIconAnimating} variant="fab" className="fab-ai-icon" />
         </button>
       </div>
-
-      {mounted && (
-        <a className="demo-tab" data-accent={demoAccent} href="/support" aria-label="Request a Demo">
-          <span className="demo-tab__label">Request a Demo</span>
-        </a>
-      )}
     </GlobalToolsContext.Provider>
   );
 }
