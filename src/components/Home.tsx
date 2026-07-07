@@ -66,6 +66,22 @@ const I = {
       <path d="M6 17v3h12v-3M8 9V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4" />
     </svg>
   ),
+  labprint: (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 11c0-1 .6-1.7 1.3-2.6C10 7.5 10.4 6.7 12 6.7s2 .8 2.7 1.7C15.4 9.3 16 10 16 11c0 1.1-.3 2-.6 3.1-.3 1-.4 2-.6 3.1-.1.9-.3 1.7-.9 1.7-.6 0-.7-.9-.9-1.7-.2-.9-.4-1.6-1-1.6s-.8.7-1 1.6c-.2.8-.3 1.7-.9 1.7-.6 0-.8-.8-.9-1.7-.2-1.1-.3-2.1-.6-3.1C8.3 13 8 12.1 8 11Z" />
+      <path d="M4 5h16" />
+      <path d="M6 5 5 2M18 5l1-3" />
+    </svg>
+  ),
   cure: (
     <svg
       width="22"
@@ -502,13 +518,17 @@ export default function Home() {
               <div className="pcard-body">
                 <div className="ic">
                   <svg
-                    width="22"
-                    height="26"
-                    viewBox="0 0 24 28"
-                    fill="currentColor"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     aria-hidden
                   >
-                    <path d="M7 1C4.2 1 2 3.2 2 6c0 1.9.5 3.4 1.1 5.4.5 1.8.8 3.6 1.1 5.8.2 1.7.4 3.8 1.4 3.8.9 0 1.1-1.8 1.4-3.3.3-1.9.5-3.2 1.5-3.2s1.2 1.3 1.5 3.2c.3 1.5.5 3.3 1.4 3.3 1 0 1.2-2.1 1.4-3.8.3-2.2.6-4 1.1-5.8C21.5 9.4 22 7.9 22 6c0-2.8-2.2-5-5-5-1.6 0-2.6.8-3.5.8S8.6 1 7 1z" />
+                    <path d="M7.5 3.2C5.4 3.2 3.8 4.9 3.8 7c0 1.4.4 2.5.9 4 .5 1.4.7 2.8.9 4.6.2 1.5.4 3 1.3 3 .9 0 1.1-1.4 1.4-2.7.2-1.2.5-2.3 1.2-2.3s1 1.1 1.2 2.3c.3 1.3.5 2.7 1.4 2.7.9 0 1.1-1.5 1.3-3 .2-1.8.4-3.2.9-4.6.5-1.5.9-2.6.9-4 0-2.1-1.6-3.8-3.7-3.8-1.2 0-2 .6-2.6.6s-1.4-.6-2.6-.6Z" />
                   </svg>
                 </div>
                 <h3>Dentist</h3>
@@ -533,7 +553,7 @@ export default function Home() {
                 <span className="scrim2" />
               </div>
               <div className="pcard-body">
-                <div className="ic">{I.print}</div>
+                <div className="ic">{I.labprint}</div>
                 <h3>Lab Technician</h3>
                 <p>
                   Move from milling to 3D printing with high-volume production
@@ -558,8 +578,8 @@ export default function Home() {
               <div className="pcard-body">
                 <div className="ic">
                   <svg
-                    width="22"
-                    height="22"
+                    width="28"
+                    height="28"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -568,7 +588,8 @@ export default function Home() {
                     strokeLinejoin="round"
                   >
                     <circle cx="12" cy="12" r="9" />
-                    <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
+                    <path d="M3 12h18" />
+                    <path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9Z" />
                   </svg>
                 </div>
                 <h3>Guest</h3>
