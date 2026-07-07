@@ -14,6 +14,12 @@ export interface ProductDownload {
   href: string;
 }
 
+export interface ProductStat {
+  value: string;
+  label: string;
+  desc: string;
+}
+
 export type ProductLayout = 'print-line' | 'cinematic' | 'classic' | 'signature';
 
 export interface ProductContent {
@@ -31,6 +37,7 @@ export interface ProductContent {
   specs: ProductSpec[];
   downloads: ProductDownload[];
   benefits: string[];
+  stats?: ProductStat[];
   layout?: ProductLayout;
 }
 
@@ -39,6 +46,7 @@ export const PRODUCTS: ProductContent[] = [
     slug: 'intraoral-scanner',
     name: 'Intraoral Scanner',
     category: 'Scanning',
+    layout: 'cinematic',
     tagline: 'Chairside 3D impressions in seconds.',
     overview:
       'The ODYX intraoral scanner captures full-arch color scans with real-time mesh preview. Open export formats connect directly to design and lab workflows without proprietary lock-in.',
@@ -63,11 +71,17 @@ export const PRODUCTS: ProductContent[] = [
       { name: 'IFU / User manual', type: 'PDF', href: '/support#manuals' },
     ],
     benefits: ['No impressions', 'Instant preview', 'Open CAD export', 'Patient comfort'],
+    stats: [
+      { value: '<60s', label: 'Full-arch capture', desc: 'Complete digital impressions in under a minute.' },
+      { value: '3', label: 'Export formats', desc: 'STL, PLY and OBJ for open CAD workflows.' },
+      { value: '2', label: 'Configurations', desc: 'Scan Pro for speed, Scan Compact for chairside.' },
+    ],
   },
   {
     slug: 'design',
     name: 'Design Software',
     category: 'Digital',
+    layout: 'cinematic',
     tagline: 'CAD built for ODYX print and cure parameters.',
     overview:
       'Design crowns, guides, models and dentures with libraries validated for ODYX materials. Export print-ready files with supports and nesting optimized for ODYX printers.',
@@ -92,17 +106,22 @@ export const PRODUCTS: ProductContent[] = [
       { name: 'Release notes', type: 'PDF', href: '/support#updates' },
     ],
     benefits: ['Validated parameters', 'Fast design paths', 'Dentist + lab modes', 'Training included'],
+    stats: [
+      { value: '4', label: 'Indications', desc: 'Crown, guide, model and denture design paths.' },
+      { value: '2', label: 'Editions', desc: 'Design Studio for labs, Chairside for clinics.' },
+      { value: '1-click', label: 'Print-ready export', desc: 'Validated parameters baked into every STL.' },
+    ],
   },
   {
     slug: '3d-printers',
     name: '3D Printers',
     category: 'Printing',
-    layout: 'signature',
+    layout: 'cinematic',
     tagline: 'Desktop production for clinic and lab.',
     overview:
       'ODYX printers deliver crowns, guides, models and dentures with validated resin profiles. Compact footprint, simple maintenance and workflow-linked presets keep production predictable.',
     img: '/img/feat-printer.jpg',
-    heroImg: '/img/feat-printer.jpg',
+    heroImg: '/img/feat-printer-cutout.png',
     accent: 'orange',
     workflowStep: 'print',
     applications: ['Permanent crowns', 'Surgical guides', 'Models', 'Denture bases', 'Provisionals'],
@@ -123,11 +142,17 @@ export const PRODUCTS: ProductContent[] = [
       { name: 'Maintenance schedule', type: 'PDF', href: '/support#manuals' },
     ],
     benefits: ['In-house production', 'Validated profiles', 'Small footprint', 'Same-day cases'],
+    stats: [
+      { value: '25µm', label: 'Layer precision', desc: 'Validated profiles for clinical-grade detail.' },
+      { value: '2×', label: 'Configurations', desc: 'Print One for chairside, Print Pro for production.' },
+      { value: '5+', label: 'Indications', desc: 'Crowns, guides, models, dentures and more.' },
+    ],
   },
   {
     slug: 'curing-machines',
     name: 'Curing Machines',
     category: 'Post-processing',
+    layout: 'cinematic',
     tagline: 'Full-strength, biocompatible cure every time.',
     overview:
       'The ODYX curing unit applies validated light dose and time per resin type. Presets link to the workflow so clinic and lab teams get consistent mechanical properties without guesswork.',
@@ -152,11 +177,17 @@ export const PRODUCTS: ProductContent[] = [
       { name: 'Safety & IFU', type: 'PDF', href: '/support#manuals' },
     ],
     benefits: ['Validated presets', 'Biocompatible outcomes', 'Simple operation', 'QA-friendly'],
+    stats: [
+      { value: '5+', label: 'Resin presets', desc: 'Validated light dose and time per resin type.' },
+      { value: '2', label: 'Configurations', desc: 'Cure for clinics, Cure Plus for lab throughput.' },
+      { value: '100%', label: 'ODYX validated', desc: 'Every profile tested for biocompatible outcomes.' },
+    ],
   },
   {
     slug: 'staining-glazing',
     name: 'Staining & Glazing',
     category: 'Finishing',
+    layout: 'cinematic',
     tagline: 'Lifelike characterization for restorative cases.',
     overview:
       'Complete the aesthetic layer with ODYX-compatible stains and glaze systems. From monolithic convenience to full layering, match patient shade and surface texture with predictable results.',
@@ -179,11 +210,17 @@ export const PRODUCTS: ProductContent[] = [
       { name: 'Shade protocol', type: 'PDF', href: '#' },
     ],
     benefits: ['Natural esthetics', 'Shade matching', 'Lab-grade results', 'Training resources'],
+    stats: [
+      { value: 'VITA', label: 'Shade range', desc: 'Oriented shade set for predictable matching.' },
+      { value: '2', label: 'Kit options', desc: 'Finish Kit essentials or Finish Pro extended.' },
+      { value: '2×', label: 'Application', desc: 'Brush and spray techniques for every case.' },
+    ],
   },
   {
     slug: 'resins',
     name: 'Resins & Materials',
     category: 'Materials',
+    layout: 'cinematic',
     tagline: 'Five clinical lines validated for the ODYX workflow.',
     overview:
       'Permanent crown, ceramic crown, temporary, model and surgical guide resins - each with datasheets, cure profiles and safety documentation. The materials layer that makes the ecosystem clinically complete.',
@@ -210,31 +247,13 @@ export const PRODUCTS: ProductContent[] = [
       { name: 'Processing guides', type: 'PDF', href: '/support#manuals' },
     ],
     benefits: ['Workflow-validated', 'Clear indications', 'Safety docs included', 'Shop reorder path'],
+    stats: [
+      { value: '5', label: 'Clinical lines', desc: 'Crown, ceramic, temporary, model and guide resins.' },
+      { value: '100%', label: 'Workflow-validated', desc: 'Every line tested with ODYX print and cure.' },
+      { value: 'SDS', label: 'Safety docs', desc: 'Full datasheets and processing guides included.' },
+    ],
   },
 ];
-
-// Alternate presentations of the 3D Printers page. Same content, three layouts:
-// - print-line : current signature hero (two-column, masked photo)
-// - cinematic  : SprintRay-style full-bleed transparent printer
-// - classic    : standard product layout (like the Intraoral Scanner page)
-const printerBase = PRODUCTS.find((p) => p.slug === '3d-printers')!;
-
-PRODUCTS.push(
-  {
-    ...printerBase,
-    slug: '3d-printers-cinematic',
-    name: '3D Printers',
-    heroImg: '/img/feat-printer-cutout.png',
-    layout: 'cinematic',
-  },
-  {
-    ...printerBase,
-    slug: '3d-printers-classic',
-    name: '3D Printers',
-    heroImg: '/img/feat-printer.jpg',
-    layout: 'classic',
-  },
-);
 
 export function getProduct(slug: string) {
   return PRODUCTS.find((p) => p.slug === slug);

@@ -1,27 +1,6 @@
 'use client';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, type FormEvent } from 'react';
-import { usePathname } from 'next/navigation';
 import AiChatbotIcon from './AiChatbotIcon';
-import { PRODUCTS } from '@/content/products';
-import { SOLUTION_PATHS } from '@/content/solutions';
-
-type DemoAccent = 'main' | 'orange' | 'teal';
-
-// The floating Request-a-Demo tab mirrors the brand accent of the current page:
-// the main logo's sky on general pages, orange on the printing family, teal on scanning/design.
-function demoAccentFor(pathname: string): DemoAccent {
-  const product = pathname.match(/^\/products\/([^/]+)/);
-  if (product) {
-    const p = PRODUCTS.find((x) => x.slug === product[1]);
-    if (p) return p.accent === 'orange' ? 'orange' : 'teal';
-  }
-  const solution = pathname.match(/^\/solutions\/([^/]+)/);
-  if (solution) {
-    const s = SOLUTION_PATHS.find((x) => x.slug === solution[1]);
-    if (s) return s.accent === 'orange' ? 'orange' : 'teal';
-  }
-  return 'main';
-}
 
 type Locale = 'en' | 'ar' | 'fr';
 
@@ -103,10 +82,6 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   const [conversationStarted, setConversationStarted] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const aiBodyRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const demoAccent = demoAccentFor(pathname || '/');
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
   const openSearch = useCallback(() => setSearchOpen(true), []);
   const closeSearch = useCallback(() => { setSearchOpen(false); setQuery(''); }, []);
@@ -138,7 +113,15 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   }, [aiOpen]);
 
   useEffect(() => {
-    if (searchOpen) searchRef.current?.focus();
+    if (!searchOpen) return;
+    const id = window.setTimeout(() => {
+      const el = searchRef.current;
+      if (el) {
+        el.focus({ preventScroll: true });
+        el.select();
+      }
+    }, 40);
+    return () => window.clearTimeout(id);
   }, [searchOpen]);
 
   useEffect(() => {
@@ -207,25 +190,13 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
       </div>
 
       <div className="fabs" role="complementary" aria-label="Help and support">
-        <div className="fab-stack">
-          <button type="button" className="fab wa" title="WhatsApp — ODYX Customer Care" aria-label="WhatsApp customer care" onClick={() => window.open(WA_URL, '_blank', 'noopener')}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.486 2 2 6.486 2 12c0 1.768.46 3.433 1.267 4.882L2 22l5.233-1.237A9.956 9.956 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.2a8.18 8.18 0 0 1-4.178-1.146l-.3-.178-3.1.737.737-3.023-.195-.312A8.2 8.2 0 0 1 3.8 12c0-4.535 3.665-8.2 8.2-8.2s8.2 3.665 8.2 8.2-3.665 8.2-8.2 8.2z"/></svg>
-          </button>
-          <span className="fab-caption">WhatsApp care</span>
-        </div>
-        <div className="fab-stack">
-          <button type="button" className="fab ai" title="Odyx Agent — products, workflow, support" aria-label="Open Odyx Agent" aria-expanded={aiOpen} onClick={toggleAi}>
-            <AiChatbotIcon size={22} animate={aiIconAnimating} variant="fab" className="fab-ai-icon" />
-          </button>
-          <span className="fab-caption">Odyx Agent</span>
-        </div>
+        <button type="button" className="fab wa" title="WhatsApp — ODYX Customer Care" aria-label="WhatsApp customer care" onClick={() => window.open(WA_URL, '_blank', 'noopener')}>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.486 2 2 6.486 2 12c0 1.768.46 3.433 1.267 4.882L2 22l5.233-1.237A9.956 9.956 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.2a8.18 8.18 0 0 1-4.178-1.146l-.3-.178-3.1.737.737-3.023-.195-.312A8.2 8.2 0 0 1 3.8 12c0-4.535 3.665-8.2 8.2-8.2s8.2 3.665 8.2 8.2-3.665 8.2-8.2 8.2z"/></svg>
+        </button>
+        <button type="button" className="fab ai" title="Odyx Agent — products, workflow, support" aria-label="Open Odyx Agent" aria-expanded={aiOpen} onClick={toggleAi}>
+          <AiChatbotIcon size={26} animate={aiIconAnimating} variant="fab" className="fab-ai-icon" />
+        </button>
       </div>
-
-      {mounted && (
-        <a className="demo-tab" data-accent={demoAccent} href="/support" aria-label="Request a Demo">
-          <span className="demo-tab__label">Request a Demo</span>
-        </a>
-      )}
     </GlobalToolsContext.Provider>
   );
 }

@@ -6,7 +6,8 @@
 
 :root{
   --sky:#06a5df; --sky-soft:#7fd0f3; --sky-deep:#0581ad; --sky-rgb:6,165,223;
-  --ink:#10283a; --ink-muted:#4f6b80; --ink-faint:#7e95a7;
+  /* Body text derives from the logo wordmark charcoal; muted/faint are neutral greys. */
+  --ink:#211C1D; --ink-muted:#5A555C; --ink-faint:#8A858E;
   --paper:#f5fafd; --paper-2:#e9f4fb; --paper-card:#ffffff;
   --paper-line:rgba(10,60,100,.10); --paper-line-2:rgba(10,60,100,.18);
 }
@@ -22,7 +23,9 @@ header.scrolled{
   box-shadow:0 4px 16px rgba(0,0,0,.07);
 }
 header .nav-item>a{color:#3d4f5f}
-header .nav-item>a:hover{color:#10283a;background:rgba(0,0,0,.05)}
+header .nav-item>a:hover{color:#211C1D;background:rgba(0,0,0,.05)}
+header .nav-link-label.active{color:var(--sky-deep)}
+header .nav-item>a:has(.nav-link-label.active){color:var(--sky-deep)}
 header .tool-btn{color:#48657c;border-color:rgba(0,0,0,.12);background:rgba(255,255,255,.45)}
 header .tool-btn:hover{border-color:var(--sky);color:var(--sky-deep);background:#fff}
 header .lang-drop{background:#fff;border-color:rgba(0,0,0,.10);box-shadow:0 16px 40px rgba(0,0,0,.12)}
@@ -30,7 +33,7 @@ header .lang-drop button{color:#48657c}
 header .lang-drop button.active,
 header .lang-drop button:hover{color:var(--sky-deep);background:rgba(var(--sky-rgb),.10)}
 header .btn-ghost{color:#334155;border-color:rgba(0,0,0,.16);background:rgba(255,255,255,.35)}
-header .btn-ghost:hover{color:#10283a;border-color:rgba(0,0,0,.28);background:#fff;box-shadow:none}
+header .btn-ghost:hover{color:#211C1D;border-color:rgba(0,0,0,.28);background:#fff;box-shadow:none}
 header .nav-demo{background:var(--sky);color:#fff;font-weight:700}
 header .nav-demo:hover{background:var(--sky-deep);box-shadow:0 8px 22px rgba(6,165,223,.32);transform:translateY(-1px)}
 header .nav-assist{border-color:rgba(6,165,223,.55);background:rgba(6,165,223,.08);color:#0581ad}
@@ -61,8 +64,11 @@ header .burger span{background:#334155}
 .hero-video .hc-title{color:#fff}
 .hero-video .kw{color:#fff}
 .hero-video .kw::after{background:#fff;opacity:.16}
+/* keep the active word lit (scan on step 1, smile on the last step) — needs to beat the white override above */
+.hero-video .kw.lit{color:var(--acc);text-shadow:0 0 34px rgba(var(--acc-rgb),.55)}
+.hero-video .kw.lit::after{opacity:1;background:var(--acc);box-shadow:0 0 16px rgba(var(--acc-rgb),.7)}
 .hero-video .hc-lead{color:#c8c8da}
-.hero-video .hc-line{background:linear-gradient(90deg, rgba(13,150,150,.28), rgba(255,132,0,.28))}
+.hero-video .hc-line{background:linear-gradient(90deg, rgba(var(--teal-rgb),.28), rgba(var(--orange-rgb),.28))}
 .hero-video .hc-node .d{background:var(--navy-deep);color:var(--grey);border-color:var(--line-2)}
 .hero-video .hc-node .l{color:var(--grey)}
 .hero-video .hc-node.on .l,
@@ -105,12 +111,12 @@ main{
 :is(#top, main) > .sec.sec-teal{
   background:
     radial-gradient(1000px 560px at 50% 30%, rgba(var(--sky-rgb),.13), transparent 64%),
-    radial-gradient(700px 420px at 85% 8%, rgba(13,150,150,.07), transparent 60%),
+    radial-gradient(700px 420px at 85% 8%, rgba(var(--teal-rgb),.07), transparent 60%),
     linear-gradient(180deg, var(--paper) 0%, #e6f3fb 38%, #e2f1fa 58%, var(--paper) 100%);
 }
 :is(#top, main) > .sec.sec-orange{
   background:
-    radial-gradient(1000px 560px at 50% 30%, rgba(255,132,0,.07), transparent 62%),
+    radial-gradient(1000px 560px at 50% 30%, rgba(var(--orange-rgb),.07), transparent 62%),
     radial-gradient(700px 420px at 15% 8%, rgba(var(--sky-rgb),.09), transparent 60%),
     linear-gradient(180deg, var(--paper) 0%, #f0f7fc 40%, #ecf5fb 58%, var(--paper) 100%);
 }
@@ -126,17 +132,27 @@ main{
 .sec .btn-ghost{color:var(--ink);border-color:var(--paper-line-2)}
 .sec .btn-ghost:hover{border-color:var(--ink)}
 .sec .btn{color:var(--ink)}
-.sec .btn-dark{background:#10283a;color:#fff}
+.sec .btn-dark{background:#211C1D;color:#fff}
 .sec .pill-list a{color:var(--ink-muted)}
 .sec .wfs-caption p{color:var(--ink-muted)}
+/* Highlights slider pills — neutral fill animates upcoming -> visited; label identical in every state */
+.sec .hl-pill{background:rgba(10,60,100,.05);border-color:var(--paper-line-2)}
+.sec .hl-pill .hl-fill{background:rgba(10,60,100,.16)}
+.sec .hl-pill .hl-pill-l{color:var(--ink)}
+.sec .hl-pill:hover{border-color:var(--ink-muted)}
+.sec .hl-pill.on{border-color:var(--ink-muted)}
 .sec .why-card{background:var(--paper-card);box-shadow:0 14px 36px rgba(8,80,130,.07)}
 .sec .why-card:hover{box-shadow:0 26px 54px rgba(8,80,130,.16)}
 .sec .pgx-nav{background:rgba(255,255,255,.88);color:var(--ink);border-color:var(--paper-line-2);box-shadow:0 10px 26px rgba(8,80,130,.14)}
 .sec .pgx-card{box-shadow:0 24px 56px rgba(8,80,130,.16)}
 .sec .pgx-card.on{box-shadow:0 0 0 2px rgba(var(--acc-rgb),.9),0 32px 70px rgba(8,80,130,.22)}
+/* Coverflow dots — inactive uses white on dark theme; invisible on light panels */
+.sec .pgx-dot{background:rgba(10,60,100,.20)}
+.sec .pgx-dot:hover{background:rgba(10,60,100,.40)}
+.sec .pgx-dot.on{background:var(--acc)}
 .sec .card,.sec .capp,.sec .prev,.sec .pcard,.sec .shop-card,.sec .news-item{box-shadow:0 10px 30px rgba(8,80,130,.06)}
 .sec .capp:hover,.sec .prev:hover{box-shadow:0 26px 60px rgba(8,80,130,.16)}
-.sec .news-item.on{box-shadow:0 0 0 1px rgba(255,132,0,.35),0 12px 28px rgba(8,80,130,.14)}
+.sec .news-item.on{box-shadow:0 0 0 1px rgba(var(--orange-rgb),.35),0 12px 28px rgba(8,80,130,.14)}
 
 /* Forms — dark-theme field styles use white text; flip for light panels */
 .sec .field label{color:var(--ink-muted)}
@@ -162,7 +178,7 @@ main{
 .sec .reg-unlocks li{color:var(--ink-muted)}
 .sec .reg-hint{color:var(--ink-muted)}
 .sec .reg-msg{background:rgba(10,60,100,.05);color:var(--ink-muted);border-color:var(--paper-line-2)}
-.sec .reg-msg.pending{color:var(--orange-deep);border-color:rgba(255,132,0,.28);background:rgba(255,132,0,.10)}
+.sec .reg-msg.pending{color:var(--orange-deep);border-color:rgba(var(--orange-rgb),.28);background:rgba(var(--orange-rgb),.10)}
 .sec .reg-msg.ok{color:#1a8f52;border-color:rgba(54,196,110,.30);background:rgba(54,196,110,.10)}
 .sec .reg-pending{color:var(--ink-muted)}
 .sec .reg-perk{background:#fff;border-color:var(--paper-line-2)}
@@ -174,7 +190,7 @@ main{
 .sec .reg-tabs button.on{
   background:linear-gradient(135deg,var(--orange),var(--orange-soft));
   color:var(--ink);font-weight:700;
-  box-shadow:0 4px 16px rgba(255,132,0,.35),inset 0 1px 0 rgba(255,255,255,.28);
+  box-shadow:0 4px 16px rgba(var(--orange-rgb),.35),inset 0 1px 0 rgba(255,255,255,.28);
 }
 .sec .reg-tabs button.on:hover{color:var(--ink);background:linear-gradient(135deg,var(--orange),var(--orange-soft))}
 
@@ -226,10 +242,10 @@ footer .logo-img{height:40px;filter:none}
     radial-gradient(700px 420px at 15% 8%, rgba(var(--sky-rgb),.09), transparent 60%),
     linear-gradient(180deg, var(--paper) 0%, #e6f3fb 38%, #e2f1fa 58%, var(--paper) 100%);
 }
-#top .hero-video .hc-line{background:linear-gradient(90deg,rgba(13,150,150,.28),rgba(6,165,223,.28))}
-#top .hero-video .hc-line .f{background:linear-gradient(90deg,#0D9696,#16b3b3 28%,#06a5df)}
-#top .wfs-fill{background:linear-gradient(90deg,#0D9696,#16b3b3 32%,#06a5df)}
-#top .reg-rail-fill{background:linear-gradient(90deg,#0D9696,#16b3b3 40%,#06a5df)}
+#top .hero-video .hc-line{background:linear-gradient(90deg,rgba(var(--teal-rgb),.28),rgba(6,165,223,.28))}
+#top .hero-video .hc-line .f{background:linear-gradient(90deg,var(--teal),var(--teal-soft) 28%,#06a5df)}
+#top .wfs-fill{background:linear-gradient(90deg,var(--teal),var(--teal-soft) 32%,#06a5df)}
+#top .reg-rail-fill{background:linear-gradient(90deg,var(--teal),var(--teal-soft) 40%,#06a5df)}
 #top .btn:hover{box-shadow:0 10px 28px rgba(6,165,223,.35)}
 #top .card:hover,
 #top .capp:hover,
@@ -238,7 +254,7 @@ footer .logo-img{height:40px;filter:none}
 #top .card .more,
 #top .more{color:var(--sky)}
 #top .badge,
-#top .news-lead .badge2{background:var(--sky);color:#10283a}
+#top .news-lead .badge2{background:var(--sky);color:#211C1D}
 #top .news-item.on{border-color:var(--sky);box-shadow:0 0 0 1px rgba(6,165,223,.35),0 12px 28px rgba(8,80,130,.14)}
 #top .news-item:hover{border-color:rgba(6,165,223,.4)}
 #top .eco-node:hover .eco-ic,

@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { HEADER_MENUS } from '@/content/nav';
 import { LOCALE_LABEL, useGlobalTools, type Locale } from './GlobalTools';
@@ -42,16 +42,23 @@ function NavAnchor({
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const { openSearch, openAi, locale, setLocale, aiIconAnimating } = useGlobalTools();
   const { session } = useAuthSession();
   const [inboxUnread, setInboxUnread] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [isMac, setIsMac] = useState(true);
   const [open, setOpen] = useState(false);
   const [expandedNav, setExpandedNav] = useState<string | null>(null);
   const [langOpen, setLangOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  const topSeg = (href: string) => href.split(/[#?]/)[0].split('/')[1] || '';
+  const currentSeg = topSeg(pathname || '/');
+  const isMenuActive = (href: string) => currentSeg !== '' && topSeg(href) === currentSeg;
 
   const refreshUnread = () => {
     if (session) setInboxUnread(unreadTotal(session));
@@ -66,6 +73,10 @@ export default function Header() {
     window.addEventListener('odyx-inbox-change', onInboxChange);
     return () => window.removeEventListener('odyx-inbox-change', onInboxChange);
   }, [session]);
+
+  useEffect(() => {
+    setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent));
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -123,8 +134,16 @@ export default function Header() {
     setExpandedNav((prev) => (prev === label ? null : label));
   };
 
+  const onSpotlightMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = headerRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
+
   return (
-    <header id="hdr" className={scrolled ? 'scrolled' : ''}>
+    <header id="hdr" ref={headerRef} className={scrolled ? 'scrolled' : ''} onMouseMove={onSpotlightMove}>
       <div className="wrap nav">
         <Link href="/" className="logo" aria-label="ODYX home">
           <img className="logo-img" src="/brand/odyx-company.png" alt="ODYX" />
@@ -133,13 +152,14 @@ export default function Header() {
           {HEADER_MENUS.map((m) => (
             <div className={`nav-item${expandedNav === m.label ? ' exp' : ''}`} key={m.label}>
               <NavAnchor href={m.href} onClick={(e) => toggleMobileSection(m.label, e)}>
-                {m.label} <Caret />
+                <span className={isMenuActive(m.href) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
               </NavAnchor>
               <div className="mega">
                 <div className="mega-head">{m.label}</div>
                 {m.items.map((item) => (
                   <NavAnchor key={item.label} href={item.href} onClick={closeMenu}>
-                    {item.label}
+                    <span className="mega-item-label">{item.label}</span>
+                    {item.desc ? <span className="mega-item-desc">{item.desc}</span> : null}
                   </NavAnchor>
                 ))}
               </div>
@@ -148,10 +168,7 @@ export default function Header() {
           <div className="nav-mobile-auth" aria-label="Account">
             <Link className="btn-ghost btn btn-sm" href="/#register" onClick={closeMenu}>Register device</Link>
             {!session && (
-              <>
-                <Link className="btn-ghost btn btn-sm" href="/register" onClick={closeMenu}>Register</Link>
-                <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Login</Link>
-              </>
+              <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Login</Link>
             )}
             <Link className="btn btn-sm nav-demo" href="/support" onClick={closeMenu}>Request a Demo</Link>
           </div>
@@ -161,7 +178,10 @@ export default function Header() {
           <span className="nav-assist-label">Odyx Agent</span>
         </button>
         <div className="nav-tools">
-          <button type="button" className="tool-btn search-btn" onClick={openSearch} title="Search (Cmd+K)" aria-label="Open search"><SearchIcon /></button>
+          <button type="button" className="tool-btn search-btn" onClick={openSearch} title="Search (Cmd+K)" aria-label="Open search">
+            <SearchIcon />
+            <span className="search-kbd-hint">{isMac ? '\u2318K' : 'Ctrl K'}</span>
+          </button>
           <div className="lang-wrap" ref={langRef}>
             <button type="button" className={`tool-btn lang${langOpen ? ' on' : ''}`} title="Language" aria-expanded={langOpen} onClick={() => setLangOpen((o) => !o)}>
               {LOCALE_LABEL[locale]} <Caret />
@@ -209,10 +229,7 @@ export default function Header() {
               </div>
             </>
           ) : (
-            <>
-              <Link className="btn-ghost btn btn-sm nav-reg" href="/register">Register</Link>
-              <Link className="btn-ghost btn btn-sm nav-login" href="/login">Login</Link>
-            </>
+            <Link className="btn-ghost btn btn-sm nav-login" href="/login">Login</Link>
           )}
           <Link className="btn btn-sm nav-demo" href="/support">
             <span className="nav-label-long">Request a Demo</span>
