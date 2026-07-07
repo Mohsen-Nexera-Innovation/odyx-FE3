@@ -71,9 +71,27 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
 
   if (layout === 'print-line' || layout === 'cinematic') {
     return (
-      <div className={pageClass} data-product={product.slug}>
-        {layout === 'cinematic' ? <CinematicHero product={product} /> : <PrintLineHero product={product} />}
-        <PrintLineStats />
+      <div className={pageClass} data-product={product.slug} data-accent={product.accent}>
+        {layout === 'cinematic' ? (
+          <CinematicHero
+            accent={product.accent}
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Products', href: '/products' },
+              { label: product.name, href: `/products/${product.slug}` },
+            ]}
+            title={product.name}
+            lead={product.tagline}
+            desc={product.overview}
+            heroImg={product.heroImg ?? product.img}
+            heroAlt={product.name}
+            primaryAction={{ label: 'Request a Demo', href: '/support' }}
+            secondaryAction={{ label: 'Workflow step', href: `/workflows/${product.workflowStep}` }}
+          />
+        ) : (
+          <PrintLineHero product={product} />
+        )}
+        <PrintLineStats stats={product.stats} />
         {sharedSections}
       </div>
     );

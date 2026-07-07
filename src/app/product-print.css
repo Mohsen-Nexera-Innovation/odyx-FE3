@@ -3,8 +3,10 @@
    Sky blue (#06a5df) = all other accents (logo line color). */
 
 .product-page--print-line{
-  --line-sign:var(--orange);
-  --line-sign-soft:var(--orange-soft);
+  /* True brand orange — the 3D-printer product line sign. This is the ONLY place
+     orange survives; the rest of the site uses the sky-blue accent. */
+  --line-sign:#FF8400;
+  --line-sign-soft:#FFA340;
   --line-acc:var(--sky);
   --line-acc-soft:var(--sky-soft);
   --line-acc-deep:var(--sky-deep);
@@ -24,6 +26,12 @@
     radial-gradient(1100px 680px at 12% 8%, rgba(var(--line-acc-rgb),.10), transparent 58%),
     radial-gradient(900px 560px at 88% 18%, rgba(var(--line-acc-rgb),.06), transparent 55%),
     linear-gradient(180deg, var(--paper) 0%, #eef6fc 40%, var(--paper-2) 70%, var(--paper) 100%);
+}
+
+/* Teal-line products (Scanners) use teal as the sign color instead of orange */
+.product-page--print-line[data-accent="teal"]{
+  --line-sign:var(--teal);
+  --line-sign-soft:var(--teal-soft);
 }
 
 /* Wider canvas — less empty margin left/right */
@@ -112,6 +120,7 @@
 .product-page--print-line .dl-name,
 .product-page--print-line .dl-type,
 .product-page--print-line .pill-list a,
+.product-page--print-line .pill-list span,
 .product-page--print-line .crumbs{
   font-family:var(--font-body)!important;
   font-size:var(--prod-body-size)!important;
@@ -143,7 +152,7 @@
   background:
     radial-gradient(900px 520px at 72% 50%, rgba(var(--line-acc-rgb),.20), transparent 62%),
     radial-gradient(640px 420px at 18% 30%, rgba(var(--line-acc-rgb),.10), transparent 58%),
-    linear-gradient(155deg, #070f1c 0%, #0f1c30 38%, #15263f 68%, #0a1424 100%);
+    linear-gradient(155deg, #0e0d10 0%, #1a171b 38%, #201c1e 68%, #141216 100%);
 }
 .product-page--print-line .prod-print-hero__wrap{
   position:relative;z-index:1;
@@ -223,6 +232,11 @@
   aspect-ratio:1000 / 429;
   object-fit:contain;
 }
+/* Interim: lighten dark scanners wordmark on the cinematic dark stage until a light asset exists */
+.product-page--print-line .prod-print-hero__brand--scanners{
+  filter:brightness(0) invert(1);
+  opacity:.92;
+}
 .product-page--print-line .prod-print-hero__eyebrow{
   font-family:var(--font-display);
   font-size:clamp(.72rem, 1vw, .82rem);
@@ -273,7 +287,7 @@
   position:relative;
   padding:0;
   margin-top:-1px;
-  background:linear-gradient(180deg, #0a1424 0%, #0f1c30 100%);
+  background:linear-gradient(180deg, #141216 0%, #1a171b 100%);
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 .product-page--print-line .prod-print-stats__grid{
@@ -385,6 +399,9 @@
 .product-page--print-line .btn-sign:hover{
   box-shadow:0 10px 28px rgba(255,132,0,.35)!important;
 }
+.product-page--print-line[data-accent="teal"] .btn-sign:hover{
+  box-shadow:0 10px 28px rgba(var(--teal-rgb),.35)!important;
+}
 
 /* Sky blue — everything else (incl. Specifications & Downloads) */
 .product-page--print-line .sec-head .eyebrow,
@@ -409,14 +426,19 @@
 }
 .product-page--print-line .card h3{color:var(--ink)}
 .product-page--print-line .card p{color:var(--ink-muted)}
-.product-page--print-line .pill-list a{
+.product-page--print-line .pill-list a,
+.product-page--print-line .pill-list span{
   background:#fff;
-  border-color:var(--paper-line-2);
+  border:1px solid var(--paper-line-2);
+  border-radius:30px;
+  padding:9px 16px;
   color:var(--ink-muted);
+  transition:.25s;
 }
 .product-page--print-line .pill-list a:hover{
   border-color:var(--line-acc);
   color:var(--line-acc-deep);
+  transform:translateY(-2px);
 }
 .product-page--print-line .dl-list a{
   background:#fff;
@@ -468,7 +490,13 @@
   background:
     radial-gradient(1200px 820px at 78% 40%, rgba(var(--line-acc-rgb),.20), transparent 60%),
     radial-gradient(880px 620px at 10% 82%, rgba(255,132,0,.10), transparent 58%),
-    linear-gradient(160deg, #04101f 0%, #071a2e 42%, #0a2036 70%, #050f1d 100%);
+    linear-gradient(160deg, #0c0b0e 0%, #151318 42%, #1c191d 70%, #0d0c0f 100%);
+}
+.product-page--cinematic[data-accent="teal"] .prod-cine-hero__bg{
+  background:
+    radial-gradient(1200px 820px at 78% 40%, rgba(var(--line-acc-rgb),.20), transparent 60%),
+    radial-gradient(880px 620px at 10% 82%, rgba(var(--teal-rgb),.12), transparent 58%),
+    linear-gradient(160deg, #0c0b0e 0%, #151318 42%, #1c191d 70%, #0d0c0f 100%);
 }
 .product-page--cinematic .prod-cine-hero__glow{
   position:absolute;z-index:0;pointer-events:none;
@@ -521,6 +549,13 @@
   object-fit:contain;
   object-position:center;
   filter:drop-shadow(0 42px 84px rgba(0,0,0,.62));
+}
+/* Rectangular product photos (no cutout PNG) — soft mask so they blend into the dark stage */
+.product-page--cinematic .prod-cine-hero__printer--photo{
+  border-radius:18px;
+  -webkit-mask-image:radial-gradient(120% 120% at 50% 50%, #000 58%, transparent 94%);
+  mask-image:radial-gradient(120% 120% at 50% 50%, #000 58%, transparent 94%);
+  filter:drop-shadow(0 42px 84px rgba(0,0,0,.62)) drop-shadow(0 0 48px rgba(var(--line-acc-rgb),.18));
 }
 
 @media(max-width:980px){

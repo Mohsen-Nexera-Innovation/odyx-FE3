@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import PageHero, { Arrow, PageActions, PageCta } from '@/components/PageHero';
+import { Arrow, PageCta } from '@/components/PageHero';
+import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
 import { getSolution } from '@/content/solutions';
 
@@ -9,36 +10,30 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
   if (!path) notFound();
 
   return (
-    <>
-      <PageHero
+    <div className="product-page product-page--print-line product-page--cinematic" data-accent={path.accent}>
+      <CinematicHero
+        accent={path.accent}
         crumbs={[
           { label: 'Home', href: '/' },
           { label: 'Solutions', href: `/solutions/${path.slug}` },
           { label: path.eyebrow, href: `/solutions/${path.slug}` },
         ]}
+        eyebrow={path.eyebrow}
         title={path.title}
         lead={path.lead}
-        action={
-          <PageActions>
-            <Link className="btn" href="/workflows">Explore workflow <Arrow /></Link>
-            <Link className="btn btn-ghost" href="/#cta">Request a Demo</Link>
-          </PageActions>
-        }
+        heroImg={path.img}
+        heroAlt={path.title}
+        primaryAction={{ label: 'Explore workflow', href: '/workflows' }}
+        secondaryAction={{ label: 'Request a Demo', href: '/#cta' }}
       />
 
-      <section className={`sec sec-${path.accent === 'teal' ? 'mint' : 'orange'}`}>
-        <div className="wrap wf-step-layout">
-          <div className="wf-step-visual reveal">
-            <img src={path.img} alt={path.title} />
-          </div>
-          <div className="wf-step-copy reveal">
-            <span className="eyebrow">Challenges we solve</span>
-            <h2 className="m-underline">Why teams go digital with ODYX</h2>
-            <ul className="wf-benefits">
-              {path.challenges.map((c) => (
-                <li key={c}>{c}</li>
-              ))}
-            </ul>
+      <section className="sec">
+        <div className="wrap">
+          <SecHead eyebrow="Challenges we solve" />
+          <div className="pill-list reveal">
+            {path.challenges.map((c) => (
+              <span key={c}>{c}</span>
+            ))}
           </div>
         </div>
       </section>
@@ -120,7 +115,8 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
       <PageCta
         title={path.slug === 'dentists' ? 'Start your clinic journey' : 'Scale your lab production'}
         desc="Book a tailored demo with products and workflow matched to your team."
+        demoClassName="btn btn-sign"
       />
-    </>
+    </div>
   );
 }
