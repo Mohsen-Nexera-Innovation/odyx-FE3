@@ -609,7 +609,7 @@ export default function Home() {
       {/* ===== Legacy ecosystem map (hidden - superseded by the workflow stepper below) ===== */}
       <section className="sec" id="ecosystem-map" hidden>
         <div className="wrap">
-          <SecHead eyebrow="The ODYX Ecosystem" />
+          <SecHead eyebrow="ODYX Ecosystem" />
           <div className="eco" id="ecoFlow">
             <svg
               className="eco-flow-svg"
