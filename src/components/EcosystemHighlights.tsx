@@ -36,19 +36,48 @@ export default function EcosystemHighlights() {
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const activeRef = useRef(0);
+  const navigatingRef = useRef(false);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Smooth-scroll a slide to dead-center. We scroll ONLY the horizontal track
-  // (never scrollIntoView, which would also scroll the page vertically and yank
-  // the user back to this section during auto-advance).
+  const releaseNavLock = useCallback(() => {
+    navigatingRef.current = false;
+    if (navTimerRef.current !== null) {
+      clearTimeout(navTimerRef.current);
+      navTimerRef.current = null;
+    }
+  }, []);
+
+  const scrollTargetFor = useCallback((track: HTMLDivElement, el: HTMLElement) => {
+    const trackRect = track.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const raw =
+      track.scrollLeft +
+      (elRect.left - trackRect.left) -
+      (track.clientWidth - el.offsetWidth) / 2;
+    const max = track.scrollWidth - track.clientWidth;
+    return Math.max(0, Math.min(raw, max));
+  }, []);
+
+  // Scroll the track to a slide and mark that slide active immediately so pills
+  // always match the user's click (IO/scroll sync alone can pick a neighbor mid-scroll).
   const goTo = useCallback((i: number, smooth = true) => {
     const track = trackRef.current;
     const el = slideRefs.current[i];
     if (!track || !el) return;
-    const trackRect = track.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    const delta = (elRect.left - trackRect.left) - (track.clientWidth - el.clientWidth) / 2;
-    track.scrollBy({ left: delta, behavior: smooth && !reduced ? 'smooth' : 'auto' });
-  }, [reduced]);
+
+    navigatingRef.current = true;
+    activeRef.current = i;
+    setActive(i);
+    setProgress(0);
+
+    track.scrollTo({
+      left: scrollTargetFor(track, el),
+      behavior: smooth && !reduced ? 'smooth' : 'auto',
+    });
+
+    if (navTimerRef.current !== null) clearTimeout(navTimerRef.current);
+    navTimerRef.current = setTimeout(releaseNavLock, smooth && !reduced ? 700 : 80);
+  }, [reduced, releaseNavLock, scrollTargetFor]);
 
   // Detect reduced-motion once.
   useEffect(() => {
@@ -59,25 +88,49 @@ export default function EcosystemHighlights() {
     return () => mq.removeEventListener('change', apply);
   }, []);
 
-  // Track the most-visible slide via IntersectionObserver rooted on the track.
+  // Release the nav lock as soon as programmatic scroll settles.
   useEffect(() => {
-    const root = trackRef.current;
-    if (!root) return;
-    const ratios = new Array(N).fill(0);
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          const i = Number((e.target as HTMLElement).dataset.idx);
-          if (!Number.isNaN(i)) ratios[i] = e.intersectionRatio;
+    const track = trackRef.current;
+    if (!track) return;
+    track.addEventListener('scrollend', releaseNavLock);
+    return () => track.removeEventListener('scrollend', releaseNavLock);
+  }, [releaseNavLock]);
+
+  // While the user drags/swipes, pick whichever slide is closest to center.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let raf = 0;
+    const syncFromScroll = () => {
+      if (navigatingRef.current) return;
+      const trackRect = track.getBoundingClientRect();
+      const center = trackRect.left + trackRect.width / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      slideRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const dist = Math.abs(r.left + r.width / 2 - center);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
         }
-        let best = 0;
-        for (let i = 1; i < N; i++) if (ratios[i] > ratios[best]) best = i;
-        setActive(best);
-      },
-      { root, threshold: [0, 0.25, 0.5, 0.6, 0.75, 1] },
-    );
-    slideRefs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+      });
+      setActive(best);
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(syncFromScroll);
+    };
+
+    track.addEventListener('scroll', onScroll, { passive: true });
+    syncFromScroll();
+    return () => {
+      track.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   // Intelligent media control: only the active video plays; the rest pause + reset.
