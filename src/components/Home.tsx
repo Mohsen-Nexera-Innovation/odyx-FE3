@@ -679,7 +679,7 @@ export default function Home() {
       {/* ===== The ODYX Ecosystem (Get the highlights video slider) ===== */}
       <section className="sec sec-orange" id="ecosystem">
         <div className="wrap">
-          <SecHead eyebrow="The ODYX Ecosystem" />
+          <SecHead eyebrow="ODYX Ecosystem" />
         </div>
         <EcosystemHighlights />
         <div className="wrap">
