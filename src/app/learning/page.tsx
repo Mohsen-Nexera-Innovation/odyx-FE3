@@ -20,7 +20,7 @@ export default function Page() {
       />
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead eyebrow="Coming soon" h2="Courses and guides" p="Clinical courses are registered-only. Create a dentist or lab account to unlock them when academy content goes live." />
+          <SecHead eyebrow="Coming soon" />
           <div className="g3 build-group">
             {['Beginner Path', 'Clinical Courses', 'Videos & Guides'].map((t) => (
               <div key={t} className="card build reveal">

@@ -1,25 +1,28 @@
 import Link from 'next/link';
-import PageHero, { Arrow, PageCta } from '@/components/PageHero';
+import { Arrow, PageCta } from '@/components/PageHero';
+import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
 import { WORKFLOW_STEPS } from '@/content/workflow';
 
 export default function WorkflowHubPage() {
   return (
-    <>
-      <PageHero
+    <div className="product-page product-page--print-line product-page--cinematic" data-accent="teal">
+      <CinematicHero
+        accent="teal"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Guided Workflows', href: '/workflows' }]}
+        eyebrow="Scan to smile"
         title="One connected workflow"
-        lead="Scan, design, print, cure, finish and deliver - six steps, one ecosystem. Walk the sequence ODYX is built around."
-        action={<Link className="btn" href="/workflows/scan">Start with Scan <Arrow /></Link>}
+        lead="Scan, design, print, cure, finish and deliver - six steps, one ecosystem."
+        desc="Walk the sequence ODYX is built around, from the first chairside scan to the final delivered restoration."
+        heroImg="/img/odyx/dental-frame.webp"
+        heroAlt="ODYX connected workflow"
+        primaryAction={{ label: 'Start with Scan', href: '/workflows/scan' }}
+        secondaryAction={{ label: 'Products', href: '/products' }}
       />
 
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead
-            eyebrow="Six steps"
-            h2="Walk the full sequence"
-            p="Each step links to a product, a video moment, and the next stage in the chain."
-          />
+          <SecHead eyebrow="Six steps" />
           <div className="wf-hub-grid build-group">
             {WORKFLOW_STEPS.map((s) => (
               <Link key={s.id} href={`/workflows/${s.id}`} className={`wf-hub-card build${s.accent === 'teal' ? ' teal' : ''}`}>
@@ -38,11 +41,7 @@ export default function WorkflowHubPage() {
 
       <section className="sec sec-orange">
         <div className="wrap">
-          <SecHead
-            eyebrow="By role"
-            h2="How the workflow changes by audience"
-            p="The same six steps - emphasized differently for clinic chairside vs lab production."
-          />
+          <SecHead eyebrow="By role" />
           <div className="pgrid build-group">
             <Link href="/solutions/dentists" className="pcard teal reveal build">
               <div className="pcard-art">
@@ -76,7 +75,7 @@ export default function WorkflowHubPage() {
         </div>
       </section>
 
-      <PageCta title="See the full workflow live" desc="Book a demo and walk scan to deliver with an ODYX specialist." />
-    </>
+      <PageCta title="See the full workflow live" desc="Book a demo and walk scan to deliver with an ODYX specialist." demoClassName="btn btn-sign" />
+    </div>
   );
 }

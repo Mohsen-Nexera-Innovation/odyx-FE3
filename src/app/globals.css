@@ -6,18 +6,22 @@
 
 /* ODYX design tokens — from tokens.css */
 :root{
-  --orange:#FF8400; --orange-soft:#FFA340; --orange-deep:#E07400;
-  --teal:#0D9696; --teal-soft:#16B3B3;
-  --navy:#15263F; --navy-deep:#0D1A2E; --navy-card:#1C3052; --navy-2:#244066;
-  --white:#F6F6FB; --grey:#9A9AB0; --grey-d:#6B6B82;
+  /* Site accent follows the brand/logo sky-blue. True orange is reserved for the
+     3D-printer product line only (see product-print.css --line-sign). */
+  --orange:var(--sky); --orange-soft:var(--sky-soft); --orange-deep:var(--sky-deep); --orange-rgb:var(--sky-rgb);
+  /* Teal folded into the logo's blue family — blue is the single brand accent. */
+  --teal:#0581AD; --teal-soft:#06A5DF; --teal-rgb:5,129,173;
+  /* Dark surfaces derive from the logo wordmark's charcoal black (#211C1D). */
+  --navy:#201C1E; --navy-deep:#141216; --navy-card:#2A262C; --navy-2:#343036;
+  --white:#F6F8FA; --grey:#9AA1A8; --grey-d:#6A6E75;
   --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16); --ok:#36C46E;
-  --acc:var(--orange); --acc-rgb:255,132,0;
+  --acc:var(--orange); --acc-rgb:var(--orange-rgb);
   --r-btn:10px; --r-chip:13px; --r-card:18px; --r-panel:24px; --r-band:26px; --r-pill:30px;
-  --shadow-glow:0 10px 28px rgba(255,132,0,.35);
+  --shadow-glow:0 10px 28px rgba(var(--orange-rgb),.35);
   --shadow-card:0 24px 60px rgba(0,0,0,.5);
 }
-[data-accent="teal"]  { --acc:var(--teal);   --acc-rgb:13,150,150; }
-[data-accent="orange"]{ --acc:var(--orange); --acc-rgb:255,132,0;  }
+[data-accent="teal"]  { --acc:var(--teal);   --acc-rgb:var(--teal-rgb); }
+[data-accent="orange"]{ --acc:var(--orange); --acc-rgb:var(--orange-rgb);  }
 [dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,[dir="rtl"] h4{ letter-spacing:0; line-height:1.3; }
 
 @theme inline {

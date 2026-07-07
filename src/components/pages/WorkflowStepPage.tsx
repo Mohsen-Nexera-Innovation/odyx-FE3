@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import PageHero, { Arrow, PageCta } from '@/components/PageHero';
+import { Arrow, PageCta } from '@/components/PageHero';
+import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
 import { getAdjacentSteps, getWorkflowStep, type WorkflowId } from '@/content/workflow';
 
@@ -10,49 +11,42 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
   const { prev, next } = getAdjacentSteps(step.id as WorkflowId);
 
   return (
-    <>
-      <PageHero
+    <div className="product-page product-page--print-line product-page--cinematic" data-accent={step.accent}>
+      <CinematicHero
+        accent={step.accent}
         crumbs={[
           { label: 'Home', href: '/' },
           { label: 'Workflows', href: '/workflows' },
           { label: step.label, href: `/workflows/${step.id}` },
         ]}
-        title={`Step ${step.no}: ${step.label}`}
+        eyebrow={`Step ${step.no} of 06`}
+        title={`${step.label}`}
         lead={step.lead}
-        action={
-          step.productSlug ? (
-            <Link className="btn" href={`/products/${step.productSlug}`}>
-              Explore {step.productName} <Arrow />
-            </Link>
-          ) : (
-            <Link className="btn" href="/#cta">Request a Demo <Arrow /></Link>
-          )
+        desc={step.whatHappens}
+        heroImg={step.img}
+        heroAlt={step.label}
+        primaryAction={
+          step.productSlug
+            ? { label: `Explore ${step.productName}`, href: `/products/${step.productSlug}` }
+            : { label: 'Request a Demo', href: '/#cta' }
         }
+        secondaryAction={{ label: 'All steps', href: '/workflows' }}
       />
 
-      <section className={`sec sec-${step.accent === 'teal' ? 'teal' : 'orange'}`}>
-        <div className="wrap wf-step-layout">
-          <div className="wf-step-visual reveal">
-            <img src={step.img} alt={step.label} />
-          </div>
-          <div className="wf-step-copy">
-            <div className="reveal">
-              <span className="eyebrow">What happens</span>
-              <h2 className="m-underline">{step.label} in the workflow</h2>
-              <p className="copy-lead">{step.whatHappens}</p>
-            </div>
-            <ul className="wf-benefits reveal">
-              {step.benefits.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
+      <section className="sec">
+        <div className="wrap">
+          <SecHead eyebrow="Highlights" />
+          <div className="pill-list reveal">
+            {step.benefits.map((b) => (
+              <span key={b}>{b}</span>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="By audience" h2="Dentist vs lab at this step" p="Same step, different emphasis depending on where you work." />
+          <SecHead eyebrow="By audience" />
           <div className="g2 build-group">
             <div className="card reveal build">
               <span className="card-eyebrow teal">Dentist</span>
@@ -73,7 +67,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
       {step.learning.length > 0 && (
         <section className="sec sec-teal">
           <div className="wrap">
-            <SecHead eyebrow="Learn more" h2="Related resources" />
+            <SecHead eyebrow="Learn more" />
             <div className="pill-list reveal">
               {step.learning.map((l) => (
                 <Link key={l.label} href={l.href}>{l.label}</Link>
@@ -103,7 +97,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <PageCta title="Ready to go digital?" desc="Walk this step live with an ODYX workflow specialist." />
-    </>
+      <PageCta title="Ready to go digital?" desc="Walk this step live with an ODYX workflow specialist." demoClassName="btn btn-sign" />
+    </div>
   );
 }
