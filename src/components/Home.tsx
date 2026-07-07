@@ -865,7 +865,7 @@ export default function Home() {
       {/* ===== Shop ===== */}
       <section className="sec sec-orange" id="shop">
         <div className="wrap">
-          <SecHead eyebrow="ODYX Shop" />
+          <SecHead eyebrow="ODYX Store" />
           <div className="shop-flow">
             <div className="pulse-line" />
             <div className="shop-grid build-group">
@@ -874,14 +874,14 @@ export default function Home() {
                   "Clinical Resins",
                   "Permanent crown, ceramic, temporary, model & surgical-guide lines.",
                   "From $-",
-                  "Shop resins",
+                  "Buy online",
                   "/img/shop-resin.jpg",
                 ],
                 [
                   "Accessories & Consumables",
                   "Build plates, tanks and everyday workflow consumables.",
                   "From $-",
-                  "Shop accessories",
+                  "Buy online",
                   "/img/shop-accessories.jpg",
                 ],
                 [

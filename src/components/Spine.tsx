@@ -25,7 +25,7 @@ const SECTIONS: Section[] = [
   { target: '#support-preview', title: 'Support', icon: 'support' },
   { target: '#news', title: 'News', icon: 'news' },
   { target: '#register', title: 'Register', icon: 'register' },
-  { target: '#shop', title: 'Shop', icon: 'shop' },
+  { target: '#shop', title: 'Store', icon: 'shop' },
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;

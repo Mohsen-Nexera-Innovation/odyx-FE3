@@ -138,7 +138,15 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   }, [aiOpen]);
 
   useEffect(() => {
-    if (searchOpen) searchRef.current?.focus();
+    if (!searchOpen) return;
+    const id = window.setTimeout(() => {
+      const el = searchRef.current;
+      if (el) {
+        el.focus({ preventScroll: true });
+        el.select();
+      }
+    }, 40);
+    return () => window.clearTimeout(id);
   }, [searchOpen]);
 
   useEffect(() => {
