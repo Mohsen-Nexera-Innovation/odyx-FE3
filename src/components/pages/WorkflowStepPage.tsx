@@ -52,7 +52,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="By audience" h2="Dentist vs lab at this step" p="Same step, different emphasis depending on where you work." />
+          <SecHead eyebrow="By audience" />
           <div className="g2 build-group">
             <div className="card reveal build">
               <span className="card-eyebrow teal">Dentist</span>
@@ -73,7 +73,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
       {step.learning.length > 0 && (
         <section className="sec sec-teal">
           <div className="wrap">
-            <SecHead eyebrow="Learn more" h2="Related resources" />
+            <SecHead eyebrow="Learn more" />
             <div className="pill-list reveal">
               {step.learning.map((l) => (
                 <Link key={l.label} href={l.href}>{l.label}</Link>

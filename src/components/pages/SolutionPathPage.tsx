@@ -45,7 +45,7 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="Recommended stack" h2="Products for this path" />
+          <SecHead eyebrow="Recommended stack" />
           <div className="sol-prod-list build-group">
             {path.recommendedProducts.map((p) => (
               <Link key={p.name} href={p.href} className="sol-prod-card build reveal">
@@ -65,7 +65,7 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
 
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead eyebrow="Workflow emphasis" h2="Your connected sequence" />
+          <SecHead eyebrow="Workflow emphasis" />
           <div className="steps reveal">
             {path.workflowEmphasis.map((s, i) => (
               <div key={s} className="step">
@@ -82,7 +82,7 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="Outcomes" h2="What you can expect" />
+          <SecHead eyebrow="Outcomes" />
           <div className="inner-stat-grid build-group">
             {path.outcomes.map((o) => (
               <div key={o.label} className="card stat reveal build">
@@ -98,7 +98,7 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
         <div className="wrap">
           <div className="g2">
             <div className="inner-split-block reveal">
-              <SecHead eyebrow="Cases" h2="Proof in practice" align="left" />
+              <SecHead eyebrow="Cases" align="left" />
               <div className="pill-list">
                 {path.cases.map((c) => (
                   <Link key={c.title} href={c.href}>{c.title}</Link>
@@ -106,7 +106,7 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
               </div>
             </div>
             <div className="inner-split-block reveal">
-              <SecHead eyebrow="Training" h2="Build skill with ODYX" align="left" />
+              <SecHead eyebrow="Training" align="left" />
               <div className="pill-list">
                 {path.training.map((t) => (
                   <Link key={t.label} href={t.href}>{t.label}</Link>

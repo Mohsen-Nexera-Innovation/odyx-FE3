@@ -15,10 +15,7 @@ export default function ProductsOverviewPage() {
 
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead
-            eyebrow="Product families"
-            h2="Everything in one connected chain"
-          />
+          <SecHead eyebrow="Product families" />
           <div className="prod-grid build-group">
             {PRODUCTS.map((p) => (
               <Link key={p.slug} href={`/products/${p.slug}`} className={`prod-card build${p.accent === 'teal' ? ' teal' : ''}`}>

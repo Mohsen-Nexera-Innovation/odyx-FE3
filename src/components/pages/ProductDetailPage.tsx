@@ -31,7 +31,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
     <>
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="Models" h2="Choose your configuration" />
+          <SecHead eyebrow="Models" />
           <div className="g2 build-group">
             {product.models.map((m) => (
               <div key={m.name} className="card build reveal">
@@ -46,11 +46,11 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
       <section className="sec prod-specs">
         <div className="wrap prod-detail-cols">
           <div>
-            <SecHead eyebrow="Specifications" h2="Technical details" align="left" />
+            <SecHead eyebrow="Specifications" align="left" />
             <SpecTable specs={product.specs} />
           </div>
           <div>
-            <SecHead eyebrow="Downloads" h2="Brochures and docs" align="left" />
+            <SecHead eyebrow="Downloads" align="left" />
             <DownloadList items={product.downloads} />
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="Applications" h2="Clinical indications" />
+          <SecHead eyebrow="Applications" />
           <div className="pill-list reveal">
             {product.applications.map((a) => (
               <Link key={a} href="/#clinical">{a}</Link>
@@ -193,7 +193,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="Models" h2="Choose your configuration" />
+          <SecHead eyebrow="Models" />
           <div className="g2 build-group">
             {product.models.map((m) => (
               <div key={m.name} className="card build reveal">
@@ -208,11 +208,11 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
       <section className={`sec prod-specs sec-${product.accent === 'teal' ? 'teal' : 'orange'}`}>
         <div className="wrap prod-detail-cols">
           <div>
-            <SecHead eyebrow="Specifications" h2="Technical details" align="left" />
+            <SecHead eyebrow="Specifications" align="left" />
             <SpecTable specs={product.specs} />
           </div>
           <div>
-            <SecHead eyebrow="Downloads" h2="Brochures and docs" align="left" />
+            <SecHead eyebrow="Downloads" align="left" />
             <DownloadList items={product.downloads} />
           </div>
         </div>
@@ -220,7 +220,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="Applications" h2="Clinical indications" />
+          <SecHead eyebrow="Applications" />
           <div className="pill-list reveal">
             {product.applications.map((a) => (
               <Link key={a} href="/#clinical">{a}</Link>

@@ -15,10 +15,7 @@ export default function WorkflowHubPage() {
 
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead
-            eyebrow="Six steps"
-            h2="Walk the full sequence"
-          />
+          <SecHead eyebrow="Six steps" />
           <div className="wf-hub-grid build-group">
             {WORKFLOW_STEPS.map((s) => (
               <Link key={s.id} href={`/workflows/${s.id}`} className={`wf-hub-card build${s.accent === 'teal' ? ' teal' : ''}`}>
@@ -37,10 +34,7 @@ export default function WorkflowHubPage() {
 
       <section className="sec sec-orange">
         <div className="wrap">
-          <SecHead
-            eyebrow="By role"
-            h2="How the workflow changes by audience"
-          />
+          <SecHead eyebrow="By role" />
           <div className="pgrid build-group">
             <Link href="/solutions/dentists" className="pcard teal reveal build">
               <div className="pcard-art">

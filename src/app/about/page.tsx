@@ -20,7 +20,7 @@ export default function Page() {
       />
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead eyebrow="Company" h2="Who we are" />
+          <SecHead eyebrow="Company" />
           <div className="g2 build-group">
             <div className="card build reveal">
               <h3>Vision &amp; Mission</h3>

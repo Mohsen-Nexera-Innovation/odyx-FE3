@@ -487,7 +487,7 @@ export default function Home() {
       {/* ===== Choose Your Path ===== */}
       <section className="sec sec-mint" id="path">
         <div className="wrap">
-          <SecHead eyebrow="Choose Your Path" h2="Start where you belong" />
+          <SecHead eyebrow="Choose Your Path" />
           <div className="pgrid build-group">
             {/* Dentist - floating tooth + scan sweep (teal) */}
             <a href="/solutions/dentists" className="pcard teal reveal build">
@@ -588,10 +588,7 @@ export default function Home() {
       {/* ===== Legacy ecosystem map (hidden - superseded by the workflow stepper below) ===== */}
       <section className="sec" id="ecosystem-map" hidden>
         <div className="wrap">
-          <SecHead
-            eyebrow="The ODYX Ecosystem"
-            h2="Everything you need - and it all works together"
-          />
+          <SecHead eyebrow="The ODYX Ecosystem" />
           <div className="eco" id="ecoFlow">
             <svg
               className="eco-flow-svg"
@@ -661,11 +658,7 @@ export default function Home() {
       {/* ===== The ODYX Ecosystem (guided workflow stepper) ===== */}
       <section className="sec sec-orange" id="ecosystem">
         <div className="wrap">
-          <SecHead
-            eyebrow="The ODYX Ecosystem"
-            h2="Everything works together"
-            p="Each ODYX product is a connected node in one digital dentistry workflow. Walk the full sequence - interactive, with the product used at every step."
-          />
+          <SecHead eyebrow="The ODYX Ecosystem" />
           <WorkflowStepper />
           <div
             className="reveal"
@@ -683,7 +676,6 @@ export default function Home() {
         <div className="wrap">
           <SecHead
             eyebrow="Featured Products"
-            h2="The products at the heart of the workflow"
             action={
               <a className="btn btn-ghost btn-sm" href="/products">
                 All products →
@@ -697,10 +689,7 @@ export default function Home() {
       {/* ===== Clinical Applications ===== */}
       <section className="sec sec-orange" id="clinical">
         <div className="wrap">
-          <SecHead
-            eyebrow="Clinical Applications"
-            h2="Find solutions by what you treat"
-          />
+          <SecHead eyebrow="Clinical Applications" />
           <div className="capp-grid build-group">
             {CLIN.map((c) => (
               <a
@@ -731,7 +720,7 @@ export default function Home() {
       {/* ===== Why ODYX ===== */}
       <section className="sec sec-teal" id="why">
         <div className="wrap">
-          <SecHead eyebrow="Why ODYX" h2="The whole picture, not the parts" />
+          <SecHead eyebrow="Why ODYX" />
           <div className="why-grid">
             {WHY.map(([n, t, d, count, suf, lbl, img]) => (
               <article className="why-card reveal" key={n}>
@@ -765,7 +754,6 @@ export default function Home() {
         <div className="wrap">
           <SecHead
             eyebrow="Proof"
-            h2="Case highlights"
             action={
               <a className="btn btn-ghost btn-sm" href="/learning">
                 Browse all cases →
@@ -802,8 +790,6 @@ export default function Home() {
         <div className="wrap">
           <SecHead
             eyebrow="Learn"
-            h2="Learning center"
-            p="Beginner guides, clinical courses, webinars and a certified academy that build real skill — from first scan to advanced cases."
             action={
               <a className="btn btn-ghost btn-sm" href="/learning">
                 Enter academy →
@@ -831,8 +817,6 @@ export default function Home() {
         <div className="wrap">
           <SecHead
             eyebrow="Help"
-            h2="Support when you need it"
-            p="Sales support, technical help and order tracking — human care plus self-service resources, available around the clock."
             action={
               <a className="btn btn-ghost btn-sm" href="/support">
                 Visit support →
@@ -860,7 +844,6 @@ export default function Home() {
         <div className="wrap">
           <SecHead
             eyebrow="Latest News"
-            h2="What's new at ODYX"
             action={
               <a className="btn btn-ghost btn-sm" href="/about">
                 All news →
@@ -874,11 +857,7 @@ export default function Home() {
       {/* ===== Register Device ===== */}
       <section className="sec sec-teal" id="register">
         <div className="wrap">
-          <SecHead
-            eyebrow="Device Registration"
-            h2="Register your ODYX products"
-            p="Activate warranty, unlock software updates, clinical courses and priority support - one serial number connects your device to the full ODYX ecosystem."
-          />
+          <SecHead eyebrow="Device Registration" />
           <RegisterDevice />
         </div>
       </section>
@@ -886,10 +865,7 @@ export default function Home() {
       {/* ===== Shop ===== */}
       <section className="sec sec-orange" id="shop">
         <div className="wrap">
-          <SecHead
-            eyebrow="ODYX Shop"
-            h2="Order resins, accessories & consumables"
-          />
+          <SecHead eyebrow="ODYX Shop" />
           <div className="shop-flow">
             <div className="pulse-line" />
             <div className="shop-grid build-group">

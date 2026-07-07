@@ -20,7 +20,7 @@ export default function SupportHubPage() {
 
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead eyebrow="Quick access" h2="Start here" />
+          <SecHead eyebrow="Quick access" />
           <div className="support-quick reveal">
             <Link href="/support#manuals" className="support-quick-card">
               <strong>Manuals</strong>
@@ -45,7 +45,7 @@ export default function SupportHubPage() {
       {SUPPORT_SECTIONS.map((sec, i) => (
         <section key={sec.id} className={`sec${i % 2 === 0 ? '' : ' sec-orange'}`} id={sec.id}>
           <div className="wrap">
-            <SecHead eyebrow={sec.title} h2={sec.title} p={sec.desc} align="left" />
+            <SecHead eyebrow={sec.title} align="left" />
             <ul className="support-list reveal">
               {sec.items.map((item) => (
                 <li key={item.label}>
