@@ -456,97 +456,149 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 .m-underline.vis::after,.reveal.in .m-underline::after{width:100%}
 .sec-head .m-underline::after{box-shadow:0 0 18px rgba(255,132,0,.35)}
 
-/* ===== STORY SPINE — left edge, minimal dots + animated label ===== */
+/* ===== STORY SPINE — left edge: numbered stepper (Stitch-inspired) ===== */
 .spine{
-  --spine-dot:13px;
-  --spine-gap:20px;
+  --spine-circle:30px;
+  --spine-gap:6px;          /* vertical gap absorbed by connector */
+  --spine-connector-w:2px;
   position:fixed;
-  left:clamp(18px,2.4vw,36px);
+  left:clamp(18px,2.4vw,40px);
   top:50%;
   transform:translateY(-50%);
   z-index:800;
   pointer-events:none;
-  max-height:min(72vh,calc(100vh - 180px));
+  max-height:calc(100vh - 80px);
   overflow:visible;
 }
-/* Tablet: dots only, no labels */
+/* Tablet: circles only, no text */
 @media(max-width:980px){
-  .spine{--spine-gap:14px;--spine-dot:11px;left:14px;max-height:min(60vh,calc(100vh - 160px))}
-  .spine-label{display:none!important}
+  .spine{--spine-circle:26px;left:16px}
+  .spine-text{display:none!important}
 }
-@media(max-width:640px){.spine{display:none}}
+/* Mobile: compact circles-only stepper (kept, not hidden) */
+@media(max-width:640px){
+  .spine{--spine-circle:20px;--spine-connector-w:2px;left:10px}
+  .spine-text{display:none!important}
+}
 
 .spine[data-theme="hero"]{
-  --spine-pending:rgba(255,255,255,.5);
-  --spine-pending-border:rgba(255,255,255,.75);
+  --spine-pending-bg:rgba(255,255,255,.1);
+  --spine-pending-border:rgba(255,255,255,.45);
+  --spine-pending-num:rgba(255,255,255,.75);
+  --spine-pending-title:rgba(255,255,255,.75);
   --spine-done:var(--teal);
-  --spine-done-glow:rgba(13,150,150,.45);
-  --spine-on:var(--sky);
-  --spine-on-glow:rgba(6,165,223,.55);
-  --spine-label:#fff;
+  --spine-on-bg:#fff;
+  --spine-on-ring:var(--sky);
+  --spine-on-num:var(--sky-deep);
+  --spine-title:#fff;
+  --spine-line:rgba(255,255,255,.28);
+  --spine-shadow:0 6px 18px rgba(0,0,0,.35);
 }
 .spine[data-theme="light"]{
-  --spine-pending:rgba(10,60,100,.28);
-  --spine-pending-border:rgba(10,60,100,.5);
-  --spine-done:var(--sky-deep);
-  --spine-done-glow:rgba(6,165,223,.35);
-  --spine-on:var(--sky);
-  --spine-on-glow:rgba(6,165,223,.45);
-  --spine-label:#0a2844;
+  --spine-pending-bg:#fff;
+  --spine-pending-border:rgba(10,60,100,.22);
+  --spine-pending-num:rgba(10,60,100,.5);
+  --spine-pending-title:rgba(10,40,68,.55);
+  --spine-done:var(--teal);
+  --spine-on-bg:#fff;
+  --spine-on-ring:var(--sky);
+  --spine-on-num:var(--sky-deep);
+  --spine-title:#0a2844;
+  --spine-line:rgba(10,60,100,.18);
+  --spine-shadow:0 6px 18px rgba(8,40,70,.14);
 }
 
-.spine-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--spine-gap)}
-.spine-item{display:flex;justify-content:flex-start}
+.spine-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.spine-item{display:flex}
 
 .spine-node{
-  position:relative;display:flex;align-items:center;
-  background:none;border:none;cursor:pointer;padding:0;
-  font-family:var(--font-body);pointer-events:auto;
-  min-width:var(--spine-dot);min-height:var(--spine-dot);
-}
-.spine-dot{
-  display:block;width:var(--spine-dot);height:var(--spine-dot);border-radius:50%;
-  background:var(--spine-pending);border:1.5px solid var(--spine-pending-border);
-  transition:background .35s,border-color .35s,box-shadow .35s;
-  flex-shrink:0;
-}
-.spine-pulse{
-  position:absolute;left:0;top:50%;width:var(--spine-dot);height:var(--spine-dot);
-  margin-top:calc(var(--spine-dot) / -2);border-radius:50%;
-  border:2px solid var(--spine-on);pointer-events:none;
+  position:relative;display:flex;align-items:center;gap:12px;
+  background:none;border:none;cursor:pointer;padding:0;text-align:left;
+  font-family:var(--font-body);pointer-events:auto;width:100%;
 }
 
-.spine-item--done .spine-dot{
-  background:var(--spine-done);border-color:var(--spine-done);
-  box-shadow:0 0 0 3px var(--spine-done-glow);
+/* Marker column: circle + connector line to the next step */
+.spine-marker{
+  position:relative;display:flex;flex-direction:column;align-items:center;flex-shrink:0;
+  width:var(--spine-circle);
 }
-.spine-item--on .spine-dot{
-  background:var(--spine-on);border-color:var(--sky-soft);
-  box-shadow:0 0 0 5px var(--spine-on-glow),0 0 18px rgba(6,165,223,.4);
+.spine-circle{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  width:var(--spine-circle);height:var(--spine-circle);border-radius:50%;
+  flex-shrink:0;font-family:var(--font-display);font-size:.8rem;font-weight:700;line-height:1;
+  background:var(--spine-pending-bg);
+  border:2px solid var(--spine-pending-border);
+  color:var(--spine-pending-num);
+  transition:background .35s,border-color .35s,color .35s,box-shadow .35s;
+}
+.spine-glyph{display:flex;align-items:center;justify-content:center}
+.spine-icon,.spine-check{width:58%;height:58%;color:currentColor}
+/* Active pulse ring */
+.spine-ring{
+  position:absolute;inset:-2px;border-radius:50%;
+  border:2px solid var(--spine-on-ring);pointer-events:none;
+}
+/* Connector line fills the gap down to the next circle */
+.spine-connector{
+  flex:1;width:var(--spine-connector-w);min-height:14px;margin:4px 0;
+  border-radius:99px;background:var(--spine-line);
+  transition:background .4s;
 }
 
-.spine-label{
-  position:absolute;left:calc(var(--spine-dot) + 12px);top:50%;transform:translateY(-50%);
-  white-space:nowrap;font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--spine-label);pointer-events:none;
-  padding:5px 10px;border-radius:8px;
-  background:rgba(13,26,46,.72);
+/* Floating label — vertically centered on the circle, shown on hover / active */
+.spine-text{
+  position:absolute;
+  left:calc(var(--spine-circle) + 12px);
+  top:calc(var(--spine-circle) / 2);
+  transform:translateY(-50%) translateX(-6px);
+  display:flex;align-items:center;
+  padding:5px 11px;border-radius:9px;white-space:nowrap;
+  pointer-events:none;
+  background:rgba(13,26,46,.82);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(8px);
+  opacity:0;visibility:hidden;
+  transition:opacity .22s ease,transform .22s ease,visibility .22s;
+  z-index:3;
 }
-.spine[data-theme="light"] .spine-label{
-  background:rgba(255,255,255,.92);
-  border-color:rgba(10,60,100,.12);
-  box-shadow:0 4px 16px rgba(8,40,70,.12);
+.spine[data-theme="light"] .spine-text{
+  background:rgba(255,255,255,.95);border-color:rgba(10,60,100,.12);
+  box-shadow:0 4px 16px rgba(8,40,70,.14);
 }
-.spine[data-theme="hero"] .spine-label{text-shadow:0 1px 8px rgba(0,0,0,.45)}
+.spine-title{
+  font-family:var(--font-display);font-size:.82rem;font-weight:700;line-height:1;
+  color:var(--spine-title);letter-spacing:.01em;
+}
+
+.spine-node:hover .spine-text,
+.spine-node:focus-visible .spine-text,
+.spine-item--on .spine-text{
+  opacity:1;visibility:visible;transform:translateY(-50%) translateX(0);
+}
+
+/* ---- DONE ---- */
+.spine-item--done .spine-circle{
+  background:var(--spine-done);border-color:var(--spine-done);color:#fff;
+}
+.spine-item--done .spine-connector{background:var(--spine-done)}
+
+/* ---- ACTIVE ---- */
+.spine-item--on .spine-circle{
+  background:var(--spine-on-bg);border-color:var(--spine-on-ring);color:var(--spine-on-num);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--spine-on-ring) 22%,transparent),var(--spine-shadow);
+}
+
+/* Hover affordance on interactive steps */
+.spine-node:hover .spine-circle{border-color:var(--spine-on-ring)}
 
 .spine-node:focus-visible{outline:none}
-.spine-node:focus-visible .spine-dot{box-shadow:0 0 0 3px rgba(6,165,223,.5),0 0 0 6px rgba(6,165,223,.2)}
+.spine-node:focus-visible .spine-circle{
+  box-shadow:0 0 0 3px rgba(6,165,223,.55),0 0 0 6px rgba(6,165,223,.22);
+}
 
 @media(prefers-reduced-motion:reduce){
-  .spine-dot{transition:none}
-  .spine-pulse{display:none}
+  .spine-circle,.spine-connector,.spine-text{transition:opacity .01s}
+  .spine-ring{display:none}
 }
 
 /* ===== HORIZONTAL PINNED WORKFLOW ===== */
@@ -867,14 +919,22 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 .hc-shot .ph svg{width:50px;height:50px;color:rgba(var(--acc-rgb),.7)}
 .hc-shot .ph small{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase}
 .hc-nav{position:relative;z-index:1;display:grid;grid-template-columns:repeat(6,1fr);padding:0 clamp(28px,3.6vw,56px) clamp(26px,3vw,40px)}
-.hc-line{position:absolute;top:14px;inset-inline:calc(clamp(28px,3.6vw,56px) + 8.3%);height:2px;background:rgba(255,255,255,.12)}
-.hc-line .f{height:100%;width:0;background:linear-gradient(90deg,var(--acc),#ffffff66);transition:width .6s cubic-bezier(.16,1,.3,1)}
-.hc-node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;background:none;border:none;font-family:var(--font-body)}
-.hc-node .d{width:30px;height:30px;border-radius:50%;border:2px solid var(--line-2);background:var(--navy-deep);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--grey);transition:.35s}
-.hc-node.done .d{border-color:var(--acc);color:var(--acc)}
-.hc-node.on .d{background:var(--acc);border-color:var(--acc);color:var(--navy-deep);box-shadow:0 0 0 6px rgba(var(--acc-rgb),.16);transform:scale(1.12)}
-.hc-node .l{font-size:.78rem;font-weight:600;color:var(--grey);transition:.3s}
-.hc-node.on .l,.hc-node:hover .l{color:#fff}
+/* Connector rail — matches the Spine (teal -> sky, fills with progress) */
+.hc-line{position:absolute;top:16px;inset-inline:calc(clamp(28px,3.6vw,56px) + 8.3%);height:2px;background:rgba(255,255,255,.28);border-radius:99px}
+.hc-line .f{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--sky));box-shadow:0 0 10px rgba(6,165,223,.5);transition:width .6s cubic-bezier(.16,1,.3,1)}
+.hc-node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;background:none;border:none;font-family:var(--font-body)}
+/* Icon circle — same states as the Spine: pending / done (check) / active (ring+glow+pulse) */
+.hc-node .d{position:relative;width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.45);background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);transition:background .35s,border-color .35s,color .35s,box-shadow .35s,transform .35s}
+.hc-glyph{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.hc-glyph svg{width:56%;height:56%}
+.hc-node.done .d{background:var(--teal);border-color:var(--teal);color:#fff}
+.hc-node.on .d{background:#fff;border-color:var(--sky);color:var(--sky-deep);box-shadow:0 0 0 4px rgba(6,165,223,.22),0 6px 18px rgba(0,0,0,.35);transform:scale(1.12)}
+.hc-node.on .d::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--sky);pointer-events:none;animation:hcPulse 1.8s ease-out infinite}
+/* Label revealed only on active / hover (like the Spine) */
+.hc-node .l{font-size:.78rem;font-weight:700;color:#fff;letter-spacing:.02em;opacity:0;transition:opacity .3s ease}
+.hc-node.on .l,.hc-node:hover .l,.hc-node:focus-visible .l{opacity:1}
+@keyframes hcPulse{0%{transform:scale(.85);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@media(prefers-reduced-motion:reduce){.hc-node.on .d::after{display:none}}
 @media(max-width:880px){
   .hc-main{grid-template-columns:1fr}
   .hc-stage{order:2;min-height:240px}
@@ -891,9 +951,9 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 }
 
 /* ===== HERO JOURNEY polish: gradient rail, Ken-Burns, per-step FX ===== */
-/* teal -> orange journey rail */
-.hc-line{background:linear-gradient(90deg,rgba(13,150,150,.28),rgba(255,132,0,.28))}
-.hc-line .f{background:linear-gradient(90deg,#0D9696,#16b3b3 28%,#FF8400)}
+/* teal -> sky journey rail (matches the Spine stepper) */
+.hc-line{background:rgba(255,255,255,.28)}
+.hc-line .f{background:linear-gradient(90deg,var(--teal),var(--sky))}
 /* subtle Ken-Burns on the active step image */
 .hc-shot.on img{animation:hcKB 9s ease-in-out infinite alternate}
 @keyframes hcKB{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.08) translate(-1.5%,-1%)}}
