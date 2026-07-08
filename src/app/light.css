@@ -285,3 +285,73 @@ footer .logo-img{height:40px;filter:none}
 #top > .sec.sec-motion:not(.sec-mint):not(.sec-teal):not(.sec-orange).sec-in::before{
   opacity:1;
 }
+
+/* ---------- New home section components (light theme) ---------- */
+.sec .cb-chip{background:rgba(10,60,100,.05);border-color:var(--paper-line-2);color:var(--ink-muted)}
+.sec .cb-chip:hover{color:var(--ink);border-color:var(--ink-muted);background:rgba(10,60,100,.08)}
+.sec .cb-chip.on{color:var(--ink);border-color:rgba(6,165,223,.45);background:rgba(6,165,223,.12)}
+.sec .cb-expand{background:linear-gradient(180deg,transparent 20%,rgba(18,18,33,.82) 70%)}
+.sec .cb-expand p{color:var(--ink-muted)}
+.sec .cs-ph{background:linear-gradient(135deg,#e8f4fc,#f0f8fd)}
+.sec .cs-ph svg{color:rgba(6,165,223,.4)}
+.sec .cs-hero{background:var(--paper-card);box-shadow:var(--shadow-card)}
+.sec .cs-bg .cs-ph{background:linear-gradient(135deg,#e8f4fc,#f0f8fd)}
+.sec .cs-scrim{
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.94) 0%,rgba(255,255,255,.78) 42%,rgba(255,255,255,.35) 68%,transparent 100%),
+    linear-gradient(0deg,rgba(255,255,255,.9) 0%,transparent 50%);
+}
+.sec .cs-copy > p{color:var(--ink-muted)}
+.sec .cs-step{color:var(--ink);background:rgba(10,60,100,.06);border-color:var(--paper-line-2)}
+.sec .cs-outcomes li{color:var(--sky-deep);background:rgba(6,165,223,.1);border-color:rgba(6,165,223,.2)}
+.sec .cs-metric-num,.sec .cs-metric-suf{color:var(--sky)}
+.sec .cs-metric-lbl{color:var(--ink-faint)}
+.sec .cs-thumb{background:var(--paper-card)}
+.sec .cs-thumb.on{border-color:rgba(6,165,223,.45);box-shadow:0 16px 36px rgba(8,80,130,.14)}
+.sec .cs-thumb-badge{color:var(--sky-deep)}
+.sec .cs-thumb-title{color:var(--ink)}
+.sec .cs-thumb-metric{color:var(--ink-muted)}
+.sec .cs-thumb-bar{background:linear-gradient(90deg,var(--sky),var(--sky-soft))}
+#top .cs-badge{background:rgba(6,165,223,.9);box-shadow:0 6px 18px rgba(6,165,223,.3)}
+#top .cs-metric-num,#top .cs-metric-suf,#top .cs-thumb-badge{color:var(--sky-deep)}
+#top .cs-thumb.on{border-color:rgba(6,165,223,.45)}
+#top .cs-thumb-bar{background:linear-gradient(90deg,var(--sky),var(--sky-soft))}
+@media(max-width:760px){
+  .sec .cs-scrim{background:linear-gradient(0deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.6) 55%,transparent 100%)}
+}
+.sec .lt-panel{background:var(--paper-card);box-shadow:var(--shadow-card)}
+.sec .lt-featured{border-color:var(--paper-line-2)}
+.sec .lt-seg{background:rgba(10,60,100,.06);border-color:var(--paper-line-2)}
+.sec .lt-seg-thumb{background:rgba(6,165,223,.14);box-shadow:0 4px 14px rgba(6,165,223,.12)}
+.sec .lt-seg-btn{color:var(--ink-muted)}
+.sec .lt-seg-btn:hover{color:var(--ink)}
+.sec .lt-seg-btn.on{color:var(--ink);background:transparent;box-shadow:none}
+.sec .lt-icon{background:rgba(6,165,223,.12);color:var(--sky)}
+.sec .lt-meta{color:var(--sky-deep)}
+.sec .lt-lead{color:var(--ink)}
+.sec .lt-desc,.sec .lt-list li{color:var(--ink-muted)}
+.sec .lt-list h4{color:var(--ink-faint)}
+.sec .lt-list li::before{background:var(--sky)}
+.sec .sh-live{background:linear-gradient(145deg,var(--paper-card),rgba(6,165,223,.06));box-shadow:var(--shadow-card)}
+.sec .sh-live-glow{background:radial-gradient(circle,rgba(6,165,223,.14),transparent 70%)}
+.sec .sh-live-badge{background:rgba(6,165,223,.12);color:var(--sky-deep);border-color:rgba(6,165,223,.25)}
+.sec .sh-live p{color:var(--ink-muted)}
+.sec .sh-item{background:var(--paper-card)}
+.sec .sh-item.open{border-color:rgba(6,165,223,.35);box-shadow:0 12px 28px rgba(8,80,130,.12)}
+.sec .sh-trigger-ic{background:rgba(6,165,223,.1);color:var(--sky)}
+.sec .sh-trigger-meta{color:var(--sky-deep)}
+.sec .sh-trigger-desc,.sec .sh-panel-inner p{color:var(--ink-muted)}
+.sec .sh-hours{color:var(--ink-faint)}
+.sec .sh-action{color:var(--sky)}
+.sec .sh-item.open .sh-chevron{color:var(--sky)}
+#top .cb-chip.on{border-color:rgba(6,165,223,.45);background:rgba(6,165,223,.12)}
+#top .sh-live-badge,#top .sh-trigger-meta,#top .sh-action{color:var(--sky-deep)}
+#top .sh-trigger-ic{background:rgba(6,165,223,.1);color:var(--sky)}
+#top .sh-item.open{border-color:rgba(6,165,223,.35)}
+#top .sh-item.open .sh-chevron{color:var(--sky)}
+@media(prefers-reduced-motion:reduce){
+  .lt-panel-inner{transition:none;animation:none!important}
+  .lt-seg-thumb{transition:none}
+  .cb-tile.dim{filter:none}
+  .sh-panel{transition:none}
+}

@@ -1,3 +1,57 @@
+/* Dev/preview tools — stacked panel + collapse toggle */
+.dev-preview-tools{
+  position:fixed;
+  left:16px;
+  bottom:16px;
+  z-index:1900;
+  display:flex;
+  flex-direction:column-reverse;
+  align-items:flex-start;
+  gap:8px;
+  pointer-events:none;
+}
+.dev-preview-tools-panels{
+  display:flex;
+  flex-direction:column-reverse;
+  align-items:flex-start;
+  gap:8px;
+  pointer-events:none;
+}
+.dev-preview-tools .bg-picker,
+.dev-preview-tools .font-picker,
+.dev-preview-tools .eco-shadow-picker{
+  position:static;
+  left:auto;
+  bottom:auto;
+  pointer-events:auto;
+}
+.dev-preview-tools-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  padding:0;
+  border-radius:12px;
+  border:1px solid rgba(10,60,100,.14);
+  background:rgba(255,255,255,.94);
+  color:#48657c;
+  box-shadow:0 8px 28px rgba(8,60,100,.16);
+  backdrop-filter:blur(12px);
+  cursor:pointer;
+  pointer-events:auto;
+  transition:color .2s,border-color .2s,background .2s,transform .2s;
+}
+.dev-preview-tools-toggle:hover{
+  color:var(--sky,#06a5df);
+  border-color:rgba(6,165,223,.35);
+  transform:translateY(-1px);
+}
+.dev-preview-tools-toggle:focus-visible{
+  outline:2px solid var(--sky,#06a5df);
+  outline-offset:2px;
+}
+
 /* Dev/preview tool — swap site canvas background instantly */
 .bg-picker{
   position:fixed;
@@ -305,41 +359,33 @@ html[data-eco-shadow-preview] #ecosystem .hl-slider{
 }
 
 @media(max-width:620px){
-  .bg-picker{
+  .dev-preview-tools{
     left:10px;
     right:10px;
     bottom:10px;
+    align-items:stretch;
+  }
+  .dev-preview-tools-panels{
+    align-items:stretch;
+    width:100%;
+  }
+  .dev-preview-tools .bg-picker,
+  .dev-preview-tools .font-picker,
+  .dev-preview-tools .eco-shadow-picker{
+    width:100%;
     flex-wrap:wrap;
   }
-  .bg-picker-select{
+  .dev-preview-tools-toggle{
+    align-self:flex-start;
+  }
+  .dev-preview-tools .bg-picker-select,
+  .dev-preview-tools .font-picker-select,
+  .dev-preview-tools .font-picker-select--size,
+  .dev-preview-tools .eco-shadow-picker-select{
     flex:1 1 100%;
     max-width:none;
   }
-  .font-picker{
-    left:10px;
-    right:10px;
-    bottom:104px;
-    flex-wrap:wrap;
-  }
-  .font-picker-select{
-    flex:1 1 100%;
-    max-width:none;
-  }
-  .font-picker-select--size{
-    flex:1 1 100%;
-    max-width:none;
-  }
-  .eco-shadow-picker{
-    left:10px;
-    right:10px;
-    bottom:152px;
-    flex-wrap:wrap;
-  }
-  .eco-shadow-picker-select{
-    flex:1 1 100%;
-    max-width:none;
-  }
-  .eco-shadow-picker-range{
+  .dev-preview-tools .eco-shadow-picker-range{
     flex:1 1 auto;
     max-width:none;
   }
