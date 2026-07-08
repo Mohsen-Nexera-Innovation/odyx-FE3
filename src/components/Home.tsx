@@ -5,6 +5,10 @@ import NewsShowcase from "./NewsShowcase";
 import ProductGallery from "./ProductGallery";
 import RegisterDevice from "./RegisterDevice";
 import EcosystemHighlights from "./EcosystemHighlights";
+import ClinicalBento from "./ClinicalBento";
+import CaseSpotlight from "./CaseSpotlight";
+import LearningTabs from "./LearningTabs";
+import SupportHub from "./SupportHub";
 import { FOOTER_COLUMNS } from "@/content/nav";
 import SecHead from "@/components/SecHead";
 
@@ -205,46 +209,9 @@ const FEAT = [
   },
   {
     i: "resin",
-    t: "Resins",
+    t: "Resin",
     d: "Five clinical resin lines.",
     img: "/img/feat-resin.jpg",
-  },
-] as const;
-const CLIN = [
-  {
-    tag: "Restorative",
-    t: "Crowns & Bridges",
-    d: "Single units to full-arch, designed and printed in-house.",
-    img: "/img/crowns.jpg",
-    accent: "orange",
-  },
-  {
-    tag: "Surgical",
-    t: "Implant Guides",
-    d: "Accurate surgical guides for confident placement.",
-    img: "/img/implant.jpg",
-    accent: "teal",
-  },
-  {
-    tag: "Orthodontic",
-    t: "Orthodontic Models",
-    d: "Precise models and appliances from digital scans.",
-    img: "/img/ortho.jpg",
-    accent: "teal",
-  },
-  {
-    tag: "Prosthetic",
-    t: "Dentures",
-    d: "Digital denture workflows with a natural finish.",
-    img: "/img/denture.jpg",
-    accent: "orange",
-  },
-  {
-    tag: "Provisional",
-    t: "Temporary Restorations",
-    d: "Fast, durable provisionals while finals are made.",
-    img: "/img/temp.jpg",
-    accent: "orange",
   },
 ] as const;
 const WHY = [
@@ -284,211 +251,6 @@ const WHY = [
     "Clinical resin lines",
     "/img/why/why-clinical.png",
   ],
-] as const;
-
-// Extra icons for the Learning + Support tiles
-const IX: Record<string, React.ReactNode> = {
-  book: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z" />
-      <path d="M4 19V5" />
-    </svg>
-  ),
-  cap: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 9L12 5 2 9l10 4 10-4z" />
-      <path d="M6 11v5c0 1 2.5 2.5 6 2.5s6-1.5 6-2.5v-5" />
-    </svg>
-  ),
-  play: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="M10 9l5 3-5 3z" />
-    </svg>
-  ),
-  award: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="9" r="6" />
-      <path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5" />
-    </svg>
-  ),
-  whats: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 21l1.6-4.5A8 8 0 1 1 8 19.4z" />
-      <path d="M9 9c0 3 3 6 6 6l1.5-1.5-2-1.5-1 1c-1-.5-2-1.5-2.5-2.5l1-1L10.5 8z" />
-    </svg>
-  ),
-  chat: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 4h16v12H8l-4 4z" />
-      <path d="M8 9h8M8 12h5" />
-    </svg>
-  ),
-  doc: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
-      <path d="M14 3v5h5M9 13h6M9 17h6" />
-    </svg>
-  ),
-  shield: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" />
-      <path d="M9 12l2 2 4-4" />
-    </svg>
-  ),
-};
-
-const CASES = [
-  {
-    badge: "Crown & Bridge",
-    t: "Same-day full-contour crown",
-    d: "Scan, design and print a natural-looking crown in a single visit.",
-    img: "/img/crowns.jpg",
-    metric: "1 visit",
-    metricLbl: "Scan to seat",
-  },
-  {
-    badge: "Surgical Guide",
-    t: "Guided implant placement",
-    d: "A printed surgical guide for confident, accurate positioning.",
-    img: "/img/implant.jpg",
-    metric: "0.1 mm",
-    metricLbl: "Positional accuracy",
-  },
-  {
-    badge: "Prosthetics",
-    t: "Digital denture, delivered",
-    d: "A complete denture workflow with a natural, lifelike finish.",
-    img: "/img/denture.jpg",
-    metric: "3 steps",
-    metricLbl: "Streamlined workflow",
-  },
-] as const;
-
-const LEARN = [
-  {
-    ic: "book",
-    t: "Beginner guides",
-    d: "Step-by-step onboarding to go fully digital with confidence.",
-    meta: "20+ guides",
-  },
-  {
-    ic: "cap",
-    t: "Clinical courses",
-    d: "Structured modules from the first scan to final delivery.",
-    meta: "12 courses",
-  },
-  {
-    ic: "play",
-    t: "Webinars & events",
-    d: "Live demos and Q&A with ODYX clinical specialists.",
-    meta: "Monthly",
-  },
-  {
-    ic: "award",
-    t: "Certified academy",
-    d: "Certification paths for chairside teams and labs.",
-    meta: "Members",
-  },
-] as const;
-
-const SUPPORT = [
-  {
-    ic: "whats",
-    t: "WhatsApp care",
-    d: "Instant help from our customer-care team, any day.",
-    meta: "24/7",
-  },
-  {
-    ic: "chat",
-    t: "Odyx Agent & live chat",
-    d: "Guided answers across the whole ODYX ecosystem.",
-    meta: "Online",
-  },
-  {
-    ic: "doc",
-    t: "Help center & manuals",
-    d: "Setup guides, troubleshooting and firmware downloads.",
-    meta: "Self-service",
-  },
-  {
-    ic: "shield",
-    t: "Warranty & service",
-    d: "Register devices, track repairs and coverage in one place.",
-    meta: "Coverage",
-  },
 ] as const;
 
 export default function Home() {
@@ -717,30 +479,7 @@ export default function Home() {
       <section className="sec sec-orange sec-motion" id="clinical">
         <div className="wrap">
           <SecHead eyebrow="Clinical Applications" />
-          <div className="capp-grid build-group m-stagger">
-            {CLIN.map((c) => (
-              <a
-                key={c.t}
-                href="#"
-                className={`capp build${c.accent === "teal" ? " teal" : ""}`}
-              >
-                <div className="capp-art">
-                  <div className="imgslot">
-                    <PH label={c.t} />
-                    <img data-isrc={c.img} alt={c.t} />
-                  </div>
-                  <span className="capp-tag">{c.tag}</span>
-                </div>
-                <div className="capp-body">
-                  <h3>{c.t}</h3>
-                  <p>{c.d}</p>
-                  <span className="more">
-                    See solutions <Arrow s={15} />
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
+          <ClinicalBento />
         </div>
       </section>
 
@@ -787,32 +526,9 @@ export default function Home() {
               </a>
             }
           />
-          <div className="prev-grid build-group">
-            {CASES.map((c) => (
-              <a key={c.t} href="/learning" className="prev build">
-                <div className="prev-art">
-                  <img src={c.img} alt={c.t} loading="lazy" />
-                  <span className="prev-scrim" />
-                  <span className="prev-badge">{c.badge}</span>
-                </div>
-                <div className="prev-body">
-                  <h3>{c.t}</h3>
-                  <p>{c.d}</p>
-                  <div className="prev-meta">
-                    <span className="prev-metric">{c.metric}</span>
-                    <span className="prev-metric-lbl">{c.metricLbl}</span>
-                  </div>
-                  <span className="more">
-                    View case <Arrow s={15} />
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
+          <CaseSpotlight />
         </div>
       </section>
-
-      {/* ===== Learning Center preview ===== */}
       <section className="sec sec-teal sec-motion" id="learning-preview">
         <div className="wrap">
           <SecHead
@@ -823,19 +539,7 @@ export default function Home() {
               </a>
             }
           />
-          <div className="g4 info-grid build-group">
-            {LEARN.map((l) => (
-              <a key={l.t} href="/learning" className="card info-card build">
-                <span className="card-meta">{l.meta}</span>
-                <div className="ic">{IX[l.ic]}</div>
-                <h3>{l.t}</h3>
-                <p>{l.d}</p>
-                <span className="more">
-                  Explore <Arrow s={15} />
-                </span>
-              </a>
-            ))}
-          </div>
+          <LearningTabs />
         </div>
       </section>
 
@@ -850,19 +554,7 @@ export default function Home() {
               </a>
             }
           />
-          <div className="g4 info-grid build-group">
-            {SUPPORT.map((s) => (
-              <a key={s.t} href="/support" className="card info-card build">
-                <span className="card-meta">{s.meta}</span>
-                <div className="ic">{IX[s.ic]}</div>
-                <h3>{s.t}</h3>
-                <p>{s.d}</p>
-                <span className="more">
-                  Get help <Arrow s={15} />
-                </span>
-              </a>
-            ))}
-          </div>
+          <SupportHub />
         </div>
       </section>
 
@@ -898,7 +590,7 @@ export default function Home() {
             <div className="shop-grid build-group">
               {[
                 [
-                  "Clinical Resins",
+                  "Clinical Resin",
                   "Permanent crown, ceramic, temporary, model & surgical-guide lines.",
                   "From $-",
                   "Buy online",

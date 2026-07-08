@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
-import ProductsOverviewPage from '@/components/pages/ProductsOverviewPage';
-import InnerPageMotion from '@/components/InnerPageMotion';
+import type { Metadata } from "next";
+import ProductsOverviewPage from "@/components/pages/ProductsOverviewPage";
+import InnerPageMotion from "@/components/InnerPageMotion";
 
 export const metadata: Metadata = {
-  title: 'Products | ODYX',
-  description: 'Intraoral scanners, design software, 3D printers, curing, finishing and clinical resins - one ecosystem.',
+  title: "Products | ODYX",
+  description:
+    "Intraoral scanners, design software, 3D printers, curing, finishing and clinical Resin - one ecosystem.",
 };
 
 export default function Page() {
