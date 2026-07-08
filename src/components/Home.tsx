@@ -501,10 +501,10 @@ export default function Home() {
       </section>
 
       {/* ===== Choose Your Path ===== */}
-      <section className="sec sec-mint" id="path">
+      <section className="sec sec-mint sec-motion" id="path">
         <div className="wrap">
           <SecHead eyebrow="Choose Your Path" />
-          <div className="pgrid build-group">
+          <div className="pgrid build-group m-fan">
             {/* Dentist - floating tooth + scan sweep (teal) */}
             <a href="/solutions/dentists" className="pcard teal reveal build">
               <div className="pcard-art">
@@ -677,11 +677,13 @@ export default function Home() {
       </section>
 
       {/* ===== The ODYX Ecosystem (Get the highlights video slider) ===== */}
-      <section className="sec sec-orange" id="ecosystem">
+      <section className="sec sec-orange sec-motion" id="ecosystem">
         <div className="wrap">
           <SecHead eyebrow="The ODYX Ecosystem" />
         </div>
-        <EcosystemHighlights />
+        <div className="m-up">
+          <EcosystemHighlights />
+        </div>
         <div className="wrap">
           <div
             className="reveal"
@@ -695,7 +697,7 @@ export default function Home() {
       </section>
 
       {/* ===== Featured Products ===== */}
-      <section className="sec sec-teal" id="featured">
+      <section className="sec sec-teal sec-motion" id="featured">
         <div className="wrap">
           <SecHead
             eyebrow="Featured Products"
@@ -705,15 +707,17 @@ export default function Home() {
               </a>
             }
           />
-          <ProductGallery />
+          <div className="m-up">
+            <ProductGallery />
+          </div>
         </div>
       </section>
 
       {/* ===== Clinical Applications ===== */}
-      <section className="sec sec-orange" id="clinical">
+      <section className="sec sec-orange sec-motion" id="clinical">
         <div className="wrap">
           <SecHead eyebrow="Clinical Applications" />
-          <div className="capp-grid build-group">
+          <div className="capp-grid build-group m-stagger">
             {CLIN.map((c) => (
               <a
                 key={c.t}
@@ -741,10 +745,10 @@ export default function Home() {
       </section>
 
       {/* ===== Why ODYX ===== */}
-      <section className="sec sec-teal" id="why">
+      <section className="sec sec-teal sec-motion" id="why">
         <div className="wrap">
           <SecHead eyebrow="Why ODYX" />
-          <div className="why-grid">
+          <div className="why-grid m-stagger">
             {WHY.map(([n, t, d, count, suf, lbl, img]) => (
               <article className="why-card reveal" key={n}>
                 <div className="why-card__media">
@@ -773,7 +777,7 @@ export default function Home() {
       </section>
 
       {/* ===== Case Library ===== */}
-      <section className="sec sec-orange" id="cases-preview">
+      <section className="sec sec-orange sec-motion" id="cases-preview">
         <div className="wrap">
           <SecHead
             eyebrow="Proof"
@@ -809,7 +813,7 @@ export default function Home() {
       </section>
 
       {/* ===== Learning Center preview ===== */}
-      <section className="sec sec-teal" id="learning-preview">
+      <section className="sec sec-teal sec-motion" id="learning-preview">
         <div className="wrap">
           <SecHead
             eyebrow="Learn"
@@ -836,7 +840,7 @@ export default function Home() {
       </section>
 
       {/* ===== Support preview ===== */}
-      <section className="sec sec-orange" id="support-preview">
+      <section className="sec sec-orange sec-motion" id="support-preview">
         <div className="wrap">
           <SecHead
             eyebrow="Help"
@@ -863,7 +867,7 @@ export default function Home() {
       </section>
 
       {/* ===== Latest News ===== */}
-      <section className="sec sec-teal" id="news">
+      <section className="sec sec-teal sec-motion" id="news">
         <div className="wrap">
           <SecHead
             eyebrow="Latest News"
@@ -878,7 +882,7 @@ export default function Home() {
       </section>
 
       {/* ===== Register Device ===== */}
-      <section className="sec sec-teal" id="register">
+      <section className="sec sec-orange sec-motion" id="register">
         <div className="wrap">
           <SecHead eyebrow="Device Registration" />
           <RegisterDevice />
@@ -886,7 +890,7 @@ export default function Home() {
       </section>
 
       {/* ===== Shop ===== */}
-      <section className="sec sec-orange" id="shop">
+      <section className="sec sec-orange sec-motion" id="shop">
         <div className="wrap">
           <SecHead eyebrow="ODYX Store" />
           <div className="shop-flow">

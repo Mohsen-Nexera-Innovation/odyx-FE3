@@ -246,3 +246,42 @@ footer .logo-img{height:40px;filter:none}
 #top .pill-list a:hover{border-color:var(--sky);color:var(--sky-deep)}
 #top .reg-perk.on b{color:var(--sky-deep)}
 #top .reg-spinner{border-color:rgba(6,165,223,.25);border-top-color:var(--sky)}
+
+/* ---------- Homepage section transitions ---------- */
+#top > .sec.sec-motion + .sec.sec-motion{
+  padding-top:calc(96px + 28px);
+}
+@media(max-width:620px){
+  #top > .sec.sec-motion + .sec.sec-motion{padding-top:calc(64px + 20px)}
+}
+
+/* Animated divider between sections */
+#top > .sec.sec-motion::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:3px;
+  border-radius:3px;
+  background:linear-gradient(90deg, transparent, var(--sky), rgba(var(--teal-rgb), .85), var(--sky), transparent);
+  box-shadow:0 0 20px rgba(6,165,223,.45);
+  opacity:0;
+  pointer-events:none;
+  z-index:2;
+  transition:width 1s cubic-bezier(.16,1,.3,1), opacity .6s ease;
+}
+#top > .sec.sec-motion.sec-in::after{
+  width:min(720px, 82%);
+  opacity:1;
+}
+
+/* Background accent fades in with section (non-tinted sections only) */
+#top > .sec.sec-motion:not(.sec-mint):not(.sec-teal):not(.sec-orange)::before{
+  opacity:0;
+  transition:opacity 1s cubic-bezier(.16,1,.3,1) .15s;
+}
+#top > .sec.sec-motion:not(.sec-mint):not(.sec-teal):not(.sec-orange).sec-in::before{
+  opacity:1;
+}
