@@ -6,6 +6,7 @@ import { GlobalToolsProvider } from "@/components/GlobalTools";
 import SiteBackground from "@/components/SiteBackground";
 import BackgroundPicker from "@/components/BackgroundPicker";
 import FontPicker from "@/components/FontPicker";
+import EcosystemShadowPicker from "@/components/EcosystemShadowPicker";
 
 export const metadata: Metadata = {
   title: "ODYX — One connected digital dentistry workflow",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main>{children}</main>
           <BackgroundPicker />
           <FontPicker />
+          <EcosystemShadowPicker />
         </GlobalToolsProvider>
       </body>
     </html>

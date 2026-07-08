@@ -4,6 +4,8 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
+const MOTION_SEL = '.m-up,.m-left,.m-right,.m-scale,.m-rot,.m-stagger,.m-fan,.m-words';
+
 function isInViewport(el: Element) {
   const rect = el.getBoundingClientRect();
   const vh = window.innerHeight || document.documentElement.clientHeight;
@@ -15,6 +17,7 @@ function flushVisibleOnLoad(
   buildIo: IntersectionObserver,
   visIo: IntersectionObserver,
   countIo: IntersectionObserver,
+  secIo: IntersectionObserver,
 ) {
   document.querySelectorAll<HTMLElement>('.reveal:not(.in)').forEach((el) => {
     if (!isInViewport(el)) return;
@@ -36,10 +39,18 @@ function flushVisibleOnLoad(
     buildIo.unobserve(el);
   });
 
-  document.querySelectorAll<HTMLElement>('.why-row:not(.vis), .news-lead:not(.vis), .news-item:not(.vis), .shop-card:not(.vis)').forEach((el) => {
+  document.querySelectorAll<HTMLElement>(
+    `.why-row:not(.vis), .news-lead:not(.vis), .news-item:not(.vis), .shop-card:not(.vis), ${MOTION_SEL}:not(.vis)`,
+  ).forEach((el) => {
     if (!isInViewport(el)) return;
     el.classList.add('vis');
     visIo.unobserve(el);
+  });
+
+  document.querySelectorAll<HTMLElement>('#top > .sec.sec-motion:not(.sec-in)').forEach((el) => {
+    if (!isInViewport(el)) return;
+    el.classList.add('sec-in');
+    secIo.unobserve(el);
   });
 
   document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
@@ -66,6 +77,7 @@ export default function OdyxMotion() {
 
   useEffect(() => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hero = document.getElementById('hero');
 
     let prog = document.getElementById('progress') as HTMLDivElement | null;
     if (!prog) {
@@ -76,6 +88,11 @@ export default function OdyxMotion() {
     const onScroll = () => {
       const h = document.documentElement;
       prog!.style.width = `${(h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) || 0}%`;
+      if (hero) {
+        const vh = window.innerHeight || h.clientHeight;
+        const exit = Math.min(1, Math.max(0, h.scrollTop / (vh * 0.85)));
+        hero.style.setProperty('--hero-exit', String(exit));
+      }
     };
     addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -95,6 +112,8 @@ export default function OdyxMotion() {
       document.querySelectorAll('.reveal,.build,.why-row,.news-lead,.news-item,.shop-card').forEach((e) =>
         e.classList.add('in', 'built', 'vis'),
       );
+      document.querySelectorAll(MOTION_SEL).forEach((e) => e.classList.add('vis'));
+      document.querySelectorAll('#top > .sec.sec-motion').forEach((e) => e.classList.add('sec-in'));
       document.querySelectorAll('[data-count]').forEach((e) => {
         e.textContent = (e as HTMLElement).dataset.count || '0';
       });
@@ -128,8 +147,20 @@ export default function OdyxMotion() {
       }),
       { threshold: 0.12 },
     );
-    document.querySelectorAll('.why-row,.news-lead,.news-item,.shop-card').forEach((el) => vio.observe(el));
+    document.querySelectorAll(`.why-row,.news-lead,.news-item,.shop-card,${MOTION_SEL}`).forEach((el) => vio.observe(el));
     observers.push(vio);
+
+    const secIo = new IntersectionObserver(
+      (es) => es.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('sec-in');
+          secIo.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+    );
+    document.querySelectorAll('#top > .sec.sec-motion').forEach((el) => secIo.observe(el));
+    observers.push(secIo);
 
     const bio = new IntersectionObserver(
       (es) => es.forEach((e) => {
@@ -197,7 +228,7 @@ export default function OdyxMotion() {
     document.querySelectorAll('[data-count]').forEach((el) => cio.observe(el));
     observers.push(cio);
 
-    const flush = () => flushVisibleOnLoad(io, bio, vio, cio);
+    const flush = () => flushVisibleOnLoad(io, bio, vio, cio, secIo);
     requestAnimationFrame(() => requestAnimationFrame(flush));
 
     return () => {

@@ -8,6 +8,7 @@ import AiChatbotIcon from './AiChatbotIcon';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { logout } from '@/lib/auth-store';
 import { unreadTotal } from '@/lib/inbox-store';
+import type { AccountSession } from '@/lib/auth-store';
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
 
@@ -16,6 +17,14 @@ const SearchIcon = () => (
     <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
   </svg>
 );
+
+function initialsFrom(session: AccountSession): string {
+  if (session.role === 'guest') return 'G';
+  const parts = session.name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'U';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
 function NavAnchor({
   href,
@@ -40,6 +49,61 @@ function NavAnchor({
   );
 }
 
+function UserMenu({ session, onSignOut }: { session: AccountSession; onSignOut: () => void }) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const displayName = session.role === 'guest' ? 'Guest' : session.name.split(' ')[0];
+
+  useEffect(() => {
+    if (!open) return;
+    const onClickOutside = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+    document.addEventListener('click', onClickOutside);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('click', onClickOutside);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  return (
+    <div className="nav-user-wrap" ref={wrapRef}>
+      <button
+        type="button"
+        ref={triggerRef}
+        className={`nav-user${open ? ' on' : ''}`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls="nav-user-menu"
+        aria-label={`Account menu for ${displayName}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span className="nav-avatar" aria-hidden>{initialsFrom(session)}</span>
+        <span className="nav-user-caret" aria-hidden><Caret /></span>
+      </button>
+      <div className="nav-user-drop" id="nav-user-menu" role="menu" aria-label="Account" data-open={open ? 'true' : 'false'}>
+        {session.role !== 'guest' && (
+          <p className="nav-user-meta">
+            {session.name}
+            <span>{session.email}</span>
+          </p>
+        )}
+        <button type="button" role="menuitem" className="nav-user-signout" tabIndex={open ? 0 : -1} onClick={onSignOut}>
+          Sign out
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
@@ -47,13 +111,13 @@ export default function Header() {
   const { session } = useAuthSession();
   const [inboxUnread, setInboxUnread] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [hasHero, setHasHero] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [isMac, setIsMac] = useState(true);
   const [open, setOpen] = useState(false);
   const [expandedNav, setExpandedNav] = useState<string | null>(null);
   const [langOpen, setLangOpen] = useState(false);
-  const [userOpen, setUserOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
-  const userRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
 
   const topSeg = (href: string) => href.split(/[#?]/)[0].split('/')[1] || '';
@@ -78,12 +142,29 @@ export default function Header() {
     setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent));
   }, []);
 
+  // Hero-aware scroll: transparent over hero, dark while still in hero, light once past hero.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const heroEl = document.querySelector('.page-hero');
+    setHasHero(!!heroEl);
+
+    const update = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      if (heroEl) {
+        setPastHero(heroEl.getBoundingClientRect().bottom <= 68);
+      } else {
+        setPastHero(false);
+      }
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const onResize = () => {
@@ -106,7 +187,6 @@ export default function Header() {
   useEffect(() => {
     const close = (e: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
-      if (userRef.current && !userRef.current.contains(e.target as Node)) setUserOpen(false);
     };
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
@@ -114,7 +194,6 @@ export default function Header() {
 
   const signOut = () => {
     logout();
-    setUserOpen(false);
     router.push('/login');
   };
 
@@ -142,8 +221,19 @@ export default function Header() {
     el.style.setProperty('--my', `${e.clientY - r.top}px`);
   };
 
+  const transparent = hasHero && !pastHero && !scrolled;
+  const onLight = hasHero && pastHero;
+  const headerClass = [
+    transparent ? 'transparent' : '',
+    onLight ? 'on-light' : '',
+    !transparent && !onLight ? 'solid' : '',
+    scrolled && !onLight ? 'scrolled' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <header id="hdr" ref={headerRef} className={scrolled ? 'scrolled' : ''} onMouseMove={onSpotlightMove}>
+    <header id="hdr" ref={headerRef} className={headerClass} onMouseMove={onSpotlightMove}>
       <div className="wrap nav">
         <Link href="/" className="logo" aria-label="ODYX home">
           <img className="logo-img" src="/brand/odyx-company.png" alt="ODYX" />
@@ -155,20 +245,22 @@ export default function Header() {
                 <span className={isMenuActive(m.href) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
               </NavAnchor>
               <div className="mega">
-                <div className="mega-head">{m.label}</div>
                 {m.items.map((item) => (
                   <NavAnchor key={item.label} href={item.href} onClick={closeMenu}>
-                    <span className="mega-item-label">{item.label}</span>
-                    {item.desc ? <span className="mega-item-desc">{item.desc}</span> : null}
+                    {item.label}
                   </NavAnchor>
                 ))}
               </div>
             </div>
           ))}
           <div className="nav-mobile-auth" aria-label="Account">
-            <Link className="btn-ghost btn btn-sm" href="/#register" onClick={closeMenu}>Register device</Link>
-            {!session && (
-              <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Login</Link>
+            {session ? (
+              <Link className="btn-ghost btn btn-sm" href="/#register" onClick={closeMenu}>Register device</Link>
+            ) : (
+              <>
+                <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
+                <Link className="btn-ghost btn btn-sm" href="/register" onClick={closeMenu}>Sign up</Link>
+              </>
             )}
             <Link className="btn btn-sm nav-demo" href="/support" onClick={closeMenu}>Request a Demo</Link>
           </div>
@@ -183,7 +275,7 @@ export default function Header() {
             <span className="search-kbd-hint">{isMac ? '\u2318K' : 'Ctrl K'}</span>
           </button>
           <div className="lang-wrap" ref={langRef}>
-            <button type="button" className={`tool-btn lang${langOpen ? ' on' : ''}`} title="Language" aria-expanded={langOpen} onClick={() => setLangOpen((o) => !o)}>
+            <button type="button" className={`tool-btn lang${langOpen ? ' on' : ''}`} title="Language" aria-haspopup="menu" aria-expanded={langOpen} onClick={() => setLangOpen((o) => !o)}>
               {LOCALE_LABEL[locale]} <Caret />
             </button>
             {langOpen && (
@@ -194,42 +286,23 @@ export default function Header() {
               </div>
             )}
           </div>
-          <Link className="btn-ghost btn btn-sm nav-reg-device" href="/#register">
-            <span className="nav-label-long">Register device</span>
-            <span className="nav-label-short">Device</span>
-          </Link>
           {session ? (
             <>
-              <Link className="btn-ghost btn btn-sm nav-inbox" href="/inbox">
+              <Link className="btn-ghost btn btn-sm nav-reg-device" href="/#register">
+                <span className="nav-label-long">Register device</span>
+                <span className="nav-label-short">Device</span>
+              </Link>
+              <Link className="btn-ghost btn btn-sm nav-inbox" href="/inbox" aria-label={inboxUnread > 0 ? `Inbox, ${inboxUnread} unread` : 'Inbox'}>
                 Inbox
                 {inboxUnread > 0 ? <span className="nav-inbox-badge">{inboxUnread}</span> : null}
               </Link>
-              <div className="nav-user-wrap" ref={userRef}>
-                <button
-                  type="button"
-                  className={`btn-ghost btn btn-sm nav-user${userOpen ? ' on' : ''}`}
-                  aria-expanded={userOpen}
-                  onClick={() => setUserOpen((o) => !o)}
-                >
-                  {session.role === 'guest' ? 'Guest' : session.name.split(' ')[0]}
-                </button>
-                {userOpen && (
-                  <div className="nav-user-drop" role="menu">
-                    {session.role !== 'guest' && (
-                      <p className="nav-user-meta">
-                        {session.name}
-                        <span>{session.email}</span>
-                      </p>
-                    )}
-                    <button type="button" role="menuitem" onClick={signOut}>
-                      Sign out
-                    </button>
-                  </div>
-                )}
-              </div>
+              <UserMenu session={session} onSignOut={signOut} />
             </>
           ) : (
-            <Link className="btn-ghost btn btn-sm nav-login" href="/login">Login</Link>
+            <>
+              <Link className="btn-ghost btn btn-sm nav-login" href="/login">Sign in</Link>
+              <Link className="btn-ghost btn btn-sm nav-signup" href="/register">Sign up</Link>
+            </>
           )}
           <Link className="btn btn-sm nav-demo" href="/support">
             <span className="nav-label-long">Request a Demo</span>
