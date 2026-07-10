@@ -230,9 +230,9 @@ export default function Home() {
       <section className="sec sec-mint sec-motion" id="path">
         <div className="wrap">
           <SecHead eyebrow="Choose Your Path" />
-          <div className="pgrid build-group m-fan">
-            {/* Dentist - floating tooth + scan sweep (teal) */}
-            <a href="/solutions/dentists" className="pcard teal reveal build">
+          <div className="pgrid m-fan">
+            {/* Dentist */}
+            <a href="/solutions/dentists" className="pcard teal">
               <div className="pcard-art">
                 <img
                   className="pimg parallax"
@@ -268,8 +268,8 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Lab Technician - 3D print building layer by layer (orange) */}
-            <a href="/solutions/labs" className="pcard reveal build">
+            {/* Lab Technician */}
+            <a href="/solutions/labs" className="pcard">
               <div className="pcard-art">
                 <img
                   className="pimg parallax"
@@ -291,8 +291,8 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Guest - connected ecosystem orbit (teal + orange core) */}
-            <a href="/workflows" className="pcard teal reveal build">
+            {/* Guest */}
+            <a href="/workflows" className="pcard teal">
               <div className="pcard-art">
                 <img
                   className="pimg parallax"

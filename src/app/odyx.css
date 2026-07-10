@@ -1354,7 +1354,8 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 .pcard.teal{--c:var(--teal);--c-rgb:var(--teal-rgb)}
 .pcard:hover{transform:translateY(-8px);border-color:rgba(var(--c-rgb),.5);background:var(--navy-2);box-shadow:0 30px 70px rgba(0,0,0,.45)}
 .pcard-art{position:relative;height:186px;overflow:hidden;border-bottom:1px solid var(--line);
-  background:radial-gradient(440px 240px at 50% 24%,rgba(var(--c-rgb),.20),transparent 70%)}
+  background:radial-gradient(440px 240px at 50% 24%,rgba(var(--c-rgb),.20),transparent 70%);
+  transition:transform .8s cubic-bezier(.16,1,.3,1)}
 .pcard-body{padding:26px;position:relative}
 .pcard .ic{width:48px;height:48px;border-radius:13px;color:var(--c);display:flex;align-items:center;justify-content:center;border:1px solid rgba(var(--c-rgb),.55);margin-top:-50px;position:relative;z-index:2;
   background:linear-gradient(150deg,rgba(var(--c-rgb),.30),rgba(var(--c-rgb),.06) 60%),var(--navy-deep);
@@ -1392,9 +1393,9 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 @keyframes ptSpin{to{transform:rotate(360deg)}}
 @keyframes ptPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.28)}}
 
-/* Choose-Your-Path: real photo art (brand-tinted) */
-.pcard-art .pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92;transition:transform .8s ease;animation:pimgKB 13s ease-in-out infinite alternate}
-.pcard:hover .pcard-art .pimg{transform:scale(1.06)}
+/* Choose-Your-Path: real photo art (brand-tinted) — KB on image; hover scales art so they compose */
+.pcard-art .pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92;animation:pimgKB 13s ease-in-out infinite alternate}
+.pcard:hover .pcard-art{transform:scale(1.05)}
 @keyframes pimgKB{0%{transform:scale(1)}100%{transform:scale(1.07)}}
 .pcard-art .scrim2{position:absolute;inset:0;z-index:1;
   background:linear-gradient(180deg,rgba(13,26,46,.12),rgba(13,26,46,.68)),linear-gradient(0deg,rgba(var(--c-rgb),.22),transparent 58%)}
@@ -1409,6 +1410,154 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 .pcard p{font-size:.98rem;max-width:34ch}
 .pcard .more{margin-top:22px;font-size:.9rem}
 @media(max-width:880px){.pcard{min-height:0}.pcard-art{height:220px}}
+
+/* ===== #path — entrance polish; final stop = original #top m-fan resting pose ===== */
+/*
+  Homepage #top .m-fan>* keeps translate/rotate even after .vis (higher specificity than
+  .m-fan.vis>*{transform:none}). That accidental resting fan IS the screenshot layout.
+  Keep it identical; only enhance the approach into those values.
+*/
+#path{
+  --path-ease:cubic-bezier(.22,1,.36,1);
+  --path-spring:cubic-bezier(.34,1.56,.64,1);
+  /* Exact final stop from #top .m-fan (screenshot / pre-change look) */
+  --path-rest-1:translateX(-56px) rotate(-4deg);
+  --path-rest-2:translateY(40px) scale(.95);
+  --path-rest-3:translateX(56px) rotate(4deg);
+}
+/* Approach from a wider fan, land on the screenshot pose */
+#path .m-fan > .pcard:nth-child(1){opacity:0;transform:translateX(-100px) rotate(-9deg)}
+#path .m-fan > .pcard:nth-child(2){opacity:0;transform:translateY(72px) scale(.9)}
+#path .m-fan > .pcard:nth-child(3){opacity:0;transform:translateX(100px) rotate(9deg)}
+#path .m-fan.vis > .pcard{
+  opacity:1;
+  transition:
+    opacity .95s var(--path-ease),
+    transform 1.05s var(--path-ease),
+    border-color .45s ease,
+    background .45s ease,
+    box-shadow .45s ease;
+}
+#path .m-fan.vis > .pcard:nth-child(1){transform:var(--path-rest-1);transition-delay:.08s}
+#path .m-fan.vis > .pcard:nth-child(2){transform:var(--path-rest-2);transition-delay:.2s}
+#path .m-fan.vis > .pcard:nth-child(3){transform:var(--path-rest-3);transition-delay:.32s}
+
+/* One-shot enter scanline */
+#path .pcard::before{
+  content:"";
+  position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--c),transparent);
+  opacity:0;z-index:5;pointer-events:none;
+}
+#path .m-fan.vis > .pcard::before{animation:pathScan .75s ease-out both}
+#path .m-fan.vis > .pcard:nth-child(1)::before{animation-delay:.18s}
+#path .m-fan.vis > .pcard:nth-child(2)::before{animation-delay:.3s}
+#path .m-fan.vis > .pcard:nth-child(3)::before{animation-delay:.42s}
+@keyframes pathScan{0%{opacity:0;top:0}18%{opacity:1}100%{opacity:0;top:100%}}
+
+/* Photo reveal — opacity only so Ken Burns transform stays free */
+#path .m-fan > .pcard .pcard-art .pimg{
+  opacity:0;
+  animation:none;
+  transition:opacity .65s var(--path-ease);
+}
+#path .m-fan.vis > .pcard .pcard-art .pimg{
+  opacity:.92;
+  animation:pimgKB 13s ease-in-out infinite alternate;
+}
+#path .m-fan.vis > .pcard:nth-child(1) .pcard-art .pimg{transition-delay:.28s;animation-delay:.9s}
+#path .m-fan.vis > .pcard:nth-child(2) .pcard-art .pimg{transition-delay:.4s;animation-delay:1.05s}
+#path .m-fan.vis > .pcard:nth-child(3) .pcard-art .pimg{transition-delay:.52s;animation-delay:1.2s}
+
+/* Body cascade: icon → title → copy → CTA */
+#path .m-fan > .pcard .ic{
+  opacity:0;
+  transform:scale(.42) rotate(-12deg);
+  transition:
+    opacity .45s var(--path-ease),
+    transform .55s var(--path-spring),
+    border-color .4s,
+    box-shadow .4s;
+}
+#path .m-fan > .pcard h3,
+#path .m-fan > .pcard p,
+#path .m-fan > .pcard .more{
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .5s var(--path-ease),transform .5s var(--path-ease);
+}
+#path .m-fan.vis > .pcard .ic{opacity:1;transform:none}
+#path .m-fan.vis > .pcard h3,
+#path .m-fan.vis > .pcard p,
+#path .m-fan.vis > .pcard .more{opacity:1;transform:none}
+#path .m-fan.vis > .pcard:nth-child(1) .ic{transition-delay:.42s}
+#path .m-fan.vis > .pcard:nth-child(1) h3{transition-delay:.54s}
+#path .m-fan.vis > .pcard:nth-child(1) p{transition-delay:.64s}
+#path .m-fan.vis > .pcard:nth-child(1) .more{transition-delay:.74s}
+#path .m-fan.vis > .pcard:nth-child(2) .ic{transition-delay:.54s}
+#path .m-fan.vis > .pcard:nth-child(2) h3{transition-delay:.66s}
+#path .m-fan.vis > .pcard:nth-child(2) p{transition-delay:.76s}
+#path .m-fan.vis > .pcard:nth-child(2) .more{transition-delay:.86s}
+#path .m-fan.vis > .pcard:nth-child(3) .ic{transition-delay:.66s}
+#path .m-fan.vis > .pcard:nth-child(3) h3{transition-delay:.78s}
+#path .m-fan.vis > .pcard:nth-child(3) p{transition-delay:.88s}
+#path .m-fan.vis > .pcard:nth-child(3) .more{transition-delay:.98s}
+
+/* Hover — lift from the resting fan pose (preserve tilt/offset) */
+#path .m-fan.vis > .pcard:hover{
+  border-color:rgba(var(--c-rgb),.5);
+  background:var(--navy-2);
+  box-shadow:0 30px 70px rgba(0,0,0,.45);
+}
+#path .m-fan.vis > .pcard:nth-child(1):hover{transform:translateX(-56px) rotate(-4deg) translateY(-8px)}
+#path .m-fan.vis > .pcard:nth-child(2):hover{transform:translateY(32px) scale(.95)}
+#path .m-fan.vis > .pcard:nth-child(3):hover{transform:translateX(56px) rotate(4deg) translateY(-8px)}
+#path .m-fan.vis > .pcard:hover .pcard-art{transform:scale(1.05)}
+#path .m-fan.vis > .pcard:hover .ic{
+  transform:scale(1.12) translateY(-2px);
+  border-color:rgba(var(--c-rgb),.7);
+  box-shadow:0 12px 30px rgba(0,0,0,.42),0 0 0 8px rgba(var(--c-rgb),.14),inset 0 0 16px rgba(var(--c-rgb),.22);
+}
+#path .m-fan.vis > .pcard:hover .more svg{transform:translateX(5px)}
+
+@media(prefers-reduced-motion:reduce){
+  #path .m-fan > .pcard,
+  #path .m-fan.vis > .pcard,
+  #path .m-fan > .pcard .ic,
+  #path .m-fan > .pcard h3,
+  #path .m-fan > .pcard p,
+  #path .m-fan > .pcard .more,
+  #path .m-fan > .pcard .pcard-art .pimg,
+  #path .m-fan.vis > .pcard .pcard-art .pimg{
+    opacity:1!important;
+    transition:none!important;
+    animation:none!important;
+  }
+  #path .m-fan > .pcard:nth-child(1),
+  #path .m-fan.vis > .pcard:nth-child(1){transform:var(--path-rest-1)!important}
+  #path .m-fan > .pcard:nth-child(2),
+  #path .m-fan.vis > .pcard:nth-child(2){transform:var(--path-rest-2)!important}
+  #path .m-fan > .pcard:nth-child(3),
+  #path .m-fan.vis > .pcard:nth-child(3){transform:var(--path-rest-3)!important}
+  #path .m-fan > .pcard .ic,
+  #path .m-fan > .pcard h3,
+  #path .m-fan > .pcard p,
+  #path .m-fan > .pcard .more{transform:none!important}
+  #path .pcard::before,
+  #path .m-fan.vis > .pcard::before{animation:none!important;opacity:0!important}
+  #path .pcard-art,
+  #path .m-fan.vis > .pcard:hover .pcard-art{transform:none!important}
+  #path .parallax{translate:none!important}
+}
+
+@media(max-width:880px){
+  /* Stacked: drop the fan offsets so cards align cleanly */
+  #path{
+    --path-rest-1:none;
+    --path-rest-2:none;
+    --path-rest-3:none;
+  }
+}
 
 /* ===== Site gradient background (hero video is section-scoped) ===== */
 .site-bg{
