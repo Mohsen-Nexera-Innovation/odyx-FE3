@@ -235,7 +235,7 @@ export default function Home() {
             <a href="/solutions/dentists" className="pcard teal reveal build">
               <div className="pcard-art">
                 <img
-                  className="pimg"
+                  className="pimg parallax"
                   src="/img/paths/dentist.jpg"
                   alt="Dentist using a chairside scanner"
                 />
@@ -272,7 +272,7 @@ export default function Home() {
             <a href="/solutions/labs" className="pcard reveal build">
               <div className="pcard-art">
                 <img
-                  className="pimg"
+                  className="pimg parallax"
                   src="/img/paths/lab.jpg"
                   alt="Dental lab production equipment"
                 />
@@ -295,7 +295,7 @@ export default function Home() {
             <a href="/workflows" className="pcard teal reveal build">
               <div className="pcard-art">
                 <img
-                  className="pimg"
+                  className="pimg parallax"
                   src="/img/paths/guest.jpg"
                   alt="Digital dentistry on screen"
                 />
@@ -407,7 +407,7 @@ export default function Home() {
         <div className="wrap">
           <SecHead eyebrow="The ODYX Ecosystem" />
         </div>
-        <div className="m-up">
+        <div className="m-scale">
           <EcosystemHighlights />
         </div>
         <div className="wrap">
@@ -433,7 +433,7 @@ export default function Home() {
               </a>
             }
           />
-          <div className="m-up">
+          <div className="m-rot">
             <ProductGallery />
           </div>
         </div>
@@ -501,7 +501,9 @@ export default function Home() {
               </a>
             }
           />
-          <NewsShowcase />
+          <div className="m-up">
+            <NewsShowcase />
+          </div>
         </div>
       </section>
 
@@ -509,7 +511,9 @@ export default function Home() {
       <section className="sec sec-orange sec-motion" id="register">
         <div className="wrap">
           <SecHead eyebrow="Device Registration" />
-          <RegisterDevice />
+          <div className="m-left">
+            <RegisterDevice />
+          </div>
         </div>
       </section>
 
@@ -545,7 +549,7 @@ export default function Home() {
               ].map(([t, d, price, cta, img]) => (
                 <div key={t} className="shop-card build">
                   <div className="shop-media">
-                    <div className="imgslot">
+                    <div className="imgslot parallax">
                       <PH label={t} />
                       <img data-isrc={img} alt={t} />
                     </div>
