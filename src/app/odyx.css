@@ -560,18 +560,43 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 .m-underline.vis::after,.reveal.in .m-underline::after{width:100%}
 .sec-head .m-underline::after{box-shadow:0 0 18px rgba(var(--orange-rgb),.35)}
 
-/* ===== HOMEPAGE SECTION ENTER =====
-   Do NOT translate/scale the section shell — that stacks sections on each other.
-   Shell stays put; chrome (divider) + inner content carry the motion. */
+/* ===== HOMEPAGE SECTION ENTER (Apple / Notion / Netflix style) =====
+   Whole section band slides in from the page edge into place.
+   Alternating left/right + rise; layout space reserved; #top clips X overflow. */
+#top{
+  overflow-x:clip;
+}
 #top > .sec.sec-motion{
-  opacity:1;
-  transform:none;
+  --sec-ease:cubic-bezier(.22, 1, .36, 1);
+  opacity:0;
+  transform:translate3d(0, 12vh, 0) scale(.97);
+  transform-origin:center top;
+  transition:
+    opacity 1s var(--sec-ease),
+    transform 1.2s var(--sec-ease);
+  will-change:transform, opacity;
+}
+/* From left page border */
+#top > .sec.sec-motion[data-enter="left"]:not(.sec-in){
+  transform:translate3d(-9vw, 10vh, 0) scale(.97);
+}
+/* From right page border */
+#top > .sec.sec-motion[data-enter="right"]:not(.sec-in){
+  transform:translate3d(9vw, 10vh, 0) scale(.97);
+}
+/* Straight up from bottom edge */
+#top > .sec.sec-motion[data-enter="up"]:not(.sec-in){
+  transform:translate3d(0, 14vh, 0) scale(.96);
 }
 #top > .sec.sec-motion.sec-in{
   opacity:1;
   transform:none;
 }
-/* Inner content lifts in once the section is marked .sec-in */
+#top > .sec.sec-motion.sec-in.sec-settled{
+  will-change:auto;
+}
+
+/* Content settles slightly after the band lands */
 #top > .sec.sec-motion:not(.sec-in) > .wrap,
 #top > .sec.sec-motion:not(.sec-in) > .m-up,
 #top > .sec.sec-motion:not(.sec-in) > .m-left,
@@ -580,8 +605,8 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 #top > .sec.sec-motion:not(.sec-in) > .m-rot,
 #top > .sec.sec-motion:not(.sec-in) > .m-stagger,
 #top > .sec.sec-motion:not(.sec-in) > .m-fan{
-  opacity:0;
-  transform:translateY(36px);
+  opacity:.35;
+  transform:translateY(28px);
 }
 #top > .sec.sec-motion.sec-in > .wrap,
 #top > .sec.sec-motion.sec-in > .m-up,
@@ -593,33 +618,35 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 #top > .sec.sec-motion.sec-in > .m-fan{
   opacity:1;
   transform:none;
-  transition:opacity .95s cubic-bezier(.16,1,.3,1), transform .95s cubic-bezier(.16,1,.3,1);
+  transition:
+    opacity .85s var(--sec-ease) .18s,
+    transform .95s var(--sec-ease) .18s;
 }
 
-/* Homepage-amplified motion tokens (inner pages keep global defaults) */
-#top .reveal{transform:translateY(40px);transition:.9s cubic-bezier(.16,1,.3,1)}
-#top .m-up{transform:translateY(56px)}
-#top .m-up.vis{transition:1s cubic-bezier(.16,1,.3,1)}
-#top .m-left{transform:translateX(-56px)}
-#top .m-left.vis{transition:1s cubic-bezier(.16,1,.3,1)}
-#top .m-right{transform:translateX(56px)}
-#top .m-right.vis{transition:1s cubic-bezier(.16,1,.3,1)}
-#top .m-scale{transform:scale(.9)}
-#top .m-scale.vis{transition:1.05s cubic-bezier(.16,1,.3,1)}
-#top .m-rot{transform:perspective(900px) rotateX(12deg) translateY(36px)}
-#top .m-rot.vis{transition:1.05s cubic-bezier(.16,1,.3,1)}
-#top .m-stagger>*{transform:translateY(40px) scale(.97)}
-#top .m-stagger.vis>*{transition:.9s cubic-bezier(.16,1,.3,1)}
-#top .m-stagger.vis>*:nth-child(1){transition-delay:.08s}
-#top .m-stagger.vis>*:nth-child(2){transition-delay:.16s}
-#top .m-stagger.vis>*:nth-child(3){transition-delay:.24s}
-#top .m-stagger.vis>*:nth-child(4){transition-delay:.32s}
-#top .m-stagger.vis>*:nth-child(5){transition-delay:.4s}
-#top .m-stagger.vis>*:nth-child(6){transition-delay:.48s}
-#top .m-fan>*:nth-child(1){transform:translateX(-64px) rotate(-5deg)}
-#top .m-fan>*:nth-child(2){transform:translateY(48px) scale(.94)}
-#top .m-fan>*:nth-child(3){transform:translateX(64px) rotate(5deg)}
-#top .m-fan.vis>*{transition:1.05s cubic-bezier(.16,1,.3,1)}
+/* Homepage motion tokens — secondary beats after the band enters */
+#top .reveal{transform:translateY(36px);transition:.85s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
+#top .m-up{transform:translateY(48px)}
+#top .m-up.vis{transition:.95s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
+#top .m-left{transform:translateX(-48px)}
+#top .m-left.vis{transition:.95s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
+#top .m-right{transform:translateX(48px)}
+#top .m-right.vis{transition:.95s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
+#top .m-scale{transform:scale(.92)}
+#top .m-scale.vis{transition:1s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
+#top .m-rot{transform:perspective(900px) rotateX(10deg) translateY(28px)}
+#top .m-rot.vis{transition:1s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
+#top .m-stagger>*{transform:translateY(32px) scale(.98)}
+#top .m-stagger.vis>*{transition:.85s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
+#top .m-stagger.vis>*:nth-child(1){transition-delay:.1s}
+#top .m-stagger.vis>*:nth-child(2){transition-delay:.18s}
+#top .m-stagger.vis>*:nth-child(3){transition-delay:.26s}
+#top .m-stagger.vis>*:nth-child(4){transition-delay:.34s}
+#top .m-stagger.vis>*:nth-child(5){transition-delay:.42s}
+#top .m-stagger.vis>*:nth-child(6){transition-delay:.5s}
+#top .m-fan>*:nth-child(1){transform:translateX(-56px) rotate(-4deg)}
+#top .m-fan>*:nth-child(2){transform:translateY(40px) scale(.95)}
+#top .m-fan>*:nth-child(3){transform:translateX(56px) rotate(4deg)}
+#top .m-fan.vis>*{transition:1s var(--sec-ease, cubic-bezier(.22,1,.36,1))}
 #top .m-fan.vis>*:nth-child(2){transition-delay:.12s}
 #top .m-fan.vis>*:nth-child(3){transition-delay:.22s}
 
@@ -674,7 +701,9 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 }
 
 @media(prefers-reduced-motion:reduce){
-  #top > .sec.sec-motion{opacity:1;transform:none}
+  #top > .sec.sec-motion{
+    opacity:1;transform:none;filter:none;will-change:auto;transition:none
+  }
   #top > .sec.sec-motion::after{width:min(720px, 78%);opacity:1}
   #top > .sec.sec-motion:not(.sec-in) > .wrap,
   #top > .sec.sec-motion:not(.sec-in) > .m-up,
@@ -692,7 +721,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
   #top > .sec.sec-motion.sec-in > .m-rot,
   #top > .sec.sec-motion.sec-in > .m-stagger,
   #top > .sec.sec-motion.sec-in > .m-fan{
-    opacity:1;transform:none
+    opacity:1;transform:none;transition:none
   }
   #top .sec-head.reveal .eyebrow,
   #top .sec-head.reveal h2,

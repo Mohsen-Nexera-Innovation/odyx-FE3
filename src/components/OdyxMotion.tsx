@@ -74,7 +74,7 @@ function flushVisibleOnLoad(
 
   document.querySelectorAll<HTMLElement>('#top > .sec.sec-motion:not(.sec-in)').forEach((el) => {
     if (!isInViewport(el)) return;
-    el.classList.add('sec-in');
+    el.classList.add('sec-in', 'sec-settled');
     secIo.unobserve(el);
   });
 
@@ -140,7 +140,9 @@ export default function OdyxMotion() {
         e.classList.add('in', 'built', 'vis'),
       );
       document.querySelectorAll(MOTION_SEL).forEach((e) => e.classList.add('vis'));
-      document.querySelectorAll('#top > .sec.sec-motion').forEach((e) => e.classList.add('sec-in'));
+      document.querySelectorAll('#top > .sec.sec-motion').forEach((e) => {
+        e.classList.add('sec-in', 'sec-settled');
+      });
       document.querySelectorAll('[data-count]').forEach((e) => {
         e.textContent = (e as HTMLElement).dataset.count || '0';
       });
@@ -177,16 +179,24 @@ export default function OdyxMotion() {
     document.querySelectorAll(`.why-row,.news-lead,.news-item,.shop-card,${MOTION_SEL}`).forEach((el) => vio.observe(el));
     observers.push(vio);
 
+    const sections = [...document.querySelectorAll<HTMLElement>('#top > .sec.sec-motion')];
+    const enterCycle = ['left', 'up', 'right', 'up'] as const;
+    sections.forEach((el, i) => {
+      if (!el.dataset.enter) el.dataset.enter = enterCycle[i % enterCycle.length];
+    });
+
     const secIo = new IntersectionObserver(
       (es) => es.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('sec-in');
-          secIo.unobserve(e.target);
-        }
+        if (!e.isIntersecting) return;
+        const el = e.target as HTMLElement;
+        el.classList.add('sec-in');
+        window.setTimeout(() => el.classList.add('sec-settled'), 1300);
+        secIo.unobserve(el);
       }),
-      { threshold: 0.12, rootMargin: '0px 0px -2% 0px' },
+      /* Start as the band crosses the lower viewport edge — reads as “entering the page” */
+      { threshold: 0.08, rootMargin: '0px 0px -12% 0px' },
     );
-    document.querySelectorAll('#top > .sec.sec-motion').forEach((el) => secIo.observe(el));
+    sections.forEach((el) => secIo.observe(el));
     observers.push(secIo);
 
     const bio = new IntersectionObserver(
