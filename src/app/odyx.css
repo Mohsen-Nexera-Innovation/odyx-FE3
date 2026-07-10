@@ -1616,7 +1616,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
   --acc:var(--teal); --acc-rgb:var(--teal-rgb);
   position:relative; flex:0 0 var(--slideW);
   scroll-snap-align:center; scroll-snap-stop:always;
-  border-radius:24px; overflow:hidden; border:1px solid var(--line);
+  border-radius:24px; overflow:hidden; border:none;
   aspect-ratio:16/10; background:var(--navy-card);
   box-shadow:var(--hl-slide-shadow); isolation:isolate;
   /* transform/opacity only — no reflow, so neighbors recede without layout shift */
