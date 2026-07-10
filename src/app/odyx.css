@@ -1441,7 +1441,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
 .hl-slider{
   --pad:clamp(16px,4vw,64px);
   --acc:var(--teal); --acc-rgb:var(--teal-rgb);
-  --hl-slide-shadow:0 30px 90px rgba(0,0,0,.5);
+  --hl-slide-shadow:none;
   --hl-slide-inactive-opacity:.42;
   position:relative; width:100%;
   display:flex; flex-direction:column; gap:clamp(20px,2.6vw,36px);
