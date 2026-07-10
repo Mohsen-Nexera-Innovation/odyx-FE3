@@ -1591,7 +1591,6 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
   --pad:clamp(16px,4vw,64px);
   --acc:var(--teal); --acc-rgb:var(--teal-rgb);
   --hl-slide-shadow:none;
-  --hl-slide-inactive-opacity:.42;
   position:relative; width:100%;
   display:flex; flex-direction:column; gap:clamp(20px,2.6vw,36px);
   margin-top:clamp(8px,2vw,24px);
@@ -1619,22 +1618,45 @@ footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:72px
   border-radius:24px; overflow:hidden; border:none;
   aspect-ratio:16/10; background:var(--navy-card);
   box-shadow:var(--hl-slide-shadow); isolation:isolate;
-  /* transform/opacity only — no reflow, so neighbors recede without layout shift */
-  transition:opacity .55s ease, transform .55s cubic-bezier(.16,1,.3,1);
+  /* transform only — no reflow, so neighbors recede without layout shift */
+  transition:transform .55s cubic-bezier(.16,1,.3,1);
 }
 .hl-slide[data-accent="orange"]{--acc:var(--orange); --acc-rgb:var(--orange-rgb)}
-.hl-slide:not(.on){opacity:var(--hl-slide-inactive-opacity); transform:scale(.93)}
-.hl-slide.on{opacity:1; transform:none}
+/* Inactive: media stays visible; scale + dim keep active card dominant */
+.hl-slide:not(.on){transform:scale(.93)}
+.hl-slide.on{transform:none}
 @media(min-width:900px){.hl-slide{aspect-ratio:16/9}}
 
-.hl-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; background:var(--navy-deep)}
+.hl-poster,
+.hl-video{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:var(--navy-deep);
+}
+.hl-poster{z-index:0; transition:filter .55s ease}
+.hl-video{
+  z-index:1; opacity:0; pointer-events:none;
+  transition:opacity .45s ease;
+}
+/* Active: process video. Inactive: unique cover still with a light dim/shadow */
+.hl-slide.on .hl-video{opacity:1}
+.hl-slide:not(.on) .hl-poster{filter:brightness(.72) saturate(.75)}
 .hl-veil{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
+  position:absolute; inset:0; z-index:2; pointer-events:none;
   background:
     linear-gradient(0deg, rgba(11,20,36,.9) 0%, rgba(11,20,36,.35) 42%, transparent 68%),
     radial-gradient(120% 90% at 82% 12%, rgba(var(--acc-rgb),.28), transparent 60%);
+  transition:background .55s ease, opacity .55s ease;
 }
-.hl-cap{position:absolute; z-index:2; left:clamp(18px,3vw,40px); right:clamp(18px,3vw,40px); bottom:clamp(18px,3vw,36px); color:#fff}
+.hl-slide:not(.on) .hl-veil{
+  opacity:1;
+  background:
+    linear-gradient(0deg, rgba(11,20,36,.82) 0%, rgba(11,20,36,.5) 48%, rgba(11,20,36,.32) 100%),
+    radial-gradient(120% 90% at 82% 12%, rgba(var(--acc-rgb),.1), transparent 60%);
+}
+.hl-cap{
+  position:absolute; z-index:3; left:clamp(18px,3vw,40px); right:clamp(18px,3vw,40px); bottom:clamp(18px,3vw,36px); color:#fff;
+  transition:opacity .55s ease;
+}
+.hl-slide:not(.on) .hl-cap{opacity:.45}
 .hl-no{display:inline-flex; align-items:center; gap:9px; font-size:.72rem; font-weight:700; letter-spacing:.24em; color:var(--acc)}
 .hl-glyph{display:inline-flex; width:20px; height:20px}
 .hl-glyph svg{width:100%; height:100%}

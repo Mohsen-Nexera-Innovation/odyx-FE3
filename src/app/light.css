@@ -105,7 +105,6 @@ main{
 .sec .hl-pill.on{border-color:var(--ink-muted)}
 .sec .hl-slider{
   --hl-slide-shadow:none;
-  --hl-slide-inactive-opacity:.62;
 }
 .sec .why-tab{background:var(--paper-card);box-shadow:0 10px 30px rgba(8,80,130,.06)}
 .sec .why-tab.on{box-shadow:0 16px 36px rgba(8,80,130,.14)}
