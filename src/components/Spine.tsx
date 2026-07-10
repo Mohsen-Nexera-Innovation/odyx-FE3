@@ -15,11 +15,11 @@ type Section = {
 };
 
 const SECTIONS: Section[] = [
+  { target: '#why', title: 'Why ODYX', icon: 'why' },
   { target: '#path', title: 'Choose Path', icon: 'path' },
   { target: '#ecosystem', title: 'Ecosystem', icon: 'ecosystem' },
   { target: '#featured', title: 'Products', icon: 'products' },
   { target: '#clinical', title: 'Applications', icon: 'clinical' },
-  { target: '#why', title: 'Why ODYX', icon: 'why' },
   { target: '#cases-preview', title: 'Cases', icon: 'cases' },
   { target: '#learning-preview', title: 'Learning', icon: 'learning' },
   { target: '#support-preview', title: 'Support', icon: 'support' },

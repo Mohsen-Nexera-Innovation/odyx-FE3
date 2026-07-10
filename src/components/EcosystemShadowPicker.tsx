@@ -15,11 +15,7 @@ import { applyEcosystemShadowPreview } from '@/lib/ecosystem-shadow-preview';
 const DEFAULT_CUSTOM_COLOR = '#085082';
 
 function persistState(shadowId: string, customColor: string, inactiveOpacity: number) {
-  const isDefault =
-    shadowId === DEFAULT_ECO_SHADOW_ID &&
-    inactiveOpacity === DEFAULT_ECO_INACTIVE_OPACITY;
-
-  if (isDefault) {
+  if (shadowId === DEFAULT_ECO_SHADOW_ID) {
     localStorage.removeItem(ECO_SHADOW_STORAGE_KEY);
     localStorage.removeItem(ECO_INACTIVE_OPACITY_STORAGE_KEY);
     localStorage.removeItem(ECO_CUSTOM_COLOR_STORAGE_KEY);
@@ -93,9 +89,9 @@ export default function EcosystemShadowPicker() {
       : current?.swatch ?? 'transparent';
 
   return (
-    <div className="eco-shadow-picker" aria-label="Ecosystem shadow preview tool">
+    <div className="eco-shadow-picker" aria-label="Ecosystem section color preview tool">
       <label className="eco-shadow-picker-label" htmlFor="eco-shadow-select">
-        Eco shadow
+        Eco section
       </label>
       <select
         id="eco-shadow-select"
@@ -117,8 +113,8 @@ export default function EcosystemShadowPicker() {
         value={customColor}
         onChange={(e) => onCustomColorChange(e.target.value)}
         disabled={!ready}
-        aria-label="Custom shadow color"
-        title="Pick a custom shadow tint"
+        aria-label="Custom section color"
+        title="Pick a custom section tint"
       />
       <span
         className="eco-shadow-picker-swatch"
@@ -126,7 +122,7 @@ export default function EcosystemShadowPicker() {
         aria-hidden
       />
       <label className="eco-shadow-picker-opacity-label" htmlFor="eco-shadow-opacity">
-        Fade
+        Strength
       </label>
       <input
         id="eco-shadow-opacity"
@@ -138,7 +134,7 @@ export default function EcosystemShadowPicker() {
         value={inactiveOpacity}
         onChange={(e) => onOpacityChange(parseFloat(e.target.value))}
         disabled={!ready}
-        aria-label="Inactive slide fade"
+        aria-label="Section color intensity"
       />
       <span className="eco-shadow-picker-opacity-val" aria-live="polite">
         {Math.round(inactiveOpacity * 100)}%

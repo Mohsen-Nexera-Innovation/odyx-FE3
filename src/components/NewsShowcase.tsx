@@ -44,7 +44,7 @@ export default function NewsShowcase() {
     <div className="news-grid" onMouseEnter={() => (paused.current = true)} onMouseLeave={() => (paused.current = false)}>
       <a href="#" className="news-lead">
         <div className="news-lead-media">
-          <img src={s.img} alt={s.alt} className={`news-lead-img${anim ? ' swap' : ''}`} />
+          <img src={s.img} alt={s.alt} className={`news-lead-img parallax${anim ? ' swap' : ''}`} />
         </div>
         <span className="badge2">{s.tag}</span>
         <h3>{s.title}</h3>

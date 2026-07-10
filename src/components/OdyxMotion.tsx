@@ -5,11 +5,35 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 const MOTION_SEL = '.m-up,.m-left,.m-right,.m-scale,.m-rot,.m-stagger,.m-fan,.m-words';
+const BUILD_STAGGER_HOME = 220;
+const BUILD_STAGGER_DEFAULT = 160;
 
 function isInViewport(el: Element) {
   const rect = el.getBoundingClientRect();
   const vh = window.innerHeight || document.documentElement.clientHeight;
   return rect.top < vh * 0.94 && rect.bottom > vh * 0.06;
+}
+
+function buildStaggerMs(el: Element) {
+  return el.closest('#top') ? BUILD_STAGGER_HOME : BUILD_STAGGER_DEFAULT;
+}
+
+function updateParallax() {
+  const top = document.getElementById('top');
+  if (!top) return;
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  top.querySelectorAll<HTMLElement>('.parallax').forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    // Skip far-offscreen nodes
+    if (rect.bottom < -80 || rect.top > vh + 80) {
+      el.style.setProperty('--par', '0px');
+      return;
+    }
+    const mid = rect.top + rect.height / 2;
+    const progress = (mid - vh / 2) / vh;
+    const offset = Math.max(-24, Math.min(24, progress * -28));
+    el.style.setProperty('--par', `${offset.toFixed(1)}px`);
+  });
 }
 
 function flushVisibleOnLoad(
@@ -27,8 +51,9 @@ function flushVisibleOnLoad(
 
   document.querySelectorAll<HTMLElement>('.build-group').forEach((group) => {
     if (!isInViewport(group)) return;
+    const stagger = buildStaggerMs(group);
     group.querySelectorAll('.build').forEach((item, i) => {
-      setTimeout(() => item.classList.add('built'), i * 160);
+      setTimeout(() => item.classList.add('built'), i * stagger);
     });
     buildIo.unobserve(group);
   });
@@ -49,7 +74,7 @@ function flushVisibleOnLoad(
 
   document.querySelectorAll<HTMLElement>('#top > .sec.sec-motion:not(.sec-in)').forEach((el) => {
     if (!isInViewport(el)) return;
-    el.classList.add('sec-in');
+    el.classList.add('sec-in', 'sec-settled');
     secIo.unobserve(el);
   });
 
@@ -90,9 +115,11 @@ export default function OdyxMotion() {
       prog!.style.width = `${(h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) || 0}%`;
       if (hero) {
         const vh = window.innerHeight || h.clientHeight;
-        const exit = Math.min(1, Math.max(0, h.scrollTop / (vh * 0.85)));
+        // Snappier handoff into Why — reaches full curtain sooner
+        const exit = Math.min(1, Math.max(0, h.scrollTop / (vh * 0.55)));
         hero.style.setProperty('--hero-exit', String(exit));
       }
+      if (!reduce) updateParallax();
     };
     addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -113,7 +140,9 @@ export default function OdyxMotion() {
         e.classList.add('in', 'built', 'vis'),
       );
       document.querySelectorAll(MOTION_SEL).forEach((e) => e.classList.add('vis'));
-      document.querySelectorAll('#top > .sec.sec-motion').forEach((e) => e.classList.add('sec-in'));
+      document.querySelectorAll('#top > .sec.sec-motion').forEach((e) => {
+        e.classList.add('sec-in', 'sec-settled');
+      });
       document.querySelectorAll('[data-count]').forEach((e) => {
         e.textContent = (e as HTMLElement).dataset.count || '0';
       });
@@ -130,7 +159,7 @@ export default function OdyxMotion() {
           io.unobserve(e.target);
         }
       }),
-      { threshold: 0.08, rootMargin: '0px 0px -4% 0px' },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
     );
     document.querySelectorAll<HTMLElement>('.reveal').forEach((el, i) => {
       el.style.transitionDelay = `${(i % 3) * 0.07}s`;
@@ -145,21 +174,29 @@ export default function OdyxMotion() {
           vio.unobserve(e.target);
         }
       }),
-      { threshold: 0.12 },
+      { threshold: 0.18, rootMargin: '0px 0px -6% 0px' },
     );
     document.querySelectorAll(`.why-row,.news-lead,.news-item,.shop-card,${MOTION_SEL}`).forEach((el) => vio.observe(el));
     observers.push(vio);
 
+    const sections = [...document.querySelectorAll<HTMLElement>('#top > .sec.sec-motion')];
+    const enterCycle = ['left', 'up', 'right', 'up'] as const;
+    sections.forEach((el, i) => {
+      if (!el.dataset.enter) el.dataset.enter = enterCycle[i % enterCycle.length];
+    });
+
     const secIo = new IntersectionObserver(
       (es) => es.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('sec-in');
-          secIo.unobserve(e.target);
-        }
+        if (!e.isIntersecting) return;
+        const el = e.target as HTMLElement;
+        el.classList.add('sec-in');
+        window.setTimeout(() => el.classList.add('sec-settled'), 1300);
+        secIo.unobserve(el);
       }),
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+      /* Start as the band crosses the lower viewport edge — reads as “entering the page” */
+      { threshold: 0.08, rootMargin: '0px 0px -12% 0px' },
     );
-    document.querySelectorAll('#top > .sec.sec-motion').forEach((el) => secIo.observe(el));
+    sections.forEach((el) => secIo.observe(el));
     observers.push(secIo);
 
     const bio = new IntersectionObserver(
@@ -167,13 +204,14 @@ export default function OdyxMotion() {
         if (!e.isIntersecting) return;
         const g = e.target as HTMLElement;
         if (g.classList.contains('build-group')) {
-          g.querySelectorAll('.build').forEach((it, i) => setTimeout(() => it.classList.add('built'), i * 160));
+          const stagger = buildStaggerMs(g);
+          g.querySelectorAll('.build').forEach((it, i) => setTimeout(() => it.classList.add('built'), i * stagger));
         } else {
           g.classList.add('built');
         }
         bio.unobserve(g);
       }),
-      { threshold: 0.12 },
+      { threshold: 0.15 },
     );
     document.querySelectorAll('.build-group').forEach((g) => bio.observe(g));
     document.querySelectorAll('.build').forEach((b) => {
