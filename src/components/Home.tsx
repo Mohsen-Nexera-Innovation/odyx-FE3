@@ -1,6 +1,7 @@
 /* ODYX home - ported from Sample/index.html (3D journey hero excluded). Static markup;
    animations are applied by <OdyxMotion/>. Same classes/flavour as the Sample stylesheet. */
 import HeroJourney from "./HeroJourney";
+import WhyOdyx from "./WhyOdyx";
 import NewsShowcase from "./NewsShowcase";
 import ProductGallery from "./ProductGallery";
 import RegisterDevice from "./RegisterDevice";
@@ -214,45 +215,6 @@ const FEAT = [
     img: "/img/feat-resin.jpg",
   },
 ] as const;
-const WHY = [
-  [
-    "REASON 01",
-    "Precision",
-    "Accurate scans and prints that fit the first time - less chair time, fewer remakes.",
-    "99",
-    "%",
-    "First-fit accuracy",
-    "/img/why/why-precision.png",
-  ],
-  [
-    "REASON 02",
-    "Integrated workflow",
-    "Every device connects, so data flows scan-to-delivery with no compatibility guesswork.",
-    "6",
-    "",
-    "Connected steps",
-    "/img/why/why-integrated.png",
-  ],
-  [
-    "REASON 03",
-    "Training & support",
-    "An academy and a team that grow with your practice, from first scan to advanced cases.",
-    "24",
-    "/7",
-    "Support access",
-    "/img/why/why-training.png",
-  ],
-  [
-    "REASON 04",
-    "Clinical confidence",
-    "Proven materials and validated curing for safe, durable, biocompatible results.",
-    "5",
-    "",
-    "Clinical resin lines",
-    "/img/why/why-clinical.png",
-  ],
-] as const;
-
 export default function Home() {
   return (
     <div id="top">
@@ -261,6 +223,8 @@ export default function Home() {
         {/* full-bleed video hero: scan -> smile, stepper synced to the video */}
         <HeroJourney />
       </section>
+
+      <WhyOdyx />
 
       {/* ===== Choose Your Path ===== */}
       <section className="sec sec-mint sec-motion" id="path">
@@ -480,38 +444,6 @@ export default function Home() {
         <div className="wrap">
           <SecHead eyebrow="Clinical Applications" />
           <ClinicalBento />
-        </div>
-      </section>
-
-      {/* ===== Why ODYX ===== */}
-      <section className="sec sec-teal sec-motion" id="why">
-        <div className="wrap">
-          <SecHead eyebrow="Why ODYX" />
-          <div className="why-grid m-stagger">
-            {WHY.map(([n, t, d, count, suf, lbl, img]) => (
-              <article className="why-card reveal" key={n}>
-                <div className="why-card__media">
-                  <img src={img} alt={t} loading="lazy" />
-                </div>
-                <div className="why-card__body">
-                  <div className="why-card__stat">
-                    <span
-                      className="why-card__num"
-                      data-count={count}
-                      data-suf={suf}
-                    >
-                      0
-                    </span>
-                    {suf && <span className="why-card__suf">{suf}</span>}
-                  </div>
-                  <div className="why-card__lbl">{lbl}</div>
-                  <div className="why-card__n">{n}</div>
-                  <h3>{t}</h3>
-                  <p>{d}</p>
-                </div>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
 
