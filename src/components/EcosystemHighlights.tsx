@@ -2,6 +2,7 @@
 // "Get the highlights"-style ecosystem slider (scan -> smile). Self-contained:
 // a CSS scroll-snap peek-card row where the active card is centered and only the
 // visible slide's video plays; a pill bar tracks the active video's currentTime / duration.
+// Inactive/peek cards show each step's unique cover still (dimmed); active reveals video.
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 type Accent = 'teal' | 'orange';
@@ -15,8 +16,8 @@ interface EStep {
   poster: string;
 }
 
-// Reuse the two shipped clips cyclically; each step's still image is the paint-first poster.
-// Swapping in six real clips later is just editing this array.
+// Only two clips ship today, so they rotate as motion for the active card.
+// Each step keeps a unique cover still for peek cards. Swap in six real clips by editing `video`.
 const STEPS: EStep[] = [
   { no: '01', label: 'Scan', product: 'Intraoral Scanner', accent: 'teal', video: '/video/hero.mp4', poster: '/img/feat-scanner.jpg', cap: 'A chairside intraoral scan captures the mouth in seconds - no molds, just instant, accurate 3D data.' },
   { no: '02', label: 'Design', product: 'Design Software', accent: 'teal', video: '/video/dental-scan-animation.mp4', poster: '/img/odyx/design.webp', cap: 'Scan data flows into CAD, where the restoration is designed with precise, repeatable accuracy.' },
@@ -181,12 +182,13 @@ export default function EcosystemHighlights() {
             aria-roledescription="slide"
             aria-label={`${s.no} - ${s.label}`}
           >
+            <img className="hl-poster" src={s.poster} alt="" aria-hidden draggable={false} />
             <video
               ref={(el) => { videoRefs.current[i] = el; }}
               className="hl-video"
               muted
               playsInline
-              preload={i === 0 ? 'auto' : 'none'}
+              preload={i === active ? 'auto' : 'metadata'}
               poster={s.poster}
               aria-hidden
             >
