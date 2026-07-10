@@ -1,5 +1,5 @@
 import {
-  buildCustomShadow,
+  buildSectionBackground,
   DEFAULT_ECO_INACTIVE_OPACITY,
   DEFAULT_ECO_SHADOW_ID,
   getEcosystemShadowOption,
@@ -12,46 +12,48 @@ export type EcosystemShadowPreviewState = {
   inactiveOpacity?: number;
 };
 
-function resolveShadow(state: EcosystemShadowPreviewState): string | null {
+function resolveSectionBackground(state: EcosystemShadowPreviewState): string | null {
   const { shadowId, customColor } = state;
+  const intensity = state.inactiveOpacity ?? DEFAULT_ECO_INACTIVE_OPACITY;
+
+  if (shadowId === 'none') return 'transparent';
 
   if (shadowId === 'custom' && customColor) {
     const rgb = hexToRgb(customColor);
-    if (rgb) return buildCustomShadow(rgb.r, rgb.g, rgb.b);
+    if (rgb) return buildSectionBackground(rgb.r, rgb.g, rgb.b, intensity);
     return null;
   }
 
   const option = getEcosystemShadowOption(shadowId);
-  return option?.shadow ?? null;
+  if (!option?.tintRgb) return null;
+
+  const { r, g, b } = option.tintRgb;
+  return buildSectionBackground(r, g, b, intensity, option.deep);
 }
 
 export function applyEcosystemShadowPreview(state: EcosystemShadowPreviewState) {
   const root = document.documentElement;
-  const shadow = resolveShadow(state);
-  const inactiveOpacity =
-    state.inactiveOpacity ?? DEFAULT_ECO_INACTIVE_OPACITY;
 
-  const isDefault =
-    state.shadowId === DEFAULT_ECO_SHADOW_ID &&
-    inactiveOpacity === DEFAULT_ECO_INACTIVE_OPACITY;
-
-  if (isDefault) {
+  if (state.shadowId === DEFAULT_ECO_SHADOW_ID) {
     clearEcosystemShadowPreview();
     return;
   }
 
-  root.setAttribute('data-eco-shadow-preview', state.shadowId);
-  if (shadow) {
-    root.style.setProperty('--eco-preview-shadow', shadow);
-  } else {
-    root.style.removeProperty('--eco-preview-shadow');
+  const sectionBg = resolveSectionBackground(state);
+  if (!sectionBg) {
+    clearEcosystemShadowPreview();
+    return;
   }
-  root.style.setProperty('--eco-preview-inactive-opacity', String(inactiveOpacity));
+
+  const intensity = state.inactiveOpacity ?? DEFAULT_ECO_INACTIVE_OPACITY;
+  root.setAttribute('data-eco-shadow-preview', state.shadowId);
+  root.style.setProperty('--eco-preview-section-bg', sectionBg);
+  root.style.setProperty('--eco-preview-intensity', String(intensity));
 }
 
 export function clearEcosystemShadowPreview() {
   const root = document.documentElement;
   root.removeAttribute('data-eco-shadow-preview');
-  root.style.removeProperty('--eco-preview-shadow');
-  root.style.removeProperty('--eco-preview-inactive-opacity');
+  root.style.removeProperty('--eco-preview-section-bg');
+  root.style.removeProperty('--eco-preview-intensity');
 }

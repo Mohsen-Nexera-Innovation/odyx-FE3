@@ -277,13 +277,16 @@ html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page
   box-shadow:0 0 0 2px rgba(6,165,223,.2);
 }
 
-/* Ecosystem shadow preview — overrides #ecosystem slider card shadow + inactive fade */
-html[data-eco-shadow-preview] #ecosystem .hl-slider{
-  --hl-slide-shadow:var(--eco-preview-shadow);
-  --hl-slide-inactive-opacity:var(--eco-preview-inactive-opacity);
+/* Ecosystem section color preview — overrides #ecosystem band background */
+html[data-eco-shadow-preview] #ecosystem{
+  background:var(--eco-preview-section-bg)!important;
+  box-shadow:none;
+}
+html[data-eco-shadow-preview] #ecosystem::before{
+  display:none!important;
 }
 
-/* Dev/preview tool — live-tune ecosystem card shadow + side-slide fade */
+/* Dev/preview tool — live-tune ecosystem section background tint */
 .eco-shadow-picker{
   position:fixed;
   left:16px;

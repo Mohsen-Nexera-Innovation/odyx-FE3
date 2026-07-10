@@ -205,19 +205,23 @@ footer .logo-img{height:40px;filter:none}
   --c-rgb:var(--sky-rgb);
 }
 #top .sec-orange .eyebrow{color:var(--sky-deep)}
-/* Homepage bands — paper × sky/teal only (orange token = sky on this theme) */
-#top > .sec.sec-orange{
-  background:
-    radial-gradient(1000px 560px at 18% 22%, rgba(var(--sky-rgb),.08), transparent 64%),
-    radial-gradient(720px 400px at 88% 12%, rgba(var(--teal-rgb),.05), transparent 58%),
-    linear-gradient(180deg, var(--paper) 0%, #f0f7fc 42%, var(--paper-2) 62%, var(--paper) 100%);
+/* Homepage canvas — one solid base so nothing peeks through between sections */
+#top{
+  background:var(--paper);
 }
+#top > .sec{
+  background:var(--paper);
+}
+#top > .sec::before,
+#top > .sec:nth-of-type(even)::before{
+  display:none !important;
+  content:none !important;
+  background:none !important;
+}
+#top > .sec.sec-orange,
 #top > .sec.sec-mint,
 #top > .sec.sec-teal{
-  background:
-    radial-gradient(1000px 560px at 50% 30%, rgba(var(--sky-rgb),.15), transparent 64%),
-    radial-gradient(700px 420px at 85% 8%, rgba(var(--teal-rgb),.09), transparent 60%),
-    linear-gradient(180deg, var(--paper) 0%, #e4f2fb 38%, #dceef8 58%, var(--paper-2) 100%);
+  background:var(--paper);
 }
 #top .hero-video .hc-line{background:linear-gradient(90deg,rgba(var(--teal-rgb),.28),rgba(6,165,223,.28))}
 #top .hero-video .hc-line .f{background:linear-gradient(90deg,var(--teal),var(--teal-soft) 28%,#06a5df)}
@@ -252,7 +256,7 @@ footer .logo-img{height:40px;filter:none}
 #top .reg-msg.pending{color:var(--sky-deep);border-color:rgba(6,165,223,.28);background:rgba(6,165,223,.10)}
 #top .shop-card:hover{border-color:rgba(6,165,223,.45)}
 #top .shop-flow .pulse-line::after{background:linear-gradient(90deg,transparent,var(--sky),transparent)}
-#top .sec-head .m-underline::after{background:linear-gradient(90deg,var(--teal),var(--sky));box-shadow:0 0 18px rgba(6,165,223,.35)}
+#top .sec-head .m-underline::after{background:linear-gradient(90deg,var(--teal),var(--sky));box-shadow:none}
 #top .eyebrow{color:var(--sky-deep)}
 #top .hero-video .hc-fx.cure{background:radial-gradient(circle at 50% 46%,rgba(6,165,223,.30),transparent 58%)}
 #top .pill-list a:hover{border-color:var(--sky);color:var(--sky-deep)}
@@ -264,19 +268,17 @@ footer .logo-img{height:40px;filter:none}
   isolation:isolate;
   border-radius:0;
 }
-/* Gap ≥ travel distance so rising bands don’t cover the previous section */
+/* Spacing lives inside the section (padding) — no outer margin gap */
 #top > .sec.sec-motion:not(#why){
-  margin-top:clamp(72px, 10vw, 128px);
-  padding-top:calc(96px + 32px);
-  border-top:1px solid var(--paper-line-2);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.75),
-    inset 0 28px 48px -36px rgba(var(--sky-rgb),.10);
+  margin-top:0;
+  padding-top:calc(96px + 48px);
+  border-top:none;
+  box-shadow:none;
 }
 @media(max-width:620px){
   #top > .sec.sec-motion:not(#why){
-    margin-top:clamp(48px, 10vw, 72px);
-    padding-top:calc(64px + 24px);
+    margin-top:0;
+    padding-top:calc(64px + 32px);
   }
   #top > .sec.sec-motion[data-enter="left"]:not(.sec-in),
   #top > .sec.sec-motion[data-enter="right"]:not(.sec-in){
@@ -284,23 +286,7 @@ footer .logo-img{height:40px;filter:none}
   }
 }
 
-/* Same-tint neighbors — deeper sky wash, still on paper palette */
-#top > .sec.sec-orange + .sec.sec-orange{
-  background:
-    radial-gradient(900px 480px at 72% 18%, rgba(var(--sky-rgb),.14), transparent 62%),
-    radial-gradient(640px 360px at 18% 78%, rgba(var(--teal-rgb),.06), transparent 55%),
-    linear-gradient(180deg, var(--paper-2) 0%, #e2f0f9 40%, #d9ebf6 60%, var(--paper) 100%);
-}
-#top > .sec.sec-teal + .sec.sec-teal,
-#top > .sec.sec-mint + .sec.sec-teal,
-#top > .sec.sec-teal + .sec.sec-mint{
-  background:
-    radial-gradient(900px 480px at 20% 20%, rgba(var(--sky-rgb),.18), transparent 62%),
-    radial-gradient(640px 360px at 80% 70%, rgba(var(--teal-rgb),.08), transparent 55%),
-    linear-gradient(180deg, #e8f4fb 0%, #d5ebf7 40%, #cfe7f5 58%, var(--paper-2) 100%);
-}
-
-/* Divider expands as the band settles */
+/* Divider expands as the band settles — no glow */
 #top > .sec.sec-motion::after{
   content:"";
   position:absolute;
@@ -308,10 +294,10 @@ footer .logo-img{height:40px;filter:none}
   left:50%;
   transform:translateX(-50%);
   width:0;
-  height:4px;
-  border-radius:4px;
+  height:3px;
+  border-radius:3px;
   background:linear-gradient(90deg, transparent, var(--sky-soft), var(--sky), var(--teal), var(--sky-soft), transparent);
-  box-shadow:0 0 28px rgba(var(--sky-rgb),.5), 0 0 40px rgba(var(--teal-rgb),.2);
+  box-shadow:none;
   opacity:0;
   pointer-events:none;
   z-index:3;
@@ -321,39 +307,13 @@ footer .logo-img{height:40px;filter:none}
   width:min(720px, 78%);
   opacity:1;
 }
-#top > .sec.sec-motion:not(#why).sec-in{
-  border-top-color:rgba(var(--sky-rgb),.28);
-}
 
-/* Soft top wash on tinted sections */
+/* No wash overlays — keep solid fills */
 #top > .sec.sec-motion.sec-mint::before,
 #top > .sec.sec-motion.sec-teal::before,
-#top > .sec.sec-motion.sec-orange::before{
-  display:block;
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  height:64px;
-  pointer-events:none;
-  z-index:0;
-  opacity:0;
-  background:linear-gradient(180deg, rgba(255,255,255,.75), transparent 100%);
-  transition:opacity .9s cubic-bezier(.22,1,.36,1) .2s;
-}
-#top > .sec.sec-motion.sec-mint.sec-in::before,
-#top > .sec.sec-motion.sec-teal.sec-in::before,
-#top > .sec.sec-motion.sec-orange.sec-in::before{
-  opacity:1;
-}
-
+#top > .sec.sec-motion.sec-orange::before,
 #top > .sec.sec-motion:not(.sec-mint):not(.sec-teal):not(.sec-orange)::before{
-  opacity:0;
-  transition:opacity 1s cubic-bezier(.22,1,.36,1) .2s;
-}
-#top > .sec.sec-motion:not(.sec-mint):not(.sec-teal):not(.sec-orange).sec-in::before{
-  opacity:1;
+  display:none;
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -361,7 +321,7 @@ footer .logo-img{height:40px;filter:none}
   #top > .sec.sec-motion.sec-teal::before,
   #top > .sec.sec-motion.sec-orange::before,
   #top > .sec.sec-motion:not(.sec-mint):not(.sec-teal):not(.sec-orange)::before{
-    opacity:1;
+    display:none;
   }
 }
 
