@@ -433,7 +433,7 @@ export default function Home() {
               </a>
             }
           />
-          <div className="m-rot">
+          <div className="pgx-stage">
             <ProductGallery />
           </div>
         </div>

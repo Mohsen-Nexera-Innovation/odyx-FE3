@@ -204,6 +204,29 @@ export default function ProductGallery() {
   };
   const current = PRODUCTS[active];
 
+  /** Coverflow: active card straight; neighbors fanned in 3D */
+  const cardStyle = (o: number): CSSProperties => {
+    const abs = Math.abs(o);
+    if (o === 0) {
+      return {
+        transform: "translate3d(0, 0, 56px) scale(1)",
+        opacity: 1,
+        zIndex: 30,
+        pointerEvents: "auto",
+      };
+    }
+    const x = o * 18;
+    const z = -210 - (abs - 1) * 100;
+    const ry = o < 0 ? 62 : -62;
+    const s = abs === 1 ? 0.86 : 0.78;
+    return {
+      transform: `translate3d(${x}cqi, 0, ${z}px) rotateY(${ry}deg) scale(${s})`,
+      opacity: abs > 2 ? 0 : abs === 1 ? 0.78 : 0.45,
+      zIndex: 20 - abs,
+      pointerEvents: abs > 2 ? "none" : "auto",
+    };
+  };
+
   return (
     <div
       className="pgx"
@@ -215,20 +238,13 @@ export default function ProductGallery() {
         <div className="pgx-ring" role="listbox" aria-label="Featured products">
           {PRODUCTS.map((pr, i) => {
             const o = rel(i);
-            const abs = Math.abs(o);
-            const style: CSSProperties = {
-              transform: `translateX(calc(${o} * 52%)) translateZ(calc(${-abs} * 130px)) rotateY(${-o * 34}deg) scale(${1 - abs * 0.13})`,
-              opacity: abs > 2 ? 0 : 1 - abs * 0.26,
-              zIndex: 20 - abs,
-              pointerEvents: abs > 2 ? "none" : "auto",
-            };
             return (
               <button
                 key={pr.name}
                 type="button"
                 className={`pgx-card${i === active ? " on" : ""}`}
                 data-accent={pr.accent}
-                style={style}
+                style={cardStyle(o)}
                 onClick={() => setActive(i)}
                 aria-selected={i === active}
                 aria-label={pr.name}

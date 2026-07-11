@@ -113,11 +113,18 @@ main{
 .sec .why-tab-metric small{color:var(--ink-faint)}
 .sec .pgx-nav{background:rgba(255,255,255,.88);color:var(--ink);border-color:var(--paper-line-2);box-shadow:0 10px 26px rgba(8,80,130,.14)}
 .sec .pgx-card{box-shadow:0 24px 56px rgba(8,80,130,.16)}
-.sec .pgx-card.on{box-shadow:0 0 0 2px rgba(var(--acc-rgb),.9),0 32px 70px rgba(8,80,130,.22)}
+.sec .pgx-card.on{box-shadow:0 0 0 2px rgba(var(--acc-rgb),.95),0 0 28px rgba(var(--acc-rgb),.22),0 32px 70px rgba(8,80,130,.22)}
 /* Coverflow dots — inactive uses white on dark theme; invisible on light panels */
 .sec .pgx-dot{background:rgba(10,60,100,.20)}
 .sec .pgx-dot:hover{background:rgba(10,60,100,.40)}
 .sec .pgx-dot.on{background:var(--acc)}
+.sec .pgx-card img{filter:saturate(.92) brightness(.62)}
+.sec .pgx-card.on img{filter:saturate(1.05) brightness(1)}
+.sec .pgx-scrim{background:linear-gradient(180deg,transparent 45%,rgba(13,26,46,.78))}
+.sec .pgx-card.on .pgx-scrim{background:linear-gradient(180deg,transparent 45%,rgba(13,26,46,.65))}
+.sec .pgx-side,
+.sec .pgx-side .pgx-brand,
+.sec .pgx-side img{filter:none!important;opacity:1}
 .sec .card,.sec .capp,.sec .prev,.sec .pcard,.sec .shop-card,.sec .news-item{box-shadow:0 10px 30px rgba(8,80,130,.06)}
 .sec .capp:hover,.sec .prev:hover{box-shadow:0 26px 60px rgba(8,80,130,.16)}
 .sec .news-item.on{box-shadow:0 0 0 1px rgba(var(--orange-rgb),.35),0 12px 28px rgba(8,80,130,.14)}
