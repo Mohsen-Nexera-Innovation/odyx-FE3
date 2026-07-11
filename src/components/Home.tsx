@@ -13,6 +13,37 @@ import SupportHub from "./SupportHub";
 import { FOOTER_COLUMNS } from "@/content/nav";
 import SecHead from "@/components/SecHead";
 
+const PathUpArrow = ({ s = 22 }: { s?: number }) => (
+  <svg
+    width={s}
+    height={s}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 19V5" />
+    <path d="M7 10l5-5 5 5" />
+  </svg>
+);
+
+const PathLane = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => (
+  <div className="path-lane">
+    <div className="path-guide" aria-hidden="true">
+      <span className="path-guide-head">
+        <PathUpArrow />
+      </span>
+    </div>
+    {children}
+  </div>
+);
+
 const Arrow = ({ s = 16 }: { s?: number }) => (
   <svg
     width={s}
@@ -230,8 +261,9 @@ export default function Home() {
       <section className="sec sec-mint sec-motion" id="path">
         <div className="wrap">
           <SecHead eyebrow="Choose Your Path" />
-          <div className="pgrid m-fan">
+          <div className="path-stage m-fan">
             {/* Dentist */}
+            <PathLane>
             <a href="/solutions/dentists" className="pcard teal">
               <div className="pcard-art">
                 <img
@@ -267,8 +299,10 @@ export default function Home() {
                 </span>
               </div>
             </a>
+            </PathLane>
 
             {/* Lab Technician */}
+            <PathLane>
             <a href="/solutions/labs" className="pcard">
               <div className="pcard-art">
                 <img
@@ -290,8 +324,10 @@ export default function Home() {
                 </span>
               </div>
             </a>
+            </PathLane>
 
             {/* Guest */}
+            <PathLane>
             <a href="/workflows" className="pcard teal">
               <div className="pcard-art">
                 <img
@@ -328,6 +364,7 @@ export default function Home() {
                 </span>
               </div>
             </a>
+            </PathLane>
           </div>
         </div>
       </section>

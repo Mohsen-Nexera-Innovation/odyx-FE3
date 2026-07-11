@@ -262,6 +262,7 @@ footer .logo-img{height:40px;filter:none}
 #top .reg-msg.pending{color:var(--sky-deep);border-color:rgba(6,165,223,.28);background:rgba(6,165,223,.10)}
 #top .shop-card:hover{border-color:rgba(6,165,223,.45)}
 #top .shop-flow .pulse-line::after{background:linear-gradient(90deg,transparent,var(--sky),transparent)}
+#top #path .path-guide-head{color:var(--sky)}
 #top .sec-head .m-underline::after{background:linear-gradient(90deg,var(--teal),var(--sky));box-shadow:none}
 #top .eyebrow{color:var(--sky-deep)}
 #top .hero-video .hc-fx.cure{background:radial-gradient(circle at 50% 46%,rgba(6,165,223,.30),transparent 58%)}
