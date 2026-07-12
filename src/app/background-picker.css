@@ -286,6 +286,26 @@ html[data-eco-shadow-preview] #ecosystem::before{
   display:none!important;
 }
 
+/* Same demo control also drives the workflow slider pills */
+html[data-eco-shadow-preview][data-eco-pill-tone] #ecosystem .hl-pill{
+  background:var(--eco-preview-pill-bg)!important;
+  border-color:var(--eco-preview-pill-border)!important;
+  transition:color .3s,background .3s,border-color .3s;
+}
+html[data-eco-shadow-preview][data-eco-pill-tone] #ecosystem .hl-pill .hl-fill{
+  background:var(--eco-preview-pill-fill)!important;
+  transition:width .18s linear, background .3s;
+}
+html[data-eco-shadow-preview][data-eco-pill-tone] #ecosystem .hl-pill .hl-pill-l{
+  color:var(--eco-preview-pill-fg)!important;
+}
+html[data-eco-shadow-preview][data-eco-pill-tone] #ecosystem .hl-pill:hover{
+  border-color:var(--eco-preview-pill-border-on)!important;
+}
+html[data-eco-shadow-preview][data-eco-pill-tone] #ecosystem .hl-pill.on{
+  border-color:var(--eco-preview-pill-border-on)!important;
+}
+
 /* Dev/preview tool — live-tune ecosystem section background tint */
 .eco-shadow-picker{
   position:fixed;
