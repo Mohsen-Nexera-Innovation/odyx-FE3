@@ -88,7 +88,7 @@ export const RESIN_OPTIONS = [
   'ODYX Denture Base',
 ] as const;
 
-export const PRINTER_OPTIONS = ['ODYX Print Pro', 'ODYX Print Compact', 'Third-party LCD / DLP'] as const;
+export const PRINTER_OPTIONS = ['ODYX P1-26', 'Third-party LCD / DLP'] as const;
 
 const now = Date.now();
 const hoursAgo = (h: number) => new Date(now - h * 3600_000).toISOString();
@@ -192,7 +192,7 @@ export const DEMO_THREADS: InboxThread[] = [
     patientRef: 'LB-881',
     sla: '24h',
     resin: 'ODYX Surgical Guide',
-    printer: 'ODYX Print Pro',
+    printer: 'ODYX P1-26',
     batchRef: 'BATCH-03',
     status: 'in_progress',
     isDemo: true,
@@ -205,7 +205,7 @@ export const DEMO_THREADS: InboxThread[] = [
         'lab@production.com',
         'Sample Lab',
         'Scan bundle — Surgical guide (BATCH-03)',
-        'CBCT + intraoral scan attached. Target resin: ODYX Surgical Guide. Printer: ODYX Print Pro.',
+        'CBCT + intraoral scan attached. Target resin: ODYX Surgical Guide. Printer: ODYX P1-26.',
         [{ id: 'a3', name: 'cbct_guide_intake.zip', size: 12_400_000, kind: 'scan' }],
         hoursAgo(52),
       ),

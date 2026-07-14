@@ -69,6 +69,16 @@ main{
 :is(#top, main) > .sec:nth-of-type(even)::before{
   background:radial-gradient(800px 420px at 15% 30%, rgba(var(--sky-rgb),.07), transparent 70%);
 }
+/* Store / cart / checkout — clean flat surface, no wash overlays */
+:is(#top, main) > .sec.store-sec,
+:is(#top, main) > .sec.co-sec{
+  background:#fff;
+}
+:is(#top, main) > .sec.store-sec::before,
+:is(#top, main) > .sec.co-sec::before{
+  content:none;
+  background:none;
+}
 :is(#top, main) > .sec.sec-mint,
 :is(#top, main) > .sec.sec-teal{
   background:

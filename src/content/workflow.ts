@@ -30,11 +30,11 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     label: "Scan",
     accent: "teal",
     productSlug: "intraoral-scanner",
-    productName: "Intraoral Scanner",
+    productName: "ODYX-S1",
     img: "/img/feat-scanner.jpg",
     lead: "Digital impressions in seconds - no molds, no mess, instant 3D data.",
     whatHappens:
-      "A chairside intraoral scan captures the patient's anatomy in full color 3D. The file exports in open formats and flows directly into design - no manual steps, no compatibility guesswork.",
+      "A chairside ODYX-S1 scan captures the patient's anatomy in full color 3D. The file exports in open formats and flows directly into design - no manual steps, no compatibility guesswork.",
     benefits: [
       "No traditional impressions",
       "Instant chairside preview",
@@ -82,11 +82,11 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     label: "Print",
     accent: "orange",
     productSlug: "3d-printers",
-    productName: "3D Printer",
+    productName: "ODYX P1-26",
     img: "/img/feat-printer.jpg",
     lead: "Layer-by-layer production with ODYX-validated Resin.",
     whatHappens:
-      "The designed file is sent to the ODYX printer. Layer resolution, support strategy and material profile are matched to the indication - crown, guide, model or denture.",
+      "The designed file is sent to the ODYX P1-26. Layer resolution, support strategy and material profile are matched to the indication - crown, guide, model or denture.",
     benefits: [
       "In-house production",
       "Validated resin profiles",
@@ -107,11 +107,11 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     label: "Cure",
     accent: "orange",
     productSlug: "curing-machines",
-    productName: "Curing Machine",
+    productName: "ODYX Cure",
     img: "/img/feat-curing.jpg",
     lead: "Controlled UV polymerization for full strength and biocompatibility.",
     whatHappens:
-      "Printed parts move to the curing unit for a validated light dose and time profile. This completes polymerization so mechanical properties and biocompatibility meet clinical requirements.",
+      "Printed parts move to ODYX Cure for a validated light dose and time profile. This completes polymerization so mechanical properties and biocompatibility meet clinical requirements.",
     benefits: [
       "Validated cure profiles",
       "Consistent mechanical strength",

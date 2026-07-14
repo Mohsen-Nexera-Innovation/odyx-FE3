@@ -22,8 +22,9 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
     title: "Product Manuals",
     desc: "IFU, setup guides and maintenance for every ODYX device.",
     items: [
-      { label: "Intraoral Scanner IFU", href: "#", meta: "PDF" },
-      { label: "3D Printer setup guide", href: "#", meta: "PDF" },
+      { label: "ODYX-S1 IFU", href: "#", meta: "PDF" },
+      { label: "ODYX P1-26 setup guide", href: "#", meta: "PDF" },
+      { label: "ODYX Cure profile guide", href: "#", meta: "PDF" },
       { label: "Curing machine manual", href: "#", meta: "PDF" },
       { label: "Design software install", href: "#", meta: "PDF" },
       {

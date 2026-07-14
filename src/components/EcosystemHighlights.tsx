@@ -19,10 +19,10 @@ interface EStep {
 // Only two clips ship today, so they rotate as motion for the active card.
 // Each step keeps a unique cover still for peek cards. Swap in six real clips by editing `video`.
 const STEPS: EStep[] = [
-  { no: '01', label: 'Scan', product: 'Intraoral Scanner', accent: 'teal', video: '/video/hero.mp4', poster: '/img/feat-scanner.jpg', cap: 'A chairside intraoral scan captures the mouth in seconds - no molds, just instant, accurate 3D data.' },
+  { no: '01', label: 'Scan', product: 'ODYX-S1', accent: 'teal', video: '/video/hero.mp4', poster: '/img/feat-scanner.jpg', cap: 'A chairside ODYX-S1 scan captures the mouth in seconds - no molds, just instant, accurate 3D data.' },
   { no: '02', label: 'Design', product: 'Design Software', accent: 'teal', video: '/video/dental-scan-animation.mp4', poster: '/img/odyx/design.webp', cap: 'Scan data flows into CAD, where the restoration is designed with precise, repeatable accuracy.' },
-  { no: '03', label: 'Print', product: '3D Printer', accent: 'orange', video: '/video/hero.mp4', poster: '/img/feat-printer.jpg', cap: 'The restoration is built layer by layer on the ODYX printer using validated ODYX resin.' },
-  { no: '04', label: 'Cure', product: 'Curing Machine', accent: 'orange', video: '/video/dental-scan-animation.mp4', poster: '/img/feat-curing.jpg', cap: 'Controlled UV completes polymerization for full strength and biocompatibility.' },
+  { no: '03', label: 'Print', product: 'ODYX P1-26', accent: 'orange', video: '/video/hero.mp4', poster: '/img/feat-printer.jpg', cap: 'The restoration is built layer by layer on the ODYX P1-26 using validated ODYX resin.' },
+  { no: '04', label: 'Cure', product: 'ODYX Cure', accent: 'orange', video: '/video/dental-scan-animation.mp4', poster: '/img/feat-curing.jpg', cap: 'Controlled UV on ODYX Cure completes polymerization for full strength and biocompatibility.' },
   { no: '05', label: 'Finish', product: 'Final Polish', accent: 'orange', video: '/video/hero.mp4', poster: '/img/feat-finishing.jpg', cap: 'Characterization and gloss bring lifelike color and a natural finish to the restoration.' },
   { no: '06', label: 'Deliver', product: 'Finished Smile', accent: 'orange', video: '/video/dental-scan-animation.mp4', poster: '/img/step-deliver.jpg', cap: 'A finished restoration, delivered - often same-day. One connected workflow, from scan to smile.' },
 ];

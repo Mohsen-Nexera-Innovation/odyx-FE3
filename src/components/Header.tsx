@@ -8,6 +8,7 @@ import AiChatbotIcon from './AiChatbotIcon';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { logout } from '@/lib/auth-store';
 import { unreadTotal } from '@/lib/inbox-store';
+import { cartCount } from '@/lib/cart-store';
 import type { AccountSession } from '@/lib/auth-store';
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
@@ -15,6 +16,15 @@ const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 const SearchIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
+  </svg>
+);
+
+const CartIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M6 6h15l-1.5 9h-12z" />
+    <path d="M6 6l-1-3H2" />
+    <circle cx="9" cy="20" r="1.2" fill="currentColor" stroke="none" />
+    <circle cx="18" cy="20" r="1.2" fill="currentColor" stroke="none" />
   </svg>
 );
 
@@ -110,6 +120,7 @@ export default function Header() {
   const { openSearch, openAi, locale, setLocale, aiIconAnimating } = useGlobalTools();
   const { session } = useAuthSession();
   const [inboxUnread, setInboxUnread] = useState(0);
+  const [cartItems, setCartItems] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const [hasHero, setHasHero] = useState(false);
   const [pastHero, setPastHero] = useState(false);
@@ -137,6 +148,17 @@ export default function Header() {
     window.addEventListener('odyx-inbox-change', onInboxChange);
     return () => window.removeEventListener('odyx-inbox-change', onInboxChange);
   }, [session]);
+
+  useEffect(() => {
+    const refreshCart = () => setCartItems(cartCount());
+    refreshCart();
+    window.addEventListener('odyx-cart-change', refreshCart);
+    window.addEventListener('storage', refreshCart);
+    return () => {
+      window.removeEventListener('odyx-cart-change', refreshCart);
+      window.removeEventListener('storage', refreshCart);
+    };
+  }, []);
 
   useEffect(() => {
     setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent));
@@ -244,12 +266,25 @@ export default function Header() {
               <NavAnchor href={m.href} onClick={(e) => toggleMobileSection(m.label, e)}>
                 <span className={isMenuActive(m.href) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
               </NavAnchor>
-              <div className="mega">
-                {m.items.map((item) => (
-                  <NavAnchor key={item.label} href={item.href} onClick={closeMenu}>
-                    {item.label}
-                  </NavAnchor>
-                ))}
+              <div className={`mega${m.sections ? ' mega-cat' : ''}`}>
+                {m.sections ? (
+                  m.sections.map((section) => (
+                    <div className="mega-section" key={section.category}>
+                      <p className="mega-cat-label">{section.category}</p>
+                      {section.items.map((item) => (
+                        <NavAnchor key={item.label} href={item.href} onClick={closeMenu}>
+                          {item.label}
+                        </NavAnchor>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  m.items.map((item) => (
+                    <NavAnchor key={item.label} href={item.href} onClick={closeMenu}>
+                      {item.label}
+                    </NavAnchor>
+                  ))
+                )}
               </div>
             </div>
           ))}
@@ -274,6 +309,16 @@ export default function Header() {
             <SearchIcon />
             <span className="search-kbd-hint">{isMac ? '\u2318K' : 'Ctrl K'}</span>
           </button>
+          <Link
+            className="tool-btn nav-cart"
+            href="/cart"
+            title="Cart"
+            aria-label={cartItems > 0 ? `Cart, ${cartItems} items` : 'Cart'}
+            onClick={closeMenu}
+          >
+            <CartIcon />
+            {cartItems > 0 ? <span className="nav-cart-badge">{cartItems > 99 ? '99+' : cartItems}</span> : null}
+          </Link>
           <div className="lang-wrap" ref={langRef}>
             <button type="button" className={`tool-btn lang${langOpen ? ' on' : ''}`} title="Language" aria-haspopup="menu" aria-expanded={langOpen} onClick={() => setLangOpen((o) => !o)}>
               {LOCALE_LABEL[locale]} <Caret />

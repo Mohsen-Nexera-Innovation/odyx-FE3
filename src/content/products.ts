@@ -1,6 +1,8 @@
 export interface ProductModel {
   name: string;
   tagline: string;
+  /** When set, model card shows Add to cart / Buy now for this shop SKU */
+  shopProductId?: string;
 }
 
 export interface ProductSpec {
@@ -48,12 +50,12 @@ export interface ProductContent {
 export const PRODUCTS: ProductContent[] = [
   {
     slug: "intraoral-scanner",
-    name: "Intraoral Scanner",
-    category: "Scanning",
+    name: "ODYX-S1",
+    category: "Scanner",
     layout: "cinematic",
     tagline: "Chairside 3D impressions in seconds.",
     overview:
-      "The ODYX intraoral scanner captures full-arch color scans with real-time mesh preview. Open export formats connect directly to design and lab workflows without proprietary lock-in.",
+      "The ODYX-S1 intraoral scanner captures full-arch color scans with real-time mesh preview. Open export formats connect directly to design and lab workflows without proprietary lock-in.",
     img: "/img/feat-scanner.jpg",
     accent: "teal",
     workflowStep: "scan",
@@ -65,11 +67,7 @@ export const PRODUCTS: ProductContent[] = [
       "Provisionals",
     ],
     models: [
-      { name: "ODYX Scan Pro", tagline: "Full-arch speed for busy clinics" },
-      {
-        name: "ODYX Scan Compact",
-        tagline: "Small footprint, chairside ready",
-      },
+      { name: "ODYX-S1", tagline: "Full-arch color scans with open export", shopProductId: "scanner-s1" },
     ],
     specs: [
       { label: "Scan time (full arch)", value: "Under 60 seconds" },
@@ -101,9 +99,9 @@ export const PRODUCTS: ProductContent[] = [
         desc: "STL, PLY and OBJ for open CAD workflows.",
       },
       {
-        value: "2",
-        label: "Configurations",
-        desc: "Scan Pro for speed, Scan Compact for chairside.",
+        value: "1",
+        label: "Flagship scanner",
+        desc: "ODYX-S1 for clinic and lab chairside capture.",
       },
     ],
   },
@@ -169,12 +167,12 @@ export const PRODUCTS: ProductContent[] = [
   },
   {
     slug: "3d-printers",
-    name: "3D Printers",
-    category: "Printing",
+    name: "ODYX P1-26",
+    category: "Printer",
     layout: "cinematic",
     tagline: "Desktop production for clinic and lab.",
     overview:
-      "ODYX printers deliver crowns, guides, models and dentures with validated resin profiles. Compact footprint, simple maintenance and workflow-linked presets keep production predictable.",
+      "The ODYX P1-26 delivers crowns, guides, models and dentures with validated resin profiles. Compact footprint, simple maintenance and workflow-linked presets keep production predictable.",
     img: "/img/feat-printer.jpg",
     heroImg: "/img/feat-printer-cutout.png",
     accent: "orange",
@@ -187,12 +185,11 @@ export const PRODUCTS: ProductContent[] = [
       "Provisionals",
     ],
     models: [
-      { name: "ODYX Print One", tagline: "Chairside and small lab" },
-      { name: "ODYX Print Pro", tagline: "Higher throughput production" },
+      { name: "ODYX P1-26", tagline: "Chairside and small lab production", shopProductId: "printer-p1-26" },
     ],
     specs: [
-      { label: "Technology", value: "LCD / DLP (model dependent)" },
-      { label: "Build volume", value: "See model datasheet" },
+      { label: "Technology", value: "LCD / DLP" },
+      { label: "Build volume", value: "See datasheet" },
       { label: "Layer thickness", value: "25-100 microns" },
       { label: "Resin compatibility", value: "ODYX validated line" },
       { label: "Connectivity", value: "USB / Network" },
@@ -215,9 +212,9 @@ export const PRODUCTS: ProductContent[] = [
         desc: "Validated profiles for clinical-grade detail.",
       },
       {
-        value: "2×",
-        label: "Configurations",
-        desc: "Print One for chairside, Print Pro for production.",
+        value: "P1-26",
+        label: "Desktop printer",
+        desc: "Built for chairside and small-lab throughput.",
       },
       {
         value: "5+",
@@ -228,12 +225,12 @@ export const PRODUCTS: ProductContent[] = [
   },
   {
     slug: "curing-machines",
-    name: "Curing Machines",
-    category: "Post-processing",
+    name: "ODYX Cure",
+    category: "Curing Machine",
     layout: "cinematic",
     tagline: "Full-strength, biocompatible cure every time.",
     overview:
-      "The ODYX curing unit applies validated light dose and time per resin type. Presets link to the workflow so clinic and lab teams get consistent mechanical properties without guesswork.",
+      "ODYX Cure applies validated light dose and time per resin type. Presets link to the workflow so clinic and lab teams get consistent mechanical properties without guesswork.",
     img: "/img/feat-curing.jpg",
     accent: "orange",
     workflowStep: "cure",
@@ -244,8 +241,7 @@ export const PRODUCTS: ProductContent[] = [
       "Model Resin",
     ],
     models: [
-      { name: "ODYX Cure", tagline: "Standard clinic and lab unit" },
-      { name: "ODYX Cure Plus", tagline: "Extended capacity for labs" },
+      { name: "ODYX Cure", tagline: "Standard clinic and lab unit", shopProductId: "curing-odyx-cure" },
     ],
     specs: [
       { label: "Cure profiles", value: "Resin-specific presets" },
@@ -272,14 +268,14 @@ export const PRODUCTS: ProductContent[] = [
         desc: "Validated light dose and time per resin type.",
       },
       {
-        value: "2",
-        label: "Configurations",
-        desc: "Cure for clinics, Cure Plus for lab throughput.",
+        value: "1",
+        label: "Clinic & lab unit",
+        desc: "ODYX Cure for consistent biocompatible outcomes.",
       },
       {
-        value: "100%",
-        label: "ODYX validated",
-        desc: "Every profile tested for biocompatible outcomes.",
+        value: "QA",
+        label: "Repeatable results",
+        desc: "Guided timers and status for every batch.",
       },
     ],
   },
@@ -403,6 +399,42 @@ export const PRODUCTS: ProductContent[] = [
     ],
   },
 ];
+
+/** Workflow-aligned product family order */
+export const PRODUCT_CATEGORY_ORDER = [
+  'Printer',
+  'Curing Machine',
+  'Scanner',
+  'Digital',
+  'Finishing',
+  'Materials',
+] as const;
+
+export type ProductCategory = (typeof PRODUCT_CATEGORY_ORDER)[number];
+
+export function groupProductsByCategory(
+  products: ProductContent[] = PRODUCTS,
+): { category: string; items: ProductContent[] }[] {
+  const map = new Map<string, ProductContent[]>();
+  for (const p of products) {
+    const list = map.get(p.category) ?? [];
+    list.push(p);
+    map.set(p.category, list);
+  }
+  const ordered: { category: string; items: ProductContent[] }[] = PRODUCT_CATEGORY_ORDER
+    .filter((c) => map.has(c))
+    .map((category) => ({
+      category,
+      items: map.get(category)!,
+    }));
+  const known = new Set<string>(PRODUCT_CATEGORY_ORDER);
+  for (const [category, items] of map) {
+    if (!known.has(category)) {
+      ordered.push({ category, items });
+    }
+  }
+  return ordered;
+}
 
 export function getProduct(slug: string) {
   return PRODUCTS.find((p) => p.slug === slug);

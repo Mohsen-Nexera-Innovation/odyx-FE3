@@ -4,8 +4,11 @@
 // product sits front-and-center with an intraoral "scan-beam" sweep; neighbours fan back in
 // perspective. Auto-advances (pauses on hover); arrows, side cards and dots all navigate.
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
+import { addItem } from "@/lib/cart-store";
+import { formatMoney, getProductById } from "@/content/shop";
 
 type Accent = "teal" | "orange";
 interface Product {
@@ -16,6 +19,8 @@ interface Product {
   img: string;
   accent: Accent;
   href: string;
+  /** When set, Featured Products shows Add to cart / Buy now for this shop SKU */
+  shopProductId?: string;
 }
 
 /* Sub-brand line: scanning/imaging → ODYX Scanners; print/cure/materials/finishing → ODYX Digital Printing */
@@ -46,13 +51,14 @@ const BRAND_LINE: Record<string, { src: string; alt: string }> = {
 
 const PRODUCTS: Product[] = [
   {
-    cat: "Scanning",
-    name: "Intraoral Scanner",
+    cat: "Scanner",
+    name: "ODYX-S1",
     desc: "Real-time 3D digital impressions, chairside - no molds, just instant accurate data.",
     chips: ["~20s capture", "Open .STL", "Powder-free"],
     img: "/img/feat-scanner.jpg",
     accent: "teal",
     href: "/products/intraoral-scanner",
+    shopProductId: "scanner-s1",
   },
   {
     cat: "Imaging",
@@ -91,13 +97,14 @@ const PRODUCTS: Product[] = [
     href: "/products/design",
   },
   {
-    cat: "Printing",
-    name: "3D Printer",
+    cat: "Printer",
+    name: "ODYX P1-26",
     desc: "Crowns, guides, models & dentures printed in-house, layer by layer.",
     chips: ["Layer-by-layer", "ODYX resin", "In-house"],
     img: "/img/feat-printer.jpg",
     accent: "orange",
     href: "/products/3d-printers",
+    shopProductId: "printer-p1-26",
   },
   {
     cat: "Production",
@@ -109,13 +116,14 @@ const PRODUCTS: Product[] = [
     href: "/products",
   },
   {
-    cat: "Curing",
-    name: "Curing Machine",
+    cat: "Curing Machine",
+    name: "ODYX Cure",
     desc: "Controlled UV completes polymerization for final strength and biocompatibility.",
     chips: ["Controlled UV", "Full strength", "Biocompatible"],
     img: "/img/feat-curing.jpg",
     accent: "orange",
     href: "/products/curing-machines",
+    shopProductId: "curing-odyx-cure",
   },
   {
     cat: "Post-Processing",
@@ -184,6 +192,7 @@ const Chevron = ({ left }: { left?: boolean }) => (
 );
 
 export default function ProductGallery() {
+  const router = useRouter();
   const [active, setActive] = useState(0);
   const paused = useRef(false);
 
@@ -203,6 +212,15 @@ export default function ProductGallery() {
     return o;
   };
   const current = PRODUCTS[active];
+  const shopProduct = current.shopProductId
+    ? getProductById(current.shopProductId)
+    : undefined;
+
+  function onBuyNow() {
+    if (!current.shopProductId) return;
+    addItem(current.shopProductId, 1);
+    router.push("/checkout");
+  }
 
   /** Coverflow: active card straight; neighbors fanned in 3D */
   const cardStyle = (o: number): CSSProperties => {
@@ -299,14 +317,21 @@ export default function ProductGallery() {
             ))}
           </div>
         </div>
-        <Link
-          className="btn pgx-view-btn"
-          href={current.href}
-          key={`view-${active}`}
-          aria-label={`View ${current.name}`}
-        >
-          View product <Arrow />
-        </Link>
+        <div className="pgx-actions" key={`cta-${active}`}>
+          {shopProduct ? (
+            <button type="button" className="btn pgx-view-btn" onClick={onBuyNow}>
+              Buy now — {formatMoney(shopProduct.price)} <Arrow />
+            </button>
+          ) : (
+            <Link
+              className="btn pgx-view-btn"
+              href={current.href}
+              aria-label={`View ${current.name}`}
+            >
+              View product <Arrow />
+            </Link>
+          )}
+        </div>
         <div className="pgx-foot">
           <span className="pgx-count">
             <b>{String(active + 1).padStart(2, "0")}</b> /{" "}

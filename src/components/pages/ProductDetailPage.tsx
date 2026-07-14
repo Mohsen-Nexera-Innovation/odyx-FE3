@@ -6,6 +6,8 @@ import PrintLineHero from '@/components/PrintLineHero';
 import CinematicHero from '@/components/CinematicHero';
 import PrintLineStats from '@/components/PrintLineStats';
 import SecHead from '@/components/SecHead';
+import ProductBuyActions from '@/components/shop/ProductBuyActions';
+import ProductHeroBuyCta from '@/components/shop/ProductHeroBuyCta';
 import { getProduct, type ProductLayout } from '@/content/products';
 
 export default function ProductDetailPage({ slug }: { slug: string }) {
@@ -13,6 +15,8 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
   if (!product) notFound();
 
   const layout: ProductLayout | 'standard' = product.layout ?? 'standard';
+  const buyableModel = product.models.find((m) => m.shopProductId);
+  const heroAccent = product.accent === 'orange' ? 'orange' : product.accent === 'teal' ? 'teal' : 'sky';
 
   // Signature keeps the standard structure but rides the print-line canvas so it
   // inherits the exact cinematic colors + fonts (only the hero is re-themed below).
@@ -26,22 +30,36 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
     .filter(Boolean)
     .join(' ');
 
+  const modelsSection = (
+    <section className="sec">
+      <div className="wrap">
+        <SecHead eyebrow="Models" />
+        <div className="g2 build-group">
+          {product.models.map((m) => (
+            <div key={m.name} className="card build reveal prod-model-card">
+              <h3>{m.name}</h3>
+              <p>{m.tagline}</p>
+              {m.shopProductId ? (
+                <ProductBuyActions
+                  shopProductId={m.shopProductId}
+                  accent={product.accent === 'orange' ? 'orange' : 'sky'}
+                />
+              ) : (
+                <Link className="btn btn-ghost btn-sm prod-model-demo" href="/support">
+                  Request a Demo <Arrow />
+                </Link>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
   // Shared content sections used by the print-line + cinematic canvases.
   const sharedSections = (
     <>
-      <section className="sec">
-        <div className="wrap">
-          <SecHead eyebrow="Models" />
-          <div className="g2 build-group">
-            {product.models.map((m) => (
-              <div key={m.name} className="card build reveal">
-                <h3>{m.name}</h3>
-                <p>{m.tagline}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {modelsSection}
 
       <section className="sec prod-specs">
         <div className="wrap prod-detail-cols">
@@ -87,6 +105,15 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             heroAlt={product.name}
             primaryAction={{ label: 'Request a Demo', href: '/support' }}
             secondaryAction={{ label: 'Workflow step', href: `/workflows/${product.workflowStep}` }}
+            actions={
+              buyableModel?.shopProductId ? (
+                <ProductHeroBuyCta
+                  shopProductId={buyableModel.shopProductId}
+                  workflowHref={`/workflows/${product.workflowStep}`}
+                  accent={heroAccent}
+                />
+              ) : undefined
+            }
           />
         ) : (
           <PrintLineHero product={product} />
@@ -121,14 +148,22 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             <span className="eyebrow prod-classic-hero__eyebrow">Precision meets production</span>
             <h1 className="prod-classic-hero__title">{product.name}</h1>
             <p className="copy-lead prod-classic-hero__lead">{product.tagline}</p>
-            <PageActions>
-              <Link className="btn btn-sign" href="/support">
-                Request a Demo <Arrow />
-              </Link>
-              <Link className="btn btn-ghost" href={`/workflows/${product.workflowStep}`}>
-                Workflow step <Arrow />
-              </Link>
-            </PageActions>
+            {buyableModel?.shopProductId ? (
+              <ProductHeroBuyCta
+                shopProductId={buyableModel.shopProductId}
+                workflowHref={`/workflows/${product.workflowStep}`}
+                accent="orange"
+              />
+            ) : (
+              <PageActions>
+                <Link className="btn btn-sign" href="/support">
+                  Request a Demo <Arrow />
+                </Link>
+                <Link className="btn btn-ghost" href={`/workflows/${product.workflowStep}`}>
+                  Workflow step <Arrow />
+                </Link>
+              </PageActions>
+            )}
           </div>
         </section>
 
@@ -177,17 +212,25 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           ) : undefined
         }
         action={
-          <PageActions>
-            <Link className={layout === 'signature' ? 'btn btn-sign' : 'btn'} href="/support">
-              Request a Demo <Arrow />
-            </Link>
-            <Link
-              className={`btn btn-ghost${layout === 'signature' ? ' prod-print-hero__ghost' : ''}`}
-              href={`/workflows/${product.workflowStep}`}
-            >
-              Workflow step <Arrow />
-            </Link>
-          </PageActions>
+          buyableModel?.shopProductId ? (
+            <ProductHeroBuyCta
+              shopProductId={buyableModel.shopProductId}
+              workflowHref={`/workflows/${product.workflowStep}`}
+              accent={layout === 'signature' ? 'orange' : 'sky'}
+            />
+          ) : (
+            <PageActions>
+              <Link className={layout === 'signature' ? 'btn btn-sign' : 'btn'} href="/support">
+                Request a Demo <Arrow />
+              </Link>
+              <Link
+                className={`btn btn-ghost${layout === 'signature' ? ' prod-print-hero__ghost' : ''}`}
+                href={`/workflows/${product.workflowStep}`}
+              >
+                Workflow step <Arrow />
+              </Link>
+            </PageActions>
+          )
         }
       />
 
@@ -209,19 +252,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <section className="sec">
-        <div className="wrap">
-          <SecHead eyebrow="Models" />
-          <div className="g2 build-group">
-            {product.models.map((m) => (
-              <div key={m.name} className="card build reveal">
-                <h3>{m.name}</h3>
-                <p>{m.tagline}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {modelsSection}
 
       <section className={`sec prod-specs sec-${product.accent === 'teal' ? 'teal' : 'orange'}`}>
         <div className="wrap prod-detail-cols">

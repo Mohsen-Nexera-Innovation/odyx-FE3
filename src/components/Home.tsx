@@ -214,28 +214,28 @@ const PATHS = [
   },
 ];
 const ECO = [
-  ["scan", "Scanner", "01"],
+  ["scan", "ODYX-S1", "01"],
   ["design", "Design Software", "02"],
-  ["print", "3D Printer", "03"],
-  ["cure", "Curing Machine", "04"],
+  ["print", "ODYX P1-26", "03"],
+  ["cure", "ODYX Cure", "04"],
   ["resin", "Resin", "05"],
 ] as const;
 const FEAT = [
   {
     i: "scan",
-    t: "Intraoral Scanner",
+    t: "ODYX-S1",
     d: "Real-time 3D digital impressions, chairside.",
     img: "/img/feat-scanner.jpg",
   },
   {
     i: "print",
-    t: "3D Printer",
+    t: "ODYX P1-26",
     d: "Crowns, guides, models & dentures in-house.",
     img: "/img/feat-printer.jpg",
   },
   {
     i: "cure",
-    t: "Curing Machine",
+    t: "ODYX Cure",
     d: "Controlled UV for final strength.",
     img: "/img/feat-curing.jpg",
   },
@@ -465,8 +465,8 @@ export default function Home() {
           <SecHead
             eyebrow="Featured Products"
             action={
-              <a className="btn btn-ghost btn-sm" href="/products">
-                All products →
+              <a className="btn btn-ghost btn-sm" href="/shop">
+                Store →
               </a>
             }
           />
@@ -563,27 +563,33 @@ export default function Home() {
             <div className="shop-grid build-group">
               {[
                 [
-                  "Clinical Resin",
-                  "Permanent crown, ceramic, temporary, model & surgical-guide lines.",
-                  "From $-",
+                  "ODYX P1-26",
+                  "Desktop 3D printer for chairside and lab production.",
+                  "From $4,999",
                   "Buy online",
-                  "/img/shop-resin.jpg",
+                  "/img/feat-printer.jpg",
+                  "/shop?cat=printer",
+                  "Printer",
                 ],
                 [
-                  "Accessories & Consumables",
-                  "Build plates, tanks and everyday workflow consumables.",
-                  "From $-",
+                  "ODYX Cure",
+                  "Standard clinic and lab curing unit with resin-specific presets.",
+                  "From $2,499",
                   "Buy online",
-                  "/img/shop-accessories.jpg",
+                  "/img/feat-curing.jpg",
+                  "/shop?cat=curing",
+                  "Curing Machine",
                 ],
                 [
-                  "Demo & Brochure",
-                  "Book a live demo or download the full ODYX product brochure.",
-                  "Free",
-                  "Request a demo",
-                  "/img/shop-brochure.jpg",
+                  "ODYX-S1",
+                  "Intraoral scanner for full-arch color impressions in seconds.",
+                  "From $8,999",
+                  "Buy online",
+                  "/img/feat-scanner.jpg",
+                  "/shop?cat=scanner",
+                  "Scanner",
                 ],
-              ].map(([t, d, price, cta, img]) => (
+              ].map(([t, d, price, cta, img, href, cat]) => (
                 <div key={t} className="shop-card build">
                   <div className="shop-media">
                     <div className="imgslot parallax">
@@ -593,9 +599,10 @@ export default function Home() {
                     <span className="price">{price}</span>
                   </div>
                   <div className="shop-body">
+                    <p className="shop-card-cat">{cat}</p>
                     <h4>{t}</h4>
                     <p>{d}</p>
-                    <a className="btn btn-sm" href="/support">
+                    <a className="btn btn-sm" href={href}>
                       {cta} <Arrow s={15} />
                     </a>
                   </div>

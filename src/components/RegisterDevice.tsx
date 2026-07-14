@@ -15,8 +15,8 @@ const STEPS = [
 ];
 
 const PRODUCTS = [
-  'Intraoral Scanner', 'Desktop Lab Scanner', 'Design Software', '3D Printer',
-  'Curing Machine', 'Milling Machine', 'Wash Station', 'Sintering Furnace',
+  'ODYX-S1', 'Desktop Lab Scanner', 'Design Software', 'ODYX P1-26',
+  'ODYX Cure', 'Milling Machine', 'Wash Station', 'Sintering Furnace',
 ];
 
 const PERKS = [

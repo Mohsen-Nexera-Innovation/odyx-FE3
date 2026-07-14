@@ -37,8 +37,9 @@ export function useGlobalTools() {
 const SEARCH_ITEMS = [
   { label: "Workflow Hub", href: "/workflows" },
   { label: "Scan step", href: "/workflows/scan" },
-  { label: "Intraoral Scanner", href: "/products/intraoral-scanner" },
-  { label: "3D Printers", href: "/products/3d-printers" },
+  { label: "ODYX-S1", href: "/products/intraoral-scanner" },
+  { label: "ODYX P1-26", href: "/products/3d-printers" },
+  { label: "ODYX Cure", href: "/products/curing-machines" },
   { label: "Resin & Materials", href: "/products/Resin" },
   { label: "For Dentists", href: "/solutions/dentists" },
   { label: "For Dental Labs", href: "/solutions/labs" },
@@ -52,7 +53,7 @@ const AI_ANSWERS: Record<string, string> = {
   "Which resin do I use for crowns?":
     "For permanent crowns use the ODYX Permanent Crown & Bridge resin, or Ceramic Crown resin for higher aesthetics. For provisionals, the Temporary Restoration line fits best.",
   "What printer suits a small clinic?":
-    "A compact ODYX desktop printer paired with a curing machine covers chairside crowns and guides. Visit Featured Products or request a demo for a tailored setup.",
+    "A compact ODYX P1-26 paired with ODYX Cure covers chairside crowns and guides. Visit the Store or request a demo for a tailored setup.",
   "How does the workflow work?":
     "ODYX runs Scan, Design, Print, Cure, Finish and Deliver as one connected flow. See the Ecosystem section on this page to walk each step.",
   "I'm a dentist - where to start?":

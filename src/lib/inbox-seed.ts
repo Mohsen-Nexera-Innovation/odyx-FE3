@@ -175,7 +175,7 @@ function buildLabThreads(session: AccountSession): InboxThread[] {
       sla: '24h',
       status: 'in_progress',
       resin: 'ODYX Surgical Guide',
-      printer: 'ODYX Print Pro',
+      printer: 'ODYX P1-26',
       batchRef: 'BATCH-03',
       messages: [
         {
@@ -221,7 +221,7 @@ function buildLabThreads(session: AccountSession): InboxThread[] {
       sla: 'same_day',
       status: 'design_delivered',
       resin: 'ODYX Model Gray',
-      printer: 'ODYX Print Pro',
+      printer: 'ODYX P1-26',
       batchRef: 'BATCH-04',
       messages: [
         {

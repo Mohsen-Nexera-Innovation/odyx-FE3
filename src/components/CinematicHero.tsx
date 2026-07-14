@@ -44,6 +44,8 @@ export interface CinematicHeroProps {
   desc?: string;
   primaryAction: CinematicHeroAction;
   secondaryAction?: CinematicHeroAction;
+  /** When set, replaces the default primary/secondary Link buttons */
+  actions?: React.ReactNode;
 }
 
 function isCutoutHero(src: string) {
@@ -61,6 +63,7 @@ export default function CinematicHero({
   desc,
   primaryAction,
   secondaryAction,
+  actions,
 }: CinematicHeroProps) {
   const brand = accent === 'teal' ? BRAND_SCANNERS : BRAND_PRINTING;
   const printerClass = [
@@ -97,16 +100,18 @@ export default function CinematicHero({
           <h1 id="cine-hero-title" className="prod-cine-hero__title">{title}</h1>
           <p className="prod-print-hero__lead">{lead}</p>
           {desc && <p className="prod-print-hero__desc">{desc}</p>}
-          <PageActions>
-            <Link className="btn btn-sign" href={primaryAction.href}>
-              {primaryAction.label} <Arrow />
-            </Link>
-            {secondaryAction && (
-              <Link className="btn btn-ghost prod-print-hero__ghost" href={secondaryAction.href}>
-                {secondaryAction.label} <Arrow />
+          {actions ?? (
+            <PageActions>
+              <Link className="btn btn-sign" href={primaryAction.href}>
+                {primaryAction.label} <Arrow />
               </Link>
-            )}
-          </PageActions>
+              {secondaryAction && (
+                <Link className="btn btn-ghost prod-print-hero__ghost" href={secondaryAction.href}>
+                  {secondaryAction.label} <Arrow />
+                </Link>
+              )}
+            </PageActions>
+          )}
         </div>
       </div>
 

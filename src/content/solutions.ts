@@ -34,7 +34,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
     ],
     recommendedProducts: [
       {
-        name: "Intraoral Scanner",
+        name: "ODYX-S1",
         href: "/products/intraoral-scanner",
         why: "Start digital with chairside scans",
         img: "/img/feat-scanner.jpg",
@@ -46,13 +46,13 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         img: "/img/odyx/design.webp",
       },
       {
-        name: "3D Printer",
+        name: "ODYX P1-26",
         href: "/products/3d-printers",
         why: "Print provisionals and finals same-day",
         img: "/img/feat-printer.jpg",
       },
       {
-        name: "Curing Machine",
+        name: "ODYX Cure",
         href: "/products/curing-machines",
         why: "Validated cure for safe delivery",
         img: "/img/feat-curing.jpg",
@@ -105,13 +105,13 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         img: "/img/odyx/design.webp",
       },
       {
-        name: "3D Printer",
+        name: "ODYX P1-26",
         href: "/products/3d-printers",
         why: "High-volume print capacity",
         img: "/img/feat-printer.jpg",
       },
       {
-        name: "Curing Machine",
+        name: "ODYX Cure",
         href: "/products/curing-machines",
         why: "QA-friendly cure profiles",
         img: "/img/feat-curing.jpg",

@@ -12,10 +12,10 @@ const BRAND_SCANNERS = { src: '/brand/odyx-scanners-wide.png', alt: 'ODYX Scanne
 const BRAND_PRINTING = { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' };
 
 const STEPS: WStep[] = [
-  { no: '01', label: 'Scan', product: 'Intraoral Scanner', desc: 'A chairside intraoral scan captures the mouth in seconds, with no molds, just instant accurate 3D data.', img: '/img/feat-scanner.jpg', accent: 'teal', brand: BRAND_SCANNERS },
+  { no: '01', label: 'Scan', product: 'ODYX-S1', desc: 'A chairside ODYX-S1 scan captures the mouth in seconds, with no molds, just instant accurate 3D data.', img: '/img/feat-scanner.jpg', accent: 'teal', brand: BRAND_SCANNERS },
   { no: '02', label: 'Design', product: 'Design Software', desc: 'Scan data flows into CAD, where the restoration is designed with precise, repeatable accuracy.', img: '/img/odyx/design.webp', accent: 'teal', brand: BRAND_SCANNERS },
-  { no: '03', label: 'Print', product: '3D Printer', desc: 'The restoration is built layer by layer on the ODYX printer using validated ODYX resin.', img: '/img/feat-printer.jpg', accent: 'orange', brand: BRAND_PRINTING },
-  { no: '04', label: 'Cure', product: 'Curing Machine', desc: 'Controlled UV completes polymerization for full strength and biocompatibility.', img: '/img/feat-curing.jpg', accent: 'orange', brand: BRAND_PRINTING },
+  { no: '03', label: 'Print', product: 'ODYX P1-26', desc: 'The restoration is built layer by layer on the ODYX P1-26 using validated ODYX resin.', img: '/img/feat-printer.jpg', accent: 'orange', brand: BRAND_PRINTING },
+  { no: '04', label: 'Cure', product: 'ODYX Cure', desc: 'Controlled UV on ODYX Cure completes polymerization for full strength and biocompatibility.', img: '/img/feat-curing.jpg', accent: 'orange', brand: BRAND_PRINTING },
   { no: '05', label: 'Finish', product: 'Final polish', desc: 'Characterization and gloss bring lifelike color and a natural finish to the restoration.', img: '/img/crowns.jpg', accent: 'orange', brand: BRAND_PRINTING },
   { no: '06', label: 'Deliver', product: 'Finished Smile', desc: 'A finished restoration, delivered, often same-day. One connected workflow, from scan to smile.', img: '/img/step-deliver.jpg', accent: 'orange' },
 ];

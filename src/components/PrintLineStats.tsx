@@ -2,7 +2,7 @@ import type { ProductStat } from '@/content/products';
 
 const DEFAULT_STATS: ProductStat[] = [
   { value: '25µm', label: 'Layer precision', desc: 'Validated profiles for clinical-grade detail.' },
-  { value: '2×', label: 'Configurations', desc: 'Print One for chairside, Print Pro for production.' },
+  { value: '2×', label: 'Configurations', desc: 'ODYX P1-26 for chairside and lab production.' },
   { value: '5+', label: 'Indications', desc: 'Crowns, guides, models, dentures and more.' },
 ];
 

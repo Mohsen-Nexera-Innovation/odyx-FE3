@@ -3,10 +3,18 @@ export interface NavLink {
   href: string;
   desc?: string;
 }
+
+export interface NavSection {
+  category: string;
+  items: NavLink[];
+}
+
 export interface NavGroup {
   label: string;
   href: string;
   items: NavLink[];
+  /** When set, mega menu renders grouped by category instead of a flat list */
+  sections?: NavSection[];
 }
 
 export const HEADER_MENUS: NavGroup[] = [
@@ -42,35 +50,27 @@ export const HEADER_MENUS: NavGroup[] = [
     label: "Products",
     href: "/products",
     items: [
+      { label: "ODYX P1-26", href: "/products/3d-printers" },
+      { label: "ODYX Cure", href: "/products/curing-machines" },
+      { label: "ODYX-S1", href: "/products/intraoral-scanner" },
+      { label: "Store", href: "/shop" },
+    ],
+    sections: [
       {
-        label: "Products Overview",
-        href: "/products",
-        desc: "The full connected lineup",
+        category: "Printer",
+        items: [{ label: "ODYX P1-26", href: "/products/3d-printers" }],
       },
       {
-        label: "Intraoral Scanners",
-        href: "/products/intraoral-scanner",
-        desc: "Fast, accurate digital impressions",
+        category: "Curing Machine",
+        items: [{ label: "ODYX Cure", href: "/products/curing-machines" }],
       },
       {
-        label: "Design Software",
-        href: "/products/design",
-        desc: "Model and plan every case",
+        category: "Scanner",
+        items: [{ label: "ODYX-S1", href: "/products/intraoral-scanner" }],
       },
       {
-        label: "3D Printers",
-        href: "/products/3d-printers",
-        desc: "Desktop production for clinic and lab",
-      },
-      {
-        label: "Curing Machines",
-        href: "/products/curing-machines",
-        desc: "Perfect post-processing cures",
-      },
-      {
-        label: "Resin",
-        href: "/products/Resin",
-        desc: "Certified dental materials",
+        category: "More",
+        items: [{ label: "Store", href: "/shop" }],
       },
     ],
   },
@@ -216,10 +216,11 @@ export const FOOTER_COLUMNS: { title: string; links: NavLink[] }[] = [
   {
     title: "Products",
     links: [
-      { label: "Scanners", href: "/products/intraoral-scanner" },
-      { label: "3D Printers", href: "/products/3d-printers" },
-      { label: "Curing", href: "/products/curing-machines" },
+      { label: "ODYX-S1", href: "/products/intraoral-scanner" },
+      { label: "ODYX P1-26", href: "/products/3d-printers" },
+      { label: "ODYX Cure", href: "/products/curing-machines" },
       { label: "Resin", href: "/products/Resin" },
+      { label: "Store", href: "/shop" },
     ],
   },
   {
