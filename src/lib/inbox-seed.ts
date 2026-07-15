@@ -4,7 +4,7 @@
 
 import type { InboxThread } from '@/content/inbox';
 import { DESIGN_TEAM_EMAIL } from '@/content/inbox';
-import type { AccountSession } from '@/lib/auth-store';
+import type { AccountSession } from '@/lib/auth';
 import { INBOX_STORAGE_KEY } from '@/lib/inbox-store';
 
 const SEED_FLAG_PREFIX = 'odyx_inbox_seeded_';

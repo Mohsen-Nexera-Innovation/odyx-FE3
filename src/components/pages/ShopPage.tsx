@@ -1,19 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import {
   FREE_SHIPPING_THRESHOLD,
   SHOP_CATEGORIES,
   SHOP_CATEGORY_LABEL,
-  SHOP_PRODUCTS,
   formatMoney,
   type ShopCategory,
   type ShopProduct,
 } from '@/content/shop';
-import { addItem } from '@/lib/cart-store';
+import { addItemAsync, fetchShopProducts } from '@/lib/commerce';
+import { isApiMode } from '@/lib/config';
+import { readSession } from '@/lib/auth';
 
 function isCategory(v: string | null): v is ShopCategory {
   return v === 'printer' || v === 'curing' || v === 'scanner';
@@ -83,15 +84,11 @@ function ProductCard({
         </div>
 
         <div className="store-actions">
-          <button type="button" className="btn store-btn-buy" onClick={() => onBuyNow(p.id)}>
-            Buy now <Arrow />
-          </button>
-          <button
-            type="button"
-            className={`btn btn-ghost store-btn-cart${added ? ' is-added' : ''}`}
-            onClick={() => onAdd(p.id)}
-          >
+          <button type="button" className="btn btn-sm" onClick={() => onAdd(p.id)}>
             {added ? 'Added' : 'Add to cart'}
+          </button>
+          <button type="button" className="btn btn-ghost btn-sm" onClick={() => onBuyNow(p.id)}>
+            Buy now
           </button>
         </div>
       </div>
@@ -105,24 +102,55 @@ export default function ShopPage() {
   const catParam = searchParams.get('cat');
   const filter: ShopCategory | 'all' = isCategory(catParam) ? catParam : 'all';
   const [addedId, setAddedId] = useState<string | null>(null);
+  const [products, setProducts] = useState<ShopProduct[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const products = useMemo(() => {
-    if (filter === 'all') return SHOP_PRODUCTS;
-    return SHOP_PRODUCTS.filter((p) => p.category === filter);
+  useEffect(() => {
+    let cancelled = false;
+    setError(null);
+    fetchShopProducts(filter)
+      .then((list) => {
+        if (!cancelled) setProducts(list);
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setProducts([]);
+          setError(err instanceof Error ? err.message : 'Could not load products');
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [filter]);
 
   const filterLabel =
     filter === 'all' ? 'All products' : SHOP_CATEGORY_LABEL[filter];
 
-  function onAdd(productId: string) {
-    addItem(productId, 1);
-    setAddedId(productId);
-    window.setTimeout(() => setAddedId((cur) => (cur === productId ? null : cur)), 1600);
+  async function onAdd(productId: string) {
+    if (isApiMode() && !readSession()) {
+      router.push('/login');
+      return;
+    }
+    try {
+      await addItemAsync(productId, 1);
+      setAddedId(productId);
+      window.setTimeout(() => setAddedId((cur) => (cur === productId ? null : cur)), 1600);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not add to cart');
+    }
   }
 
-  function onBuyNow(productId: string) {
-    addItem(productId, 1);
-    router.push('/checkout');
+  async function onBuyNow(productId: string) {
+    if (isApiMode() && !readSession()) {
+      router.push('/login');
+      return;
+    }
+    try {
+      await addItemAsync(productId, 1);
+      router.push('/checkout');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not add to cart');
+    }
   }
 
   return (
@@ -152,7 +180,9 @@ export default function ShopPage() {
               <p className="store-toolbar-meta">
                 {products.length} product{products.length === 1 ? '' : 's'}
                 <span aria-hidden>·</span>
-                Free shipping from {formatMoney(FREE_SHIPPING_THRESHOLD)}
+                {isApiMode()
+                  ? 'Shipping via Bosta · Pay with Paymob or COD'
+                  : `Free shipping from ${formatMoney(FREE_SHIPPING_THRESHOLD)}`}
               </p>
             </div>
 
@@ -177,7 +207,9 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {products.length === 0 ? (
+          {error ? <p className="store-empty">{error}</p> : null}
+
+          {products.length === 0 && !error ? (
             <p className="store-empty">No products in this category.</p>
           ) : (
             <div className={`store-grid${products.length < 3 ? ' store-grid--sparse' : ''}`}>

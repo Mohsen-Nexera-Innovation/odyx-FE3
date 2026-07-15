@@ -6,7 +6,9 @@ import { useRouter } from 'next/navigation';
 import PageHero from '@/components/PageHero';
 import { FREE_SHIPPING_THRESHOLD, calcShipping, formatMoney } from '@/content/shop';
 import { useCart } from '@/hooks/useCart';
-import { placeOrder, type OrderShipping } from '@/lib/order-store';
+import { readSession } from '@/lib/auth';
+import { isApiMode } from '@/lib/config';
+import { placeOrderFacade, previewShipping, type OrderShipping } from '@/lib/orders';
 
 type FormState = OrderShipping & {
   cardName: string;
@@ -128,6 +130,7 @@ function BrandMark({ brand }: { brand: CardBrand }) {
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const apiMode = isApiMode();
   const { lines, count } = useCart();
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
@@ -135,34 +138,77 @@ export default function CheckoutPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [cvcFocus, setCvcFocus] = useState(false);
+  const [payMethod, setPayMethod] = useState<'ONLINE' | 'CASH'>('ONLINE');
+  const [apiShipping, setApiShipping] = useState<number | null>(null);
+  const [payIframe, setPayIframe] = useState<string | null>(null);
 
   useEffect(() => {
     setReady(true);
-  }, []);
+    if (apiMode) {
+      const session = readSession();
+      if (session) {
+        setForm((f) => ({
+          ...f,
+          name: f.name || session.name,
+          email: f.email || session.email,
+          country: f.country || session.country || 'Egypt',
+        }));
+      }
+    }
+  }, [apiMode]);
 
   useEffect(() => {
     if (!ready) return;
-    if (count === 0) {
+    if (apiMode && !readSession()) {
+      router.replace('/login');
+      return;
+    }
+    if (count === 0 && !payIframe) {
       router.replace('/shop');
     }
-  }, [ready, count, router]);
+  }, [ready, count, router, apiMode, payIframe]);
+
+  useEffect(() => {
+    if (!apiMode || !form.city.trim()) {
+      setApiShipping(null);
+      return;
+    }
+    let cancelled = false;
+    void previewShipping({
+      shippingGovernorate: form.city.trim(),
+      paymentMethod: payMethod,
+    })
+      .then((q) => {
+        if (!cancelled && q) setApiShipping(q.shipping);
+      })
+      .catch(() => {
+        if (!cancelled) setApiShipping(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [apiMode, form.city, payMethod]);
 
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const shippingFee = calcShipping(subtotal);
+  const shippingFee = apiMode
+    ? (apiShipping ?? 0)
+    : calcShipping(subtotal);
   const total = subtotal + shippingFee;
 
   const contactDone =
     form.name.trim() !== '' && isValidEmail(form.email) && digitsOnly(form.phone).length >= 8;
-  const shippingDone =
-    form.line1.trim() !== '' &&
-    form.city.trim() !== '' &&
-    form.country.trim() !== '' &&
-    form.postal.trim() !== '';
-  const paymentDone =
-    form.cardName.trim() !== '' &&
-    digitsOnly(form.cardNumber).length >= 15 &&
-    isValidExpiry(form.expiry) &&
-    digitsOnly(form.cvc).length >= 3;
+  const shippingDone = apiMode
+    ? form.line1.trim() !== '' && form.city.trim() !== ''
+    : form.line1.trim() !== '' &&
+      form.city.trim() !== '' &&
+      form.country.trim() !== '' &&
+      form.postal.trim() !== '';
+  const paymentDone = apiMode
+    ? true
+    : form.cardName.trim() !== '' &&
+      digitsOnly(form.cardNumber).length >= 15 &&
+      isValidExpiry(form.expiry) &&
+      digitsOnly(form.cvc).length >= 3;
 
   const brand = cardBrand(form.cardNumber);
 
@@ -182,13 +228,15 @@ export default function CheckoutPage() {
     if (!form.email.trim() || !isValidEmail(form.email)) next.email = 'Valid email required';
     if (!form.phone.trim() || digitsOnly(form.phone).length < 8) next.phone = 'Valid phone required';
     if (!form.line1.trim()) next.line1 = 'Required';
-    if (!form.city.trim()) next.city = 'Required';
-    if (!form.country.trim()) next.country = 'Required';
-    if (!form.postal.trim()) next.postal = 'Required';
-    if (!form.cardName.trim()) next.cardName = 'Required';
-    if (digitsOnly(form.cardNumber).length < 15) next.cardNumber = 'Enter a valid card number';
-    if (!isValidExpiry(form.expiry)) next.expiry = 'Use MM/YY';
-    if (digitsOnly(form.cvc).length < 3) next.cvc = 'Invalid CVC';
+    if (!form.city.trim()) next.city = apiMode ? 'Governorate / city required (Bosta)' : 'Required';
+    if (!apiMode) {
+      if (!form.country.trim()) next.country = 'Required';
+      if (!form.postal.trim()) next.postal = 'Required';
+      if (!form.cardName.trim()) next.cardName = 'Required';
+      if (digitsOnly(form.cardNumber).length < 15) next.cardNumber = 'Enter a valid card number';
+      if (!isValidExpiry(form.expiry)) next.expiry = 'Use MM/YY';
+      if (digitsOnly(form.cvc).length < 3) next.cvc = 'Invalid CVC';
+    }
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -199,22 +247,58 @@ export default function CheckoutPage() {
     if (!validate()) return;
     setSubmitting(true);
     try {
-      const order = await placeOrder({
-        shipping: {
-          name: form.name.trim(),
-          email: form.email.trim(),
-          phone: form.phone.trim(),
-          line1: form.line1.trim(),
-          city: form.city.trim(),
-          country: form.country.trim(),
-          postal: form.postal.trim(),
-        },
+      const shipping = {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        line1: form.line1.trim(),
+        city: form.city.trim(),
+        country: form.country.trim() || 'Egypt',
+        postal: form.postal.trim() || '-',
+      };
+      const result = await placeOrderFacade({
+        shipping,
+        paymentMethod: apiMode ? payMethod : 'ONLINE',
       });
-      router.push(`/checkout/success?order=${encodeURIComponent(order.id)}`);
+
+      if ('iframeUrl' in result && result.iframeUrl) {
+        setPayIframe(result.iframeUrl);
+        setSubmitting(false);
+        return;
+      }
+
+      const orderId =
+        'order' in result && result.order ? result.order.id : (result as { id: string }).id;
+      router.push(`/checkout/success?order=${encodeURIComponent(orderId)}`);
     } catch (err) {
       setFormError(err instanceof Error ? err.message : 'Could not place order.');
       setSubmitting(false);
     }
+  }
+
+  if (payIframe) {
+    return (
+      <section className="sec store-sec co-sec">
+        <div className="wrap">
+          <PageHero
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Checkout', href: '/checkout' },
+            ]}
+            title="Complete payment"
+            lead="Pay securely with Paymob. After payment you will return to the confirmation page."
+          />
+          <iframe
+            title="Paymob checkout"
+            src={payIframe}
+            style={{ width: '100%', minHeight: '720px', border: 0, borderRadius: 12 }}
+          />
+          <p style={{ marginTop: '1rem' }}>
+            <Link href="/shop">Back to store</Link>
+          </p>
+        </div>
+      </section>
+    );
   }
 
   if (!ready || count === 0) {
@@ -319,29 +403,33 @@ export default function CheckoutPage() {
                   />
                   <Field
                     id="co-city"
-                    label="City"
+                    label={apiMode ? 'Governorate / city (Bosta)' : 'City'}
                     autoComplete="address-level2"
                     value={form.city}
                     onChange={(v) => setField('city', v)}
                     error={errors.city}
                   />
-                  <Field
-                    id="co-country"
-                    label="Country"
-                    autoComplete="country-name"
-                    value={form.country}
-                    onChange={(v) => setField('country', v)}
-                    error={errors.country}
-                  />
-                  <Field
-                    id="co-postal"
-                    label="Postal code"
-                    autoComplete="postal-code"
-                    full
-                    value={form.postal}
-                    onChange={(v) => setField('postal', v)}
-                    error={errors.postal}
-                  />
+                  {!apiMode ? (
+                    <>
+                      <Field
+                        id="co-country"
+                        label="Country"
+                        autoComplete="country-name"
+                        value={form.country}
+                        onChange={(v) => setField('country', v)}
+                        error={errors.country}
+                      />
+                      <Field
+                        id="co-postal"
+                        label="Postal code"
+                        autoComplete="postal-code"
+                        full
+                        value={form.postal}
+                        onChange={(v) => setField('postal', v)}
+                        error={errors.postal}
+                      />
+                    </>
+                  ) : null}
                 </div>
               </section>
 
@@ -350,92 +438,121 @@ export default function CheckoutPage() {
                   <span className="co-step-num">{paymentDone ? <CheckIcon /> : '3'}</span>
                   <div>
                     <h2>Payment</h2>
-                    <p>Demo mode — no real charges are made</p>
+                    <p>
+                      {apiMode
+                        ? 'Paymob card checkout or cash on delivery (Bosta COD)'
+                        : 'Demo mode — no real charges are made'}
+                    </p>
                   </div>
                 </div>
 
-                <div className="pay-methods" role="radiogroup" aria-label="Payment method">
-                  <button type="button" className="pay-method on" role="radio" aria-checked="true">
-                    <LockIcon /> Card
-                  </button>
-                  <button type="button" className="pay-method" role="radio" aria-checked="false" disabled>
-                    Bank transfer <em>Soon</em>
-                  </button>
-                  <button type="button" className="pay-method" role="radio" aria-checked="false" disabled>
-                    Pay on delivery <em>Soon</em>
-                  </button>
-                </div>
-
-                <div className={`pay-card${cvcFocus ? ' flip' : ''}`} aria-hidden>
-                  <div className="pay-card-inner">
-                    <div className="pay-card-front">
-                      <div className="pay-card-top">
-                        <span className="pay-chip" />
-                        <BrandMark brand={brand} />
-                      </div>
-                      <p className="pay-card-num">{form.cardNumber || '•••• •••• •••• ••••'}</p>
-                      <div className="pay-card-bottom">
-                        <span>
-                          <em>Card holder</em>
-                          <strong>{form.cardName.toUpperCase() || 'YOUR NAME'}</strong>
-                        </span>
-                        <span>
-                          <em>Expires</em>
-                          <strong>{form.expiry || 'MM/YY'}</strong>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="pay-card-back">
-                      <span className="pay-card-stripe" />
-                      <span className="pay-card-sig">
-                        <i>{form.cvc || '•••'}</i>
-                      </span>
-                      <BrandMark brand={brand} />
-                    </div>
+                {apiMode ? (
+                  <div className="pay-methods" role="radiogroup" aria-label="Payment method">
+                    <button
+                      type="button"
+                      className={`pay-method${payMethod === 'ONLINE' ? ' on' : ''}`}
+                      role="radio"
+                      aria-checked={payMethod === 'ONLINE'}
+                      onClick={() => setPayMethod('ONLINE')}
+                    >
+                      <LockIcon /> Paymob (card)
+                    </button>
+                    <button
+                      type="button"
+                      className={`pay-method${payMethod === 'CASH' ? ' on' : ''}`}
+                      role="radio"
+                      aria-checked={payMethod === 'CASH'}
+                      onClick={() => setPayMethod('CASH')}
+                    >
+                      Cash on delivery
+                    </button>
                   </div>
-                </div>
+                ) : (
+                  <>
+                    <div className="pay-methods" role="radiogroup" aria-label="Payment method">
+                      <button type="button" className="pay-method on" role="radio" aria-checked="true">
+                        <LockIcon /> Card
+                      </button>
+                      <button type="button" className="pay-method" role="radio" aria-checked="false" disabled>
+                        Bank transfer <em>Soon</em>
+                      </button>
+                      <button type="button" className="pay-method" role="radio" aria-checked="false" disabled>
+                        Pay on delivery <em>Soon</em>
+                      </button>
+                    </div>
 
-                <div className="co-fields">
-                  <Field
-                    id="co-card-name"
-                    label="Name on card"
-                    autoComplete="cc-name"
-                    full
-                    value={form.cardName}
-                    onChange={(v) => setField('cardName', v)}
-                    error={errors.cardName}
-                  />
-                  <Field
-                    id="co-card-num"
-                    label="Card number"
-                    inputMode="numeric"
-                    autoComplete="cc-number"
-                    full
-                    value={form.cardNumber}
-                    onChange={(v) => setField('cardNumber', formatCardNumber(v))}
-                    error={errors.cardNumber}
-                  />
-                  <Field
-                    id="co-expiry"
-                    label="Expiry (MM/YY)"
-                    inputMode="numeric"
-                    autoComplete="cc-exp"
-                    value={form.expiry}
-                    onChange={(v) => setField('expiry', formatExpiry(v))}
-                    error={errors.expiry}
-                  />
-                  <Field
-                    id="co-cvc"
-                    label="CVC"
-                    inputMode="numeric"
-                    autoComplete="cc-csc"
-                    value={form.cvc}
-                    onChange={(v) => setField('cvc', digitsOnly(v).slice(0, 4))}
-                    onFocus={() => setCvcFocus(true)}
-                    onBlur={() => setCvcFocus(false)}
-                    error={errors.cvc}
-                  />
-                </div>
+                    <div className={`pay-card${cvcFocus ? ' flip' : ''}`} aria-hidden>
+                      <div className="pay-card-inner">
+                        <div className="pay-card-front">
+                          <div className="pay-card-top">
+                            <span className="pay-chip" />
+                            <BrandMark brand={brand} />
+                          </div>
+                          <p className="pay-card-num">{form.cardNumber || '•••• •••• •••• ••••'}</p>
+                          <div className="pay-card-bottom">
+                            <span>
+                              <em>Card holder</em>
+                              <strong>{form.cardName.toUpperCase() || 'YOUR NAME'}</strong>
+                            </span>
+                            <span>
+                              <em>Expires</em>
+                              <strong>{form.expiry || 'MM/YY'}</strong>
+                            </span>
+                          </div>
+                        </div>
+                        <div className="pay-card-back">
+                          <span className="pay-card-stripe" />
+                          <span className="pay-card-sig">
+                            <i>{form.cvc || '•••'}</i>
+                          </span>
+                          <BrandMark brand={brand} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="co-fields">
+                      <Field
+                        id="co-card-name"
+                        label="Name on card"
+                        autoComplete="cc-name"
+                        full
+                        value={form.cardName}
+                        onChange={(v) => setField('cardName', v)}
+                        error={errors.cardName}
+                      />
+                      <Field
+                        id="co-card-num"
+                        label="Card number"
+                        inputMode="numeric"
+                        autoComplete="cc-number"
+                        full
+                        value={form.cardNumber}
+                        onChange={(v) => setField('cardNumber', formatCardNumber(v))}
+                        error={errors.cardNumber}
+                      />
+                      <Field
+                        id="co-expiry"
+                        label="Expiry (MM/YY)"
+                        inputMode="numeric"
+                        autoComplete="cc-exp"
+                        value={form.expiry}
+                        onChange={(v) => setField('expiry', formatExpiry(v))}
+                        error={errors.expiry}
+                      />
+                      <Field
+                        id="co-cvc"
+                        label="CVC"
+                        inputMode="numeric"
+                        autoComplete="cc-csc"
+                        value={form.cvc}
+                        onChange={(v) => setField('cvc', digitsOnly(v).slice(0, 4))}
+                        onFocus={() => setCvcFocus(true)}
+                        onBlur={() => setCvcFocus(false)}
+                        error={errors.cvc}
+                      />
+                    </div>
+                  </>
+                )}
               </section>
 
               {formError ? <p className="co-form-error">{formError}</p> : null}

@@ -10,12 +10,13 @@ import {
   formatMoney,
 } from '@/content/shop';
 import { useCart } from '@/hooks/useCart';
-import { removeItem, updateQty } from '@/lib/cart-store';
+import { removeItemAsync, updateQtyAsync } from '@/lib/commerce';
+import { isApiMode } from '@/lib/config';
 
 export default function CartPage() {
   const { lines, count } = useCart();
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const shipping = calcShipping(subtotal);
+  const shipping = isApiMode() ? 0 : calcShipping(subtotal);
   const total = subtotal + shipping;
   const shipProgress = Math.min(1, subtotal / FREE_SHIPPING_THRESHOLD);
   const toFreeShip = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
@@ -130,7 +131,7 @@ export default function CartPage() {
                         <button
                           type="button"
                           className="cart-remove"
-                          onClick={() => removeItem(line.productId)}
+                          onClick={() => void removeItemAsync(line.productId)}
                         >
                           Remove
                         </button>
@@ -140,7 +141,7 @@ export default function CartPage() {
                         <span className="cart-qty-label">Qty</span>
                         <QtyStepper
                           value={line.qty}
-                          onChange={(q) => updateQty(line.productId, q)}
+                          onChange={(q) => void updateQtyAsync(line.productId, q)}
                           label={`Quantity for ${line.product.name}`}
                         />
                       </div>
@@ -185,7 +186,13 @@ export default function CartPage() {
                   </div>
                   <div className="cart-sum-row">
                     <span>Shipping</span>
-                    <span>{shipping === 0 ? 'Free' : formatMoney(shipping)}</span>
+                    <span>
+                      {isApiMode()
+                        ? 'Calculated at checkout'
+                        : shipping === 0
+                          ? 'Free'
+                          : formatMoney(shipping)}
+                    </span>
                   </div>
                   <div className="cart-sum-row cart-sum-total">
                     <span>Total</span>

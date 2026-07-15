@@ -1,6 +1,6 @@
 /**
- * Client-side auth with dummy user database (localStorage).
- * Replace with real API in production.
+ * Demo-mode auth (localStorage user DB).
+ * UI must use `@/lib/auth` facade — do not import login/register/logout from here.
  */
 
 import type { UserRole } from '@/content/auth';

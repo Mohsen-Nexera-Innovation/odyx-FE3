@@ -7,8 +7,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { addItem } from "@/lib/cart-store";
 import { formatMoney, getProductById } from "@/content/shop";
+import { readSession } from "@/lib/auth";
+import { addItemAsync, resolveCartProductId } from "@/lib/commerce";
+import { isApiMode } from "@/lib/config";
 
 type Accent = "teal" | "orange";
 interface Product {
@@ -216,9 +218,15 @@ export default function ProductGallery() {
     ? getProductById(current.shopProductId)
     : undefined;
 
-  function onBuyNow() {
+  async function onBuyNow() {
     if (!current.shopProductId) return;
-    addItem(current.shopProductId, 1);
+    if (isApiMode() && !readSession()) {
+      router.push("/login");
+      return;
+    }
+    const id =
+      (await resolveCartProductId(current.shopProductId)) ?? current.shopProductId;
+    await addItemAsync(id, 1);
     router.push("/checkout");
   }
 
@@ -319,7 +327,7 @@ export default function ProductGallery() {
         </div>
         <div className="pgx-actions" key={`cta-${active}`}>
           {shopProduct ? (
-            <button type="button" className="btn pgx-view-btn" onClick={onBuyNow}>
+            <button type="button" className="btn pgx-view-btn" onClick={() => void onBuyNow()}>
               Buy now — {formatMoney(shopProduct.price)} <Arrow />
             </button>
           ) : (

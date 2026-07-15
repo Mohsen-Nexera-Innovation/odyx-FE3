@@ -76,10 +76,15 @@ export function getProductById(id: string): ShopProduct | undefined {
   return SHOP_PRODUCTS.find((p) => p.id === id);
 }
 
-export function formatMoney(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
+export function formatMoney(amount: number, currency: 'USD' | 'EGP' = 'USD'): string {
+  // API/Paymob/Bosta path uses EGP; offline demo store stays USD.
+  const code =
+    typeof process !== 'undefined' && process.env.NEXT_PUBLIC_USE_API === 'true'
+      ? 'EGP'
+      : currency;
+  return new Intl.NumberFormat(code === 'EGP' ? 'en-EG' : 'en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: code,
     minimumFractionDigits: amount % 1 === 0 ? 0 : 2,
   }).format(amount);
 }

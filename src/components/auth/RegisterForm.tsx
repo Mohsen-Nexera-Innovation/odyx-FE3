@@ -9,7 +9,8 @@ import {
   roleDestination,
   type UserRole,
 } from '@/content/auth';
-import { initAuthStore, register } from '@/lib/auth-store';
+import { initAuthStore, register } from '@/lib/auth';
+import { isApiMode } from '@/lib/config';
 import { seedInboxForUser } from '@/lib/inbox-seed';
 import AuthRoleRail from './AuthRoleRail';
 
@@ -17,6 +18,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
   const router = useRouter();
   const search = useSearchParams();
   const initialRole = roleById(search.get('role'))?.id ?? null;
+  const apiMode = isApiMode();
 
   const [step, setStep] = useState(initialRole ? 1 : 0);
   const [role, setRole] = useState<UserRole | null>(initialRole);
@@ -53,7 +55,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
     setStep(1);
   };
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (!role) {
       setMsg('Pick a role to continue.');
@@ -80,25 +82,27 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
     setBusy(true);
     setError(false);
 
-    setTimeout(() => {
-      const result = register({
-        name: name.trim(),
-        email: email.trim(),
-        password,
-        role,
-        org: org.trim(),
-        country: country.trim(),
-      });
-      setBusy(false);
-      if (!result.ok) {
-        setMsg(result.error);
-        setError(true);
-        return;
-      }
-      seedInboxForUser(result.session);
-      setMsg('Account created — inbox ready with sample cases.');
-      setTimeout(() => router.push(roleDestination(result.session.role)), 900);
-    }, 500);
+    const result = await register({
+      name: name.trim(),
+      email: email.trim(),
+      password,
+      role,
+      org: org.trim(),
+      country: country.trim(),
+    });
+    setBusy(false);
+    if (!result.ok) {
+      setMsg(result.error);
+      setError(true);
+      return;
+    }
+    if (!apiMode) seedInboxForUser(result.session);
+    setMsg(
+      apiMode
+        ? 'Account created via API (JWT stored). Inbox API comes later — local sample cases not seeded.'
+        : 'Account created — inbox ready with sample cases.',
+    );
+    setTimeout(() => router.push(roleDestination(result.session.role)), 900);
   };
 
   return (

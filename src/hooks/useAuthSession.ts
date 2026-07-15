@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { AUTH_STORAGE_KEY } from '@/content/auth';
-import { readSession, type AccountSession } from '@/lib/auth-store';
+import { readSession, type AccountSession } from '@/lib/auth';
 
 export function useAuthSession() {
   const [session, setSession] = useState<AccountSession | null>(null);

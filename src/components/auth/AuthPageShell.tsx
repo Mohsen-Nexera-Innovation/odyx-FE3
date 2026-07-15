@@ -6,6 +6,7 @@ const ACCENT: Record<UserRole | 'default', string> = {
   dentist: 'teal',
   lab: 'orange',
   guest: 'sky',
+  admin: 'sky',
 };
 
 export default function AuthPageShell({

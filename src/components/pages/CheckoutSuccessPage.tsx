@@ -5,7 +5,8 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import { formatMoney } from '@/content/shop';
-import { getOrderById, type StoredOrder } from '@/lib/order-store';
+import { isApiMode } from '@/lib/config';
+import { getOrderFacade, type StoredOrder } from '@/lib/orders';
 
 const CheckIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -23,7 +24,7 @@ function SuccessBody() {
       setOrder(null);
       return;
     }
-    setOrder(getOrderById(orderId) ?? null);
+    void getOrderFacade(orderId).then((o) => setOrder(o ?? null));
   }, [orderId]);
 
   if (order === undefined) {
@@ -80,7 +81,11 @@ function SuccessBody() {
             Thank you, {order.shipping.name.split(' ')[0]} — your gear is being prepared.
             A confirmation was sent to <strong>{order.shipping.email}</strong>.
           </p>
-          <p className="suc-demo-note">Demo checkout · No real charge was made</p>
+          <p className="suc-demo-note">
+            {isApiMode()
+              ? 'Order saved on ODYX API · Paymob / Bosta when configured'
+              : 'Demo checkout · No real charge was made'}
+          </p>
         </div>
 
         <div className="suc-receipt">

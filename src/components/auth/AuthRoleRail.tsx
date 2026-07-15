@@ -20,6 +20,11 @@ const ICONS: Record<UserRole, React.ReactNode> = {
       <path d="M12 8v4l3 2" strokeLinecap="round" />
     </svg>
   ),
+  admin: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z" strokeLinejoin="round" />
+    </svg>
+  ),
 };
 
 export default function AuthRoleRail({

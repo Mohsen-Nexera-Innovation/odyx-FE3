@@ -8,7 +8,7 @@ import {
   type InboxThread,
   type SlaTier,
 } from '@/content/inbox';
-import { readSession, type AccountSession } from '@/lib/auth-store';
+import { readSession, type AccountSession } from '@/lib/auth';
 
 export type { AccountSession };
 
@@ -123,7 +123,7 @@ export function sendScanToDesignTeam(session: AccountSession, input: ComposeInpu
     id,
     ref,
     ownerKey: ownerKey(session),
-    role: session.role,
+    role: session.role === 'admin' ? 'dentist' : session.role,
     orgName: session.org,
     indication: input.indication,
     patientRef: input.patientRef,

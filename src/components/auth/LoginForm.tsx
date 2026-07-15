@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type FormEvent, useEffect, useState } from 'react';
 import { roleDestination } from '@/content/auth';
-import { DEMO_ACCOUNTS, initAuthStore, login, loginAsGuest } from '@/lib/auth-store';
+import { DEMO_ACCOUNTS, initAuthStore, login, loginAsGuest } from '@/lib/auth';
+import { isApiMode } from '@/lib/config';
 import { seedInboxForUser } from '@/lib/inbox-seed';
 
 export default function LoginForm() {
@@ -15,6 +16,7 @@ export default function LoginForm() {
   const [msg, setMsg] = useState('');
   const [error, setError] = useState(false);
   const [busy, setBusy] = useState(false);
+  const apiMode = isApiMode();
 
   useEffect(() => {
     initAuthStore();
@@ -27,7 +29,7 @@ export default function LoginForm() {
     setError(false);
   };
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
       setMsg('Email and password required.');
@@ -38,18 +40,21 @@ export default function LoginForm() {
     setMsg('');
     setError(false);
 
-    setTimeout(() => {
-      const result = login(email.trim(), password);
-      setBusy(false);
-      if (!result.ok) {
-        setMsg(result.error);
-        setError(true);
-        return;
-      }
-      seedInboxForUser(result.session);
-      setMsg(`Welcome back, ${result.session.name}.`);
-      setTimeout(() => router.push(roleDestination(result.session.role)), 700);
-    }, 400);
+    const result = await login(email.trim(), password);
+    setBusy(false);
+    if (!result.ok) {
+      setMsg(result.error);
+      setError(true);
+      return;
+    }
+    // Inbox seed is localStorage-only; skip when auth is backed by Nest.
+    if (!apiMode) seedInboxForUser(result.session);
+    setMsg(
+      apiMode
+        ? `Signed in via API as ${result.session.name} (JWT stored).`
+        : `Welcome back, ${result.session.name}.`,
+    );
+    setTimeout(() => router.push(roleDestination(result.session.role)), 700);
   };
 
   const continueAsGuest = () => {
@@ -59,6 +64,15 @@ export default function LoginForm() {
 
   return (
     <>
+      <p
+        className="auth-toast ok"
+        role="status"
+        style={{ marginBottom: '0.75rem' }}
+      >
+        {apiMode
+          ? 'API mode — auth calls Nest at localhost:4000'
+          : 'Demo mode — auth uses localStorage (no backend)'}
+      </p>
       <form className="auth-form" onSubmit={submit}>
         <div className="auth-field">
           <label htmlFor="login-email">Email</label>
@@ -95,7 +109,9 @@ export default function LoginForm() {
       </form>
 
       <div className="auth-demo-accounts">
-        <p className="auth-demo-label">Try a demo account</p>
+        <p className="auth-demo-label">
+          {apiMode ? 'Seeded API accounts (same DB as Nest)' : 'Try a demo account'}
+        </p>
         <ul className="auth-demo-list">
           {DEMO_ACCOUNTS.map((demo) => (
             <li key={demo.email}>

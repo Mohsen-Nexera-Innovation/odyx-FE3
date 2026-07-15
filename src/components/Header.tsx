@@ -6,10 +6,9 @@ import { HEADER_MENUS } from '@/content/nav';
 import { LOCALE_LABEL, useGlobalTools, type Locale } from './GlobalTools';
 import AiChatbotIcon from './AiChatbotIcon';
 import { useAuthSession } from '@/hooks/useAuthSession';
-import { logout } from '@/lib/auth-store';
+import { logout, type AccountSession } from '@/lib/auth';
 import { unreadTotal } from '@/lib/inbox-store';
-import { cartCount } from '@/lib/cart-store';
-import type { AccountSession } from '@/lib/auth-store';
+import { cartCountAsync } from '@/lib/commerce';
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
 
@@ -150,13 +149,17 @@ export default function Header() {
   }, [session]);
 
   useEffect(() => {
-    const refreshCart = () => setCartItems(cartCount());
+    const refreshCart = () => {
+      void cartCountAsync().then(setCartItems).catch(() => setCartItems(0));
+    };
     refreshCart();
     window.addEventListener('odyx-cart-change', refreshCart);
     window.addEventListener('storage', refreshCart);
+    window.addEventListener('odyx-auth-change', refreshCart);
     return () => {
       window.removeEventListener('odyx-cart-change', refreshCart);
       window.removeEventListener('storage', refreshCart);
+      window.removeEventListener('odyx-auth-change', refreshCart);
     };
   }, []);
 
@@ -214,8 +217,8 @@ export default function Header() {
     return () => document.removeEventListener('click', close);
   }, []);
 
-  const signOut = () => {
-    logout();
+  const signOut = async () => {
+    await logout();
     router.push('/login');
   };
 
