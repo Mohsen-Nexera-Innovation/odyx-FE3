@@ -1,5 +1,6 @@
 import { getApiBaseUrl } from '@/lib/config';
 import { clearTokens, getAccessToken, getRefreshToken, setTokens } from '@/lib/auth-tokens';
+import { clearSession } from '@/lib/auth-store';
 
 export class ApiError extends Error {
   status: number;
@@ -54,6 +55,7 @@ async function tryRefreshAccessToken(): Promise<boolean> {
   const data = await parseJson(res);
   if (!res.ok) {
     clearTokens();
+    clearSession();
     return false;
   }
 
@@ -63,6 +65,7 @@ async function tryRefreshAccessToken(): Promise<boolean> {
   };
   if (!payload.accessToken || !payload.refreshToken) {
     clearTokens();
+    clearSession();
     return false;
   }
 

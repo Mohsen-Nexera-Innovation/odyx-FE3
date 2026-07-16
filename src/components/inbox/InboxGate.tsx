@@ -9,7 +9,14 @@ export default function InboxGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (ready && !session) router.replace('/login?next=/inbox');
+    if (!ready) return;
+    if (!session) {
+      router.replace('/login?next=/inbox');
+      return;
+    }
+    if (session.accountType === 'STAFF') {
+      router.replace('/admin/chat');
+    }
   }, [ready, session, router]);
 
   if (!ready) {
@@ -21,6 +28,6 @@ export default function InboxGate({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!session) return null;
+  if (!session || session.accountType === 'STAFF') return null;
   return <>{children}</>;
 }

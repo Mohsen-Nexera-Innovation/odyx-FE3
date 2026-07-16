@@ -6,22 +6,22 @@ import { type FormEvent, useEffect, useMemo, useState } from 'react';
 import {
   AUTH_ROLES,
   roleById,
-  roleDestination,
-  type UserRole,
+  sessionDestination,
+  type RegisterRole,
 } from '@/content/auth';
 import { initAuthStore, register } from '@/lib/auth';
 import { isApiMode } from '@/lib/config';
 import { seedInboxForUser } from '@/lib/inbox-seed';
 import AuthRoleRail from './AuthRoleRail';
 
-export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: UserRole | null) => void }) {
+export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: RegisterRole | null) => void }) {
   const router = useRouter();
   const search = useSearchParams();
   const initialRole = roleById(search.get('role'))?.id ?? null;
   const apiMode = isApiMode();
 
   const [step, setStep] = useState(initialRole ? 1 : 0);
-  const [role, setRole] = useState<UserRole | null>(initialRole);
+  const [role, setRole] = useState<RegisterRole | null>(initialRole);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,7 +47,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
     }
   }, [search, onRoleChange]);
 
-  const pickRole = (r: UserRole) => {
+  const pickRole = (r: RegisterRole) => {
     setRole(r);
     onRoleChange?.(r);
     setMsg('');
@@ -102,7 +102,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: U
         ? 'Account created via API (JWT stored). Inbox API comes later — local sample cases not seeded.'
         : 'Account created — inbox ready with sample cases.',
     );
-    setTimeout(() => router.push(roleDestination(result.session.role)), 900);
+    setTimeout(() => router.push(sessionDestination(result.session)), 900);
   };
 
   return (

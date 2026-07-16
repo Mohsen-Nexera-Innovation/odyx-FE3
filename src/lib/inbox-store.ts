@@ -9,6 +9,9 @@ import {
   type SlaTier,
 } from '@/content/inbox';
 import { readSession, type AccountSession } from '@/lib/auth';
+import { notifyInboxChange } from '@/lib/inbox-store-events';
+
+export { notifyInboxChange };
 
 export type { AccountSession };
 
@@ -153,11 +156,6 @@ export function markDesignDownloaded(session: AccountSession, threadId: string):
   writeAllThreads(all);
   notifyInboxChange();
   return all[idx];
-}
-
-export function notifyInboxChange() {
-  if (typeof window === 'undefined') return;
-  window.dispatchEvent(new Event('odyx-inbox-change'));
 }
 
 /** Demo: design team replies with STL after a short delay. */

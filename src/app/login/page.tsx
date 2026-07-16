@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import AuthPageShell from '@/components/auth/AuthPageShell';
 import LoginForm from '@/components/auth/LoginForm';
 import InnerPageMotion from '@/components/InnerPageMotion';
@@ -12,7 +13,9 @@ export default function LoginPage() {
   return (
     <>
       <AuthPageShell title="Sign in" subtitle="Dentist · Lab · Guest" wide>
-        <LoginForm />
+        <Suspense fallback={<p className="auth-hint">Loading…</p>}>
+          <LoginForm />
+        </Suspense>
       </AuthPageShell>
       <InnerPageMotion />
     </>

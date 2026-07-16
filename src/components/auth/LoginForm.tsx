@@ -1,15 +1,21 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { type FormEvent, useEffect, useState } from 'react';
-import { roleDestination } from '@/content/auth';
+import { sessionDestination } from '@/content/auth';
 import { DEMO_ACCOUNTS, initAuthStore, login, loginAsGuest } from '@/lib/auth';
 import { isApiMode } from '@/lib/config';
 import { seedInboxForUser } from '@/lib/inbox-seed';
 
+function safeNextPath(next: string | null): string | null {
+  if (!next || !next.startsWith('/') || next.startsWith('//')) return null;
+  return next;
+}
+
 export default function LoginForm() {
   const router = useRouter();
+  const search = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(true);
@@ -54,7 +60,13 @@ export default function LoginForm() {
         ? `Signed in via API as ${result.session.name} (JWT stored).`
         : `Welcome back, ${result.session.name}.`,
     );
-    setTimeout(() => router.push(roleDestination(result.session.role)), 700);
+    const next = safeNextPath(search.get('next'));
+    const dest =
+      next &&
+      (result.session.accountType === 'STAFF' || !next.startsWith('/admin'))
+        ? next
+        : sessionDestination(result.session);
+    setTimeout(() => router.push(dest), 700);
   };
 
   const continueAsGuest = () => {

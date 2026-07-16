@@ -11,7 +11,9 @@ import {
   type CaseIndication,
   type SlaTier,
 } from '@/content/inbox';
+import { createThreadFromComposeApi } from '@/lib/inbox-api';
 import { sendScanToDesignTeam, scheduleDesignReply, type AccountSession } from '@/lib/inbox-store';
+import { isApiMode } from '@/lib/config';
 
 const INDICATIONS = Object.keys(INDICATION_LABEL) as CaseIndication[];
 
@@ -32,6 +34,7 @@ export default function InboxComposeForm({
   disabled = false,
 }: InboxComposeFormProps) {
   const isLab = session.role === 'lab';
+  const apiMode = isApiMode();
   const [indication, setIndication] = useState<CaseIndication>('crown');
   const [patientRef, setPatientRef] = useState('');
   const [tooth, setTooth] = useState('');
@@ -44,34 +47,61 @@ export default function InboxComposeForm({
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (disabled) return;
     setError('');
-    if (!file) {
+
+    // Demo mode still requires a scan file. API mode allows message-only chat.
+    if (!apiMode && !file) {
       setError('Attach your STL or ZIP scan file before sending.');
       return;
     }
-    if (isLab && !batchRef.trim()) {
+    if (apiMode && !file && !notes.trim()) {
+      setError('Write a message or attach a scan file.');
+      return;
+    }
+    if (isLab && !batchRef.trim() && file) {
       setError('Batch reference is required for lab submissions.');
       return;
     }
 
     setBusy(true);
     try {
-      const thread = sendScanToDesignTeam(session, {
-        indication,
-        patientRef: patientRef.trim() || undefined,
-        tooth: tooth.trim() || undefined,
-        notes: notes.trim() || undefined,
-        sla,
-        resin: isLab ? resin : undefined,
-        printer: isLab ? printer : undefined,
-        batchRef: isLab ? batchRef.trim() : undefined,
-        stlFile: { name: file.name, size: file.size },
-      });
-      scheduleDesignReply(session, thread.id);
-      onSent(thread.id);
+      const subject = file
+        ? `Scan upload — ${INDICATION_LABEL[indication]}${tooth.trim() ? ` ${tooth.trim()}` : ''}${patientRef.trim() ? ` (${patientRef.trim()})` : ''}`
+        : `Message — ${INDICATION_LABEL[indication]}${patientRef.trim() ? ` (${patientRef.trim()})` : ''}`;
+      const body =
+        notes.trim() ||
+        (file
+          ? `Please process the attached scan. Turnaround: ${sla === 'same_day' ? 'same day' : '24 hours'}.` +
+            (isLab && batchRef.trim()
+              ? `\nBatch: ${batchRef.trim()}. Resin: ${resin}. Printer: ${printer}.`
+              : '')
+          : 'Hello ODYX team — I need help with my case.');
+
+      if (apiMode) {
+        const thread = await createThreadFromComposeApi(session, {
+          subject,
+          body,
+          attachmentName: file?.name,
+        });
+        onSent(thread.id);
+      } else {
+        const thread = sendScanToDesignTeam(session, {
+          indication,
+          patientRef: patientRef.trim() || undefined,
+          tooth: tooth.trim() || undefined,
+          notes: notes.trim() || undefined,
+          sla,
+          resin: isLab ? resin : undefined,
+          printer: isLab ? printer : undefined,
+          batchRef: isLab ? batchRef.trim() : undefined,
+          stlFile: { name: file!.name, size: file!.size },
+        });
+        scheduleDesignReply(session, thread.id);
+        onSent(thread.id);
+      }
       setBusy(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not send.');
@@ -213,15 +243,17 @@ export default function InboxComposeForm({
       </div>
 
       <div className="mail-compose-field">
-        <span className="mail-compose-label">Attach scan (STL or ZIP) — required</span>
+        <span className="mail-compose-label">
+          Attach scan (STL or ZIP){apiMode ? ' — optional' : ' — required'}
+        </span>
         <StlUploadZone
           file={file}
           onFile={disabled ? () => {} : setFile}
-          error={error && !file ? error : undefined}
+          error={error && !file && !apiMode ? error : undefined}
         />
       </div>
 
-      {error && file ? <p className="mail-compose-error">{error}</p> : null}
+      {error ? <p className="mail-compose-error">{error}</p> : null}
 
       <footer className="mail-compose-foot">
         {onCancel ? (
@@ -230,7 +262,7 @@ export default function InboxComposeForm({
           </button>
         ) : null}
         <button type="submit" className="btn btn-send-scan" disabled={busy || disabled}>
-          {busy ? 'Sending…' : 'Send scan to design team'}
+          {busy ? 'Sending…' : apiMode ? 'Send to ODYX' : 'Send scan to design team'}
         </button>
       </footer>
     </form>

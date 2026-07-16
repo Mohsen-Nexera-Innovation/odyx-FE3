@@ -1,7 +1,15 @@
-export type UserRole = 'dentist' | 'lab' | 'guest' | 'admin';
+/** Public register picker ids (client subtypes + guest). Not staff ranks. */
+export type RegisterRole = 'dentist' | 'lab' | 'guest';
+
+/** @deprecated Prefer accountType / clientType on AccountSession */
+export type UserRole = RegisterRole | 'admin';
+
+export type AccountType = 'STAFF' | 'CLIENT';
+export type ClientType = 'DENTIST' | 'LAB' | 'OTHER';
+export type StaffRank = 'SUPER_ADMIN' | 'OWNER' | 'STAFF';
 
 export interface AuthRole {
-  id: UserRole;
+  id: RegisterRole;
   label: string;
   short: string;
   desc: string;
@@ -11,6 +19,7 @@ export interface AuthRole {
   orgLabel: string;
   orgPlaceholder: string;
   verifyNote?: string;
+  clientType: ClientType | null;
 }
 
 export const AUTH_ROLES: AuthRole[] = [
@@ -24,6 +33,7 @@ export const AUTH_ROLES: AuthRole[] = [
     orgLabel: 'Clinic name',
     orgPlaceholder: 'Your practice name',
     verifyNote: 'Optional license upload unlocks clinical courses and case submission faster.',
+    clientType: 'DENTIST',
     perks: [
       'Registered clinical courses & academy',
       'Device warranty linked to your clinic',
@@ -41,6 +51,7 @@ export const AUTH_ROLES: AuthRole[] = [
     orgLabel: 'Lab name',
     orgPlaceholder: 'Your dental lab',
     verifyNote: 'Lab verification helps unlock production resources and bulk support.',
+    clientType: 'LAB',
     perks: [
       'Lab workflow hub & material guides',
       'Firmware and software update alerts',
@@ -57,6 +68,7 @@ export const AUTH_ROLES: AuthRole[] = [
     href: '/workflows',
     orgLabel: 'Organization (optional)',
     orgPlaceholder: 'Clinic, lab, or company',
+    clientType: null,
     perks: [
       'Full workflow tour and product explorer',
       'Beginner learning previews',
@@ -71,7 +83,28 @@ export function roleById(id: string | null | undefined): AuthRole | undefined {
   return AUTH_ROLES.find((r) => r.id === id);
 }
 
+export function registerRoleToClientType(role: RegisterRole): ClientType | null {
+  return roleById(role)?.clientType ?? null;
+}
+
+export function clientTypeToRegisterRole(
+  clientType: ClientType | null | undefined,
+): RegisterRole {
+  if (clientType === 'LAB') return 'lab';
+  if (clientType === 'DENTIST') return 'dentist';
+  return 'dentist';
+}
+
+export function sessionDestination(session: {
+  accountType: AccountType | 'GUEST';
+}): string {
+  if (session.accountType === 'STAFF') return '/admin';
+  return '/inbox';
+}
+
+/** @deprecated Use sessionDestination(session) */
 export function roleDestination(role: UserRole): string {
+  if (role === 'admin') return '/admin';
   return '/inbox';
 }
 

@@ -3,8 +3,15 @@
  * UI must use `@/lib/auth` facade — do not import login/register/logout from here.
  */
 
-import type { UserRole } from '@/content/auth';
-import { AUTH_STORAGE_KEY } from '@/content/auth';
+import {
+  AUTH_STORAGE_KEY,
+  clientTypeToRegisterRole,
+  type AccountType,
+  type ClientType,
+  type RegisterRole,
+  type StaffRank,
+  type UserRole,
+} from '@/content/auth';
 
 export const USERS_DB_KEY = 'odyx_users_db';
 
@@ -12,7 +19,10 @@ export type StoredUser = {
   email: string;
   password: string;
   name: string;
-  role: UserRole;
+  accountType: AccountType;
+  staffRank?: StaffRank | null;
+  clientType?: ClientType | null;
+  permissions: string[];
   org?: string;
   country?: string;
   createdAt: string;
@@ -21,14 +31,22 @@ export type StoredUser = {
 export type AccountSession = {
   email: string;
   name: string;
-  role: UserRole;
+  accountType: AccountType | 'GUEST';
+  staffRank?: StaffRank | null;
+  clientType?: ClientType | null;
+  permissions: string[];
+  roleId?: string | null;
+  roleName?: string | null;
   org?: string;
   country?: string;
+  /** UI compatibility: dentist | lab | guest | admin */
+  role: UserRole;
 };
 
 export const DEMO_ACCOUNTS: readonly { email: string; password: string; hint: string }[] = [
-  { email: 'dentist@demo.com', password: 'demo12345', hint: 'Dentist — full inbox with design ready' },
-  { email: 'lab@demo.com', password: 'demo12345', hint: 'Lab — batch production threads' },
+  { email: 'dentist@demo.com', password: 'demo12345', hint: 'Dentist client — inbox' },
+  { email: 'lab@demo.com', password: 'demo12345', hint: 'Lab client — production threads' },
+  { email: 'admin@odyx.com', password: 'demo12345', hint: 'Owner — full admin access' },
 ];
 
 const SEED_USERS: StoredUser[] = [
@@ -36,7 +54,9 @@ const SEED_USERS: StoredUser[] = [
     email: 'dentist@demo.com',
     password: 'demo12345',
     name: 'Dr. Sarah Chen',
-    role: 'dentist',
+    accountType: 'CLIENT',
+    clientType: 'DENTIST',
+    permissions: [],
     org: 'Smile Clinic Cairo',
     country: 'Egypt',
     createdAt: new Date('2025-01-15').toISOString(),
@@ -45,16 +65,39 @@ const SEED_USERS: StoredUser[] = [
     email: 'lab@demo.com',
     password: 'demo12345',
     name: 'Ahmed Hassan',
-    role: 'lab',
+    accountType: 'CLIENT',
+    clientType: 'LAB',
+    permissions: [],
     org: 'Nile Dental Lab',
     country: 'Egypt',
     createdAt: new Date('2025-02-01').toISOString(),
+  },
+  {
+    email: 'admin@odyx.com',
+    password: 'demo12345',
+    name: 'ODYX Owner',
+    accountType: 'STAFF',
+    staffRank: 'OWNER',
+    permissions: ['*'],
+    org: 'ODYX',
+    country: 'Egypt',
+    createdAt: new Date('2025-01-01').toISOString(),
   },
 ];
 
 export function notifyAuthChange() {
   if (typeof window === 'undefined') return;
   window.dispatchEvent(new Event('odyx-auth-change'));
+}
+
+function deriveRole(session: {
+  accountType: AccountType | 'GUEST';
+  staffRank?: StaffRank | null;
+  clientType?: ClientType | null;
+}): UserRole {
+  if (session.accountType === 'GUEST') return 'guest';
+  if (session.accountType === 'STAFF') return 'admin';
+  return clientTypeToRegisterRole(session.clientType);
 }
 
 function readUsersDb(): StoredUser[] {
@@ -94,9 +137,13 @@ function toSession(user: StoredUser): AccountSession {
   return {
     email: user.email,
     name: user.name,
-    role: user.role,
+    accountType: user.accountType,
+    staffRank: user.staffRank,
+    clientType: user.clientType,
+    permissions: user.permissions,
     org: user.org,
     country: user.country,
+    role: deriveRole(user),
   };
 }
 
@@ -105,20 +152,67 @@ export function readSession(): AccountSession | null {
   try {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
     if (!raw) return null;
-    const data = JSON.parse(raw) as AccountSession & { role?: UserRole };
-    if (!data.role || data.role === 'guest') {
-      if (data.role === 'guest') {
-        return { email: '', name: data.name || 'Guest', role: 'guest' };
-      }
-      return null;
-    }
-    return {
-      email: data.email,
-      name: data.name,
-      role: data.role,
-      org: data.org,
-      country: data.country,
+    const data = JSON.parse(raw) as Partial<AccountSession> & {
+      role?: UserRole;
     };
+
+    if (data.accountType === 'GUEST' || data.role === 'guest') {
+      return {
+        email: '',
+        name: data.name || 'Guest',
+        accountType: 'GUEST',
+        permissions: [],
+        role: 'guest',
+      };
+    }
+
+    if (data.accountType === 'STAFF' || data.accountType === 'CLIENT') {
+      return {
+        email: data.email || '',
+        name: data.name || '',
+        accountType: data.accountType,
+        staffRank: data.staffRank,
+        clientType: data.clientType,
+        permissions: data.permissions ?? [],
+        roleId: data.roleId,
+        roleName: data.roleName,
+        org: data.org,
+        country: data.country,
+        role: deriveRole({
+          accountType: data.accountType,
+          staffRank: data.staffRank,
+          clientType: data.clientType,
+        }),
+      };
+    }
+
+    // Legacy sessions with only role
+    if (data.role === 'admin') {
+      return {
+        email: data.email || '',
+        name: data.name || '',
+        accountType: 'STAFF',
+        staffRank: 'OWNER',
+        permissions: ['*'],
+        org: data.org,
+        country: data.country,
+        role: 'admin',
+      };
+    }
+    if (data.role === 'dentist' || data.role === 'lab') {
+      return {
+        email: data.email || '',
+        name: data.name || '',
+        accountType: 'CLIENT',
+        clientType: data.role === 'lab' ? 'LAB' : 'DENTIST',
+        permissions: [],
+        org: data.org,
+        country: data.country,
+        role: data.role,
+      };
+    }
+
+    return null;
   } catch {
     return null;
   }
@@ -145,7 +239,10 @@ export function login(email: string, password: string): LoginResult {
   initAuthStore();
   const user = findUser(email);
   if (!user) {
-    return { ok: false, error: 'No account found for this email. Register or use a demo account.' };
+    return {
+      ok: false,
+      error: 'No account found for this email. Register or use a demo account.',
+    };
   }
   if (user.password !== password) {
     return { ok: false, error: 'Incorrect password.' };
@@ -159,7 +256,7 @@ export type RegisterInput = {
   name: string;
   email: string;
   password: string;
-  role: UserRole;
+  role: RegisterRole;
   org?: string;
   country?: string;
 };
@@ -170,22 +267,31 @@ export type RegisterResult =
 
 export function register(input: RegisterInput): RegisterResult {
   if (input.role === 'guest') {
-    return { ok: false, error: 'Choose Dentist or Lab to access the design inbox.' };
+    return {
+      ok: false,
+      error: 'Choose Dentist or Lab to access the design inbox.',
+    };
   }
   initAuthStore();
   const email = input.email.trim().toLowerCase();
   if (findUser(email)) {
-    return { ok: false, error: 'An account with this email already exists. Sign in instead.' };
+    return {
+      ok: false,
+      error: 'An account with this email already exists. Sign in instead.',
+    };
   }
   if (input.password.length < 8) {
     return { ok: false, error: 'Password must be at least 8 characters.' };
   }
 
+  const clientType: ClientType = input.role === 'lab' ? 'LAB' : 'DENTIST';
   const user: StoredUser = {
     email: input.email.trim(),
     password: input.password,
     name: input.name.trim(),
-    role: input.role,
+    accountType: 'CLIENT',
+    clientType,
+    permissions: [],
     org: input.org?.trim(),
     country: input.country?.trim(),
     createdAt: new Date().toISOString(),
@@ -201,7 +307,13 @@ export function register(input: RegisterInput): RegisterResult {
 }
 
 export function loginAsGuest() {
-  writeSession({ email: '', name: 'Guest', role: 'guest' });
+  writeSession({
+    email: '',
+    name: 'Guest',
+    accountType: 'GUEST',
+    permissions: [],
+    role: 'guest',
+  });
 }
 
 export function logout() {

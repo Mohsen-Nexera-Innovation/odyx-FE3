@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import type { UserRole } from '@/content/auth';
+import type { RegisterRole, UserRole } from '@/content/auth';
 
-const ACCENT: Record<UserRole | 'default', string> = {
+const ACCENT: Record<RegisterRole | 'admin' | 'default', string> = {
   default: 'sky',
   dentist: 'teal',
   lab: 'orange',

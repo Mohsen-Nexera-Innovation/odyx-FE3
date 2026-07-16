@@ -8,6 +8,8 @@ import AiChatbotIcon from './AiChatbotIcon';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { logout, type AccountSession } from '@/lib/auth';
 import { unreadTotal } from '@/lib/inbox-store';
+import { unreadTotalApi } from '@/lib/inbox-api';
+import { isApiMode } from '@/lib/config';
 import { cartCountAsync } from '@/lib/commerce';
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
@@ -135,7 +137,17 @@ export default function Header() {
   const isMenuActive = (href: string) => currentSeg !== '' && topSeg(href) === currentSeg;
 
   const refreshUnread = () => {
-    if (session) setInboxUnread(unreadTotal(session));
+    if (!session) {
+      setInboxUnread(0);
+      return;
+    }
+    if (isApiMode() && session.accountType === 'CLIENT') {
+      void unreadTotalApi(session)
+        .then(setInboxUnread)
+        .catch(() => setInboxUnread(0));
+      return;
+    }
+    setInboxUnread(unreadTotal(session));
   };
 
   useEffect(() => {
@@ -257,6 +269,9 @@ export default function Header() {
     .filter(Boolean)
     .join(' ');
 
+  // Admin has its own shell — avoid double chrome / sticky offset bugs.
+  if (pathname?.startsWith('/admin')) return null;
+
   return (
     <header id="hdr" ref={headerRef} className={headerClass} onMouseMove={onSpotlightMove}>
       <div className="wrap nav">
@@ -336,14 +351,27 @@ export default function Header() {
           </div>
           {session ? (
             <>
-              <Link className="btn-ghost btn btn-sm nav-reg-device" href="/#register">
-                <span className="nav-label-long">Register device</span>
-                <span className="nav-label-short">Device</span>
-              </Link>
-              <Link className="btn-ghost btn btn-sm nav-inbox" href="/inbox" aria-label={inboxUnread > 0 ? `Inbox, ${inboxUnread} unread` : 'Inbox'}>
-                Inbox
-                {inboxUnread > 0 ? <span className="nav-inbox-badge">{inboxUnread}</span> : null}
-              </Link>
+              {session.accountType === 'STAFF' ? (
+                <Link className="btn-ghost btn btn-sm nav-inbox" href="/admin">
+                  Admin
+                </Link>
+              ) : (
+                <>
+                  <Link className="btn-ghost btn btn-sm nav-reg-device" href="/#register">
+                    <span className="nav-label-long">Register device</span>
+                    <span className="nav-label-short">Device</span>
+                  </Link>
+                  <Link className="btn-ghost btn btn-sm nav-inbox" href="/inbox" aria-label={inboxUnread > 0 ? `Inbox, ${inboxUnread} unread` : 'Inbox'}>
+                    Inbox
+                    {inboxUnread > 0 ? <span className="nav-inbox-badge">{inboxUnread}</span> : null}
+                  </Link>
+                </>
+              )}
+              {session.accountType === 'STAFF' && (
+                <Link className="btn-ghost btn btn-sm nav-inbox" href="/admin/chat">
+                  Chat
+                </Link>
+              )}
               <UserMenu session={session} onSignOut={signOut} />
             </>
           ) : (

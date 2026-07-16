@@ -5,6 +5,7 @@
 
 import { ApiError } from '@/lib/api/client';
 import {
+  acceptInviteApi,
   loginApi,
   logoutApi,
   meApi,
@@ -32,6 +33,7 @@ import {
 
 export type { AccountSession, LoginResult, RegisterInput, RegisterResult };
 export { DEMO_ACCOUNTS, notifyAuthChange, writeSession };
+export { hasPermission, isStaff, isClient, isGuest } from '@/lib/permissions';
 
 export function initAuthStore() {
   if (!isApiMode()) initDemoAuthStore();
@@ -40,7 +42,12 @@ export function initAuthStore() {
 export function readSession(): AccountSession | null {
   const session = demoReadSession();
   if (!session) return null;
-  if (isApiMode() && session.role !== 'guest' && !hasTokens()) {
+  if (
+    isApiMode() &&
+    session.accountType !== 'GUEST' &&
+    session.role !== 'guest' &&
+    !hasTokens()
+  ) {
     return null;
   }
   return session;
@@ -88,6 +95,23 @@ export async function register(input: RegisterInput): Promise<RegisterResult> {
     return { ok: true, session };
   } catch (err) {
     return { ok: false, error: apiErrorMessage(err, 'Registration failed.') };
+  }
+}
+
+export async function acceptInvite(input: {
+  token: string;
+  name: string;
+  password: string;
+}): Promise<LoginResult> {
+  if (!isApiMode()) {
+    return { ok: false, error: 'Staff invites require API mode.' };
+  }
+  try {
+    const data = await acceptInviteApi(input);
+    const session = await applyApiAuth(data);
+    return { ok: true, session };
+  } catch (err) {
+    return { ok: false, error: apiErrorMessage(err, 'Invite accept failed.') };
   }
 }
 
