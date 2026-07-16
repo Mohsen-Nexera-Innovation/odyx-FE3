@@ -27,6 +27,7 @@ import {
 } from '@/content/inbox';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import {
+  conversationToThread,
   getThreadApi,
   listThreadsApi,
   markThreadReadApi,
@@ -38,10 +39,12 @@ import {
   listThreads,
   markDesignDownloaded,
   markThreadRead,
+  notifyInboxChange,
   unreadTotal,
   type AccountSession,
 } from '@/lib/inbox-store';
 import { isApiMode } from '@/lib/config';
+import { subscribeChatSocket } from '@/lib/chat-socket';
 import InnerPageMotion from '@/components/InnerPageMotion';
 
 type PaneMode = 'compose' | 'read';
@@ -136,11 +139,36 @@ export default function InboxWorkspace() {
     };
   }, [session, apiMode, tick]);
 
-  // Poll for staff replies in API mode (silent refresh — no list flash)
+  // Realtime chat via Socket.IO (+ slow poll fallback)
   useEffect(() => {
-    if (!session || !apiMode || session.role === 'guest') return;
-    const id = window.setInterval(() => reload(), 12000);
-    return () => window.clearInterval(id);
+    if (!session || !apiMode || session.accountType === 'GUEST' || session.role === 'guest') {
+      return;
+    }
+
+    const applyConversation = (thread: InboxThread) => {
+      setApiThreads((prev) => upsertThread(prev, thread));
+      notifyInboxChange();
+    };
+
+    const unsub = subscribeChatSocket({
+      onConversationCreated: (conv) => {
+        applyConversation(conversationToThread(session, conv));
+      },
+      onConversationUpdated: (conv) => {
+        applyConversation(conversationToThread(session, conv));
+      },
+      onConversationMessage: ({ conversationId }) => {
+        void getThreadApi(session, conversationId).then((full) => {
+          if (full) applyConversation(full);
+        });
+      },
+    });
+
+    const fallback = window.setInterval(() => reload(), 60000);
+    return () => {
+      unsub();
+      window.clearInterval(fallback);
+    };
   }, [session, apiMode, reload]);
 
   const threads = useMemo(() => {

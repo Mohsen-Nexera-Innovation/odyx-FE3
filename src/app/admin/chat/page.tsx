@@ -11,6 +11,7 @@ import {
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { hasPermission } from '@/lib/permissions';
 import { isApiMode } from '@/lib/config';
+import { subscribeChatSocket } from '@/lib/chat-socket';
 
 function initialsFrom(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -40,6 +41,36 @@ function lastMessage(c: ApiConversation): ApiMessage | undefined {
   const b = msgs[msgs.length - 1];
   if (!a || !b) return a || b;
   return new Date(a.createdAt).getTime() >= new Date(b.createdAt).getTime() ? a : b;
+}
+
+/** HTTP send + socket event can race; keep one row per message id. */
+function uniqueMessages(messages: ApiMessage[] | undefined): ApiMessage[] {
+  const out: ApiMessage[] = [];
+  const seen = new Set<string>();
+  for (const m of messages || []) {
+    if (!m?.id || seen.has(m.id)) continue;
+    seen.add(m.id);
+    out.push(m);
+  }
+  return out;
+}
+
+function mergeMessage(
+  conversation: ApiConversation,
+  message: ApiMessage,
+  updatedAt?: string | Date,
+): ApiConversation {
+  const at =
+    typeof updatedAt === 'string'
+      ? updatedAt
+      : updatedAt
+        ? new Date(updatedAt).toISOString()
+        : conversation.updatedAt;
+  return {
+    ...conversation,
+    updatedAt: at,
+    messages: uniqueMessages([...(conversation.messages || []), message]),
+  };
 }
 
 export default function AdminChatPage() {
@@ -77,20 +108,88 @@ export default function AdminChatPage() {
   }, [canReply]);
 
   useEffect(() => {
-    if (!canReply) return;
-    const id = window.setInterval(() => void loadList(true), 15000);
-    return () => window.clearInterval(id);
-  }, [canReply]);
-
-  useEffect(() => {
     if (!selectedId || !canReply) {
       setActive(null);
       return;
     }
     void getConversationApi(selectedId)
-      .then(setActive)
+      .then((conv) =>
+        setActive({ ...conv, messages: uniqueMessages(conv.messages) }),
+      )
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to open'));
   }, [selectedId, canReply]);
+
+  // Realtime chat via Socket.IO (+ slow poll fallback)
+  useEffect(() => {
+    if (!canReply) return;
+
+    const upsertList = (conv: ApiConversation) => {
+      setConversations((prev) => {
+        const rest = prev.filter((c) => c.id !== conv.id);
+        const preview: ApiConversation = {
+          ...conv,
+          messages:
+            conv.messages?.length > 1
+              ? [conv.messages[conv.messages.length - 1]]
+              : conv.messages || [],
+        };
+        return [preview, ...rest].sort(
+          (a, b) =>
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+        );
+      });
+    };
+
+    const unsub = subscribeChatSocket({
+      onConversationCreated: (conv) => {
+        upsertList(conv);
+      },
+      onConversationUpdated: (conv) => {
+        upsertList(conv);
+        setActive((prev) =>
+          prev?.id === conv.id
+            ? { ...conv, messages: uniqueMessages(conv.messages) }
+            : prev,
+        );
+      },
+      onConversationMessage: ({ conversationId, message, updatedAt }) => {
+        setConversations((prev) => {
+          const existing = prev.find((c) => c.id === conversationId);
+          if (!existing) {
+            void loadList(true);
+            return prev;
+          }
+          const already = existing.messages?.some((m) => m.id === message.id);
+          const next: ApiConversation = {
+            ...existing,
+            updatedAt:
+              typeof updatedAt === 'string'
+                ? updatedAt
+                : new Date(updatedAt).toISOString(),
+            messages: [message],
+            _count: {
+              messages:
+                (existing._count?.messages ?? existing.messages?.length ?? 0) +
+                (already ? 0 : 1),
+            },
+          };
+          const rest = prev.filter((c) => c.id !== conversationId);
+          return [next, ...rest];
+        });
+
+        setActive((prev) => {
+          if (!prev || prev.id !== conversationId) return prev;
+          return mergeMessage(prev, message, updatedAt);
+        });
+      },
+    });
+
+    const fallback = window.setInterval(() => void loadList(true), 60000);
+    return () => {
+      unsub();
+      window.clearInterval(fallback);
+    };
+  }, [canReply]);
 
   useEffect(() => {
     const el = messagesRef.current;
@@ -124,13 +223,7 @@ export default function AdminChatPage() {
     try {
       const msg = await sendMessageApi(selectedId, { body: reply.trim() });
       setActive((prev) =>
-        prev
-          ? {
-              ...prev,
-              messages: [...(prev.messages || []), msg as ApiMessage],
-              updatedAt: new Date().toISOString(),
-            }
-          : prev,
+        prev ? mergeMessage(prev, msg as ApiMessage, new Date()) : prev,
       );
       setReply('');
       await loadList(true);
@@ -324,7 +417,7 @@ export default function AdminChatPage() {
               </div>
 
               <div className="admin-chat-messages" ref={messagesRef}>
-                {(active.messages || []).map((m) => {
+                {uniqueMessages(active.messages).map((m) => {
                   const staff = m.sender.accountType === 'STAFF';
                   return (
                     <article
