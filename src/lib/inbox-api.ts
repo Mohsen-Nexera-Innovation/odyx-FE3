@@ -69,11 +69,19 @@ function mapMessage(
   };
 }
 
+function sortMessagesAsc(messages: InboxMessage[]): InboxMessage[] {
+  return [...messages].sort(
+    (a, b) => new Date(a.at).getTime() - new Date(b.at).getTime(),
+  );
+}
+
 export function conversationToThread(
   session: AccountSession,
   conv: ApiConversation,
 ): InboxThread {
-  const messages = (conv.messages || []).map((m) => mapMessage(session, conv, m));
+  const messages = sortMessagesAsc(
+    (conv.messages || []).map((m) => mapMessage(session, conv, m)),
+  );
   const role =
     session.role === 'lab' ? 'lab' : session.role === 'guest' ? 'guest' : 'dentist';
 
@@ -95,17 +103,60 @@ export function conversationToThread(
   };
 }
 
+/** Prefer the fuller message history when merging list polls with open threads. */
+export function mergeThreadLists(
+  previous: InboxThread[],
+  incoming: InboxThread[],
+): InboxThread[] {
+  const prevById = new Map(previous.map((t) => [t.id, t]));
+
+  return incoming.map((thread) => {
+    const prev = prevById.get(thread.id);
+    if (!prev) return thread;
+
+    if (thread.messages.length >= prev.messages.length) {
+      return thread;
+    }
+
+    const incomingIds = new Set(thread.messages.map((m) => m.id));
+    const prevIds = new Set(prev.messages.map((m) => m.id));
+    const incomingHasUnknown = thread.messages.some((m) => !prevIds.has(m.id));
+
+    // Preview/list stub or stale poll: keep the richer local history and refresh read flags.
+    if (!incomingHasUnknown) {
+      return {
+        ...thread,
+        messages: prev.messages.map((m) => {
+          if (!incomingIds.has(m.id)) return m;
+          const newer = thread.messages.find((x) => x.id === m.id);
+          return newer ? { ...m, read: newer.read } : m;
+        }),
+        status: prev.status,
+      };
+    }
+
+    // New activity arrived that we don't have yet — keep prev until hydrate fills gaps.
+    return {
+      ...thread,
+      messages: prev.messages,
+      status: prev.status,
+    };
+  });
+}
+
+export function upsertThread(
+  threads: InboxThread[],
+  thread: InboxThread,
+): InboxThread[] {
+  const rest = threads.filter((t) => t.id !== thread.id);
+  return [thread, ...rest].sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
+}
+
 export async function listThreadsApi(session: AccountSession): Promise<InboxThread[]> {
   const list = await listConversationsApi();
-  // List endpoint returns latest message only (desc). Normalize to chronological for UI.
-  return list.map((c) => {
-    const latest = [...(c.messages || [])].reverse();
-    const enriched: ApiConversation = {
-      ...c,
-      messages: latest,
-    };
-    return conversationToThread(session, enriched);
-  });
+  return list.map((c) => conversationToThread(session, c));
 }
 
 export async function unreadTotalApi(session: AccountSession): Promise<number> {
@@ -129,9 +180,17 @@ export async function getThreadApi(
   }
 }
 
-export async function markThreadReadApi(threadId: string) {
-  await markConversationReadApi(threadId);
-  notifyInboxChange();
+export async function markThreadReadApi(
+  session: AccountSession,
+  threadId: string,
+): Promise<InboxThread | undefined> {
+  try {
+    const conv = await markConversationReadApi(threadId);
+    notifyInboxChange();
+    return conversationToThread(session, conv);
+  } catch {
+    return undefined;
+  }
 }
 
 export async function createThreadFromComposeApi(
@@ -154,6 +213,7 @@ export async function replyToThreadApi(
   attachmentName?: string,
 ): Promise<InboxThread | undefined> {
   await sendMessageApi(threadId, { body, attachmentName });
+  const updated = await getThreadApi(session, threadId);
   notifyInboxChange();
-  return getThreadApi(session, threadId);
+  return updated;
 }

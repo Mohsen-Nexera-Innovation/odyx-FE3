@@ -9,6 +9,7 @@ import {
   RESIN_OPTIONS,
   SLA_LABEL,
   type CaseIndication,
+  type InboxThread,
   type SlaTier,
 } from '@/content/inbox';
 import { createThreadFromComposeApi } from '@/lib/inbox-api';
@@ -19,7 +20,7 @@ const INDICATIONS = Object.keys(INDICATION_LABEL) as CaseIndication[];
 
 type InboxComposeFormProps = {
   session: AccountSession;
-  onSent: (threadId: string) => void;
+  onSent: (threadId: string, thread?: InboxThread) => void;
   onCancel?: () => void;
   variant?: 'inline' | 'modal';
   disabled?: boolean;
@@ -86,7 +87,7 @@ export default function InboxComposeForm({
           body,
           attachmentName: file?.name,
         });
-        onSent(thread.id);
+        onSent(thread.id, thread);
       } else {
         const thread = sendScanToDesignTeam(session, {
           indication,
@@ -100,7 +101,7 @@ export default function InboxComposeForm({
           stlFile: { name: file!.name, size: file!.size },
         });
         scheduleDesignReply(session, thread.id);
-        onSent(thread.id);
+        onSent(thread.id, thread);
       }
       setBusy(false);
     } catch (err) {
