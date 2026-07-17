@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import PageHero, { Arrow, PageActions, PageCta } from '@/components/PageHero';
+import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import SecHead from '@/components/SecHead';
 import { SUPPORT_SECTIONS } from '@/content/support';
 
@@ -59,8 +59,6 @@ export default function SupportHubPage() {
           </div>
         </section>
       ))}
-
-      <PageCta title="Still need help?" desc="Our team can walk troubleshooting, warranty or training - live or async." />
     </>
   );
 }

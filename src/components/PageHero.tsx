@@ -44,42 +44,32 @@ export function PageActions({ children }: { children: React.ReactNode }) {
   return <div className="page-hero-actions">{children}</div>;
 }
 
-export function PageCta({
-  title,
-  desc,
-  demoClassName = 'btn btn-dark',
-}: {
-  title: string;
-  desc: string;
-  demoClassName?: string;
-}) {
-  return (
-    <section className="sec">
-      <div className="wrap">
-        <div className="cta-band reveal">
-          <h2>{title}</h2>
-          <p>{desc}</p>
-          <Link className={demoClassName} href="/support">Request a Demo <Arrow /></Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function SpecTable({ specs }: { specs: { label: string; value: string }[] }) {
   return (
     <div className="spec-table reveal">
-      <table>
-        <tbody>
-          {specs.map((s) => (
-            <tr key={s.label}>
-              <th scope="row">{s.label}</th>
-              <td>{s.value}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ul className="spec-rows">
+        {specs.map((s, i) => (
+          <li key={s.label} className="spec-row">
+            <span className="spec-row__n" aria-hidden>
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div className="spec-row__body">
+              <span className="spec-row__label">{s.label}</span>
+              <strong className="spec-row__value">{s.value}</strong>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
+  );
+}
+
+function FileIcon() {
+  return (
+    <svg className="dl-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" />
+      <path d="M14 3v5h5M12 18v-6M9 15l3 3 3-3" />
+    </svg>
   );
 }
 
@@ -88,9 +78,15 @@ export function DownloadList({ items }: { items: { name: string; type: string; h
     <ul className="dl-list reveal">
       {items.map((d) => (
         <li key={d.name}>
-          <Link href={d.href}>
-            <span className="dl-name">{d.name}</span>
-            <span className="dl-type">{d.type}</span>
+          <Link href={d.href} className="dl-item">
+            <span className="dl-ic-wrap">
+              <FileIcon />
+            </span>
+            <span className="dl-meta">
+              <span className="dl-name">{d.name}</span>
+              <span className="dl-type">{d.type}</span>
+            </span>
+            <span className="dl-action">Download</span>
           </Link>
         </li>
       ))}

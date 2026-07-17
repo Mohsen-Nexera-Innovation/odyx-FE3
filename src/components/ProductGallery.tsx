@@ -153,6 +153,7 @@ const PRODUCTS: Product[] = [
     img: "/img/feat-resin.jpg",
     accent: "orange",
     href: "/products/Resin",
+    shopProductId: "resin-odyx",
   },
   {
     cat: "Materials",

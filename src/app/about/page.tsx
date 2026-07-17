@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import PageHero, { Arrow, PageCta } from '@/components/PageHero';
+import PageHero, { Arrow } from '@/components/PageHero';
 import SecHead from '@/components/SecHead';
 import InnerPageMotion from '@/components/InnerPageMotion';
 
@@ -34,7 +34,6 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <PageCta title="Meet the ecosystem" desc="Explore products and workflows built around one connected chain." />
       <InnerPageMotion />
     </>
   );

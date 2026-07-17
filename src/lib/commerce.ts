@@ -132,6 +132,7 @@ const LEGACY_ID_TO_SLUG: Record<string, string> = {
   'printer-p1-26': 'odyx-p1-26',
   'curing-odyx-cure': 'odyx-cure',
   'scanner-s1': 'odyx-s1',
+  'resin-odyx': 'odyx-resin',
 };
 
 /** Resolve a product id usable with the cart (API cuid or demo id). */

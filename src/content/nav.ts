@@ -53,6 +53,7 @@ export const HEADER_MENUS: NavGroup[] = [
       { label: "ODYX P1-26", href: "/products/3d-printers" },
       { label: "ODYX Cure", href: "/products/curing-machines" },
       { label: "ODYX-S1", href: "/products/intraoral-scanner" },
+      { label: "Resin", href: "/products/Resin" },
       { label: "Store", href: "/shop" },
     ],
     sections: [
@@ -67,6 +68,10 @@ export const HEADER_MENUS: NavGroup[] = [
       {
         category: "Scanner",
         items: [{ label: "ODYX-S1", href: "/products/intraoral-scanner" }],
+      },
+      {
+        category: "Materials",
+        items: [{ label: "Resin", href: "/products/Resin" }],
       },
       {
         category: "More",
@@ -166,6 +171,16 @@ export const HEADER_MENUS: NavGroup[] = [
         href: "/learning",
         desc: "Watch and follow along",
       },
+      {
+        label: "ROI Calculator",
+        href: "/roi",
+        desc: "Full ecosystem — scanner, printer & cure",
+      },
+      {
+        label: "P1-26 product ROI",
+        href: "/products/3d-printers#roi",
+        desc: "Printer-focused ROI on the P1-26 page",
+      },
     ],
   },
   {
@@ -235,6 +250,8 @@ export const FOOTER_COLUMNS: { title: string; links: NavLink[] }[] = [
     title: "Learning",
     links: [
       { label: "Academy", href: "/learning" },
+      { label: "ROI Calculator", href: "/roi" },
+      { label: "P1-26 product ROI", href: "/products/3d-printers#roi" },
       { label: "Workflows", href: "/workflows" },
       { label: "Support", href: "/support" },
     ],

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Arrow, DownloadList, PageActions, PageCta, SpecTable } from '@/components/PageHero';
+import { Arrow, DownloadList, PageActions, SpecTable } from '@/components/PageHero';
 import PageHero from '@/components/PageHero';
 import PrintLineHero from '@/components/PrintLineHero';
 import CinematicHero from '@/components/CinematicHero';
@@ -8,7 +8,24 @@ import PrintLineStats from '@/components/PrintLineStats';
 import SecHead from '@/components/SecHead';
 import ProductBuyActions from '@/components/shop/ProductBuyActions';
 import ProductHeroBuyCta from '@/components/shop/ProductHeroBuyCta';
+import PrinterRoiSection from '@/components/roi/PrinterRoiSection';
 import { getProduct, type ProductLayout } from '@/content/products';
+
+const BENEFIT_ICONS: React.ReactNode[] = [
+  <svg key="i0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M20 6 9 17l-5-5" />
+  </svg>,
+  <svg key="i1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M12 2v4M12 18v4M4.9 4.9l2.9 2.9M16.2 16.2l2.9 2.9M2 12h4M18 12h4M4.9 19.1l2.9-2.9M16.2 7.8l2.9-2.9" />
+  </svg>,
+  <svg key="i2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9z" />
+  </svg>,
+  <svg key="i3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M12 3 4 6v6c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V6l-8-3z" />
+    <path d="M9.5 12l1.8 1.8L15 10" />
+  </svg>,
+];
 
 export default function ProductDetailPage({ slug }: { slug: string }) {
   const product = getProduct(slug);
@@ -30,13 +47,33 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
     .filter(Boolean)
     .join(' ');
 
-  const modelsSection = (
+  const highlightsSection = (
+    <section className="sec prod-highlights">
+      <div className="wrap">
+        <SecHead eyebrow="Highlights" h2="Built for the ODYX workflow" />
+        <div className="prod-highlights__grid">
+          {product.benefits.map((b, i) => (
+            <article key={b} className="prod-highlight reveal">
+              <span className="prod-highlight__ic">
+                {BENEFIT_ICONS[i % BENEFIT_ICONS.length]}
+              </span>
+              <p>{b}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  const hasMultipleModels = product.models.length > 1;
+  const modelsSection = hasMultipleModels ? (
     <section className="sec">
       <div className="wrap">
         <SecHead eyebrow="Models" />
-        <div className="g2 build-group">
+        <div className="build-group prod-models g2">
           {product.models.map((m) => (
             <div key={m.name} className="card build reveal prod-model-card">
+              <span className="prod-model-card__badge">{product.category}</span>
               <h3>{m.name}</h3>
               <p>{m.tagline}</p>
               {m.shopProductId ? (
@@ -54,7 +91,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
         </div>
       </div>
     </section>
-  );
+  ) : null;
 
   // Shared content sections used by the print-line + cinematic canvases.
   const sharedSections = (
@@ -63,11 +100,11 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
 
       <section className="sec prod-specs">
         <div className="wrap prod-detail-cols">
-          <div>
+          <div className="prod-panel reveal">
             <SecHead eyebrow="Specifications" align="left" />
             <SpecTable specs={product.specs} />
           </div>
-          <div>
+          <div className="prod-panel reveal">
             <SecHead eyebrow="Downloads" align="left" />
             <DownloadList items={product.downloads} />
           </div>
@@ -77,9 +114,15 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
       <section className="sec">
         <div className="wrap">
           <SecHead eyebrow="Applications" />
-          <div className="pill-list reveal">
-            {product.applications.map((a) => (
-              <Link key={a} href="/#clinical">{a}</Link>
+          <div className="prod-applications reveal">
+            {product.applications.map((a, i) => (
+              <Link key={a} href="/#clinical" className="prod-application">
+                <span className="prod-application__num">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="prod-application__label">{a}</span>
+                <Arrow />
+              </Link>
             ))}
           </div>
         </div>
@@ -119,7 +162,9 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           <PrintLineHero product={product} />
         )}
         <PrintLineStats stats={product.stats} />
+        {highlightsSection}
         {sharedSections}
+        {product.slug === '3d-printers' ? <PrinterRoiSection /> : null}
       </div>
     );
   }
@@ -278,11 +323,6 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <PageCta
-        title={`Demo the ${product.name}`}
-        desc="See specs, materials and workflow fit with a live walkthrough."
-        demoClassName={layout === 'signature' ? 'btn btn-sign' : 'btn btn-dark'}
-      />
     </div>
   );
 }

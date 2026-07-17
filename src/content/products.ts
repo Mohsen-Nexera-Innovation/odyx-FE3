@@ -353,7 +353,11 @@ export const PRODUCTS: ProductContent[] = [
       "Dentures",
     ],
     models: [
-      { name: "Permanent Crown & Bridge", tagline: "Long-term restorative" },
+      {
+        name: "Permanent Crown & Bridge",
+        tagline: "Long-term restorative",
+        shopProductId: "resin-odyx",
+      },
       { name: "Ceramic Crown", tagline: "Higher esthetics" },
       { name: "Temporary Restoration", tagline: "Fast provisionals" },
       { name: "Model Resin", tagline: "Stable models" },

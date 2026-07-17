@@ -37,6 +37,7 @@ export default function ProductBuyActions({
         'printer-p1-26': 'odyx-p1-26',
         'curing-odyx-cure': 'odyx-cure',
         'scanner-s1': 'odyx-s1',
+        'resin-odyx': 'odyx-resin',
       };
       const slug = slugMap[shopProductId] ?? shopProductId;
       setProduct(list.find((p) => p.slug === slug || p.id === shopProductId) ?? null);

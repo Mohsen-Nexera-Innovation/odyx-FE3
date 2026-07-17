@@ -1,4 +1,4 @@
-export type ShopCategory = 'scanner' | 'printer' | 'curing';
+export type ShopCategory = 'scanner' | 'printer' | 'curing' | 'resin';
 
 export type ShopProduct = {
   id: string;
@@ -21,6 +21,7 @@ export const SHOP_CATEGORY_LABEL: Record<ShopCategory, string> = {
   scanner: 'Scanner',
   printer: 'Printer',
   curing: 'Curing Machine',
+  resin: 'Resin',
 };
 
 export const SHOP_CATEGORIES: { id: ShopCategory | 'all'; label: string }[] = [
@@ -28,6 +29,7 @@ export const SHOP_CATEGORIES: { id: ShopCategory | 'all'; label: string }[] = [
   { id: 'printer', label: SHOP_CATEGORY_LABEL.printer },
   { id: 'curing', label: SHOP_CATEGORY_LABEL.curing },
   { id: 'scanner', label: SHOP_CATEGORY_LABEL.scanner },
+  { id: 'resin', label: SHOP_CATEGORY_LABEL.resin },
 ];
 
 export const SHOP_PRODUCTS: ShopProduct[] = [
@@ -67,6 +69,18 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     href: '/products/intraoral-scanner',
     highlights: ['Full-arch color', 'Open export', 'Real-time mesh'],
   },
+  {
+    id: 'resin-odyx',
+    slug: 'odyx-resin',
+    name: 'ODYX Resin',
+    desc: 'Clinical resin lines for permanent crowns, ceramic aesthetics, provisionals, models and surgical guides — validated for ODYX print and cure.',
+    price: 899,
+    image: '/img/feat-resin.jpg',
+    category: 'resin',
+    unit: '1 bottle',
+    href: '/products/Resin',
+    highlights: ['5 clinical lines', 'Workflow-validated', 'Biocompatible'],
+  },
 ];
 
 export const FREE_SHIPPING_THRESHOLD = 5000;
@@ -95,7 +109,12 @@ export function calcShipping(subtotal: number): number {
 }
 
 /** Category order for grouped "All" views */
-export const SHOP_CATEGORY_ORDER: ShopCategory[] = ['printer', 'curing', 'scanner'];
+export const SHOP_CATEGORY_ORDER: ShopCategory[] = [
+  'printer',
+  'curing',
+  'scanner',
+  'resin',
+];
 
 export function groupShopProducts(
   products: ShopProduct[],

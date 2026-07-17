@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Arrow, PageCta } from '@/components/PageHero';
+import { Arrow } from '@/components/PageHero';
 import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
 import { getAdjacentSteps, getWorkflowStep, type WorkflowId } from '@/content/workflow';
@@ -96,8 +96,6 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
           )}
         </div>
       </section>
-
-      <PageCta title="Ready to go digital?" desc="Walk this step live with an ODYX workflow specialist." demoClassName="btn btn-sign" />
     </div>
   );
 }

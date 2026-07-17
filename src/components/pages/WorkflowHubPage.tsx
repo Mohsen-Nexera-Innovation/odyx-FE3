@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Arrow, PageCta } from '@/components/PageHero';
+import { Arrow } from '@/components/PageHero';
 import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
 import { WORKFLOW_STEPS } from '@/content/workflow';
@@ -74,8 +74,6 @@ export default function WorkflowHubPage() {
           </div>
         </div>
       </section>
-
-      <PageCta title="See the full workflow live" desc="Book a demo and walk scan to deliver with an ODYX specialist." demoClassName="btn btn-sign" />
     </div>
   );
 }

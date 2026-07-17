@@ -114,11 +114,6 @@
 .product-page--print-line .sec p,
 .product-page--print-line .card p,
 .product-page--print-line .wf-benefits li,
-.product-page--print-line .spec-table th,
-.product-page--print-line .spec-table td,
-.product-page--print-line .dl-list a,
-.product-page--print-line .dl-name,
-.product-page--print-line .dl-type,
 .product-page--print-line .pill-list a,
 .product-page--print-line .pill-list span,
 .product-page--print-line .crumbs{
@@ -126,10 +121,6 @@
   font-size:var(--prod-body-size)!important;
   line-height:var(--prod-body-lh)!important;
   font-weight:var(--prod-body-fw)!important;
-}
-.product-page--print-line .spec-table th,
-.product-page--print-line .dl-type{
-  font-weight:var(--prod-label-fw)!important;
 }
 .product-page--print-line .copy-lead,
 .product-page--print-line .wf-benefits li{
@@ -410,8 +401,6 @@
 }
 .product-page--print-line .copy-lead,
 .product-page--print-line .wf-benefits li{color:var(--ink-muted)}
-.product-page--print-line .spec-table th{color:var(--ink-muted)}
-.product-page--print-line .spec-table td{color:var(--ink)}
 .product-page--print-line .wf-benefits li::before{background:var(--line-acc)}
 .product-page--print-line .m-underline::after{display:none}
 .product-page--print-line .sec-head h2.m-underline::after{display:none}
@@ -440,15 +429,6 @@
   color:var(--line-acc-deep);
   transform:translateY(-2px);
 }
-.product-page--print-line .dl-list a{
-  background:#fff;
-  border-color:var(--paper-line-2);
-  color:var(--ink-muted);
-}
-.product-page--print-line .dl-list a:hover{
-  border-color:var(--line-acc);
-  color:var(--line-acc-deep);
-}
 .product-page--print-line .sec .btn-ghost{
   color:var(--ink);
   border-color:var(--paper-line-2);
@@ -466,11 +446,6 @@
   aspect-ratio:1000 / 429;
   object-fit:contain;
   display:block;
-}
-
-/* Shared Request-a-Demo banner — bottom clearance for floating tools */
-.product-page--print-line .cta-band{
-  margin-bottom:clamp(8px, 1.5vw, 16px);
 }
 
 /* ============================================================
@@ -684,3 +659,186 @@
   border-radius:18px;
   box-shadow:0 24px 60px rgba(8,30,52,.18);
 }
+
+/* ============================================================
+   ENHANCED BODY SECTIONS (after hero) — highlights, models,
+   spec/download panels, applications. Shared by all print-line
+   product pages so the design system stays consistent.
+   ============================================================ */
+
+/* Alternating section tint for visual rhythm on the light canvas */
+.product-page--print-line > .sec.prod-highlights,
+.product-page--print-line > .sec.prod-specs{
+  background:linear-gradient(180deg, rgba(var(--line-acc-rgb),.045), rgba(var(--line-acc-rgb),.015))!important;
+}
+
+/* —— Highlights band —— */
+.product-page--print-line .prod-highlights__grid{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:clamp(12px, 1.6vw, 18px);
+}
+@media(max-width:900px){.product-page--print-line .prod-highlights__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.product-page--print-line .prod-highlights__grid{grid-template-columns:1fr}}
+.product-page--print-line .prod-highlight{
+  display:flex;flex-direction:column;gap:14px;
+  padding:22px 20px;border-radius:16px;
+  background:#fff;
+  border:1px solid var(--paper-line-2);
+  box-shadow:0 8px 22px rgba(8,40,70,.05);
+  transition:transform .25s, box-shadow .25s, border-color .25s;
+}
+.product-page--print-line .prod-highlight:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 36px rgba(8,40,70,.10);
+  border-color:rgba(var(--line-acc-rgb),.4);
+}
+.product-page--print-line .prod-highlight__ic{
+  width:46px;height:46px;border-radius:13px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(var(--line-acc-rgb),.10);
+  color:var(--line-acc);
+  transition:.25s;
+}
+.product-page--print-line .prod-highlight__ic svg{width:23px;height:23px}
+.product-page--print-line .prod-highlight:hover .prod-highlight__ic{
+  background:var(--line-sign);color:var(--navy-deep);transform:scale(1.06) rotate(-4deg);
+}
+.product-page--print-line .prod-highlight p{
+  margin:0!important;font-family:var(--font-display)!important;
+  font-size:1rem!important;font-weight:600!important;line-height:1.35!important;
+  color:var(--ink)!important;
+}
+
+/* —— Models —— */
+.product-page--print-line .prod-models{
+  display:grid;gap:clamp(14px, 1.8vw, 20px);
+}
+.product-page--print-line .prod-models:not(.g2){
+  grid-template-columns:minmax(0, 560px);
+}
+.product-page--print-line .prod-model-card{
+  position:relative;overflow:hidden;
+  border-radius:18px;
+  padding:26px 24px 22px;
+}
+.product-page--print-line .prod-model-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--line-sign),var(--line-acc));
+}
+.product-page--print-line .prod-model-card__badge{
+  display:inline-block;margin-bottom:12px;
+  font-family:var(--font-body);font-size:.64rem;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--line-acc-deep);
+  background:rgba(var(--line-acc-rgb),.10);
+  padding:5px 11px;border-radius:999px;
+}
+.product-page--print-line .prod-model-card h3{margin:0 0 6px}
+
+/* —— Spec / Download panels —— */
+.product-page--print-line .prod-panel{
+  position:relative;overflow:hidden;
+  background:#fff;
+  border:1px solid var(--paper-line-2);
+  border-radius:20px;
+  padding:clamp(22px, 2.6vw, 30px);
+  box-shadow:0 8px 22px rgba(8,40,70,.05);
+  transition:box-shadow .25s, border-color .25s, transform .25s;
+}
+.product-page--print-line .prod-panel:hover{
+  border-color:rgba(var(--line-acc-rgb),.28);
+  box-shadow:0 16px 36px rgba(8,40,70,.10);
+}
+.product-page--print-line .prod-panel::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--line-sign),var(--line-acc));
+}
+.product-page--print-line .prod-panel .sec-head{margin-bottom:20px}
+
+/* Spec rows on light canvas */
+.product-page--print-line .spec-rows{gap:10px}
+.product-page--print-line .spec-row{
+  background:rgba(var(--line-acc-rgb),.04);
+  border:1px solid var(--paper-line-2);
+  border-radius:14px;padding:15px 16px;
+}
+.product-page--print-line .spec-row:hover{
+  border-color:rgba(var(--line-acc-rgb),.4);
+  background:rgba(var(--line-acc-rgb),.08);
+  transform:translateX(3px);
+}
+.product-page--print-line .spec-row__n{color:var(--line-acc)}
+.product-page--print-line .spec-row__label{
+  font-size:.74rem!important;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--ink-faint)!important;font-weight:700!important;
+}
+.product-page--print-line .spec-row__value{
+  font-family:var(--font-display)!important;
+  font-size:1rem!important;font-weight:700!important;color:var(--ink)!important;
+}
+
+/* Download items on light canvas */
+.product-page--print-line .dl-list{gap:10px}
+.product-page--print-line .dl-list a,
+.product-page--print-line .dl-item{
+  background:rgba(var(--line-acc-rgb),.04);
+  border:1px solid var(--paper-line-2);
+  border-radius:14px;padding:14px 16px;color:var(--ink)!important;
+}
+.product-page--print-line .dl-list a:hover,
+.product-page--print-line .dl-item:hover{
+  border-color:var(--line-acc);
+  background:#fff;
+  box-shadow:0 10px 24px rgba(8,40,70,.08);
+  color:var(--ink)!important;
+  transform:translateY(-2px);
+}
+.product-page--print-line .dl-ic-wrap{
+  background:rgba(var(--line-acc-rgb),.12);
+  color:var(--line-acc);
+  transition:.25s;
+}
+.product-page--print-line .dl-list a:hover .dl-ic-wrap,
+.product-page--print-line .dl-item:hover .dl-ic-wrap{
+  background:var(--line-sign);color:var(--navy-deep);
+}
+.product-page--print-line .dl-name{
+  font-family:var(--font-display)!important;
+  font-weight:700!important;font-size:.95rem!important;color:var(--ink)!important;
+}
+.product-page--print-line .dl-type{
+  color:var(--ink-faint)!important;font-size:.68rem!important;
+}
+.product-page--print-line .dl-action{color:var(--line-acc-deep)!important}
+
+/* —— Applications —— */
+.product-page--print-line .prod-applications{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+  gap:12px;
+}
+.product-page--print-line .prod-application{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;border-radius:14px;
+  background:#fff;border:1px solid var(--paper-line-2);
+  color:var(--ink)!important;text-decoration:none;
+  transition:transform .2s, border-color .2s, box-shadow .2s;
+}
+.product-page--print-line .prod-application:hover{
+  transform:translateY(-3px);
+  border-color:var(--line-acc);
+  box-shadow:0 12px 26px rgba(8,40,70,.10);
+}
+.product-page--print-line .prod-application__num{
+  font-family:var(--font-display);font-size:1rem;font-weight:800;
+  color:rgba(var(--line-acc-rgb),.55);min-width:26px;
+}
+.product-page--print-line .prod-application__label{
+  flex:1;font-family:var(--font-display)!important;
+  font-weight:600!important;font-size:.98rem!important;color:var(--ink)!important;
+}
+.product-page--print-line .prod-application svg{
+  color:var(--line-acc);opacity:0;transform:translateX(-6px);transition:.2s;
+}
+.product-page--print-line .prod-application:hover svg{opacity:1;transform:translateX(0)}

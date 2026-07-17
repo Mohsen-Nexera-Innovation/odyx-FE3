@@ -50,6 +50,11 @@ const Icon = {
       <path d="M5 18l-1.5 3.2L8 18h8.5A4.5 4.5 0 0021 13.5v-3A4.5 4.5 0 0016.5 6H7.5A4.5 4.5 0 003 10.5V15" strokeLinejoin="round" />
     </svg>
   ),
+  leads: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
 };
 
 type NavLink = {
@@ -66,6 +71,7 @@ const LINKS: NavLink[] = [
   { href: '/admin/roles', label: 'Roles', perm: 'roles.manage', icon: Icon.roles, section: 'Team' },
   { href: '/admin/orders', label: 'Orders', perm: 'orders.read', icon: Icon.orders, section: 'Commerce' },
   { href: '/admin/clients', label: 'Clients', perm: 'clients.read', icon: Icon.clients, section: 'Commerce' },
+  { href: '/admin/leads', label: 'Leads', perm: 'leads.read', icon: Icon.leads, section: 'Commerce' },
   { href: '/admin/chat', label: 'Chat', perm: 'chat.reply', icon: Icon.chat, section: 'Support' },
 ];
 

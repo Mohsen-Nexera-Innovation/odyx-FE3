@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import PageHero, { Arrow, PageCta } from '@/components/PageHero';
+import PageHero, { Arrow } from '@/components/PageHero';
 import SecHead from '@/components/SecHead';
 import {
   PRODUCTS,
@@ -117,11 +117,6 @@ export default function ProductsOverviewPage() {
           )}
         </div>
       </section>
-
-      <PageCta
-        title="Not sure where to start?"
-        desc="Tell us your role and we will recommend the right ODYX setup."
-      />
     </>
   );
 }

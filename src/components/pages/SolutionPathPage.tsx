@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Arrow, PageCta } from '@/components/PageHero';
+import { Arrow } from '@/components/PageHero';
 import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
 import { getSolution } from '@/content/solutions';
@@ -111,12 +111,6 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
-
-      <PageCta
-        title={path.slug === 'dentists' ? 'Start your clinic journey' : 'Scale your lab production'}
-        desc="Book a tailored demo with products and workflow matched to your team."
-        demoClassName="btn btn-sign"
-      />
     </div>
   );
 }

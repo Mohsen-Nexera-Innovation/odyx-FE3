@@ -7,7 +7,7 @@ export type ApiProduct = {
   description: string;
   price: number;
   imageUrl: string;
-  category: 'scanner' | 'printer' | 'curing';
+  category: 'scanner' | 'printer' | 'curing' | 'resin';
   unit?: string | null;
   href?: string | null;
   highlights: string[];

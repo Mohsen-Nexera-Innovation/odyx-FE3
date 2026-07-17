@@ -17,7 +17,7 @@ import { isApiMode } from '@/lib/config';
 import { readSession } from '@/lib/auth';
 
 function isCategory(v: string | null): v is ShopCategory {
-  return v === 'printer' || v === 'curing' || v === 'scanner';
+  return v === 'printer' || v === 'curing' || v === 'scanner' || v === 'resin';
 }
 
 function ProductCard({
