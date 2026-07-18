@@ -2,7 +2,12 @@
  * Client-side cart (localStorage). Replace with real API in production.
  */
 
+import { getDesignServiceById } from '@/content/design-services';
 import { getProductById, type ShopProduct } from '@/content/shop';
+
+function resolveProduct(id: string): ShopProduct | undefined {
+  return getProductById(id) ?? getDesignServiceById(id);
+}
 
 export const CART_STORAGE_KEY = 'odyx_cart';
 
@@ -48,7 +53,7 @@ export function getCart(): CartLine[] {
 export function getResolvedCart(): CartLineResolved[] {
   return readCart()
     .map((line) => {
-      const product = getProductById(line.productId);
+      const product = resolveProduct(line.productId);
       if (!product) return null;
       return {
         ...line,
@@ -69,7 +74,7 @@ export function cartSubtotal(): number {
 
 export function addItem(productId: string, qty = 1): void {
   if (typeof window === 'undefined') return;
-  if (!getProductById(productId)) return;
+  if (!resolveProduct(productId)) return;
   const cart = readCart();
   const existing = cart.find((l) => l.productId === productId);
   if (existing) {

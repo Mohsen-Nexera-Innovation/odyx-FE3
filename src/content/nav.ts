@@ -54,6 +54,7 @@ export const HEADER_MENUS: NavGroup[] = [
       { label: "ODYX Cure", href: "/products/curing-machines" },
       { label: "ODYX-S1", href: "/products/intraoral-scanner" },
       { label: "Resin", href: "/products/Resin" },
+      { label: "Design Services", href: "/design-services" },
       { label: "Store", href: "/shop" },
     ],
     sections: [
@@ -75,7 +76,10 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         category: "More",
-        items: [{ label: "Store", href: "/shop" }],
+        items: [
+          { label: "Design Services", href: "/design-services" },
+          { label: "Store", href: "/shop" },
+        ],
       },
     ],
   },

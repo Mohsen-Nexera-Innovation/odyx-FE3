@@ -1,11 +1,11 @@
-export type ShopCategory = 'scanner' | 'printer' | 'curing' | 'resin';
+export type ShopCategory = 'scanner' | 'printer' | 'curing' | 'resin' | 'design';
 
 export type ShopProduct = {
   id: string;
   slug: string;
   name: string;
   desc: string;
-  /** Unit price in USD */
+  /** Unit price in USD (demo) or EGP (API) */
   price: number;
   image: string;
   category: ShopCategory;
@@ -22,6 +22,7 @@ export const SHOP_CATEGORY_LABEL: Record<ShopCategory, string> = {
   printer: 'Printer',
   curing: 'Curing Machine',
   resin: 'Resin',
+  design: 'Design service',
 };
 
 export const SHOP_CATEGORIES: { id: ShopCategory | 'all'; label: string }[] = [
@@ -87,7 +88,7 @@ export const FREE_SHIPPING_THRESHOLD = 5000;
 export const FLAT_SHIPPING_USD = 150;
 
 export function getProductById(id: string): ShopProduct | undefined {
-  return SHOP_PRODUCTS.find((p) => p.id === id);
+  return SHOP_PRODUCTS.find((p) => p.id === id || p.slug === id);
 }
 
 export function formatMoney(amount: number, currency: 'USD' | 'EGP' = 'USD'): string {

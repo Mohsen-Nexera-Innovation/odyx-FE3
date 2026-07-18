@@ -31,6 +31,8 @@ export function mapApiOrder(order: ApiOrder): StoredOrder {
       price: i.unitPrice,
       qty: i.quantity,
       image: '',
+      slug: i.product?.slug,
+      category: i.product?.category,
     })),
     shipping: {
       name: order.contactName || '',
@@ -46,11 +48,12 @@ export function mapApiOrder(order: ApiOrder): StoredOrder {
     total: order.total,
     createdAt: new Date().toISOString(),
     status: 'confirmed',
+    fulfillmentType: order.fulfillmentType,
   };
 }
 
 export async function previewShipping(input: {
-  shippingGovernorate: string;
+  shippingGovernorate?: string;
   paymentMethod: 'CASH' | 'ONLINE';
 }): Promise<PricingQuote | null> {
   if (!isApiMode()) return null;
@@ -73,8 +76,8 @@ export async function placeOrderFacade(input: {
   }
 
   const apiOrder = await checkoutApi({
-    shippingAddress: input.shipping.line1,
-    shippingGovernorate: input.shipping.city,
+    shippingAddress: input.shipping.line1 || undefined,
+    shippingGovernorate: input.shipping.city || undefined,
     paymentMethod: input.paymentMethod,
     contactPhone: input.shipping.phone,
     contactName: input.shipping.name,

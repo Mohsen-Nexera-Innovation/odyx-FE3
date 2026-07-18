@@ -23,12 +23,20 @@ import { notifyInboxChange } from '@/lib/inbox-store-events';
 
 function parseIndication(subject: string): CaseIndication {
   const lower = subject.toLowerCase();
-  if (lower.includes('bridge')) return 'bridge';
+  if (lower.includes('smile') || lower.includes('veneer')) return 'digital_smile_design';
+  if (lower.includes('partial') || lower.includes('rpd')) {
+    return 'removable_partial_denture';
+  }
+  if (lower.includes('splint') || lower.includes('night')) return 'occlusal_splint';
   if (lower.includes('guide')) return 'surgical_guide';
-  if (lower.includes('denture')) return 'denture';
-  if (lower.includes('model')) return 'model';
-  if (lower.includes('night')) return 'night_guard';
-  if (lower.includes('crown')) return 'crown';
+  if (
+    lower.includes('single unit') ||
+    lower.includes('crown') ||
+    lower.includes('overlay') ||
+    lower.includes('endocrown')
+  ) {
+    return 'single_unit';
+  }
   return 'other';
 }
 
@@ -90,13 +98,14 @@ export function conversationToThread(
 
   return {
     id: conv.id,
-    ref: conv.id.slice(0, 8).toUpperCase(),
+    ref: conv.order?.orderNumber ?? conv.id.slice(0, 8).toUpperCase(),
     ownerKey: session.email.toLowerCase(),
     role,
     orgName: session.org,
     indication: parseIndication(conv.subject),
     sla: '24h',
     status,
+    orderNumber: conv.order?.orderNumber,
     messages,
     createdAt: conv.createdAt,
     updatedAt: conv.updatedAt,
@@ -199,6 +208,7 @@ export async function createThreadFromComposeApi(
     subject: string;
     body: string;
     attachmentName?: string;
+    orderNumber?: string;
   },
 ): Promise<InboxThread> {
   const conv = await createConversationApi(input);

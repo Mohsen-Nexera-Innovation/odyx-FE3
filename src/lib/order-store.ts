@@ -24,6 +24,8 @@ export type OrderItem = {
   qty: number;
   image: string;
   unit?: string;
+  slug?: string;
+  category?: ShopProduct['category'];
 };
 
 export type StoredOrder = {
@@ -35,6 +37,7 @@ export type StoredOrder = {
   total: number;
   createdAt: string;
   status: 'confirmed';
+  fulfillmentType?: 'PHYSICAL' | 'DIGITAL';
 };
 
 export type PlaceOrderInput = {
@@ -71,6 +74,8 @@ function toOrderItem(line: CartLineResolved): OrderItem {
     qty: line.qty,
     image: p.image,
     unit: p.unit,
+    slug: p.slug,
+    category: p.category,
   };
 }
 
@@ -81,11 +86,20 @@ export async function placeOrder(input: PlaceOrderInput): Promise<StoredOrder> {
     throw new Error('Your cart is empty.');
   }
 
+  const hasDesign = lines.some((l) => l.product.category === 'design');
+  const hasPhysical = lines.some((l) => l.product.category !== 'design');
+  if (hasDesign && hasPhysical) {
+    throw new Error(
+      'Cannot mix design services and hardware in one order. Checkout separately.',
+    );
+  }
+
   // Mock payment processing delay
   await new Promise((r) => setTimeout(r, 900));
 
+  const digital = hasDesign && !hasPhysical;
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const shippingFee = calcShipping(subtotal);
+  const shippingFee = digital ? 0 : calcShipping(subtotal);
   const order: StoredOrder = {
     id: nextOrderId(),
     items: lines.map(toOrderItem),
@@ -95,6 +109,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<StoredOrder> {
     total: subtotal + shippingFee,
     createdAt: new Date().toISOString(),
     status: 'confirmed',
+    fulfillmentType: digital ? 'DIGITAL' : 'PHYSICAL',
   };
 
   const orders = readOrders();

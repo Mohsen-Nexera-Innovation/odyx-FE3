@@ -84,6 +84,7 @@ export type ComposeInput = {
   resin?: string;
   printer?: string;
   batchRef?: string;
+  orderNumber?: string;
   stlFile: { name: string; size: number };
 };
 
@@ -95,8 +96,13 @@ export function sendScanToDesignTeam(session: AccountSession, input: ComposeInpu
   const all = readAllThreads();
   const now = new Date().toISOString();
   const id = `thread-${Date.now()}`;
-  const ref = nextThreadRef(all);
-  const subject = `Scan upload — ${INDICATION_LABEL[input.indication]}${input.tooth ? ` ${input.tooth}` : ''}${input.patientRef ? ` (${input.patientRef})` : ''}`;
+  const ref = input.orderNumber ?? nextThreadRef(all);
+  const paidPrefix = input.orderNumber
+    ? `Paid order ${input.orderNumber} — `
+    : input.indication !== 'other'
+      ? 'Design request — '
+      : '';
+  const subject = `${paidPrefix}Scan upload — ${INDICATION_LABEL[input.indication]}${input.tooth ? ` ${input.tooth}` : ''}${input.patientRef ? ` (${input.patientRef})` : ''}`;
 
   const sentMessage: InboxMessage = {
     id: `msg-${Date.now()}`,
@@ -136,6 +142,7 @@ export function sendScanToDesignTeam(session: AccountSession, input: ComposeInpu
     resin: session.role === 'lab' ? input.resin : undefined,
     printer: session.role === 'lab' ? input.printer : undefined,
     batchRef: session.role === 'lab' ? input.batchRef : undefined,
+    orderNumber: input.orderNumber,
     messages: [sentMessage],
     createdAt: now,
     updatedAt: now,

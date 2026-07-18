@@ -2,6 +2,7 @@
  * Commerce facade: demo localStorage vs Nest API (products/cart/orders/Paymob).
  */
 
+import { DESIGN_SERVICES } from '@/content/design-services';
 import type { ShopProduct } from '@/content/shop';
 import {
   clearCartApi,
@@ -39,6 +40,16 @@ export function apiProductToShop(p: ApiProduct): ShopProduct {
   };
 }
 
+export function isDesignCart(lines: CartLineResolved[]): boolean {
+  return lines.length > 0 && lines.every((l) => l.product.category === 'design');
+}
+
+export function isMixedCart(lines: CartLineResolved[]): boolean {
+  const hasDesign = lines.some((l) => l.product.category === 'design');
+  const hasPhysical = lines.some((l) => l.product.category !== 'design');
+  return hasDesign && hasPhysical;
+}
+
 function cartToResolved(cart: ApiCart): CartLineResolved[] {
   return cart.items.map((item) => {
     const product = apiProductToShop(item.product);
@@ -58,15 +69,25 @@ export async function fetchShopProducts(
 ): Promise<ShopProduct[]> {
   if (!isApiMode()) {
     const { SHOP_PRODUCTS } = await import('@/content/shop');
-    return category && category !== 'all'
-      ? SHOP_PRODUCTS.filter((p) => p.category === category)
-      : [...SHOP_PRODUCTS];
+    if (category === 'design') return [...DESIGN_SERVICES];
+    if (category && category !== 'all') {
+      return SHOP_PRODUCTS.filter((p) => p.category === category);
+    }
+    // Hardware store excludes design SKUs (they live under /design-services).
+    return [...SHOP_PRODUCTS];
+  }
+  if (category === 'design') {
+    const products = await listProducts('design');
+    return products.map(apiProductToShop);
   }
   const products = await listProducts(
     category && category !== 'all' ? category : undefined,
   );
-  cachedProducts = products.map(apiProductToShop);
-  return cachedProducts;
+  const mapped = products
+    .map(apiProductToShop)
+    .filter((p) => p.category !== 'design');
+  cachedProducts = mapped;
+  return mapped;
 }
 
 export async function getResolvedCartAsync(): Promise<CartLineResolved[]> {
@@ -86,10 +107,11 @@ export async function addItemAsync(productId: string, qty = 1): Promise<void> {
     demoAdd(productId, qty);
     return;
   }
+  const resolvedId = (await resolveCartProductId(productId)) ?? productId;
   const cart = await getCartApi();
-  const existing = cart.items.find((i) => i.productId === productId);
+  const existing = cart.items.find((i) => i.productId === resolvedId);
   const nextQty = (existing?.quantity ?? 0) + qty;
-  await upsertCartItemApi(productId, nextQty);
+  await upsertCartItemApi(resolvedId, nextQty);
   notifyCartChange();
 }
 
@@ -133,6 +155,11 @@ const LEGACY_ID_TO_SLUG: Record<string, string> = {
   'curing-odyx-cure': 'odyx-cure',
   'scanner-s1': 'odyx-s1',
   'resin-odyx': 'odyx-resin',
+  'design-single-unit': 'design-single-unit',
+  'design-dsd-veneers': 'design-dsd-veneers',
+  'design-rpd': 'design-rpd',
+  'design-occlusal-splint': 'design-occlusal-splint',
+  'design-surgical-guide': 'design-surgical-guide',
 };
 
 /** Resolve a product id usable with the cart (API cuid or demo id). */
@@ -140,8 +167,8 @@ export async function resolveCartProductId(
   legacyOrSlugOrId: string,
 ): Promise<string | null> {
   if (!isApiMode()) return legacyOrSlugOrId;
-  const products = await fetchShopProducts();
   const slug = LEGACY_ID_TO_SLUG[legacyOrSlugOrId] ?? legacyOrSlugOrId;
+  const products = await listProducts();
   const match = products.find(
     (p) => p.id === legacyOrSlugOrId || p.slug === slug || p.slug === legacyOrSlugOrId,
   );

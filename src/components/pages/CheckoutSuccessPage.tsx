@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import PageHero, { Arrow, PageActions } from '@/components/PageHero';
+import { isDesignServiceSlug } from '@/content/design-services';
 import { formatMoney } from '@/content/shop';
 import { isApiMode } from '@/lib/config';
 import { getOrderFacade, type StoredOrder } from '@/lib/orders';
@@ -13,6 +14,23 @@ const CheckIcon = ({ size = 14 }: { size?: number }) => (
     <path d="M4 12.5l5.5 5.5L20 6.5" />
   </svg>
 );
+
+function designHandoffHref(order: StoredOrder): string | null {
+  const digital =
+    order.fulfillmentType === 'DIGITAL' ||
+    order.items.every((i) => i.category === 'design');
+  if (!digital) return null;
+  const slug =
+    order.items.map((i) => i.slug).find((s) => isDesignServiceSlug(s)) ??
+    order.items.map((i) => i.productId).find((s) => isDesignServiceSlug(s));
+  if (!slug || !isDesignServiceSlug(slug)) return null;
+  const params = new URLSearchParams({
+    compose: '1',
+    service: slug,
+    order: order.id,
+  });
+  return `/inbox?${params.toString()}`;
+}
 
 function SuccessBody() {
   const searchParams = useSearchParams();
@@ -26,6 +44,12 @@ function SuccessBody() {
     }
     void getOrderFacade(orderId).then((o) => setOrder(o ?? null));
   }, [orderId]);
+
+  const inboxHref = useMemo(
+    () => (order ? designHandoffHref(order) : null),
+    [order],
+  );
+  const isDigital = Boolean(inboxHref);
 
   if (order === undefined) {
     return (
@@ -78,8 +102,17 @@ function SuccessBody() {
           </span>
           <h1>Order confirmed</h1>
           <p>
-            Thank you, {order.shipping.name.split(' ')[0]} — your gear is being prepared.
-            A confirmation was sent to <strong>{order.shipping.email}</strong>.
+            {isDigital ? (
+              <>
+                Thank you{order.shipping.name ? `, ${order.shipping.name.split(' ')[0]}` : ''} —
+                your design service is paid. Next, upload your scan so our team can start.
+              </>
+            ) : (
+              <>
+                Thank you, {order.shipping.name.split(' ')[0]} — your gear is being prepared.
+                A confirmation was sent to <strong>{order.shipping.email}</strong>.
+              </>
+            )}
           </p>
           <p className="suc-demo-note">
             {isApiMode()
@@ -99,9 +132,11 @@ function SuccessBody() {
               <strong>{orderDate}</strong>
             </div>
             <div>
-              <em>Ship to</em>
+              <em>{isDigital ? 'Delivery' : 'Ship to'}</em>
               <strong>
-                {order.shipping.city}, {order.shipping.country}
+                {isDigital
+                  ? 'Inbox (digital)'
+                  : `${order.shipping.city}, ${order.shipping.country}`}
               </strong>
             </div>
             <div>
@@ -112,30 +147,51 @@ function SuccessBody() {
             </div>
           </div>
 
-          <ol className="suc-timeline" aria-label="Order progress">
-            <li className="done">
-              <i />
-              <span>Confirmed</span>
-            </li>
-            <li>
-              <i />
-              <span>Preparing</span>
-            </li>
-            <li>
-              <i />
-              <span>Shipped</span>
-            </li>
-            <li>
-              <i />
-              <span>Delivered</span>
-            </li>
-          </ol>
+          {isDigital ? (
+            <ol className="suc-timeline" aria-label="Design progress">
+              <li className="done">
+                <i />
+                <span>Paid</span>
+              </li>
+              <li>
+                <i />
+                <span>Upload scan</span>
+              </li>
+              <li>
+                <i />
+                <span>In design</span>
+              </li>
+              <li>
+                <i />
+                <span>Delivered</span>
+              </li>
+            </ol>
+          ) : (
+            <ol className="suc-timeline" aria-label="Order progress">
+              <li className="done">
+                <i />
+                <span>Confirmed</span>
+              </li>
+              <li>
+                <i />
+                <span>Preparing</span>
+              </li>
+              <li>
+                <i />
+                <span>Shipped</span>
+              </li>
+              <li>
+                <i />
+                <span>Delivered</span>
+              </li>
+            </ol>
+          )}
 
           <ul className="co-items suc-items">
             {order.items.map((item) => (
               <li key={item.productId}>
                 <span className="co-item-thumb">
-                  <img src={item.image} alt="" />
+                  <img src={item.image || '/img/crowns.jpg'} alt="" />
                   <i>{item.qty}</i>
                 </span>
                 <span className="co-item-info">
@@ -151,21 +207,29 @@ function SuccessBody() {
             <span>Subtotal</span>
             <span>{formatMoney(order.subtotal)}</span>
           </div>
-          <div className="co-sum-row">
-            <span>Shipping</span>
-            <span>{order.shippingFee === 0 ? 'Free' : formatMoney(order.shippingFee)}</span>
-          </div>
+          {!isDigital ? (
+            <div className="co-sum-row">
+              <span>Shipping</span>
+              <span>{order.shippingFee === 0 ? 'Free' : formatMoney(order.shippingFee)}</span>
+            </div>
+          ) : null}
           <div className="co-sum-row co-sum-total">
             <span>Total paid</span>
             <span>{formatMoney(order.total)}</span>
           </div>
 
           <div className="suc-actions">
-            <Link className="btn" href="/shop">
-              Continue shopping <Arrow />
-            </Link>
-            <Link className="btn btn-ghost" href="/">
-              Back to home
+            {inboxHref ? (
+              <Link className="btn" href={inboxHref}>
+                Upload scan in inbox <Arrow />
+              </Link>
+            ) : (
+              <Link className="btn" href="/shop">
+                Continue shopping <Arrow />
+              </Link>
+            )}
+            <Link className="btn btn-ghost" href={isDigital ? '/design-services' : '/'}>
+              {isDigital ? 'Back to design services' : 'Back to home'}
             </Link>
           </div>
         </div>

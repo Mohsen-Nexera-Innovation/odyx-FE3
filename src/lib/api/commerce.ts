@@ -7,7 +7,7 @@ export type ApiProduct = {
   description: string;
   price: number;
   imageUrl: string;
-  category: 'scanner' | 'printer' | 'curing' | 'resin';
+  category: 'scanner' | 'printer' | 'curing' | 'resin' | 'design';
   unit?: string | null;
   href?: string | null;
   highlights: string[];
@@ -30,6 +30,7 @@ export type ApiOrder = {
   id: string;
   orderNumber: string;
   status: string;
+  fulfillmentType?: 'PHYSICAL' | 'DIGITAL';
   shippingAddress: string;
   shippingGovernorate: string;
   paymentMethod: 'CASH' | 'ONLINE';
@@ -45,6 +46,7 @@ export type ApiOrder = {
     productName: string;
     unitPrice: number;
     quantity: number;
+    product?: { slug: string; category: ApiProduct['category'] };
   }[];
   payments: { method: string; status: string; amount: number }[];
   shipments: { trackingNumber: string; status: string }[];
@@ -88,7 +90,7 @@ export function clearCartApi() {
 }
 
 export function previewOrderApi(input: {
-  shippingGovernorate: string;
+  shippingGovernorate?: string;
   paymentMethod: 'CASH' | 'ONLINE';
 }) {
   return apiFetch<PricingQuote>('/orders/preview', {
@@ -99,8 +101,8 @@ export function previewOrderApi(input: {
 }
 
 export function checkoutApi(input: {
-  shippingAddress: string;
-  shippingGovernorate: string;
+  shippingAddress?: string;
+  shippingGovernorate?: string;
   paymentMethod: 'CASH' | 'ONLINE';
   contactPhone: string;
   contactName?: string;

@@ -19,16 +19,25 @@ export type ApiMessage = {
   sender: ApiConversationUser;
 };
 
+export type ApiConversationOrder = {
+  id: string;
+  orderNumber: string;
+  status: string;
+  fulfillmentType: string;
+};
+
 export type ApiConversation = {
   id: string;
   clientId: string;
   assigneeId?: string | null;
+  orderId?: string | null;
   subject: string;
   status: string;
   createdAt: string;
   updatedAt: string;
   client: ApiConversationUser;
   assignee?: ApiConversationUser | null;
+  order?: ApiConversationOrder | null;
   messages: ApiMessage[];
   _count?: { messages: number };
 };
@@ -45,6 +54,8 @@ export function createConversationApi(input: {
   subject: string;
   body: string;
   attachmentName?: string;
+  orderId?: string;
+  orderNumber?: string;
 }) {
   return apiFetch<ApiConversation>('/conversations', {
     method: 'POST',

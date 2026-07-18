@@ -9,13 +9,16 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useSearchParams } from 'next/navigation';
 import InboxGate from '@/components/inbox/InboxGate';
 import InboxComposeForm from '@/components/inbox/InboxComposeForm';
 import {
+  DESIGN_BILLING_LABEL,
   DESIGN_TEAM_EMAIL,
   INDICATION_LABEL,
   SLA_LABEL,
   THREAD_STATUS_LABEL,
+  designBillingKind,
   formatFileSize,
   formatMessageDate,
   hasDesignAttachment,
@@ -25,6 +28,7 @@ import {
   type InboxFolder,
   type InboxThread,
 } from '@/content/inbox';
+import { indicationFromServiceSlug } from '@/content/design-services';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import {
   conversationToThread,
@@ -74,6 +78,13 @@ function initialsFrom(name: string) {
 
 export default function InboxWorkspace() {
   const { session } = useAuthSession();
+  const searchParams = useSearchParams();
+  const paidServiceSlug = searchParams.get('service');
+  const paidOrderNumber = searchParams.get('order');
+  const lockedIndication = indicationFromServiceSlug(paidServiceSlug);
+  const forceComposeFromCheckout =
+    searchParams.get('compose') === '1' || Boolean(lockedIndication);
+
   const [folder, setFolder] = useState<InboxFolder>('inbox');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [paneMode, setPaneMode] = useState<PaneMode>('compose');
@@ -87,6 +98,13 @@ export default function InboxWorkspace() {
   const hasLoadedRef = useRef(false);
 
   selectedIdRef.current = selectedId;
+
+  useEffect(() => {
+    if (forceComposeFromCheckout) {
+      setPaneMode('compose');
+      setSelectedId(null);
+    }
+  }, [forceComposeFromCheckout, paidServiceSlug, paidOrderNumber]);
 
   const reload = useCallback(() => setTick((n) => n + 1), []);
 
@@ -318,8 +336,8 @@ export default function InboxWorkspace() {
                 <li>
                   <span>1</span>
                   <div>
-                    <b>{apiMode ? 'Start a case' : 'Attach scan'}</b>
-                    <small>{apiMode ? 'Message or upload STL' : 'STL or ZIP file'}</small>
+                    <b>{apiMode ? 'Request a design' : 'Attach scan'}</b>
+                    <small>{apiMode ? 'Unpaid request or paid case' : 'STL file'}</small>
                   </div>
                 </li>
                 <li>
@@ -376,7 +394,7 @@ export default function InboxWorkspace() {
               <span className="mail-action-plus" aria-hidden>
                 +
               </span>
-              {apiMode ? 'New message' : 'Send scan to design team'}
+              {apiMode ? 'Request design' : 'Send scan to design team'}
             </button>
             <div className="mail-action-divider" aria-hidden />
             <nav className="mail-action-folders" aria-label="Folders">
@@ -440,7 +458,7 @@ export default function InboxWorkspace() {
                     <p>No conversations in this folder.</p>
                     {canSend ? (
                       <button type="button" className="btn btn-sm" onClick={openCompose}>
-                        {apiMode ? 'Start a conversation' : 'Send your first scan'}
+                        {apiMode ? 'Request a design' : 'Send your first scan'}
                       </button>
                     ) : (
                       <Link href="/register?role=dentist" className="btn btn-sm">
@@ -481,6 +499,19 @@ export default function InboxWorkspace() {
                             <span className="mail-row-preview">{threadPreview(t)}</span>
                             <span className="mail-row-meta">
                               <span className="mail-row-ref">{t.ref}</span>
+                              {(() => {
+                                const billing = designBillingKind(t);
+                                if (billing === 'support') return null;
+                                return (
+                                  <span
+                                    className={`mail-row-tag mail-row-tag--billing-${billing}`}
+                                  >
+                                    {billing === 'paid' && t.orderNumber
+                                      ? `Paid · ${t.orderNumber}`
+                                      : DESIGN_BILLING_LABEL[billing]}
+                                  </span>
+                                );
+                              })()}
                               {hasDesignAttachment(t) ? (
                                 <span className="mail-row-tag mail-row-tag--design">
                                   Design file
@@ -512,25 +543,41 @@ export default function InboxWorkspace() {
               {paneMode === 'compose' ? (
                 <div className="mail-compose-pane">
                   <div className="mail-compose-pane-head">
-                    <p className="mail-compose-kicker">New conversation</p>
-                    <h2>{apiMode ? 'Message ODYX' : 'Send scan to design team'}</h2>
+                    <p className="mail-compose-kicker">
+                      {paidOrderNumber ? 'Paid design case' : 'New design request'}
+                    </p>
+                    <h2>
+                      {paidOrderNumber
+                        ? 'Upload your scan'
+                        : 'Request a design'}
+                    </h2>
                     <p>
-                      {apiMode ? (
+                      {paidOrderNumber ? (
                         <>
-                          Start a conversation with the ODYX team. Attach an STL/ZIP scan when you
-                          have one — or just send a message.
+                          Your design service is paid. Attach the STL scan for{' '}
+                          {lockedIndication
+                            ? INDICATION_LABEL[lockedIndication]
+                            : 'this case'}{' '}
+                          and send it to the design team.
                         </>
                       ) : (
                         <>
-                          This works like email — your scan is sent to{' '}
-                          <a href={`mailto:${DESIGN_TEAM_EMAIL}`}>{DESIGN_TEAM_EMAIL}</a>. The
-                          design file comes back in this same thread.
+                          Choose a design type (Single Unit, Veneers, RPD, Splint, Surgical Guide,
+                          or Other), attach your STL, and send — no checkout required. Or{' '}
+                          <a href="/design-services">buy a design service</a> first for a linked
+                          paid case.
                         </>
                       )}
                     </p>
                   </div>
                   {canSend ? (
-                    <InboxComposeForm session={session} onSent={onSent} variant="inline" />
+                    <InboxComposeForm
+                      session={session}
+                      onSent={onSent}
+                      variant="inline"
+                      lockedIndication={lockedIndication}
+                      paidOrderNumber={paidOrderNumber}
+                    />
                   ) : (
                     <div className="mail-compose-locked">
                       <InboxComposeForm
@@ -538,6 +585,8 @@ export default function InboxWorkspace() {
                         onSent={onSent}
                         variant="inline"
                         disabled
+                        lockedIndication={lockedIndication}
+                        paidOrderNumber={paidOrderNumber}
                       />
                       <div className="mail-compose-lock-overlay">
                         <p>Register to message the ODYX team.</p>
@@ -569,7 +618,7 @@ export default function InboxWorkspace() {
                   <h3>Pick a conversation</h3>
                   <p>Select a thread from the left, or start a new message to ODYX.</p>
                   <button type="button" className="btn btn-send-scan" onClick={openCompose}>
-                    {apiMode ? 'New message' : 'Send scan to design team'}
+                    {apiMode ? 'Request design' : 'Send scan to design team'}
                   </button>
                 </div>
               )}
@@ -643,7 +692,7 @@ function ThreadReadingPane({
           </div>
           {!isGuest ? (
             <button type="button" className="btn-ghost btn btn-sm" onClick={onCompose}>
-              + New
+              + Request
             </button>
           ) : null}
         </div>
@@ -653,6 +702,17 @@ function ThreadReadingPane({
           <span className={`mail-chip mail-chip--${thread.status}`}>
             {THREAD_STATUS_LABEL[thread.status]}
           </span>
+          {(() => {
+            const billing = designBillingKind(thread);
+            if (billing === 'support') return null;
+            return (
+              <span className={`mail-chip mail-chip--billing-${billing}`}>
+                {billing === 'paid' && thread.orderNumber
+                  ? `Paid · ${thread.orderNumber}`
+                  : DESIGN_BILLING_LABEL[billing]}
+              </span>
+            );
+          })()}
         </div>
         {awaitingDesign ? (
           <p className="mail-thread-wait">

@@ -128,20 +128,20 @@ export default function CartPage() {
                           {formatMoney(line.product.price)} each
                           {line.product.unit ? ` · ${line.product.unit}` : ''}
                         </p>
-                        <button
-                          type="button"
-                          className="cart-remove"
-                          onClick={() => void removeItemAsync(line.productId)}
-                        >
-                          Remove
-                        </button>
                       </div>
 
                       <div className="cart-qty-wrap">
                         <span className="cart-qty-label">Qty</span>
                         <QtyStepper
                           value={line.qty}
-                          onChange={(q) => void updateQtyAsync(line.productId, q)}
+                          min={0}
+                          onChange={(q) => {
+                            if (q <= 0) {
+                              void removeItemAsync(line.productId);
+                              return;
+                            }
+                            void updateQtyAsync(line.productId, q);
+                          }}
                           label={`Quantity for ${line.product.name}`}
                         />
                       </div>

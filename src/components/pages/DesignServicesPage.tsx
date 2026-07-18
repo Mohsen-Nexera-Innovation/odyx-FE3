@@ -2,23 +2,13 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import PageHero, { Arrow, PageActions } from '@/components/PageHero';
-import {
-  FREE_SHIPPING_THRESHOLD,
-  SHOP_CATEGORIES,
-  SHOP_CATEGORY_LABEL,
-  formatMoney,
-  type ShopCategory,
-  type ShopProduct,
-} from '@/content/shop';
+import { DESIGN_SERVICES } from '@/content/design-services';
+import { formatMoney, type ShopProduct } from '@/content/shop';
 import { addItemAsync, fetchShopProducts } from '@/lib/commerce';
 import { isApiMode } from '@/lib/config';
 import { readSession } from '@/lib/auth';
-
-function isCategory(v: string | null): v is ShopCategory {
-  return v === 'printer' || v === 'curing' || v === 'scanner' || v === 'resin';
-}
 
 function ProductCard({
   p,
@@ -38,29 +28,15 @@ function ProductCard({
   return (
     <article className="store-card" style={{ animationDelay: `${index * 70}ms` }}>
       <div className="store-media">
-        {p.href ? (
-          <Link href={p.href} className="store-media-link" tabIndex={-1} aria-hidden>
-            <img src={p.image} alt="" />
-          </Link>
-        ) : (
-          <img src={p.image} alt="" />
-        )}
+        <img src={p.image} alt="" />
         <div className="store-media-scrim" aria-hidden />
-        <span className="store-badge">{SHOP_CATEGORY_LABEL[p.category]}</span>
+        <span className="store-badge">Design service</span>
         <span className="store-price-pill">{formatMoney(p.price)}</span>
       </div>
 
       <div className="store-body">
         <div className="store-card-top">
-          <h3>
-            {p.href ? (
-              <Link href={p.href} className="store-title-link">
-                {p.name}
-              </Link>
-            ) : (
-              p.name
-            )}
-          </h3>
+          <h3>{p.name}</h3>
           <p className="store-price-lg">{formatMoney(p.price)}</p>
         </div>
 
@@ -76,11 +52,6 @@ function ProductCard({
 
         <div className="store-meta">
           {p.unit ? <span>{p.unit}</span> : null}
-          {p.href ? (
-            <Link href={p.href} className="store-specs-link">
-              Specs <Arrow />
-            </Link>
-          ) : null}
         </div>
 
         <div className="store-actions">
@@ -96,35 +67,29 @@ function ProductCard({
   );
 }
 
-export default function ShopPage() {
+export default function DesignServicesPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const catParam = searchParams.get('cat');
-  const filter: ShopCategory | 'all' = isCategory(catParam) ? catParam : 'all';
   const [addedId, setAddedId] = useState<string | null>(null);
-  const [products, setProducts] = useState<ShopProduct[]>([]);
+  const [products, setProducts] = useState<ShopProduct[]>(DESIGN_SERVICES);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     setError(null);
-    fetchShopProducts(filter)
+    fetchShopProducts('design')
       .then((list) => {
-        if (!cancelled) setProducts(list);
+        if (!cancelled) setProducts(list.length ? list : DESIGN_SERVICES);
       })
       .catch((err: unknown) => {
         if (!cancelled) {
-          setProducts([]);
-          setError(err instanceof Error ? err.message : 'Could not load products');
+          setProducts(DESIGN_SERVICES);
+          setError(err instanceof Error ? err.message : 'Could not load design services');
         }
       });
     return () => {
       cancelled = true;
     };
-  }, [filter]);
-
-  const filterLabel =
-    filter === 'all' ? 'All products' : SHOP_CATEGORY_LABEL[filter];
+  }, []);
 
   async function onAdd(productId: string) {
     if (isApiMode() && !readSession()) {
@@ -148,7 +113,7 @@ export default function ShopPage() {
     try {
       await addItemAsync(productId, 1);
       try {
-        sessionStorage.setItem('odyx_checkout_from', 'shop');
+        sessionStorage.setItem('odyx_checkout_from', 'design');
       } catch {
         /* ignore */
       }
@@ -163,14 +128,17 @@ export default function ShopPage() {
       <PageHero
         crumbs={[
           { label: 'Home', href: '/' },
-          { label: 'Store', href: '/shop' },
+          { label: 'Design services', href: '/design-services' },
         ]}
-        title="ODYX Store"
-        lead="Purchase ODYX P1-26, ODYX Cure, and ODYX-S1 — clinic-ready hardware with fast checkout."
+        title="Design as a service"
+        lead="Buy a design case, pay online, then upload your scan in the inbox — we deliver the STL digitally."
         action={
           <PageActions>
             <Link className="btn" href="/cart">
               View cart <Arrow />
+            </Link>
+            <Link className="btn btn-ghost" href="/inbox">
+              Open inbox <Arrow />
             </Link>
           </PageActions>
         }
@@ -181,41 +149,19 @@ export default function ShopPage() {
           <div className="store-toolbar">
             <div className="store-toolbar-copy">
               <p className="store-toolbar-kicker">Catalog</p>
-              <h2 className="store-toolbar-title">{filterLabel}</h2>
+              <h2 className="store-toolbar-title">Design services</h2>
               <p className="store-toolbar-meta">
-                {products.length} product{products.length === 1 ? '' : 's'}
+                {products.length} service{products.length === 1 ? '' : 's'}
                 <span aria-hidden>·</span>
-                {isApiMode()
-                  ? 'Shipping via Bosta · Pay with Paymob or COD'
-                  : `Free shipping from ${formatMoney(FREE_SHIPPING_THRESHOLD)}`}
+                Digital delivery · Online payment · No shipping
               </p>
-            </div>
-
-            <div className="store-tabs" role="tablist" aria-label="Product categories">
-              {SHOP_CATEGORIES.map((c) => {
-                const href = c.id === 'all' ? '/shop' : `/shop?cat=${c.id}`;
-                const selected = filter === c.id;
-                return (
-                  <Link
-                    key={c.id}
-                    href={href}
-                    scroll={false}
-                    replace
-                    role="tab"
-                    aria-selected={selected}
-                    className={`store-tab${selected ? ' on' : ''}`}
-                  >
-                    {c.label}
-                  </Link>
-                );
-              })}
             </div>
           </div>
 
           {error ? <p className="store-empty">{error}</p> : null}
 
           {products.length === 0 && !error ? (
-            <p className="store-empty">No products in this category.</p>
+            <p className="store-empty">No design services available.</p>
           ) : (
             <div className={`store-grid${products.length < 3 ? ' store-grid--sparse' : ''}`}>
               {products.map((p, i) => (

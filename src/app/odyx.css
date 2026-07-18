@@ -2598,6 +2598,53 @@ main .sec + .sec{border-top:none}
 .mail-compose-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
 .mail-compose-foot{display:flex;justify-content:flex-end;gap:10px;padding-top:12px;margin-top:auto;border-top:1px solid #e2e8f0;position:sticky;bottom:0;background:#fff}
 .mail-compose-error{font-size:.78rem;color:#dc2626;margin:0}
+.mail-compose-paid-banner{
+  margin:0 0 12px;
+  padding:10px 12px;
+  border-radius:8px;
+  background:rgba(15,118,110,.08);
+  border:1px solid rgba(15,118,110,.22);
+  color:#0f766e;
+  font-size:.85rem;
+  line-height:1.4;
+}
+.mail-compose-paid-banner strong{font-weight:700}
+.mail-compose-request-banner{
+  margin:0 0 12px;
+  padding:10px 12px;
+  border-radius:8px;
+  background:rgba(5,129,173,.07);
+  border:1px solid rgba(5,129,173,.2);
+  color:var(--ink,#211C1D);
+  font-size:.85rem;
+  line-height:1.45;
+}
+.mail-compose-request-banner a{color:var(--sky-deep,#0581ad);font-weight:600}
+.mail-compose-quote{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:0 0 14px;padding:12px 14px;border-radius:10px;
+  background:rgba(255,255,255,.9);
+  border:1px solid var(--paper-line,rgba(10,60,100,.12));
+}
+.mail-compose-quote-label{
+  display:block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:700;color:var(--ink-faint,#8A858E);margin-bottom:2px;
+}
+.mail-compose-quote-price{
+  font-size:1.2rem;font-weight:800;letter-spacing:-.02em;color:var(--ink,#211C1D);
+}
+.mail-compose-quote-unit{
+  margin-left:8px;font-size:.78rem;color:var(--ink-muted,#5A555C);
+}
+.mail-row-tag--order,.mail-chip--order,
+.mail-row-tag--billing-paid,.mail-chip--billing-paid{
+  background:rgba(15,118,110,.12)!important;
+  color:#0f766e!important;
+}
+.mail-row-tag--billing-unpaid,.mail-chip--billing-unpaid{
+  background:rgba(180,83,9,.12)!important;
+  color:#b45309!important;
+}
 
 .mail-compose-locked{position:relative;flex:1}
 .mail-compose-lock-overlay{
@@ -3742,6 +3789,13 @@ header.on-light .nav-cart:hover{color:var(--sky-deep);background:rgba(var(--sky-
 }
 .co-item-info em{font-style:normal;font-size:.74rem;color:var(--ink-faint,#8A858E)}
 .co-item-total{font-size:.88rem;font-weight:800;color:var(--ink,#211C1D);white-space:nowrap}
+.co-item-x{
+  flex-shrink:0;width:28px;height:28px;margin:0;padding:0;
+  border:none;border-radius:8px;background:transparent;cursor:pointer;
+  font-size:1.15rem;line-height:1;font-weight:500;color:var(--ink-faint,#8A858E);
+  transition:color .15s,background .15s;
+}
+.co-item-x:hover{color:var(--ink,#211C1D);background:rgba(10,40,70,.06)}
 
 /* Free shipping nudge */
 .co-freeship{

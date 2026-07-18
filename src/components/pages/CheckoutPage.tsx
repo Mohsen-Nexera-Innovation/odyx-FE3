@@ -7,6 +7,7 @@ import PageHero from '@/components/PageHero';
 import { FREE_SHIPPING_THRESHOLD, calcShipping, formatMoney } from '@/content/shop';
 import { useCart } from '@/hooks/useCart';
 import { readSession } from '@/lib/auth';
+import { isDesignCart, isMixedCart, removeItemAsync } from '@/lib/commerce';
 import { isApiMode } from '@/lib/config';
 import { placeOrderFacade, previewShipping, type OrderShipping } from '@/lib/orders';
 
@@ -131,7 +132,7 @@ function BrandMark({ brand }: { brand: CardBrand }) {
 export default function CheckoutPage() {
   const router = useRouter();
   const apiMode = isApiMode();
-  const { lines, count } = useCart();
+  const { lines, count, loading: cartLoading } = useCart();
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -157,18 +158,44 @@ export default function CheckoutPage() {
     }
   }, [apiMode]);
 
+  const digital = isDesignCart(lines);
+  const mixed = isMixedCart(lines);
+
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || cartLoading) return;
     if (apiMode && !readSession()) {
       router.replace('/login');
       return;
     }
     if (count === 0 && !payIframe) {
-      router.replace('/shop');
+      // Prefer design catalog when this checkout was opened from Buy now there.
+      const fromDesign =
+        typeof window !== 'undefined' &&
+        (sessionStorage.getItem('odyx_checkout_from') === 'design' ||
+          document.referrer.includes('/design-services'));
+      try {
+        sessionStorage.removeItem('odyx_checkout_from');
+      } catch {
+        /* ignore */
+      }
+      router.replace(digital || fromDesign ? '/design-services' : '/shop');
+      return;
     }
-  }, [ready, count, router, apiMode, payIframe]);
+    if (count > 0) {
+      try {
+        sessionStorage.removeItem('odyx_checkout_from');
+      } catch {
+        /* ignore */
+      }
+    }
+  }, [ready, cartLoading, count, router, apiMode, payIframe, digital]);
 
   useEffect(() => {
+    if (digital) {
+      setPayMethod('ONLINE');
+      setApiShipping(0);
+      return;
+    }
     if (!apiMode || !form.city.trim()) {
       setApiShipping(null);
       return;
@@ -187,22 +214,41 @@ export default function CheckoutPage() {
     return () => {
       cancelled = true;
     };
-  }, [apiMode, form.city, payMethod]);
+  }, [apiMode, form.city, payMethod, digital]);
+
+  useEffect(() => {
+    if (!apiMode || !digital || count === 0) return;
+    let cancelled = false;
+    void previewShipping({ paymentMethod: 'ONLINE' })
+      .then((q) => {
+        if (!cancelled && q) setApiShipping(q.shipping);
+      })
+      .catch(() => {
+        if (!cancelled) setApiShipping(0);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [apiMode, digital, count]);
 
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const shippingFee = apiMode
-    ? (apiShipping ?? 0)
-    : calcShipping(subtotal);
+  const shippingFee = digital
+    ? 0
+    : apiMode
+      ? (apiShipping ?? 0)
+      : calcShipping(subtotal);
   const total = subtotal + shippingFee;
 
   const contactDone =
     form.name.trim() !== '' && isValidEmail(form.email) && digitsOnly(form.phone).length >= 8;
-  const shippingDone = apiMode
-    ? form.line1.trim() !== '' && form.city.trim() !== ''
-    : form.line1.trim() !== '' &&
-      form.city.trim() !== '' &&
-      form.country.trim() !== '' &&
-      form.postal.trim() !== '';
+  const shippingDone = digital
+    ? true
+    : apiMode
+      ? form.line1.trim() !== '' && form.city.trim() !== ''
+      : form.line1.trim() !== '' &&
+        form.city.trim() !== '' &&
+        form.country.trim() !== '' &&
+        form.postal.trim() !== '';
   const paymentDone = apiMode
     ? true
     : form.cardName.trim() !== '' &&
@@ -227,11 +273,15 @@ export default function CheckoutPage() {
     if (!form.name.trim()) next.name = 'Required';
     if (!form.email.trim() || !isValidEmail(form.email)) next.email = 'Valid email required';
     if (!form.phone.trim() || digitsOnly(form.phone).length < 8) next.phone = 'Valid phone required';
-    if (!form.line1.trim()) next.line1 = 'Required';
-    if (!form.city.trim()) next.city = apiMode ? 'Governorate / city required (Bosta)' : 'Required';
+    if (!digital) {
+      if (!form.line1.trim()) next.line1 = 'Required';
+      if (!form.city.trim()) next.city = apiMode ? 'Governorate / city required (Bosta)' : 'Required';
+      if (!apiMode) {
+        if (!form.country.trim()) next.country = 'Required';
+        if (!form.postal.trim()) next.postal = 'Required';
+      }
+    }
     if (!apiMode) {
-      if (!form.country.trim()) next.country = 'Required';
-      if (!form.postal.trim()) next.postal = 'Required';
       if (!form.cardName.trim()) next.cardName = 'Required';
       if (digitsOnly(form.cardNumber).length < 15) next.cardNumber = 'Enter a valid card number';
       if (!isValidExpiry(form.expiry)) next.expiry = 'Use MM/YY';
@@ -244,6 +294,12 @@ export default function CheckoutPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormError(null);
+    if (mixed) {
+      setFormError(
+        'Cannot mix design services and hardware in one order. Checkout separately.',
+      );
+      return;
+    }
     if (!validate()) return;
     setSubmitting(true);
     try {
@@ -251,14 +307,14 @@ export default function CheckoutPage() {
         name: form.name.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),
-        line1: form.line1.trim(),
-        city: form.city.trim(),
+        line1: digital ? 'Digital delivery' : form.line1.trim(),
+        city: digital ? 'N/A' : form.city.trim(),
         country: form.country.trim() || 'Egypt',
-        postal: form.postal.trim() || '-',
+        postal: digital ? '-' : form.postal.trim() || '-',
       };
       const result = await placeOrderFacade({
         shipping,
-        paymentMethod: apiMode ? payMethod : 'ONLINE',
+        paymentMethod: apiMode ? (digital ? 'ONLINE' : payMethod) : 'ONLINE',
       });
 
       if ('iframeUrl' in result && result.iframeUrl) {
@@ -301,7 +357,7 @@ export default function CheckoutPage() {
     );
   }
 
-  if (!ready || count === 0) {
+  if (!ready || cartLoading || count === 0) {
     return (
       <section className="sec store-sec">
         <div className="wrap">
@@ -318,11 +374,17 @@ export default function CheckoutPage() {
       <PageHero
         crumbs={[
           { label: 'Home', href: '/' },
-          { label: 'Store', href: '/shop' },
+          digital
+            ? { label: 'Design services', href: '/design-services' }
+            : { label: 'Store', href: '/shop' },
           { label: 'Checkout', href: '/checkout' },
         ]}
         title="Secure checkout"
-        lead="A few details and your ODYX gear is on its way."
+        lead={
+          digital
+            ? 'Pay for your design case, then upload your scan in the inbox.'
+            : 'A few details and your ODYX gear is on its way.'
+        }
       />
 
       <section className="sec store-sec co-sec">
@@ -330,7 +392,9 @@ export default function CheckoutPage() {
           <ol className="co-progress" aria-label="Checkout progress">
             <li className="done">
               <span className="co-dot"><CheckIcon /></span>
-              <Link href="/shop">Store</Link>
+              <Link href={digital ? '/design-services' : '/shop'}>
+                {digital ? 'Design' : 'Store'}
+              </Link>
             </li>
             <li className="done">
               <span className="co-dot"><CheckIcon /></span>
@@ -341,6 +405,12 @@ export default function CheckoutPage() {
               <span>Checkout</span>
             </li>
           </ol>
+
+          {mixed ? (
+            <p className="co-form-error" style={{ marginBottom: '1.5rem' }}>
+              Your cart mixes design services and hardware. Remove one type before checkout.
+            </p>
+          ) : null}
 
           <form className="co-shell" onSubmit={onSubmit} noValidate>
             <div className="co-main">
@@ -383,6 +453,7 @@ export default function CheckoutPage() {
                 </div>
               </section>
 
+              {!digital ? (
               <section className={`co-step${shippingDone ? ' done' : ''}`}>
                 <div className="co-step-head">
                   <span className="co-step-num">{shippingDone ? <CheckIcon /> : '2'}</span>
@@ -432,16 +503,31 @@ export default function CheckoutPage() {
                   ) : null}
                 </div>
               </section>
+              ) : (
+              <section className="co-step done">
+                <div className="co-step-head">
+                  <span className="co-step-num"><CheckIcon /></span>
+                  <div>
+                    <h2>Delivery</h2>
+                    <p>Digital — design files are delivered in your inbox after you upload a scan</p>
+                  </div>
+                </div>
+              </section>
+              )}
 
               <section className={`co-step${paymentDone ? ' done' : ''}`}>
                 <div className="co-step-head">
-                  <span className="co-step-num">{paymentDone ? <CheckIcon /> : '3'}</span>
+                  <span className="co-step-num">{paymentDone ? <CheckIcon /> : digital ? '2' : '3'}</span>
                   <div>
                     <h2>Payment</h2>
                     <p>
-                      {apiMode
-                        ? 'Paymob card checkout or cash on delivery (Bosta COD)'
-                        : 'Demo mode — no real charges are made'}
+                      {digital
+                        ? apiMode
+                          ? 'Online payment required for design services'
+                          : 'Demo mode — no real charges are made'
+                        : apiMode
+                          ? 'Paymob card checkout or cash on delivery (Bosta COD)'
+                          : 'Demo mode — no real charges are made'}
                     </p>
                   </div>
                 </div>
@@ -457,15 +543,17 @@ export default function CheckoutPage() {
                     >
                       <LockIcon /> Paymob (card)
                     </button>
-                    <button
-                      type="button"
-                      className={`pay-method${payMethod === 'CASH' ? ' on' : ''}`}
-                      role="radio"
-                      aria-checked={payMethod === 'CASH'}
-                      onClick={() => setPayMethod('CASH')}
-                    >
-                      Cash on delivery
-                    </button>
+                    {!digital ? (
+                      <button
+                        type="button"
+                        className={`pay-method${payMethod === 'CASH' ? ' on' : ''}`}
+                        role="radio"
+                        aria-checked={payMethod === 'CASH'}
+                        onClick={() => setPayMethod('CASH')}
+                      >
+                        Cash on delivery
+                      </button>
+                    ) : null}
                   </div>
                 ) : (
                   <>
@@ -572,11 +660,19 @@ export default function CheckoutPage() {
                       <em>{formatMoney(line.product.price)} each</em>
                     </span>
                     <span className="co-item-total">{formatMoney(line.lineTotal)}</span>
+                    <button
+                      type="button"
+                      className="co-item-x"
+                      onClick={() => void removeItemAsync(line.productId)}
+                      aria-label={`Remove ${line.product.name}`}
+                    >
+                      ×
+                    </button>
                   </li>
                 ))}
               </ul>
 
-              {shippingFee > 0 ? (
+              {!digital && shippingFee > 0 ? (
                 <div className="co-freeship">
                   <span>
                     Add {formatMoney(FREE_SHIPPING_THRESHOLD - subtotal)} more for free shipping
@@ -585,9 +681,13 @@ export default function CheckoutPage() {
                     <i style={{ width: `${freeShipPct}%` }} />
                   </span>
                 </div>
-              ) : (
+              ) : !digital ? (
                 <p className="co-freeship-done">
                   <CheckIcon /> Free shipping unlocked
+                </p>
+              ) : (
+                <p className="co-freeship-done">
+                  <CheckIcon /> Digital delivery — no shipping
                 </p>
               )}
 
@@ -595,10 +695,12 @@ export default function CheckoutPage() {
                 <span>Subtotal</span>
                 <span>{formatMoney(subtotal)}</span>
               </div>
-              <div className="co-sum-row">
-                <span>Shipping</span>
-                <span>{shippingFee === 0 ? 'Free' : formatMoney(shippingFee)}</span>
-              </div>
+              {!digital ? (
+                <div className="co-sum-row">
+                  <span>Shipping</span>
+                  <span>{shippingFee === 0 ? 'Free' : formatMoney(shippingFee)}</span>
+                </div>
+              ) : null}
               <div className="co-sum-row co-sum-total">
                 <span>Total</span>
                 <span>{formatMoney(total)}</span>

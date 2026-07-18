@@ -14,9 +14,7 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
   const [drag, setDrag] = useState(false);
 
   const accept = useCallback((f: File) => {
-    const ok =
-      f.name.toLowerCase().endsWith('.stl') ||
-      f.name.toLowerCase().endsWith('.zip');
+    const ok = f.name.toLowerCase().endsWith('.stl');
     if (!ok) return false;
     if (f.size > MAX_MB * 1024 * 1024) return false;
     return true;
@@ -50,7 +48,7 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
       <input
         type="file"
         id="stl-upload"
-        accept=".stl,.zip"
+        accept=".stl,model/stl,application/sla"
         className="inbox-upload-input"
         onChange={(e) => pick(e.target.files?.[0] ?? null)}
       />
@@ -67,8 +65,8 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
           <span className="inbox-upload-icon" aria-hidden>
             ↑
           </span>
-          <span className="inbox-upload-lead">Drop STL or ZIP here</span>
-          <span className="inbox-upload-hint">Max {MAX_MB} MB · scan mesh or bundled intake</span>
+          <span className="inbox-upload-lead">Drop STL here</span>
+          <span className="inbox-upload-hint">Max {MAX_MB} MB · .stl scan only</span>
         </label>
       )}
       {error ? <p className="inbox-upload-error">{error}</p> : null}

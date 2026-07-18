@@ -5,12 +5,11 @@ export const DESIGN_TEAM_EMAIL = 'design-team@odyx.dental';
 export type SlaTier = 'same_day' | '24h';
 
 export type CaseIndication =
-  | 'crown'
-  | 'bridge'
+  | 'single_unit'
+  | 'digital_smile_design'
+  | 'removable_partial_denture'
+  | 'occlusal_splint'
   | 'surgical_guide'
-  | 'model'
-  | 'denture'
-  | 'night_guard'
   | 'other';
 
 export type ThreadStatus = 'awaiting_design' | 'in_progress' | 'design_delivered' | 'completed';
@@ -53,19 +52,50 @@ export type InboxThread = {
   resin?: string;
   printer?: string;
   batchRef?: string;
+  /** Linked paid design-service order number (e.g. ODYX-123456). */
+  orderNumber?: string;
   isDemo?: boolean;
   messages: InboxMessage[];
   updatedAt: string;
   createdAt: string;
 };
 
+/** How a design conversation was billed. */
+export type DesignBillingKind = 'paid' | 'unpaid' | 'support';
+
+/** Design-service case types that have a catalog price. */
+export const PAID_DESIGN_INDICATIONS: CaseIndication[] = [
+  'single_unit',
+  'digital_smile_design',
+  'removable_partial_denture',
+  'occlusal_splint',
+  'surgical_guide',
+];
+
+export function isPaidDesignIndication(indication: CaseIndication): boolean {
+  return PAID_DESIGN_INDICATIONS.includes(indication);
+}
+
+export function designBillingKind(
+  thread: Pick<InboxThread, 'indication' | 'orderNumber'>,
+): DesignBillingKind {
+  if (thread.orderNumber) return 'paid';
+  if (isPaidDesignIndication(thread.indication)) return 'unpaid';
+  return 'support';
+}
+
+export const DESIGN_BILLING_LABEL: Record<DesignBillingKind, string> = {
+  paid: 'Paid',
+  unpaid: 'Unpaid',
+  support: 'Support',
+};
+
 export const INDICATION_LABEL: Record<CaseIndication, string> = {
-  crown: 'Crown',
-  bridge: 'Bridge',
-  surgical_guide: 'Surgical guide',
-  model: 'Model',
-  denture: 'Denture',
-  night_guard: 'Night guard',
+  single_unit: 'Single Unit (crown/overlay/endocrown)',
+  digital_smile_design: 'Digital Smile Design (Veneers)',
+  removable_partial_denture: 'Removable Partial Denture',
+  occlusal_splint: 'Occlusal Splint',
+  surgical_guide: 'Surgical Guide',
   other: 'Other',
 };
 
@@ -152,7 +182,7 @@ export const DEMO_THREADS: InboxThread[] = [
     ownerKey: 'guest-demo',
     role: 'dentist',
     orgName: 'Sample Clinic',
-    indication: 'crown',
+    indication: 'single_unit',
     patientRef: 'PT-204',
     tooth: '#14',
     sla: 'same_day',
@@ -166,7 +196,7 @@ export const DEMO_THREADS: InboxThread[] = [
         'm1',
         'dr.sample@clinic.com',
         'Dr. Sample',
-        'Scan upload — Crown #14 (PT-204)',
+        'Scan upload — Single Unit #14 (PT-204)',
         'Please design a crown for tooth #14. Margin preference: chamfer. Same-day turnaround if possible.',
         [{ id: 'a1', name: 'scan_upper.stl', size: 4_200_000, kind: 'scan' }],
         hoursAgo(26),
@@ -174,7 +204,7 @@ export const DEMO_THREADS: InboxThread[] = [
       receivedMsg(
         'demo-t1',
         'm2',
-        'Re: Scan upload — Crown #14 (PT-204)',
+        'Re: Scan upload — Single Unit #14 (PT-204)',
         'Your design is ready. Files attached — validated for ODYX Crown & Bridge resin. Let us know if you need adjustments.',
         [{ id: 'a2', name: 'crown_14_design.stl', size: 1_800_000, kind: 'design' }],
         hoursAgo(2),
@@ -204,7 +234,7 @@ export const DEMO_THREADS: InboxThread[] = [
         'm3',
         'lab@production.com',
         'Sample Lab',
-        'Scan bundle — Surgical guide (BATCH-03)',
+        'Scan bundle — Surgical Guide (BATCH-03)',
         'CBCT + intraoral scan attached. Target resin: ODYX Surgical Guide. Printer: ODYX P1-26.',
         [{ id: 'a3', name: 'cbct_guide_intake.zip', size: 12_400_000, kind: 'scan' }],
         hoursAgo(52),
@@ -212,7 +242,7 @@ export const DEMO_THREADS: InboxThread[] = [
       receivedMsg(
         'demo-t2',
         'm4',
-        'Re: Scan bundle — Surgical guide (BATCH-03)',
+        'Re: Scan bundle — Surgical Guide (BATCH-03)',
         'We received your files and started the design. Verifying sleeve offsets — on track for 24h SLA.',
         [],
         hoursAgo(6),
@@ -225,9 +255,9 @@ export const DEMO_THREADS: InboxThread[] = [
     ref: 'ODYX-1021',
     ownerKey: 'guest-demo',
     role: 'dentist',
-    indication: 'bridge',
+    indication: 'digital_smile_design',
     patientRef: 'PT-188',
-    tooth: '#13–15',
+    tooth: 'Upper anterior',
     sla: '24h',
     status: 'completed',
     isDemo: true,
@@ -239,17 +269,17 @@ export const DEMO_THREADS: InboxThread[] = [
         'm5',
         'dr.sample@clinic.com',
         'Dr. Sample',
-        'Scan upload — Bridge #13–15',
-        'Bridge design request for teeth 13–15.',
+        'Scan upload — Digital Smile Design (Veneers)',
+        'Smile design / veneer case for upper anteriors.',
         [{ id: 'a4', name: 'prep_scan.stl', size: 5_100_000, kind: 'scan' }],
         hoursAgo(120),
       ),
       receivedMsg(
         'demo-t3',
         'm6',
-        'Re: Scan upload — Bridge #13–15',
-        'Design package attached. Includes connector specs for your print workflow.',
-        [{ id: 'a5', name: 'bridge_design_pack.zip', size: 3_200_000, kind: 'design' }],
+        'Re: Scan upload — Digital Smile Design (Veneers)',
+        'Design package attached. Includes aesthetic proposal for your print workflow.',
+        [{ id: 'a5', name: 'veneer_design_pack.zip', size: 3_200_000, kind: 'design' }],
         hoursAgo(72),
         true,
       ),
