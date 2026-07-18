@@ -6,17 +6,23 @@
 import { ApiError } from '@/lib/api/client';
 import {
   acceptInviteApi,
+  changePasswordApi,
+  forgotPasswordApi,
   loginApi,
   logoutApi,
   meApi,
   registerApi,
+  resetPasswordApi,
   toSession,
+  updateProfileApi,
 } from '@/lib/api/auth';
 import { clearTokens, hasTokens, setTokens } from '@/lib/auth-tokens';
 import { isApiMode } from '@/lib/config';
 import {
   DEMO_ACCOUNTS,
+  changePassword as demoChangePassword,
   clearSession,
+  forgotPassword as demoForgotPassword,
   initAuthStore as initDemoAuthStore,
   login as demoLogin,
   loginAsGuest as demoLoginAsGuest,
@@ -24,14 +30,27 @@ import {
   notifyAuthChange,
   readSession as demoReadSession,
   register as demoRegister,
+  resetPassword as demoResetPassword,
+  updateProfile as demoUpdateProfile,
   writeSession,
   type AccountSession,
   type LoginResult,
+  type OkResult,
   type RegisterInput,
   type RegisterResult,
+  type UpdateProfileInput,
+  type UpdateProfileResult,
 } from '@/lib/auth-store';
 
-export type { AccountSession, LoginResult, RegisterInput, RegisterResult };
+export type {
+  AccountSession,
+  LoginResult,
+  OkResult,
+  RegisterInput,
+  RegisterResult,
+  UpdateProfileInput,
+  UpdateProfileResult,
+};
 export { DEMO_ACCOUNTS, notifyAuthChange, writeSession };
 export { hasPermission, isStaff, isClient, isGuest } from '@/lib/permissions';
 
@@ -148,5 +167,76 @@ export async function syncSessionFromApi(): Promise<AccountSession | null> {
     clearTokens();
     clearSession();
     return null;
+  }
+}
+
+export async function updateProfile(
+  input: UpdateProfileInput,
+): Promise<UpdateProfileResult> {
+  if (!isApiMode()) {
+    return demoUpdateProfile(input);
+  }
+
+  try {
+    const user = await updateProfileApi(input);
+    const session = toSession(user);
+    writeSession(session);
+    return { ok: true, session };
+  } catch (err) {
+    return { ok: false, error: apiErrorMessage(err, 'Could not update profile.') };
+  }
+}
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+): Promise<OkResult> {
+  if (!isApiMode()) {
+    return demoChangePassword(currentPassword, newPassword);
+  }
+
+  try {
+    await changePasswordApi(currentPassword, newPassword);
+    return { ok: true };
+  } catch (err) {
+    return {
+      ok: false,
+      error: apiErrorMessage(err, 'Could not change password.'),
+    };
+  }
+}
+
+export async function forgotPassword(email: string): Promise<OkResult> {
+  if (!isApiMode()) {
+    return demoForgotPassword(email);
+  }
+
+  try {
+    await forgotPasswordApi(email.trim().toLowerCase());
+    return { ok: true };
+  } catch (err) {
+    return {
+      ok: false,
+      error: apiErrorMessage(err, 'Could not send reset email.'),
+    };
+  }
+}
+
+export async function resetPassword(
+  token: string,
+  newPassword: string,
+): Promise<OkResult> {
+  if (!isApiMode()) {
+    return demoResetPassword(token, newPassword);
+  }
+
+  try {
+    await resetPasswordApi(token, newPassword);
+    return { ok: true };
+  } catch (err) {
+    return {
+      ok: false,
+      error: apiErrorMessage(err, 'Could not reset password.'),
+    };
   }
 }

@@ -9,6 +9,7 @@ import { apiFetch } from '@/lib/api/client';
 import type { AccountSession, RegisterInput } from '@/lib/auth-store';
 
 export type ApiPublicUser = {
+  id?: string;
   email: string;
   name: string;
   accountType: AccountType;
@@ -21,6 +22,13 @@ export type ApiPublicUser = {
   org?: string;
   country?: string;
   phone?: string;
+};
+
+export type UpdateProfileInput = {
+  name: string;
+  phone?: string;
+  org?: string;
+  country?: string;
 };
 
 export type AuthTokensResponse = {
@@ -45,6 +53,7 @@ export function toSession(user: ApiPublicUser): AccountSession {
     permissions: user.permissions ?? [],
     roleId: user.roleId,
     roleName: user.roleName,
+    phone: user.phone,
     org: user.org,
     country: user.country,
     role,
@@ -97,6 +106,41 @@ export function refreshApi(refreshToken: string) {
 
 export function meApi() {
   return apiFetch<ApiPublicUser>('/auth/me', { auth: true });
+}
+
+export function updateProfileApi(input: UpdateProfileInput) {
+  return apiFetch<ApiPublicUser>('/auth/me', {
+    method: 'PATCH',
+    auth: true,
+    body: JSON.stringify({
+      name: input.name,
+      phone: input.phone || undefined,
+      org: input.org || undefined,
+      country: input.country || undefined,
+    }),
+  });
+}
+
+export function changePasswordApi(currentPassword: string, newPassword: string) {
+  return apiFetch<{ ok: boolean }>('/auth/change-password', {
+    method: 'POST',
+    auth: true,
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+}
+
+export function forgotPasswordApi(email: string) {
+  return apiFetch<{ ok: boolean }>('/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  });
+}
+
+export function resetPasswordApi(token: string, newPassword: string) {
+  return apiFetch<{ ok: boolean }>('/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify({ token, newPassword }),
+  });
 }
 
 export function logoutApi() {

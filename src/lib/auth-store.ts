@@ -23,6 +23,7 @@ export type StoredUser = {
   staffRank?: StaffRank | null;
   clientType?: ClientType | null;
   permissions: string[];
+  phone?: string;
   org?: string;
   country?: string;
   createdAt: string;
@@ -37,6 +38,7 @@ export type AccountSession = {
   permissions: string[];
   roleId?: string | null;
   roleName?: string | null;
+  phone?: string;
   org?: string;
   country?: string;
   /** UI compatibility: dentist | lab | guest | admin */
@@ -141,6 +143,7 @@ function toSession(user: StoredUser): AccountSession {
     staffRank: user.staffRank,
     clientType: user.clientType,
     permissions: user.permissions,
+    phone: user.phone,
     org: user.org,
     country: user.country,
     role: deriveRole(user),
@@ -176,6 +179,7 @@ export function readSession(): AccountSession | null {
         permissions: data.permissions ?? [],
         roleId: data.roleId,
         roleName: data.roleName,
+        phone: data.phone,
         org: data.org,
         country: data.country,
         role: deriveRole({
@@ -318,4 +322,109 @@ export function loginAsGuest() {
 
 export function logout() {
   clearSession();
+}
+
+export type UpdateProfileInput = {
+  name: string;
+  phone?: string;
+  org?: string;
+  country?: string;
+};
+
+export type OkResult = { ok: true } | { ok: false; error: string };
+
+export type UpdateProfileResult =
+  | { ok: true; session: AccountSession }
+  | { ok: false; error: string };
+
+export function updateProfile(input: UpdateProfileInput): UpdateProfileResult {
+  const session = readSession();
+  if (!session || session.accountType === 'GUEST' || session.role === 'guest') {
+    return { ok: false, error: 'Sign in to update your profile.' };
+  }
+
+  const name = input.name.trim();
+  if (!name) {
+    return { ok: false, error: 'Name is required.' };
+  }
+
+  const user = findUser(session.email);
+  if (!user) {
+    return { ok: false, error: 'Account not found.' };
+  }
+
+  const phone = input.phone?.trim() || undefined;
+  const org = input.org?.trim() || undefined;
+  const country = input.country?.trim() || undefined;
+
+  const users = readUsersDb();
+  const idx = users.findIndex((u) => u.email.toLowerCase() === user.email.toLowerCase());
+  if (idx < 0) {
+    return { ok: false, error: 'Account not found.' };
+  }
+
+  users[idx] = { ...users[idx], name, phone, org, country };
+  writeUsersDb(users);
+
+  const next = toSession(users[idx]);
+  writeSession(next);
+  return { ok: true, session: next };
+}
+
+export function changePassword(
+  currentPassword: string,
+  newPassword: string,
+): OkResult {
+  const session = readSession();
+  if (!session || session.accountType === 'GUEST' || session.role === 'guest') {
+    return { ok: false, error: 'Sign in to change your password.' };
+  }
+
+  if (newPassword.length < 8) {
+    return { ok: false, error: 'Password must be at least 8 characters.' };
+  }
+  if (currentPassword === newPassword) {
+    return {
+      ok: false,
+      error: 'New password must be different from the current password.',
+    };
+  }
+
+  const user = findUser(session.email);
+  if (!user) {
+    return { ok: false, error: 'Account not found.' };
+  }
+  if (user.password !== currentPassword) {
+    return { ok: false, error: 'Current password is incorrect.' };
+  }
+
+  const users = readUsersDb();
+  const idx = users.findIndex((u) => u.email.toLowerCase() === user.email.toLowerCase());
+  if (idx < 0) {
+    return { ok: false, error: 'Account not found.' };
+  }
+
+  users[idx] = { ...users[idx], password: newPassword };
+  writeUsersDb(users);
+  return { ok: true };
+}
+
+export function forgotPassword(email: string): OkResult {
+  // Demo mode: always succeed without revealing whether the email exists.
+  void email;
+  return { ok: true };
+}
+
+export function resetPassword(token: string, newPassword: string): OkResult {
+  if (!token.trim()) {
+    return { ok: false, error: 'Reset token is required.' };
+  }
+  if (newPassword.length < 8) {
+    return { ok: false, error: 'Password must be at least 8 characters.' };
+  }
+  // Demo mode has no emailed tokens; guide users to change password while signed in.
+  return {
+    ok: false,
+    error: 'Password reset links require API mode. Sign in and change your password in Settings.',
+  };
 }

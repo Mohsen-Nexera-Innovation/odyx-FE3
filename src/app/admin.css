@@ -198,21 +198,43 @@ body:has(.admin-shell) .site-bg {
   text-overflow: ellipsis;
 }
 
-.admin-nav-back {
+.admin-nav-actions {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.admin-nav-back,
+.admin-nav-signout {
   display: flex;
   align-items: center;
   gap: 0.45rem;
+  width: 100%;
   padding: 0.45rem 0.7rem;
   color: var(--admin-muted);
   text-decoration: none;
+  font-family: inherit;
   font-size: 0.82rem;
+  font-weight: 500;
+  border: 0;
   border-radius: 9px;
+  background: none;
+  cursor: pointer;
+  text-align: left;
   transition: color 0.2s, background 0.2s;
 }
 
 .admin-nav-back:hover {
   color: var(--admin-ink);
   background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-nav-signout {
+  color: #f0a0a0;
+}
+
+.admin-nav-signout:hover {
+  color: #ffc9c9;
+  background: rgba(239, 68, 68, 0.12);
 }
 
 /* Never inherit site chrome `header { position:fixed }` inside admin */

@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuthSession } from '@/hooks/useAuthSession';
+import { logout } from '@/lib/auth';
 import { hasPermission } from '@/lib/permissions';
 import AdminGate from './AdminGate';
 import '@/app/admin.css';
@@ -102,6 +103,7 @@ function groupLinks(links: NavLink[]) {
 
 function AdminChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { session } = useAuthSession();
 
   const visible = LINKS.filter((l) => !l.perm || hasPermission(session, l.perm));
@@ -113,6 +115,11 @@ function AdminChrome({ children }: { children: React.ReactNode }) {
       : session?.staffRank === 'OWNER'
         ? 'Owner'
         : session?.roleName || 'Staff';
+
+  const onSignOut = async () => {
+    await logout();
+    router.push('/login');
+  };
 
   return (
     <div className="admin-shell">
@@ -157,12 +164,28 @@ function AdminChrome({ children }: { children: React.ReactNode }) {
               <span>{rankLabel}</span>
             </div>
           </div>
-          <Link href="/" className="admin-nav-back">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Back to site
-          </Link>
+          <div className="admin-nav-actions">
+            <Link href="/settings" className="admin-nav-back">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" strokeLinecap="round" />
+              </svg>
+              Settings
+            </Link>
+            <button type="button" className="admin-nav-signout" onClick={onSignOut}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M10 7V5a2 2 0 012-2h7a2 2 0 012 2v14a2 2 0 01-2 2h-7a2 2 0 01-2-2v-2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M15 12H3m0 0l3-3m-3 3l3 3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Sign out
+            </button>
+            <Link href="/" className="admin-nav-back">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Back to site
+            </Link>
+          </div>
         </div>
       </aside>
       <div className="admin-main">{children}</div>

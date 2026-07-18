@@ -26,7 +26,11 @@ export default function LoginForm() {
 
   useEffect(() => {
     initAuthStore();
-  }, []);
+    if (search.get('reset') === '1') {
+      setMsg('Password updated. Sign in with your new password.');
+      setError(false);
+    }
+  }, [search]);
 
   const fillDemo = (demoEmail: string, demoPassword: string) => {
     setEmail(demoEmail);

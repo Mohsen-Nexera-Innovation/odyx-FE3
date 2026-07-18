@@ -108,6 +108,17 @@ function UserMenu({ session, onSignOut }: { session: AccountSession; onSignOut: 
             <span>{session.email}</span>
           </p>
         )}
+        {session.role !== 'guest' && (
+          <Link
+            href="/settings"
+            role="menuitem"
+            className="nav-user-link"
+            tabIndex={open ? 0 : -1}
+            onClick={() => setOpen(false)}
+          >
+            Settings
+          </Link>
+        )}
         <button type="button" role="menuitem" className="nav-user-signout" tabIndex={open ? 0 : -1} onClick={onSignOut}>
           Sign out
         </button>
