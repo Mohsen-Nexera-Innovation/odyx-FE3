@@ -103,6 +103,9 @@ export function inviteStaffApi(input: {
     roleId: string;
     expiresAt: string;
     inviteToken: string;
+    inviteUrl: string;
+    emailSent: boolean;
+    emailReason?: string;
   }>('/admin/users/invite', {
     method: 'POST',
     auth: true,

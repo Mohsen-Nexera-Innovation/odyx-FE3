@@ -440,6 +440,13 @@ body:has(.admin-shell) .site-bg {
   font-weight: 600;
 }
 
+.admin-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
 /* Badges */
 .admin-badge {
   display: inline-flex;

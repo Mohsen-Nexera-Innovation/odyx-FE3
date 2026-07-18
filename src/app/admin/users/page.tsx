@@ -22,13 +22,17 @@ export default function AdminUsersPage() {
   const [name, setName] = useState('');
   const [roleId, setRoleId] = useState('');
   const [inviteToken, setInviteToken] = useState('');
-  const [error, setError] = useState('');
-  const [ok, setOk] = useState('');
+  const [formError, setFormError] = useState('');
+  const [formOk, setFormOk] = useState('');
+  const [reinviteError, setReinviteError] = useState('');
+  const [reinviteOk, setReinviteOk] = useState('');
+  const [reinviteToken, setReinviteToken] = useState('');
   const [busy, setBusy] = useState(false);
+  const [reinvitingId, setReinvitingId] = useState('');
 
   const load = async () => {
     if (!isApiMode()) {
-      setError('Staff management requires API mode.');
+      setFormError('Staff management requires API mode.');
       return;
     }
     try {
@@ -36,9 +40,9 @@ export default function AdminUsersPage() {
       setStaff(s);
       setRoles(r);
       if (!roleId && r[0]) setRoleId(r[0].id);
-      setError('');
+      setFormError('');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to load staff');
+      setFormError(e instanceof Error ? e.message : 'Failed to load staff');
     }
   };
 
@@ -46,27 +50,61 @@ export default function AdminUsersPage() {
     if (canInvite) void load();
   }, [canInvite]);
 
+  const inviteMessage = (res: { email: string; emailSent: boolean }) =>
+    res.emailSent
+      ? `Invite email sent to ${res.email}.`
+      : `Invite created for ${res.email}. Email not sent yet (SMTP not configured) — share the accept link below.`;
+
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setBusy(true);
-    setError('');
-    setOk('');
+    setFormError('');
+    setFormOk('');
     setInviteToken('');
+    setReinviteError('');
+    setReinviteOk('');
+    setReinviteToken('');
     try {
       const res = await inviteStaffApi({
         email: email.trim(),
         roleId,
         name: name.trim() || undefined,
       });
-      setOk(`Invite sent to ${res.email}. Share the accept link (token below).`);
+      setFormOk(inviteMessage(res));
       setInviteToken(res.inviteToken);
       setEmail('');
       setName('');
       await load();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Invite failed');
+      setFormError(err instanceof Error ? err.message : 'Invite failed');
     } finally {
       setBusy(false);
+    }
+  };
+
+  const reinviteUser = async (user: ApiStaffUser) => {
+    const nextRoleId = user.roleId || roleId || roles[0]?.id;
+    if (!nextRoleId) {
+      setReinviteError('Assign a role before re-inviting.');
+      return;
+    }
+    setReinvitingId(user.id);
+    setReinviteError('');
+    setReinviteOk('');
+    setReinviteToken('');
+    try {
+      const res = await inviteStaffApi({
+        email: user.email,
+        roleId: nextRoleId,
+        name: user.name || undefined,
+      });
+      setReinviteOk(inviteMessage(res));
+      setReinviteToken(res.inviteToken);
+      await load();
+    } catch (err) {
+      setReinviteError(err instanceof Error ? err.message : 'Re-invite failed');
+    } finally {
+      setReinvitingId('');
     }
   };
 
@@ -76,7 +114,7 @@ export default function AdminUsersPage() {
       await updateStaffApi(user.id, { status: 'DISABLED' });
       await load();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Update failed');
+      setReinviteError(err instanceof Error ? err.message : 'Update failed');
     }
   };
 
@@ -130,8 +168,8 @@ export default function AdminUsersPage() {
             {busy ? 'Inviting…' : 'Send invite'}
           </button>
         </form>
-        {error ? <p className="admin-error">{error}</p> : null}
-        {ok ? <p className="admin-ok">{ok}</p> : null}
+        {formError ? <p className="admin-error">{formError}</p> : null}
+        {formOk ? <p className="admin-ok">{formOk}</p> : null}
         {inviteToken ? (
           <p className="admin-muted">
             Accept URL
@@ -145,6 +183,14 @@ export default function AdminUsersPage() {
           <h2>Team</h2>
           <span className="admin-badge admin-badge--muted">{staff.length} members</span>
         </div>
+        {reinviteError ? <p className="admin-error">{reinviteError}</p> : null}
+        {reinviteOk ? <p className="admin-ok">{reinviteOk}</p> : null}
+        {reinviteToken ? (
+          <p className="admin-muted">
+            Accept URL
+            <code className="admin-code">/accept-invite?token={reinviteToken}</code>
+          </p>
+        ) : null}
         <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
@@ -186,15 +232,27 @@ export default function AdminUsersPage() {
                     </span>
                   </td>
                   <td>
-                    {u.staffRank === 'STAFF' && u.status === 'ACTIVE' ? (
-                      <button
-                        type="button"
-                        className="btn-ghost btn btn-sm"
-                        onClick={() => void disableUser(u)}
-                      >
-                        Disable
-                      </button>
-                    ) : null}
+                    <div className="admin-row-actions">
+                      {u.staffRank === 'STAFF' && u.status === 'INVITED' ? (
+                        <button
+                          type="button"
+                          className="btn btn-sm"
+                          disabled={Boolean(reinvitingId) || busy}
+                          onClick={() => void reinviteUser(u)}
+                        >
+                          {reinvitingId === u.id ? 'Re-inviting…' : 'Re-invite'}
+                        </button>
+                      ) : null}
+                      {u.staffRank === 'STAFF' && u.status === 'ACTIVE' ? (
+                        <button
+                          type="button"
+                          className="btn-ghost btn btn-sm"
+                          onClick={() => void disableUser(u)}
+                        >
+                          Disable
+                        </button>
+                      ) : null}
+                    </div>
                   </td>
                 </tr>
               ))}
