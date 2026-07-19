@@ -310,7 +310,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
           onClick={toggleAi}
         >
           <AiChatbotIcon
-            size={26}
+            size={28}
             animate={aiIconAnimating}
             variant="fab"
             className="fab-ai-icon"

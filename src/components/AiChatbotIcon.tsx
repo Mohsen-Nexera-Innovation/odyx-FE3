@@ -3,8 +3,8 @@
 type Variant = 'toolbar' | 'fab' | 'panel';
 
 /**
- * White chat bubble with a Gemini sparkle cutout on the right —
- * matches the reference: bubble + AI sparkle, no letters.
+ * Chat bubble with Gemini sparkle cutout on the right —
+ * white bubble + punched star, matching the reference icon.
  */
 function AgentGlyph({ size }: { size: number }) {
   return (
@@ -16,15 +16,11 @@ function AgentGlyph({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
-      {/* Bubble (outer) + Gemini star (inner hole) via evenodd */}
       <path
         fill="currentColor"
         fillRule="evenodd"
         clipRule="evenodd"
-        d="
-          M5.2 3.4h11.6c1.77 0 3.2 1.43 3.2 3.2v7.1c0 1.77-1.43 3.2-3.2 3.2h-3.55l-2.35 2.55a.9.9 0 0 1-1.5-.05l-1.85-2.5H5.2c-1.77 0-3.2-1.43-3.2-3.2V6.6c0-1.77 1.43-3.2 3.2-3.2z
-          M15.35 6.15c.85 1.95 2.05 3.15 4 4-1.95.85-3.15 2.05-4 4-.85-1.95-2.05-3.15-4-4 1.95-.85 3.15-2.05 4-4z
-        "
+        d="M5.2 3.4h11.6A3.2 3.2 0 0 1 20 6.6v7.1a3.2 3.2 0 0 1-3.2 3.2h-3.55l-2.35 2.55a.9.9 0 0 1-1.5-.05l-1.85-2.5H5.2A3.2 3.2 0 0 1 2 13.7V6.6a3.2 3.2 0 0 1 3.2-3.2zm10.15 2.75c.85 1.95 2.05 3.15 4 4-1.95.85-3.15 2.05-4 4-.85-1.95-2.05-3.15-4-4 1.95-.85 3.15-2.05 4-4z"
       />
     </svg>
   );
