@@ -3,8 +3,7 @@
 type Variant = 'toolbar' | 'fab' | 'panel';
 
 /**
- * Chat bubble with Gemini sparkle cutout on the right —
- * white bubble + punched star, matching the reference icon.
+ * Chat bubble + Gemini dual sparkle (large star + small star).
  */
 function AgentGlyph({ size }: { size: number }) {
   return (
@@ -16,11 +15,20 @@ function AgentGlyph({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
+      {/* Chat bubble */}
       <path
         fill="currentColor"
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M5.2 3.4h11.6A3.2 3.2 0 0 1 20 6.6v7.1a3.2 3.2 0 0 1-3.2 3.2h-3.55l-2.35 2.55a.9.9 0 0 1-1.5-.05l-1.85-2.5H5.2A3.2 3.2 0 0 1 2 13.7V6.6a3.2 3.2 0 0 1 3.2-3.2zm10.15 2.75c.85 1.95 2.05 3.15 4 4-1.95.85-3.15 2.05-4 4-.85-1.95-2.05-3.15-4-4 1.95-.85 3.15-2.05 4-4z"
+        d="M4.8 3.2h12.4A3.4 3.4 0 0 1 20.6 6.6v7.2a3.4 3.4 0 0 1-3.4 3.4h-3.7l-2.5 2.7a.95.95 0 0 1-1.58-.06l-1.95-2.64H4.8A3.4 3.4 0 0 1 1.4 13.8V6.6A3.4 3.4 0 0 1 4.8 3.2z"
+      />
+      {/* Large Gemini star */}
+      <path
+        className="ai-agent-gemini"
+        d="M12.6 5.35c1.05 2.45 2.55 3.95 5 5-2.45 1.05-3.95 2.55-5 5-1.05-2.45-2.55-3.95-5-5 2.45-1.05 3.95-2.55 5-5z"
+      />
+      {/* Small Gemini star */}
+      <path
+        className="ai-agent-gemini"
+        d="M18.55 4.2c.48 1.15 1.15 1.82 2.3 2.3-1.15.48-1.82 1.15-2.3 2.3-.48-1.15-1.15-1.82-2.3-2.3 1.15-.48 1.82-1.15 2.3-2.3z"
       />
     </svg>
   );
