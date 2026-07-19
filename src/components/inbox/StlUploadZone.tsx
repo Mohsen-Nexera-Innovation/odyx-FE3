@@ -64,8 +64,13 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
       />
       {file ? (
         <div className="inbox-upload-file">
-          <strong>{file.name}</strong>
-          <span>{(file.size / (1024 * 1024)).toFixed(2)} MB</span>
+          <span className="inbox-upload-file-badge" aria-hidden>
+            STL
+          </span>
+          <span className="inbox-upload-file-meta">
+            <strong>{file.name}</strong>
+            <span>{(file.size / (1024 * 1024)).toFixed(2)} MB · ready to submit</span>
+          </span>
           <button type="button" className="inbox-upload-clear" onClick={() => onFile(null)}>
             Remove
           </button>
@@ -73,9 +78,21 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
       ) : (
         <label htmlFor="stl-upload" className="inbox-upload-label">
           <span className="inbox-upload-icon" aria-hidden>
-            ↑
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2" />
+              <path d="M12 12v9M8.5 15.5 12 12l3.5 3.5" />
+            </svg>
           </span>
-          <span className="inbox-upload-lead">Drop STL here</span>
+          <span className="inbox-upload-lead">
+            Drop your STL here, or <em>browse files</em>
+          </span>
           <span className="inbox-upload-hint">Max {MAX_MB} MB · .stl only</span>
         </label>
       )}

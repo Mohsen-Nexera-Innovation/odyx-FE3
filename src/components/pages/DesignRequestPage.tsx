@@ -25,8 +25,20 @@ import {
   type PatientSex,
 } from '@/lib/patients';
 import StlUploadZone from '@/components/inbox/StlUploadZone';
+import ToothChartSelector from '@/components/ToothChartSelector';
 
 type PatientMode = 'existing' | 'new';
+
+const SLA_DETAIL: Record<SlaTier, string> = {
+  same_day: 'Priority queue — design delivered by end of day.',
+  '24h': 'Standard queue — delivered within one business day.',
+};
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M20 6L9 17l-5-5" />
+  </svg>
+);
 
 function DesignRequestBody() {
   const router = useRouter();
@@ -255,24 +267,64 @@ function DesignRequestBody() {
       <section className="sec store-sec">
         <div className="wrap dr-wrap">
           <aside className="dr-summary" aria-label="Selected service">
-            <p className="dr-summary-kicker">Selected service</p>
-            <h2>{service.name}</h2>
-            <p>{service.desc}</p>
-            <p className="dr-summary-price">{formatMoney(service.price)}</p>
-            {indication ? (
-              <p className="dr-summary-meta">{INDICATION_LABEL[indication]}</p>
+            {service.image ? (
+              <div className="dr-summary-media">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={service.image} alt="" loading="lazy" />
+              </div>
             ) : null}
+            <div className="dr-summary-body">
+              <p className="dr-summary-kicker">Selected service</p>
+              <h2>{service.name}</h2>
+              {indication ? (
+                <span className="dr-summary-chip">{INDICATION_LABEL[indication]}</span>
+              ) : null}
+              <p>{service.desc}</p>
+              <div className="dr-summary-pricing">
+                <strong>{formatMoney(service.price)}</strong>
+                {service.unit ? <span>{service.unit}</span> : null}
+              </div>
+              <Link className="dr-summary-change" href="/design-services">
+                Change service <Arrow />
+              </Link>
+            </div>
             <ol className="dr-steps" aria-label="Request steps">
-              <li className="done">Choose service</li>
-              <li className="current">Patient, case &amp; scan</li>
-              <li>Checkout</li>
-              <li>Case opened in inbox</li>
+              <li className="done">
+                <span className="dr-step-dot">
+                  <CheckIcon />
+                </span>
+                <span className="dr-step-label">Choose service</span>
+              </li>
+              <li className="current" aria-current="step">
+                <span className="dr-step-dot">2</span>
+                <span className="dr-step-label">
+                  Patient, case &amp; scan
+                  <small>You are here</small>
+                </span>
+              </li>
+              <li>
+                <span className="dr-step-dot">3</span>
+                <span className="dr-step-label">Checkout</span>
+              </li>
+              <li>
+                <span className="dr-step-dot">4</span>
+                <span className="dr-step-label">Case opened in inbox</span>
+              </li>
             </ol>
           </aside>
 
           <form className="dr-form" onSubmit={onContinue}>
-            <fieldset className="dr-fieldset">
-              <legend>Patient</legend>
+            <fieldset className="dr-fieldset dr-card">
+              <legend className="dr-card-head">
+                <span className="dr-card-num" aria-hidden>
+                  1
+                </span>
+                <span className="dr-card-title">
+                  Patient
+                  <small>Who is this design for?</small>
+                </span>
+              </legend>
+
               <div className="dr-mode-tabs" role="tablist" aria-label="Patient mode">
                 <button
                   type="button"
@@ -367,47 +419,80 @@ function DesignRequestBody() {
               )}
             </fieldset>
 
-            <fieldset className="dr-fieldset">
-              <legend>Case details</legend>
-              <div className="mail-compose-row">
-                <div className="mail-compose-field">
-                  <label htmlFor="dr-tooth">Tooth / site</label>
-                  <input
-                    id="dr-tooth"
-                    placeholder="#14"
-                    value={tooth}
-                    onChange={(e) => setTooth(e.target.value)}
-                  />
-                </div>
-                <div className="mail-compose-field">
-                  <label htmlFor="dr-sla">Turnaround</label>
-                  <select
-                    id="dr-sla"
-                    value={sla}
-                    onChange={(e) => setSla(e.target.value as SlaTier)}
-                  >
-                    {(Object.keys(SLA_LABEL) as SlaTier[]).map((tier) => (
-                      <option key={tier} value={tier}>
-                        {SLA_LABEL[tier]}
-                      </option>
-                    ))}
-                  </select>
+            <fieldset className="dr-fieldset dr-card">
+              <legend className="dr-card-head">
+                <span className="dr-card-num" aria-hidden>
+                  2
+                </span>
+                <span className="dr-card-title">
+                  Case details
+                  <small>Site, turnaround and clinical guidance</small>
+                </span>
+              </legend>
+
+              <div className="mail-compose-field">
+                <label htmlFor="dr-tooth">Tooth / site</label>
+                <ToothChartSelector value={tooth} onChange={setTooth} />
+                <input
+                  id="dr-tooth"
+                  placeholder="e.g. #14, upper arch…"
+                  value={tooth}
+                  onChange={(e) => setTooth(e.target.value)}
+                />
+                <p className="dr-hint">
+                  Tap teeth on the chart, or type a site description manually.
+                </p>
+              </div>
+
+              <div className="mail-compose-field">
+                <span className="mail-compose-label" id="dr-sla-label">
+                  Turnaround
+                </span>
+                <div className="dr-sla-grid" role="radiogroup" aria-labelledby="dr-sla-label">
+                  {(Object.keys(SLA_LABEL) as SlaTier[]).map((tier) => (
+                    <button
+                      key={tier}
+                      type="button"
+                      role="radio"
+                      aria-checked={sla === tier}
+                      className={`dr-sla-card${sla === tier ? ' is-selected' : ''}`}
+                      onClick={() => setSla(tier)}
+                    >
+                      <span className="dr-sla-radio" aria-hidden />
+                      <span className="dr-sla-copy">
+                        <strong>{SLA_LABEL[tier]}</strong>
+                        <small>{SLA_DETAIL[tier]}</small>
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
+
               <div className="mail-compose-field">
                 <label htmlFor="dr-notes">Clinical notes</label>
                 <textarea
                   id="dr-notes"
                   rows={4}
-                  placeholder="Margin, contacts, material, urgency…"
+                  placeholder="Margin, contacts, material, occlusion, urgency…"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                 />
+                <p className="dr-hint">
+                  The more context you share, the fewer revision rounds you&apos;ll need.
+                </p>
               </div>
             </fieldset>
 
-            <fieldset className="dr-fieldset">
-              <legend>Scan (STL) — required</legend>
+            <fieldset className="dr-fieldset dr-card">
+              <legend className="dr-card-head">
+                <span className="dr-card-num" aria-hidden>
+                  3
+                </span>
+                <span className="dr-card-title">
+                  Scan upload
+                  <small>Attach the intraoral or model scan (STL, required)</small>
+                </span>
+              </legend>
               <StlUploadZone
                 file={scanFile}
                 onFile={setScanFile}
@@ -418,18 +503,19 @@ function DesignRequestBody() {
             {error ? <p className="mail-compose-error">{error}</p> : null}
 
             <footer className="dr-form-foot">
-              <Link className="btn btn-ghost" href="/design-services">
-                Back
-              </Link>
-              <button
-                type="submit"
-                className="btn"
-                disabled={busy || !scanFile}
-              >
-                {busy
-                  ? 'Preparing checkout…'
-                  : `Continue to checkout · ${formatMoney(service.price)}`}
-              </button>
+              <div className="dr-foot-total">
+                <span>Total due at checkout</span>
+                <strong>{formatMoney(service.price)}</strong>
+              </div>
+              <div className="dr-foot-actions">
+                <Link className="btn btn-ghost" href="/design-services">
+                  Back
+                </Link>
+                <button type="submit" className="btn" disabled={busy || !scanFile}>
+                  {busy ? 'Preparing checkout…' : 'Continue to checkout'}
+                  {!busy ? <Arrow /> : null}
+                </button>
+              </div>
             </footer>
           </form>
         </div>
