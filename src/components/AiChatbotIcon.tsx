@@ -2,6 +2,10 @@
 
 type Variant = 'toolbar' | 'fab' | 'panel';
 
+/**
+ * White chat bubble with a Gemini sparkle cutout on the right —
+ * matches the reference: bubble + AI sparkle, no letters.
+ */
 function AgentGlyph({ size }: { size: number }) {
   return (
     <svg
@@ -12,15 +16,15 @@ function AgentGlyph({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
+      {/* Bubble (outer) + Gemini star (inner hole) via evenodd */}
       <path
-        d="M6.25 5.75h11.5a1.6 1.6 0 0 1 1.6 1.6v6.9a1.6 1.6 0 0 1-1.6 1.6H11.1l-3.35 2.75v-2.75H6.25a1.6 1.6 0 0 1-1.6-1.6V7.35a1.6 1.6 0 0 1 1.6-1.6z"
-        stroke="currentColor"
-        strokeWidth="1.55"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 9.35l.72 1.92 1.92.72-1.92.72-.72 1.92-.72-1.92-1.92-.72 1.92-.72.72-1.92z"
         fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="
+          M5.2 3.4h11.6c1.77 0 3.2 1.43 3.2 3.2v7.1c0 1.77-1.43 3.2-3.2 3.2h-3.55l-2.35 2.55a.9.9 0 0 1-1.5-.05l-1.85-2.5H5.2c-1.77 0-3.2-1.43-3.2-3.2V6.6c0-1.77 1.43-3.2 3.2-3.2z
+          M15.35 6.15c.85 1.95 2.05 3.15 4 4-1.95.85-3.15 2.05-4 4-.85-1.95-2.05-3.15-4-4 1.95-.85 3.15-2.05 4-4z
+        "
       />
     </svg>
   );
@@ -37,8 +41,6 @@ export default function AiChatbotIcon({
   variant?: Variant;
   className?: string;
 }) {
-  const glyphSize = size;
-
   return (
     <span
       className={[
@@ -49,10 +51,10 @@ export default function AiChatbotIcon({
       ]
         .filter(Boolean)
         .join(' ')}
-      style={{ width: glyphSize, height: glyphSize }}
+      style={{ width: size, height: size }}
       aria-hidden
     >
-      <AgentGlyph size={glyphSize} />
+      <AgentGlyph size={size} />
     </span>
   );
 }

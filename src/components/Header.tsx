@@ -2,9 +2,8 @@
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { HEADER_MENUS } from '@/content/nav';
+import { HEADER_MENUS, type MegaColumn, type NavGroup, type NavLink } from '@/content/nav';
 import { LOCALE_LABEL, useGlobalTools, type Locale } from './GlobalTools';
-import AiChatbotIcon from './AiChatbotIcon';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { logout, type AccountSession } from '@/lib/auth';
 import { unreadTotal } from '@/lib/inbox-store';
@@ -42,22 +41,117 @@ function NavAnchor({
   href,
   children,
   onClick,
+  className,
 }: {
   href: string;
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  className?: string;
 }) {
   if (href.startsWith('/')) {
     return (
-      <Link href={href} onClick={onClick}>
+      <Link href={href} className={className} onClick={onClick}>
         {children}
       </Link>
     );
   }
   return (
-    <a href={href} onClick={onClick}>
+    <a href={href} className={className} onClick={onClick}>
       {children}
     </a>
+  );
+}
+
+function MegaLink({
+  item,
+  onClick,
+}: {
+  item: NavLink;
+  onClick: () => void;
+}) {
+  return (
+    <NavAnchor href={item.href} className="mega-link" onClick={onClick}>
+      <span className="mega-link__label">{item.label}</span>
+    </NavAnchor>
+  );
+}
+
+function MegaColumnBlock({
+  column,
+  onClick,
+}: {
+  column: MegaColumn;
+  onClick: () => void;
+}) {
+  return (
+    <div className="mega-col">
+      {column.href ? (
+        <NavAnchor href={column.href} className="mega-col__title" onClick={onClick}>
+          {column.title}
+        </NavAnchor>
+      ) : (
+        <p className="mega-col__title">{column.title}</p>
+      )}
+      {column.groups?.map((group, i) => (
+        <div className="mega-group" key={group.label ?? `g-${i}`}>
+          {group.label ? <p className="mega-group__label">{group.label}</p> : null}
+          {group.items.map((item) => (
+            <MegaLink key={item.label + item.href} item={item} onClick={onClick} />
+          ))}
+        </div>
+      ))}
+      {column.items?.map((item) => (
+        <MegaLink key={item.label + item.href} item={item} onClick={onClick} />
+      ))}
+    </div>
+  );
+}
+
+function MegaPanel({
+  menu,
+  onClick,
+}: {
+  menu: NavGroup;
+  onClick: () => void;
+}) {
+  if (menu.columns?.length) {
+    return (
+      <div className="mega mega-panel">
+        <div className="mega-panel__inner wrap">
+          <div
+            className={`mega-panel__cols${menu.featured ? ' mega-panel__cols--featured' : ''}`}
+            style={{ ['--mega-cols' as string]: String(menu.columns.length) }}
+          >
+            {menu.columns.map((col) => (
+              <MegaColumnBlock key={col.title} column={col} onClick={onClick} />
+            ))}
+          </div>
+          {menu.featured ? (
+            <aside className="mega-featured">
+              <span className="mega-featured__eyebrow">{menu.featured.eyebrow}</span>
+              <strong className="mega-featured__title">{menu.featured.title}</strong>
+              <p className="mega-featured__desc">{menu.featured.desc}</p>
+              <NavAnchor href={menu.featured.href} className="mega-featured__cta" onClick={onClick}>
+                {menu.featured.cta}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </NavAnchor>
+            </aside>
+          ) : null}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mega">
+      {menu.items.map((item) => (
+        <NavAnchor key={item.label} href={item.href} onClick={onClick}>
+          {item.label}
+        </NavAnchor>
+      ))}
+    </div>
   );
 }
 
@@ -130,7 +224,7 @@ function UserMenu({ session, onSignOut }: { session: AccountSession; onSignOut: 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const { openSearch, openAi, locale, setLocale, aiIconAnimating } = useGlobalTools();
+  const { openSearch, locale, setLocale } = useGlobalTools();
   const { session } = useAuthSession();
   const [inboxUnread, setInboxUnread] = useState(0);
   const [cartItems, setCartItems] = useState(0);
@@ -301,30 +395,14 @@ export default function Header() {
         </Link>
         <nav className={`nav-menu${open ? ' open' : ''}`} aria-label="Main">
           {HEADER_MENUS.map((m) => (
-            <div className={`nav-item${expandedNav === m.label ? ' exp' : ''}`} key={m.label}>
+            <div
+              className={`nav-item${m.columns ? ' nav-item--mega' : ''}${expandedNav === m.label ? ' exp' : ''}`}
+              key={m.label}
+            >
               <NavAnchor href={m.href} onClick={(e) => toggleMobileSection(m.label, e)}>
                 <span className={isMenuActive(m.href) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
               </NavAnchor>
-              <div className={`mega${m.sections ? ' mega-cat' : ''}`}>
-                {m.sections ? (
-                  m.sections.map((section) => (
-                    <div className="mega-section" key={section.category}>
-                      <p className="mega-cat-label">{section.category}</p>
-                      {section.items.map((item) => (
-                        <NavAnchor key={item.label} href={item.href} onClick={closeMenu}>
-                          {item.label}
-                        </NavAnchor>
-                      ))}
-                    </div>
-                  ))
-                ) : (
-                  m.items.map((item) => (
-                    <NavAnchor key={item.label} href={item.href} onClick={closeMenu}>
-                      {item.label}
-                    </NavAnchor>
-                  ))
-                )}
-              </div>
+              <MegaPanel menu={m} onClick={closeMenu} />
             </div>
           ))}
           <div className="nav-mobile-auth" aria-label="Account">
@@ -339,10 +417,6 @@ export default function Header() {
             <Link className="btn btn-sm nav-demo" href="/support" onClick={closeMenu}>Request a Demo</Link>
           </div>
         </nav>
-        <button type="button" className="nav-assist" onClick={openAi} aria-label="Open Odyx Agent">
-          <AiChatbotIcon size={22} animate={aiIconAnimating} variant="toolbar" className="nav-assist-icon" />
-          <span className="nav-assist-label">Odyx Agent</span>
-        </button>
         <div className="nav-tools">
           <button type="button" className="tool-btn search-btn" onClick={openSearch} title="Search (Cmd+K)" aria-label="Open search">
             <SearchIcon />

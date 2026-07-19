@@ -99,7 +99,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
   >([
     {
       role: "agent",
-      text: "I'm the Odyx Agent. Tell me what you're working on — products, workflow, registration, or support — and I'll guide you to the right next step.",
+      text: "I'm the ODYX AI Agent. Tell me what you're working on — products, workflow, registration, or support — and I'll guide you to the right next step.",
     },
   ]);
   const [aiInput, setAiInput] = useState("");
@@ -238,7 +238,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
       <div
         className={`ai-panel${aiOpen ? " open" : ""}`}
         role="dialog"
-        aria-label="Odyx Agent"
+        aria-label="ODYX AI Agent"
       >
         <div className="ai-head">
           <AiChatbotIcon
@@ -248,14 +248,14 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
             className="ai-head-icon"
           />
           <div className="ai-head-copy">
-            <h4>Odyx Agent</h4>
+            <h4>ODYX AI Agent</h4>
             <p>Guides your next step across the ODYX ecosystem</p>
           </div>
           <button
             type="button"
             className="ai-close"
             onClick={() => setAiOpen(false)}
-            aria-label="Close Odyx Agent"
+            aria-label="Close ODYX AI Agent"
           >
             &times;
           </button>
@@ -274,7 +274,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
             placeholder="Describe your goal or question…"
             value={aiInput}
             onChange={(e) => setAiInput(e.target.value)}
-            aria-label="Message to Odyx Agent"
+            aria-label="Message to ODYX AI Agent"
           />
           <button type="submit" className="btn btn-sm ai-send">
             Send
@@ -304,8 +304,8 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
         <button
           type="button"
           className="fab ai"
-          title="Odyx Agent — products, workflow, support"
-          aria-label="Open Odyx Agent"
+          title="ODYX AI Agent — products, workflow, support"
+          aria-label="Open ODYX AI Agent"
           aria-expanded={aiOpen}
           onClick={toggleAi}
         >
