@@ -2889,26 +2889,37 @@ main .sec + .sec{border-top:none}
 }
 .tooth-chart-clear:hover{color:var(--sky,#06a5df)}
 .tooth-chart-svg{display:block;width:100%;max-width:400px;height:auto;margin:0 auto;user-select:none}
+.tc-gums{pointer-events:none}
+.tc-gum{fill:#ec7583;stroke:#d9536a;stroke-width:2.5;stroke-linejoin:round}
+.tc-palate{fill:#d9576e;stroke:none}
 .tc-arch-label,.tc-side-label{
   font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:.14em;
-  text-transform:uppercase;fill:#b6c2d0;
+  text-transform:uppercase;fill:#b6c2d0;pointer-events:none;
 }
+.tc-arch-label--on-gum{fill:rgba(255,255,255,.8)}
 .tc-side-label{font-size:12px}
-.tc-midline{stroke:#dbe4ec;stroke-width:2;stroke-dasharray:2 5;stroke-linecap:round}
 .tc-tooth{cursor:pointer;outline:none}
-.tc-tooth rect{
-  fill:#fff;stroke:#cbd5e1;stroke-width:1.5;
+.tc-crown{
+  fill:#fdfefe;stroke:#d9536a;stroke-width:1.6;stroke-linejoin:round;
   transition:fill .15s,stroke .15s;
 }
+.tc-groove{
+  fill:none;stroke:rgba(176,97,110,.45);stroke-width:1.3;
+  stroke-linecap:round;stroke-linejoin:round;pointer-events:none;
+  transition:stroke .15s;
+}
 .tc-tooth text{
-  font-family:var(--font-body);font-size:11px;font-weight:700;fill:#64748b;
+  font-family:var(--font-body);font-size:10.5px;font-weight:700;fill:#9a5560;
+  paint-order:stroke;stroke:rgba(255,255,255,.85);stroke-width:2.5px;
   pointer-events:none;transition:fill .15s;
 }
-.tc-tooth:hover rect{stroke:var(--sky,#06a5df);fill:rgba(var(--sky-rgb,6,165,223),.08)}
-.tc-tooth:focus-visible rect{stroke:var(--sky,#06a5df);stroke-width:2.5}
-.tc-tooth.is-selected rect{fill:var(--sky,#06a5df);stroke:var(--sky-deep,#0581ad)}
-.tc-tooth.is-selected text{fill:#fff}
-.tc-tooth.is-selected:hover rect{fill:var(--sky-deep,#0581ad)}
+.tc-tooth:hover .tc-crown{stroke:var(--sky,#06a5df);fill:rgba(var(--sky-rgb,6,165,223),.1)}
+.tc-tooth:hover text{fill:var(--sky-deep,#0581ad)}
+.tc-tooth:focus-visible .tc-crown{stroke:var(--sky,#06a5df);stroke-width:2.5}
+.tc-tooth.is-selected .tc-crown{fill:var(--sky,#06a5df);stroke:var(--sky-deep,#0581ad)}
+.tc-tooth.is-selected .tc-groove{stroke:rgba(255,255,255,.55)}
+.tc-tooth.is-selected text{fill:#fff;stroke:rgba(5,129,173,.7)}
+.tc-tooth.is-selected:hover .tc-crown{fill:var(--sky-deep,#0581ad)}
 
 /* Turnaround radio cards */
 .dr-sla-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
