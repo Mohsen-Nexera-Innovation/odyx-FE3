@@ -12,11 +12,18 @@ const MAX_MB = 50;
 
 export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProps) {
   const [drag, setDrag] = useState(false);
+  const [localError, setLocalError] = useState('');
 
   const accept = useCallback((f: File) => {
-    const ok = f.name.toLowerCase().endsWith('.stl');
-    if (!ok) return false;
-    if (f.size > MAX_MB * 1024 * 1024) return false;
+    if (!f.name.toLowerCase().endsWith('.stl')) {
+      setLocalError('STL files only');
+      return false;
+    }
+    if (f.size > MAX_MB * 1024 * 1024) {
+      setLocalError(`Max ${MAX_MB} MB`);
+      return false;
+    }
+    setLocalError('');
     return true;
   }, []);
 
@@ -24,6 +31,7 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
     (f: File | null) => {
       if (!f) {
         onFile(null);
+        setLocalError('');
         return;
       }
       if (accept(f)) onFile(f);
@@ -31,9 +39,11 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
     [accept, onFile],
   );
 
+  const showError = error || localError;
+
   return (
     <div
-      className={`inbox-upload${drag ? ' is-dragover' : ''}${file ? ' has-file' : ''}${error ? ' has-error' : ''}`}
+      className={`inbox-upload${drag ? ' is-dragover' : ''}${file ? ' has-file' : ''}${showError ? ' has-error' : ''}`}
       onDragOver={(e) => {
         e.preventDefault();
         setDrag(true);
@@ -66,10 +76,10 @@ export default function StlUploadZone({ file, onFile, error }: StlUploadZoneProp
             ↑
           </span>
           <span className="inbox-upload-lead">Drop STL here</span>
-          <span className="inbox-upload-hint">Max {MAX_MB} MB · .stl scan only</span>
+          <span className="inbox-upload-hint">Max {MAX_MB} MB · .stl only</span>
         </label>
       )}
-      {error ? <p className="inbox-upload-error">{error}</p> : null}
+      {showError ? <p className="inbox-upload-error">{showError}</p> : null}
     </div>
   );
 }

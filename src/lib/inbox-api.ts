@@ -94,7 +94,16 @@ export function conversationToThread(
     session.role === 'lab' ? 'lab' : session.role === 'guest' ? 'guest' : 'dentist';
 
   let status: ThreadStatus = 'awaiting_design';
-  if (messages.some((m) => m.direction === 'received')) status = 'design_delivered';
+  // Confirmation from ODYX is "received" but not a delivered design file.
+  if (
+    messages.some(
+      (m) =>
+        m.direction === 'received' &&
+        m.attachments.some((a) => a.kind === 'design'),
+    )
+  ) {
+    status = 'design_delivered';
+  }
 
   return {
     id: conv.id,
@@ -209,6 +218,7 @@ export async function createThreadFromComposeApi(
     body: string;
     attachmentName?: string;
     orderNumber?: string;
+    patientId?: string;
   },
 ): Promise<InboxThread> {
   const conv = await createConversationApi(input);

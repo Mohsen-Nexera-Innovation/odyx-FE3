@@ -41,8 +41,18 @@
 /* Hero shell */
 .hero-wrap{background:var(--navy-deep)}
 
-/* ---------- Page canvas below the hero ---------- */
+/* ---------- Page canvas (prevents dark site-bg / navy body peeking on short pages) ---------- */
+body{
+  background:var(--paper);
+}
+.site-bg{
+  background:
+    radial-gradient(1100px 680px at 12% 8%, rgba(var(--sky-rgb),.10), transparent 58%),
+    radial-gradient(900px 560px at 88% 18%, rgba(var(--sky-rgb),.06), transparent 55%),
+    linear-gradient(165deg, var(--paper) 0%, #eef6fc 45%, var(--paper-2) 100%);
+}
 main{
+  min-height:100dvh;
   background:
     radial-gradient(1100px 680px at 12% 8%, rgba(var(--sky-rgb),.10), transparent 58%),
     radial-gradient(900px 560px at 88% 18%, rgba(var(--sky-rgb),.06), transparent 55%),

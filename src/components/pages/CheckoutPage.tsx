@@ -4,12 +4,15 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PageHero from '@/components/PageHero';
+import PaymobPixelCheckout from '@/components/checkout/PaymobPixelCheckout';
 import { FREE_SHIPPING_THRESHOLD, calcShipping, formatMoney } from '@/content/shop';
 import { useCart } from '@/hooks/useCart';
 import { readSession } from '@/lib/auth';
 import { isDesignCart, isMixedCart, removeItemAsync } from '@/lib/commerce';
 import { isApiMode } from '@/lib/config';
 import { placeOrderFacade, previewShipping, type OrderShipping } from '@/lib/orders';
+import { designInboxHandoffHref, finalizeDesignCaseAfterPayment, readDesignCaseDraft } from '@/lib/design-case-draft';
+import { isDesignServiceSlug } from '@/content/design-services';
 
 type FormState = OrderShipping & {
   cardName: string;
@@ -142,6 +145,13 @@ export default function CheckoutPage() {
   const [payMethod, setPayMethod] = useState<'ONLINE' | 'CASH'>('ONLINE');
   const [apiShipping, setApiShipping] = useState<number | null>(null);
   const [payIframe, setPayIframe] = useState<string | null>(null);
+  const [payPixel, setPayPixel] = useState<{
+    clientSecret: string;
+    publicKey: string;
+    orderNumber: string;
+    digital: boolean;
+  } | null>(null);
+  const awaitingPaymob = Boolean(payIframe || payPixel);
 
   useEffect(() => {
     setReady(true);
@@ -160,6 +170,32 @@ export default function CheckoutPage() {
 
   const digital = isDesignCart(lines);
   const mixed = isMixedCart(lines);
+  const [designHandoff, setDesignHandoff] = useState(false);
+
+  async function goAfterDesignPaid(orderNumber: string) {
+    setDesignHandoff(true);
+    const draft = readDesignCaseDraft();
+    const fromLine = lines
+      .map((l) => l.product.slug ?? l.product.id)
+      .find((s) => isDesignServiceSlug(s));
+    const session = readSession();
+    if (session && session.role !== 'guest') {
+      try {
+        const href = await finalizeDesignCaseAfterPayment(session, orderNumber);
+        router.replace(href);
+        return;
+      } catch {
+        /* fall through */
+      }
+    }
+    router.replace(
+      designInboxHandoffHref({
+        orderNumber,
+        serviceSlug: draft?.serviceSlug ?? fromLine ?? null,
+        confirmed: true,
+      }),
+    );
+  }
 
   useEffect(() => {
     if (!ready || cartLoading) return;
@@ -167,7 +203,8 @@ export default function CheckoutPage() {
       router.replace('/login');
       return;
     }
-    if (count === 0 && !payIframe) {
+    // Don't bounce to catalog while we create the inbox thread after payment.
+    if (count === 0 && !awaitingPaymob && !designHandoff) {
       // Prefer design catalog when this checkout was opened from Buy now there.
       const fromDesign =
         typeof window !== 'undefined' &&
@@ -188,7 +225,7 @@ export default function CheckoutPage() {
         /* ignore */
       }
     }
-  }, [ready, cartLoading, count, router, apiMode, payIframe, digital]);
+  }, [ready, cartLoading, count, router, apiMode, awaitingPaymob, digital, designHandoff]);
 
   useEffect(() => {
     if (digital) {
@@ -317,6 +354,17 @@ export default function CheckoutPage() {
         paymentMethod: apiMode ? (digital ? 'ONLINE' : payMethod) : 'ONLINE',
       });
 
+      if ('pixel' in result && result.pixel) {
+        setPayPixel({
+          clientSecret: result.pixel.clientSecret,
+          publicKey: result.pixel.publicKey,
+          orderNumber: result.order.id,
+          digital: digital || Boolean(readDesignCaseDraft()),
+        });
+        setSubmitting(false);
+        return;
+      }
+
       if ('iframeUrl' in result && result.iframeUrl) {
         setPayIframe(result.iframeUrl);
         setSubmitting(false);
@@ -325,11 +373,58 @@ export default function CheckoutPage() {
 
       const orderId =
         'order' in result && result.order ? result.order.id : (result as { id: string }).id;
+
+      // Design services: create inbox thread, then open conversation.
+      if (digital || readDesignCaseDraft()) {
+        await goAfterDesignPaid(orderId);
+        return;
+      }
+
       router.push(`/checkout/success?order=${encodeURIComponent(orderId)}`);
     } catch (err) {
       setFormError(err instanceof Error ? err.message : 'Could not place order.');
       setSubmitting(false);
     }
+  }
+
+  if (payPixel) {
+    return (
+      <section className="sec store-sec co-sec">
+        <div className="wrap">
+          <PageHero
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Checkout', href: '/checkout' },
+            ]}
+            title="Pay with card"
+            lead="Enter your card details below. Payment is processed securely by Paymob Pixel."
+          />
+          <PaymobPixelCheckout
+            publicKey={payPixel.publicKey}
+            clientSecret={payPixel.clientSecret}
+            onComplete={() => {
+              if (payPixel.digital || readDesignCaseDraft()) {
+                void goAfterDesignPaid(payPixel.orderNumber);
+                return;
+              }
+              router.push(
+                `/checkout/success?order=${encodeURIComponent(payPixel.orderNumber)}`,
+              );
+            }}
+            onCancel={() => setPayPixel(null)}
+          />
+          <p style={{ marginTop: '1rem' }}>
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={() => setPayPixel(null)}
+            >
+              Cancel payment
+            </button>
+          </p>
+        </div>
+      </section>
+    );
   }
 
   if (payIframe) {
@@ -357,7 +452,19 @@ export default function CheckoutPage() {
     );
   }
 
-  if (!ready || cartLoading || count === 0) {
+  if (designHandoff) {
+    return (
+      <section className="sec store-sec">
+        <div className="wrap">
+          <p className="checkout-loading">
+            Order confirmed — opening your design conversation…
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!ready || cartLoading || (count === 0 && !awaitingPaymob)) {
     return (
       <section className="sec store-sec">
         <div className="wrap">
@@ -382,7 +489,7 @@ export default function CheckoutPage() {
         title="Secure checkout"
         lead={
           digital
-            ? 'Pay for your design case, then upload your scan in the inbox.'
+            ? 'Pay for your design case. Your conversation opens in the inbox after payment.'
             : 'A few details and your ODYX gear is on its way.'
         }
       />
@@ -523,10 +630,10 @@ export default function CheckoutPage() {
                     <p>
                       {digital
                         ? apiMode
-                          ? 'Online payment required for design services'
+                          ? 'Paymob Pixel — enter your card on this page'
                           : 'Demo mode — no real charges are made'
                         : apiMode
-                          ? 'Paymob card checkout or cash on delivery (Bosta COD)'
+                          ? 'Paymob Pixel (card) or cash on delivery (Bosta COD)'
                           : 'Demo mode — no real charges are made'}
                     </p>
                   </div>
@@ -541,7 +648,7 @@ export default function CheckoutPage() {
                       aria-checked={payMethod === 'ONLINE'}
                       onClick={() => setPayMethod('ONLINE')}
                     >
-                      <LockIcon /> Paymob (card)
+                      <LockIcon /> Paymob Pixel (card)
                     </button>
                     {!digital ? (
                       <button

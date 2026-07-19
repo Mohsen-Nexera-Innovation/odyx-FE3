@@ -2523,7 +2523,14 @@ main .sec + .sec{border-top:none}
 .mail-hero-stat{
   min-width:104px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.78);
   border:1px solid var(--mail-line);display:flex;flex-direction:column;gap:2px;
+  font-family:var(--font-body);text-align:left;cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
+.mail-hero-stat:hover{
+  transform:translateY(-2px);border-color:rgba(var(--mail-sky-rgb),.4);
+  box-shadow:0 8px 20px rgba(8,80,130,.1);
+}
+.mail-hero-stat:focus-visible{outline:2px solid var(--mail-sky);outline-offset:2px}
 .mail-hero-stat strong{
   font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--mail-ink);line-height:1;
 }
@@ -2570,13 +2577,32 @@ main .sec + .sec{border-top:none}
 }
 .btn-send-scan:hover{filter:brightness(1.06);transform:translateY(-1px)}
 .mail-action-primary{
-  padding:11px 18px!important;font-size:.86rem!important;
-  display:inline-flex!important;align-items:center;gap:8px;
+  padding:9px 20px 9px 12px!important;font-size:.88rem!important;
+  display:inline-flex!important;align-items:center;gap:11px;
+  background:linear-gradient(140deg,#0ab5ef 0%,var(--mail-sky,#06a5df) 45%,#046d92 100%)!important;
+  color:#fff!important;border-radius:14px!important;
+  box-shadow:0 6px 18px rgba(var(--mail-sky-rgb,6,165,223),.38), inset 0 1px 0 rgba(255,255,255,.28);
+  position:relative;overflow:hidden;
+  transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
+.mail-action-primary::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.22) 46%,rgba(255,255,255,.05) 54%,transparent 70%);
+  transform:translateX(-120%);transition:transform .55s ease;
+}
+.mail-action-primary:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 26px rgba(var(--mail-sky-rgb,6,165,223),.48), inset 0 1px 0 rgba(255,255,255,.3);
+}
+.mail-action-primary:hover::after{transform:translateX(120%)}
+.mail-action-primary:focus-visible{outline:2px solid var(--mail-sky);outline-offset:3px}
 .mail-action-plus{
-  width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.12);font-size:1rem;line-height:1;font-weight:700;
+  width:30px;height:30px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.2);color:#fff;font-size:1rem;line-height:1;font-weight:700;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);flex-shrink:0;
+  transition:transform .2s ease, background .2s ease;
 }
+.mail-action-primary:hover .mail-action-plus{background:rgba(255,255,255,.3);transform:rotate(90deg)}
 .mail-action-divider{width:1px;height:28px;background:var(--mail-line);margin:0 2px}
 .mail-action-folders{display:flex;flex-wrap:wrap;gap:4px;flex:1}
 .mail-action-folder{
@@ -2643,6 +2669,8 @@ main .sec + .sec{border-top:none}
   background:rgba(var(--mail-sky-rgb),.1);color:var(--mail-sky-soft);font-size:1.25rem;
   border:1px solid rgba(var(--mail-sky-rgb),.18);
 }
+.mail-empty-title{margin:0;font-weight:800;color:var(--mail-ink);font-size:.9rem}
+.mail-empty-hint{margin:-6px 0 0;font-size:.78rem;color:var(--mail-faint);max-width:30ch;line-height:1.5}
 
 .mail-row{
   display:flex;align-items:flex-start;gap:11px;width:100%;padding:12px 12px;border:0;border-radius:14px;
@@ -2705,6 +2733,90 @@ main .sec + .sec{border-top:none}
 .mail-compose-form--inline{background:#fff}
 .mail-compose-form.is-disabled{pointer-events:none;opacity:.55}
 
+/* Design request compose — case type cards */
+.mail-compose-form--design{gap:16px}
+.dc-block{display:flex;flex-direction:column;gap:10px}
+.dc-block-label{
+  margin:0;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b;
+}
+.dc-type-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;
+}
+.dc-type-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;
+  padding:12px 12px 10px;border-radius:12px;border:1px solid #e2e8f0;background:#f8fafc;
+  cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s;min-height:100px;
+}
+.dc-type-card:hover:not(:disabled){border-color:#94a3b8;background:#fff}
+.dc-type-card.is-selected{
+  border-color:var(--teal,#0f766e);background:rgba(15,118,110,.06);
+  box-shadow:0 0 0 1px rgba(15,118,110,.25);
+}
+.dc-type-card:disabled{opacity:.45;cursor:not-allowed}
+.dc-type-card strong{font-size:.84rem;font-weight:800;color:#0f172a}
+.dc-type-card span{font-size:.72rem;color:#64748b;line-height:1.35;flex:1}
+.dc-type-card em{font-style:normal;font-size:.72rem;font-weight:700;color:var(--teal,#0f766e)}
+
+/* Design request form (service → patient → checkout) */
+.dr-wrap{
+  display:grid;grid-template-columns:minmax(240px,.9fr) minmax(0,1.4fr);gap:28px;align-items:start;
+}
+.dr-summary{
+  padding:20px;border-radius:16px;background:#0f172a;color:#e2e8f0;
+  position:sticky;top:88px;
+}
+.dr-summary-kicker{
+  margin:0 0 8px;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#94a3b8;
+}
+.dr-summary h2{margin:0 0 8px;font-size:1.2rem;font-weight:800;color:#fff}
+.dr-summary p{margin:0 0 10px;font-size:.84rem;line-height:1.5;color:#cbd5e1}
+.dr-summary-price{font-size:1.35rem!important;font-weight:800;color:#fff!important}
+.dr-summary-meta{font-size:.78rem!important;color:#94a3b8!important}
+.dr-steps{margin:18px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.dr-steps li{
+  position:relative;padding-left:22px;font-size:.78rem;color:#64748b;font-weight:600;
+}
+.dr-steps li::before{
+  content:'';position:absolute;left:0;top:5px;width:8px;height:8px;border-radius:50%;background:#334155;
+}
+.dr-steps li.done{color:#94a3b8}
+.dr-steps li.done::before{background:#0f766e}
+.dr-steps li.current{color:#e2e8f0}
+.dr-steps li.current::before{background:#2dd4bf;box-shadow:0 0 0 3px rgba(45,212,191,.25)}
+.dr-form{
+  display:flex;flex-direction:column;gap:18px;padding:20px 22px;border-radius:16px;
+  border:1px solid #e2e8f0;background:#fff;
+}
+.dr-fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.dr-fieldset legend{
+  padding:0;margin:0 0 4px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#64748b;
+}
+.dr-mode-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.dr-mode-tabs button{
+  border:1px solid #e2e8f0;background:#f8fafc;color:#475569;border-radius:999px;
+  padding:8px 14px;font-size:.8rem;font-weight:700;cursor:pointer;
+}
+.dr-mode-tabs button.is-active{
+  background:rgba(15,118,110,.1);border-color:rgba(15,118,110,.35);color:#0f766e;
+}
+.dr-mode-tabs button:disabled{opacity:.4;cursor:not-allowed}
+.dr-hint{margin:6px 0 0;font-size:.78rem;color:#64748b}
+.dr-form-foot{
+  display:flex;justify-content:flex-end;gap:10px;padding-top:8px;border-top:1px solid #e2e8f0;flex-wrap:wrap;
+}
+.mail-action-support{align-self:center}
+.mail-empty-actions{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:4px;
+}
+.mail-compose-support-hint{
+  margin:0;font-size:.82rem;color:#64748b;line-height:1.45;
+}
+.mail-compose-support-hint a{color:#0f766e;font-weight:600}
+@media (max-width:900px){
+  .dr-wrap{grid-template-columns:1fr}
+  .dr-summary{position:static}
+}
+
 .mail-compose-email-row{
   display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:start;
   padding:10px 0;border-bottom:1px solid #f1f5f9;
@@ -2766,11 +2878,6 @@ main .sec + .sec{border-top:none}
   background:rgba(15,118,110,.12)!important;
   color:#0f766e!important;
 }
-.mail-row-tag--billing-unpaid,.mail-chip--billing-unpaid{
-  background:rgba(180,83,9,.12)!important;
-  color:#b45309!important;
-}
-
 .mail-compose-locked{position:relative;flex:1}
 .mail-compose-lock-overlay{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
@@ -2849,11 +2956,21 @@ main .sec + .sec{border-top:none}
 }
 .mail-reply-form textarea{
   width:100%;border:1px solid #cbd5e1;border-radius:14px;padding:11px 13px;font:inherit;
-  resize:none;min-height:52px;max-height:110px;background:#f8fafc;color:#0f172a;grid-column:1;
+  resize:none;min-height:46px;max-height:160px;background:#f8fafc;color:#0f172a;grid-column:1;
+  transition:border-color .15s, box-shadow .15s, background .15s;overflow-y:auto;
 }
 .mail-reply-form textarea:focus{outline:none;border-color:#06a5df;box-shadow:0 0 0 3px rgba(6,165,223,.15);background:#fff}
 .mail-reply-send{align-self:end;padding:11px 18px!important;min-width:88px}
 .mail-reply-form .mail-compose-error{grid-column:1 / -1;margin:0}
+.mail-reply-hint{
+  grid-column:1 / -1;margin:1px 2px 0;font-size:.66rem;color:var(--mail-faint);
+  display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+}
+.mail-reply-hint kbd{
+  font-family:var(--font-body);font-size:.62rem;font-weight:700;color:var(--mail-muted);
+  padding:1px 5px;border-radius:5px;background:#f1f5f9;border:1px solid #e2e8f0;
+  box-shadow:0 1px 0 rgba(15,23,42,.06);line-height:1.4;
+}
 .mail-demo-note{padding:0 20px 16px;font-size:.78rem;color:#64748b;margin:0}
 .mail-demo-note a{color:var(--teal);font-weight:600}
 .mail-workspace .visually-hidden{
@@ -2877,6 +2994,102 @@ main .sec + .sec{border-top:none}
 .mail-loading{display:flex;align-items:center;justify-content:center;gap:10px;min-height:50vh;color:#5a555c}
 .mail-loading-dot{width:8px;height:8px;border-radius:50%;background:#06a5df;animation:mailPulse 1s ease infinite}
 @keyframes mailPulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Skeleton loaders — conversation list */
+.mail-list-skeleton{list-style:none;display:flex;flex-direction:column;gap:2px;padding:4px}
+.mail-skel-row{display:flex;align-items:flex-start;gap:11px;padding:12px}
+.mail-skel-avatar{flex-shrink:0;width:38px;height:38px;border-radius:12px}
+.mail-skel-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;padding-top:3px}
+.mail-skel-line{height:9px;border-radius:6px}
+.mail-skel-line--sm{width:40%}
+.mail-skel-line--md{width:60%}
+.mail-skel-avatar,.mail-skel-line{
+  background:linear-gradient(100deg,#eef3f8 30%,#dbe6ef 50%,#eef3f8 70%);
+  background-size:200% 100%;animation:mailShimmer 1.3s ease-in-out infinite;
+}
+.mail-skel-row:nth-child(2) .mail-skel-avatar,.mail-skel-row:nth-child(2) .mail-skel-line{animation-delay:.08s}
+.mail-skel-row:nth-child(3) .mail-skel-avatar,.mail-skel-row:nth-child(3) .mail-skel-line{animation-delay:.16s}
+.mail-skel-row:nth-child(4) .mail-skel-avatar,.mail-skel-row:nth-child(4) .mail-skel-line{animation-delay:.24s}
+.mail-skel-row:nth-child(5) .mail-skel-avatar,.mail-skel-row:nth-child(5) .mail-skel-line{animation-delay:.32s}
+@keyframes mailShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Back to list — mobile master–detail navigation (hidden on desktop) */
+.mail-back-btn{
+  display:none;align-items:center;gap:4px;margin:0 0 10px;padding:6px 12px 6px 8px;
+  border:1px solid var(--mail-line);border-radius:999px;background:#fff;
+  color:var(--mail-sky-soft);font-family:var(--font-body);font-size:.76rem;font-weight:700;
+  cursor:pointer;transition:background .15s, transform .15s, box-shadow .15s;align-self:flex-start;
+}
+.mail-back-btn:hover{background:rgba(var(--mail-sky-rgb),.08);transform:translateX(-1px)}
+.mail-back-btn span{font-size:1.1rem;line-height:1;margin-top:-1px}
+.mail-back-btn:focus-visible{outline:2px solid var(--mail-sky);outline-offset:2px}
+
+/* ===== Inbox iconography (crisp SVG glyphs) ===== */
+.mail-search-icon svg{display:block;width:1em;height:1em}
+.mail-search-icon{font-size:1rem;display:flex;align-items:center}
+
+/* Empty-state glyph now holds an SVG */
+.mail-empty-glyph{font-size:1.7rem}
+.mail-empty-glyph svg{display:block;width:1em;height:1em}
+
+/* Attachment chips */
+.mail-attachment-icon{
+  display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;
+  width:30px;height:30px;border-radius:9px;background:#e6eef5;color:#475569;
+}
+.mail-attachment-icon svg{display:block;width:1em;height:1em}
+.mail-attachment--design .mail-attachment-icon{background:#d1fae5;color:#0f766e}
+
+/* Primary "New design case" — signals it opens another page */
+.mail-action-primary{flex-direction:row;text-align:left}
+.mail-action-primary .mail-action-plus svg{display:block;width:.95em;height:.95em}
+.mail-action-primary-text{display:inline-flex;flex-direction:column;line-height:1.2;gap:2px}
+.mail-action-primary-text small{
+  display:inline-flex;align-items:center;gap:4px;font-size:.62rem;font-weight:600;
+  letter-spacing:.015em;color:rgba(255,255,255,.85);text-transform:none;
+}
+.mail-action-primary-text small .mail-action-ext{
+  width:12px;height:12px;padding:1px;border-radius:4px;
+  background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
+  transition:transform .2s ease, background .2s ease;
+}
+.mail-action-primary:hover .mail-action-primary-text small .mail-action-ext{
+  background:rgba(255,255,255,.3);transform:translate(1px,-1px);
+}
+.mail-action-ext{width:.85em;height:.85em;flex-shrink:0}
+
+/* Support message button — quiet secondary, clearly subordinate to the primary */
+.mail-action-support{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px 9px 11px!important;font-size:.8rem!important;font-weight:700;
+  background:#fff!important;color:#1e4f66!important;border-radius:12px!important;
+  border:1px solid rgba(var(--mail-sky-rgb),.32)!important;
+  box-shadow:0 1px 3px rgba(8,80,130,.06);
+  transition:background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.mail-action-support:hover{
+  background:rgba(var(--mail-sky-rgb),.07)!important;
+  border-color:rgba(var(--mail-sky-rgb),.55)!important;
+  box-shadow:0 4px 12px rgba(8,80,130,.1);transform:translateY(-1px);
+}
+.mail-action-support:focus-visible{outline:2px solid var(--mail-sky);outline-offset:2px}
+.mail-action-icon{width:1.05em;height:1.05em;flex-shrink:0}
+.mail-action-support .mail-action-icon{
+  width:26px;height:26px;padding:5px;border-radius:8px;box-sizing:border-box;
+  background:rgba(var(--mail-sky-rgb),.12);color:var(--mail-sky-soft);
+  transition:background .2s ease, transform .25s ease;
+}
+.mail-action-support:hover .mail-action-icon{
+  background:rgba(var(--mail-sky-rgb),.2);transform:rotate(-12deg);
+}
+
+/* Empty-state "New design case" buttons carry the same external-page cue */
+.mail-goto-design{display:inline-flex;align-items:center;gap:6px}
+
+/* Neutral folder badge (Support count is informational, not urgent) */
+.mail-action-badge--neutral{
+  background:rgba(var(--mail-sky-rgb),.16);color:var(--mail-sky-soft);
+}
 
 .nav-inbox{position:relative}
 .nav-inbox{position:relative}
@@ -2932,16 +3145,22 @@ main .sec + .sec{border-top:none}
 @media(max-width:900px){
   .mail-panels{
     grid-template-columns:1fr;
-    height:auto;
-    max-height:none;
-    min-height:0;
+    height:min(74vh,720px);
+    max-height:calc(100dvh - 200px);
+    min-height:440px;
   }
-  .mail-list-pane{max-height:260px;border-right:0;border-bottom:1px solid var(--mail-line)}
-  .mail-read-pane{height:min(62vh,560px);min-height:420px}
+  /* Master–detail: show one pane at a time on narrow screens */
+  .mail-panels[data-mobile-view="list"] .mail-read-pane{display:none}
+  .mail-panels[data-mobile-view="detail"] .mail-list-pane{display:none}
+  .mail-list-pane{border-right:0}
+  .mail-read-pane{height:100%;min-height:0}
+  .mail-back-btn{display:inline-flex}
   .mail-hero-panel{flex-direction:column}
   .mail-flow-steps{flex-direction:row;flex-wrap:wrap;min-width:0}
   .mail-flow-steps li{flex:1;min-width:150px}
   .mail-action-bar{flex-direction:column;align-items:stretch}
+  .mail-action-primary,.mail-action-support{width:100%;justify-content:center}
+  .mail-action-primary-text{align-items:flex-start}
   .mail-action-divider,.mail-action-greeting{display:none}
   .mail-message{max-width:94%}
 }
@@ -2956,6 +3175,9 @@ main .sec + .sec{border-top:none}
 }
 @media(prefers-reduced-motion:reduce){
   .mail-hero-panel,.mail-message,.mail-flow-steps li{animation:none;transition:none}
+  .mail-skel-avatar,.mail-skel-line{animation:none;background:#e6eef5}
+  .mail-action-primary,.mail-action-primary::after,.mail-action-plus,
+  .mail-action-support,.mail-action-support .mail-action-icon{transition:none}
 }
 
 /* ===== CLINICAL BENTO — interactive category filter + hover expand ===== */
@@ -3675,6 +3897,17 @@ header.on-light .nav-cart:hover{color:var(--sky-deep);background:rgba(var(--sky-
 }
 .co-sec > .wrap{position:relative}
 
+.paymob-pixel-wrap{
+  max-width:520px;margin:0 auto;padding:8px 0 32px;
+}
+.paymob-pixel-host{
+  min-height:320px;border-radius:16px;background:#fff;
+  border:1px solid #e2e8f0;padding:12px;
+}
+.mail-inbox-confirm{
+  margin:12px 16px 0;
+}
+
 /* Progress stepper */
 .co-progress{
   list-style:none;margin:0 0 34px;padding:0;
@@ -4098,7 +4331,35 @@ header.on-light .nav-cart:hover{color:var(--sky-deep);background:rgba(var(--sky-
 
 /* ============ ROI Calculator ============
    Sky accent (--line-acc) throughout. True orange (--line-sign) kept off this UI. */
+/* Standalone /roi — same light canvas as printer page ROI */
+.roi-page{
+  --line-acc:var(--sky,#06a5df);
+  --line-acc-soft:var(--sky-soft,#7fd0f3);
+  --line-acc-deep:var(--sky-deep,#0581ad);
+  --line-acc-rgb:var(--sky-rgb,6,165,223);
+  min-height:100dvh;
+  background:
+    radial-gradient(1100px 680px at 12% 8%, rgba(var(--line-acc-rgb),.10), transparent 58%),
+    radial-gradient(900px 560px at 88% 18%, rgba(var(--line-acc-rgb),.06), transparent 55%),
+    linear-gradient(180deg, var(--paper,#f5fafd) 0%, #eef6fc 40%, var(--paper-2,#e9f4fb) 70%, var(--paper,#f5fafd) 100%);
+}
+.roi-page > .sec{
+  background:transparent !important;
+  position:relative;
+  padding-block:clamp(48px,6vw,72px);
+}
+.roi-page > .sec::before{
+  display:none !important;
+  content:none !important;
+}
+.roi-page .sec-head{margin-bottom:clamp(36px,4vw,48px)}
+
 .roi-section{scroll-margin-top:96px}
+.roi-section .sec-head .eyebrow{
+  font-size:clamp(2.2rem,4.6vw,3.4rem);
+  letter-spacing:.14em;
+  margin-bottom:18px;
+}
 .roi-root{margin-top:8px}
 
 /* —— Pillars: numbered benefit cards, home-card flavour —— */

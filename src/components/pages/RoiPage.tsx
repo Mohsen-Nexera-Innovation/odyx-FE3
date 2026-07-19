@@ -10,7 +10,7 @@ const COPY = ROI_COPY_BY_SCOPE.ecosystem;
 
 export default function RoiPage() {
   return (
-    <>
+    <div className="roi-page">
       <PageHero
         crumbs={[
           { label: 'Home', href: '/' },
@@ -18,17 +18,17 @@ export default function RoiPage() {
           { label: 'ROI Calculator', href: '/roi' },
         ]}
         title={COPY.title}
-        lead={COPY.lead}
         action={
           <Link className="btn" href="/products/3d-printers#roi">
             Printer-only ROI <Arrow />
           </Link>
         }
       />
+
       <section className="sec roi-section" id="roi">
         <div className="wrap">
           <SecHead
-            eyebrow="Return on investment"
+            eyebrow="ROI"
             h2={COPY.pitchHeadline}
           />
           <RoiPillars scope="ecosystem" />
@@ -36,6 +36,6 @@ export default function RoiPage() {
         </div>
       </section>
       <InnerPageMotion />
-    </>
+    </div>
   );
 }

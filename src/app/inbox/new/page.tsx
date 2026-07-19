@@ -4,15 +4,19 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-/** Preserve paid-design handoff query params into the inbox compose pane. */
+/** Design cases start from the catalog; support opens compose. */
 export default async function InboxNewRedirect({ searchParams }: Props) {
   const params = await searchParams;
-  const qs = new URLSearchParams();
-  qs.set('compose', '1');
-  for (const key of ['service', 'order'] as const) {
-    const raw = params[key];
-    const value = Array.isArray(raw) ? raw[0] : raw;
-    if (value) qs.set(key, value);
+  const service = params.service;
+  const order = params.order;
+  const hasDesignHandoff =
+    (typeof service === 'string' && service) ||
+    (typeof order === 'string' && order) ||
+    (Array.isArray(service) && service[0]) ||
+    (Array.isArray(order) && order[0]);
+
+  if (hasDesignHandoff) {
+    redirect('/design-services');
   }
-  redirect(`/inbox?${qs.toString()}`);
+  redirect('/inbox?compose=1');
 }

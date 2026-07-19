@@ -132,18 +132,27 @@ export default function CartPage() {
 
                       <div className="cart-qty-wrap">
                         <span className="cart-qty-label">Qty</span>
-                        <QtyStepper
-                          value={line.qty}
-                          min={0}
-                          onChange={(q) => {
-                            if (q <= 0) {
-                              void removeItemAsync(line.productId);
-                              return;
-                            }
-                            void updateQtyAsync(line.productId, q);
-                          }}
-                          label={`Quantity for ${line.product.name}`}
-                        />
+                        {line.product.category === 'design' ? (
+                          <span
+                            className="qty-stepper qty-stepper--fixed"
+                            aria-label={`Quantity for ${line.product.name}: 1 (design service)`}
+                          >
+                            <span className="qty-val">1</span>
+                          </span>
+                        ) : (
+                          <QtyStepper
+                            value={line.qty}
+                            min={0}
+                            onChange={(q) => {
+                              if (q <= 0) {
+                                void removeItemAsync(line.productId);
+                                return;
+                              }
+                              void updateQtyAsync(line.productId, q);
+                            }}
+                            label={`Quantity for ${line.product.name}`}
+                          />
+                        )}
                       </div>
 
                       <div className="cart-line-total">

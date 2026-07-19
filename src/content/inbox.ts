@@ -14,7 +14,7 @@ export type CaseIndication =
 
 export type ThreadStatus = 'awaiting_design' | 'in_progress' | 'design_delivered' | 'completed';
 
-export type InboxFolder = 'inbox' | 'sent' | 'all' | 'designs';
+export type InboxFolder = 'inbox' | 'awaiting' | 'designs' | 'support';
 
 export type MessageAttachment = {
   id: string;
@@ -60,10 +60,7 @@ export type InboxThread = {
   createdAt: string;
 };
 
-/** How a design conversation was billed. */
-export type DesignBillingKind = 'paid' | 'unpaid' | 'support';
-
-/** Design-service case types that have a catalog price. */
+/** Design-service case types that have a catalog price (require checkout). */
 export const PAID_DESIGN_INDICATIONS: CaseIndication[] = [
   'single_unit',
   'digital_smile_design',
@@ -75,20 +72,6 @@ export const PAID_DESIGN_INDICATIONS: CaseIndication[] = [
 export function isPaidDesignIndication(indication: CaseIndication): boolean {
   return PAID_DESIGN_INDICATIONS.includes(indication);
 }
-
-export function designBillingKind(
-  thread: Pick<InboxThread, 'indication' | 'orderNumber'>,
-): DesignBillingKind {
-  if (thread.orderNumber) return 'paid';
-  if (isPaidDesignIndication(thread.indication)) return 'unpaid';
-  return 'support';
-}
-
-export const DESIGN_BILLING_LABEL: Record<DesignBillingKind, string> = {
-  paid: 'Paid',
-  unpaid: 'Unpaid',
-  support: 'Support',
-};
 
 export const INDICATION_LABEL: Record<CaseIndication, string> = {
   single_unit: 'Single Unit (crown/overlay/endocrown)',
@@ -325,6 +308,21 @@ export function hasDesignAttachment(thread: InboxThread): boolean {
   return thread.messages.some((m) =>
     m.attachments.some((a) => a.kind === 'design'),
   );
+}
+
+/**
+ * Support threads are the ad-hoc messages opened from the "Support message"
+ * composer (subject prefixed "Support —"), as opposed to paid design cases.
+ */
+export function isSupportThread(thread: InboxThread): boolean {
+  const subject = threadSubject(thread).trim().toLowerCase();
+  return subject.startsWith('support');
+}
+
+/** You spoke last — the ball is in ODYX's court. */
+export function isAwaitingReply(thread: InboxThread): boolean {
+  const last = thread.messages[thread.messages.length - 1];
+  return last?.direction === 'sent';
 }
 
 export function nextThreadRef(threads: InboxThread[]): string {

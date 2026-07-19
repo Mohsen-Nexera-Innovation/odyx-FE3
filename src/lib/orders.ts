@@ -63,6 +63,9 @@ export async function previewShipping(input: {
 export type ApiCheckoutResult = {
   order: StoredOrder;
   apiOrder: ApiOrder;
+  /** Paymob Pixel embedded checkout */
+  pixel?: { clientSecret: string; publicKey: string };
+  /** Legacy Paymob iframe */
   iframeUrl?: string;
   simulated?: boolean;
 };
@@ -91,11 +94,28 @@ export async function placeOrderFacade(input: {
   if (input.paymentMethod === 'ONLINE') {
     try {
       const intent = await createPaymentIntentApi(apiOrder.id);
-      return {
-        order: mapApiOrder(apiOrder),
-        apiOrder,
-        iframeUrl: intent.iframeUrl,
-      };
+      if (
+        intent.mode === 'pixel' &&
+        intent.clientSecret &&
+        intent.publicKey
+      ) {
+        return {
+          order: mapApiOrder(apiOrder),
+          apiOrder,
+          pixel: {
+            clientSecret: intent.clientSecret,
+            publicKey: intent.publicKey,
+          },
+        };
+      }
+      if (intent.iframeUrl) {
+        return {
+          order: mapApiOrder(apiOrder),
+          apiOrder,
+          iframeUrl: intent.iframeUrl,
+        };
+      }
+      throw new Error('Paymob intent missing pixel or iframe payload');
     } catch {
       // Paymob not configured — simulate paid for local API mode
       await simulatePaymentApi(apiOrder.id);

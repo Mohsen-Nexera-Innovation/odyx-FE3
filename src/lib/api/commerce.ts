@@ -124,8 +124,12 @@ export function getOrderByNumberApi(orderNumber: string) {
 
 export function createPaymentIntentApi(orderId: string) {
   return apiFetch<{
-    iframeUrl: string;
-    paymentKey: string;
+    mode: 'pixel' | 'iframe';
+    clientSecret?: string;
+    publicKey?: string;
+    intentionId?: string;
+    iframeUrl?: string;
+    paymentKey?: string;
     orderId: string;
     orderNumber: string;
   }>('/payments/intent', {

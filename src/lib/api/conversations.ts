@@ -56,6 +56,7 @@ export function createConversationApi(input: {
   attachmentName?: string;
   orderId?: string;
   orderNumber?: string;
+  patientId?: string;
 }) {
   return apiFetch<ApiConversation>('/conversations', {
     method: 'POST',

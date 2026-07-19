@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import { isDesignServiceSlug } from '@/content/design-services';
 import { formatMoney } from '@/content/shop';
 import { isApiMode } from '@/lib/config';
+import { designInboxHandoffHref, finalizeDesignCaseAfterPayment } from '@/lib/design-case-draft';
 import { getOrderFacade, type StoredOrder } from '@/lib/orders';
+import { readSession } from '@/lib/auth';
 
 const CheckIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -15,27 +17,19 @@ const CheckIcon = ({ size = 14 }: { size?: number }) => (
   </svg>
 );
 
-function designHandoffHref(order: StoredOrder): string | null {
-  const digital =
+function isDigitalOrder(order: StoredOrder): boolean {
+  return (
     order.fulfillmentType === 'DIGITAL' ||
-    order.items.every((i) => i.category === 'design');
-  if (!digital) return null;
-  const slug =
-    order.items.map((i) => i.slug).find((s) => isDesignServiceSlug(s)) ??
-    order.items.map((i) => i.productId).find((s) => isDesignServiceSlug(s));
-  if (!slug || !isDesignServiceSlug(slug)) return null;
-  const params = new URLSearchParams({
-    compose: '1',
-    service: slug,
-    order: order.id,
-  });
-  return `/inbox?${params.toString()}`;
+    order.items.every((i) => i.category === 'design')
+  );
 }
 
 function SuccessBody() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get('order');
   const [order, setOrder] = useState<StoredOrder | null | undefined>(undefined);
+  const [redirectingDesign, setRedirectingDesign] = useState(false);
 
   useEffect(() => {
     if (!orderId) {
@@ -45,17 +39,46 @@ function SuccessBody() {
     void getOrderFacade(orderId).then((o) => setOrder(o ?? null));
   }, [orderId]);
 
-  const inboxHref = useMemo(
-    () => (order ? designHandoffHref(order) : null),
-    [order],
-  );
-  const isDigital = Boolean(inboxHref);
+  const isDigital = Boolean(order && isDigitalOrder(order));
 
-  if (order === undefined) {
+  // Design orders: submit pre-checkout scan, then open inbox thread.
+  useEffect(() => {
+    if (!order || !isDigitalOrder(order) || redirectingDesign) return;
+    let cancelled = false;
+    setRedirectingDesign(true);
+    void (async () => {
+      const slug =
+        order.items.map((i) => i.slug).find((s) => isDesignServiceSlug(s)) ??
+        order.items.map((i) => i.productId).find((s) => isDesignServiceSlug(s));
+      const session = readSession();
+      let href = designInboxHandoffHref({
+        orderNumber: order.id,
+        serviceSlug: slug,
+        confirmed: true,
+      });
+      if (session && session.role !== 'guest') {
+        try {
+          href = await finalizeDesignCaseAfterPayment(session, order.id);
+        } catch {
+          /* keep fallback href */
+        }
+      }
+      if (!cancelled) router.replace(href);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [order, router, redirectingDesign]);
+
+  if (order === undefined || (order && isDigital) || redirectingDesign) {
     return (
       <section className="sec store-sec">
         <div className="wrap">
-          <p className="checkout-loading">Loading confirmation…</p>
+          <p className="checkout-loading">
+            {order && isDigital
+              ? 'Order confirmed — opening your design case in the inbox…'
+              : 'Loading confirmation…'}
+          </p>
         </div>
       </section>
     );
@@ -105,7 +128,7 @@ function SuccessBody() {
             {isDigital ? (
               <>
                 Thank you{order.shipping.name ? `, ${order.shipping.name.split(' ')[0]}` : ''} —
-                your design service is paid. Next, upload your scan so our team can start.
+                your design service is paid. Opening your design conversation in the inbox…
               </>
             ) : (
               <>
@@ -153,9 +176,9 @@ function SuccessBody() {
                 <i />
                 <span>Paid</span>
               </li>
-              <li>
+              <li className="done">
                 <i />
-                <span>Upload scan</span>
+                <span>Case submitted</span>
               </li>
               <li>
                 <i />
@@ -219,17 +242,11 @@ function SuccessBody() {
           </div>
 
           <div className="suc-actions">
-            {inboxHref ? (
-              <Link className="btn" href={inboxHref}>
-                Upload scan in inbox <Arrow />
-              </Link>
-            ) : (
-              <Link className="btn" href="/shop">
-                Continue shopping <Arrow />
-              </Link>
-            )}
-            <Link className="btn btn-ghost" href={isDigital ? '/design-services' : '/'}>
-              {isDigital ? 'Back to design services' : 'Back to home'}
+            <Link className="btn" href="/shop">
+              Continue shopping <Arrow />
+            </Link>
+            <Link className="btn btn-ghost" href="/">
+              Back to home
             </Link>
           </div>
         </div>

@@ -2,7 +2,7 @@
  * Commerce facade: demo localStorage vs Nest API (products/cart/orders/Paymob).
  */
 
-import { DESIGN_SERVICES } from '@/content/design-services';
+import { DESIGN_SERVICES, getDesignServiceById } from '@/content/design-services';
 import type { ShopProduct } from '@/content/shop';
 import {
   clearCartApi,
@@ -24,6 +24,14 @@ import {
   type CartLineResolved,
 } from '@/lib/cart-store';
 import { isApiMode } from '@/lib/config';
+
+function isDesignProduct(
+  productId: string,
+  category?: string | null,
+): boolean {
+  if (category === 'design') return true;
+  return Boolean(getDesignServiceById(productId));
+}
 
 export function apiProductToShop(p: ApiProduct): ShopProduct {
   return {
@@ -110,7 +118,13 @@ export async function addItemAsync(productId: string, qty = 1): Promise<void> {
   const resolvedId = (await resolveCartProductId(productId)) ?? productId;
   const cart = await getCartApi();
   const existing = cart.items.find((i) => i.productId === resolvedId);
-  const nextQty = (existing?.quantity ?? 0) + qty;
+  // Digital design services are one case per line — do not stack qty.
+  const nextQty = isDesignProduct(
+    productId,
+    existing?.product.category,
+  )
+    ? 1
+    : (existing?.quantity ?? 0) + qty;
   await upsertCartItemApi(resolvedId, nextQty);
   notifyCartChange();
 }
@@ -126,7 +140,12 @@ export async function updateQtyAsync(
   if (qty <= 0) {
     await removeCartItemApi(productId);
   } else {
-    await upsertCartItemApi(productId, qty);
+    const cart = await getCartApi();
+    const existing = cart.items.find((i) => i.productId === productId);
+    const capped = isDesignProduct(productId, existing?.product.category)
+      ? 1
+      : qty;
+    await upsertCartItemApi(productId, capped);
   }
   notifyCartChange();
 }

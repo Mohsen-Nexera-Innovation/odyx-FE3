@@ -22,7 +22,7 @@ export const DESIGN_SERVICES: ShopProduct[] = [
     id: 'design-single-unit',
     slug: 'design-single-unit',
     name: 'Single Unit',
-    desc: 'Digital design for crown, overlay, or endocrown — upload your scan after checkout.',
+    desc: 'Digital design for crown, overlay, or endocrown — upload your scan, then checkout.',
     price: 150,
     image: '/img/crowns.jpg',
     category: 'design',
@@ -118,9 +118,4 @@ export function getDesignServiceByIndication(
 ): ShopProduct | undefined {
   const slug = serviceSlugFromIndication(indication);
   return slug ? getDesignServiceById(slug) : undefined;
-}
-
-/** Catalog price for an unpaid inbox design request (0 for support / other). */
-export function quoteDesignIndication(indication: CaseIndication): number {
-  return getDesignServiceByIndication(indication)?.price ?? 0;
 }

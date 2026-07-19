@@ -98,11 +98,31 @@ export function sendScanToDesignTeam(session: AccountSession, input: ComposeInpu
   const id = `thread-${Date.now()}`;
   const ref = input.orderNumber ?? nextThreadRef(all);
   const paidPrefix = input.orderNumber
-    ? `Paid order ${input.orderNumber} — `
+    ? `Order ${input.orderNumber} confirmed — `
     : input.indication !== 'other'
       ? 'Design request — '
       : '';
-  const subject = `${paidPrefix}Scan upload — ${INDICATION_LABEL[input.indication]}${input.tooth ? ` ${input.tooth}` : ''}${input.patientRef ? ` (${input.patientRef})` : ''}`;
+  const subject = `${paidPrefix}${INDICATION_LABEL[input.indication]}${input.tooth ? ` ${input.tooth}` : ''}${input.patientRef ? ` (${input.patientRef})` : ''}`;
+
+  const confirmationAt = now;
+  const caseAt = new Date(Date.now() + 1).toISOString();
+
+  const confirmationMessage: InboxMessage | null = input.orderNumber
+    ? {
+        id: `msg-confirm-${Date.now()}`,
+        threadId: id,
+        direction: 'received',
+        from: DESIGN_TEAM_EMAIL,
+        fromLabel: 'ODYX Design Team',
+        to: session.email,
+        toLabel: session.name,
+        subject,
+        body: `Order ${input.orderNumber} is confirmed. Your scan was submitted — the design team will reply in this thread.`,
+        attachments: [],
+        at: confirmationAt,
+        read: true,
+      }
+    : null;
 
   const sentMessage: InboxMessage = {
     id: `msg-${Date.now()}`,
@@ -124,7 +144,7 @@ export function sendScanToDesignTeam(session: AccountSession, input: ComposeInpu
         kind: 'scan',
       },
     ],
-    at: now,
+    at: caseAt,
     read: true,
   };
 
@@ -143,7 +163,9 @@ export function sendScanToDesignTeam(session: AccountSession, input: ComposeInpu
     printer: session.role === 'lab' ? input.printer : undefined,
     batchRef: session.role === 'lab' ? input.batchRef : undefined,
     orderNumber: input.orderNumber,
-    messages: [sentMessage],
+    messages: confirmationMessage
+      ? [confirmationMessage, sentMessage]
+      : [sentMessage],
     createdAt: now,
     updatedAt: now,
   };

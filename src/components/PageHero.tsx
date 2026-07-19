@@ -15,7 +15,7 @@ export default function PageHero({
 }: {
   crumbs: { label: string; href: string }[];
   title: string;
-  lead: string;
+  lead?: string;
   action?: React.ReactNode;
   brand?: React.ReactNode;
 }) {
@@ -33,7 +33,7 @@ export default function PageHero({
         </nav>
         {brand}
         <h1>{title}</h1>
-        <p className="lead">{lead}</p>
+        {lead ? <p className="lead">{lead}</p> : null}
         {action && <div className="page-hero-actions">{action}</div>}
       </div>
     </section>

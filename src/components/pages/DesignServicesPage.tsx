@@ -2,28 +2,20 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import { DESIGN_SERVICES } from '@/content/design-services';
 import { formatMoney, type ShopProduct } from '@/content/shop';
-import { addItemAsync, fetchShopProducts } from '@/lib/commerce';
-import { isApiMode } from '@/lib/config';
-import { readSession } from '@/lib/auth';
+import { fetchShopProducts } from '@/lib/commerce';
 
 function ProductCard({
   p,
   index,
-  addedId,
-  onAdd,
-  onBuyNow,
 }: {
   p: ShopProduct;
   index: number;
-  addedId: string | null;
-  onAdd: (id: string) => void;
-  onBuyNow: (id: string) => void;
 }) {
-  const added = addedId === p.id;
+  const slug = p.slug ?? p.id;
+  const href = `/design-services/request?service=${encodeURIComponent(slug)}`;
 
   return (
     <article className="store-card" style={{ animationDelay: `${index * 70}ms` }}>
@@ -55,12 +47,9 @@ function ProductCard({
         </div>
 
         <div className="store-actions">
-          <button type="button" className="btn btn-sm" onClick={() => onAdd(p.id)}>
-            {added ? 'Added' : 'Add to cart'}
-          </button>
-          <button type="button" className="btn btn-ghost btn-sm" onClick={() => onBuyNow(p.id)}>
-            Buy now
-          </button>
+          <Link className="btn btn-sm" href={href}>
+            Request design
+          </Link>
         </div>
       </div>
     </article>
@@ -68,8 +57,6 @@ function ProductCard({
 }
 
 export default function DesignServicesPage() {
-  const router = useRouter();
-  const [addedId, setAddedId] = useState<string | null>(null);
   const [products, setProducts] = useState<ShopProduct[]>(DESIGN_SERVICES);
   const [error, setError] = useState<string | null>(null);
 
@@ -91,38 +78,6 @@ export default function DesignServicesPage() {
     };
   }, []);
 
-  async function onAdd(productId: string) {
-    if (isApiMode() && !readSession()) {
-      router.push('/login');
-      return;
-    }
-    try {
-      await addItemAsync(productId, 1);
-      setAddedId(productId);
-      window.setTimeout(() => setAddedId((cur) => (cur === productId ? null : cur)), 1600);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not add to cart');
-    }
-  }
-
-  async function onBuyNow(productId: string) {
-    if (isApiMode() && !readSession()) {
-      router.push('/login');
-      return;
-    }
-    try {
-      await addItemAsync(productId, 1);
-      try {
-        sessionStorage.setItem('odyx_checkout_from', 'design');
-      } catch {
-        /* ignore */
-      }
-      router.push('/checkout');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not add to cart');
-    }
-  }
-
   return (
     <>
       <PageHero
@@ -131,12 +86,9 @@ export default function DesignServicesPage() {
           { label: 'Design services', href: '/design-services' },
         ]}
         title="Design as a service"
-        lead="Buy a design case, pay online, then upload your scan in the inbox — we deliver the STL digitally."
+        lead="Choose a service, add the patient and scan, checkout, then track the case in your inbox."
         action={
           <PageActions>
-            <Link className="btn" href="/cart">
-              View cart <Arrow />
-            </Link>
             <Link className="btn btn-ghost" href="/inbox">
               Open inbox <Arrow />
             </Link>
@@ -148,12 +100,12 @@ export default function DesignServicesPage() {
         <div className="wrap">
           <div className="store-toolbar">
             <div className="store-toolbar-copy">
-              <p className="store-toolbar-kicker">Catalog</p>
-              <h2 className="store-toolbar-title">Design services</h2>
+              <p className="store-toolbar-kicker">Step 1</p>
+              <h2 className="store-toolbar-title">Choose a design service</h2>
               <p className="store-toolbar-meta">
                 {products.length} service{products.length === 1 ? '' : 's'}
                 <span aria-hidden>·</span>
-                Digital delivery · Online payment · No shipping
+                Then patient → checkout → inbox scan
               </p>
             </div>
           </div>
@@ -165,14 +117,7 @@ export default function DesignServicesPage() {
           ) : (
             <div className={`store-grid${products.length < 3 ? ' store-grid--sparse' : ''}`}>
               {products.map((p, i) => (
-                <ProductCard
-                  key={p.id}
-                  p={p}
-                  index={i}
-                  addedId={addedId}
-                  onAdd={onAdd}
-                  onBuyNow={onBuyNow}
-                />
+                <ProductCard key={p.id} p={p} index={i} />
               ))}
             </div>
           )}

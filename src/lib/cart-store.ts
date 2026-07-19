@@ -74,13 +74,17 @@ export function cartSubtotal(): number {
 
 export function addItem(productId: string, qty = 1): void {
   if (typeof window === 'undefined') return;
-  if (!resolveProduct(productId)) return;
+  const product = resolveProduct(productId);
+  if (!product) return;
   const cart = readCart();
   const existing = cart.find((l) => l.productId === productId);
+  // Digital design services are one case per line.
+  const nextQty =
+    product.category === 'design' ? 1 : (existing?.qty ?? 0) + qty;
   if (existing) {
-    existing.qty += qty;
+    existing.qty = nextQty;
   } else {
-    cart.push({ productId, qty });
+    cart.push({ productId, qty: nextQty });
   }
   writeCart(cart);
 }
@@ -94,7 +98,8 @@ export function updateQty(productId: string, qty: number): void {
   }
   const line = cart.find((l) => l.productId === productId);
   if (!line) return;
-  line.qty = qty;
+  const product = resolveProduct(productId);
+  line.qty = product?.category === 'design' ? 1 : qty;
   writeCart(cart);
 }
 

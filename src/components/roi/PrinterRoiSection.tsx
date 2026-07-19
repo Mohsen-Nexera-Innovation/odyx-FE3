@@ -10,7 +10,7 @@ export default function PrinterRoiSection() {
     <section className="sec roi-section" id="roi">
       <div className="wrap">
         <SecHead
-          eyebrow="Return on investment"
+          eyebrow="ROI"
           h2={COPY.lead}
         />
         <RoiPillars scope="printer" />
