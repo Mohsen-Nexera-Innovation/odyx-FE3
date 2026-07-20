@@ -151,14 +151,7 @@ export default function WhyOdyx() {
   return (
     <section className="sec sec-orange sec-motion" id="why">
       <div className="wrap">
-        <SecHead
-          eyebrow="Why ODYX"
-          action={
-            <a className="btn btn-ghost btn-sm" href="/workflows">
-              Explore the workflow →
-            </a>
-          }
-        />
+        <SecHead eyebrow="Why ODYX" />
 
         <div className="why-wrap m-up">
           <div className="why-rail" role="tablist" aria-label="Why choose ODYX">
