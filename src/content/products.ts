@@ -283,62 +283,6 @@ export const PRODUCTS: ProductContent[] = [
     ],
   },
   {
-    slug: "staining-glazing",
-    name: "Staining & Glazing",
-    category: "Finishing",
-    layout: "cinematic",
-    tagline: "Lifelike characterization for restorative cases.",
-    overview:
-      "Complete the aesthetic layer with ODYX-compatible stains and glaze systems. From monolithic convenience to full layering, match patient shade and surface texture with predictable results.",
-    img: "/img/feat-finishing.jpg",
-    heroImg: "/img/cutouts/feat-finishing-cutout.png",
-    accent: "orange",
-    workflowStep: "finish",
-    applications: [
-      "Anterior esthetics",
-      "Posterior characterization",
-      "Denture teeth",
-      "Premium lab cases",
-    ],
-    models: [
-      { name: "ODYX Finish Kit", tagline: "Essential stain and glaze set" },
-      { name: "ODYX Finish Pro", tagline: "Extended shade and tool kit" },
-    ],
-    specs: [
-      { label: "Compatible materials", value: "ODYX restorative Resin" },
-      { label: "Shade range", value: "VITA-oriented set" },
-      { label: "Application", value: "Brush and spray options" },
-      { label: "Cure after glaze", value: "Per kit instructions" },
-    ],
-    downloads: [
-      { name: "Finishing guide", type: "PDF", href: "/support#manuals" },
-      { name: "Shade protocol", type: "PDF", href: "#" },
-    ],
-    benefits: [
-      "Natural esthetics",
-      "Shade matching",
-      "Lab-grade results",
-      "Training resources",
-    ],
-    stats: [
-      {
-        value: "VITA",
-        label: "Shade range",
-        desc: "Oriented shade set for predictable matching.",
-      },
-      {
-        value: "2",
-        label: "Kit options",
-        desc: "Finish Kit essentials or Finish Pro extended.",
-      },
-      {
-        value: "2×",
-        label: "Application",
-        desc: "Brush and spray techniques for every case.",
-      },
-    ],
-  },
-  {
     slug: "Resin",
     name: "Resin & Materials",
     category: "Materials",
@@ -415,7 +359,6 @@ export const PRODUCT_CATEGORY_ORDER = [
   'Curing Machine',
   'Scanner',
   'Digital',
-  'Finishing',
   'Materials',
 ] as const;
 

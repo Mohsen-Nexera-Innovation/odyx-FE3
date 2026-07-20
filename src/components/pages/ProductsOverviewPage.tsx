@@ -4,13 +4,12 @@ import Link from 'next/link';
 import { Arrow } from '@/components/PageHero';
 import { PRODUCTS, type ProductContent } from '@/content/products';
 
-/** Scan → Design → Print → Cure → Finish → Materials */
+/** Scan → Design → Print → Cure → Materials */
 const WORKFLOW_ORDER = [
   'intraoral-scanner',
   'design',
   '3d-printers',
   'curing-machines',
-  'staining-glazing',
   'Resin',
 ] as const;
 
@@ -20,7 +19,6 @@ const CUTOUTS: Partial<Record<(typeof WORKFLOW_ORDER)[number], string>> = {
   design: '/img/cutouts/feat-design-cutout.png',
   '3d-printers': '/img/cutouts/feat-printer-cutout.png',
   'curing-machines': '/img/cutouts/feat-curing-cutout.png',
-  'staining-glazing': '/img/cutouts/feat-finishing-cutout.png',
   Resin: '/img/cutouts/feat-resin-cutout.png',
 };
 

@@ -116,7 +116,6 @@ export const HEADER_MENUS: NavGroup[] = [
       { label: "ODYX-S1", href: "/products/intraoral-scanner" },
       { label: "Design Software", href: "/products/design" },
       { label: "ODYX Cure", href: "/products/curing-machines" },
-      { label: "Staining & Glazing", href: "/products/staining-glazing" },
       { label: "Resin", href: "/products/Resin" },
       { label: "Design Services", href: "/design-services" },
       { label: "Store", href: "/shop" },
@@ -178,16 +177,6 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "Resin",
                 href: "/products/Resin",
                 desc: "Five clinical lines, workflow-validated",
-              },
-            ],
-          },
-          {
-            label: "Finishing",
-            items: [
-              {
-                label: "Staining & Glazing",
-                href: "/products/staining-glazing",
-                desc: "Lifelike characterization",
               },
             ],
           },

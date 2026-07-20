@@ -5,7 +5,7 @@ import InnerPageMotion from "@/components/InnerPageMotion";
 export const metadata: Metadata = {
   title: "Products | ODYX",
   description:
-    "Explore the ODYX ecosystem — P1-26 printer, ODYX-S1 scanner, design software, curing, finishing and clinical resin.",
+    "Explore the ODYX ecosystem — P1-26 printer, ODYX-S1 scanner, design software, curing and clinical resin.",
 };
 
 export default function Page() {
