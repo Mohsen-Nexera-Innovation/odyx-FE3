@@ -284,8 +284,8 @@ export const PRODUCTS: ProductContent[] = [
   },
   {
     slug: "Resin",
-    name: "Resins",
-    category: "Resins",
+    name: "Resin",
+    category: "Resin",
     layout: "cinematic",
     tagline: "Five clinical lines validated for the ODYX workflow.",
     overview:
@@ -359,7 +359,7 @@ export const PRODUCT_CATEGORY_ORDER = [
   'Digital Products',
   '3D Printers',
   'Curing Machines',
-  'Resins',
+  'Resin',
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORY_ORDER)[number];

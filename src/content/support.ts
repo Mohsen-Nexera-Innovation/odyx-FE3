@@ -52,7 +52,7 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
     items: [
       { label: "Which resin for crowns?", href: "#", meta: "FAQ" },
       { label: "Workflow overview", href: "/workflows", meta: "Guide" },
-      { label: "Register your device", href: "/#register", meta: "Guide" },
+      { label: "Register your device", href: "/support#register", meta: "Guide" },
       { label: "Warranty coverage", href: "#warranty", meta: "FAQ" },
     ],
   },
@@ -61,13 +61,13 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
     title: "Warranty & Service",
     desc: "Coverage, repairs and RMA for registered products.",
     items: [
-      { label: "Register a device", href: "/#register", meta: "Required" },
+      { label: "Register a device", href: "/support#register", meta: "Required" },
       {
         label: "Check warranty status",
-        href: "/#register",
+        href: "/support#register",
         meta: "Self-service",
       },
-      { label: "Request service / RMA", href: "/support", meta: "Contact" },
+      { label: "Request service / RMA", href: "/support#contact", meta: "Contact" },
     ],
   },
   {
@@ -79,7 +79,7 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
       { label: "WhatsApp customer care", href: "#", meta: "24/7" },
       {
         label: "Technical support form",
-        href: "/support",
+        href: "/support#contact",
         meta: "Email follow-up",
       },
     ],

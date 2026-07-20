@@ -1,12 +1,10 @@
 "use client";
-// Featured products as a 3D coverflow carousel across the full ODYX range (not just the
-// workflow steps — the connected workflow is shown in the Ecosystem section). The focused
-// product sits front-and-center with an intraoral "scan-beam" sweep; neighbours fan back in
-// perspective. Auto-advances (pauses on hover); arrows, side cards and dots all navigate.
+// Featured products — 3-slot coverflow (left / center / right). Cards enter and exit
+// from the sides via motion; no circular CSS-transform wrap, so nothing flies through center.
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
 import { formatMoney, getProductById } from "@/content/shop";
 import { readSession } from "@/lib/auth";
 import { addItemAsync, resolveCartProductId } from "@/lib/commerce";
@@ -25,15 +23,24 @@ interface Product {
   shopProductId?: string;
 }
 
-/* Sub-brand line: scanning/imaging → ODYX Scanners; print/cure/materials/finishing → ODYX Digital Printing */
+/* Sub-brand line: scanners → ODYX Scanners; print/cure/materials → ODYX Digital Printing */
 const BRAND_LINE: Record<string, { src: string; alt: string }> = {
+  Scanner: { src: "/brand/odyx-scanners-wide.png", alt: "ODYX Scanners" },
   Scanning: { src: "/brand/odyx-scanners-wide.png", alt: "ODYX Scanners" },
   Imaging: { src: "/brand/odyx-scanners-wide.png", alt: "ODYX Scanners" },
+  Printer: {
+    src: "/brand/odyx-digital-printing.png",
+    alt: "ODYX Digital Printing",
+  },
   Printing: {
     src: "/brand/odyx-digital-printing.png",
     alt: "ODYX Digital Printing",
   },
   Curing: {
+    src: "/brand/odyx-digital-printing.png",
+    alt: "ODYX Digital Printing",
+  },
+  "Curing Machine": {
     src: "/brand/odyx-digital-printing.png",
     alt: "ODYX Digital Printing",
   },
@@ -94,6 +101,48 @@ const PRODUCTS: Product[] = [
   },
 ];
 const N = PRODUCTS.length;
+const SLOTS = [-1, 0, 1] as const;
+type Slot = (typeof SLOTS)[number];
+
+const spring = { type: "spring" as const, stiffness: 280, damping: 32, mass: 0.85 };
+
+/** Shortest signed step on a circular list of length N. */
+function shortestDelta(from: number, to: number) {
+  let d = to - from;
+  if (d > N / 2) d -= N;
+  if (d < -N / 2) d += N;
+  return d;
+}
+
+function poseFor(slot: Slot, sideX: number) {
+  if (slot === 0) {
+    return { x: 0, rotateY: 0, scale: 1, opacity: 1, z: 48 };
+  }
+  if (slot < 0) {
+    return { x: -sideX, rotateY: 34, scale: 0.86, opacity: 0.9, z: -130 };
+  }
+  return { x: sideX, rotateY: -34, scale: 0.86, opacity: 0.9, z: -130 };
+}
+
+function enterPose(dir: number, flyX: number) {
+  return {
+    x: dir >= 0 ? flyX : -flyX,
+    rotateY: dir >= 0 ? -46 : 46,
+    scale: 0.72,
+    opacity: 0,
+    z: -240,
+  };
+}
+
+function exitPose(dir: number, flyX: number) {
+  return {
+    x: dir >= 0 ? -flyX : flyX,
+    rotateY: dir >= 0 ? 46 : -46,
+    scale: 0.72,
+    opacity: 0,
+    z: -240,
+  };
+}
 
 const Arrow = () => (
   <svg
@@ -124,24 +173,52 @@ const Chevron = ({ left }: { left?: boolean }) => (
 
 export default function ProductGallery() {
   const router = useRouter();
+  const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [ringW, setRingW] = useState(640);
   const paused = useRef(false);
+  const activeRef = useRef(0);
+  const ringRef = useRef<HTMLDivElement>(null);
+  activeRef.current = active;
 
   useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const iv = setInterval(() => {
-      if (!paused.current) setActive((a) => (a + 1) % N);
-    }, 4200);
-    return () => clearInterval(iv);
+    const el = ringRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width;
+      if (w) setRingW(w);
+    });
+    ro.observe(el);
+    setRingW(el.clientWidth);
+    return () => ro.disconnect();
   }, []);
 
-  const go = (d: number) => setActive((a) => (a + d + N) % N);
-  const rel = (i: number) => {
-    let o = i - active;
-    if (o > N / 2) o -= N;
-    if (o < -N / 2) o += N;
-    return o;
+  const sideX = Math.round(ringW * 0.34);
+  const flyX = Math.round(ringW * 0.58);
+
+  const moveTo = (next: number | ((a: number) => number)) => {
+    const a = activeRef.current;
+    const target =
+      (((typeof next === "function" ? next(a) : next) % N) + N) % N;
+    if (target === a) return;
+    const delta = shortestDelta(a, target);
+    setDirection(delta >= 0 ? 1 : -1);
+    setActive(target);
   };
+
+  const moveToRef = useRef(moveTo);
+  moveToRef.current = moveTo;
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const iv = setInterval(() => {
+      if (!paused.current) moveToRef.current((cur) => cur + 1);
+    }, 4200);
+    return () => clearInterval(iv);
+  }, [reduceMotion]);
+
+  const go = (d: number) => moveTo((a) => a + d);
   const current = PRODUCTS[active];
   const shopProduct = current.shopProductId
     ? getProductById(current.shopProductId)
@@ -159,28 +236,12 @@ export default function ProductGallery() {
     router.push("/checkout");
   }
 
-  /** Coverflow: active card straight; neighbors fanned in 3D */
-  const cardStyle = (o: number): CSSProperties => {
-    const abs = Math.abs(o);
-    if (o === 0) {
-      return {
-        transform: "translate3d(0, 0, 56px) scale(1)",
-        opacity: 1,
-        zIndex: 30,
-        pointerEvents: "auto",
-      };
-    }
-    const x = o * 18;
-    const z = -210 - (abs - 1) * 100;
-    const ry = o < 0 ? 62 : -62;
-    const s = abs === 1 ? 0.86 : 0.78;
-    return {
-      transform: `translate3d(${x}cqi, 0, ${z}px) rotateY(${ry}deg) scale(${s})`,
-      opacity: abs > 2 ? 0 : abs === 1 ? 0.78 : 0.45,
-      zIndex: 20 - abs,
-      pointerEvents: abs > 2 ? "none" : "auto",
-    };
-  };
+  const visible = SLOTS.map((slot) => ({
+    slot,
+    index: (active + slot + N) % N,
+  }));
+
+  const transition = reduceMotion ? { duration: 0 } : spring;
 
   return (
     <div
@@ -190,30 +251,46 @@ export default function ProductGallery() {
       onMouseLeave={() => (paused.current = false)}
     >
       <div className="pgx-deck">
-        <div className="pgx-ring" role="listbox" aria-label="Featured products">
-          {PRODUCTS.map((pr, i) => {
-            const o = rel(i);
-            return (
-              <button
-                key={pr.name}
-                type="button"
-                className={`pgx-card${i === active ? " on" : ""}`}
-                data-accent={pr.accent}
-                style={cardStyle(o)}
-                onClick={() => setActive(i)}
-                aria-selected={i === active}
-                aria-label={pr.name}
-              >
-                <img src={pr.img} alt={pr.name} loading="lazy" />
-                <span className="pgx-scrim" />
-                {i === active && <span className="pgx-beam" aria-hidden />}
-                <span className="pgx-card-tag">
-                  <b>{pr.name}</b>
-                  <span>{pr.cat}</span>
-                </span>
-              </button>
-            );
-          })}
+        <div
+          ref={ringRef}
+          className="pgx-ring"
+          role="listbox"
+          aria-label="Featured products"
+        >
+          <AnimatePresence initial={false} custom={direction}>
+            {visible.map(({ slot, index }) => {
+              const pr = PRODUCTS[index];
+              const on = slot === 0;
+              return (
+                <motion.button
+                  key={pr.name}
+                  type="button"
+                  className={`pgx-card${on ? " on" : ""}`}
+                  data-accent={pr.accent}
+                  initial={enterPose(direction, flyX)}
+                  animate={poseFor(slot, sideX)}
+                  exit={exitPose(direction, flyX)}
+                  transition={transition}
+                  style={{ zIndex: on ? 30 : 20, transformPerspective: 1200 }}
+                  onClick={() => {
+                    if (!on) moveTo(index);
+                  }}
+                  aria-selected={on}
+                  aria-label={pr.name}
+                >
+                  <img src={pr.img} alt={pr.name} loading="lazy" draggable={false} />
+                  <span className="pgx-scrim" />
+                  {on && !reduceMotion && (
+                    <span className="pgx-beam" aria-hidden />
+                  )}
+                  <span className="pgx-card-tag">
+                    <b>{pr.name}</b>
+                    <span>{pr.cat}</span>
+                  </span>
+                </motion.button>
+              );
+            })}
+          </AnimatePresence>
         </div>
         <button
           className="pgx-nav prev"
@@ -281,7 +358,7 @@ export default function ProductGallery() {
                 type="button"
                 className={`pgx-dot${i === active ? " on" : ""}`}
                 data-accent={pr.accent}
-                onClick={() => setActive(i)}
+                onClick={() => moveTo(i)}
                 aria-current={i === active}
                 aria-label={pr.name}
               />

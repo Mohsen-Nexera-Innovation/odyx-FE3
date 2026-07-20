@@ -131,7 +131,7 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "ODYX Cure",
       },
       {
-        label: "Resins",
+        label: "Resin",
         href: "/products/Resin",
         desc: "Clinical resin lines",
       },
@@ -173,7 +173,7 @@ export const HEADER_MENUS: NavGroup[] = [
             ],
           },
           {
-            label: "Resins",
+            label: "Resin",
             items: [
               {
                 label: "Resin lines",
@@ -442,7 +442,7 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "Register Device",
-        href: "/#register",
+        href: "/support#register",
         desc: "Activate your warranty",
       },
       {
@@ -494,7 +494,7 @@ export const HEADER_MENUS: NavGroup[] = [
           },
           {
             label: "Register Device",
-            href: "/#register",
+            href: "/support#register",
             desc: "Activate your warranty",
           },
           {

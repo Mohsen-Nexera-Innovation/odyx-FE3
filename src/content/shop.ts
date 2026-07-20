@@ -21,7 +21,7 @@ export const SHOP_CATEGORY_LABEL: Record<ShopCategory, string> = {
   scanner: 'Intraoral Scanner',
   printer: '3D Printers',
   curing: 'Curing Machines',
-  resin: 'Resins',
+  resin: 'Resin',
   design: 'Design service',
 };
 

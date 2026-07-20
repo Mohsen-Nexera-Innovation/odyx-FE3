@@ -11,7 +11,7 @@ const COLUMNS = [
       { label: 'Digital Products', href: '/products/design' },
       { label: '3D Printers', href: '/products/3d-printers' },
       { label: 'Curing Machines', href: '/products/curing-machines' },
-      { label: 'Resins', href: '/products/Resin' },
+      { label: 'Resin', href: '/products/Resin' },
       { label: 'All Products', href: '/products' },
     ],
   },

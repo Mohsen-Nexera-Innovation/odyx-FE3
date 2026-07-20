@@ -57,7 +57,7 @@ const CHANNELS: SupportChannel[] = [
     detail: "Check warranty status, book repairs and download service reports.",
     hours: "Response within 24h",
     action: "Manage warranty",
-    href: "/support",
+    href: "/support#register",
   },
 ];
 

@@ -44,7 +44,7 @@ const SEARCH_ITEMS = [
   { label: "For Dentists", href: "/solutions/dentists" },
   { label: "For Dental Labs", href: "/solutions/labs" },
   { label: "Support Hub", href: "/support" },
-  { label: "Register your device", href: "/#register" },
+  { label: "Register your device", href: "/support#register" },
   { label: "Learning Center", href: "/learning" },
   { label: "Request a Demo", href: "/support" },
 ];

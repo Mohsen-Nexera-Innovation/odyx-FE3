@@ -407,7 +407,7 @@ export default function Header() {
           ))}
           <div className="nav-mobile-auth" aria-label="Account">
             {session ? (
-              <Link className="btn-ghost btn btn-sm" href="/#register" onClick={closeMenu}>Register device</Link>
+              <Link className="btn-ghost btn btn-sm" href="/support#register" onClick={closeMenu}>Register device</Link>
             ) : (
               <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
             )}
@@ -450,7 +450,7 @@ export default function Header() {
                 </Link>
               ) : (
                 <>
-                  <Link className="btn-ghost btn btn-sm nav-reg-device" href="/#register">
+                  <Link className="btn-ghost btn btn-sm nav-reg-device" href="/support#register">
                     <span className="nav-label-long">Register device</span>
                     <span className="nav-label-short">Device</span>
                   </Link>
