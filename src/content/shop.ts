@@ -33,13 +33,16 @@ export const SHOP_CATEGORIES: { id: ShopCategory | 'all'; label: string }[] = [
   { id: 'resin', label: SHOP_CATEGORY_LABEL.resin },
 ];
 
+/** Dummy EGP = former USD list × 50. Replace when exact list prices are set. */
+const USD_TO_EGP_DUMMY = 50;
+
 export const SHOP_PRODUCTS: ShopProduct[] = [
   {
     id: 'printer-p1-26',
     slug: 'odyx-p1-26',
     name: 'ODYX P1-26',
     desc: 'Desktop 3D printer for chairside and lab production — crowns, guides, models and dentures with validated resin profiles.',
-    price: 4999,
+    price: 4999 * USD_TO_EGP_DUMMY,
     image: '/img/feat-printer.jpg',
     category: 'printer',
     unit: '1 unit',
@@ -51,7 +54,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     slug: 'odyx-cure',
     name: 'ODYX Cure',
     desc: 'Standard clinic and lab curing unit with resin-specific presets for consistent, biocompatible outcomes.',
-    price: 2499,
+    price: 2499 * USD_TO_EGP_DUMMY,
     image: '/img/feat-curing.jpg',
     category: 'curing',
     unit: '1 unit',
@@ -63,7 +66,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     slug: 'odyx-s1',
     name: 'ODYX-S1',
     desc: 'Intraoral scanner for full-arch color impressions with real-time mesh preview and open STL / PLY / OBJ export.',
-    price: 8999,
+    price: 8999 * USD_TO_EGP_DUMMY,
     image: '/img/feat-scanner.jpg',
     category: 'scanner',
     unit: '1 unit',
@@ -75,7 +78,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     slug: 'odyx-resin',
     name: 'ODYX Resin',
     desc: 'Clinical resin lines for permanent crowns, ceramic aesthetics, provisionals, models and surgical guides — validated for ODYX print and cure.',
-    price: 899,
+    price: 899 * USD_TO_EGP_DUMMY,
     image: '/img/feat-resin.jpg',
     category: 'resin',
     unit: '1 bottle',
@@ -84,8 +87,8 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
 ];
 
-export const FREE_SHIPPING_THRESHOLD = 5000;
-export const FLAT_SHIPPING_EGP = 150;
+export const FREE_SHIPPING_THRESHOLD = 5000 * USD_TO_EGP_DUMMY;
+export const FLAT_SHIPPING_EGP = 150 * USD_TO_EGP_DUMMY;
 
 export function getProductById(id: string): ShopProduct | undefined {
   return SHOP_PRODUCTS.find((p) => p.id === id || p.slug === id);

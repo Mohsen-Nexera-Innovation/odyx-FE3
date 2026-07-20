@@ -11,6 +11,31 @@ import CaseSpotlight from "./CaseSpotlight";
 import LearningTabs from "./LearningTabs";
 import SupportHub from "./SupportHub";
 import SecHead from "@/components/SecHead";
+import { formatMoney, getProductById } from "@/content/shop";
+
+const HOME_SHOP_CARDS = [
+  {
+    slug: "odyx-p1-26",
+    desc: "Desktop 3D printer for chairside and lab production.",
+    cta: "Buy online",
+    href: "/shop?cat=printer",
+    cat: "Printer",
+  },
+  {
+    slug: "odyx-cure",
+    desc: "Standard clinic and lab curing unit with resin-specific presets.",
+    cta: "Buy online",
+    href: "/shop?cat=curing",
+    cat: "Curing Machine",
+  },
+  {
+    slug: "odyx-s1",
+    desc: "Intraoral scanner for full-arch color impressions in seconds.",
+    cta: "Buy online",
+    href: "/shop?cat=scanner",
+    cat: "Scanner",
+  },
+] as const;
 
 const PathUpArrow = ({ s = 22 }: { s?: number }) => (
   <svg
@@ -560,53 +585,29 @@ export default function Home() {
           <div className="shop-flow">
             <div className="pulse-line" />
             <div className="shop-grid build-group">
-              {[
-                [
-                  "ODYX P1-26",
-                  "Desktop 3D printer for chairside and lab production.",
-                  "From EGP 4,999",
-                  "Buy online",
-                  "/img/feat-printer.jpg",
-                  "/shop?cat=printer",
-                  "Printer",
-                ],
-                [
-                  "ODYX Cure",
-                  "Standard clinic and lab curing unit with resin-specific presets.",
-                  "From EGP 2,499",
-                  "Buy online",
-                  "/img/feat-curing.jpg",
-                  "/shop?cat=curing",
-                  "Curing Machine",
-                ],
-                [
-                  "ODYX-S1",
-                  "Intraoral scanner for full-arch color impressions in seconds.",
-                  "From EGP 8,999",
-                  "Buy online",
-                  "/img/feat-scanner.jpg",
-                  "/shop?cat=scanner",
-                  "Scanner",
-                ],
-              ].map(([t, d, price, cta, img, href, cat]) => (
-                <div key={t} className="shop-card build">
-                  <div className="shop-media">
-                    <div className="imgslot parallax">
-                      <PH label={t} />
-                      <img data-isrc={img} alt={t} />
+              {HOME_SHOP_CARDS.map((card) => {
+                const product = getProductById(card.slug);
+                if (!product) return null;
+                return (
+                  <div key={product.slug} className="shop-card build">
+                    <div className="shop-media">
+                      <div className="imgslot parallax">
+                        <PH label={product.name} />
+                        <img data-isrc={product.image} alt={product.name} />
+                      </div>
+                      <span className="price">From {formatMoney(product.price)}</span>
                     </div>
-                    <span className="price">{price}</span>
+                    <div className="shop-body">
+                      <p className="shop-card-cat">{card.cat}</p>
+                      <h4>{product.name}</h4>
+                      <p>{card.desc}</p>
+                      <a className="btn btn-sm" href={card.href}>
+                        {card.cta} <Arrow s={15} />
+                      </a>
+                    </div>
                   </div>
-                  <div className="shop-body">
-                    <p className="shop-card-cat">{cat}</p>
-                    <h4>{t}</h4>
-                    <p>{d}</p>
-                    <a className="btn btn-sm" href={href}>
-                      {cta} <Arrow s={15} />
-                    </a>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
