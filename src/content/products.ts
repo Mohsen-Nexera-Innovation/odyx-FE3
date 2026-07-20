@@ -57,6 +57,7 @@ export const PRODUCTS: ProductContent[] = [
     overview:
       "The ODYX-S1 intraoral scanner captures full-arch color scans with real-time mesh preview. Open export formats connect directly to design and lab workflows without proprietary lock-in.",
     img: "/img/feat-scanner.jpg",
+    heroImg: "/img/cutouts/feat-scanner-cutout.png",
     accent: "teal",
     workflowStep: "scan",
     applications: [
@@ -114,6 +115,7 @@ export const PRODUCTS: ProductContent[] = [
     overview:
       "Design crowns, guides, models and dentures with libraries validated for ODYX materials. Export print-ready files with supports and nesting optimized for ODYX printers.",
     img: "/img/odyx/design.webp",
+    heroImg: "/img/cutouts/feat-design-cutout.png",
     accent: "teal",
     workflowStep: "design",
     applications: [
@@ -174,7 +176,7 @@ export const PRODUCTS: ProductContent[] = [
     overview:
       "The ODYX P1-26 delivers crowns, guides, models and dentures with validated resin profiles. Compact footprint, simple maintenance and workflow-linked presets keep production predictable.",
     img: "/img/feat-printer.jpg",
-    heroImg: "/img/feat-printer-cutout.png",
+    heroImg: "/img/cutouts/feat-printer-cutout.png",
     accent: "orange",
     workflowStep: "print",
     applications: [
@@ -232,6 +234,7 @@ export const PRODUCTS: ProductContent[] = [
     overview:
       "ODYX Cure applies validated light dose and time per resin type. Presets link to the workflow so clinic and lab teams get consistent mechanical properties without guesswork.",
     img: "/img/feat-curing.jpg",
+    heroImg: "/img/cutouts/feat-curing-cutout.png",
     accent: "orange",
     workflowStep: "cure",
     applications: [
@@ -288,6 +291,7 @@ export const PRODUCTS: ProductContent[] = [
     overview:
       "Complete the aesthetic layer with ODYX-compatible stains and glaze systems. From monolithic convenience to full layering, match patient shade and surface texture with predictable results.",
     img: "/img/feat-finishing.jpg",
+    heroImg: "/img/cutouts/feat-finishing-cutout.png",
     accent: "orange",
     workflowStep: "finish",
     applications: [
@@ -343,6 +347,7 @@ export const PRODUCTS: ProductContent[] = [
     overview:
       "Permanent crown, ceramic crown, temporary, model and surgical guide Resin - each with datasheets, cure profiles and safety documentation. The materials layer that makes the ecosystem clinically complete.",
     img: "/img/feat-resin.jpg",
+    heroImg: "/img/cutouts/feat-resin-cutout.png",
     accent: "orange",
     workflowStep: "print",
     applications: [
