@@ -35,7 +35,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="Highlights" />
+          <SecHead eyebrow="Key benefits" />
           <div className="pill-list reveal">
             {step.benefits.map((b) => (
               <span key={b}>{b}</span>
@@ -46,17 +46,17 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
 
       <section className="sec">
         <div className="wrap">
-          <SecHead eyebrow="By audience" />
+          <SecHead eyebrow="For dentists & labs" />
           <div className="g2 build-group">
             <div className="card reveal build">
               <span className="card-eyebrow teal">Dentist</span>
-              <h3>Chairside emphasis</h3>
+              <h3>Chairside</h3>
               <p>{step.dentistNote}</p>
               <Link className="more" href="/solutions/dentists">Dentist path <Arrow /></Link>
             </div>
             <div className="card reveal build">
               <span className="card-eyebrow orange">Lab</span>
-              <h3>Production emphasis</h3>
+              <h3>Production</h3>
               <p>{step.labNote}</p>
               <Link className="more" href="/solutions/labs">Lab path <Arrow /></Link>
             </div>
@@ -67,7 +67,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
       {step.learning.length > 0 && (
         <section className="sec sec-teal">
           <div className="wrap">
-            <SecHead eyebrow="Learn more" />
+            <SecHead eyebrow="Related learning" />
             <div className="pill-list reveal">
               {step.learning.map((l) => (
                 <Link key={l.label} href={l.href}>{l.label}</Link>

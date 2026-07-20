@@ -66,26 +66,39 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
   );
 
   const hasMultipleModels = product.models.length > 1;
+  const modelsEyebrow = product.slug === 'Resin' ? 'Resin lines' : 'Models';
   const modelsSection = hasMultipleModels ? (
     <section className="sec">
       <div className="wrap">
-        <SecHead eyebrow="Models" />
+        <SecHead eyebrow={modelsEyebrow} h2={product.slug === 'Resin' ? 'Choose a clinical line' : undefined} />
         <div className="build-group prod-models g2">
           {product.models.map((m) => (
             <div key={m.name} className="card build reveal prod-model-card">
               <span className="prod-model-card__badge">{product.category}</span>
               <h3>{m.name}</h3>
               <p>{m.tagline}</p>
-              {m.shopProductId ? (
-                <ProductBuyActions
-                  shopProductId={m.shopProductId}
-                  accent={product.accent === 'orange' ? 'orange' : 'sky'}
-                />
-              ) : (
-                <Link className="btn btn-ghost btn-sm prod-model-demo" href="/support">
-                  Request a Demo <Arrow />
-                </Link>
-              )}
+              <div className="prod-model-card__actions">
+                {m.shopProductId ? (
+                  <ProductBuyActions
+                    shopProductId={m.shopProductId}
+                    accent={product.accent === 'orange' ? 'orange' : 'sky'}
+                    extra={
+                      <Link className="btn btn-ghost btn-sm" href="/support">
+                        Request a Demo <Arrow />
+                      </Link>
+                    }
+                  />
+                ) : (
+                  <Link className="btn btn-ghost btn-sm" href="/support">
+                    Request a Demo <Arrow />
+                  </Link>
+                )}
+                {product.slug === 'design' ? (
+                  <Link className="btn btn-sm" href="/design-services">
+                    Design Services <Arrow />
+                  </Link>
+                ) : null}
+              </div>
             </div>
           ))}
         </div>
@@ -147,7 +160,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             heroImg={product.heroImg ?? product.img}
             heroAlt={product.name}
             primaryAction={{ label: 'Request a Demo', href: '/support' }}
-            secondaryAction={{ label: 'Workflow step', href: `/workflows/${product.workflowStep}` }}
+            secondaryAction={{ label: 'Contact Sales', href: '/support#contact' }}
             actions={
               buyableModel?.shopProductId ? (
                 <ProductHeroBuyCta
@@ -270,9 +283,9 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
               </Link>
               <Link
                 className={`btn btn-ghost${layout === 'signature' ? ' prod-print-hero__ghost' : ''}`}
-                href={`/workflows/${product.workflowStep}`}
+                href="/support#contact"
               >
-                Workflow step <Arrow />
+                Contact Sales <Arrow />
               </Link>
             </PageActions>
           )

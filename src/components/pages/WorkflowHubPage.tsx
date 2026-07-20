@@ -20,9 +20,19 @@ export default function WorkflowHubPage() {
         secondaryAction={{ label: 'Products', href: '/products' }}
       />
 
+      <section className="sec">
+        <div className="wrap">
+          <SecHead
+            eyebrow="Overview"
+            h2="How ODYX connects"
+            p="A short path from capture to delivery — each step links to the product and learning you need."
+          />
+        </div>
+      </section>
+
       <section className="sec sec-teal">
         <div className="wrap">
-          <SecHead eyebrow="Six steps" />
+          <SecHead eyebrow="Steps" />
           <div className="wf-hub-grid build-group">
             {WORKFLOW_STEPS.map((s) => (
               <Link key={s.id} href={`/workflows/${s.id}`} className={`wf-hub-card build${s.accent === 'teal' ? ' teal' : ''}`}>

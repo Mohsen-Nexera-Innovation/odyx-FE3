@@ -41,8 +41,8 @@ export default function NewsShowcase() {
   const s = STORIES[active];
 
   return (
-    <div className="news-grid" onMouseEnter={() => (paused.current = true)} onMouseLeave={() => (paused.current = false)}>
-      <a href="#" className="news-lead">
+    <div className="news-strip" onMouseEnter={() => (paused.current = true)} onMouseLeave={() => (paused.current = false)}>
+      <a href="/#news" className="news-lead">
         <div className="news-lead-media">
           <img src={s.img} alt={s.alt} className={`news-lead-img parallax${anim ? ' swap' : ''}`} />
         </div>
@@ -50,7 +50,7 @@ export default function NewsShowcase() {
         <h3>{s.title}</h3>
         <p>{s.desc}</p>
       </a>
-      <div className="news-side">
+      <div className="news-side news-side--strip" role="list">
         {STORIES.map((story, i) => (
           <button key={story.title} type="button"
             className={`news-item${i === active ? ' on' : ''}`}

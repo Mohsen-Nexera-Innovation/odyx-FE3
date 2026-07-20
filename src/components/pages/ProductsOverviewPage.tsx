@@ -63,6 +63,17 @@ function Spotlight({
             <Link className="btn" href={`/products/${product.slug}`}>
               Explore {product.name} <Arrow />
             </Link>
+            <Link className="btn btn-ghost" href="/support">
+              Request a Demo
+            </Link>
+            <Link className="btn btn-ghost" href="/support#contact">
+              Contact Sales
+            </Link>
+            {product.slug === 'design' ? (
+              <Link className="btn btn-ghost" href="/design-services">
+                Design Services
+              </Link>
+            ) : null}
           </div>
         </div>
       </div>

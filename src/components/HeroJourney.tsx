@@ -16,7 +16,6 @@ const STEPS: JStep[] = [
   { no: '06', label: 'Smile', accent: 'orange', icon: 'smile', cap: 'A finished restoration, delivered - often same-day. One connected workflow.' },
 ];
 const N = STEPS.length;
-const Arrow = () => (<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 6l6 6-6 6" /></svg>);
 
 const STEP_ICONS: Record<StepIcon, ReactNode> = {
   scan: <><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" /><circle cx="12" cy="12" r="3" /></>,
@@ -101,11 +100,7 @@ export default function HeroJourney() {
             From a single <span className={`kw${active === 0 ? ' lit' : ''}`}>scan</span><br />
             to a finished <span className={`kw${active === N - 1 ? ' lit' : ''}`}>smile</span>.
           </h1>
-          <p className="hc-lead">{step.cap}</p>
-          <div className="hc-cta">
-            <a className="btn" href="/products">Explore Products <Arrow /></a>
-            <a className="btn btn-ghost" href="/support">Request a Demo →</a>
-          </div>
+          <p className="hc-lead">One connected digital dentistry workflow — scanner, design, print, cure and resin.</p>
         </div>
       </div>
 

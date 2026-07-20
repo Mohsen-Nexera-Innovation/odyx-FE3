@@ -45,7 +45,7 @@ export default function SupportHubPage() {
       {SUPPORT_SECTIONS.map((sec, i) => (
         <section key={sec.id} className={`sec${i % 2 === 0 ? '' : ' sec-orange'}`} id={sec.id}>
           <div className="wrap">
-            <SecHead eyebrow={sec.title} align="left" />
+            <SecHead eyebrow={sec.title} align="left" p={sec.desc} />
             <ul className="support-list reveal">
               {sec.items.map((item) => (
                 <li key={item.label}>

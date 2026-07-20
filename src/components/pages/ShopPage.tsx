@@ -90,6 +90,9 @@ function ProductCard({
           <button type="button" className="btn btn-ghost btn-sm" onClick={() => onBuyNow(p.id)}>
             Buy now
           </button>
+          <Link className="btn btn-ghost btn-sm" href="/support">
+            Demo
+          </Link>
         </div>
       </div>
     </article>
@@ -171,6 +174,12 @@ export default function ShopPage() {
           <PageActions>
             <Link className="btn" href="/cart">
               View cart <Arrow />
+            </Link>
+            <Link className="btn btn-ghost" href="/support#contact">
+              Contact Sales
+            </Link>
+            <Link className="btn btn-ghost" href="/support">
+              Request a Demo
             </Link>
           </PageActions>
         }

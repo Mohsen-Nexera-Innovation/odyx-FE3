@@ -240,7 +240,7 @@ export default function Spine() {
                   {!isLast && <span className="spine-connector" />}
                 </span>
 
-                <span className="spine-text">
+                <span className="spine-text" data-active={state === 'on' ? 'true' : 'false'}>
                   <span className="spine-title">{title}</span>
                 </span>
               </button>

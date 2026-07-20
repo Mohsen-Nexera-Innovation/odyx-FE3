@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { formatMoney, getProductById, type ShopProduct } from '@/content/shop';
 import { readSession } from '@/lib/auth';
 import {
@@ -20,9 +20,12 @@ const Arrow = () => (
 export default function ProductBuyActions({
   shopProductId,
   accent = 'sky',
+  extra,
 }: {
   shopProductId: string;
   accent?: 'sky' | 'teal' | 'orange';
+  /** Rendered on the same row as Add to cart / Buy now */
+  extra?: ReactNode;
 }) {
   const router = useRouter();
   const [added, setAdded] = useState(false);
@@ -87,6 +90,7 @@ export default function ProductBuyActions({
         <button type="button" className="btn btn-ghost btn-sm" onClick={() => void onBuyNow()}>
           Buy now <Arrow />
         </button>
+        {extra}
       </div>
     </div>
   );

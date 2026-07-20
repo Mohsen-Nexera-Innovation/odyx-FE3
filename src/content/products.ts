@@ -51,7 +51,7 @@ export const PRODUCTS: ProductContent[] = [
   {
     slug: "intraoral-scanner",
     name: "ODYX-S1",
-    category: "Scanner",
+    category: "Intraoral Scanner",
     layout: "cinematic",
     tagline: "Chairside 3D impressions in seconds.",
     overview:
@@ -109,7 +109,7 @@ export const PRODUCTS: ProductContent[] = [
   {
     slug: "design",
     name: "Design Software",
-    category: "Digital",
+    category: "Digital Products",
     layout: "cinematic",
     tagline: "CAD built for ODYX print and cure parameters.",
     overview:
@@ -170,7 +170,7 @@ export const PRODUCTS: ProductContent[] = [
   {
     slug: "3d-printers",
     name: "ODYX P1-26",
-    category: "Printer",
+    category: "3D Printers",
     layout: "cinematic",
     tagline: "Desktop production for clinic and lab.",
     overview:
@@ -228,7 +228,7 @@ export const PRODUCTS: ProductContent[] = [
   {
     slug: "curing-machines",
     name: "ODYX Cure",
-    category: "Curing Machine",
+    category: "Curing Machines",
     layout: "cinematic",
     tagline: "Full-strength, biocompatible cure every time.",
     overview:
@@ -238,10 +238,10 @@ export const PRODUCTS: ProductContent[] = [
     accent: "orange",
     workflowStep: "cure",
     applications: [
-      "Crown & bridge Resin",
-      "Surgical guide materials",
+      "Crown & Bridge Resin",
+      "Surgical Guide Pro materials",
       "Denture bases",
-      "Model Resin",
+      "Model 2.0 Resin",
     ],
     models: [
       { name: "ODYX Cure", tagline: "Standard clinic and lab unit", shopProductId: "curing-odyx-cure" },
@@ -284,12 +284,12 @@ export const PRODUCTS: ProductContent[] = [
   },
   {
     slug: "Resin",
-    name: "Resin & Materials",
-    category: "Materials",
+    name: "Resins",
+    category: "Resins",
     layout: "cinematic",
     tagline: "Five clinical lines validated for the ODYX workflow.",
     overview:
-      "Permanent crown, ceramic crown, temporary, model and surgical guide Resin - each with datasheets, cure profiles and safety documentation. The materials layer that makes the ecosystem clinically complete.",
+      "Ceramic Resin 51%, Crown & Bridge, Temporary Restoration, Model 2.0 and Surgical Guide Pro — each with datasheets, cure profiles and safety documentation. The materials layer that makes the ecosystem clinically complete.",
     img: "/img/feat-resin.jpg",
     heroImg: "/img/cutouts/feat-resin-cutout.png",
     accent: "orange",
@@ -302,15 +302,15 @@ export const PRODUCTS: ProductContent[] = [
       "Dentures",
     ],
     models: [
+      { name: "Ceramic Resin 51%", tagline: "High-ceramic esthetic restorations" },
       {
-        name: "Permanent Crown & Bridge",
+        name: "Crown & Bridge Resin",
         tagline: "Long-term restorative",
         shopProductId: "resin-odyx",
       },
-      { name: "Ceramic Crown", tagline: "Higher esthetics" },
-      { name: "Temporary Restoration", tagline: "Fast provisionals" },
-      { name: "Model Resin", tagline: "Stable models" },
-      { name: "Surgical Guide", tagline: "Guided surgery" },
+      { name: "Temporary Restoration Resin", tagline: "Fast provisionals" },
+      { name: "Model 2.0 Resin", tagline: "Stable, accurate models" },
+      { name: "Surgical Guide Pro Resin", tagline: "Guided surgery" },
     ],
     specs: [
       { label: "Lines", value: "5 clinical Resin" },
@@ -337,7 +337,7 @@ export const PRODUCTS: ProductContent[] = [
       {
         value: "5",
         label: "Clinical lines",
-        desc: "Crown, ceramic, temporary, model and guide Resin.",
+        desc: "Ceramic 51%, Crown & Bridge, Temporary, Model 2.0 and Surgical Guide Pro.",
       },
       {
         value: "100%",
@@ -353,13 +353,13 @@ export const PRODUCTS: ProductContent[] = [
   },
 ];
 
-/** Workflow-aligned product family order */
+/** Sitemap product family order */
 export const PRODUCT_CATEGORY_ORDER = [
-  'Printer',
-  'Curing Machine',
-  'Scanner',
-  'Digital',
-  'Materials',
+  'Intraoral Scanner',
+  'Digital Products',
+  '3D Printers',
+  'Curing Machines',
+  'Resins',
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORY_ORDER)[number];

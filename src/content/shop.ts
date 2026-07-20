@@ -18,18 +18,18 @@ export type ShopProduct = {
 
 /** Display labels for shop category filters and card badges */
 export const SHOP_CATEGORY_LABEL: Record<ShopCategory, string> = {
-  scanner: 'Scanner',
-  printer: 'Printer',
-  curing: 'Curing Machine',
-  resin: 'Resin',
+  scanner: 'Intraoral Scanner',
+  printer: '3D Printers',
+  curing: 'Curing Machines',
+  resin: 'Resins',
   design: 'Design service',
 };
 
 export const SHOP_CATEGORIES: { id: ShopCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
+  { id: 'scanner', label: SHOP_CATEGORY_LABEL.scanner },
   { id: 'printer', label: SHOP_CATEGORY_LABEL.printer },
   { id: 'curing', label: SHOP_CATEGORY_LABEL.curing },
-  { id: 'scanner', label: SHOP_CATEGORY_LABEL.scanner },
   { id: 'resin', label: SHOP_CATEGORY_LABEL.resin },
 ];
 
@@ -77,7 +77,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     id: 'resin-odyx',
     slug: 'odyx-resin',
     name: 'ODYX Resin',
-    desc: 'Clinical resin lines for permanent crowns, ceramic aesthetics, provisionals, models and surgical guides — validated for ODYX print and cure.',
+    desc: 'Clinical resin lines — Ceramic Resin 51%, Crown & Bridge, Temporary Restoration, Model 2.0 and Surgical Guide Pro — validated for ODYX print and cure.',
     price: 899 * USD_TO_EGP_DUMMY,
     image: '/img/feat-resin.jpg',
     category: 'resin',

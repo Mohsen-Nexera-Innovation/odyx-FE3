@@ -32,7 +32,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Chairside CAD/CAM for permanent and temporary restorations with validated ODYX resin.',
     img: '/img/crowns.jpg',
     accent: 'orange',
-    href: '/workflows',
+    href: '/#clinical',
   },
   {
     tag: 'Surgical',
@@ -41,7 +41,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Print stackable or single-piece guides from intraoral scan data with sub-millimeter fit.',
     img: '/img/implant.jpg',
     accent: 'teal',
-    href: '/workflows',
+    href: '/#clinical',
   },
   {
     tag: 'Orthodontic',
@@ -50,7 +50,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'High-resolution models for aligners, retainers and diagnostic wax-ups.',
     img: '/img/ortho.jpg',
     accent: 'teal',
-    href: '/workflows',
+    href: '/#clinical',
   },
   {
     tag: 'Prosthetic',
@@ -59,7 +59,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Base, teeth and try-in printed in sequence for predictable, lifelike outcomes.',
     img: '/img/denture.jpg',
     accent: 'orange',
-    href: '/workflows',
+    href: '/#clinical',
   },
   {
     tag: 'Provisional',
@@ -68,7 +68,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Same-day temporaries that protect the prep and keep patients comfortable.',
     img: '/img/temp.jpg',
     accent: 'orange',
-    href: '/workflows',
+    href: '/#clinical',
   },
 ];
 
@@ -107,13 +107,11 @@ function useImageLoader(imgRef: React.RefObject<HTMLImageElement | null>) {
 function BentoTile({
   item,
   index,
-  active,
   reduced,
   built,
 }: {
   item: ClinicalItem;
   index: number;
-  active: boolean;
   reduced: boolean;
   built: boolean;
 }) {
@@ -141,7 +139,7 @@ function BentoTile({
   return (
     <a
       href={item.href}
-      className={`capp cb-tile build${built ? ' built' : ''}${item.accent === 'teal' ? ' teal' : ''}${active ? '' : ' dim'}`}
+      className={`capp cb-tile build${built ? ' built' : ''}${item.accent === 'teal' ? ' teal' : ''}`}
       data-idx={index}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -152,18 +150,12 @@ function BentoTile({
           <img ref={imgRef} data-isrc={item.img} alt={item.t} />
         </div>
         <span className="capp-tag">{item.tag}</span>
-        <div className="cb-expand" aria-hidden>
-          <p>{item.detail}</p>
-          <span className="more">
-            See solutions <Arrow s={14} />
-          </span>
-        </div>
       </div>
       <div className="capp-body">
         <h3>{item.t}</h3>
         <p>{item.d}</p>
         <span className="more">
-          See solutions <Arrow s={15} />
+          See solution <Arrow s={15} />
         </span>
       </div>
     </a>
@@ -244,12 +236,11 @@ export default function ClinicalBento() {
       </div>
 
       <div className="capp-grid build-group m-stagger" ref={gridRef}>
-        {ITEMS.map((item, i) => (
+        {ITEMS.filter((item) => filter === 'All' || item.tag === filter).map((item, i) => (
           <BentoTile
             key={item.t}
             item={item}
             index={i}
-            active={filter === 'All' || item.tag === filter}
             reduced={reduced}
             built={built}
           />

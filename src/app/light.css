@@ -203,6 +203,12 @@ footer{background:var(--paper-2);border-top:1px solid var(--paper-line)}
 .foot-grid a:hover{color:var(--sky-deep)}
 .site-footer__nav a{color:var(--ink-muted)}
 .site-footer__nav a:hover{color:var(--sky-deep)}
+.site-footer__col-title{color:var(--ink)}
+.site-footer__col a{color:var(--ink-muted)}
+.site-footer__col a:hover{color:var(--sky-deep)}
+.site-footer__tag{color:var(--ink-faint)}
+.site-footer__social-link{color:var(--ink-muted);border-color:var(--paper-line)}
+.site-footer__social-link:hover{color:var(--sky-deep);border-color:var(--sky-deep)}
 .foot-bottom{color:var(--ink-faint)}
 .foot-bottom a{color:var(--ink-faint)}
 .foot-bottom a:hover{color:var(--sky-deep)}

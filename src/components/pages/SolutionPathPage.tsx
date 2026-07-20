@@ -27,6 +27,12 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
         secondaryAction={{ label: 'Request a Demo', href: '/#cta' }}
       />
 
+      <section className="sec" id="clinical">
+        <div className="wrap">
+          <SecHead eyebrow="Overview" h2={path.title} p={path.lead} />
+        </div>
+      </section>
+
       <section className="sec">
         <div className="wrap">
           <SecHead eyebrow="Challenges we solve" />

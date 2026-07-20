@@ -409,11 +409,9 @@ export default function Header() {
             {session ? (
               <Link className="btn-ghost btn btn-sm" href="/#register" onClick={closeMenu}>Register device</Link>
             ) : (
-              <>
-                <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
-                <Link className="btn-ghost btn btn-sm" href="/register" onClick={closeMenu}>Sign up</Link>
-              </>
+              <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
             )}
+            <Link className="btn-ghost btn btn-sm" href="/support#contact" onClick={closeMenu}>Contact Sales</Link>
             <Link className="btn btn-sm nav-demo" href="/support" onClick={closeMenu}>Request a Demo</Link>
           </div>
         </nav>
@@ -470,11 +468,12 @@ export default function Header() {
               <UserMenu session={session} onSignOut={signOut} />
             </>
           ) : (
-            <>
-              <Link className="btn-ghost btn btn-sm nav-login" href="/login">Sign in</Link>
-              <Link className="btn-ghost btn btn-sm nav-signup" href="/register">Sign up</Link>
-            </>
+            <Link className="btn-ghost btn btn-sm nav-login" href="/login">Sign in</Link>
           )}
+          <Link className="btn-ghost btn btn-sm nav-sales" href="/support#contact">
+            <span className="nav-label-long">Contact Sales</span>
+            <span className="nav-label-short">Sales</span>
+          </Link>
           <Link className="btn btn-sm nav-demo" href="/support">
             <span className="nav-label-long">Request a Demo</span>
             <span className="nav-label-short">Demo</span>

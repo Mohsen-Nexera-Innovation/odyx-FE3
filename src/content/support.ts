@@ -5,18 +5,8 @@ export interface SupportSection {
   items: { label: string; href: string; meta?: string }[];
 }
 
+/** Order: manuals before troubleshooting; community last (per website report). */
 export const SUPPORT_SECTIONS: SupportSection[] = [
-  {
-    id: "troubleshooting",
-    title: "Troubleshooting",
-    desc: "Quick fixes for common scan, print and cure issues.",
-    items: [
-      { label: "Scanner not connecting", href: "#", meta: "2 min read" },
-      { label: "Print adhesion problems", href: "#", meta: "3 min read" },
-      { label: "Incomplete cure symptoms", href: "#", meta: "2 min read" },
-      { label: "Design export errors", href: "#", meta: "4 min read" },
-    ],
-  },
   {
     id: "manuals",
     title: "Product Manuals",
@@ -32,6 +22,17 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
         href: "/products/Resin",
         meta: "PDF",
       },
+    ],
+  },
+  {
+    id: "troubleshooting",
+    title: "Troubleshooting",
+    desc: "Quick fixes for common scan, print and cure issues.",
+    items: [
+      { label: "Scanner not connecting", href: "#", meta: "2 min read" },
+      { label: "Print adhesion problems", href: "#", meta: "3 min read" },
+      { label: "Incomplete cure symptoms", href: "#", meta: "2 min read" },
+      { label: "Design export errors", href: "#", meta: "4 min read" },
     ],
   },
   {
@@ -53,16 +54,6 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
       { label: "Workflow overview", href: "/workflows", meta: "Guide" },
       { label: "Register your device", href: "/#register", meta: "Guide" },
       { label: "Warranty coverage", href: "#warranty", meta: "FAQ" },
-    ],
-  },
-  {
-    id: "community",
-    title: "User Community",
-    desc: "Connect with clinicians and lab partners.",
-    items: [
-      { label: "WhatsApp user group", href: "#", meta: "Community" },
-      { label: "ODYX on LinkedIn", href: "#", meta: "Social" },
-      { label: "YouTube tutorials", href: "#", meta: "Video" },
     ],
   },
   {
@@ -91,6 +82,16 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
         href: "/#cta",
         meta: "Email follow-up",
       },
+    ],
+  },
+  {
+    id: "community",
+    title: "User Community",
+    desc: "Connect with clinicians and lab partners.",
+    items: [
+      { label: "WhatsApp user group", href: "#", meta: "Community" },
+      { label: "ODYX on LinkedIn", href: "#", meta: "Social" },
+      { label: "YouTube tutorials", href: "#", meta: "Video" },
     ],
   },
 ];

@@ -314,10 +314,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3>Dentist</h3>
-                <p>
-                  Go fully digital with same-day restorations, implant guides
-                  and chairside workflows.
-                </p>
+                <p>Same-day chairside digital dentistry.</p>
                 <span className="more">
                   Enter clinic journey <Arrow />
                 </span>
@@ -338,11 +335,8 @@ export default function Home() {
               </div>
               <div className="pcard-body">
                 <div className="ic">{I.labprint}</div>
-                <h3>Lab Technician</h3>
-                <p>
-                  Move from milling to 3D printing with high-volume production
-                  and CAD/CAM integration.
-                </p>
+                <h3>Lab</h3>
+                <p>High-volume digital production for labs.</p>
                 <span className="more">
                   Enter lab journey <Arrow />
                 </span>
@@ -379,10 +373,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3>Guest</h3>
-                <p>
-                  Just exploring? Browse the ecosystem and see how every ODYX
-                  product connects.
-                </p>
+                <p>Explore the ODYX ecosystem freely.</p>
                 <span className="more">
                   Explore freely <Arrow />
                 </span>
@@ -486,16 +477,14 @@ export default function Home() {
       {/* ===== Featured Products ===== */}
       <section className="sec sec-teal sec-motion" id="featured">
         <div className="wrap">
-          <SecHead
-            eyebrow="Featured Products"
-            action={
-              <a className="btn btn-ghost btn-sm" href="/shop">
-                Store →
-              </a>
-            }
-          />
+          <SecHead eyebrow="Featured Products" />
           <div className="pgx-stage">
             <ProductGallery />
+          </div>
+          <div className="sec-browse">
+            <a className="btn btn-ghost btn-sm" href="/shop">
+              Browse store →
+            </a>
           </div>
         </div>
       </section>
@@ -505,65 +494,62 @@ export default function Home() {
         <div className="wrap">
           <SecHead eyebrow="Clinical Applications" />
           <ClinicalBento />
+          <div className="sec-browse">
+            <a className="btn btn-ghost btn-sm" href="/#clinical">
+              Browse all applications →
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ===== Case Library ===== */}
       <section className="sec sec-orange sec-motion" id="cases-preview">
         <div className="wrap">
-          <SecHead
-            eyebrow="Proof"
-            action={
-              <a className="btn btn-ghost btn-sm" href="/learning">
-                Browse all cases →
-              </a>
-            }
-          />
+          <SecHead eyebrow="Proof" />
           <CaseSpotlight />
+          <div className="sec-browse">
+            <a className="btn btn-ghost btn-sm" href="/learning">
+              Browse all cases →
+            </a>
+          </div>
         </div>
       </section>
       <section className="sec sec-teal sec-motion" id="learning-preview">
         <div className="wrap">
-          <SecHead
-            eyebrow="Learn"
-            action={
-              <a className="btn btn-ghost btn-sm" href="/learning">
-                Enter academy →
-              </a>
-            }
-          />
+          <SecHead eyebrow="Learn" />
           <LearningTabs />
+          <div className="sec-browse">
+            <a className="btn btn-ghost btn-sm" href="/learning">
+              Browse all learning →
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ===== Support preview ===== */}
       <section className="sec sec-orange sec-motion" id="support-preview">
         <div className="wrap">
-          <SecHead
-            eyebrow="Help"
-            action={
-              <a className="btn btn-ghost btn-sm" href="/support">
-                Visit support →
-              </a>
-            }
-          />
+          <SecHead eyebrow="Help" />
           <SupportHub />
+          <div className="sec-browse">
+            <a className="btn btn-ghost btn-sm" href="/support">
+              Browse support →
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ===== Latest News ===== */}
       <section className="sec sec-teal sec-motion" id="news">
         <div className="wrap">
-          <SecHead
-            eyebrow="Latest News"
-            action={
-              <a className="btn btn-ghost btn-sm" href="/about">
-                All news →
-              </a>
-            }
-          />
+          <SecHead eyebrow="Latest News" />
           <div className="m-up">
             <NewsShowcase />
+          </div>
+          <div className="sec-browse">
+            <a className="btn btn-ghost btn-sm" href="/#news">
+              Browse all news →
+            </a>
           </div>
         </div>
       </section>

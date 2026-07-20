@@ -25,7 +25,7 @@ const TABS: LearnTab[] = [
     meta: '20+ guides',
     featured: 'From your first scan to a finished crown — every step documented.',
     items: ['Scanner setup & calibration', 'Chairside design basics', 'Resin selection guide', 'Same-day workflow checklist'],
-    href: '/learning',
+    href: '/learning#beginner',
   },
   {
     id: 'courses',
@@ -35,7 +35,7 @@ const TABS: LearnTab[] = [
     meta: '12 courses',
     featured: 'Progressive learning paths for dentists and lab technicians.',
     items: ['Digital restorative fundamentals', 'Implant guide design', 'Denture digital workflow', 'Advanced CAD techniques'],
-    href: '/learning',
+    href: '/learning#courses',
   },
   {
     id: 'webinars',
@@ -45,7 +45,7 @@ const TABS: LearnTab[] = [
     meta: 'Monthly',
     featured: 'Join live sessions and watch on-demand replays anytime.',
     items: ['Product deep-dives', 'Clinical case reviews', 'Workflow optimization tips', 'Q&A with specialists'],
-    href: '/learning',
+    href: '/learning#videos',
   },
   {
     id: 'academy',

@@ -51,7 +51,7 @@ const SEARCH_ITEMS = [
 
 const AI_ANSWERS: Record<string, string> = {
   "Which resin do I use for crowns?":
-    "For permanent crowns use the ODYX Permanent Crown & Bridge resin, or Ceramic Crown resin for higher aesthetics. For provisionals, the Temporary Restoration line fits best.",
+    "For permanent crowns use Crown & Bridge Resin, or Ceramic Resin 51% for higher aesthetics. For provisionals, Temporary Restoration Resin fits best. Models use Model 2.0 Resin; guides use Surgical Guide Pro Resin.",
   "What printer suits a small clinic?":
     "A compact ODYX P1-26 paired with ODYX Cure covers chairside crowns and guides. Visit the Store or request a demo for a tailored setup.",
   "How does the workflow work?":

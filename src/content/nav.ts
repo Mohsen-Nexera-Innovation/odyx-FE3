@@ -42,26 +42,29 @@ export const HEADER_MENUS: NavGroup[] = [
     items: [
       {
         label: "Who We Are",
-        href: "/about",
+        href: "/about#who-we-are",
         desc: "Our story and what drives us",
       },
       {
         label: "Vision & Mission",
-        href: "/about",
+        href: "/about#vision-mission",
         desc: "Where we are headed",
       },
       {
         label: "Values & Beliefs",
-        href: "/about",
+        href: "/about#values",
         desc: "The principles behind ODYX",
       },
       {
-        label: "Why ODYX",
-        href: "/#why",
-        desc: "What sets our ecosystem apart",
+        label: "Our Team",
+        href: "/about#team",
+        desc: "The people building ODYX",
       },
-      { label: "Our Team", href: "/about", desc: "The people building ODYX" },
-      { label: "News", href: "/#news", desc: "Latest announcements and press" },
+      {
+        label: "News",
+        href: "/#news",
+        desc: "Latest announcements and press",
+      },
     ],
     columns: [
       {
@@ -70,32 +73,27 @@ export const HEADER_MENUS: NavGroup[] = [
         items: [
           {
             label: "Who We Are",
-            href: "/about",
+            href: "/about#who-we-are",
             desc: "Our story and what drives us",
           },
           {
             label: "Vision & Mission",
-            href: "/about",
+            href: "/about#vision-mission",
             desc: "Where we are headed",
           },
           {
             label: "Values & Beliefs",
-            href: "/about",
+            href: "/about#values",
             desc: "The principles behind ODYX",
           },
         ],
       },
       {
-        title: "Explore",
+        title: "People & News",
         items: [
           {
-            label: "Why ODYX",
-            href: "/#why",
-            desc: "What sets our ecosystem apart",
-          },
-          {
             label: "Our Team",
-            href: "/about",
+            href: "/about#team",
             desc: "The people building ODYX",
           },
           {
@@ -112,21 +110,50 @@ export const HEADER_MENUS: NavGroup[] = [
     href: "/products",
     items: [
       { label: "All Products", href: "/products", desc: "Full ODYX lineup" },
-      { label: "ODYX P1-26", href: "/products/3d-printers" },
-      { label: "ODYX-S1", href: "/products/intraoral-scanner" },
-      { label: "Design Software", href: "/products/design" },
-      { label: "ODYX Cure", href: "/products/curing-machines" },
-      { label: "Resin", href: "/products/Resin" },
-      { label: "Design Services", href: "/design-services" },
-      { label: "Store", href: "/shop" },
+      {
+        label: "Intraoral Scanner",
+        href: "/products/intraoral-scanner",
+        desc: "ODYX-S1",
+      },
+      {
+        label: "Digital Products",
+        href: "/products/design",
+        desc: "Design software",
+      },
+      {
+        label: "3D Printers",
+        href: "/products/3d-printers",
+        desc: "ODYX P1-26",
+      },
+      {
+        label: "Curing Machines",
+        href: "/products/curing-machines",
+        desc: "ODYX Cure",
+      },
+      {
+        label: "Resins",
+        href: "/products/Resin",
+        desc: "Clinical resin lines",
+      },
     ],
     columns: [
       {
-        title: "3D Printing Products",
+        title: "Intraoral Scanner",
+        href: "/products/intraoral-scanner",
+        items: [
+          {
+            label: "ODYX-S1",
+            href: "/products/intraoral-scanner",
+            desc: "Chairside 3D impressions in seconds",
+          },
+        ],
+      },
+      {
+        title: "3D Printing",
         href: "/products",
         groups: [
           {
-            label: "Dental 3D Printers",
+            label: "Printers",
             items: [
               {
                 label: "ODYX P1-26",
@@ -136,7 +163,7 @@ export const HEADER_MENUS: NavGroup[] = [
             ],
           },
           {
-            label: "Post-Processing",
+            label: "Curing",
             items: [
               {
                 label: "ODYX Cure",
@@ -146,35 +173,10 @@ export const HEADER_MENUS: NavGroup[] = [
             ],
           },
           {
-            label: "Scanners",
+            label: "Resins",
             items: [
               {
-                label: "ODYX-S1",
-                href: "/products/intraoral-scanner",
-                desc: "Chairside 3D impressions in seconds",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: "Software & Materials",
-        groups: [
-          {
-            label: "Design",
-            items: [
-              {
-                label: "Design Software",
-                href: "/products/design",
-                desc: "CAD built for ODYX print parameters",
-              },
-            ],
-          },
-          {
-            label: "Materials",
-            items: [
-              {
-                label: "Resin",
+                label: "Resin lines",
                 href: "/products/Resin",
                 desc: "Five clinical lines, workflow-validated",
               },
@@ -183,22 +185,13 @@ export const HEADER_MENUS: NavGroup[] = [
         ],
       },
       {
-        title: "Services",
+        title: "Digital Products",
+        href: "/products/design",
         items: [
           {
-            label: "Design Services",
-            href: "/design-services",
-            desc: "On-demand design, delivered as STL",
-          },
-          {
-            label: "Store",
-            href: "/shop",
-            desc: "Order materials and accessories",
-          },
-          {
-            label: "All Products",
-            href: "/products",
-            desc: "Explore the full ODYX ecosystem",
+            label: "Design Software",
+            href: "/products/design",
+            desc: "CAD built for ODYX print parameters",
           },
         ],
       },
@@ -307,42 +300,28 @@ export const HEADER_MENUS: NavGroup[] = [
     ],
     columns: [
       {
-        title: "Overview",
+        title: "Workflow",
         items: [
           {
-            label: "Workflow Hub",
+            label: "Hub overview",
             href: "/workflows",
             desc: "The end-to-end digital flow",
           },
-        ],
-      },
-      {
-        title: "Steps",
-        groups: [
           {
-            items: [
-              {
-                label: "Scan",
-                href: "/workflows/scan",
-                desc: "Capture the patient in minutes",
-              },
-              {
-                label: "Design",
-                href: "/workflows/design",
-                desc: "Plan the restoration",
-              },
-              {
-                label: "Print",
-                href: "/workflows/print",
-                desc: "Produce with precision",
-              },
-            ],
+            label: "Scan",
+            href: "/workflows/scan",
+            desc: "Capture the patient in minutes",
           },
-        ],
-      },
-      {
-        title: "Finish & Deliver",
-        items: [
+          {
+            label: "Design",
+            href: "/workflows/design",
+            desc: "Plan the restoration",
+          },
+          {
+            label: "Print",
+            href: "/workflows/print",
+            desc: "Produce with precision",
+          },
           {
             label: "Cure",
             href: "/workflows/cure",
@@ -373,22 +352,22 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "Beginner Path",
-        href: "/learning",
+        href: "/learning#beginner",
         desc: "Guided onboarding track",
       },
       {
         label: "Clinical Courses",
-        href: "/learning",
+        href: "/learning#courses",
         desc: "Deep-dive training",
       },
       {
         label: "Articles",
-        href: "/learning",
+        href: "/learning#articles",
         desc: "Tips, guides and insights",
       },
       {
         label: "Videos & Tutorials",
-        href: "/learning",
+        href: "/learning#videos",
         desc: "Watch and follow along",
       },
       {
@@ -396,30 +375,20 @@ export const HEADER_MENUS: NavGroup[] = [
         href: "/roi",
         desc: "Full ecosystem — scanner, printer & cure",
       },
-      {
-        label: "P1-26 product ROI",
-        href: "/products/3d-printers#roi",
-        desc: "Printer-focused ROI on the P1-26 page",
-      },
     ],
     columns: [
       {
-        title: "Learning Center",
+        title: "Paths",
         href: "/learning",
         items: [
           {
-            label: "Learning Center",
-            href: "/learning",
-            desc: "Everything to get started",
-          },
-          {
             label: "Beginner Path",
-            href: "/learning",
+            href: "/learning#beginner",
             desc: "Guided onboarding track",
           },
           {
             label: "Clinical Courses",
-            href: "/learning",
+            href: "/learning#courses",
             desc: "Deep-dive training",
           },
         ],
@@ -429,28 +398,18 @@ export const HEADER_MENUS: NavGroup[] = [
         items: [
           {
             label: "Articles",
-            href: "/learning",
+            href: "/learning#articles",
             desc: "Tips, guides and insights",
           },
           {
             label: "Videos & Tutorials",
-            href: "/learning",
+            href: "/learning#videos",
             desc: "Watch and follow along",
           },
-        ],
-      },
-      {
-        title: "Tools",
-        items: [
           {
             label: "ROI Calculator",
             href: "/roi",
             desc: "Full ecosystem — scanner, printer & cure",
-          },
-          {
-            label: "P1-26 product ROI",
-            href: "/products/3d-printers#roi",
-            desc: "Printer-focused ROI on the P1-26 page",
           },
         ],
       },
@@ -462,24 +421,19 @@ export const HEADER_MENUS: NavGroup[] = [
     items: [
       { label: "Support Hub", href: "/support", desc: "Get help fast" },
       {
-        label: "Troubleshooting",
-        href: "/support#troubleshooting",
-        desc: "Fix common issues",
-      },
-      {
         label: "Product Manuals",
         href: "/support#manuals",
         desc: "Guides and datasheets",
       },
       {
+        label: "Troubleshooting",
+        href: "/support#troubleshooting",
+        desc: "Fix common issues",
+      },
+      {
         label: "Software Updates",
         href: "/support#updates",
         desc: "Latest firmware and apps",
-      },
-      {
-        label: "Knowledge Base",
-        href: "/support#educate",
-        desc: "Searchable how-tos",
       },
       {
         label: "Warranty & Service",
@@ -492,6 +446,11 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "Activate your warranty",
       },
       {
+        label: "Community",
+        href: "/support#community",
+        desc: "Connect with other users",
+      },
+      {
         label: "Live Chat",
         href: "/support#chat",
         desc: "Talk to our team now",
@@ -499,10 +458,15 @@ export const HEADER_MENUS: NavGroup[] = [
     ],
     columns: [
       {
-        title: "Get Help",
+        title: "Help",
         href: "/support",
         items: [
           { label: "Support Hub", href: "/support", desc: "Get help fast" },
+          {
+            label: "Product Manuals",
+            href: "/support#manuals",
+            desc: "Guides and datasheets",
+          },
           {
             label: "Troubleshooting",
             href: "/support#troubleshooting",
@@ -516,28 +480,13 @@ export const HEADER_MENUS: NavGroup[] = [
         ],
       },
       {
-        title: "Documentation",
+        title: "Service",
         items: [
-          {
-            label: "Product Manuals",
-            href: "/support#manuals",
-            desc: "Guides and datasheets",
-          },
           {
             label: "Software Updates",
             href: "/support#updates",
             desc: "Latest firmware and apps",
           },
-          {
-            label: "Knowledge Base",
-            href: "/support#educate",
-            desc: "Searchable how-tos",
-          },
-        ],
-      },
-      {
-        title: "Service",
-        items: [
           {
             label: "Warranty & Service",
             href: "/support#warranty",
@@ -547,6 +496,11 @@ export const HEADER_MENUS: NavGroup[] = [
             label: "Register Device",
             href: "/#register",
             desc: "Activate your warranty",
+          },
+          {
+            label: "Community",
+            href: "/support#community",
+            desc: "Connect with other users",
           },
         ],
       },
