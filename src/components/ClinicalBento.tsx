@@ -32,7 +32,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Chairside CAD/CAM for permanent and temporary restorations with validated ODYX resin.',
     img: '/img/crowns.jpg',
     accent: 'orange',
-    href: '/#clinical',
+    href: '/solutions/dentists',
   },
   {
     tag: 'Surgical',
@@ -41,7 +41,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Print stackable or single-piece guides from intraoral scan data with sub-millimeter fit.',
     img: '/img/implant.jpg',
     accent: 'teal',
-    href: '/#clinical',
+    href: '/solutions/dentists',
   },
   {
     tag: 'Orthodontic',
@@ -50,7 +50,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'High-resolution models for aligners, retainers and diagnostic wax-ups.',
     img: '/img/ortho.jpg',
     accent: 'teal',
-    href: '/#clinical',
+    href: '/solutions/dentists',
   },
   {
     tag: 'Prosthetic',
@@ -59,7 +59,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Base, teeth and try-in printed in sequence for predictable, lifelike outcomes.',
     img: '/img/denture.jpg',
     accent: 'orange',
-    href: '/#clinical',
+    href: '/solutions/labs',
   },
   {
     tag: 'Provisional',
@@ -68,7 +68,7 @@ const ITEMS: ClinicalItem[] = [
     detail: 'Same-day temporaries that protect the prep and keep patients comfortable.',
     img: '/img/temp.jpg',
     accent: 'orange',
-    href: '/#clinical',
+    href: '/solutions/dentists',
   },
 ];
 

@@ -13,7 +13,7 @@ export default function SupportHubPage() {
         action={
           <PageActions>
             <Link className="btn" href="/#register">Register a device <Arrow /></Link>
-            <Link className="btn btn-ghost" href="/#cta">Contact support</Link>
+            <Link className="btn btn-ghost" href="/support">Contact support</Link>
           </PageActions>
         }
       />

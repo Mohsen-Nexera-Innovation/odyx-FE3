@@ -172,7 +172,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
       "Ship finished units with confidence - digital chain reduces remakes.",
     learning: [
       { label: "Case library", href: "/cases" },
-      { label: "Request a demo", href: "/#cta" },
+      { label: "Request a demo", href: "/support" },
     ],
   },
 ];

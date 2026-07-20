@@ -24,7 +24,7 @@ export default function SolutionPathPage({ slug }: { slug: string }) {
         heroImg={path.img}
         heroAlt={path.title}
         primaryAction={{ label: 'Explore workflow', href: '/workflows' }}
-        secondaryAction={{ label: 'Request a Demo', href: '/#cta' }}
+        secondaryAction={{ label: 'Request a Demo', href: '/support' }}
       />
 
       <section className="sec" id="clinical">

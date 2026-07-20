@@ -81,7 +81,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
     ],
     training: [
       { label: "Beginner clinic path", href: "/learning" },
-      { label: "Book hands-on training", href: "/#cta" },
+      { label: "Book hands-on training", href: "/support" },
     ],
   },
   {
@@ -140,7 +140,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
     ],
     training: [
       { label: "Lab production courses", href: "/learning/courses" },
-      { label: "Talk to a lab specialist", href: "/#cta" },
+      { label: "Talk to a lab specialist", href: "/support" },
     ],
   },
 ];

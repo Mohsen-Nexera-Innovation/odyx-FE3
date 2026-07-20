@@ -67,7 +67,7 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
         href: "/#register",
         meta: "Self-service",
       },
-      { label: "Request service / RMA", href: "/#cta", meta: "Contact" },
+      { label: "Request service / RMA", href: "/support", meta: "Contact" },
     ],
   },
   {
@@ -79,7 +79,7 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
       { label: "WhatsApp customer care", href: "#", meta: "24/7" },
       {
         label: "Technical support form",
-        href: "/#cta",
+        href: "/support",
         meta: "Email follow-up",
       },
     ],

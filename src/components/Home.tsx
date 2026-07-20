@@ -495,7 +495,7 @@ export default function Home() {
           <SecHead eyebrow="Clinical Applications" />
           <ClinicalBento />
           <div className="sec-browse">
-            <a className="btn btn-ghost btn-sm" href="/#clinical">
+            <a className="btn btn-ghost btn-sm" href="/solutions/dentists">
               Browse all applications →
             </a>
           </div>

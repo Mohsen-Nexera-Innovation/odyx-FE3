@@ -28,7 +28,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
         primaryAction={
           step.productSlug
             ? { label: `Explore ${step.productName}`, href: `/products/${step.productSlug}` }
-            : { label: 'Request a Demo', href: '/#cta' }
+            : { label: 'Request a Demo', href: '/support' }
         }
         secondaryAction={{ label: 'All steps', href: '/workflows' }}
       />
