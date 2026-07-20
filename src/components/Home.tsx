@@ -564,7 +564,7 @@ export default function Home() {
                 [
                   "ODYX P1-26",
                   "Desktop 3D printer for chairside and lab production.",
-                  "From $4,999",
+                  "From EGP 4,999",
                   "Buy online",
                   "/img/feat-printer.jpg",
                   "/shop?cat=printer",
@@ -573,7 +573,7 @@ export default function Home() {
                 [
                   "ODYX Cure",
                   "Standard clinic and lab curing unit with resin-specific presets.",
-                  "From $2,499",
+                  "From EGP 2,499",
                   "Buy online",
                   "/img/feat-curing.jpg",
                   "/shop?cat=curing",
@@ -582,7 +582,7 @@ export default function Home() {
                 [
                   "ODYX-S1",
                   "Intraoral scanner for full-arch color impressions in seconds.",
-                  "From $8,999",
+                  "From EGP 8,999",
                   "Buy online",
                   "/img/feat-scanner.jpg",
                   "/shop?cat=scanner",

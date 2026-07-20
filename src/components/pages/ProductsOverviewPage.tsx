@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Arrow } from '@/components/PageHero';
 import { PRODUCTS, type ProductContent } from '@/content/products';
@@ -70,6 +71,44 @@ function Spotlight({
 }
 
 export default function ProductsOverviewPage() {
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const spots = document.querySelectorAll<HTMLElement>('.prod-ov-spot');
+
+    if (reduce) {
+      spots.forEach((el) => el.classList.add('prod-ov-spot--in'));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          // Defer one frame so the hidden start state paints before the enter class
+          requestAnimationFrame(() => {
+            entry.target.classList.add('prod-ov-spot--in');
+          });
+          io.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.22, rootMargin: '0px 0px -12% 0px' },
+    );
+
+    // Wait two frames so opacity:0 / offset start styles are committed first
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        spots.forEach((el) => io.observe(el));
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      io.disconnect();
+    };
+  }, []);
+
   return (
     <div className="prod-ov">
       <div className="prod-ov-spots">

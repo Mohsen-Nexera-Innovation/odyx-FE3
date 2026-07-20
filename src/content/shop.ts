@@ -5,7 +5,7 @@ export type ShopProduct = {
   slug: string;
   name: string;
   desc: string;
-  /** Unit price in USD (demo) or EGP (API) */
+  /** Unit price in EGP */
   price: number;
   image: string;
   category: ShopCategory;
@@ -85,28 +85,23 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
 ];
 
 export const FREE_SHIPPING_THRESHOLD = 5000;
-export const FLAT_SHIPPING_USD = 150;
+export const FLAT_SHIPPING_EGP = 150;
 
 export function getProductById(id: string): ShopProduct | undefined {
   return SHOP_PRODUCTS.find((p) => p.id === id || p.slug === id);
 }
 
-export function formatMoney(amount: number, currency: 'USD' | 'EGP' = 'USD'): string {
-  // API/Paymob/Bosta path uses EGP; offline demo store stays USD.
-  const code =
-    typeof process !== 'undefined' && process.env.NEXT_PUBLIC_USE_API === 'true'
-      ? 'EGP'
-      : currency;
-  return new Intl.NumberFormat(code === 'EGP' ? 'en-EG' : 'en-US', {
+export function formatMoney(amount: number, currency: 'EGP' = 'EGP'): string {
+  return new Intl.NumberFormat('en-EG', {
     style: 'currency',
-    currency: code,
+    currency,
     minimumFractionDigits: amount % 1 === 0 ? 0 : 2,
   }).format(amount);
 }
 
 export function calcShipping(subtotal: number): number {
   if (subtotal <= 0) return 0;
-  return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : FLAT_SHIPPING_USD;
+  return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : FLAT_SHIPPING_EGP;
 }
 
 /** Category order for grouped "All" views */
