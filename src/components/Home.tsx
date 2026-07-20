@@ -10,7 +10,6 @@ import ClinicalBento from "./ClinicalBento";
 import CaseSpotlight from "./CaseSpotlight";
 import LearningTabs from "./LearningTabs";
 import SupportHub from "./SupportHub";
-import { FOOTER_COLUMNS } from "@/content/nav";
 import SecHead from "@/components/SecHead";
 
 const PathUpArrow = ({ s = 22 }: { s?: number }) => (
@@ -612,44 +611,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ===== Footer ===== */}
-      <footer>
-        <div className="wrap">
-          <div className="foot-grid">
-            <div className="foot-brand">
-              <a href="#top" className="logo">
-                <img
-                  className="logo-img"
-                  src="/brand/odyx-company.png"
-                  alt="ODYX"
-                />
-              </a>
-              <p>
-                Premium digital dentistry - the complete connected workflow,
-                from the first scan to the delivered restoration.
-              </p>
-            </div>
-            {FOOTER_COLUMNS.map((col) => (
-              <div key={col.title}>
-                <h5>{col.title}</h5>
-                {col.links.map((l) => (
-                  <a key={l.label} href={l.href}>
-                    {l.label}
-                  </a>
-                ))}
-              </div>
-            ))}
-          </div>
-          <div className="foot-bottom">
-            <span>© 2026 ODYX. All rights reserved.</span>
-            <span>
-              <a href="/about">Privacy</a> · <a href="/about">Terms</a> ·{" "}
-              <a href="/about">Cookies</a>
-            </span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { fontVars } from "./fonts";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { GlobalToolsProvider } from "@/components/GlobalTools";
 import SiteBackground from "@/components/SiteBackground";
 import DevPreviewTools from "@/components/DevPreviewTools";
@@ -22,6 +23,7 @@ export default function RootLayout({
         <GlobalToolsProvider>
           <Header />
           <main>{children}</main>
+          <Footer />
           <DevPreviewTools />
         </GlobalToolsProvider>
       </body>

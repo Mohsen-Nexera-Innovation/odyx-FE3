@@ -201,10 +201,13 @@ main{
 footer{background:var(--paper-2);border-top:1px solid var(--paper-line)}
 .foot-grid a{color:var(--ink-muted)}
 .foot-grid a:hover{color:var(--sky-deep)}
+.site-footer__nav a{color:var(--ink-muted)}
+.site-footer__nav a:hover{color:var(--sky-deep)}
 .foot-bottom{color:var(--ink-faint)}
 .foot-bottom a{color:var(--ink-faint)}
 .foot-bottom a:hover{color:var(--sky-deep)}
 footer .logo-img{height:40px;filter:none}
+.site-footer .logo-img{height:36px}
 
 /* ---------- Sub-brand line logos (right context placement) ---------- */
 .pgx-brand{height:30px;width:auto;align-self:flex-start;margin-bottom:14px}
