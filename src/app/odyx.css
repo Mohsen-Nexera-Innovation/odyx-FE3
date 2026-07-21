@@ -2469,8 +2469,9 @@ main .sec + .sec{border-top:none}
 
 /* ===== Auth — centered immersive login / register ===== */
 .auth-page{
-  position:relative;min-height:calc(100dvh - 64px);display:flex;align-items:center;justify-content:center;
-  padding:clamp(24px,4vh,48px) clamp(16px,3vw,32px) clamp(32px,5vh,56px);overflow:hidden;
+  position:relative;min-height:100dvh;display:flex;align-items:safe center;justify-content:center;
+  /* Clear fixed header (~68px) so the card logo is not covered */
+  padding:calc(68px + clamp(16px,3vh,32px)) clamp(16px,3vw,32px) clamp(32px,5vh,56px);overflow:hidden;
 }
 .auth-ambient{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .auth-orb{position:absolute;border-radius:50%;filter:blur(64px);opacity:.55;animation:authOrb 14s ease-in-out infinite alternate}
