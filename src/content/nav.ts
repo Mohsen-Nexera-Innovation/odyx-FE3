@@ -150,7 +150,7 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         title: "3D Printing",
-        href: "/products",
+        href: "/products/3d-printers",
         groups: [
           {
             label: "Printers",
