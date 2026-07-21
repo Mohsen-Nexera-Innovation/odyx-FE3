@@ -9,6 +9,7 @@ export default function SupportHubPage() {
     <>
       <PageHero
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Support', href: '/support' }]}
+        eyebrow="Care"
         title="Help when you need it"
         lead="Troubleshooting, manuals, updates, warranty and live care - from first setup to advanced cases."
         action={

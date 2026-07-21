@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import PageHero, { Arrow } from '@/components/PageHero';
+import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import SecHead from '@/components/SecHead';
 import InnerPageMotion from '@/components/InnerPageMotion';
 
@@ -40,8 +40,19 @@ export default function Page() {
     <>
       <PageHero
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Learning', href: '/learning' }]}
+        eyebrow="Academy"
         title="Learning Center"
         lead="Build real skill — from your first scan to advanced clinical cases."
+        action={
+          <PageActions>
+            <Link className="btn" href="/learning#beginner">
+              Start beginner path <Arrow />
+            </Link>
+            <Link className="btn btn-ghost" href="/roi">
+              ROI Calculator
+            </Link>
+          </PageActions>
+        }
       />
 
       <section className="sec sec-teal" id="beginner">

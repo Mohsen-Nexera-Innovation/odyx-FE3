@@ -29,6 +29,7 @@ export default function CartPage() {
           { label: 'Store', href: '/shop' },
           { label: 'Cart', href: '/cart' },
         ]}
+        eyebrow="Store"
         title="Your cart"
         lead={
           lines.length === 0

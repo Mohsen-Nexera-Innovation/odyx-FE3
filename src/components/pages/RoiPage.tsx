@@ -17,7 +17,9 @@ export default function RoiPage() {
           { label: 'Learning', href: '/learning' },
           { label: 'ROI Calculator', href: '/roi' },
         ]}
+        eyebrow="Planning"
         title={COPY.title}
+        lead="Model savings across the ODYX ecosystem — or jump to a printer-only view."
         action={
           <Link className="btn" href="/products/3d-printers#roi">
             Printer-only ROI <Arrow />

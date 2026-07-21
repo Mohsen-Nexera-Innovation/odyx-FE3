@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import PageHero, { Arrow } from '@/components/PageHero';
+import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import SecHead from '@/components/SecHead';
 import InnerPageMotion from '@/components/InnerPageMotion';
 
@@ -34,8 +34,19 @@ export default function Page() {
     <>
       <PageHero
         crumbs={[{ label: 'Home', href: '/' }, { label: 'About', href: '/about' }]}
-        title="About ODYX"
+        eyebrow="ODYX"
+        title="Built for the digital practice"
         lead="Premium digital dentistry — one connected workflow from the first scan to the delivered restoration."
+        action={
+          <PageActions>
+            <Link className="btn" href="/products">
+              Explore products <Arrow />
+            </Link>
+            <Link className="btn btn-ghost" href="/about#who-we-are">
+              Our story
+            </Link>
+          </PageActions>
+        }
       />
 
       <section className="sec sec-teal" id="who-we-are">

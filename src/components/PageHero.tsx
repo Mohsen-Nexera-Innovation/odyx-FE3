@@ -12,17 +12,26 @@ export default function PageHero({
   lead,
   action,
   brand,
+  eyebrow,
 }: {
   crumbs: { label: string; href: string }[];
   title: string;
   lead?: string;
   action?: React.ReactNode;
   brand?: React.ReactNode;
+  eyebrow?: string;
 }) {
   return (
     <section className="page-hero">
-      <div className="grid-bg" aria-hidden />
-      <div className="wrap">
+      <div className="page-hero__stage" aria-hidden>
+        <div className="page-hero__glow page-hero__glow--a" />
+        <div className="page-hero__glow page-hero__glow--b" />
+        <div className="page-hero__glow page-hero__glow--c" />
+        <div className="page-hero__beam" />
+        <div className="page-hero__orbit" />
+        <div className="page-hero__fade" />
+      </div>
+      <div className="wrap page-hero__inner">
         <nav className="crumbs" aria-label="Breadcrumb">
           {crumbs.map((c, i) => (
             <span key={c.href + c.label} style={{ display: 'contents' }}>
@@ -32,6 +41,7 @@ export default function PageHero({
           ))}
         </nav>
         {brand}
+        {eyebrow ? <p className="page-hero__eyebrow">{eyebrow}</p> : null}
         <h1>{title}</h1>
         {lead ? <p className="lead">{lead}</p> : null}
         {action && <div className="page-hero-actions">{action}</div>}

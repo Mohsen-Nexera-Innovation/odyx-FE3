@@ -620,7 +620,12 @@
    ============================================================ */
 .product-page--print-signature .page-hero{
   display:block;
+  min-height:clamp(380px, 58vh, 620px);
   padding:clamp(112px, 12vw, 150px) 0 clamp(56px, 6vw, 84px);
+}
+.product-page--print-signature .page-hero__orbit{opacity:.35}
+.product-page--print-signature .page-hero h1::after{
+  background:linear-gradient(90deg, var(--line-sign), rgba(255,255,255,.08));
 }
 .product-page--print-signature .page-hero__brand{
   display:block;

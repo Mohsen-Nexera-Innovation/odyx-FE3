@@ -85,6 +85,7 @@ export default function DesignServicesPage() {
           { label: 'Home', href: '/' },
           { label: 'Design services', href: '/design-services' },
         ]}
+        eyebrow="Services"
         title="Design as a service"
         lead="Choose a service, add the patient and scan, checkout, then track the case in your inbox."
         action={

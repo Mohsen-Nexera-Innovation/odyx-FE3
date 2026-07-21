@@ -168,7 +168,8 @@ export default function ShopPage() {
           { label: 'Home', href: '/' },
           { label: 'Store', href: '/shop' },
         ]}
-        title="ODYX Store"
+        eyebrow="ODYX"
+        title="Clinic-ready store"
         lead="Purchase ODYX P1-26, ODYX Cure, and ODYX-S1 — clinic-ready hardware with fast checkout."
         action={
           <PageActions>

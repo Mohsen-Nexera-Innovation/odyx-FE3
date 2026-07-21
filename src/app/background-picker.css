@@ -216,7 +216,7 @@ html[data-bg-preview][data-bg-tone="dark"] .product-page--print-classic .prod-cl
 html[data-bg-preview] .product-page--print-signature .page-hero{
   background:transparent!important;
 }
-html[data-bg-preview] .product-page--print-signature .page-hero .grid-bg{opacity:.15}
+html[data-bg-preview] .product-page--print-signature .page-hero__stage{opacity:.55}
 html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page-hero .crumbs,
 html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page-hero .crumbs a{
   color:var(--ink-faint)!important;
