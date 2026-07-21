@@ -2574,6 +2574,31 @@ main .sec + .sec{border-top:none}
 .auth-link:hover{text-decoration:underline;text-underline-offset:3px}
 .auth-submit{width:100%;justify-content:center;margin-top:8px;padding:clamp(14px,2vw,16px) 22px;font-size:clamp(.92rem,2vw,1rem)}
 .auth-alt{margin-top:16px}
+.auth-google{width:100%;margin-top:14px;display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.auth-google-btn{width:100%;min-height:44px;display:flex;justify-content:center}
+.auth-google-btn.is-disabled{opacity:.55;pointer-events:none}
+.auth-google-finish{margin:0}
+.auth-google-hint{margin:0;font-size:.74rem;color:#7e95a7;text-align:center;line-height:1.4}
+.auth-google-profile{
+  display:flex;align-items:center;gap:14px;margin:8px 0 18px;padding:12px 14px;
+  border-radius:14px;background:rgba(10,60,100,.04);border:1px solid rgba(10,60,100,.08);text-align:left;
+}
+.auth-google-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.auth-google-avatar-fallback{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(6,165,223,.18);color:#0581ad;font-weight:700;font-size:1.1rem;
+}
+.auth-google-profile-text{min-width:0}
+.auth-google-name{margin:0;font-size:.95rem;font-weight:700;color:#211C1D}
+.auth-google-email{margin:2px 0 0;font-size:.82rem;color:#4f6b80;word-break:break-all}
+.auth-google-locked{margin:4px 0 0;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#7e95a7}
+.auth-divider{
+  display:flex;align-items:center;gap:12px;margin:2px 0;
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7e95a7;
+}
+.auth-divider::before,.auth-divider::after{
+  content:"";flex:1;height:1px;background:rgba(10,60,100,.12);
+}
 .auth-demo-accounts{
   margin-top:18px;padding:14px 16px;border-radius:14px;text-align:left;
   background:rgba(10,60,100,.04);border:1px solid rgba(10,60,100,.08);

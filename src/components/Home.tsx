@@ -581,7 +581,7 @@ export default function Home() {
                         <PH label={product.name} />
                         <img data-isrc={product.image} alt={product.name} />
                       </div>
-                      <span className="price">From {formatMoney(product.price)}</span>
+                      <span className="price">{formatMoney(product.price)}</span>
                     </div>
                     <div className="shop-body">
                       <p className="shop-card-cat">{card.cat}</p>

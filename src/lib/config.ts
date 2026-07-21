@@ -4,6 +4,7 @@
  */
 const USE_API = process.env.NEXT_PUBLIC_USE_API;
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
 /** True when FE should call Nest instead of localStorage demo stores. */
 export function isApiMode(): boolean {
@@ -12,4 +13,15 @@ export function isApiMode(): boolean {
 
 export function getApiBaseUrl(): string {
   return (API_URL ?? '').trim().replace(/\/$/, '');
+}
+
+export function getGoogleClientId(): string {
+  return (GOOGLE_CLIENT_ID ?? '')
+    .trim()
+    .replace(/^["']|["']$/g, '');
+}
+
+/** Google button only in API mode when a Web client ID is configured. */
+export function isGoogleSignInEnabled(): boolean {
+  return isApiMode() && Boolean(getGoogleClientId());
 }

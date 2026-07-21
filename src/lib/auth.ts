@@ -9,12 +9,14 @@ import {
   changePasswordApi,
   forgotPasswordApi,
   loginApi,
+  loginWithGoogleApi,
   logoutApi,
   meApi,
   registerApi,
   resetPasswordApi,
   toSession,
   updateProfileApi,
+  type GoogleAuthInput,
 } from '@/lib/api/auth';
 import { clearTokens, hasTokens, setTokens } from '@/lib/auth-tokens';
 import { isApiMode } from '@/lib/config';
@@ -53,6 +55,10 @@ export type {
 };
 export { DEMO_ACCOUNTS, notifyAuthChange, writeSession };
 export { hasPermission, isStaff, isClient, isGuest } from '@/lib/permissions';
+
+export type GoogleAuthResult =
+  | { ok: true; session: AccountSession }
+  | { ok: false; error: string; needsRegistration?: boolean };
 
 export function initAuthStore() {
   if (!isApiMode()) initDemoAuthStore();
@@ -100,6 +106,27 @@ export async function login(email: string, password: string): Promise<LoginResul
     return { ok: true, session };
   } catch (err) {
     return { ok: false, error: apiErrorMessage(err, 'Sign in failed.') };
+  }
+}
+
+export async function loginWithGoogle(
+  input: GoogleAuthInput,
+): Promise<GoogleAuthResult> {
+  if (!isApiMode()) {
+    return { ok: false, error: 'Google sign-in requires API mode.' };
+  }
+
+  try {
+    const data = await loginWithGoogleApi(input);
+    const session = await applyApiAuth(data);
+    return { ok: true, session };
+  } catch (err) {
+    const message = apiErrorMessage(err, 'Google sign-in failed.');
+    const needsRegistration =
+      err instanceof ApiError &&
+      err.status === 400 &&
+      /complete registration/i.test(message);
+    return { ok: false, error: message, needsRegistration };
   }
 }
 

@@ -2,15 +2,17 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { type FormEvent, useEffect, useMemo, useState } from 'react';
+import { type FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AUTH_ROLES,
   roleById,
   sessionDestination,
   type RegisterRole,
 } from '@/content/auth';
-import { initAuthStore, register } from '@/lib/auth';
-import { isApiMode } from '@/lib/config';
+import GoogleSignInButton from '@/components/auth/GoogleSignInButton';
+import { initAuthStore, loginWithGoogle, register } from '@/lib/auth';
+import { isApiMode, isGoogleSignInEnabled } from '@/lib/config';
+import { peekGoogleIdToken, stashGoogleIdToken } from '@/lib/google-identity';
 import { seedInboxForUser } from '@/lib/inbox-seed';
 import AuthRoleRail from './AuthRoleRail';
 
@@ -19,6 +21,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
   const search = useSearchParams();
   const initialRole = roleById(search.get('role'))?.id ?? null;
   const apiMode = isApiMode();
+  const googleEnabled = isGoogleSignInEnabled();
 
   const [step, setStep] = useState(initialRole ? 1 : 0);
   const [role, setRole] = useState<RegisterRole | null>(initialRole);
@@ -36,7 +39,10 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
 
   useEffect(() => {
     initAuthStore();
-  }, []);
+    if (peekGoogleIdToken()) {
+      router.replace('/complete-google');
+    }
+  }, [router]);
 
   useEffect(() => {
     const q = roleById(search.get('role'));
@@ -54,6 +60,29 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
     setError(false);
     setStep(1);
   };
+
+  const onGoogleCredential = useCallback(
+    async (idToken: string) => {
+      setBusy(true);
+      setMsg('');
+      setError(false);
+      const result = await loginWithGoogle({ idToken });
+      setBusy(false);
+      if (!result.ok) {
+        if (result.needsRegistration) {
+          stashGoogleIdToken(idToken);
+          router.push('/complete-google');
+          return;
+        }
+        setMsg(result.error);
+        setError(true);
+        return;
+      }
+      setMsg(`Signed in with Google as ${result.session.name}.`);
+      setTimeout(() => router.push(sessionDestination(result.session)), 700);
+    },
+    [router],
+  );
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -176,6 +205,26 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
             {busy ? 'Creating…' : 'Create account'}
           </button>
         </form>
+      )}
+
+      {googleEnabled && (
+        <div className="auth-google">
+          <div className="auth-divider" role="separator">
+            <span>or sign up with Google</span>
+          </div>
+          <GoogleSignInButton
+            text="signup_with"
+            disabled={busy}
+            onCredential={onGoogleCredential}
+            onError={(message) => {
+              setMsg(message);
+              setError(true);
+            }}
+          />
+          <p className="auth-google-hint">
+            You’ll confirm clinic details on the next step. Password is optional there.
+          </p>
+        </div>
       )}
 
       {msg && (

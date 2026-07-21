@@ -67,6 +67,29 @@ export function loginApi(email: string, password: string) {
   });
 }
 
+export type GoogleAuthInput = {
+  idToken: string;
+  clientType?: ClientType;
+  org?: string;
+  country?: string;
+  phone?: string;
+  password?: string;
+};
+
+export function loginWithGoogleApi(input: GoogleAuthInput) {
+  return apiFetch<AuthTokensResponse>('/auth/google', {
+    method: 'POST',
+    body: JSON.stringify({
+      idToken: input.idToken,
+      clientType: input.clientType,
+      org: input.org || undefined,
+      country: input.country || undefined,
+      phone: input.phone || undefined,
+      password: input.password || undefined,
+    }),
+  });
+}
+
 export function registerApi(input: RegisterInput) {
   const clientType = registerRoleToClientType(input.role);
   if (!clientType) {

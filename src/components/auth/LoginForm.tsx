@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, useCallback, useEffect, useState } from 'react';
 import { sessionDestination } from '@/content/auth';
-import { DEMO_ACCOUNTS, initAuthStore, login, loginAsGuest } from '@/lib/auth';
-import { isApiMode } from '@/lib/config';
+import GoogleSignInButton from '@/components/auth/GoogleSignInButton';
+import { DEMO_ACCOUNTS, initAuthStore, login, loginAsGuest, loginWithGoogle } from '@/lib/auth';
+import { isApiMode, isGoogleSignInEnabled } from '@/lib/config';
+import { stashGoogleIdToken } from '@/lib/google-identity';
 import { seedInboxForUser } from '@/lib/inbox-seed';
 
 function safeNextPath(next: string | null): string | null {
@@ -23,6 +25,7 @@ export default function LoginForm() {
   const [error, setError] = useState(false);
   const [busy, setBusy] = useState(false);
   const apiMode = isApiMode();
+  const googleEnabled = isGoogleSignInEnabled();
 
   useEffect(() => {
     initAuthStore();
@@ -38,6 +41,19 @@ export default function LoginForm() {
     setMsg('');
     setError(false);
   };
+
+  const goAfterAuth = useCallback(
+    (session: Parameters<typeof sessionDestination>[0]) => {
+      const next = safeNextPath(search.get('next'));
+      const dest =
+        next &&
+        (session.accountType === 'STAFF' || !next.startsWith('/admin'))
+          ? next
+          : sessionDestination(session);
+      setTimeout(() => router.push(dest), 700);
+    },
+    [router, search],
+  );
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -64,14 +80,33 @@ export default function LoginForm() {
         ? `Signed in via API as ${result.session.name} (JWT stored).`
         : `Welcome back, ${result.session.name}.`,
     );
-    const next = safeNextPath(search.get('next'));
-    const dest =
-      next &&
-      (result.session.accountType === 'STAFF' || !next.startsWith('/admin'))
-        ? next
-        : sessionDestination(result.session);
-    setTimeout(() => router.push(dest), 700);
+    goAfterAuth(result.session);
   };
+
+  const onGoogleCredential = useCallback(
+    async (idToken: string) => {
+      setBusy(true);
+      setMsg('');
+      setError(false);
+      const result = await loginWithGoogle({ idToken });
+      setBusy(false);
+      if (!result.ok) {
+        if (result.needsRegistration) {
+          stashGoogleIdToken(idToken);
+          setMsg('Almost done — add your clinic details.');
+          setError(false);
+          router.push('/complete-google');
+          return;
+        }
+        setMsg(result.error);
+        setError(true);
+        return;
+      }
+      setMsg(`Signed in with Google as ${result.session.name}.`);
+      goAfterAuth(result.session);
+    },
+    [goAfterAuth, router],
+  );
 
   const continueAsGuest = () => {
     loginAsGuest();
@@ -123,6 +158,23 @@ export default function LoginForm() {
           {busy ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
+
+      {googleEnabled && (
+        <div className="auth-google">
+          <div className="auth-divider" role="separator">
+            <span>or</span>
+          </div>
+          <GoogleSignInButton
+            text="continue_with"
+            disabled={busy}
+            onCredential={onGoogleCredential}
+            onError={(message) => {
+              setMsg(message);
+              setError(true);
+            }}
+          />
+        </div>
+      )}
 
       <div className="auth-demo-accounts">
         <p className="auth-demo-label">
