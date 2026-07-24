@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
+import CuringClinicalPage from '@/components/pages/CuringClinicalPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 
@@ -30,6 +31,14 @@ export default async function Page({ params }: Props) {
   const { slug: raw } = await params;
   if (SLUG_ALIASES[raw]) redirect(`/products/${SLUG_ALIASES[raw]}`);
   if (!PRODUCTS.some((p) => p.slug === raw)) notFound();
+  if (raw === 'curing-machines') {
+    return (
+      <>
+        <CuringClinicalPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
   return (
     <>
       <ProductDetailPage slug={raw} />

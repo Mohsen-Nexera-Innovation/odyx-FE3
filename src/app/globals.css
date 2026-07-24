@@ -2,6 +2,8 @@
 @import "./odyx.css";
 @import "./light.css";
 @import "./product-print.css";
+@import "./product-cure.css";
+@import "./product-cure-cutout.css";
 @import "./background-picker.css";
 
 /* ODYX design tokens — from tokens.css */
