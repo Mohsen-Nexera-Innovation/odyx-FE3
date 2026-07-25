@@ -8,9 +8,14 @@
 > ui-ux-pro-max database as supplementary guidance. Where it disagrees with the
 > client-approved decisions below, the client's decisions win:
 >
-> - **Primary action color:** `#0050D8` on white (approved 2026-07-25) — NOT the navy/sky
->   palette below. Family accents: Scanners `#3A9C96`, Digital Printing `#F5761E`,
->   masterbrand `#06A5DE`. Gold `#F0B838` for rating stars only.
+> - **Primary action color:** ~~`#0050D8` on white (approved 2026-07-25)~~ —
+>   **superseded 2026-07-25 (Khaled): screens use the live home-screen palette for
+>   consistency** — sky `#06A5DF` actions (deep `#0581AD`, dark ink text on sky
+>   buttons), charcoal ink `#211C1D`, paper surfaces `#F5FAFD`/`#E9F4FB`, dark
+>   `#141216`. Reference the CSS variables (`--sky`, `--ink`, `--paper*`,
+>   `--navy-deep`), never hardcoded copies. Family accents unchanged: Scanners
+>   `#3A9C96`, Digital Printing `#F5761E`, masterbrand `#06A5DE`. Gold `#F0B838`
+>   for rating stars only.
 > - **Typography:** Tajawal (Latin + Arabic, weights 400/500/700 — no 600, no italic,
 >   no letter-spacing or uppercase on Arabic) — NOT Rubik/Nunito Sans below.
 > - **Surfaces:** light-dominant `#FFFFFF` / tint `#F5F8FF`; dark `#0A1020` reserved for
@@ -51,6 +56,13 @@
 >   Conversational copy goes in the intro line below, never replaces the title.
 > - **Imagery-first:** every section that has real product imagery available uses it.
 >   Text-only sections are the fallback, not the default.
+> - **Whitespace discipline (added 2026-07-25, Khaled):** a section's height must be
+>   earned by its content. Concretely: section vertical padding 32–48px at desktop,
+>   card internal padding 16–24px, section-header bottom margin ≤22px. No column may
+>   be mostly empty background — an image earns its column only if it carries
+>   information at that size; otherwise shrink it to a thumbnail beside the heading
+>   or drop it. Short checklists set in two columns, not one sparse column. Test:
+>   at 1440px, if a section band reads as mostly background, densify or merge it.
 
 ---
 

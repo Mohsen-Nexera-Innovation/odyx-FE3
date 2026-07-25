@@ -205,6 +205,7 @@ Anything below breaks the master and needs sign-off before it ships.
 | What | Why it's necessary | Approved by |
 |---|---|---|
 | Dials revised to Variance 3 / Motion 6 / Density 7; card-based sections; "boxes three times" rule dropped; every section gets a short bar-titled header (conversational lines move to intros) | The first build followed this file's airy editorial rhythm and was rejected: unused whitespace, unattractive content display, unclear titles, imagery unused. The client references (authority #1) are card-dense and imagery-first — this file's §3 rhythm strayed from them | Khaled, 2026-07-25 |
+| Screen palette follows the live home screen (sky `#06A5DF` actions with dark ink text, charcoal ink `#211C1D`, paper surfaces, dark `#141216`) instead of this file's inherited `#0050D8`-on-white / `#0A1020` set. Family accent `#F5761E` unchanged | Cross-screen consistency: the shipped site runs the sky/paper palette; a one-screen `#0050D8` system read as foreign next to the home screen. If the client re-asserts `#0050D8`, the migration is sitewide, not per screen | Khaled, 2026-07-25 |
 
 ## Token delta (dev handoff)
 

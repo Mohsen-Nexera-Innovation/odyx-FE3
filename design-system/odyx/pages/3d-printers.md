@@ -23,6 +23,16 @@
 > - The spec's content rules are unchanged: catalog-only claims, per-line
 >   certification, tabbed specs (never side-by-side), Proof hidden until real cases.
 
+> **Hero experiment (2026-07-25, Khaled): "3D & Hyperrealism" style, CSS-tier.**
+> Dark cinematic ground (`#141216`, allowed by the token rule for product heroes),
+> `perspective: 1100px` stage, pointer-tilt, 5 depth layers (glows → floor shadow →
+> machine cutout → floating part tile → stat tile), multi-layer drop-shadows.
+> Deliberately NOT the full DB version: no WebGL/Three.js (no 3D model of ODYX
+> hardware exists; synthesizing one is forbidden), and the DB's own performance ❌ /
+> accessibility ⚠ flags are mitigated by staying CSS-only, keeping text off the
+> tilting stage, and disabling tilt/float under `prefers-reduced-motion` and on
+> touch. The previous light hero styles are kept in CSS for revert.
+
 ## Page-Specific Rules
 
 ### Layout Overrides

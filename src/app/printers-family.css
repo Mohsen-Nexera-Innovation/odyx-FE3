@@ -11,11 +11,14 @@
    ============================================================ */
 
 .pf{
-  --pfa:#0050D8; --pfa-h:#0040B8;
-  --pf-ink:#0A1050; --pf-body:#3A4468; --pf-mut:#6B7494;
-  --pf-tint:#F5F8FF; --pf-dark:#0A1020; --pf-acc:#F5761E;
-  --pf-rule:#E1E8F5;
-  --pf-shadow:0 6px 24px rgba(10,16,80,.06);
+  /* Palette follows the home screen (light.css tokens), per Khaled 2026-07-25:
+     sky accent + paper surfaces + charcoal ink. Print-family orange stays as
+     the section accent. Falls back to the same values if a var is missing. */
+  --pfa:var(--sky,#06A5DF); --pfa-h:var(--sky-deep,#0581AD); --pfa-soft:var(--sky-soft,#7FD0F3);
+  --pf-ink:var(--ink,#211C1D); --pf-body:var(--ink-muted,#5A555C); --pf-mut:var(--ink-faint,#8A858E);
+  --pf-tint:var(--paper-2,#E9F4FB); --pf-dark:var(--navy-deep,#141216); --pf-acc:#F5761E;
+  --pf-rule:var(--paper-line,rgba(10,60,100,.10));
+  --pf-shadow:0 6px 24px rgba(10,60,100,.08);
   background:#fff; color:var(--pf-body);
   font-family:var(--font-tajawal),'Tajawal',sans-serif;
   font-size:16px; line-height:1.6;
@@ -29,14 +32,14 @@
 
 .pf-wrap{max-width:1180px; margin-inline:auto; padding-inline:24px}
 .pf [id]{scroll-margin-top:130px} /* fixed header + sticky sub-nav */
-.pf-sec{padding-block:clamp(40px,5vw,64px)}
+.pf-sec{padding-block:clamp(32px,4vw,48px)}
 .pf-sec--tint{background:var(--pf-tint)}
 .pf-sec--tight{padding-block-start:0}
 .pf-sec--dark{background:var(--pf-dark); color:#C4CEE9}
 .pf-sec--dark h2,.pf-sec--dark h3{color:#fff}
 
 /* Section header — client-reference style: accent bar + short title */
-.pf-shead{margin-bottom:clamp(20px,2.5vw,30px)}
+.pf-shead{margin-bottom:clamp(14px,2vw,22px)}
 .pf-h2{
   font-size:clamp(23px,2.6vw,30px);
   border-inline-start:5px solid var(--pf-acc);
@@ -54,15 +57,16 @@
 .pf-card--pad{padding:clamp(16px,2vw,24px)}
 
 /* Buttons */
+/* Buttons — home-screen style: sky fill with dark ink text (matches .btn) */
 .pf-btn{
   display:inline-flex; align-items:center; gap:8px; cursor:pointer;
-  background:var(--pfa); color:#fff; font-weight:700; font-size:15.5px;
+  background:var(--pfa); color:var(--pf-dark); font-weight:700; font-size:15.5px;
   padding:12px 24px; border-radius:10px; border:2px solid var(--pfa);
   transition:background .2s ease,border-color .2s ease,transform .2s ease;
 }
-.pf-btn:hover{background:var(--pfa-h); border-color:var(--pfa-h)}
-.pf-btn--ghost{background:transparent; color:var(--pfa)}
-.pf-btn--ghost:hover{background:rgba(0,80,216,.07)}
+.pf-btn:hover{background:var(--pfa-soft); border-color:var(--pfa-soft)}
+.pf-btn--ghost{background:transparent; color:var(--pfa-h)}
+.pf-btn--ghost:hover{background:rgba(6,165,223,.08)}
 .pf-btn--onDark{background:transparent; color:#fff; border-color:rgba(255,255,255,.5)}
 .pf-btn--onDark:hover{background:rgba(255,255,255,.1); border-color:#fff}
 .pf-cta-micro{font-size:13px; color:var(--pf-mut); margin-top:8px}
@@ -89,12 +93,92 @@
 }
 .pf-subnav a:hover{color:var(--pfa)}
 
-/* 1 · Hero */
+/* 1 · Hero — 3D & Hyperrealism (CSS-tier): perspective, layered translate3d
+   parallax, pointer tilt, multi-layer shadows. Dark ground per the token rule
+   "dark reserved for cinematic product heroes". No WebGL (no 3D model of the
+   hardware exists, and synthesizing one is forbidden). */
+.ph-hero{
+  background:
+    radial-gradient(720px 400px at 82% 88%, rgba(245,118,30,.16), transparent 60%),
+    radial-gradient(640px 380px at 12% 6%, rgba(6,165,223,.14), transparent 62%),
+    linear-gradient(180deg, #191519 0%, var(--navy-deep,#141216) 55%, #100D10 100%);
+  color:#C9CFDE;
+  padding-block:clamp(108px,12vw,140px) clamp(40px,5vw,60px);
+  overflow:hidden;
+}
+.ph-grid{display:grid; grid-template-columns:1.02fr .98fr; gap:clamp(28px,4vw,56px); align-items:center}
+.ph-copy h1{color:#fff; font-size:clamp(31px,4vw,46px); margin-bottom:16px}
+.ph-sub{font-size:clamp(16.5px,1.5vw,18px); max-width:34em; margin-bottom:22px; color:rgba(224,229,240,.82)}
+.ph-sub strong{color:#fff}
+.ph-chips{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; padding:0; margin:28px 0 0; list-style:none}
+.ph-chip{
+  display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.13); border-radius:12px;
+  padding:12px 8px; font-size:12.5px; font-weight:500; color:#E3E8F2;
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+}
+.ph-chip svg{width:22px; height:22px; color:var(--pfa); flex:none}
+
+/* The 3D stage */
+.ph-stage{
+  position:relative; perspective:1100px; min-height:clamp(380px,42vw,560px);
+  transform-style:preserve-3d;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:transform .18s ease-out;
+}
+.ph-glow{position:absolute; border-radius:50%; filter:blur(48px); pointer-events:none}
+.ph-glow--amber{
+  width:56%; height:38%; inset-inline-end:6%; bottom:4%;
+  background:radial-gradient(closest-side, rgba(245,118,30,.4), transparent 70%);
+}
+.ph-glow--sky{
+  width:46%; height:32%; inset-inline-start:2%; top:6%;
+  background:radial-gradient(closest-side, rgba(6,165,223,.3), transparent 70%);
+}
+/* Duo scene — both printers in one dark studio frame, on the tilting stage.
+   The image's black ground blends into the hero, so the frame is subtle. */
+.ph-scene{
+  position:absolute; top:50%; left:50%; width:110%; max-width:none;
+  transform:translate(-50%,-50%) translateZ(46px);
+  border-radius:20px;
+  box-shadow:
+    0 40px 70px rgba(0,0,0,.5),
+    0 0 90px rgba(245,118,30,.1);
+}
+.ph-tile{
+  position:absolute; margin:0; border-radius:14px; overflow:hidden;
+  background:rgba(24,22,26,.72); border:1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 4px 10px rgba(0,0,0,.35);
+}
+.ph-tile--stat{
+  inset-inline-end:2%; top:9%; padding:12px 18px; text-align:center;
+  transform:translateZ(120px);
+  animation:phFloat 7s ease-in-out .8s infinite alternate;
+}
+.ph-tile--stat b{display:block; color:#fff; font-size:22px; line-height:1.1}
+.ph-tile--stat span{font-size:11.5px; color:rgba(224,229,240,.75)}
+@keyframes phFloat{from{margin-top:0}to{margin-top:-10px}}
+@media (prefers-reduced-motion: reduce){
+  .ph-stage{transition:none; transform:none}
+  .ph-tile--img,.ph-tile--stat{animation:none}
+}
+@media (max-width: 960px){
+  .ph-grid{grid-template-columns:1fr}
+  .ph-stage{order:-1; min-height:340px}
+  .ph-stage{min-height:380px}
+  .ph-chips{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width: 720px){
+  .ph-chips{grid-template-columns:repeat(2,1fr)}
+}
+
+/* 1b · Legacy light hero (kept for possible revert) */
 .pf-hero{
   padding-block:clamp(104px,12vw,132px) clamp(32px,4vw,48px);
   background:
-    radial-gradient(900px 480px at 78% 10%, rgba(0,80,216,.08), transparent 60%),
-    linear-gradient(180deg, #EDF3FF 0%, #F7FAFF 55%, #FFFFFF 100%);
+    radial-gradient(900px 480px at 78% 10%, rgba(6,165,223,.12), transparent 60%),
+    linear-gradient(180deg, var(--paper,#F5FAFD) 0%, #EEF6FC 55%, #FFFFFF 100%);
 }
 .pf-hero .pf-wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(28px,4vw,56px); align-items:center}
 .pf-hero h1{font-size:clamp(31px,4vw,46px); margin-bottom:16px}
@@ -102,9 +186,10 @@
 .pf-hero-sub strong{color:var(--pf-ink)}
 .pf-hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:28px}
 .pf-hero-media img{
-  width:100%; max-height:560px; object-fit:cover; height:auto;
+  width:100%; max-height:560px; object-fit:cover; object-position:50% 28%; height:auto;
   border-radius:18px; display:block; box-shadow:var(--pf-shadow);
 }
+.pf img{max-width:100%}
 /* Hero chip mini-cards — reference style */
 .pf-chipcards{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; padding:0; margin:0; list-style:none}
 .pf-chipcard{
@@ -115,15 +200,16 @@
 }
 .pf-chipcard svg{width:22px; height:22px; color:var(--pfa); flex:none}
 
-/* 2 · Why print in-house */
-.pf-why-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px}
-.pf-why-card{display:grid; grid-template-columns:1.15fr .85fr; align-items:stretch}
-.pf-why-card-body{padding:clamp(18px,2.4vw,28px)}
-.pf-why-card h3{font-size:19px; margin-bottom:14px}
-.pf-why-card img{width:100%; height:100%; object-fit:cover; min-height:220px}
-.pf-checklist{list-style:none; margin:0; padding:0; display:grid; gap:10px}
-.pf-checklist li{display:grid; grid-template-columns:22px 1fr; gap:10px; font-size:14.5px; align-items:start}
-.pf-check{width:20px; height:20px; color:var(--pfa); margin-top:1px}
+/* 2 · Why print in-house — one compact card, two registers, no dead columns */
+.pf-why{display:grid; grid-template-columns:1fr 1fr}
+.pf-why-col{padding:clamp(16px,2vw,22px) clamp(18px,2.4vw,28px)}
+.pf-why-col + .pf-why-col{border-inline-start:1px solid var(--pf-rule)}
+.pf-why-head{display:flex; align-items:center; gap:12px; margin-bottom:12px}
+.pf-why-head img{width:88px; height:56px; object-fit:cover; border-radius:10px; border:1px solid var(--pf-rule); flex:none}
+.pf-why-head h3{font-size:17.5px}
+.pf-checklist{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:8px 16px}
+.pf-checklist li{display:grid; grid-template-columns:20px 1fr; gap:8px; font-size:13.5px; line-height:1.45; align-items:start}
+.pf-check{width:18px; height:18px; color:var(--pfa); margin-top:1px}
 
 /* 3 · The two printers */
 .pf-model{
@@ -133,7 +219,10 @@
 .pf-model:last-child{margin-bottom:0}
 .pf-model--halot{grid-template-columns:.75fr 1.25fr}
 .pf-model-media{background:var(--pf-tint); display:flex; align-items:center; justify-content:center; overflow:hidden}
-.pf-model-media img{width:100%; height:100%; object-fit:cover; display:block}
+.pf-model-media img{width:100%; height:100%; max-height:720px; object-fit:cover; display:block}
+/* The HALOT packshot is a studio shot — contain it instead of blowing it up */
+.pf-model--halot .pf-model-media{background:#EFF3FA}
+.pf-model--halot .pf-model-media img{object-fit:contain; padding:18px; max-height:520px}
 .pf-model-copy{padding:clamp(18px,2.6vw,32px)}
 .pf-model-label{font-size:12px; font-weight:700; letter-spacing:.16em; color:var(--pf-mut); margin-bottom:6px}
 [dir="rtl"] .pf-model-label{letter-spacing:0}
@@ -159,7 +248,7 @@
 
 /* HALOT honest line — ink on tint with a border; never color-coded */
 .pf-honest{
-  border:1.5px solid rgba(10,16,80,.28); border-radius:12px; background:var(--pf-tint);
+  border:1.5px solid rgba(33,28,29,.3); border-radius:12px; background:var(--pf-tint);
   padding:14px 18px; margin:0 0 10px; color:var(--pf-ink); font-size:14.5px;
 }
 .pf-honest p{margin:0 0 6px}
@@ -198,7 +287,7 @@
   transition:border-color .15s ease, background .15s ease, color .15s ease;
 }
 .pf-rchip:hover{border-color:var(--pfa)}
-.pf-rchip[aria-pressed="true"]{background:var(--pfa); border-color:var(--pfa); color:#fff; font-weight:700}
+.pf-rchip[aria-pressed="true"]{background:var(--pfa); border-color:var(--pfa); color:var(--pf-dark); font-weight:700}
 .pf-router-result{
   background:#fff; border:1px solid var(--pf-rule); border-radius:14px;
   box-shadow:var(--pf-shadow); padding:clamp(18px,2.4vw,28px);
@@ -258,8 +347,9 @@
 
 /* 8 · What ODYX changed */
 .pf-changed{display:grid; grid-template-columns:.9fr 1.1fr; align-items:stretch}
-.pf-changed-media{background:var(--pf-tint); margin:0}
-.pf-changed-media img{width:100%; height:100%; object-fit:cover; display:block; min-height:300px}
+.pf-changed-media{background:var(--pf-tint); margin:0; display:flex; align-items:center; justify-content:center}
+/* Annotated frame — must stay fully visible, never crop the callout labels */
+.pf-changed-media img{width:100%; height:100%; max-height:560px; object-fit:contain; padding:14px; display:block}
 .pf-callouts{list-style:none; margin:0; padding:clamp(18px,2.6vw,30px); display:grid; gap:16px; align-content:center}
 .pf-callout{display:grid; grid-template-columns:32px 1fr; gap:12px}
 .pf-callout-n{
@@ -317,7 +407,6 @@
 .pf-downloads>img{width:100%; height:100%; object-fit:cover; min-height:260px}
 
 /* Motion — site .reveal system plus grid staggers (Motion 6/10) */
-.pf-why-grid>.reveal:nth-child(2){transition-delay:.08s}
 .pf-feat-grid>.reveal:nth-child(4n+2){transition-delay:.06s}
 .pf-feat-grid>.reveal:nth-child(4n+3){transition-delay:.12s}
 .pf-feat-grid>.reveal:nth-child(4n+4){transition-delay:.18s}
@@ -350,7 +439,9 @@
   .pf-hero .pf-wrap{grid-template-columns:1fr}
   .pf-hero-media{order:-1; max-width:380px}
   .pf-chipcards{grid-template-columns:repeat(3,1fr)}
-  .pf-why-grid{grid-template-columns:1fr}
+  .pf-why{grid-template-columns:1fr}
+  .pf-why-col + .pf-why-col{border-inline-start:none; border-top:1px solid var(--pf-rule)}
+  .pf-checklist{grid-template-columns:1fr}
   .pf-model,.pf-model--halot{grid-template-columns:1fr}
   .pf-model-media img{max-height:340px}
   .pf-changed{grid-template-columns:1fr}

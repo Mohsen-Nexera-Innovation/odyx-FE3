@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import HyperHero from '@/components/printers/HyperHero';
 import IndicationRouter from '@/components/printers/IndicationRouter';
 import SpecTabs from '@/components/printers/SpecTabs';
 import {
@@ -77,13 +78,17 @@ const Check = () => (
   </svg>
 );
 
-/** Client-reference style section header: accent bar + short clear title. */
-function SectionHead({ title, intro }: { title: string; intro?: string }) {
+/**
+ * Client-reference style section header: accent bar + short clear title.
+ * No description line under the header (client review #20 / Khaled 2026-07-25).
+ * Rendered as a <div>, NOT <header> — odyx.css applies `position:fixed` to
+ * bare <header> elements (site chrome), which would rip titles out of flow.
+ */
+function SectionHead({ title }: { title: string }) {
   return (
-    <header className="pf-shead reveal">
+    <div className="pf-shead reveal">
       <h2 className="pf-h2">{title}</h2>
-      {intro && <p className="pf-intro">{intro}</p>}
-    </header>
+    </div>
   );
 }
 
@@ -118,39 +123,10 @@ function ModelGallery({ model }: { model: PrinterModel }) {
 export default function PrintersFamilyPage() {
   return (
     <div className="pf">
-      {/* 1 · Hero */}
-      <section className="pf-hero" id="overview">
-        <div className="pf-wrap">
-          <div className="pf-hero-copy">
-            <span className="pf-eyebrow reveal">{HERO.eyebrow}</span>
-            <h1 className="reveal">{HERO.headline}</h1>
-            <p className="pf-hero-sub reveal">
-              Two machines, two jobs. The <strong>ODYX P1-26</strong> prints
-              the definitive work that goes in the mouth. The{' '}
-              <strong>HALOT-X1</strong> prints the volume that supports it.
-            </p>
-            <div className="pf-hero-ctas reveal">
-              <Link className="pf-btn" href={HERO.primaryCta.href}>
-                {HERO.primaryCta.label} <ArrowGlyph />
-              </Link>
-              <a className="pf-btn pf-btn--ghost" href={HERO.secondaryCta.href}>
-                {HERO.secondaryCta.label}
-              </a>
-            </div>
-            <ul className="pf-chipcards" aria-label={HERO.chipsLabel}>
-              {HERO.chips.map((chip, i) => (
-                <li key={chip} className="pf-chipcard reveal">
-                  {CHIP_ICONS[i]}
-                  <span>{chip}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <figure className="pf-hero-media reveal">
-            <img src={HERO.img} alt={HERO.imgAlt} width={786} height={1400} fetchPriority="high" />
-          </figure>
-        </div>
-      </section>
+      {/* 1 · Hero — 3D & Hyperrealism (CSS-tier), dark cinematic ground */}
+      <HyperHero
+        chips={HERO.chips.map((label, i) => ({ label, icon: CHIP_ICONS[i] }))}
+      />
 
       {/* Sticky sub-nav — the client's four inner links */}
       <nav className="pf-subnav" aria-label="Page sections">
@@ -166,23 +142,23 @@ export default function PrintersFamilyPage() {
       {/* 2 · Why print in-house — two boxed checklists with imagery */}
       <section className="pf-sec">
         <div className="pf-wrap">
-          <SectionHead title={WHY_IN_HOUSE.title} intro={WHY_IN_HOUSE.intro} />
-          <div className="pf-why-grid">
+          <SectionHead title={WHY_IN_HOUSE.title} />
+          <div className="pf-card pf-why reveal">
             {WHY_IN_HOUSE.cards.map((card) => (
-              <article key={card.label} className="pf-card pf-why-card reveal">
-                <div className="pf-why-card-body">
+              <div key={card.label} className="pf-why-col">
+                <div className="pf-why-head">
+                  <img src={card.img} alt={card.imgAlt} loading="lazy" />
                   <h3>{card.label}</h3>
-                  <ul className="pf-checklist">
-                    {card.points.map((p) => (
-                      <li key={p}>
-                        <Check />
-                        <span>{p}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-                <img src={card.img} alt={card.imgAlt} loading="lazy" />
-              </article>
+                <ul className="pf-checklist">
+                  {card.points.map((p) => (
+                    <li key={p}>
+                      <Check />
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
@@ -191,7 +167,7 @@ export default function PrintersFamilyPage() {
       {/* 3 · The two printers */}
       <section className="pf-sec pf-sec--tint" id="models">
         <div className="pf-wrap">
-          <SectionHead title={MODELS_INTRO.title} intro={MODELS_INTRO.intro} />
+          <SectionHead title={MODELS_INTRO.title} />
 
           <article className="pf-card pf-model" id="p1-26">
             <div className="pf-model-media reveal">
@@ -246,7 +222,7 @@ export default function PrintersFamilyPage() {
       {/* 4 · Technical features — image-card grid */}
       <section className="pf-sec" id="features">
         <div className="pf-wrap">
-          <SectionHead title={TECH_FEATURES.title} intro={TECH_FEATURES.intro} />
+          <SectionHead title={TECH_FEATURES.title} />
           <div className="pf-feat-grid">
             {TECH_FEATURES.cards.map((f) => (
               <article key={f.title} className="pf-card pf-feat reveal">
@@ -285,7 +261,7 @@ export default function PrintersFamilyPage() {
       {/* 6 · Specifications */}
       <section className="pf-sec" id="specs">
         <div className="pf-wrap">
-          <SectionHead title={SPECS_SECTION.title} intro={SPECS_SECTION.intro} />
+          <SectionHead title={SPECS_SECTION.title} />
           <div className="pf-card pf-card--pad reveal">
             <SpecTabs models={[P1_26, HALOT_X1]} />
           </div>
@@ -295,7 +271,7 @@ export default function PrintersFamilyPage() {
       {/* 7 · Running costs — tight against specs: one argument */}
       <section className="pf-sec pf-sec--tight pf-costs" id="running-costs">
         <div className="pf-wrap">
-          <SectionHead title={RUNNING_COSTS.title} intro={RUNNING_COSTS.intro} />
+          <SectionHead title={RUNNING_COSTS.title} />
           <div className="pf-card pf-card--pad reveal">
             <div className="pf-table-scroll">
               <table className="pf-table">
@@ -327,7 +303,7 @@ export default function PrintersFamilyPage() {
       {/* 8 · What ODYX changed */}
       <section className="pf-sec pf-sec--tint" id="engineered">
         <div className="pf-wrap">
-          <SectionHead title={ODYX_CHANGED.title} intro={ODYX_CHANGED.intro} />
+          <SectionHead title={ODYX_CHANGED.title} />
           <div className="pf-card pf-changed reveal">
             <figure className="pf-changed-media">
               <img src={ODYX_CHANGED.img} alt={ODYX_CHANGED.imgAlt} loading="lazy" />
@@ -403,7 +379,7 @@ export default function PrintersFamilyPage() {
       {/* 10 · Ecosystem — product-image chain with dotted connectors */}
       <section className="pf-sec" id="ecosystem">
         <div className="pf-wrap">
-          <SectionHead title={WORKS_WITH.title} intro={WORKS_WITH.intro} />
+          <SectionHead title={WORKS_WITH.title} />
           <div className="pf-chain">
             {WORKS_WITH.nodes.map((node) => (
               <div key={node.name} className="pf-card pf-chain-node reveal">
