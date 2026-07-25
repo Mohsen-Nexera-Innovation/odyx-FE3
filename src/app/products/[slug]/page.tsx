@@ -5,6 +5,8 @@ import CuringClinicalPage from '@/components/pages/CuringClinicalPage';
 import CuringCutoutPage from '@/components/pages/CuringCutoutPage';
 import CuringEditorialPage from '@/components/pages/CuringEditorialPage';
 import CuringFloatPage from '@/components/pages/CuringFloatPage';
+import CuringV4Page from '@/components/pages/CuringV4Page';
+import CuringV5Page from '@/components/pages/CuringV5Page';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 
@@ -62,6 +64,22 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <CuringFloatPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === 'cure-v4') {
+    return (
+      <>
+        <CuringV4Page />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === 'cure-v5') {
+    return (
+      <>
+        <CuringV5Page />
         <InnerPageMotion />
       </>
     );

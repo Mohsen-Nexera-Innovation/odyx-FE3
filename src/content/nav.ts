@@ -146,6 +146,16 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "Floating chapter cutouts demo",
       },
       {
+        label: "ODYX Cure V4",
+        href: "/products/cure-v4",
+        desc: "Editorial clone — final draft",
+      },
+      {
+        label: "ODYX Cure V5",
+        href: "/products/cure-v5",
+        desc: "V4 with reduced orange accents",
+      },
+      {
         label: "Resin",
         href: "/products/Resin",
         desc: "Clinical resin lines",
@@ -199,6 +209,16 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "ODYX Cure Float",
                 href: "/products/cure-float",
                 desc: "Floating chapter cutouts demo",
+              },
+              {
+                label: "ODYX Cure V4",
+                href: "/products/cure-v4",
+                desc: "Editorial clone — final draft",
+              },
+              {
+                label: "ODYX Cure V5",
+                href: "/products/cure-v5",
+                desc: "V4 with reduced orange accents",
               },
             ],
           },

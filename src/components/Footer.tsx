@@ -14,6 +14,8 @@ const COLUMNS = [
       { label: 'ODYX Cure Cutout', href: '/products/cure-cutout' },
       { label: 'ODYX Cure Editorial', href: '/products/cure-editorial' },
       { label: 'ODYX Cure Float', href: '/products/cure-float' },
+      { label: 'ODYX Cure V4', href: '/products/cure-v4' },
+      { label: 'ODYX Cure V5', href: '/products/cure-v5' },
       { label: 'Resin', href: '/products/Resin' },
       { label: 'All Products', href: '/products' },
     ],

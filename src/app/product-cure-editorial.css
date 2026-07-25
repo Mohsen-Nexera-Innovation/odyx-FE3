@@ -185,6 +185,7 @@
   position: relative;
   z-index: 5;
   max-width: 34rem;
+  margin-inline: var(--cure-margin) auto;
   display: flex;
   flex-direction: column;
   gap: 18px;

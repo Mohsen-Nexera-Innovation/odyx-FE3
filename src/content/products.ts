@@ -454,6 +454,120 @@ export const PRODUCTS: ProductContent[] = [
     ],
   },
   {
+    slug: "cure-v4",
+    name: "ODYX Cure V4",
+    category: "Curing Machines",
+    layout: "cinematic",
+    tagline: "Editorial chamber story — working draft for the final Cure page.",
+    overview:
+      "A clone of the ODYX Cure Editorial demo (v2) as the base for the next final product page: immersive chapters, interactive material cycles, and a cinematic product read.",
+    img: "/img/feat-curing.jpg",
+    heroImg: "/img/cure-stitch/machine-hero-cutout.png",
+    accent: "orange",
+    workflowStep: "cure",
+    applications: [
+      "Crown & Bridge Resin",
+      "Surgical Guide Pro materials",
+      "Denture bases",
+      "Model 2.0 Resin",
+    ],
+    models: [
+      { name: "ODYX Cure UV-02", tagline: "Clinic and lab curing station", shopProductId: "curing-odyx-cure" },
+    ],
+    specs: [
+      { label: "Light source", value: "Multi-angle UV LED array" },
+      { label: "Wavelength", value: "385 nm + 405 nm" },
+      { label: "Chamber heat", value: "Regulated ≤ 45°C" },
+      { label: "Curing modes", value: "Material-validated presets" },
+      { label: "Power", value: "110-240V" },
+    ],
+    downloads: [
+      { name: "Product brochure", type: "PDF", href: "#" },
+      { name: "Cure profile guide", type: "PDF", href: "/support#manuals" },
+      { name: "Safety & IFU", type: "PDF", href: "/support#manuals" },
+    ],
+    benefits: [
+      "Validated presets",
+      "Biocompatible outcomes",
+      "Simple operation",
+      "QA-friendly",
+    ],
+    stats: [
+      {
+        value: "360°",
+        label: "Matched light",
+        desc: "Uniform exposure across the chamber.",
+      },
+      {
+        value: "≤45°C",
+        label: "Heat ceiling",
+        desc: "Regulated chamber for clinical materials.",
+      },
+      {
+        value: "1 tap",
+        label: "Guided cycles",
+        desc: "Material-specific presets for daily use.",
+      },
+    ],
+  },
+  {
+    slug: "cure-v5",
+    name: "ODYX Cure V5",
+    category: "Curing Machines",
+    layout: "cinematic",
+    tagline: "V4 structure with reduced orange — brand sky accents.",
+    overview:
+      "Same Cure V4 story, clinical cases, and ROI panel, with orange accents replaced by ODYX sky blue for a cooler clinical read.",
+    img: "/img/feat-curing.jpg",
+    heroImg: "/img/cure-stitch/machine-hero-cutout.png",
+    accent: "teal",
+    workflowStep: "cure",
+    applications: [
+      "Crown & Bridge Resin",
+      "Surgical Guide Pro materials",
+      "Denture bases",
+      "Model 2.0 Resin",
+    ],
+    models: [
+      { name: "ODYX Cure UV-02", tagline: "Clinic and lab curing station", shopProductId: "curing-odyx-cure" },
+    ],
+    specs: [
+      { label: "Light source", value: "Multi-angle UV LED array" },
+      { label: "Wavelength", value: "385 nm + 405 nm" },
+      { label: "Chamber heat", value: "Regulated ≤ 45°C" },
+      { label: "Curing modes", value: "Material-validated presets" },
+      { label: "Power", value: "110-240V" },
+    ],
+    downloads: [
+      { name: "Product brochure", type: "PDF", href: "#" },
+      { name: "Cure profile guide", type: "PDF", href: "/support#manuals" },
+      { name: "Safety & IFU", type: "PDF", href: "/support#manuals" },
+    ],
+    benefits: [
+      "Validated presets",
+      "Biocompatible outcomes",
+      "Simple operation",
+      "QA-friendly",
+    ],
+    stats: [
+      {
+        value: "360°",
+        label: "Matched light",
+        desc: "Uniform exposure across the chamber.",
+      },
+      {
+        value: "≤45°C",
+        label: "Heat ceiling",
+        desc: "Regulated chamber for clinical materials.",
+      },
+      {
+        value: "1 tap",
+        label: "Guided cycles",
+        desc: "Material-specific presets for daily use.",
+      },
+    ],
+  },
+  {
     slug: "Resin",
     name: "Resin",
     category: "Resin",

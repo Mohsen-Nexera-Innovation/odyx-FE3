@@ -62,7 +62,7 @@ const MATERIALS = [
 export default function CureMaterialGuide({
   classPrefix = "cure-ed",
 }: {
-  classPrefix?: "cure-ed" | "cure-fl";
+  classPrefix?: "cure-ed" | "cure-fl" | "cure-v4" | "cure-v5";
 }) {
   const [active, setActive] = useState<(typeof MATERIALS)[number]["id"]>("crown");
   const material = MATERIALS.find((m) => m.id === active) ?? MATERIALS[0];
