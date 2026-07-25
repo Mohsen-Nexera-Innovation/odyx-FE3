@@ -4,6 +4,8 @@
 @import "./product-print.css";
 @import "./product-cure.css";
 @import "./product-cure-cutout.css";
+@import "./product-cure-editorial.css";
+@import "./product-cure-float.css";
 @import "./background-picker.css";
 
 /* ODYX design tokens — from tokens.css */

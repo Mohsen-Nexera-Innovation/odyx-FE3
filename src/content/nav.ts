@@ -126,9 +126,24 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "ODYX P1-26",
       },
       {
-        label: "Curing Machines",
+        label: "ODYX Cure",
         href: "/products/curing-machines",
-        desc: "ODYX Cure",
+        desc: "Validated light dose every time",
+      },
+      {
+        label: "ODYX Cure Cutout",
+        href: "/products/cure-cutout",
+        desc: "Floating clinical product view",
+      },
+      {
+        label: "ODYX Cure Editorial",
+        href: "/products/cure-editorial",
+        desc: "Modern chamber demo story",
+      },
+      {
+        label: "ODYX Cure Float",
+        href: "/products/cure-float",
+        desc: "Floating chapter cutouts demo",
       },
       {
         label: "Resin",
@@ -169,6 +184,21 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "ODYX Cure",
                 href: "/products/curing-machines",
                 desc: "Validated light dose every time",
+              },
+              {
+                label: "ODYX Cure Cutout",
+                href: "/products/cure-cutout",
+                desc: "Floating clinical product view",
+              },
+              {
+                label: "ODYX Cure Editorial",
+                href: "/products/cure-editorial",
+                desc: "Modern chamber demo story",
+              },
+              {
+                label: "ODYX Cure Float",
+                href: "/products/cure-float",
+                desc: "Floating chapter cutouts demo",
               },
             ],
           },

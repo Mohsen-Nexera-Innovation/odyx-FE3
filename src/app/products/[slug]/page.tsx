@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
 import CuringClinicalPage from '@/components/pages/CuringClinicalPage';
+import CuringCutoutPage from '@/components/pages/CuringCutoutPage';
+import CuringEditorialPage from '@/components/pages/CuringEditorialPage';
+import CuringFloatPage from '@/components/pages/CuringFloatPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 
@@ -35,6 +38,30 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <CuringClinicalPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === 'cure-cutout') {
+    return (
+      <>
+        <CuringCutoutPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === 'cure-editorial') {
+    return (
+      <>
+        <CuringEditorialPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === 'cure-float') {
+    return (
+      <>
+        <CuringFloatPage />
         <InnerPageMotion />
       </>
     );
