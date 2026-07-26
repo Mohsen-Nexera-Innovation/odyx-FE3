@@ -23,11 +23,9 @@ function formatMoney(n: number) {
   }).format(n);
 }
 
-export default function CureRoiPanel({
-  classPrefix = "cure-v4",
-}: {
-  classPrefix?: "cure-v4" | "cure-v5";
-}) {
+const cx = (part: string) => `cure-${part}`;
+
+export default function CureRoiPanel() {
   const [monthlyCases, setMonthlyCases] = useState(DEFAULTS.monthlyCases);
   const [minutesSaved, setMinutesSaved] = useState(DEFAULTS.minutesSaved);
   const [hourlyValue, setHourlyValue] = useState(DEFAULTS.hourlyValue);
@@ -37,8 +35,6 @@ export default function CureRoiPanel({
     const savings = hours * Math.max(0, hourlyValue);
     return { hours, savings, yearly: savings * 12 };
   }, [monthlyCases, minutesSaved, hourlyValue]);
-
-  const cx = (part: string) => `${classPrefix}-${part}`;
 
   return (
     <div className={cx("roi")}>

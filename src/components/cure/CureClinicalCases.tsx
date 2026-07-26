@@ -63,14 +63,11 @@ const STAGES = [
   { key: "finished", label: "Finished restoration" },
 ] as const;
 
-export default function CureClinicalCases({
-  classPrefix = "cure-v4",
-}: {
-  classPrefix?: "cure-v4" | "cure-v5";
-}) {
+const cx = (part: string) => `cure-${part}`;
+
+export default function CureClinicalCases() {
   const [active, setActive] = useState<(typeof CASES)[number]["id"]>("crown");
   const caseItem = CASES.find((c) => c.id === active) ?? CASES[0];
-  const cx = (part: string) => `${classPrefix}-${part}`;
 
   return (
     <div className={cx("cases")}>
