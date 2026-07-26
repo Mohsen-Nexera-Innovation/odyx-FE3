@@ -42,7 +42,7 @@
 .pf-shead{margin-bottom:clamp(14px,2vw,22px)}
 .pf-h2{
   font-size:clamp(23px,2.6vw,30px);
-  border-inline-start:5px solid var(--pf-acc);
+  border-inline-start:5px solid var(--pfa);
   padding-inline-start:14px;
   margin-bottom:8px;
 }
@@ -106,7 +106,7 @@
   padding-block:clamp(108px,12vw,140px) clamp(40px,5vw,60px);
   overflow:hidden;
 }
-.ph-grid{display:grid; grid-template-columns:1.02fr .98fr; gap:clamp(28px,4vw,56px); align-items:center}
+.ph-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,56px); align-items:center}
 .ph-copy h1{color:#fff; font-size:clamp(31px,4vw,46px); margin-bottom:16px}
 .ph-sub{font-size:clamp(16.5px,1.5vw,18px); max-width:34em; margin-bottom:22px; color:rgba(224,229,240,.82)}
 .ph-sub strong{color:#fff}
@@ -135,15 +135,15 @@
   width:46%; height:32%; inset-inline-start:2%; top:6%;
   background:radial-gradient(closest-side, rgba(6,165,223,.3), transparent 70%);
 }
-/* Duo scene — both printers in one dark studio frame, on the tilting stage.
-   The image's black ground blends into the hero, so the frame is subtle. */
+/* Duo scene — background-free cutout of both printers, floating on the
+   tilting stage. drop-shadow follows the printers' silhouette (a box-shadow
+   would reintroduce a visible rectangle). */
 .ph-scene{
-  position:absolute; top:50%; left:50%; width:110%; max-width:none;
+  position:absolute; top:50%; left:50%; width:100%; max-width:none; height:auto;
   transform:translate(-50%,-50%) translateZ(46px);
-  border-radius:20px;
-  box-shadow:
-    0 40px 70px rgba(0,0,0,.5),
-    0 0 90px rgba(245,118,30,.1);
+  filter:
+    drop-shadow(0 34px 44px rgba(0,0,0,.55))
+    drop-shadow(0 0 60px rgba(245,118,30,.12));
 }
 .ph-tile{
   position:absolute; margin:0; border-radius:14px; overflow:hidden;
@@ -217,12 +217,48 @@
   margin-bottom:20px;
 }
 .pf-model:last-child{margin-bottom:0}
-.pf-model--halot{grid-template-columns:.75fr 1.25fr}
+/* Same 50/50 split as the flipped P1-26 card — the media/copy separator
+   sits at the card's midpoint on both cards */
+.pf-model--halot{grid-template-columns:1fr 1fr}
+/* P1-26 — copy on the inline-start side, image on the inline-end side */
+.pf-model--flip{grid-template-columns:1fr 1fr}
+.pf-model--flip .pf-model-copy{order:1}
+.pf-model--flip .pf-model-media{order:2}
+/* Wide media column shows the packshot uncropped, at natural aspect.
+   The copy column is compacted to stay shorter than the image, so the
+   image's natural height is what sets the card height. */
+@media (min-width: 961px){
+  .pf-model--flip .pf-model-media img{height:auto; object-fit:contain}
+  .pf-model--flip .pf-model-copy{padding:clamp(14px,1.6vw,20px) clamp(18px,2.6vw,32px)}
+  .pf-model--flip .pf-model-headline{margin-bottom:8px}
+  .pf-model--flip .pf-model-body{margin-bottom:10px}
+  .pf-model--flip .pf-specpull{padding:8px 0; margin-bottom:10px}
+  .pf-model--flip .pf-gallery{gap:8px; margin-bottom:10px}
+  .pf-model--flip .pf-gallery img{aspect-ratio:3/2}
+  .pf-model--flip .pf-video{margin-bottom:12px; aspect-ratio:2/1}
+  .pf-model--flip .pf-divider{margin-bottom:10px}
+  .pf-model--flip .pf-resins-label{margin-bottom:8px}
+  .pf-model--flip .pf-resin-grid{gap:8px; margin-bottom:8px}
+  .pf-model--flip .pf-resin-card img{aspect-ratio:4/3}
+  .pf-model--flip .pf-resin-name{padding:6px 8px; font-size:12px}
+}
 .pf-model-media{background:var(--pf-tint); display:flex; align-items:center; justify-content:center; overflow:hidden}
-.pf-model-media img{width:100%; height:100%; max-height:720px; object-fit:cover; display:block}
-/* The HALOT packshot is a studio shot — contain it instead of blowing it up */
-.pf-model--halot .pf-model-media{background:#EFF3FA}
-.pf-model--halot .pf-model-media img{object-fit:contain; padding:18px; max-height:520px}
+/* Top-anchored cover: whatever the card height, the crop eats the base/table,
+   never the machine's hood and logo */
+.pf-model-media img{width:100%; height:100%; object-fit:cover; object-position:50% 0; display:block}
+/* The HALOT packshot is a square studio shot — shown whole at the top of the
+   column; a print-run video placeholder fills the space left under it */
+.pf-model--halot .pf-model-media{background:linear-gradient(180deg,#ECECEE,#CFD1D4)}
+.pf-model--halot .pf-model-media > img{object-position:50% 50%}
+@media (min-width: 961px){
+  .pf-model--halot .pf-model-media > img{height:auto; object-fit:contain}
+}
+.pf-model-media--stack{flex-direction:column; align-items:stretch; justify-content:flex-start}
+.pf-model-media--stack > img{flex:none}
+.pf-video.pf-video--flush{
+  flex:1; min-height:220px; margin:0; aspect-ratio:auto;
+  border:0; border-radius:0; box-shadow:none;
+}
 .pf-model-copy{padding:clamp(18px,2.6vw,32px)}
 .pf-model-label{font-size:12px; font-weight:700; letter-spacing:.16em; color:var(--pf-mut); margin-bottom:6px}
 [dir="rtl"] .pf-model-label{letter-spacing:0}
@@ -240,8 +276,57 @@
   width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px;
   border:1px solid var(--pf-rule); display:block;
 }
-.pf-prints{font-size:14px; margin-bottom:10px}
-.pf-prints b{color:var(--pf-ink)}
+/* P1-26 — print-run video placeholder + featured resins */
+.pf-video{
+  position:relative; margin:0 0 16px; border-radius:14px; overflow:hidden;
+  aspect-ratio:16/9; background:var(--pf-dark);
+  border:1px solid var(--pf-rule); box-shadow:var(--pf-shadow);
+}
+.pf-video img{width:100%; height:100%; object-fit:cover; object-position:50% 28%; display:block; transition:transform .5s ease}
+.pf-video:hover img{transform:scale(1.03)}
+.pf-video::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,16,32,0) 55%,rgba(10,16,32,.55));
+}
+.pf-video-play{
+  position:absolute; inset:0; margin:auto; width:60px; height:60px; z-index:1;
+  display:grid; place-items:center; padding:0; border:0; border-radius:50%; cursor:pointer;
+  background:rgba(255,255,255,.94); color:var(--pfa-h);
+  box-shadow:0 8px 28px rgba(10,16,32,.4); transition:transform .2s ease, background .2s ease;
+}
+.pf-video-play svg{width:26px; height:26px; margin-inline-start:3px}
+[dir="rtl"] .pf-video-play svg{transform:scaleX(-1); margin-inline-start:0; margin-inline-end:3px}
+.pf-video:hover .pf-video-play{transform:scale(1.08); background:#fff}
+.pf-video-tag{
+  position:absolute; bottom:12px; inset-inline-start:14px; z-index:1;
+  color:#fff; font-size:13.5px; font-weight:500;
+}
+.pf-divider{border:0; border-top:1px solid var(--pf-rule); margin:0 0 14px}
+.pf-resins-label{
+  font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--pf-mut); margin-bottom:10px;
+}
+[dir="rtl"] .pf-resins-label{letter-spacing:0; text-transform:none}
+.pf-resin-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:10px}
+.pf-resin-card{
+  display:flex; flex-direction:column; overflow:hidden;
+  border:1px solid var(--pf-rule); border-radius:12px; background:#fff;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.pf-resin-card:hover{transform:translateY(-2px); box-shadow:var(--pf-shadow)}
+.pf-resin-card img{width:100%; aspect-ratio:1; object-fit:cover; display:block; background:var(--pf-tint); border-bottom:1px solid var(--pf-rule)}
+.pf-resin-name{padding:8px 10px; font-size:12.5px; font-weight:700; line-height:1.35; color:var(--pf-ink)}
+.pf-resin-card--cta{
+  align-items:center; justify-content:center; gap:6px; text-align:center; padding:12px 10px;
+  background:var(--pf-tint); border:1.5px dashed var(--pfa);
+}
+.pf-resin-card--cta .pf-resin-name{color:var(--pfa-h); padding:0 4px}
+.pf-resin-cta-ic{
+  display:grid; place-items:center; width:34px; height:34px; border-radius:50%;
+  background:var(--pfa); color:var(--pf-dark);
+}
+[dir="rtl"] .pf-resin-cta-ic svg{transform:scaleX(-1)}
+.pf-resin-card--cta:hover .pf-resin-cta-ic{background:var(--pfa-soft)}
 .pf-micro{font-size:13px; color:var(--pf-mut)}
 .pf-micro a{color:var(--pfa); font-weight:500}
 .pf-micro a:hover{text-decoration:underline}
@@ -273,12 +358,6 @@
 .pf-feat-body p{font-size:13.5px; margin:0}
 
 /* 5 · Indication router */
-.pf-router-head{display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center}
-.pf-router-img{
-  width:min(300px,30vw); aspect-ratio:16/9; object-fit:cover; border-radius:12px;
-  border:1px solid var(--pf-rule); display:none;
-}
-@media (min-width:900px){.pf-router-img{display:block}}
 .pf-router-chips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; padding:0; list-style:none}
 .pf-rchip{
   cursor:pointer; border:1px solid var(--pf-rule); border-radius:999px;
@@ -310,15 +389,84 @@
 .pf-rr-links{display:flex; gap:20px; margin-top:14px; padding-top:12px; border-top:1px solid var(--pf-rule)}
 .pf-rr-links a{color:var(--pfa); font-weight:700; font-size:14.5px}
 .pf-rr-links a:hover{text-decoration:underline}
-.pf-rr-open{font-size:14.5px; margin-top:12px; max-width:44em}
 .pf-router-foot{font-size:13px; color:var(--pf-mut); margin-top:14px; max-width:52em}
 
+/* Router result — route + cases on the left, the matching resin line on the right */
+.pf-rt-grid{display:grid; grid-template-columns:1.12fr .88fr; gap:18px; align-items:stretch}
+.pf-rt-grid .pf-router-result{display:flex; flex-direction:column}
+
+/* The resin line card — imagery-first: scene photo, packshot, per-line certification */
+.pf-rt-resin{
+  background:#fff; border:1px solid var(--pf-rule); border-radius:14px;
+  box-shadow:var(--pf-shadow); overflow:hidden; display:flex; flex-direction:column;
+}
+.pf-rt-resin-media{background:var(--pf-tint)}
+.pf-rt-resin-media img{width:100%; aspect-ratio:16/8; object-fit:cover; display:block}
+.pf-rt-resin--open .pf-rt-resin-media{background:var(--pf-dark)}
+.pf-rt-resin-body{padding:16px 18px 18px; display:flex; flex-direction:column; gap:10px; flex:1}
+.pf-rt-resin-label{
+  font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--pf-acc);
+}
+[dir="rtl"] .pf-rt-resin-label{letter-spacing:0; text-transform:none}
+.pf-rt-resin-id{display:flex; gap:12px; align-items:center}
+.pf-rt-packshot{
+  width:58px; height:58px; flex:none; object-fit:cover; border-radius:10px;
+  border:1px solid var(--pf-rule); background:#111;
+}
+.pf-rt-resin-body h3{font-size:18px; margin:0}
+.pf-rt-resin-body p{font-size:14px; margin:0}
+.pf-rt-resin-body p b{color:var(--pf-ink)}
+.pf-rt-badges{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:5px}
+.pf-rt-cert-label{font-size:12px; font-weight:500; color:var(--pf-mut)}
+.pf-rt-badge{
+  font-size:11.5px; font-weight:700; color:var(--pf-ink);
+  background:rgba(6,165,223,.1); border:1px solid rgba(6,165,223,.3);
+  padding:2px 8px; border-radius:999px; white-space:nowrap;
+}
+.pf-rt-resin-cta{
+  margin-top:auto; padding-top:6px; display:inline-flex; align-items:center; gap:7px;
+  color:var(--pfa-h); font-weight:700; font-size:14.5px;
+}
+.pf-rt-resin-cta:hover{text-decoration:underline}
+.pf-rt-resin-cta svg{flex:none}
+[dir="rtl"] .pf-rt-resin-cta svg,[dir="rtl"] .pf-rr-links svg{transform:scaleX(-1)}
+
+/* Clinical cases — honest placeholder frames until real case photography lands */
+.pf-rt-cases{margin-top:16px; padding-top:14px; border-top:1px solid var(--pf-rule)}
+.pf-rt-cases-head{display:flex; align-items:baseline; gap:10px; margin-bottom:10px}
+.pf-rt-cases-head h3{font-size:15.5px; margin:0}
+.pf-rt-cases-pick{font-size:13px; color:var(--pf-mut)}
+.pf-rt-case-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.pf-rt-case{
+  border:1.5px dashed rgba(10,60,100,.22); border-radius:12px; overflow:hidden;
+  background:var(--pf-tint); display:flex; flex-direction:column;
+}
+.pf-rt-case-frame{
+  display:flex; align-items:center; justify-content:center; aspect-ratio:16/7;
+  color:rgba(10,60,100,.28); border-bottom:1.5px dashed rgba(10,60,100,.18);
+}
+.pf-rt-case-frame svg{width:34px; height:34px}
+.pf-rt-case-body{padding:10px 12px 12px; display:grid; gap:3px}
+.pf-rt-case-title{font-size:13.5px; font-weight:700; color:var(--pf-ink)}
+.pf-rt-case-meta{font-size:12px; color:var(--pf-mut)}
+.pf-rt-case-tag{
+  margin-top:5px; display:inline-flex; align-items:center; gap:5px; width:fit-content;
+  font-size:11.5px; font-weight:500; color:var(--pf-mut);
+  background:#fff; border:1px solid var(--pf-rule); border-radius:999px; padding:2px 9px;
+}
+.pf-rt-case-tag svg{width:13px; height:13px}
+
 @media (prefers-reduced-motion: no-preference){
-  .pf-rr-chain[data-anim] .pf-rr-node::after{transform-origin:0 0; animation:pfDraw .26s cubic-bezier(.33,0,.2,1) both}
-  [dir="rtl"] .pf-rr-chain[data-anim] .pf-rr-node::after{transform-origin:100% 0}
-  .pf-rr-chain[data-anim] .pf-rr-node{animation:pfNode .2s ease-out both}
-  .pf-rr-chain[data-anim] .pf-rr-node:nth-child(2){animation-delay:.12s}
-  .pf-rr-chain[data-anim] .pf-rr-node:nth-child(3){animation-delay:.24s}
+  .pf-rt-grid[data-anim] .pf-rr-node::after{transform-origin:0 0; animation:pfDraw .26s cubic-bezier(.33,0,.2,1) both}
+  [dir="rtl"] .pf-rt-grid[data-anim] .pf-rr-node::after{transform-origin:100% 0}
+  .pf-rt-grid[data-anim] .pf-rr-node{animation:pfNode .2s ease-out both}
+  .pf-rt-grid[data-anim] .pf-rr-node:nth-child(2){animation-delay:.12s}
+  .pf-rt-grid[data-anim] .pf-rr-node:nth-child(3){animation-delay:.24s}
+  .pf-rt-grid[data-anim] .pf-rt-resin{animation:pfNode .26s ease-out .1s both}
+  .pf-rt-grid[data-anim] .pf-rt-case{animation:pfNode .22s ease-out both}
+  .pf-rt-grid[data-anim] .pf-rt-case:nth-child(2){animation-delay:.08s}
+  .pf-rt-grid[data-anim] .pf-rt-case:nth-child(3){animation-delay:.16s}
 }
 @keyframes pfDraw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes pfNode{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
@@ -361,7 +509,7 @@
 .pf-callout p{font-size:13.5px; margin:0}
 
 /* 9 · PRINT, in the workflow — the one dark section */
-.pf-sec--dark .pf-h2{border-inline-start-color:var(--pf-acc)}
+.pf-sec--dark .pf-h2{border-inline-start-color:var(--pfa)}
 .pf-spine{display:flex; align-items:center; flex-wrap:wrap; gap:2px; margin:clamp(20px,3vw,32px) 0}
 .pf-spine-step{display:flex; align-items:center}
 .pf-spine-node{display:flex; flex-direction:column; align-items:center; gap:8px; min-width:86px}
@@ -442,8 +590,11 @@
   .pf-why{grid-template-columns:1fr}
   .pf-why-col + .pf-why-col{border-inline-start:none; border-top:1px solid var(--pf-rule)}
   .pf-checklist{grid-template-columns:1fr}
-  .pf-model,.pf-model--halot{grid-template-columns:1fr}
+  .pf-rt-grid{grid-template-columns:1fr}
+  .pf-model,.pf-model--halot,.pf-model--flip{grid-template-columns:1fr}
+  .pf-model--flip .pf-model-media{order:0} /* image back on top when stacked */
   .pf-model-media img{max-height:340px}
+  .pf-model--halot .pf-model-media > img{object-fit:contain}
   .pf-changed{grid-template-columns:1fr}
   .pf-workflow-grid{grid-template-columns:1fr}
   .pf-downloads{grid-template-columns:1fr}
@@ -456,8 +607,12 @@
   .pf-chain-node::after{display:none}
   .pf-rr-chain{grid-template-columns:1fr; gap:12px}
   .pf-rr-node::after{display:none}
+  .pf-rt-case-grid{grid-template-columns:1fr}
+  .pf-rt-case{flex-direction:row}
+  .pf-rt-case-frame{aspect-ratio:auto; width:74px; flex:none; border-bottom:none; border-inline-end:1.5px dashed rgba(10,60,100,.18)}
   .pf-neighbours{grid-template-columns:1fr}
   .pf-gallery{grid-template-columns:repeat(3,1fr); gap:6px}
+  .pf-resin-grid{grid-template-columns:repeat(2,1fr)}
   .pf-router-chips{flex-wrap:nowrap; overflow-x:auto; padding-bottom:6px}
   .pf-rchip{white-space:nowrap}
 }

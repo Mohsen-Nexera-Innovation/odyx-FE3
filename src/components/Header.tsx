@@ -299,7 +299,8 @@ export default function Header() {
   useEffect(() => {
     // A hero marked data-hero-light is a light surface — the bar goes on-light
     // immediately instead of transparent (white links would be unreadable).
-    const heroEl = document.querySelector('.page-hero, [data-hero-light]');
+    // data-hero-dark marks custom dark heroes that don't use .page-hero styles.
+    const heroEl = document.querySelector('.page-hero, [data-hero-light], [data-hero-dark]');
     setHasHero(!!heroEl);
     setHeroLight(!!heroEl?.hasAttribute('data-hero-light'));
 

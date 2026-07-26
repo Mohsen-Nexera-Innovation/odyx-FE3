@@ -31,15 +31,41 @@ export interface PrinterModel {
   specs: PrinterSpecRow[];
 }
 
+export type ResinLineId =
+  | 'ceramic-crown'
+  | 'crown-bridge'
+  | 'ortho-model'
+  | 'surgical-guide-pro'
+  | 'temporary-restoration';
+
+export interface ResinLine {
+  id: ResinLineId;
+  name: string;
+  idealFor: string;
+  highlight: string;
+  /** Per-line certification — never range-wide (claims register rule). */
+  cert: { label: string; badges: string[] };
+  packshot: string;
+  scene: string;
+  sceneAlt: string;
+}
+
+export interface ClinicalCasePlaceholder {
+  title: string;
+}
+
 export interface IndicationRow {
   id: string;
   pick: string;
   printer: string;
   printerNote?: string;
   resin: string;
+  /** Matching ODYX resin line — absent on open-material indications. */
+  resinId?: ResinLineId;
   certification: 'ce-fda' | 'none' | 'open';
   resinNote?: string;
   cure: string;
+  cases: ClinicalCasePlaceholder[];
 }
 
 export interface TechFeature {
@@ -79,8 +105,8 @@ export const WHY_IN_HOUSE = {
   cards: [
     {
       label: 'For the clinic',
-      img: '/img/printers/part-arch-model.png',
-      imgAlt: 'Printed full-arch dental model',
+      img: '/img/printers/clinic-scene.jpg',
+      imgAlt: 'Compact resin printer on an operatory bench with printed models, an aligner and crowns, dental chair behind',
       points: [
         'The case stops leaving the building',
         'A model, a guide, a splint or a temporary, made in the room where it was designed',
@@ -90,8 +116,8 @@ export const WHY_IN_HOUSE = {
     },
     {
       label: 'For the laboratory',
-      img: '/img/printers/halot-volume.png',
-      imgAlt: 'HALOT-X1 build plate loaded with printed arches and crowns',
+      img: '/img/printers/lab-scene.jpg',
+      imgAlt: 'Lab printer with a build plate fully loaded with printed arches, crowns and splints',
       points: [
         'The plate is the unit of economics — 211.68 × 118.37 × 200 mm',
         'Up to 170 mm/h at a 0.20 mm layer changes what a night shift produces',
@@ -142,20 +168,23 @@ export const P1_26: PrinterModel = {
   ],
 };
 
-export const P1_26_PRINTS = {
-  label: 'Prints',
+/** Video placeholder — poster only until the client delivers the print-run footage. */
+export const P1_26_VIDEO = {
+  poster: '/img/printers/p1-26-hero.jpg',
+  posterAlt: 'ODYX P1-26 mid-print, build platform lowered into the resin vat',
+  caption: 'The P1-26 in action',
+};
+
+export const P1_26_RESINS = {
+  label: 'Featured resins',
   items: [
-    'Crowns',
-    'Bridges',
-    'Veneers',
-    'Inlays & onlays',
-    'Temporary crowns & bridges',
-    'Study, aligner & working models',
-    'Implant surgical guides',
+    { name: 'Temporary Restoration Resin', img: '/img/resins/temp-restro-resign-2.jpg' },
+    { name: 'Crown and Bridge Resin', img: '/img/resins/crown-and-bridge-resign-2.jpg' },
+    { name: 'Surgical Guide Resin Pro', img: '/img/resins/surcgical-guide-resign-pro-1.jpg' },
   ],
+  cta: { label: 'Explore more resins', href: '/products/Resin' },
   microcopy:
     'What a printed part is cleared for is a property of the resin, not the machine. Certification is stated per resin line.',
-  microcopyLink: { label: 'See the resins', href: '/products/Resin' },
 };
 
 export const HALOT_X1: PrinterModel = {
@@ -165,7 +194,7 @@ export const HALOT_X1: PrinterModel = {
   headline: 'For everything that supports the case.',
   body: 'A 10.1" 16K monochrome LCD at 15120 × 6230 px over a 211.68 × 118.37 × 200 mm plate, running up to 170 mm/h at a 0.20 mm layer. A honeycomb 405 nm matrix fires only the 92 zones under the model. Factory-calibrated and leveling-free — the vat and light source move while the plate stays still — and the Auto Feed Unit keeps resin topped up, heated to 30–45 °C and weighed in real time.',
   specPull: ['16K · 10.1"', '170 mm/h', '211.68 × 118.37 × 200 mm', 'Leveling-free'],
-  img: '/img/printers/halot-packshot.png',
+  img: '/img/printers/halot-x1.jpg',
   imgAlt: 'ODYX HALOT-X1 three-quarter view',
   gallery: [
     { img: '/img/printers/halot-x1-hero.png', alt: 'HALOT-X1 with a printed full-arch model' },
@@ -189,6 +218,13 @@ export const HALOT_X1: PrinterModel = {
     { label: 'Release film life', value: '~30,000 layers' },
     { label: 'UV lamp life', value: '~20,000 h' },
   ],
+};
+
+/** Video placeholder — poster only until the client delivers the print-run footage. */
+export const HALOT_VIDEO = {
+  poster: '/img/printers/halot-x1-inprint.png',
+  posterAlt: 'Full-arch teeth printing on the HALOT-X1 build plate',
+  caption: 'The HALOT-X1 in action',
 };
 
 export const HALOT_HONEST_LINE = {
@@ -264,26 +300,112 @@ export const TECH_FEATURES: { title: string; intro: string; cards: TechFeature[]
   ],
 };
 
+/**
+ * The five resin lines, as shown inside the indication router. Copy is
+ * transcribed from knowledge_base/screens/039-resin/content.md §3 (which traces
+ * to the product catalog PDF). Imagery from knowledge_base/product-photos/resin.
+ */
+export const RESIN_LINES: Record<ResinLineId, ResinLine> = {
+  'ceramic-crown': {
+    id: 'ceramic-crown',
+    name: 'Ceramic Crown Resin',
+    idealFor: 'Crowns, veneers, inlays and onlays — permanent and temporary restorations.',
+    highlight:
+      'Low polymerization shrinkage for an accurate marginal fit; wear- and fracture-resistant, in six natural shades.',
+    cert: { label: 'Certified', badges: ['CE', 'FDA', 'ISO'] },
+    packshot: '/img/resins/ceramic-crown.jpg',
+    scene: '/img/resins/ceramic-scene.jpg',
+    sceneAlt: 'Ceramic Crown Resin bottle beside printed crowns and bridges on a marble bench',
+  },
+  'crown-bridge': {
+    id: 'crown-bridge',
+    name: 'Crown & Bridge Resin',
+    idealFor: 'Crowns, bridges, denture teeth, inlays, onlays and veneers.',
+    highlight:
+      'Mechanical strength for long-term restorations; impact resistance that minimizes fracture risk.',
+    cert: { label: 'Certified', badges: ['CE', 'FDA', 'ISO'] },
+    packshot: '/img/resins/crown-and-bridge.jpg',
+    scene: '/img/resins/crown-and-bridge-resign-2.jpg',
+    sceneAlt: 'Crown & Bridge Resin bottle on a bench in front of a printer and a printed arch',
+  },
+  'ortho-model': {
+    id: 'ortho-model',
+    name: 'Ortho Model Resin 2.0',
+    idealFor: 'Study models, aligner models and working models.',
+    highlight:
+      'High dimensional accuracy with a smooth surface — and it withstands vacuum thermoforming heat.',
+    cert: { label: 'Certified', badges: ['CE', 'FDA', 'ISO'] },
+    packshot: '/img/resins/model-resin.jpg',
+    scene: '/img/resins/model-scene.jpg',
+    sceneAlt: 'Model Resin bottle surrounded by printed dental arch models',
+  },
+  'surgical-guide-pro': {
+    id: 'surgical-guide-pro',
+    name: 'Surgical Guide Resin Pro',
+    idealFor: 'Implant surgical guides.',
+    highlight:
+      'High transparency for visibility during surgery; flexibility that prevents cracking; steam-sterilizable to 135 °C.',
+    cert: { label: 'Biocompatibility-tested', badges: ['ISO 10993', 'ISO 13485'] },
+    packshot: '/img/resins/surgical-guide-pro.jpg',
+    scene: '/img/resins/surgical-scene.jpg',
+    sceneAlt: 'Surgical Guide Resin Pro bottle with transparent printed implant guides',
+  },
+  'temporary-restoration': {
+    id: 'temporary-restoration',
+    name: 'Temporary Restoration Resin',
+    idealFor: 'Temporary crowns and bridges.',
+    highlight:
+      'Easy polishing and patient comfort, water absorption under 1.5%, six natural shades.',
+    cert: { label: 'Biocompatibility-tested', badges: ['ISO 10993', 'ISO 13485'] },
+    packshot: '/img/resins/temporary-restoration.jpg',
+    scene: '/img/resins/temp-scene.jpg',
+    sceneAlt: 'Temporary Restoration Resin bottle in a workflow scene with printer, scanner and printed provisionals',
+  },
+};
+
+/** Shown for open-material indications (splints, dentures) instead of a line card. */
+export const OPEN_MATERIAL_PANEL = {
+  title: 'Runs on your 405 nm resin',
+  img: '/img/resins/all-resins.jpg',
+  imgAlt: 'The five ODYX resin bottles grouped together',
+  cta: { label: 'See all five ODYX resin lines', href: '/products/Resin' },
+};
+
 export const ROUTER = {
   title: 'What are you printing?',
-  img: '/img/printers/parts-tray.png',
-  imgAlt: 'Printed bridge, crown and splint on a steel tray',
+  resinCardLabel: 'The resin for this job',
+  casesLabel: 'Clinical cases',
+  casesNote:
+    'Real cases from ODYX clinicians are being documented — photography pending. Each will show the printed part, the printer and the resin line used.',
+  casePendingTag: 'Photography pending',
   indications: [
     {
       id: 'crown-bridge',
       pick: 'Crown or bridge',
       printer: 'P1-26',
       resin: 'Crown & Bridge',
+      resinId: 'crown-bridge',
       certification: 'ce-fda',
       cure: 'Varies by resin — see cure timings',
+      cases: [
+        { title: 'Three-unit posterior bridge' },
+        { title: 'Single molar crown' },
+        { title: 'Full-arch restoration' },
+      ],
     },
     {
       id: 'veneer-inlay',
       pick: 'Veneer, inlay or onlay',
       printer: 'P1-26',
       resin: 'Ceramic Crown',
+      resinId: 'ceramic-crown',
       certification: 'ce-fda',
       cure: 'Varies by resin — see cure timings',
+      cases: [
+        { title: 'Anterior veneer case, shade-matched' },
+        { title: 'Inlay on a first molar' },
+        { title: 'Onlay with cusp coverage' },
+      ],
     },
     {
       id: 'temporary',
@@ -291,34 +413,58 @@ export const ROUTER = {
       printer: 'P1-26',
       printerNote: 'HALOT-X1 for volume',
       resin: 'Temporary Restoration',
+      resinId: 'temporary-restoration',
       certification: 'none',
       cure: '~10 min',
+      cases: [
+        { title: 'Long-span provisional bridge' },
+        { title: 'Same-visit temporary crown' },
+        { title: 'Provisional batch on one plate' },
+      ],
     },
     {
       id: 'study-model',
       pick: 'Study or orthodontic model',
       printer: 'Either printer',
       resin: 'Ortho Model 2.0',
+      resinId: 'ortho-model',
       certification: 'ce-fda',
       cure: '~2 min',
+      cases: [
+        { title: 'Full-arch study model' },
+        { title: 'Orthodontic working model' },
+        { title: 'Overnight model batch' },
+      ],
     },
     {
       id: 'aligner-model',
       pick: 'Aligner / thermoform model',
       printer: 'Either printer',
       resin: 'Ortho Model 2.0',
+      resinId: 'ortho-model',
       certification: 'ce-fda',
       resinNote: 'Withstands vacuum thermoforming heat',
       cure: '~2 min',
+      cases: [
+        { title: 'Thermoformed aligner series' },
+        { title: 'Aligner models across one plate' },
+        { title: 'Retainer model set' },
+      ],
     },
     {
       id: 'surgical-guide',
       pick: 'Implant surgical guide',
       printer: 'P1-26',
       resin: 'Surgical Guide Pro',
+      resinId: 'surgical-guide-pro',
       certification: 'none',
       resinNote: 'Steam sterilizable to 135 °C',
       cure: '~3 min',
+      cases: [
+        { title: 'Guided posterior implant placement' },
+        { title: 'Full-arch implant guide' },
+        { title: 'Guide sterilized and seated' },
+      ],
     },
     {
       id: 'splint',
@@ -327,6 +473,10 @@ export const ROUTER = {
       resin: 'No ODYX resin line — open material system',
       certification: 'open',
       cure: 'Set by your resin',
+      cases: [
+        { title: 'Occlusal splint' },
+        { title: 'Night guard, thin-wall' },
+      ],
     },
     {
       id: 'denture',
@@ -335,6 +485,10 @@ export const ROUTER = {
       resin: 'No ODYX resin line — open material system',
       certification: 'open',
       cure: '~15 min',
+      cases: [
+        { title: 'Full denture base' },
+        { title: 'Try-in denture' },
+      ],
     },
   ] as IndicationRow[],
   openMaterialCopy:
@@ -430,13 +584,13 @@ export const WORKS_WITH = {
       name: 'ODYX resins',
       body: 'Five lines. The resin decides what the part is cleared for — certification stated per line.',
       href: '/products/Resin',
-      img: '/img/cutouts/feat-resin-cutout.png',
+      img: '/img/scanner/eco-resins.jpg',
     },
     {
       name: 'ODYX Cure / UW-03',
       body: 'Three selectable wavelengths — 365, 385, 405 nm. The UW-03 washes models still on the plate.',
       href: '/products/curing-machines',
-      img: '/img/cutouts/feat-curing-cutout.png',
+      img: '/img/cutouts/cure-icon-right-1.jpg',
     },
   ],
 };

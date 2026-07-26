@@ -53,7 +53,7 @@ export default function HyperHero({
   }, []);
 
   return (
-    <section className="ph-hero" id="overview" ref={heroRef}>
+    <section className="ph-hero" id="overview" data-hero-dark ref={heroRef}>
       <div className="pf-wrap ph-grid">
         <div className="ph-copy">
           <span className="pf-eyebrow reveal">{HERO.eyebrow}</span>
@@ -86,10 +86,10 @@ export default function HyperHero({
           <span className="ph-glow ph-glow--sky" aria-hidden />
           <img
             className="ph-scene"
-            src="/img/printers/duo-dark.jpg"
+            src="/img/printers/duo-cutout.png"
             alt="The ODYX HALOT-X1 and P1-26 resin 3D printers side by side"
-            width={1672}
-            height={941}
+            width={900}
+            height={801}
             fetchPriority="high"
           />
         </div>

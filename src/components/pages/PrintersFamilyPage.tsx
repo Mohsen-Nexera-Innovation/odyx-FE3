@@ -5,12 +5,14 @@ import SpecTabs from '@/components/printers/SpecTabs';
 import {
   DOWNLOADS,
   HALOT_HONEST_LINE,
+  HALOT_VIDEO,
   HALOT_X1,
   HERO,
   MODELS_INTRO,
   ODYX_CHANGED,
   P1_26,
-  P1_26_PRINTS,
+  P1_26_RESINS,
+  P1_26_VIDEO,
   ROUTER,
   RUNNING_COSTS,
   SPECS_SECTION,
@@ -169,7 +171,7 @@ export default function PrintersFamilyPage() {
         <div className="pf-wrap">
           <SectionHead title={MODELS_INTRO.title} />
 
-          <article className="pf-card pf-model" id="p1-26">
+          <article className="pf-card pf-model pf-model--flip" id="p1-26">
             <div className="pf-model-media reveal">
               <img src={P1_26.img} alt={P1_26.imgAlt} width={870} height={1400} loading="lazy" />
             </div>
@@ -180,22 +182,49 @@ export default function PrintersFamilyPage() {
               <p className="pf-model-body reveal">{P1_26.body}</p>
               <SpecPull items={P1_26.specPull} />
               <ModelGallery model={P1_26} />
-              <p className="pf-prints reveal">
-                <b>{P1_26_PRINTS.label}:</b> {P1_26_PRINTS.items.join(' · ')} —
-                each with the resin line cleared for it.
-              </p>
-              <p className="pf-micro reveal">
-                {P1_26_PRINTS.microcopy}{' '}
-                <Link href={P1_26_PRINTS.microcopyLink.href}>
-                  {P1_26_PRINTS.microcopyLink.label}
-                </Link>
-              </p>
+              <figure className="pf-video reveal" aria-label={P1_26_VIDEO.posterAlt}>
+                <img src={P1_26_VIDEO.poster} alt={P1_26_VIDEO.posterAlt} loading="lazy" />
+                <button type="button" className="pf-video-play" aria-label="Play video">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d="M8.5 5.8v12.4c0 .8.9 1.3 1.6.9l10-6.2c.7-.4.7-1.4 0-1.8l-10-6.2c-.7-.4-1.6.1-1.6.9z" />
+                  </svg>
+                </button>
+                <figcaption className="pf-video-tag">{P1_26_VIDEO.caption}</figcaption>
+              </figure>
+              <hr className="pf-divider" aria-hidden />
+              <div className="pf-resins reveal">
+                <div className="pf-resins-label">{P1_26_RESINS.label}</div>
+                <div className="pf-resin-grid">
+                  {P1_26_RESINS.items.map((r) => (
+                    <div key={r.name} className="pf-resin-card">
+                      <img src={r.img} alt={r.name} loading="lazy" />
+                      <span className="pf-resin-name">{r.name}</span>
+                    </div>
+                  ))}
+                  <Link className="pf-resin-card pf-resin-card--cta" href={P1_26_RESINS.cta.href}>
+                    <span className="pf-resin-cta-ic" aria-hidden>
+                      <ArrowGlyph />
+                    </span>
+                    <span className="pf-resin-name">{P1_26_RESINS.cta.label}</span>
+                  </Link>
+                </div>
+                <p className="pf-micro">{P1_26_RESINS.microcopy}</p>
+              </div>
             </div>
           </article>
 
           <article className="pf-card pf-model pf-model--halot" id="halot-x1">
-            <div className="pf-model-media reveal">
-              <img src={HALOT_X1.img} alt={HALOT_X1.imgAlt} width={429} height={431} loading="lazy" />
+            <div className="pf-model-media pf-model-media--stack reveal">
+              <img src={HALOT_X1.img} alt={HALOT_X1.imgAlt} width={1000} height={1000} loading="lazy" />
+              <figure className="pf-video pf-video--flush" aria-label={HALOT_VIDEO.posterAlt}>
+                <img src={HALOT_VIDEO.poster} alt={HALOT_VIDEO.posterAlt} loading="lazy" />
+                <button type="button" className="pf-video-play" aria-label="Play video">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d="M8.5 5.8v12.4c0 .8.9 1.3 1.6.9l10-6.2c.7-.4.7-1.4 0-1.8l-10-6.2c-.7-.4-1.6.1-1.6.9z" />
+                  </svg>
+                </button>
+                <figcaption className="pf-video-tag">{HALOT_VIDEO.caption}</figcaption>
+              </figure>
             </div>
             <div className="pf-model-copy">
               <div className="pf-model-label reveal">{HALOT_X1.label}</div>
@@ -245,15 +274,7 @@ export default function PrintersFamilyPage() {
       {/* 5 · Indication router */}
       <section className="pf-sec pf-sec--tint" id="indications">
         <div className="pf-wrap">
-          <div className="pf-router-head">
-            <SectionHead title={ROUTER.title} />
-            <img
-              className="pf-router-img reveal"
-              src={ROUTER.img}
-              alt={ROUTER.imgAlt}
-              loading="lazy"
-            />
-          </div>
+          <SectionHead title={ROUTER.title} />
           <IndicationRouter />
         </div>
       </section>
