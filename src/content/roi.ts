@@ -11,7 +11,7 @@ export const ROI_SCANNER = {
   productId: 'scanner-s1',
   name: 'ODYX-S1',
   price: shopPrice('odyx-s1'),
-  href: '/products/intraoral-scanner',
+  href: '/products/odyx-s1-intraoral-scanner',
 };
 
 export const ROI_PRINTER = {

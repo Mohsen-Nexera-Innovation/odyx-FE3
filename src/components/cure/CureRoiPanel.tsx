@@ -7,7 +7,7 @@ const DEFAULTS = {
   monthlyCases: 40,
   minutesSaved: 12,
   hourlyValue: 350,
-} as const;
+};
 
 function formatHours(n: number) {
   if (!Number.isFinite(n)) return "—";

@@ -66,7 +66,7 @@ const PRODUCTS: Product[] = [
     chips: ["~20s capture", "Open .STL", "Powder-free"],
     img: "/img/feat-scanner.jpg",
     accent: "teal",
-    href: "/products/intraoral-scanner",
+    href: "/products/odyx-s1-intraoral-scanner",
     shopProductId: "scanner-s1",
   },
   {

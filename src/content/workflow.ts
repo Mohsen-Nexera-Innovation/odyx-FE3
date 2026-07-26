@@ -29,7 +29,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     no: "01",
     label: "Scan",
     accent: "teal",
-    productSlug: "intraoral-scanner",
+    productSlug: "odyx-s1-intraoral-scanner",
     productName: "ODYX-S1",
     img: "/img/feat-scanner.jpg",
     lead: "Digital impressions in seconds - no molds, no mess, instant 3D data.",

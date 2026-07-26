@@ -230,6 +230,7 @@ export default function Header() {
   const [cartItems, setCartItems] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const [hasHero, setHasHero] = useState(false);
+  const [heroLight, setHeroLight] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [isMac, setIsMac] = useState(true);
   const [open, setOpen] = useState(false);
@@ -296,8 +297,11 @@ export default function Header() {
 
   // Hero-aware scroll: transparent over hero, dark while still in hero, light once past hero.
   useEffect(() => {
-    const heroEl = document.querySelector('.page-hero');
+    // A hero marked data-hero-light is a light surface — the bar goes on-light
+    // immediately instead of transparent (white links would be unreadable).
+    const heroEl = document.querySelector('.page-hero, [data-hero-light]');
     setHasHero(!!heroEl);
+    setHeroLight(!!heroEl?.hasAttribute('data-hero-light'));
 
     const update = () => {
       const y = window.scrollY;
@@ -373,8 +377,8 @@ export default function Header() {
     el.style.setProperty('--my', `${e.clientY - r.top}px`);
   };
 
-  const transparent = hasHero && !pastHero && !scrolled;
-  const onLight = hasHero && pastHero;
+  const transparent = hasHero && !heroLight && !pastHero && !scrolled;
+  const onLight = hasHero && (pastHero || heroLight);
   const headerClass = [
     transparent ? 'transparent' : '',
     onLight ? 'on-light' : '',

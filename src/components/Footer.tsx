@@ -7,7 +7,7 @@ const COLUMNS = [
   {
     title: 'Products',
     links: [
-      { label: 'Intraoral Scanners', href: '/products/intraoral-scanner' },
+      { label: 'Intraoral Scanners', href: '/products/odyx-s1-intraoral-scanner' },
       { label: 'Digital Products', href: '/products/design' },
       { label: '3D Printers', href: '/products/3d-printers' },
       { label: 'ODYX Cure', href: '/products/curing-machines' },

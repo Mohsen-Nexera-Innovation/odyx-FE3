@@ -37,7 +37,7 @@ export function useGlobalTools() {
 const SEARCH_ITEMS = [
   { label: "Workflow Hub", href: "/workflows" },
   { label: "Scan step", href: "/workflows/scan" },
-  { label: "ODYX-S1", href: "/products/intraoral-scanner" },
+  { label: "ODYX-S1", href: "/products/odyx-s1-intraoral-scanner" },
   { label: "ODYX P1-26", href: "/products/3d-printers" },
   { label: "ODYX Cure", href: "/products/curing-machines" },
   { label: "ODYX Cure Cutout", href: "/products/cure-cutout" },
