@@ -21,7 +21,7 @@ export const SHOP_CATEGORY_LABEL: Record<ShopCategory, string> = {
   scanner: 'Intraoral Scanner',
   printer: '3D Printers',
   curing: 'Curing Machines',
-  resin: 'Resin',
+  resin: 'resins',
   design: 'Design service',
 };
 
@@ -82,7 +82,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: '/img/feat-resin.jpg',
     category: 'resin',
     unit: '1 bottle',
-    href: '/products/Resin',
+    href: '/products/resins',
     highlights: ['5 clinical lines', 'Workflow-validated', 'Biocompatible'],
   },
 ];

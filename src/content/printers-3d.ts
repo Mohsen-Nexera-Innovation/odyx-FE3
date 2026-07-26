@@ -182,7 +182,7 @@ export const P1_26_RESINS = {
     { name: 'Crown and Bridge Resin', img: '/img/resins/crown-and-bridge-resign-2.jpg' },
     { name: 'Surgical Guide Resin Pro', img: '/img/resins/surcgical-guide-resign-pro-1.jpg' },
   ],
-  cta: { label: 'Explore more resins', href: '/products/Resin' },
+  cta: { label: 'Explore more resins', href: '/products/resins' },
   microcopy:
     'What a printed part is cleared for is a property of the resin, not the machine. Certification is stated per resin line.',
 };
@@ -368,7 +368,7 @@ export const OPEN_MATERIAL_PANEL = {
   title: 'Runs on your 405 nm resin',
   img: '/img/resins/all-resins.jpg',
   imgAlt: 'The five ODYX resin bottles grouped together',
-  cta: { label: 'See all five ODYX resin lines', href: '/products/Resin' },
+  cta: { label: 'See all five ODYX resin lines', href: '/products/resins' },
 };
 
 export const ROUTER = {
@@ -494,7 +494,7 @@ export const ROUTER = {
   openMaterialCopy:
     'Both printers are open-material systems, so this one runs on the 405 nm resin you already use. There is no ODYX line for it yet.',
   links: {
-    resin: { label: 'See the resin', href: '/products/Resin' },
+    resin: { label: 'See the resin', href: '/products/resins' },
     cure: { label: 'See the cure settings', href: '/products/curing-machines' },
   },
   footnote:
@@ -583,7 +583,7 @@ export const WORKS_WITH = {
     {
       name: 'ODYX resins',
       body: 'Five lines. The resin decides what the part is cleared for — certification stated per line.',
-      href: '/products/Resin',
+      href: '/products/resins',
       img: '/img/scanner/eco-resins.jpg',
     },
     {

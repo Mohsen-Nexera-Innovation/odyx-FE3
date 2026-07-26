@@ -96,7 +96,7 @@ const PRODUCTS: Product[] = [
     chips: ["5 clinical lines", "Validated", "Biocompatible"],
     img: "/img/feat-resin.jpg",
     accent: "orange",
-    href: "/products/Resin",
+    href: "/products/resins",
     shopProductId: "resin-odyx",
   },
 ];

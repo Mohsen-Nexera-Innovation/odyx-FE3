@@ -66,11 +66,11 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
   );
 
   const hasMultipleModels = product.models.length > 1;
-  const modelsEyebrow = product.slug === 'Resin' ? 'Resin lines' : 'Models';
+  const modelsEyebrow = product.slug === 'resins' ? 'Resin lines' : 'Models';
   const modelsSection = hasMultipleModels ? (
     <section className="sec">
       <div className="wrap">
-        <SecHead eyebrow={modelsEyebrow} h2={product.slug === 'Resin' ? 'Choose a clinical line' : undefined} />
+        <SecHead eyebrow={modelsEyebrow} h2={product.slug === 'resins' ? 'Choose a clinical line' : undefined} />
         <div className="build-group prod-models g2">
           {product.models.map((m) => (
             <div key={m.name} className="card build reveal prod-model-card">

@@ -1,0 +1,384 @@
+/* ============================================================
+   039 · Resins — screen-scoped styles (.rs-)
+   Range-lineup archetype: the one Products page whose subject is
+   a set, so it earns the dark full-bleed hero (MASTER §6).
+   Palette follows the home screen (light.css tokens) per Khaled
+   2026-07-25; accent unified to sky (Khaled 2026-07-26 — the
+   print-family orange was dropped from this screen; deep sky for
+   small glyphs on light, 4.5:1). Per-line gradient environments
+   are imagery-only, never UI (sub-design §1).
+   Dials: Variance 3 · Motion 6 · Density 7 (dense local in the
+   matrix + cert table). Scoped per-screen until the sitewide
+   token migration — see knowledge_base/OPEN-QUESTIONS.md.
+   ============================================================ */
+
+.rs{
+  --rsa:var(--sky,#06A5DF); --rsa-h:var(--sky-deep,#0581AD); --rsa-soft:var(--sky-soft,#7FD0F3);
+  --rs-ink:var(--ink,#211C1D); --rs-body:var(--ink-muted,#5A555C); --rs-mut:var(--ink-faint,#8A858E);
+  /* Accent unified to the system's sky blue (Khaled 2026-07-26) — the
+     print-family orange #F5761E no longer appears on this screen. */
+  --rs-tint:var(--paper-2,#E9F4FB); --rs-dark:var(--navy-deep,#141216); --rs-acc:var(--sky,#06A5DF);
+  --rs-rule:var(--paper-line,rgba(10,60,100,.10));
+  --rs-shadow:0 6px 24px rgba(10,60,100,.08);
+  background:#fff; color:var(--rs-body);
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  font-size:16px; line-height:1.6;
+  overflow-x:clip;
+}
+.rs h1,.rs h2,.rs h3,.rs h4{
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  color:var(--rs-ink); font-weight:700; line-height:1.15; letter-spacing:-.01em;
+}
+.rs :focus-visible{outline:2px solid var(--rsa); outline-offset:2px; border-radius:4px}
+
+.rs-wrap{max-width:1180px; margin-inline:auto; padding-inline:24px}
+.rs [id]{scroll-margin-top:130px} /* fixed header + sticky sub-nav */
+.rs-sec{padding-block:clamp(32px,4vw,48px)}
+.rs-sec--tint{background:var(--rs-tint)}
+
+.rs-visually-hidden{
+  position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* Section header — accent bar + short noun title (client reference style) */
+.rs-shead{margin-bottom:clamp(14px,2vw,22px)}
+.rs-h2{
+  font-size:clamp(23px,2.6vw,30px);
+  border-inline-start:5px solid var(--rsa); /* sky — the system's main accent, per Khaled */
+  padding-inline-start:14px;
+  margin-bottom:8px;
+}
+.rs-intro{max-width:52em; font-size:16.5px; margin-bottom:clamp(14px,2vw,20px)}
+.rs-micro{font-size:13px; color:var(--rs-mut); margin-top:10px}
+
+/* Cards — the base unit */
+.rs-card{
+  background:#fff; border:1px solid var(--rs-rule); border-radius:16px;
+  box-shadow:var(--rs-shadow); overflow:hidden;
+}
+.rs-card--pad{padding:clamp(16px,2vw,24px)}
+
+/* Buttons — home-screen style: sky fill, dark ink text */
+.rs-btn{
+  display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+  background:var(--rsa); color:var(--rs-dark); font-weight:700; font-size:15.5px;
+  padding:12px 24px; border-radius:10px; border:2px solid var(--rsa);
+  transition:background .2s ease,border-color .2s ease;
+}
+.rs-btn:hover{background:var(--rsa-soft); border-color:var(--rsa-soft)}
+.rs-btn--ghost{background:transparent; color:var(--rsa-h)}
+.rs-btn--ghost:hover{background:rgba(6,165,223,.08)}
+.rs-btn--onDark{background:transparent; color:#fff; border-color:rgba(255,255,255,.5)}
+.rs-btn--onDark:hover{background:rgba(255,255,255,.1); border-color:#fff}
+.rs-cta-micro{font-size:13px; color:var(--rs-mut); margin-top:8px}
+
+.rs-eyebrow{
+  display:inline-block; color:var(--rs-acc); font-weight:700; font-size:13px;
+  letter-spacing:.14em; text-transform:uppercase; margin-bottom:10px;
+}
+[dir="rtl"] .rs-eyebrow{letter-spacing:0; text-transform:none}
+
+/* ---------- 1 · Range hero — five-bottle lineup, the one dark moment ---------- */
+.rs-hero{
+  background:
+    radial-gradient(760px 420px at 78% 80%, rgba(6,165,223,.17), transparent 62%),
+    radial-gradient(560px 340px at 10% 8%, rgba(6,165,223,.12), transparent 62%),
+    linear-gradient(180deg,#191519 0%, var(--navy-deep,#141216) 55%, #100D10 100%);
+  color:#C9CFDE;
+  padding-block:clamp(104px,11vw,136px) clamp(36px,4.5vw,56px);
+  overflow:hidden;
+}
+.rs-hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(24px,4vw,52px); align-items:center}
+.rs-crumbs{font-size:13.5px; color:rgba(201,207,222,.75); margin-bottom:14px}
+.rs-crumbs a{color:inherit}
+.rs-crumbs a:hover{color:#fff}
+.rs-crumb-sep{opacity:.55; padding-inline:4px}
+.rs .rs-h1{color:rgba(255,255,255,.85); font-size:clamp(16px,1.6vw,19px); font-weight:500; letter-spacing:.02em; margin-bottom:6px}
+.rs-display{
+  color:#fff; font-weight:700; line-height:1.12; letter-spacing:-.015em;
+  font-size:clamp(30px,3.8vw,44px); margin-bottom:14px;
+}
+.rs-hero-sub{font-size:clamp(16.5px,1.5vw,18px); max-width:32em; margin-bottom:22px; color:rgba(224,229,240,.82)}
+.rs-hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px}
+.rs-chips{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:0; margin:0; list-style:none}
+.rs-chip{
+  display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.13); border-radius:12px;
+  padding:12px 8px; font-size:12.5px; font-weight:500; color:#E3E8F2;
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+}
+.rs-chip svg{width:24px; height:24px; color:var(--rs-acc); flex:none} /* sky on the dark ground ≈7:1 */
+.rs-hero-media{position:relative; margin:0}
+/* Bottles are a background-free cutout: a soft backlight separates the matte
+   black silhouettes from the dark hero, and a floor glow grounds them. */
+.rs-hero-media::before{
+  content:""; position:absolute; inset:-4% 2%;
+  background:radial-gradient(closest-side, rgba(150,190,225,.20), rgba(150,190,225,.05) 62%, transparent 78%);
+  filter:blur(26px); pointer-events:none;
+}
+.rs-hero-media img{
+  position:relative; width:100%; height:auto; display:block;
+  filter:drop-shadow(0 26px 34px rgba(0,0,0,.55));
+}
+.rs-hero-media::after{
+  content:""; position:absolute; inset-inline:12%; bottom:-6%; height:20%;
+  background:radial-gradient(closest-side, rgba(6,165,223,.30), transparent 72%);
+  filter:blur(34px); pointer-events:none;
+}
+
+/* Sticky sub-nav */
+.rs-subnav{
+  position:sticky; top:68px; z-index:500;
+  background:rgba(255,255,255,.94); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rs-rule);
+}
+.rs-subnav ul{
+  display:flex; gap:4px; list-style:none; margin:0; overflow-x:auto;
+  max-width:1180px; margin-inline:auto; padding:0 16px;
+}
+.rs-subnav a{
+  display:block; padding:12px 14px; font-weight:500; font-size:15px;
+  color:var(--rs-ink); white-space:nowrap;
+}
+.rs-subnav a:hover{color:var(--rsa)}
+
+/* ---------- 2 · Workflow band — inline spine, PRINT active ---------- */
+.rs-band{display:grid; grid-template-columns:minmax(260px,.9fr) 1.6fr; gap:clamp(18px,2.5vw,32px); padding:clamp(16px,2.2vw,26px); align-items:center}
+.rs-band-copy h3{font-size:clamp(19px,2vw,23px); margin-bottom:8px}
+.rs-band-copy p{font-size:15.5px}
+.rs-band-links{display:flex; flex-wrap:wrap; gap:16px; margin-top:12px; font-size:14.5px; font-weight:700}
+.rs-band-links a{color:var(--rsa-h)}
+.rs-band-links a:hover{text-decoration:underline}
+.rs-spine{display:flex; align-items:flex-start; justify-content:space-between; gap:2px}
+.rs-spine-step{display:flex; align-items:flex-start; flex:1; min-width:0}
+.rs-spine-node{display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; flex:1; min-width:0}
+.rs-spine-ic{
+  display:grid; place-items:center; width:44px; height:44px; border-radius:50%;
+  background:var(--rs-tint); color:var(--rs-mut); border:1.5px solid var(--rs-rule);
+  transition:background .2s ease,color .2s ease;
+}
+.rs-spine-ic svg{width:21px; height:21px}
+.rs-spine-name{font-size:13px; font-weight:700; color:var(--rs-ink)}
+.rs-spine-cap{font-size:11.5px; color:var(--rs-mut); line-height:1.35}
+/* Sky fill takes dark ink, like the site's buttons (white-on-sky fails contrast) */
+.rs-spine-step[data-active="true"] .rs-spine-ic{background:var(--rs-acc); color:var(--rs-dark); border-color:var(--rs-acc)}
+.rs-spine-step[data-active="true"] .rs-spine-name{color:var(--rsa-h)}
+.rs-spine-arrow{color:var(--rs-mut); margin-top:13px; flex:none}
+.rs-spine-arrow svg{width:15px; height:15px}
+[dir="rtl"] .rs-spine-arrow svg{transform:scaleX(-1)}
+
+/* ---------- 3 · The five lines — gradient environment cards ---------- */
+.rs-lines{display:grid; grid-template-columns:repeat(5,1fr); gap:14px}
+.rs-line{display:flex; flex-direction:column}
+.rs-line-media{
+  position:relative; aspect-ratio:1/1.02; overflow:hidden;
+  /* the client's per-line photographic environment — imagery only, never UI.
+     Bright center so the matte-black bottles rim-separate. */
+  background:
+    radial-gradient(120% 95% at 50% 38%,
+      color-mix(in srgb, var(--env) 46%, #fff) 0%,
+      var(--env) 52%,
+      color-mix(in srgb, var(--env) 55%, #000) 100%);
+}
+/* Packshots are white-ground renders: multiply melts the ground into the
+   environment (white → env, bottle stays black, shadows read naturally).
+   The image fills the tile so no rectangle edge can appear. */
+.rs-line-media img{
+  width:100%; height:100%; object-fit:cover;
+  mix-blend-mode:multiply; transition:transform .3s ease;
+}
+.rs-line:hover .rs-line-media img{transform:scale(1.04)}
+.rs-line-body{display:flex; flex-direction:column; gap:7px; padding:14px 16px 16px; flex:1; background:#fff}
+.rs-line-body h3{font-size:16.5px; line-height:1.25; min-height:2.5em; display:flex; align-items:flex-end}
+.rs-line-ideal{font-size:13.5px; line-height:1.45; color:var(--rs-ink)}
+.rs-line-ideal b{font-weight:700}
+.rs-line-note{font-size:13px; line-height:1.5}
+.rs-line-cert{
+  font-size:12px; font-weight:700; color:var(--rs-ink);
+  border-top:1px solid var(--rs-rule); padding-top:8px; margin-top:auto;
+}
+.rs-line-cert[data-kind="biocompatibility"]{color:var(--rs-body)}
+.rs-line-cta{
+  display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+  font-size:13.5px; font-weight:700; color:var(--rsa-h);
+}
+.rs-line-cta svg{width:14px; height:14px; transition:translate .2s ease}
+.rs-line-cta:hover svg{translate:3px 0}
+[dir="rtl"] .rs-line-cta svg{transform:scaleX(-1)}
+[dir="rtl"] .rs-line-cta:hover svg{translate:-3px 0}
+
+/* ---------- 4 · Indication matrix + glossary (dense local) ---------- */
+.rs-table-scroll{overflow-x:auto}
+.rs-matrix{width:100%; border-collapse:collapse; font-size:13.5px; min-width:680px}
+.rs-matrix th,.rs-matrix td{padding:9px 10px; text-align:center; border-bottom:1px solid var(--rs-rule)}
+.rs-matrix thead th{
+  font-size:12.5px; font-weight:700; color:var(--rs-ink);
+  border-bottom:2px solid var(--rs-acc); vertical-align:bottom;
+}
+.rs-matrix tbody th{text-align:start; font-weight:500; color:var(--rs-ink); min-width:180px}
+.rs-matrix td{color:var(--rs-mut)}
+.rs-matrix td[data-yes="true"]{color:var(--rsa-h)}
+.rs-dot{width:19px; height:19px; vertical-align:middle}
+.rs-matrix-mobile{display:none; list-style:none; margin:0; padding:0}
+.rs-gloss{margin-top:clamp(14px,2vw,20px)}
+.rs-gloss-title{font-size:16px; margin-bottom:10px}
+.rs-gloss-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.rs-gloss-item{
+  background:#fff; border:1px solid var(--rs-rule); border-radius:12px;
+  box-shadow:var(--rs-shadow); font-size:13.5px;
+}
+.rs-gloss-item summary{
+  cursor:pointer; padding:10px 14px; font-weight:700; color:var(--rs-ink);
+  list-style:none; position:relative; padding-inline-end:34px;
+}
+.rs-gloss-item summary::-webkit-details-marker{display:none}
+.rs-gloss-item summary::after{
+  content:"+"; position:absolute; inset-inline-end:14px; top:50%; translate:0 -50%;
+  color:var(--rsa-h); font-weight:700; font-size:17px; transition:rotate .2s ease;
+}
+.rs-gloss-item[open] summary::after{rotate:45deg}
+.rs-gloss-item p{padding:0 14px 12px; line-height:1.55}
+
+/* ---------- 5 · Shades — split editorial ---------- */
+.rs-shades{display:grid; grid-template-columns:1fr 1.15fr; align-items:stretch}
+.rs-shades-copy{padding:clamp(18px,2.5vw,30px); display:flex; flex-direction:column; justify-content:center}
+.rs-shades-copy h3{font-size:clamp(20px,2.2vw,26px); margin-bottom:10px}
+.rs-shades-copy p{font-size:15.5px}
+.rs-swatches{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap}
+.rs-swatch{display:flex; flex-direction:column; align-items:center; gap:5px}
+.rs-swatch i{
+  display:block; width:46px; height:46px; border-radius:10px; background:var(--fill);
+  border:1px solid rgba(33,28,29,.14); box-shadow:inset 0 -8px 14px rgba(120,90,40,.12);
+}
+.rs-swatch-code{font-size:12px; font-weight:700; color:var(--rs-ink)}
+.rs-shades-media{margin:0; min-height:280px}
+.rs-shades-media img{width:100%; height:100%; object-fit:cover; display:block}
+
+/* ---------- 6 · Wash & cure — split with stat tiles ---------- */
+.rs-wash{display:grid; grid-template-columns:1.25fr .75fr; align-items:center; background:linear-gradient(135deg,#fff 62%,var(--rs-tint))}
+.rs-wash-copy{padding:clamp(18px,2.5vw,30px)}
+.rs-wash-copy h3{font-size:clamp(20px,2.2vw,26px); margin-bottom:10px}
+.rs-wash-copy>p{font-size:15.5px; max-width:46em}
+.rs-times{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; max-width:480px}
+.rs-time{
+  background:#fff; border:1px solid var(--rs-rule); border-radius:12px;
+  padding:12px 10px; text-align:center; box-shadow:var(--rs-shadow);
+}
+.rs-time-val{display:block; font-size:22px; font-weight:700; color:var(--rs-ink)}
+.rs-time-app{font-size:12.5px; line-height:1.35; display:block; margin-top:2px}
+.rs-waves{display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin:16px 0}
+.rs-wave{
+  font-size:13px; font-weight:700; color:var(--rs-ink);
+  border:1.5px solid var(--rs-acc); border-radius:999px; padding:4px 12px;
+}
+.rs-waves-note{font-size:13px; color:var(--rs-mut)}
+.rs-wash-media{margin:0; padding:clamp(12px,2vw,24px); align-self:center}
+.rs-wash-media img{width:100%; max-width:340px; height:auto; display:block; margin-inline:auto; filter:drop-shadow(0 18px 28px rgba(10,60,100,.18))}
+
+/* ---------- 7 · Documents & certification ---------- */
+.rs-docs-grid{display:grid; grid-template-columns:1fr 1.15fr; gap:16px; align-items:start}
+.rs-tabs{display:flex; gap:6px; border-bottom:1px solid var(--rs-rule); margin-bottom:12px}
+.rs-tab{
+  cursor:pointer; background:none; border:none; border-bottom:3px solid transparent;
+  font:inherit; font-weight:700; font-size:14.5px; color:var(--rs-mut);
+  padding:8px 12px; margin-bottom:-1px; transition:color .2s ease,border-color .2s ease;
+}
+.rs-tab:hover{color:var(--rs-ink)}
+.rs-tab[data-active="true"]{color:var(--rs-ink); border-bottom-color:var(--rs-acc)}
+.rs-doclist{display:flex; flex-direction:column}
+.rs-docrow{display:flex; align-items:center; gap:12px; padding:10px 2px; border-bottom:1px solid var(--rs-rule)}
+.rs-docrow:last-of-type{border-bottom:none}
+.rs-docrow-ic{color:var(--rsa-h); display:grid; place-items:center; flex:none}
+.rs-docrow-ic svg{width:22px; height:22px}
+.rs-docrow-copy{display:flex; flex-direction:column; min-width:0; flex:1}
+.rs-docrow-line{font-size:14.5px; font-weight:700; color:var(--rs-ink)}
+.rs-docrow-doc{font-size:12.5px; color:var(--rs-mut)}
+.rs-docrow-cta{
+  flex:none; cursor:pointer; font-size:13.5px; font-weight:700; color:var(--rsa-h);
+  border:1.5px solid currentColor; border-radius:999px; padding:5px 14px;
+  transition:background .2s ease;
+}
+.rs-docrow-cta:hover{background:rgba(6,165,223,.08)}
+.rs-cert-title{font-size:16px; margin-bottom:10px}
+.rs-cert{width:100%; border-collapse:collapse; font-size:12px; min-width:520px}
+.rs-cert th,.rs-cert td{padding:7px 4px; text-align:center; border-bottom:1px solid var(--rs-rule)}
+.rs-cert thead th{font-weight:700; color:var(--rs-ink); border-bottom:2px solid var(--rs-acc)}
+.rs-cert tbody th{text-align:start; font-weight:500; color:var(--rs-ink); white-space:nowrap}
+.rs-cert td{color:var(--rs-mut)}
+.rs-cert td[data-yes="true"]{color:var(--rsa-h)}
+.rs-cert .rs-dot{width:16px; height:16px}
+
+/* ---------- 8 · Ecosystem strip + closing CTA ---------- */
+.rs-chain{display:grid; grid-template-columns:repeat(4,1fr); gap:26px; position:relative}
+.rs-chain-node{padding:16px; text-align:center; position:relative}
+/* Same product shots as the scanner screen's strip: white-ground packshots
+   render contain; photographic scenes (cure) render as cover thumbs */
+.rs-chain-node img{width:100%; height:150px; object-fit:contain; border-radius:10px; display:block}
+.rs-chain-node img[data-fit="cover"]{object-fit:cover}
+.rs-chain-node h3{font-size:15px; margin-top:8px}
+.rs-chain-node h3 a{color:inherit}
+.rs-chain-node h3 a:hover{color:var(--rsa-h)}
+.rs-chain-node[data-active]{border-color:var(--rs-acc); box-shadow:0 6px 24px rgba(6,165,223,.16)}
+.rs-chain-node:not(:last-child)::after{
+  content:""; position:absolute; top:50%; inset-inline-end:-22px; width:18px; height:2px;
+  background-image:linear-gradient(90deg,var(--rs-mut) 55%,transparent 0);
+  background-size:6px 2px;
+}
+.rs-closing{text-align:center; margin-top:clamp(24px,3.5vw,40px)}
+.rs-closing h3{font-size:clamp(21px,2.4vw,27px); margin-bottom:8px}
+.rs-closing .rs-intro{margin-inline:auto; margin-bottom:16px}
+
+/* ---------- Motion — site .reveal system + grid staggers (Motion 6/10) ---------- */
+.rs-lines>.reveal:nth-child(2){transition-delay:.06s}
+.rs-lines>.reveal:nth-child(3){transition-delay:.12s}
+.rs-lines>.reveal:nth-child(4){transition-delay:.18s}
+.rs-lines>.reveal:nth-child(5){transition-delay:.24s}
+.rs-chips>.reveal:nth-child(2){transition-delay:.05s}
+.rs-chips>.reveal:nth-child(3){transition-delay:.1s}
+.rs-chips>.reveal:nth-child(4){transition-delay:.15s}
+.rs-chain>.reveal:nth-child(2){transition-delay:.08s}
+.rs-chain>.reveal:nth-child(3){transition-delay:.16s}
+.rs-chain>.reveal:nth-child(4){transition-delay:.24s}
+@media (prefers-reduced-motion:reduce){
+  .rs .reveal{opacity:1 !important; transform:none !important; transition:none !important}
+  .rs *{transition-duration:.01ms !important}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1080px){
+  .rs-hero-grid{grid-template-columns:1fr; }
+  .rs-hero-media{max-width:520px; margin-inline:auto}
+  .rs-band{grid-template-columns:1fr}
+  /* lineup 2+3 (tablet) */
+  .rs-lines{grid-template-columns:repeat(6,1fr)}
+  .rs-lines>:nth-child(-n+2){grid-column:span 3}
+  .rs-lines>:nth-child(n+3){grid-column:span 2}
+  .rs-shades{grid-template-columns:1fr}
+  .rs-shades-media{min-height:220px; order:-1}
+  .rs-wash{grid-template-columns:1fr}
+  .rs-docs-grid{grid-template-columns:1fr}
+}
+@media (max-width:767px){
+  .rs-chips{grid-template-columns:repeat(2,1fr)}
+  .rs-lines{grid-template-columns:1fr; gap:12px}
+  .rs-lines>*{grid-column:auto}
+  /* most-searched line first on mobile (spec §12) */
+  .rs-lines>:nth-child(4){order:-1}
+  .rs-line-media{aspect-ratio:auto; min-height:200px}
+  .rs-line-media img{width:min(60%,240px)}
+  .rs-line-body h3{min-height:0}
+  /* the matrix becomes a per-job list — never side-scrolls the page */
+  .rs-table-scroll:has(.rs-matrix){display:none}
+  .rs-matrix-mobile{display:block}
+  .rs-matrix-mobile li{display:flex; flex-direction:column; gap:2px; padding:10px 2px; border-bottom:1px solid var(--rs-rule)}
+  .rs-mm-job{font-weight:700; color:var(--rs-ink); font-size:14.5px}
+  .rs-mm-lines{font-size:13.5px; color:var(--rsa-h); font-weight:500}
+  .rs-gloss-grid{grid-template-columns:1fr}
+  .rs-times{grid-template-columns:repeat(3,1fr); max-width:none}
+  .rs-chain{grid-template-columns:1fr 1fr; gap:14px}
+  .rs-chain-node:not(:last-child)::after{display:none}
+  .rs-spine{flex-wrap:wrap; row-gap:14px}
+  .rs-spine-step{flex:1 1 30%}
+  .rs-spine-cap{display:none}
+}

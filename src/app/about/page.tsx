@@ -24,7 +24,7 @@ const TEAM = [
 ];
 
 const NEWS = [
-  { tag: 'Product', title: 'New permanent crown & bridge resin line', href: '/products/Resin' },
+  { tag: 'Product', title: 'New permanent crown & bridge resin line', href: '/products/resins' },
   { tag: 'Expo', title: 'ODYX at the digital dentistry expo', href: '/about#news' },
   { tag: 'Academy', title: 'Academy: new implant-guide course', href: '/learning' },
 ];

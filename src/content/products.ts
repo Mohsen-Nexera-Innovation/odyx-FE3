@@ -573,8 +573,8 @@ export const PRODUCTS: ProductContent[] = [
     ],
   },
   {
-    slug: "Resin",
-    name: "Resin",
+    slug: "resins",
+    name: "Resins",
     category: "Resin",
     layout: "cinematic",
     tagline: "Five clinical lines validated for the ODYX workflow.",
