@@ -2,6 +2,8 @@ export interface NavLink {
   label: string;
   href: string;
   desc?: string;
+  /** Background-free cutout shown in the mega menu's featured card while this link is hovered */
+  img?: string;
 }
 
 /** Nested group inside a mega column (e.g. "3D Printers") */
@@ -24,6 +26,9 @@ export interface MegaFeatured {
   desc: string;
   href: string;
   cta: string;
+  /** Background-free product cutout — must read on both the dark and on-light card variants */
+  img?: string;
+  imgAlt?: string;
 }
 
 export interface NavGroup {
@@ -129,32 +134,38 @@ export const HEADER_MENUS: NavGroup[] = [
         label: "ODYX Cure",
         href: "/products/curing-machines",
         desc: "Validated light dose every time",
-      },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
       {
         label: "ODYX Cure Cutout",
         href: "/products/cure-cutout",
         desc: "Floating clinical product view",
-      },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
       {
         label: "ODYX Cure Editorial",
         href: "/products/cure-editorial",
         desc: "Modern chamber demo story",
-      },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
       {
         label: "ODYX Cure Float",
         href: "/products/cure-float",
         desc: "Floating chapter cutouts demo",
-      },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
       {
         label: "ODYX Cure V4",
         href: "/products/cure-v4",
         desc: "Editorial clone — final draft",
-      },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
       {
         label: "ODYX Cure V5",
         href: "/products/cure-v5",
         desc: "V4 with reduced orange accents",
-      },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
       {
         label: "Resins",
         href: "/products/resins",
@@ -170,6 +181,7 @@ export const HEADER_MENUS: NavGroup[] = [
             label: "ODYX-S1",
             href: "/products/odyx-s1-intraoral-scanner",
             desc: "Chairside 3D impressions in seconds",
+            img: "/img/cutouts/feat-scanner-cutout.png",
           },
         ],
       },
@@ -184,7 +196,8 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "ODYX P1-26",
                 href: "/products/3d-printers",
                 desc: "Desktop production for clinic and lab",
-              },
+            img: "/img/cutouts/feat-printer-cutout.png",
+          },
             ],
           },
           {
@@ -194,32 +207,38 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "ODYX Cure",
                 href: "/products/curing-machines",
                 desc: "Validated light dose every time",
-              },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
               {
                 label: "ODYX Cure Cutout",
                 href: "/products/cure-cutout",
                 desc: "Floating clinical product view",
-              },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
               {
                 label: "ODYX Cure Editorial",
                 href: "/products/cure-editorial",
                 desc: "Modern chamber demo story",
-              },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
               {
                 label: "ODYX Cure Float",
                 href: "/products/cure-float",
                 desc: "Floating chapter cutouts demo",
-              },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
               {
                 label: "ODYX Cure V4",
                 href: "/products/cure-v4",
                 desc: "Editorial clone — final draft",
-              },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
               {
                 label: "ODYX Cure V5",
                 href: "/products/cure-v5",
                 desc: "V4 with reduced orange accents",
-              },
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
             ],
           },
           {
@@ -229,7 +248,8 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "Resin lines",
                 href: "/products/resins",
                 desc: "Five clinical lines, workflow-validated",
-              },
+            img: "/img/resins/all-resins-cutout.png",
+          },
             ],
           },
         ],
@@ -242,6 +262,7 @@ export const HEADER_MENUS: NavGroup[] = [
             label: "Design Software",
             href: "/products/design",
             desc: "CAD built for ODYX print parameters",
+            img: "/img/cutouts/feat-design-cutout.png",
           },
         ],
       },
@@ -252,6 +273,8 @@ export const HEADER_MENUS: NavGroup[] = [
       desc: "The dental production workhorse — validated profiles for crowns, guides, models and more.",
       href: "/products/3d-printers",
       cta: "Explore P1-26",
+      img: "/img/cutouts/feat-printer-cutout.png",
+      imgAlt: "ODYX P1-26 dental 3D printer",
     },
   },
   {
