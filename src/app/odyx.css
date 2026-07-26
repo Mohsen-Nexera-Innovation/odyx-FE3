@@ -226,6 +226,32 @@ a.mega-col__title:hover{color:#fff}
   transition:opacity .25s ease .08s,transform .25s ease .08s;
 }
 .nav-item:hover .mega-featured{opacity:1;transform:none}
+/* Featured product image — background-free cutout staged on a glow pedestal.
+   Styled for the dark panel here; the on-light overrides follow the
+   header.on-light block below, matching the nav bar's two modes. */
+.mega-featured__media{
+  position:relative;display:flex;align-items:flex-end;justify-content:center;
+  margin:-4px 0 14px;min-height:150px;
+}
+.mega-featured__media::before{
+  content:"";position:absolute;inset:8% 6% 0;
+  background:radial-gradient(closest-side at 50% 62%, rgba(var(--sky-rgb),.28), rgba(var(--sky-rgb),.06) 62%, transparent 78%);
+  filter:blur(18px);pointer-events:none;
+}
+.mega-featured__media::after{
+  content:"";position:absolute;inset-inline:18%;bottom:-2px;height:14px;
+  background:radial-gradient(closest-side, rgba(0,0,0,.5), transparent 72%);
+  filter:blur(6px);pointer-events:none;
+}
+.mega-featured__media img{
+  position:relative;z-index:1;max-height:150px;width:auto;max-width:82%;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.4));
+  transition:transform .3s ease;
+  animation:megaPreviewIn .28s ease; /* replays on hover swap (img keyed by src) */
+}
+@keyframes megaPreviewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mega-featured__media img{animation:none}}
+.nav-item:hover .mega-featured__media img{transform:translateY(-3px)}
 .mega-featured__eyebrow{
   font-size:.64rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
   color:var(--sky);margin-bottom:10px;
@@ -265,6 +291,15 @@ header.on-light .mega-featured{
 }
 header.on-light .mega-featured__title{color:#211C1D}
 header.on-light .mega-featured__desc{color:#5A555C}
+header.on-light .mega-featured__media::before{
+  background:radial-gradient(closest-side at 50% 62%, rgba(var(--sky-rgb),.20), rgba(var(--sky-rgb),.05) 62%, transparent 78%);
+}
+header.on-light .mega-featured__media::after{
+  background:radial-gradient(closest-side, rgba(10,60,100,.22), transparent 72%);
+}
+header.on-light .mega-featured__media img{
+  filter:drop-shadow(0 10px 16px rgba(10,60,100,.22));
+}
 header.on-light .mega-featured__cta{color:var(--sky-deep)}
 header.on-light .mega-featured__cta:hover{color:#047099}
 @media(max-width:1100px) and (min-width:768px){

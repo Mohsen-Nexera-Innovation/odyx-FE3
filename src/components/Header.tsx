@@ -42,35 +42,47 @@ function NavAnchor({
   children,
   onClick,
   className,
+  onMouseEnter,
+  onFocus,
 }: {
   href: string;
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   className?: string;
+  onMouseEnter?: () => void;
+  onFocus?: () => void;
 }) {
   if (href.startsWith('/')) {
     return (
-      <Link href={href} className={className} onClick={onClick}>
+      <Link href={href} className={className} onClick={onClick} onMouseEnter={onMouseEnter} onFocus={onFocus}>
         {children}
       </Link>
     );
   }
   return (
-    <a href={href} className={className} onClick={onClick}>
+    <a href={href} className={className} onClick={onClick} onMouseEnter={onMouseEnter} onFocus={onFocus}>
       {children}
     </a>
   );
 }
 
+/** What the featured card previews while a product link is hovered/focused */
+type MegaPreview = { item: NavLink; category: string };
+
 function MegaLink({
   item,
   onClick,
+  onPreview,
 }: {
   item: NavLink;
   onClick: () => void;
+  onPreview?: (item: NavLink) => void;
 }) {
+  const previewProps = item.img && onPreview
+    ? { onMouseEnter: () => onPreview(item), onFocus: () => onPreview(item) }
+    : {};
   return (
-    <NavAnchor href={item.href} className="mega-link" onClick={onClick}>
+    <NavAnchor href={item.href} className="mega-link" onClick={onClick} {...previewProps}>
       <span className="mega-link__label">{item.label}</span>
     </NavAnchor>
   );
@@ -79,10 +91,15 @@ function MegaLink({
 function MegaColumnBlock({
   column,
   onClick,
+  onPreview,
 }: {
   column: MegaColumn;
   onClick: () => void;
+  onPreview?: (preview: MegaPreview) => void;
 }) {
+  const preview = onPreview
+    ? (item: NavLink) => onPreview({ item, category: column.title })
+    : undefined;
   return (
     <div className="mega-col">
       {column.href ? (
@@ -96,12 +113,12 @@ function MegaColumnBlock({
         <div className="mega-group" key={group.label ?? `g-${i}`}>
           {group.label ? <p className="mega-group__label">{group.label}</p> : null}
           {group.items.map((item) => (
-            <MegaLink key={item.label + item.href} item={item} onClick={onClick} />
+            <MegaLink key={item.label + item.href} item={item} onClick={onClick} onPreview={preview} />
           ))}
         </div>
       ))}
       {column.items?.map((item) => (
-        <MegaLink key={item.label + item.href} item={item} onClick={onClick} />
+        <MegaLink key={item.label + item.href} item={item} onClick={onClick} onPreview={preview} />
       ))}
     </div>
   );
@@ -114,25 +131,53 @@ function MegaPanel({
   menu: NavGroup;
   onClick: () => void;
 }) {
+  // The featured card previews whichever product link is hovered/focused,
+  // falling back to the menu's default flagship when nothing is.
+  const [preview, setPreview] = useState<MegaPreview | null>(null);
   if (menu.columns?.length) {
+    const featured = menu.featured;
+    const shown = featured
+      ? preview
+        ? {
+            eyebrow: preview.category,
+            title: preview.item.label,
+            desc: preview.item.desc ?? featured.desc,
+            href: preview.item.href,
+            cta: `Explore ${preview.item.label}`,
+            img: preview.item.img,
+            imgAlt: preview.item.label,
+          }
+        : featured
+      : null;
     return (
-      <div className="mega mega-panel">
+      <div className="mega mega-panel" onMouseLeave={() => setPreview(null)}>
         <div className="mega-panel__inner wrap">
           <div
             className={`mega-panel__cols${menu.featured ? ' mega-panel__cols--featured' : ''}`}
             style={{ ['--mega-cols' as string]: String(menu.columns.length) }}
           >
             {menu.columns.map((col) => (
-              <MegaColumnBlock key={col.title} column={col} onClick={onClick} />
+              <MegaColumnBlock
+                key={col.title}
+                column={col}
+                onClick={onClick}
+                onPreview={menu.featured ? setPreview : undefined}
+              />
             ))}
           </div>
-          {menu.featured ? (
+          {shown ? (
             <aside className="mega-featured">
-              <span className="mega-featured__eyebrow">{menu.featured.eyebrow}</span>
-              <strong className="mega-featured__title">{menu.featured.title}</strong>
-              <p className="mega-featured__desc">{menu.featured.desc}</p>
-              <NavAnchor href={menu.featured.href} className="mega-featured__cta" onClick={onClick}>
-                {menu.featured.cta}
+              {shown.img ? (
+                <span className="mega-featured__media">
+                  {/* keyed by src so a swap remounts and replays the fade-in */}
+                  <img key={shown.img} src={shown.img} alt={shown.imgAlt ?? ''} loading="lazy" />
+                </span>
+              ) : null}
+              <span className="mega-featured__eyebrow">{shown.eyebrow}</span>
+              <strong className="mega-featured__title">{shown.title}</strong>
+              <p className="mega-featured__desc">{shown.desc}</p>
+              <NavAnchor href={shown.href} className="mega-featured__cta" onClick={onClick}>
+                {shown.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                   <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
