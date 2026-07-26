@@ -98,7 +98,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     labNote: "Run multiple units per day with consistent material performance.",
     learning: [
       { label: "Printer setup guide", href: "/support#manuals" },
-      { label: "Resin selection", href: "/products/Resin" },
+      { label: "Resin selection", href: "/products/resins" },
     ],
   },
   {
@@ -122,7 +122,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     labNote: "Batch curing with traceable profiles for production QA.",
     learning: [
       { label: "Curing best practices", href: "/support#educate" },
-      { label: "Material safety docs", href: "/products/Resin" },
+      { label: "Material safety docs", href: "/products/resins" },
     ],
   },
   {
@@ -130,7 +130,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     no: "05",
     label: "Finish",
     accent: "orange",
-    productSlug: "Resin",
+    productSlug: "resins",
     productName: "Final polish",
     img: "/img/crowns.jpg",
     lead: "Characterization and gloss for lifelike aesthetics.",

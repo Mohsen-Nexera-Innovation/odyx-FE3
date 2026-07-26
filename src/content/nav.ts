@@ -156,8 +156,8 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "V4 with reduced orange accents",
       },
       {
-        label: "Resin",
-        href: "/products/Resin",
+        label: "Resins",
+        href: "/products/resins",
         desc: "Clinical resin lines",
       },
     ],
@@ -223,11 +223,11 @@ export const HEADER_MENUS: NavGroup[] = [
             ],
           },
           {
-            label: "Resin",
+            label: "Resins",
             items: [
               {
                 label: "Resin lines",
-                href: "/products/Resin",
+                href: "/products/resins",
                 desc: "Five clinical lines, workflow-validated",
               },
             ],

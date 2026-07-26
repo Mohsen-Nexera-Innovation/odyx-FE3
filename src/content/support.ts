@@ -19,7 +19,7 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
       { label: "Design software install", href: "#", meta: "PDF" },
       {
         label: "Resin processing guides",
-        href: "/products/Resin",
+        href: "/products/resins",
         meta: "PDF",
       },
     ],

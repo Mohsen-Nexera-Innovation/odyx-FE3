@@ -8,17 +8,21 @@ import CuringFloatPage from '@/components/pages/CuringFloatPage';
 import CuringV4Page from '@/components/pages/CuringV4Page';
 import CuringV5Page from '@/components/pages/CuringV5Page';
 import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
+import ResinsRangePage from '@/components/pages/ResinsRangePage';
 import ScannerS1Page from '@/components/pages/ScannerS1Page';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 import { PRINTERS_META } from '@/content/printers-3d';
+import { RESINS_META, RESINS_SLUG } from '@/content/resins';
 import { SCANNER_META, SCANNER_SLUG } from '@/content/scanner-s1';
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Legacy product slugs → current (301 — the scanner slug carries the model name, review #22) */
+/** Legacy product slugs → current (301 — the scanner slug carries the model name, review #22;
+ *  the resins slug is plural lowercase per 039 content.md §3) */
 const SLUG_ALIASES: Record<string, string> = {
-  Resins: 'Resin',
+  Resin: RESINS_SLUG,
+  Resins: RESINS_SLUG,
   'intraoral-scanner': SCANNER_SLUG,
 };
 
@@ -34,6 +38,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === SCANNER_SLUG) {
     return { title: SCANNER_META.title, description: SCANNER_META.description };
+  }
+  if (slug === RESINS_SLUG) {
+    return { title: RESINS_META.title, description: RESINS_META.description };
   }
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return { title: 'Product | ODYX' };
@@ -101,6 +108,16 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <CuringV5Page />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  // 039 · Resins is the range-lineup page with its own layout —
+  // spec in knowledge_base/screens/039-resin/
+  if (raw === RESINS_SLUG) {
+    return (
+      <>
+        <ResinsRangePage />
         <InnerPageMotion />
       </>
     );

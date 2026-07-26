@@ -7,20 +7,20 @@ import { PRODUCTS, type ProductContent } from '@/content/products';
 
 /** Scan → Design → Print → Cure → Materials */
 const WORKFLOW_ORDER = [
-  'intraoral-scanner',
+  'odyx-s1-intraoral-scanner',
   'design',
   '3d-printers',
   'curing-machines',
-  'Resin',
+  'resins',
 ] as const;
 
 /** Transparent PNGs for the light products overview (studio bg removed). */
 const CUTOUTS: Partial<Record<(typeof WORKFLOW_ORDER)[number], string>> = {
-  'intraoral-scanner': '/img/cutouts/feat-scanner-cutout.png',
+  'odyx-s1-intraoral-scanner': '/img/cutouts/feat-scanner-cutout.png',
   design: '/img/cutouts/feat-design-cutout.png',
   '3d-printers': '/img/cutouts/feat-printer-cutout.png',
   'curing-machines': '/img/cutouts/feat-curing-cutout.png',
-  Resin: '/img/cutouts/feat-resin-cutout.png',
+  resins: '/img/cutouts/feat-resin-cutout.png',
 };
 
 const LINEUP = WORKFLOW_ORDER.map((slug) =>

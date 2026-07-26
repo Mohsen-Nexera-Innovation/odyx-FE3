@@ -81,7 +81,7 @@ const ECOSYSTEM = [
     name: "ODYX Resin",
     type: "Validated materials",
     image: "/img/cure-stitch/wf-resin.png",
-    href: "/products/Resin",
+    href: "/products/resins",
   },
   {
     name: "ODYX Cure",

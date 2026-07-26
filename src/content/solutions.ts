@@ -59,7 +59,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
       },
       {
         name: "Clinical Resin",
-        href: "/products/Resin",
+        href: "/products/resins",
         why: "Materials matched to each indication",
         img: "/img/feat-resin.jpg",
       },
@@ -118,7 +118,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
       },
       {
         name: "Resin & Materials",
-        href: "/products/Resin",
+        href: "/products/resins",
         why: "Full indication coverage",
         img: "/img/feat-resin.jpg",
       },
