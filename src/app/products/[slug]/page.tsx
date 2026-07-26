@@ -1,16 +1,19 @@
 import type { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
 import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
+import ScannerS1Page from '@/components/pages/ScannerS1Page';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 import { PRINTERS_META } from '@/content/printers-3d';
+import { SCANNER_META, SCANNER_SLUG } from '@/content/scanner-s1';
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Legacy product slugs → current */
+/** Legacy product slugs → current (301 — the scanner slug carries the model name, review #22) */
 const SLUG_ALIASES: Record<string, string> = {
   Resins: 'Resin',
+  'intraoral-scanner': SCANNER_SLUG,
 };
 
 export function generateStaticParams() {
@@ -23,6 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (slug === '3d-printers') {
     return { title: PRINTERS_META.title, description: PRINTERS_META.description };
   }
+  if (slug === SCANNER_SLUG) {
+    return { title: SCANNER_META.title, description: SCANNER_META.description };
+  }
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return { title: 'Product | ODYX' };
   return {
@@ -33,8 +39,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug: raw } = await params;
-  if (SLUG_ALIASES[raw]) redirect(`/products/${SLUG_ALIASES[raw]}`);
+  if (SLUG_ALIASES[raw]) permanentRedirect(`/products/${SLUG_ALIASES[raw]}`);
   if (!PRODUCTS.some((p) => p.slug === raw)) notFound();
+  // 034 · Intraoral Scanner is a single-model detail page with its own layout —
+  // spec in knowledge_base/screens/034-interoral-scanner/
+  if (raw === SCANNER_SLUG) {
+    return (
+      <>
+        <ScannerS1Page />
+        <InnerPageMotion />
+      </>
+    );
+  }
   // 036 · 3D Printers is a product-family (forked) page with its own layout —
   // spec in knowledge_base/screens/036-3d-printers/
   if (raw === '3d-printers') {

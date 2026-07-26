@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const BEGINNER = [
-  { title: 'What is an intraoral scanner?', href: '/products/intraoral-scanner' },
+  { title: 'What is an intraoral scanner?', href: '/products/odyx-s1-intraoral-scanner' },
   { title: 'What is a 3D printer?', href: '/products/3d-printers' },
   { title: 'What is curing?', href: '/products/curing-machines' },
   { title: 'What are dental resins?', href: '/products/Resin' },

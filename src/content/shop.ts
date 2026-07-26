@@ -70,7 +70,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: '/img/feat-scanner.jpg',
     category: 'scanner',
     unit: '1 unit',
-    href: '/products/intraoral-scanner',
+    href: '/products/odyx-s1-intraoral-scanner',
     highlights: ['Full-arch color', 'Open export', 'Real-time mesh'],
   },
   {

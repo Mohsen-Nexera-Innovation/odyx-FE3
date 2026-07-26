@@ -112,7 +112,7 @@ export const HEADER_MENUS: NavGroup[] = [
       { label: "All Products", href: "/products", desc: "Full ODYX lineup" },
       {
         label: "Intraoral Scanner",
-        href: "/products/intraoral-scanner",
+        href: "/products/odyx-s1-intraoral-scanner",
         desc: "ODYX-S1",
       },
       {
@@ -139,11 +139,11 @@ export const HEADER_MENUS: NavGroup[] = [
     columns: [
       {
         title: "Intraoral Scanner",
-        href: "/products/intraoral-scanner",
+        href: "/products/odyx-s1-intraoral-scanner",
         items: [
           {
             label: "ODYX-S1",
-            href: "/products/intraoral-scanner",
+            href: "/products/odyx-s1-intraoral-scanner",
             desc: "Chairside 3D impressions in seconds",
           },
         ],

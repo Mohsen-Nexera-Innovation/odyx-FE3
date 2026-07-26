@@ -49,7 +49,7 @@ export interface ProductContent {
 
 export const PRODUCTS: ProductContent[] = [
   {
-    slug: "intraoral-scanner",
+    slug: "odyx-s1-intraoral-scanner",
     name: "ODYX-S1",
     category: "Intraoral Scanner",
     layout: "cinematic",
