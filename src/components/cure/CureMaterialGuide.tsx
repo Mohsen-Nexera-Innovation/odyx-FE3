@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const IMG = "/img/cure-stitch/clinical-cases";
+
 const MATERIALS = [
   {
     id: "crown",
@@ -10,7 +12,8 @@ const MATERIALS = [
     heat: "40°C",
     wave: "385 + 405 nm",
     note: "Full polymerization for permanent strength and marginal accuracy.",
-    image: "/img/cure-stitch/odyx-cine-crown.webp",
+    image: `${IMG}/case-crown-curing.png`,
+    alt: "ODYX Cure UV-02 curing a dental crown inside the amber UV chamber",
   },
   {
     id: "guide",
@@ -19,7 +22,8 @@ const MATERIALS = [
     heat: "38°C",
     wave: "385 + 405 nm",
     note: "Clears residual monomer while preserving dimensional fit.",
-    image: "/img/cure-stitch/odyx-cine-guide.webp",
+    image: `${IMG}/case-guide-curing.png`,
+    alt: "ODYX Cure UV-02 chamber curing a surgical guide under dual-wave light",
   },
   {
     id: "denture",
@@ -28,7 +32,8 @@ const MATERIALS = [
     heat: "42°C",
     wave: "385 + 405 nm",
     note: "Longer cycle for thicker geometries and biocompatible finish.",
-    image: "/img/cure-stitch/odyx-cine-denture.webp",
+    image: `${IMG}/case-denture-curing.png`,
+    alt: "ODYX Cure UV-02 curing a denture base on the rotating platform",
   },
   {
     id: "model",
@@ -37,7 +42,8 @@ const MATERIALS = [
     heat: "35°C",
     wave: "405 nm",
     note: "Fast surface harden for diagnostic and working models.",
-    image: "/img/cure-stitch/odyx-cine-model.webp",
+    image: `${IMG}/case-model-curing.png`,
+    alt: "ODYX Cure UV-02 curing a dental model in the UV chamber",
   },
   {
     id: "guard",
@@ -46,7 +52,8 @@ const MATERIALS = [
     heat: "40°C",
     wave: "385 + 405 nm",
     note: "Balances toughness with clarity for occlusal appliances.",
-    image: "/img/cure-stitch/odyx-cine-guard.webp",
+    image: `${IMG}/case-splint-curing.png`,
+    alt: "ODYX Cure UV-02 curing a splint inside the amber-lit chamber",
   },
   {
     id: "temp",
@@ -55,18 +62,16 @@ const MATERIALS = [
     heat: "40°C",
     wave: "385 + 405 nm",
     note: "Chairside-ready temporaries with stable shade and edge.",
-    image: "/img/cure-stitch/odyx-cine-temp.webp",
+    image: `${IMG}/case-temp-curing.png`,
+    alt: "ODYX Cure UV-02 curing a provisional restoration with the chamber open",
   },
 ] as const;
 
-export default function CureMaterialGuide({
-  classPrefix = "cure-ed",
-}: {
-  classPrefix?: "cure-ed" | "cure-fl" | "cure-v4" | "cure-v5";
-}) {
+const cx = (part: string) => `cure-${part}`;
+
+export default function CureMaterialGuide() {
   const [active, setActive] = useState<(typeof MATERIALS)[number]["id"]>("crown");
   const material = MATERIALS.find((m) => m.id === active) ?? MATERIALS[0];
-  const cx = (part: string) => `${classPrefix}-${part}`;
 
   return (
     <div className={cx("guide")}>
@@ -87,7 +92,16 @@ export default function CureMaterialGuide({
 
       <div className={cx("guide__panel")} role="tabpanel">
         <div className={cx("guide__visual")}>
-          <img src={material.image} alt={material.name} width={640} height={480} />
+          <img
+            key={material.id}
+            src={material.image}
+            alt={material.alt}
+            width={960}
+            height={640}
+          />
+          <span className={cx("guide__machine")} aria-hidden>
+            Cure UV-02
+          </span>
         </div>
         <div className={cx("guide__data")}>
           <p className={cx("guide__label")}>Validated cycle</p>

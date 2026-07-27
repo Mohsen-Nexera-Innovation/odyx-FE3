@@ -1,12 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
-import CuringClinicalPage from '@/components/pages/CuringClinicalPage';
-import CuringCutoutPage from '@/components/pages/CuringCutoutPage';
-import CuringEditorialPage from '@/components/pages/CuringEditorialPage';
-import CuringFloatPage from '@/components/pages/CuringFloatPage';
-import CuringV4Page from '@/components/pages/CuringV4Page';
-import CuringV5Page from '@/components/pages/CuringV5Page';
+import CuringPage from '@/components/pages/CuringPage';
 import CuringUv02Page from '@/components/pages/CuringUv02Page';
 import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
 import ResinsRangePage from '@/components/pages/ResinsRangePage';
@@ -20,11 +15,17 @@ import { SCANNER_META, SCANNER_SLUG } from '@/content/scanner-s1';
 type Props = { params: Promise<{ slug: string }> };
 
 /** Legacy product slugs → current (301 — the scanner slug carries the model name, review #22;
- *  the resins slug is plural lowercase per 039 content.md §3) */
+ *  the resins slug is plural lowercase per 039 content.md §3;
+ *  curing demo variants collapse to the single Cure page) */
 const SLUG_ALIASES: Record<string, string> = {
   Resin: RESINS_SLUG,
   Resins: RESINS_SLUG,
   'intraoral-scanner': SCANNER_SLUG,
+  'cure-cutout': 'curing-machines',
+  'cure-editorial': 'curing-machines',
+  'cure-float': 'curing-machines',
+  'cure-v4': 'curing-machines',
+  'cure-v5': 'curing-machines',
 };
 
 export function generateStaticParams() {
@@ -76,39 +77,7 @@ export default async function Page({ params }: Props) {
   if (raw === 'curing-machines') {
     return (
       <>
-        <CuringClinicalPage />
-        <InnerPageMotion />
-      </>
-    );
-  }
-  if (raw === 'cure-cutout') {
-    return (
-      <>
-        <CuringCutoutPage />
-        <InnerPageMotion />
-      </>
-    );
-  }
-  if (raw === 'cure-editorial') {
-    return (
-      <>
-        <CuringEditorialPage />
-        <InnerPageMotion />
-      </>
-    );
-  }
-  if (raw === 'cure-float') {
-    return (
-      <>
-        <CuringFloatPage />
-        <InnerPageMotion />
-      </>
-    );
-  }
-  if (raw === 'cure-v4') {
-    return (
-      <>
-        <CuringV4Page />
+        <CuringPage />
         <InnerPageMotion />
       </>
     );
@@ -118,14 +87,6 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <CuringUv02Page />
-        <InnerPageMotion />
-      </>
-    );
-  }
-  if (raw === 'cure-v5') {
-    return (
-      <>
-        <CuringV5Page />
         <InnerPageMotion />
       </>
     );
