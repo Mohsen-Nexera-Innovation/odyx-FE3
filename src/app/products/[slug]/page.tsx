@@ -7,6 +7,7 @@ import CuringEditorialPage from '@/components/pages/CuringEditorialPage';
 import CuringFloatPage from '@/components/pages/CuringFloatPage';
 import CuringV4Page from '@/components/pages/CuringV4Page';
 import CuringV5Page from '@/components/pages/CuringV5Page';
+import CuringUv02Page from '@/components/pages/CuringUv02Page';
 import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
 import ResinsRangePage from '@/components/pages/ResinsRangePage';
 import ScannerS1Page from '@/components/pages/ScannerS1Page';
@@ -41,6 +42,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === RESINS_SLUG) {
     return { title: RESINS_META.title, description: RESINS_META.description };
+  }
+  if (slug === 'cure-v6') {
+    // 037 content.md §3 — title tag + meta description
+    return {
+      title: 'ODYX Cure UV-02 — Dental UV Curing Machine',
+      description:
+        'Triple-wavelength UV curing (365/385/405 nm) for every dental resin. 360° coverage, 8 presets, 1–5 minute typical cures. Meet the ODYX Cure UV-02.',
+    };
   }
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return { title: 'Product | ODYX' };
@@ -100,6 +109,15 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <CuringV4Page />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  // 037 · spec-faithful ODYX Cure UV-02 build — knowledge_base/screens/037 Curing Machines
+  if (raw === 'cure-v6') {
+    return (
+      <>
+        <CuringUv02Page />
         <InnerPageMotion />
       </>
     );

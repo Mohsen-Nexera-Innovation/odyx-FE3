@@ -167,6 +167,12 @@ export const HEADER_MENUS: NavGroup[] = [
             img: "/img/cutouts/feat-curing-cutout.png",
           },
       {
+        label: "ODYX Cure V6",
+        href: "/products/cure-v6",
+        desc: "Spec-faithful UV-02 — two-act wash & cure",
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
+      {
         label: "Resins",
         href: "/products/resins",
         desc: "Clinical resin lines",
@@ -237,6 +243,12 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "ODYX Cure V5",
                 href: "/products/cure-v5",
                 desc: "V4 with reduced orange accents",
+            img: "/img/cutouts/feat-curing-cutout.png",
+          },
+              {
+                label: "ODYX Cure V6",
+                href: "/products/cure-v6",
+                desc: "Spec-faithful UV-02 — two-act wash & cure",
             img: "/img/cutouts/feat-curing-cutout.png",
           },
             ],
