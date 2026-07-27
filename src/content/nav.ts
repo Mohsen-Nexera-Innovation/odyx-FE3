@@ -121,9 +121,9 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "ODYX-S1",
       },
       {
-        label: "Digital Products",
-        href: "/products/design",
-        desc: "Design software",
+        label: "Design Services",
+        href: "/design-services",
+        desc: "Design services",
       },
       {
         label: "3D Printers",
@@ -195,13 +195,13 @@ export const HEADER_MENUS: NavGroup[] = [
         ],
       },
       {
-        title: "Digital Products",
-        href: "/products/design",
+        title: "Design Services",
+        href: "/design-services",
         items: [
           {
-            label: "Design Software",
-            href: "/products/design",
-            desc: "CAD built for ODYX print parameters",
+            label: "Design Services",
+            href: "/design-services",
+            desc: "On-demand dental CAD design",
             img: "/img/cutouts/feat-design-cutout.png",
           },
         ],
