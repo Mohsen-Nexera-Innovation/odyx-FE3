@@ -417,11 +417,11 @@ export default function CuringUv02Page() {
             <h2 className="c6-h2">Technical specifications</h2>
           </div>
           <div className="c6-specs-grid">
-            {/* Video slot — drop client footage at public/video/cure-in-action.mp4;
+            {/* Same footage as the ODYX Cure hero (public/video/cure-uv02-hero.mp4);
                 the device still serves as poster until it plays */}
             <figure className="c6-card c6-specs-media m-left">
               <video
-                src="/video/cure-in-action.mp4"
+                src="/video/cure-uv02-hero.mp4"
                 poster="/img/cure-uv02/device-angle.jpg"
                 autoPlay
                 muted
@@ -432,7 +432,6 @@ export default function CuringUv02Page() {
                 height={1024}
                 aria-label="The ODYX Cure UV-02 running a cure cycle, chamber glowing"
               />
-              <figcaption>The Cure UV-02 in action: a full cure cycle inside the chamber.</figcaption>
             </figure>
             <div className="m-right">
               <table className="c6-table">
