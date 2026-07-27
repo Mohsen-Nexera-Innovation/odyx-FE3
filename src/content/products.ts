@@ -288,6 +288,67 @@ export const PRODUCTS: ProductContent[] = [
     ],
   },
   {
+    // 037 · spec-faithful design version — every value traces to the
+    // catalog (ODYX Products 18.7.26.pdf p14–15) via content.md §7.
+    slug: "cure-v6",
+    name: "ODYX Cure UV-02",
+    category: "Curing Machines",
+    layout: "cinematic",
+    tagline: "Powerful Curing. Perfect Results.",
+    overview:
+      "The precision cure box for dental 3D printing: triple-wavelength UV light, 360° coverage, and validated timing for every application in the ODYX range.",
+    img: "/img/feat-curing.jpg",
+    heroImg: "/img/cure-stitch/odyx-cure-chamber-glow.png",
+    accent: "orange",
+    workflowStep: "cure",
+    applications: [
+      "Surgical Guides",
+      "Crowns & Bridges",
+      "Models",
+      "Splints & Night Guards",
+      "Temporary Restorations",
+      "Dentures",
+    ],
+    models: [
+      { name: "ODYX Cure UV-02", tagline: "Clinic and lab curing station", shopProductId: "curing-odyx-cure" },
+    ],
+    specs: [
+      { label: "Curing chamber", value: "180 mm ⌀ × 120 mm height" },
+      { label: "Wavelengths", value: "365 / 385 / 405 nm" },
+      { label: "Light intensity", value: "Adjustable 5% – 100%" },
+      { label: "Timer", value: "1 second – 30 minutes" },
+      { label: "Memory presets", value: "8 saved profiles" },
+      { label: "Input voltage", value: "100–240 V, 50–60 Hz" },
+    ],
+    downloads: [
+      { name: "Cure UV-02 datasheet", type: "PDF", href: "/support#manuals" },
+      { name: "Product manual", type: "PDF", href: "/support#manuals" },
+    ],
+    benefits: [
+      "360° uniform curing",
+      "Triple-wavelength UV",
+      "8 memory presets",
+      "Safety by design",
+    ],
+    stats: [
+      {
+        value: "1–5",
+        label: "Minutes, typical cure",
+        desc: "Models ~2 to dentures ~15; may vary by resin type.",
+      },
+      {
+        value: "3",
+        label: "Wavelengths",
+        desc: "365, 385 and 405 nm — independently or together.",
+      },
+      {
+        value: "8",
+        label: "Memory presets",
+        desc: "Wavelength, intensity and time per application.",
+      },
+    ],
+  },
+  {
     slug: "resins",
     name: "Resins",
     category: "Resin",
