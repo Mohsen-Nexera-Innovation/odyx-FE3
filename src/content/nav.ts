@@ -67,7 +67,7 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "News",
-        href: "/#news",
+        href: "/about#news",
         desc: "Latest announcements and press",
       },
     ],
@@ -103,7 +103,7 @@ export const HEADER_MENUS: NavGroup[] = [
           },
           {
             label: "News",
-            href: "/#news",
+            href: "/about#news",
             desc: "Latest announcements and press",
           },
         ],

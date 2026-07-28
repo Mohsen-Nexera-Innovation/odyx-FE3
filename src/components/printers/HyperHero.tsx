@@ -58,11 +58,7 @@ export default function HyperHero({
         <div className="ph-copy">
           <span className="pf-eyebrow reveal">{HERO.eyebrow}</span>
           <h1 className="reveal">{HERO.headline}</h1>
-          <p className="ph-sub reveal">
-            Two machines, two jobs. The <strong>ODYX P1-26</strong> prints the
-            definitive work that goes in the mouth. The <strong>HALOT-X1</strong>{' '}
-            prints the volume that supports it.
-          </p>
+          <p className="ph-sub reveal">{HERO.sub}</p>
           <div className="pf-hero-ctas reveal">
             <Link className="pf-btn" href={HERO.primaryCta.href}>
               {HERO.primaryCta.label}
@@ -86,8 +82,8 @@ export default function HyperHero({
           <span className="ph-glow ph-glow--sky" aria-hidden />
           <img
             className="ph-scene"
-            src="/img/printers/duo-cutout.png"
-            alt="The ODYX HALOT-X1 and P1-26 resin 3D printers side by side"
+            src={HERO.img}
+            alt={HERO.imgAlt}
             width={900}
             height={801}
             fetchPriority="high"
