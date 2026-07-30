@@ -1,466 +1,331 @@
-import Link from "next/link";
-import CureClinicalCases from "@/components/cure/CureClinicalCases";
-import CureMaterialGuide from "@/components/cure/CureMaterialGuide";
-import CureRoiPanel from "@/components/cure/CureRoiPanel";
-import CureHeroCopy from "@/components/cure/CureHeroCopy";
+import Link from 'next/link';
+import type { ReactNode } from 'react';
+import CureCases from '@/components/cureLanding/CureCases';
+import CureRoiMini from '@/components/cureLanding/CureRoiMini';
+import CureVideo from '@/components/cureLanding/CureVideo';
+import {
+  CURE_UV02_APPS,
+  CURE_UV02_CHIPS,
+  CURE_UV02_ECOSYSTEM,
+  CURE_UV02_HERO,
+  CURE_UV02_REVIEWS,
+  CURE_UV02_SPECS,
+  CURE_UV02_WHY,
+  CURE_UV02_WORKFLOW,
+} from '@/content/cure-uv02';
+import '@/app/odyx-p126.css';
+import '@/app/odyx-cure.css';
 
-const METRICS = [
-  { value: "360°", label: "Uniform exposure" },
-  { value: "2λ", label: "385 + 405 nm" },
-  { value: "≤45°C", label: "Regulated heat" },
-  { value: "1 tap", label: "Guided presets" },
-] as const;
+const chipStroke = {
+  fill: 'none' as const,
+  stroke: 'currentColor',
+  strokeWidth: 2.6,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+};
 
-const CHAPTERS = [
-  {
-    id: "light",
-    kicker: "01 — Light",
-    title: "Every surface. Same dose.",
-    copy: "Multi-angle LEDs wrap restorations so crowns, guides, and bases cure evenly — not just the faces that face the lamp.",
-    proof: "360° uniform exposure",
-    image: "/img/cure-stitch/odyx-360-curing.webp",
-    alt: "Dental restoration surrounded by uniform curing light",
-    metric: "360°",
-    focus: "center",
-  },
-  {
-    id: "heat",
-    kicker: "02 — Heat",
-    title: "Warm enough. Never harsh.",
-    copy: "Chamber temperature stays in a controlled band so prints finish strong without warping thin margins or cloudy clear resins.",
-    proof: "Regulated ≤ 45°C",
-    image: "/img/cure-stitch/odyx-cure-macro-amber.png",
-    alt: "Close-up of a crown curing under amber UV light",
-    metric: "≤45°C",
-    focus: "heat",
-  },
-  {
-    id: "time",
-    kicker: "03 — Time",
-    title: "Material-specific. Not guesswork.",
-    copy: "Validated presets map resin chemistry to cycle length — so clinics and labs get repeatable finish without babysitting the machine.",
-    proof: "Material-validated presets",
-    image: "/img/cure-stitch/odyx-guided-cycles.webp",
-    alt: "Guided curing cycles on the ODYX Cure interface",
-    metric: "Presets",
-    focus: "time",
-  },
-] as const;
+/** Feature-chip icons — motifs from product-design-refrences/cure.jpeg */
+const CHIP_ICONS: Record<string, ReactNode> = {
+  /* Sun: solid-ish disc + 8 short equal rays */
+  orbit: (
+    <svg viewBox="0 0 48 48" aria-hidden>
+      <circle cx="24" cy="24" r="8" {...chipStroke} />
+      <path
+        d="M24 6.5v5M24 36.5v5M6.5 24h5M36.5 24h5M12.2 12.2l3.5 3.5M32.3 32.3l3.5 3.5M35.8 12.2l-3.5 3.5M15.7 32.3l-3.5 3.5"
+        {...chipStroke}
+        strokeWidth={2.4}
+      />
+    </svg>
+  ),
+  /* Lightbulb + glow rays on top + screw base (cure.jpeg) */
+  waves: (
+    <svg viewBox="0 0 48 48" aria-hidden>
+      <path d="M24 3.5v3.2M17.2 6.2l1.8 2.6M30.8 6.2l-1.8 2.6" {...chipStroke} strokeWidth={2.2} />
+      <path
+        d="M24 9.5c-5.4 0-9.6 4-9.6 9 0 3.3 1.7 5.7 4 7.5.7.6 1.2 1.4 1.2 2.3V31h8.8v-2.7c0-.9.5-1.7 1.2-2.3 2.3-1.8 4-4.2 4-7.5 0-5-4.2-9-9.6-9z"
+        {...chipStroke}
+      />
+      <path d="M20 34h8M21 37h6M22 40h4" {...chipStroke} strokeWidth={2.2} />
+    </svg>
+  ),
+  /* Three wavy heat lines rising from a base bar */
+  heat: (
+    <svg viewBox="0 0 48 48" aria-hidden>
+      <path d="M16 31c2.4-3.5 2.4-7 0-10.5 2.4-3.5 2.4-7 0-10.5" {...chipStroke} />
+      <path d="M24 33c2.4-3.8 2.4-7.6 0-11.4 2.4-3.8 2.4-7.6 0-11.4" {...chipStroke} />
+      <path d="M32 31c2.4-3.5 2.4-7 0-10.5 2.4-3.5 2.4-7 0-10.5" {...chipStroke} />
+      <path d="M12 36.5h24" {...chipStroke} strokeWidth={3} />
+    </svg>
+  ),
+  /* Three nodes in a triangle network */
+  compat: (
+    <svg viewBox="0 0 48 48" aria-hidden>
+      <circle cx="24" cy="11.5" r="3.6" {...chipStroke} />
+      <circle cx="11.5" cy="35" r="3.6" {...chipStroke} />
+      <circle cx="36.5" cy="35" r="3.6" {...chipStroke} />
+      <path d="M21.4 14.4L14.4 31.6M26.6 14.4l7 17.2M15.2 35h17.6" {...chipStroke} strokeWidth={2.3} />
+    </svg>
+  ),
+  /* Shield + check */
+  safe: (
+    <svg viewBox="0 0 48 48" aria-hidden>
+      <path
+        d="M24 6.5l13.5 4.8v11.2c0 9.4-5.5 15.2-13.5 18-8-2.8-13.5-8.6-13.5-18V11.3L24 6.5z"
+        {...chipStroke}
+      />
+      <path d="M17.2 24.2l4.4 4.4L31.5 18" {...chipStroke} strokeWidth={2.8} />
+    </svg>
+  ),
+};
 
-const WORKFLOW = [
-  {
-    label: "Scan",
-    image: "/img/cure-stitch/wf-scanner.png",
-    alt: "ODYX intraoral scanner",
-  },
-  {
-    label: "Design",
-    image: "/img/cure-stitch/wf-design.png",
-    alt: "ODYX design software",
-  },
-  {
-    label: "Print",
-    image: "/img/cure-stitch/wf-printer.png",
-    alt: "ODYX dental 3D printer",
-  },
-  {
-    label: "Cure",
-    image: "/img/cure-stitch/wf-cure.png",
-    alt: "ODYX Cure UV-02",
-    active: true,
-  },
-] as const;
+/** Local 6-step set — wash droplet + cure cube (not the eco packshot) */
+const FLOW_ICONS: Record<string, string> = {
+  scan: '/img/cure-uv02/flow/scan.png',
+  design: '/img/cure-uv02/flow/design.png',
+  print: '/img/cure-uv02/flow/print.png',
+  wash: '/img/cure-uv02/flow/wash.png',
+  cure: '/img/cure-uv02/flow/cure.png',
+  deliver: '/img/cure-uv02/flow/deliver.png',
+};
 
-const ECOSYSTEM = [
-  {
-    name: "ODYX S1",
-    type: "Intraoral scanner",
-    image: "/img/cure-stitch/wf-scanner.png",
-    href: "/products/intraoral-scanner",
-  },
-  {
-    name: "ODYX P1-26",
-    type: "Dental 3D printer",
-    image: "/img/cure-stitch/wf-printer.png",
-    href: "/products/3d-printers",
-  },
-  {
-    name: "ODYX Resin",
-    type: "Validated materials",
-    image: "/img/cure-stitch/wf-resin.png",
-    href: "/products/resins",
-  },
-  {
-    name: "ODYX Cure",
-    type: "UV-02 curing station",
-    image: "/img/cure-stitch/wf-cure.png",
-    href: "#cure-hero",
-  },
-] as const;
+const FLOW_CHEVRON = (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path
+      d="M9 6l6 6-6 6"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
-const SPECS = [
-  { label: "Light source", value: "Multi-angle UV LED array" },
-  { label: "Wavelength", value: "385 nm + 405 nm" },
-  { label: "Chamber heat", value: "Regulated ≤ 45°C" },
-  { label: "Curing modes", value: "Material-validated presets" },
-  { label: "Capacity", value: "Multi-part clinical chamber" },
-  { label: "Material classes", value: "Class I & IIa resins" },
-  { label: "Power", value: "110–240 V" },
-  { label: "Interface", value: "Guided touch controls" },
-] as const;
-
-const REVIEWS = [
-  {
-    quote:
-      "Finish quality is consistent enough that we trust the last step the same way we trust the print.",
-    name: "Dr. Maya El-Sayed",
-    role: "Prosthodontist",
-    place: "Cairo Digital Clinic",
-    tag: "Chairside",
-    initials: "ME",
-    focus: "Crowns & provisionals",
-  },
-  {
-    quote:
-      "Presets removed the guesswork. The team spends less time babysitting cycles and more time delivering cases.",
-    name: "Omar Farid",
-    role: "Lab Director",
-    place: "Precision Dental Lab",
-    tag: "Production lab",
-    initials: "OF",
-    focus: "Daily throughput",
-  },
-  {
-    quote:
-      "Clear appliances come out crystal — heat stays controlled, so we stopped second-guessing every cycle.",
-    name: "Sara Nabil",
-    role: "Digital Dentist",
-    place: "Aether Smile Studio",
-    tag: "Clinic",
-    initials: "SN",
-    focus: "Guides & clear resins",
-  },
-] as const;
-
-const VOICE_STATS = [
-  { value: "4.9", label: "Clinic rating" },
-  { value: "120+", label: "Practices" },
-  { value: "1 tap", label: "Trusted presets" },
-] as const;
-
-export default function CuringPage() {
+function Stars() {
   return (
-    <div className="cure">
-      <section className="cure-hero" id="cure-hero">
-        <div className="cure-hero__stage" aria-hidden>
-          <video
-            className="cure-hero__bg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster="/img/uw03/hero-packshot.png?v=10"
-          >
-            <source src="/video/cure-uv02-hero.mp4?v=ext-1" type="video/mp4" />
-          </video>
-          <img
-            src="/img/uw03/hero-packshot.png?v=10"
-            alt=""
-            className="cure-hero__fallback"
-            width={1223}
-            height={933}
+    <div className="p126-stars" aria-label="5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} viewBox="0 0 20 20" width="16" height="16" aria-hidden>
+          <path
+            fill="currentColor"
+            d="M10 1.8l2.4 5 5.5.5-4.2 3.6 1.3 5.3L10 13.6l-4.9 2.6 1.3-5.3L2.1 7.3l5.5-.5L10 1.8z"
           />
-          <div className="cure-hero__veil" />
-          <div className="cure-hero__amber" />
-        </div>
-
-        <CureHeroCopy />
-      </section>
-
-      <section className="cure-manifesto" aria-label="Core variables">
-        <div className="cure-wrap cure-manifesto__inner reveal">
-          <p className="cure-kicker">Three variables. One finish.</p>
-          <h2 className="cure-manifesto__title">
-            <span>Light</span>
-            <i aria-hidden>×</i>
-            <span>Heat</span>
-            <i aria-hidden>×</i>
-            <span>Time</span>
-          </h2>
-          <p className="cure-manifesto__copy">
-            Polymerization stops being a variable when the chamber manages all three with
-            clinical precision.
-          </p>
-        </div>
-        <div className="cure-wrap cure-metrics m-stagger">
-          {METRICS.map((m) => (
-            <div className="cure-metric" key={m.label}>
-              <strong>{m.value}</strong>
-              <span>{m.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {CHAPTERS.map((chapter, index) => (
-        <section
-          key={chapter.id}
-          className={`cure-chapter${index % 2 === 1 ? " cure-chapter--flip cure-chapter--light" : ""}`}
-          id={`cure-${chapter.id}`}
-        >
-          <div
-            className={`cure-chapter__media cure-chapter__media--${chapter.focus} m-scale`}
-          >
-            <img src={chapter.image} alt={chapter.alt} />
-            <strong className="cure-chapter__metric" aria-hidden>
-              {chapter.metric}
-            </strong>
-          </div>
-          <div className="cure-chapter__copy m-stagger">
-            <p className="cure-kicker">{chapter.kicker}</p>
-            <h2>{chapter.title}</h2>
-            <p>{chapter.copy}</p>
-            <p className="cure-chapter__proof">{chapter.proof}</p>
-          </div>
-        </section>
+        </svg>
       ))}
+    </div>
+  );
+}
 
-      <section className="cure-materials" id="cure-guide">
-        <div className="cure-wrap">
-          <div className="cure-section-head reveal">
-            <p className="cure-kicker">Cure guide</p>
-            <h2>Pick a material. See the cycle.</h2>
-            <p>Validated profiles for the indications you print every day.</p>
-          </div>
-          <CureMaterialGuide />
-        </div>
-      </section>
+/** Single curing landing — P1-26 layout system + cure.jpeg content */
+export default function CuringPage() {
+  const hero = CURE_UV02_HERO;
 
-      <section className="cure-workflow" id="cure-workflow">
-        <div className="cure-wrap">
-          <div className="cure-workflow__head reveal">
-            <p className="cure-kicker">Digital workflow</p>
-            <h2 className="cure-workflow__title">Scan → Design → Print → Cure</h2>
-            <div className="cure-workflow__route" aria-hidden>
-              <span>Patient</span>
-              <i />
-              <span>Outcome</span>
-            </div>
-          </div>
-
-          <div className="cure-workflow__row m-stagger">
-            {WORKFLOW.map((stage, index) => (
-              <article
-                className={`cure-workflow__item${"active" in stage ? " is-active" : ""}`}
-                key={stage.label}
-              >
-                <div className="cure-workflow__visual">
-                  <span className="cure-workflow__number">0{index + 1}</span>
-                  <img src={stage.image} alt={stage.alt} />
-                </div>
-                <h3>{stage.label}</h3>
-                {index < WORKFLOW.length - 1 ? (
-                  <span className="cure-workflow__connector" aria-hidden>
-                    <i />
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
+  return (
+    <main className="p126-page cure-page" id="top">
+      <section className="p126-hero" aria-label="ODYX Cure UV-02">
+        <div className="p126-hero-bg" aria-hidden />
+        <div className="p126-wrap p126-hero-grid">
+          <div className="p126-hero-left">
+            <div className="p126-hero-copy">
+              <p className="p126-eyebrow">{hero.eyebrow}</p>
+              <h1 className="p126-title">{hero.title}</h1>
+              <p className="p126-body">{hero.body}</p>
+              <div className="p126-hero-ctas">
+                <Link className="p126-btn p126-btn--primary" href={hero.primaryCta.href}>
+                  {hero.primaryCta.label}
+                </Link>
+                <a className="p126-btn p126-btn--ghost" href={hero.secondaryCta.href}>
+                  {hero.secondaryCta.label}
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path
+                      d="M12 3v12M7 11l5 5 5-5M5 20h14"
                       stroke="currentColor"
-                      strokeWidth={1.7}
+                      strokeWidth="1.8"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      focusable="false"
-                      aria-hidden
-                    >
-                      <path d="M5 12h13" />
-                      <path d="m13 6 6 6-6 6" />
-                    </svg>
-                  </span>
-                ) : null}
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="cure-specs" id="cure-precision">
-        <div className="cure-wrap cure-specs__grid">
-          <div className="cure-specs__intro m-left">
-            <p className="cure-kicker">Engineering</p>
-            <h2>Complex inside. Clear outside.</h2>
-            <p>
-              Dual-wavelength light, regulated heat, and guided cycles — presented through a
-              calm interface built for daily clinical use.
-            </p>
-            <Link className="cure-text-link" href="/support#contact">
-              Talk to a specialist →
-            </Link>
-          </div>
-          <dl className="cure-specs__list m-stagger">
-            {SPECS.map((row) => (
-              <div key={row.label}>
-                <dt>{row.label}</dt>
-                <dd>{row.value}</dd>
+                    />
+                  </svg>
+                </a>
               </div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
-      <section className="cure-roi-sec" id="cure-roi">
-        <div className="cure-wrap cure-roi-sec__grid">
-          <div className="cure-section-head reveal">
-            <p className="cure-kicker">ROI calculator</p>
-            <h2>What does a faster last step save?</h2>
-            <p>
-              Model monthly time and cost recovered when Cure UV-02 removes guesswork from every
-              cycle.
-            </p>
-          </div>
-          <CureRoiPanel />
-        </div>
-      </section>
-
-      <section className="cure-ecosystem" id="cure-ecosystem">
-        <div className="cure-wrap">
-          <div className="cure-section-head reveal">
-            <p className="cure-kicker">ODYX ecosystem</p>
-            <h2>One workflow, end to end.</h2>
-          </div>
-          <div className="cure-ecosystem__row m-stagger">
-            {ECOSYSTEM.map((product, index) => (
-              <div className="cure-eco-item" key={product.name}>
-                <Link href={product.href}>
-                  <img src={product.image} alt={product.name} />
-                  <strong>{product.name}</strong>
-                  <span>{product.type}</span>
-                </Link>
-                {index < ECOSYSTEM.length - 1 ? (
-                  <span className="cure-eco-item__join" aria-hidden>
-                    →
-                  </span>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="cure-cases-sec" id="cure-cases">
-        <div className="cure-wrap">
-          <div className="cure-section-head reveal">
-            <p className="cure-kicker">Clinical cases</p>
-            <h2>Before. Curing. Finished.</h2>
-            <p>Follow common indications from printed green to clinical finish inside UV-02.</p>
-          </div>
-          <CureClinicalCases />
-        </div>
-      </section>
-
-      <section className="cure-voice" id="cure-reviews" aria-labelledby="cure-voice-title">
-        <div className="cure-voice__glow" aria-hidden />
-        <div className="cure-wrap">
-          <div className="cure-voice__top reveal">
-            <div className="cure-voice__intro">
-              <p className="cure-kicker">Social proof</p>
-              <h2 id="cure-voice-title">Heard where prints become patients.</h2>
-              <p className="cure-voice__lead">
-                Clinics and labs talk about the last step the same way — calm, repeatable, done.
-              </p>
             </div>
-            <ul className="cure-voice__stats" aria-label="Trust signals">
-              {VOICE_STATS.map((stat) => (
-                <li key={stat.label}>
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
+            <ul className="p126-chips">
+              {CURE_UV02_CHIPS.map((chip) => (
+                <li key={chip.id} className="p126-chip">
+                  <span className="p126-chip-icon">{CHIP_ICONS[chip.id]}</span>
+                  <span className="p126-chip-label">
+                    {chip.lines.map((line) => (
+                      <span key={line}>{line}</span>
+                    ))}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="cure-voice__stage m-stagger">
-            <blockquote className="cure-voice__feature">
-              <div className="cure-voice__mark" aria-hidden>
-                ”
-              </div>
-              <div className="cure-voice__stars" aria-label="5 out of 5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} />
-                ))}
-              </div>
-              <p>“{REVIEWS[0].quote}”</p>
-              <div className="cure-voice__person">
-                <span className="cure-voice__avatar" aria-hidden>
-                  {REVIEWS[0].initials}
-                </span>
-                <div>
-                  <strong>{REVIEWS[0].name}</strong>
-                  <span>
-                    {REVIEWS[0].role} · {REVIEWS[0].place}
-                  </span>
-                </div>
-                <em>{REVIEWS[0].tag}</em>
-              </div>
-            </blockquote>
+          <div className="p126-hero-media cure-hero-media" aria-label={hero.imgAlt}>
+            <span className="p126-hero-ground-shadow" aria-hidden />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="p126-layer cure-layer cure-layer--arch"
+              src={`${hero.outputArchImg}?v=${hero.imgVersion}`}
+              alt=""
+              width={953}
+              height={759}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="p126-layer cure-layer cure-layer--aligner"
+              src={`${hero.outputAlignerImg}?v=${hero.imgVersion}`}
+              alt=""
+              width={898}
+              height={464}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="p126-layer cure-layer cure-layer--machine"
+              src={`${hero.machineImg}?v=${hero.imgVersion}`}
+              alt=""
+              width={1309}
+              height={1020}
+              fetchPriority="high"
+            />
+          </div>
+        </div>
+      </section>
 
-            <div className="cure-voice__stack">
-              {REVIEWS.slice(1).map((review) => (
-                <blockquote key={review.name} className="cure-voice__card">
-                  <p>“{review.quote}”</p>
-                  <div className="cure-voice__person">
-                    <span className="cure-voice__avatar" aria-hidden>
-                      {review.initials}
+      <div className="p126-wrap p126-stack">
+        <div className="p126-row p126-row--why">
+          <div className="p126-card p126-why-card reveal">
+            <h2 className="p126-card-title">{CURE_UV02_WHY.title}</h2>
+            <div className="p126-why-grid">
+              <ul className="p126-why-list">
+                {CURE_UV02_WHY.points.map((point) => (
+                  <li key={point}>
+                    <span className="p126-check" aria-hidden>
+                      <svg viewBox="0 0 20 20" width="12" height="12">
+                        <path
+                          d="M4 10.5l4 4 8-9"
+                          fill="none"
+                          stroke="#fff"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </span>
-                    <div>
-                      <strong>{review.name}</strong>
-                      <span>
-                        {review.role} · {review.place}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="cure-voice__focus">{review.focus}</span>
-                </blockquote>
-              ))}
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <figure className="p126-why-media">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${CURE_UV02_WHY.img}?v=${CURE_UV02_WHY.imgVersion ?? 14}`}
+                  alt={CURE_UV02_WHY.imgAlt}
+                  loading="lazy"
+                />
+              </figure>
             </div>
           </div>
-
-          <p className="cure-voice__band" aria-hidden>
-            <span>Chairside</span>
-            <i />
-            <span>Production labs</span>
-            <i />
-            <span>Digital clinics</span>
-            <i />
-            <span>Teaching hospitals</span>
-          </p>
+          <CureVideo />
         </div>
-      </section>
 
-      <section className="cure-close">
-        <div className="cure-close__stage" aria-hidden>
-          <img
-            src="/img/uw03/hero-packshot.png?v=10"
-            alt=""
-            width={1223}
-            height={933}
-          />
-          <div className="cure-close__veil" />
-        </div>
-        <div className="cure-wrap cure-close__content m-scale">
-          <p className="cure-hero__brand">ODYX</p>
-          <h2>The last step deserves precision.</h2>
-          <p>See how Cure UV-02 turns printed parts into dependable clinical outcomes.</p>
-          <div className="cure-actions">
-            <Link className="cure-btn" href="/support">
-              Schedule a Demo
-            </Link>
-            <Link className="cure-btn cure-btn--ghost" href="/support#manuals">
-              Download Specs
-            </Link>
+        <div className="p126-row p126-row--specs">
+          <div className="p126-card p126-specs-card reveal">
+            <h2 className="p126-card-title">Technical Specifications</h2>
+            <ul className="p126-specs">
+              {CURE_UV02_SPECS.map((row) => (
+                <li key={row.label} className="p126-spec-row">
+                  <span className="p126-spec-label">{row.label}</span>
+                  <span className="p126-spec-value">{row.value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="p126-card p126-apps-card reveal">
+            <h2 className="p126-card-title">What Can You Cure?</h2>
+            <ul className="p126-apps-grid">
+              {CURE_UV02_APPS.map((app) => (
+                <li key={app.label} className="p126-app">
+                  <div className="p126-app-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`${app.img}?v=cut1`} alt={app.alt} loading="lazy" />
+                  </div>
+                  <p>{app.label}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </section>
-    </div>
+
+        <div className="p126-row p126-row--flow">
+          <div className="p126-card p126-flow-card reveal in">
+            <h2 className="p126-card-title">Digital Workflow</h2>
+            <ol className="p126-flow">
+              {CURE_UV02_WORKFLOW.map((step, i) => (
+                <li
+                  key={step.id}
+                  className={`p126-flow-step${step.id === 'cure' ? ' is-current' : ''}`}
+                >
+                  <span className="p126-flow-icon">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`${FLOW_ICONS[step.id]}?v=3`} alt="" loading="lazy" />
+                  </span>
+                  <span className="p126-flow-label">
+                    <strong>{step.bold}</strong>
+                    {step.rest}
+                  </span>
+                  {i < CURE_UV02_WORKFLOW.length - 1 ? (
+                    <span className="p126-flow-arrow" aria-hidden>
+                      {FLOW_CHEVRON}
+                    </span>
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+          </div>
+          <CureRoiMini />
+        </div>
+
+        <div className="p126-card p126-eco-card reveal">
+          <h2 className="p126-card-title">{CURE_UV02_ECOSYSTEM.title}</h2>
+          <ul className="p126-eco">
+            {CURE_UV02_ECOSYSTEM.nodes.map((node, i) => (
+              <li key={node.name} className="p126-eco-node">
+                <Link href={node.href} className="p126-eco-link">
+                  <span className="p126-eco-label">
+                    <span className="p126-eco-name">{node.name}</span>
+                    {node.subtitle ? <span className="p126-eco-sub">{node.subtitle}</span> : null}
+                  </span>
+                  <span className="p126-eco-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`${node.img}?v=14`} alt="" loading="lazy" />
+                  </span>
+                </Link>
+                {i < CURE_UV02_ECOSYSTEM.nodes.length - 1 ? (
+                  <span className="p126-eco-dots" aria-hidden />
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="p126-row p126-row--proof">
+          <CureCases />
+          <div className="p126-card p126-reviews-card reveal">
+            <h2 className="p126-card-title">{CURE_UV02_REVIEWS.title}</h2>
+            <ul className="p126-reviews">
+              {CURE_UV02_REVIEWS.items.map((r) => (
+                <li key={r.author}>
+                  <Stars />
+                  <blockquote>“{r.quote}”</blockquote>
+                  <cite>- {r.author}</cite>
+                </li>
+              ))}
+            </ul>
+            <p className="p126-reviews-footer">{CURE_UV02_REVIEWS.footer}</p>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

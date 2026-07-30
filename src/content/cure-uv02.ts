@@ -1,39 +1,43 @@
 /**
- * Dedicated Cure UV-02 landing — attached product UI.
- * Specs from CuringUv02Page / claims register (no Smart Heating).
+ * Single Cure UV-02 landing — fidelity to product-design-refrences/cure.jpeg
+ * Uses the same layout system as P1-26 (odyx-p126.css).
  */
 
-export const CURE_UV02_SLUG = 'cure-v6';
+export const CURE_UV02_SLUG = 'curing-machines';
 
 export const CURE_UV02_META = {
   title: 'ODYX Cure UV-02 — Dental UV Curing Machine',
   description:
-    'Triple-wavelength UV curing (365/385/405 nm) with 360° coverage, 8 presets, and 1–5 minute typical cures.',
+    'Triple-wavelength UV curing (365/385/405 nm) with 360° coverage, smart heating, and validated presets for consistent dental results.',
 };
 
 export const CURE_UV02_HERO = {
-  eyebrow: 'ODYX Cure UV-02',
+  eyebrow: 'ODYX CURE UV-02',
   title: 'Powerful Curing. Perfect Results.',
-  tagline: 'Dental UV Curing Machine',
-  body: 'The ODYX Cure UV-02 delivers powerful, uniform UV curing for consistent results across your dental resins — from clinic restorations to lab production.',
-  img: '/img/cure-uv02/hero-packshot.png',
-  imgAlt: 'ODYX Cure UV-02 dental UV curing station',
+  body: 'The ODYX Cure UV-02 delivers uniform, reliable, and efficient curing for all your dental 3D printed applications.',
+  /** Multi-layer hero — real product photo + cured outputs (P1-26 pattern) */
+  machineImg: '/img/cure-uv02/hero/machine-cutout.png',
+  outputArchImg: '/img/cure-uv02/hero/output-arch-cutout.png',
+  outputAlignerImg: '/img/cure-uv02/hero/output-aligner-cutout.png',
+  imgAlt: 'ODYX Cure UV-02 dental UV curing station with cured models',
+  imgVersion: '7',
   primaryCta: { label: 'Request Demo', href: '/support' },
   secondaryCta: { label: 'Download Brochure', href: '/support' },
 };
 
 export const CURE_UV02_CHIPS = [
-  { id: 'orbit', label: '360° Uniform Curing', line: 'All-round coverage for every surface.' },
-  { id: 'waves', label: 'Powerful UV Light', line: '365 / 385 / 405 nm, alone or together.' },
-  { id: 'preset', label: '8 Memory Presets', line: 'Wavelength, intensity and time stored.' },
-  { id: 'compat', label: 'Wide Compatibility', line: 'Validated across ODYX dental resins.' },
-  { id: 'safe', label: 'Safe & User Friendly', line: 'Stops instantly if the cover opens.' },
+  { id: 'orbit', label: '360° Uniform Curing', lines: ['360°', 'Uniform Curing'] },
+  { id: 'waves', label: 'Powerful UV Light', lines: ['Powerful', 'UV Light'] },
+  { id: 'heat', label: 'Smart Heating', lines: ['Smart', 'Heating'] },
+  { id: 'compat', label: 'Wide Compatibility', lines: ['Wide', 'Compatibility'] },
+  { id: 'safe', label: 'Safe & User Friendly', lines: ['Safe &', 'User Friendly'] },
 ] as const;
 
 export const CURE_UV02_WHY = {
   title: 'Why ODYX Cure UV-02?',
   img: '/img/cure-uv02/why-open.png',
   imgAlt: 'ODYX Cure UV-02 with chamber open and UV active',
+  imgVersion: '6',
   points: [
     '360° all-round UV coverage for uniform polymerization',
     'Triple wavelength: 365 / 385 / 405 nm',
@@ -63,60 +67,64 @@ export const CURE_UV02_SPECS = [
 ] as const;
 
 export const CURE_UV02_APPS = [
-  { label: 'Surgical Guides', img: '/img/cure-uv02/app-guides.jpg' },
-  { label: 'Crowns & Bridges', img: '/img/cure-uv02/app-crowns.jpg' },
-  { label: 'Denture Bases', img: '/img/cure-uv02/app-dentures.jpg' },
-  { label: 'Models', img: '/img/cure-uv02/app-models.jpg' },
-  { label: 'Splints', img: '/img/cure-uv02/app-splints.jpg' },
-  { label: 'Temporary Restorations', img: '/img/cure-uv02/app-temps.jpg' },
+  { label: 'Surgical Guides', img: '/img/cure-uv02/apps/guides.png', alt: 'Surgical guide' },
+  { label: 'Crowns & Bridges', img: '/img/cure-uv02/apps/crowns.png', alt: 'Crowns and bridges' },
+  { label: 'Denture Bases', img: '/img/cure-uv02/apps/dentures.png', alt: 'Denture base' },
+  { label: 'Models', img: '/img/cure-uv02/apps/models.png', alt: 'Dental model' },
+  { label: 'Splints & Night Guards', img: '/img/cure-uv02/apps/splints.png', alt: 'Splint' },
+  { label: 'Temporary Restorations', img: '/img/cure-uv02/apps/temps.png', alt: 'Temporary restoration' },
 ] as const;
 
 export const CURE_UV02_WORKFLOW = [
-  { id: 'scan', label: 'Scan' },
-  { id: 'design', label: 'Design' },
-  { id: 'print', label: 'Print' },
-  { id: 'wash', label: 'Wash' },
-  { id: 'cure', label: 'Cure' },
-  { id: 'deliver', label: 'Deliver' },
+  { id: 'scan', label: 'Scan', bold: 'Scan', rest: '' },
+  { id: 'design', label: 'Design', bold: 'Design', rest: '' },
+  { id: 'print', label: 'Print', bold: 'Print', rest: '' },
+  { id: 'wash', label: 'Wash', bold: 'Wash', rest: '' },
+  { id: 'cure', label: 'Cure', bold: 'Cure', rest: '' },
+  { id: 'deliver', label: 'Deliver', bold: 'Deliver', rest: '' },
 ] as const;
 
 export const CURE_UV02_ROI = {
   title: 'ROI Calculator',
-  lead: 'Estimate Your Savings.',
+  lead: 'Estimate Your Savings',
   monthlyLabel: 'Monthly Cases',
-  timeLabel: 'Average Time Saved per Case (min)',
+  timeLabel: 'Average Time Saved per Case',
+  hourlyLabel: 'Value of Clinic Time ($/hr)',
   timeResultLabel: 'Potential Time Savings',
   timeResultUnit: '/ Month',
   costResultLabel: 'Potential Cost Savings',
   costResultUnit: '/ Month',
   defaultMonthly: 40,
   defaultMinutes: 15,
-  /** Assumed chair-time value for illustrative savings */
-  hourlyValue: 80,
+  defaultHourly: 80,
 };
 
 export const CURE_UV02_ECOSYSTEM = {
   title: 'Compatible with ODYX Ecosystem',
   nodes: [
     {
-      name: 'ODYX S1 Intra-oral Scanner',
+      name: 'ODYX S1',
+      subtitle: 'Intra-oral Scanner',
       href: '/products/odyx-s1-intraoral-scanner',
-      img: '/img/cutouts/feat-scanner-cutout.png',
+      img: '/img/printers/p126/eco/scanner.png',
     },
     {
-      name: 'P1-26 3D Printer',
+      name: 'P1-26',
+      subtitle: '3D Printer',
       href: '/products/odyx-p1-26',
-      img: '/img/printers/p126/hero-packshot.png',
+      img: '/img/printers/p126/eco/printer.png',
     },
     {
       name: 'ODYX Dental Resins',
+      subtitle: 'High-Performance Resins',
       href: '/products/resins',
-      img: '/img/scanner/eco-resins.jpg',
+      img: '/img/printers/p126/eco/resins.png',
     },
     {
       name: 'ODYX Cure UV-02',
+      subtitle: 'UV Curing Station',
       href: '#top',
-      img: '/img/cure-uv02/hero-packshot.png',
+      img: '/img/printers/p126/eco/cure.png',
     },
   ],
 };

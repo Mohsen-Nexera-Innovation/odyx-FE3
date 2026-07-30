@@ -24,12 +24,12 @@ export default function CureVideo() {
   };
 
   return (
-    <div className="cu2-card cu2-video-card reveal">
-      <h2 className="cu2-card-title">{CURE_UV02_VIDEO.title}</h2>
-      <div className="cu2-video">
+    <div className="p126-card p126-video-card reveal">
+      <h2 className="p126-card-title">{CURE_UV02_VIDEO.title}</h2>
+      <div className="p126-video">
         <video
           ref={videoRef}
-          className="cu2-video-el"
+          className="p126-video-el"
           poster={CURE_UV02_VIDEO.poster}
           playsInline
           preload="metadata"
@@ -41,10 +41,15 @@ export default function CureVideo() {
           <source src={CURE_UV02_VIDEO.src} type="video/mp4" />
         </video>
         {!playing ? (
-          <button type="button" className="cu2-play" onClick={toggle} aria-label="Play Cure UV-02 video">
-            <span className="cu2-play-circle" aria-hidden>
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-                <path d="M8 5.5v13l11-6.5-11-6.5z" />
+          <button
+            type="button"
+            className="p126-play"
+            onClick={toggle}
+            aria-label="Play UV-02 video"
+          >
+            <span className="p126-play-circle" aria-hidden>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7L8 5z" />
               </svg>
             </span>
           </button>

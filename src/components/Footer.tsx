@@ -103,8 +103,15 @@ function SocialIcon({ kind }: { kind: (typeof SOCIAL)[number]['icon'] }) {
 export default function Footer() {
   const pathname = usePathname();
   if (pathname?.startsWith('/admin')) return null;
-  /* P1-26 design footer — interactive nav/controls, not a raster */
-  if (pathname?.includes('/odyx-p1-26')) return <P126Footer />;
+  /* Dark product-page footer (P1-26 / S1 / Cure / Resins design system) */
+  if (
+    pathname?.includes('/odyx-p1-26') ||
+    pathname?.includes('/odyx-s1-intraoral-scanner') ||
+    pathname?.includes('/curing-machines') ||
+    pathname?.includes('/products/resins')
+  ) {
+    return <P126Footer />;
+  }
 
   return (
     <footer className="site-footer">

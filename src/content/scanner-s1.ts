@@ -177,7 +177,7 @@ export const NEXT_STEP = {
     {
       name: 'P1-26 3D Printer',
       line: 'prints your scan at 18 µm',
-      href: '/products/3d-printers',
+      href: '/products/odyx-p1-26',
       img: '/img/scanner/eco-printer.jpg',
     },
     {

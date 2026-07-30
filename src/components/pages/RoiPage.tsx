@@ -21,7 +21,7 @@ export default function RoiPage() {
         title={COPY.title}
         lead="Model savings across the ODYX ecosystem — or jump to a printer-only view."
         action={
-          <Link className="btn" href="/products/3d-printers#roi">
+          <Link className="btn" href="/products/odyx-p1-26#roi">
             Printer-only ROI <Arrow />
           </Link>
         }

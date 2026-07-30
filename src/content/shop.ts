@@ -46,7 +46,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: '/img/feat-printer.jpg',
     category: 'printer',
     unit: '1 unit',
-    href: '/products/3d-printers',
+    href: '/products/odyx-p1-26',
     highlights: ['Chairside ready', 'Validated resins', 'In-house production'],
   },
   {

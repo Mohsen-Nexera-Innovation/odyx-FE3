@@ -144,7 +144,7 @@ export const P1_26_ECOSYSTEM = {
     {
       name: 'ODYX Cure UV-02',
       subtitle: 'UV Curing Station',
-      href: '/products/cure-v6',
+      href: '/products/curing-machines',
       img: '/img/printers/p126/eco/cure.png',
     },
   ],

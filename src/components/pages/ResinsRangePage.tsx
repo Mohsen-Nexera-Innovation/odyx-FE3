@@ -1,7 +1,4 @@
-import type { ReactNode } from 'react';
-import DocsTabs from '@/components/resin/DocsTabs';
 import {
-  DOCS,
   HERO,
   LINES,
   LINES_SECTION,
@@ -9,143 +6,27 @@ import {
   WHY,
 } from '@/content/resins';
 
-/** Hero feature icons — traced from resins-line UI mock (thin cyan neon line art). */
-const FEATURE_ICONS: Record<string, ReactNode> = {
-  validated: (
-    <svg viewBox="0 0 40 40" fill="none" aria-hidden>
-      {/* Shield: peaked top, pointed base */}
-      <path
-        d="M20 5.2L31.2 9.4v9.2c0 7.4-4.5 12.2-11.2 14.6C13.3 30.8 8.8 26 8.8 18.6V9.4L20 5.2z"
-        stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M15.2 19.6l3.1 3.15 6.7-7"
-        stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  strength: (
-    <svg viewBox="0 0 40 40" fill="none" aria-hidden>
-      {/* Faceted diamond + corner sparkles (design) */}
-      <path
-        d="M16.4 8.8h7.2L30 14.4H10l6.4-5.6z"
-        stroke="currentColor"
-        strokeWidth="1.55"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 14.4L20 33.4 30 14.4"
-        stroke="currentColor"
-        strokeWidth="1.55"
-        strokeLinejoin="round"
-      />
-      <path d="M16.4 8.8L20 14.4M23.6 8.8L20 14.4" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" />
-      <path d="M14.2 14.4L20 33.4M25.8 14.4L20 33.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-      <path d="M9 10.4v3.2M7.4 12h3.2" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-      <path d="M31 10.4v3.2M29.4 12h3.2" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-    </svg>
-  ),
-  compat: (
-    <svg viewBox="0 0 40 40" fill="none" aria-hidden>
-      <circle cx="20" cy="20" r="11.2" stroke="currentColor" strokeWidth="1.65" />
-      <path
-        d="M14.4 20.3l3.5 3.4 8-8.2"
-        stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  esthetics: (
-    <svg viewBox="0 0 40 40" fill="none" aria-hidden>
-      {/* Leaf tilted right with midrib + short stem */}
-      <g transform="rotate(18 20 20)">
-        <path
-          d="M20 7.5c6.2 4.2 9.2 9.4 9.2 14.6 0 5.1-3.6 8.6-9.2 10.4-5.6-1.8-9.2-5.3-9.2-10.4 0-5.2 3-10.4 9.2-14.6z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M20 9.2v23.2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-        <path
-          d="M20 32.4c-1.6.6-2.8 1.3-3.4 2.2"
-          stroke="currentColor"
-          strokeWidth="1.45"
-          strokeLinecap="round"
-        />
-      </g>
-    </svg>
-  ),
+const ICON_V = '2';
+
+/** Icons AI-traced to product-design-refrences/all-resign.jpeg */
+const FEATURE_ICONS: Record<string, string> = {
+  validated: `/img/resins/icons/hero-validated.png?v=${ICON_V}`,
+  strength: `/img/resins/icons/hero-strength.png?v=${ICON_V}`,
+  compat: `/img/resins/icons/hero-compat.png?v=${ICON_V}`,
+  esthetics: `/img/resins/icons/hero-esthetics.png?v=${ICON_V}`,
 };
 
-const WHY_ICONS: Record<string, ReactNode> = {
-  proven: (
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-      <path d="M20 6l10 4v9c0 7-4.2 11.4-10 13.5C14.2 30.4 10 26 10 19V10l10-4z" />
-      <path d="M15.5 20.2l3.2 3.2 6.2-6.6" />
-    </svg>
-  ),
-  formulas: (
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-      <path d="M20 8c4 6 8 10 8 15a8 8 0 1 1-16 0c0-5 4-9 8-15z" />
-      <path d="M15 24h10" />
-    </svg>
-  ),
-  compat: (
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-      <circle cx="14" cy="20" r="6" />
-      <circle cx="26" cy="20" r="6" />
-      <path d="M20 17.5v5" />
-    </svg>
-  ),
-  esthetics: (
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-      <circle cx="14" cy="16" r="5" />
-      <circle cx="24" cy="14" r="4" />
-      <circle cx="26" cy="24" r="5" />
-      <circle cx="15" cy="26" r="3.5" />
-    </svg>
-  ),
-  safe: (
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-      <path d="M12 28c6-2 10-8 12-18 1.2 0 3.2.6 4 2-1 8-5 14-12 18-1.4.8-3.2 1.2-4 0z" />
-      <path d="M16 22c2.5-1 5-3.5 7-7M14 26c2.2-.8 4.5-2.5 6.5-5" />
-    </svg>
-  ),
+const WHY_ICONS: Record<string, string> = {
+  proven: `/img/resins/icons/why-proven.png?v=${ICON_V}`,
+  formulas: `/img/resins/icons/why-formulas.png?v=${ICON_V}`,
+  compat: `/img/resins/icons/why-compat.png?v=${ICON_V}`,
+  esthetics: `/img/resins/icons/why-esthetics.png?v=${ICON_V}`,
+  safe: `/img/resins/icons/why-safe.png?v=${ICON_V}`,
 };
 
-const DocsIcon = () => (
-  <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-    <path d="M14 8h9l5 5v17a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" />
-    <path d="M23 8v5h5M16 20h10M16 25h7" />
-  </svg>
-);
+const DOCS_ICON = `/img/resins/icons/why-docs.png?v=${ICON_V}`;
 
-const Dot = () => (
-  <svg className="rs-dot" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <circle cx="12" cy="12" r="10" fill="currentColor" opacity=".12" />
-    <path
-      d="M7.5 12.2l3 3 6-6.4"
-      stroke="currentColor"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-/** 039 · Resins — client resins-line UI reference */
+/** 039 · Resins — fidelity target: product-design-refrences/all-resign.jpeg */
 export default function ResinsRangePage() {
   return (
     <div className="rs">
@@ -160,7 +41,10 @@ export default function ResinsRangePage() {
             <ul className="rs-features">
               {HERO.features.map((f) => (
                 <li key={f.id} className="rs-feature">
-                  <span className="rs-feature-ic">{FEATURE_ICONS[f.id]}</span>
+                  <span className="rs-feature-ic" aria-hidden>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={FEATURE_ICONS[f.id]} alt="" width={56} height={56} />
+                  </span>
                   <span className="rs-feature-copy">
                     <strong>{f.title}</strong>
                     <span>{f.body}</span>
@@ -210,7 +94,7 @@ export default function ResinsRangePage() {
                 <div className="rs-line-body">
                   <h3>{line.name}</h3>
                   <p>{line.highlight}</p>
-                  <a className="rs-line-cta" href={`#docs-${line.id}`}>
+                  <a className="rs-line-cta" href={line.href ?? '#why'}>
                     {LINE_CTA_LABEL} <span aria-hidden>→</span>
                   </a>
                 </div>
@@ -228,7 +112,10 @@ export default function ResinsRangePage() {
               <ul className="rs-why-grid">
                 {WHY.features.map((f) => (
                   <li key={f.id} className="rs-why-item">
-                    <span className="rs-why-ic">{WHY_ICONS[f.id]}</span>
+                    <span className="rs-why-ic" aria-hidden>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={WHY_ICONS[f.id]} alt="" width={56} height={56} />
+                    </span>
                     <strong>{f.title}</strong>
                     <span>{f.body}</span>
                   </li>
@@ -236,8 +123,9 @@ export default function ResinsRangePage() {
               </ul>
             </div>
             <aside className="rs-why-docs">
-              <span className="rs-why-docs-ic">
-                <DocsIcon />
+              <span className="rs-why-docs-ic" aria-hidden>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={DOCS_ICON} alt="" width={40} height={40} />
               </span>
               <h3>{WHY.docs.title}</h3>
               <p>{WHY.docs.body}</p>
@@ -245,53 +133,6 @@ export default function ResinsRangePage() {
                 {WHY.docs.cta.label} <span aria-hidden>→</span>
               </a>
             </aside>
-          </div>
-        </div>
-      </section>
-
-      <section className="rs-sec rs-sec--tint" id="downloads">
-        <div className="rs-wrap">
-          <div className="rs-sec-head rs-sec-head--start">
-            <h2 className="rs-sec-title">{DOCS.title}</h2>
-            <p className="rs-sec-intro">{DOCS.intro}</p>
-          </div>
-          <div className="rs-docs-grid">
-            <div className="rs-card rs-card--pad">
-              <DocsTabs />
-            </div>
-            <div className="rs-card rs-card--pad">
-              <h3 className="rs-cert-title">{DOCS.certTitle}</h3>
-              <div className="rs-table-scroll">
-                <table className="rs-cert">
-                  <thead>
-                    <tr>
-                      <th scope="col">Line</th>
-                      {DOCS.certColumns.map((c) => (
-                        <th scope="col" key={c}>
-                          {c}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {DOCS.certRows.map((row) => (
-                      <tr key={row.line}>
-                        <th scope="row">{row.line}</th>
-                        {DOCS.certColumns.map((c) => (
-                          <td key={c} data-yes={row.marks.includes(c)}>
-                            {row.marks.includes(c) ? <Dot /> : <span aria-hidden>—</span>}
-                            <span className="rs-visually-hidden">
-                              {row.marks.includes(c) ? `${c}: yes` : `${c}: no`}
-                            </span>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <p className="rs-micro">{DOCS.certMicro}</p>
-            </div>
           </div>
         </div>
       </section>

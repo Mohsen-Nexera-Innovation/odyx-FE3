@@ -1,8 +1,11 @@
 /* ===== P1-26 dedicated landing — pixel fidelity to printer-odyx-p1-26.jpeg ===== */
 .p126-page{
-  --p126-blue:#0057c2;
-  --p126-blue-soft:#1a6fd4;
-  --p126-blue-label:#3b7dd6;
+  /* Brand accent = logo sky (same as toolbar .btn / Request a Demo) */
+  --p126-blue:var(--sky, #06a5df);
+  --p126-blue-soft:var(--sky-soft, #7fd0f3);
+  --p126-blue-label:var(--sky-deep, #0581ad);
+  --p126-blue-rgb:6, 165, 223; /* logo sky — matches --sky-rgb */
+  --p126-btn-ink:var(--navy-deep, #141216);
   --p126-navy:#141c2b;
   --p126-ink:#1a2433;
   --p126-muted:#5a6574;
@@ -175,22 +178,29 @@
   text-decoration:none;
   transition:background .22s ease, color .22s ease, border-color .22s ease, transform .22s ease, box-shadow .22s ease;
 }
+/* Match toolbar `header .nav-demo` exactly: sky fill + white label */
 .p126-btn--primary{
-  background:#0b4ea8;color:#fff;border:1.5px solid #0b4ea8;
-  box-shadow:0 6px 16px rgba(11,78,168,.22);
+  background:var(--sky, #06a5df);
+  color:#fff;
+  border:none;
+  box-shadow:none;
 }
 .p126-btn--primary:hover{
-  background:var(--p126-blue-soft);
+  background:var(--sky, #06a5df);
+  color:#fff;
   transform:translateY(-1px);
-  box-shadow:0 10px 22px rgba(11,78,168,.28);
+  box-shadow:0 10px 28px rgba(6,165,223,.35);
 }
 .p126-btn--ghost{
-  background:rgba(255,255,255,.72);color:#0b4ea8;
-  border:1.5px solid #0b4ea8;
+  background:rgba(255,255,255,.72);
+  color:var(--sky, #06a5df);
+  border:1.5px solid var(--sky, #06a5df);
   backdrop-filter:blur(6px);
 }
 .p126-btn--ghost:hover{
   background:#fff;
+  color:var(--sky-deep, #0581ad);
+  border-color:var(--sky-deep, #0581ad);
   transform:translateY(-1px);
 }
 .p126-btn--ghost svg{transition:transform .22s ease}
@@ -1190,7 +1200,7 @@
   --p126-ft-bg:#070d18;
   --p126-ft-muted:#9aa6b8;
   --p126-ft-line:rgba(255,255,255,.1);
-  --p126-ft-blue:#0057c2;
+  --p126-ft-blue:var(--sky, #06a5df);
   background:var(--p126-ft-bg);
   color:#fff;
   font-family:var(--font-sora), 'Sora', sans-serif;
@@ -1314,7 +1324,7 @@
   cursor:pointer;
   transition:background .2s ease;
 }
-.p126-ft__form button:hover{background:#1a6fd4}
+.p126-ft__form button:hover{background:var(--sky-deep, #0581ad)}
 .p126-ft__bottom{
   display:flex;
   align-items:center;

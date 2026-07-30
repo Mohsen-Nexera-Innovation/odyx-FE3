@@ -49,6 +49,8 @@ export type ResinLine = {
   highlight: string;
   img: string;
   imgAlt: string;
+  /** Optional deep-link; defaults to why-band docs CTA */
+  href?: string;
 };
 
 export const LINES_SECTION = {
@@ -59,6 +61,9 @@ export const LINES_SECTION = {
 };
 
 /** Card order / copy matches the client resins-line reference (L → R). */
+const docsMail = (line: string) =>
+  `mailto:info@odyx.dental?subject=${encodeURIComponent(`Document request: ${line}`)}`;
+
 export const LINES: ResinLine[] = [
   {
     id: 'ceramic-crown',
@@ -67,6 +72,7 @@ export const LINES: ResinLine[] = [
       'High-strength, highly esthetic resin for long-lasting crowns with natural translucency.',
     img: '/img/resins/card-ceramic.png',
     imgAlt: 'ODYX Ceramic Crown Resin bottle with printed crowns',
+    href: docsMail('Ceramic Crown Resin'),
   },
   {
     id: 'temporary',
@@ -75,6 +81,7 @@ export const LINES: ResinLine[] = [
       'Reliable and easy-to-finish resin for temporary crowns and provisional restorations.',
     img: '/img/resins/card-temporary.png',
     imgAlt: 'ODYX Temporary Resin bottle with printed temporary crowns',
+    href: docsMail('Temporary Resin'),
   },
   {
     id: 'surgical-guide',
@@ -83,6 +90,7 @@ export const LINES: ResinLine[] = [
       'Biocompatible and precise resin for accurate surgical guides and drilling templates.',
     img: '/img/resins/card-surgical.png',
     imgAlt: 'ODYX Surgical Resin bottle with printed surgical guide',
+    href: docsMail('Surgical Resin'),
   },
   {
     id: 'ortho-model',
@@ -91,6 +99,7 @@ export const LINES: ResinLine[] = [
       'High-precision resin for detailed study models with sharp features and accuracy.',
     img: '/img/resins/card-model.png',
     imgAlt: 'ODYX Model Resin bottle with printed dental model',
+    href: docsMail('Model Resin'),
   },
   {
     id: 'crown-bridge',
@@ -99,6 +108,7 @@ export const LINES: ResinLine[] = [
       'Durable and strong resin for long-span bridges and high-load restorations.',
     img: '/img/resins/card-crown-bridge.png',
     imgAlt: 'ODYX Crown & Bridge Resin bottle with printed bridge',
+    href: docsMail('Crown & Bridge Resin'),
   },
 ];
 
@@ -110,53 +120,35 @@ export const WHY = {
     {
       id: 'proven',
       title: 'Proven Performance',
-      body: 'Consistent clinical results you can trust',
+      body: 'Clinically tested for reliable outcomes',
     },
     {
       id: 'formulas',
       title: 'Optimized Formulas',
-      body: 'Purpose-built for each indication',
+      body: 'Balanced strength, precision & esthetics',
     },
     {
       id: 'compat',
       title: 'Perfect Compatibility',
-      body: 'Tuned for the ODYX print workflow',
+      body: 'Designed for seamless workflow with ODYX ecosystem',
     },
     {
       id: 'esthetics',
       title: 'Natural Esthetics',
-      body: 'Lifelike shade and surface quality',
+      body: 'Life-like shades and translucency',
     },
     {
       id: 'safe',
       title: 'Safe & Biocompatible',
-      body: 'Biocompatibility tested per line',
+      body: 'Patient-safe materials you can trust',
     },
   ],
   docs: {
     title: 'Technical Data & Safety Sheets',
     body: 'Download detailed information about all ODYX resins.',
-    cta: { label: 'View Downloads', href: '#downloads' },
+    cta: {
+      label: 'View Downloads',
+      href: 'mailto:info@odyx.dental?subject=ODYX%20Resins%20Technical%20Data%20%26%20Safety%20Sheets',
+    },
   },
-};
-
-export const DOCS = {
-  title: 'Documents & certification',
-  intro:
-    'Technical data sheets and safety documents, per line - and certification stated per line, because that is the only honest way to state it.',
-  tabs: ['Technical data', 'Handling & safety'] as const,
-  emptyLine: 'Document on request - tell us which line and we will send it.',
-  requestHref: (line: string, doc: string) =>
-    `mailto:info@odyx.dental?subject=${encodeURIComponent(`Document request: ${line} - ${doc}`)}`,
-  docNames: ['Technical Data Sheet (TDS)', 'Safety Data Sheet (SDS)'] as const,
-  certTitle: 'Certification, per line',
-  certColumns: ['CE', 'FDA', 'ISO', 'ISO 10993', 'ISO 13485', 'MSDS', 'REACH', 'RoHS'],
-  certRows: [
-    { line: 'Ceramic Crown Resin', marks: ['CE', 'FDA', 'ISO', 'MSDS', 'REACH', 'RoHS'] },
-    { line: 'Temporary Resin', marks: ['ISO 10993', 'ISO 13485', 'MSDS', 'REACH', 'RoHS'] },
-    { line: 'Surgical Resin', marks: ['ISO 10993', 'ISO 13485', 'MSDS', 'REACH', 'RoHS'] },
-    { line: 'Model Resin', marks: ['CE', 'FDA', 'ISO', 'MSDS', 'REACH', 'RoHS'] },
-    { line: 'Crown & Bridge Resin', marks: ['CE', 'FDA', 'ISO', 'MSDS', 'REACH', 'RoHS'] },
-  ],
-  certMicro: 'MSDS available for all five lines. Certification is stated per resin line, never range-wide.',
 };

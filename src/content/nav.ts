@@ -131,17 +131,11 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "ODYX P1-26",
       },
       {
-        label: "ODYX Cure",
+        label: "ODYX Cure UV-02",
         href: "/products/curing-machines",
-        desc: "Validated light dose every time",
+        desc: "Powerful curing. Perfect results.",
         img: "/img/cutouts/feat-curing-cutout.png",
       },
-      {
-        label: "ODYX Cure V2",
-        href: "/products/cure-v6",
-        desc: "Spec-faithful UV-02 — two-act wash & cure",
-            img: "/img/cutouts/feat-curing-cutout.png",
-          },
       {
         label: "Resins",
         href: "/products/resins",
@@ -180,15 +174,9 @@ export const HEADER_MENUS: NavGroup[] = [
             label: "Curing",
             items: [
               {
-                label: "ODYX Cure",
+                label: "ODYX Cure UV-02",
                 href: "/products/curing-machines",
-                desc: "Validated light dose every time",
-                img: "/img/cutouts/feat-curing-cutout.png",
-              },
-              {
-                label: "ODYX Cure V2",
-                href: "/products/cure-v6",
-                desc: "Spec-faithful UV-02 — two-act wash & cure",
+                desc: "Powerful curing. Perfect results.",
                 img: "/img/cutouts/feat-curing-cutout.png",
               },
             ],
