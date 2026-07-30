@@ -2,7 +2,7 @@ import Link from "next/link";
 import ClinicalApplicationsSection from "@/components/home2/ClinicalApplicationsSection";
 import ClinicalCasesShowcase from "@/components/home2/ClinicalCasesShowcase";
 import HubCardsSection from "@/components/home2/HubCardsSection";
-import Hv2Header from "@/components/home2/Hv2Header";
+import Hv2Footer from "@/components/home2/Hv2Footer";
 import Hv2Motion from "@/components/home2/Hv2Motion";
 import LatestUpdatesSection from "@/components/home2/LatestUpdatesSection";
 import PathCarousel from "@/components/home2/PathCarousel";
@@ -150,8 +150,6 @@ const ECO_NODES = [
 export default function HomeV2Page() {
   return (
     <div className="hv2" id="top">
-      <Hv2Header />
-
       {/* ===== 1 · Hero — headline + orbit product collage ===== */}
       <section className="hv2-hero" data-hero-light id="hero">
         <div className="hv2-wrap hv2-hero-grid">
@@ -326,6 +324,9 @@ export default function HomeV2Page() {
 
       {/* ===== 9 · Latest updates — five-up update carousel ===== */}
       <LatestUpdatesSection />
+
+      {/* ===== 10 · Footer — the mock's navy band (replaces the global one) ===== */}
+      <Hv2Footer />
 
       <Hv2Motion />
     </div>

@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
-import HomeV2Page from "@/components/pages/HomeV2Page";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "ODYX — One Ecosystem. Endless Possibilities.",
-  description:
-    "Everything you need for digital dentistry in one seamless ecosystem — scanner, printer, curing and resins working as one connected workflow.",
-};
-
+// The V2 home is now the site's main home at `/`. This route stays so existing
+// review links keep working — temporary (307) rather than permanent, so the URL
+// can be handed back to a future preview without cached 308s in the way.
 export default function Page() {
-  return <HomeV2Page />;
+  redirect("/");
 }
