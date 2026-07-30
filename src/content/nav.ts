@@ -170,7 +170,7 @@ export const HEADER_MENUS: NavGroup[] = [
             items: [
               {
                 label: "ODYX P1-26",
-                href: "/products/3d-printers",
+                href: "/products/odyx-p1-26",
                 desc: "Desktop production for clinic and lab",
             img: "/img/cutouts/feat-printer-cutout.png",
           },

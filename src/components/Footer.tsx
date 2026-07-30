@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import P126Footer from '@/components/P126Footer';
 
 const COLUMNS = [
   {
@@ -102,6 +103,8 @@ function SocialIcon({ kind }: { kind: (typeof SOCIAL)[number]['icon'] }) {
 export default function Footer() {
   const pathname = usePathname();
   if (pathname?.startsWith('/admin')) return null;
+  /* P1-26 design footer — interactive nav/controls, not a raster */
+  if (pathname?.includes('/odyx-p1-26')) return <P126Footer />;
 
   return (
     <footer className="site-footer">
