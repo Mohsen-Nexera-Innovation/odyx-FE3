@@ -1,0 +1,1581 @@
+/* ============================================================
+   Home V2 — screen-scoped styles (.hv2-)
+   Pixel-faithful rebuild of the client hero-collage mock:
+   light blue-washed surfaces, action blue #0050D8 on white
+   (approved tokens), white rounded panels, orbit hero collage,
+   compact coverflow path picker with edge ghosts, radial
+   ecosystem, five-up products rail. Own minimal header (the
+   global #hdr is hidden on this screen).
+   Dials: Variance 3 · Motion 6 · Density 7.
+   ============================================================ */
+
+/* The mock ships its own minimal header — hide the global one here. It also
+   shows no floating support FABs on this screen, so drop those too. */
+body:has(.hv2) #hdr{display:none !important}
+body:has(.hv2) .fabs{display:none !important}
+
+.hv2{
+  --hv2-blue:#0050D8;
+  --hv2-blue-deep:#0041AF;
+  --hv2-blue-rgb:0,80,216;
+  --hv2-ink:#0A1020;
+  --hv2-body:#525C70;
+  --hv2-mut:#8A93A6;
+  --hv2-bg:#EEF2F9;
+  --hv2-surface:#F3F5FD; /* flat backdrop for the sections after the hero */
+  --hv2-line:rgba(10,40,90,.10);
+  --hv2-card-shadow:0 16px 44px rgba(10,40,90,.09);
+  --hv2-navy:#0A1745;
+  --hv2-maxw:1400px;
+  /* Client-supplied silk-wave backdrop (public/img/hv2-bg.jpg, from
+     home-background.png) under the soft action-blue glows. Fixed to the
+     viewport so the wave detail (bottom half of the image) stays in view
+     on every screenful; iOS ignores `fixed` and gracefully falls back. */
+  background:
+    radial-gradient(760px 400px at 78% 4%, rgba(0,80,216,.09), transparent 62%),
+    radial-gradient(600px 380px at 6% 34%, rgba(0,80,216,.05), transparent 60%),
+    url("/img/hv2-bg.jpg") center bottom / cover no-repeat fixed,
+    var(--hv2-bg);
+  color:var(--hv2-body);
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  font-size:16px; line-height:1.6;
+  overflow-x:clip;
+}
+.hv2 h1,.hv2 h2,.hv2 h3{
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  color:var(--hv2-ink); font-weight:700; line-height:1.15; letter-spacing:-.01em;
+}
+.hv2 :focus-visible{outline:2px solid var(--hv2-blue); outline-offset:2px; border-radius:4px}
+.hv2 [id]{scroll-margin-top:84px}
+
+.hv2-wrap{max-width:var(--hv2-maxw); margin-inline:auto; padding-inline:24px}
+.hv2-sec{padding-block:clamp(22px,2.8vw,36px); background:var(--hv2-surface)}
+.hv2-center{text-align:center}
+.hv2-blue{color:var(--hv2-blue)}
+
+.hv2-eyebrow{
+  color:var(--hv2-blue); font-weight:700; font-size:12px;
+  letter-spacing:.15em; text-transform:uppercase; margin-bottom:10px;
+}
+[dir="rtl"] .hv2-eyebrow{letter-spacing:0; text-transform:none}
+.hv2-h2{font-size:clamp(24px,2.5vw,31px); margin-bottom:12px}
+.hv2-body{font-size:14.5px; max-width:36em}
+.hv2-center .hv2-body{margin-inline:auto}
+
+/* Buttons */
+.hv2-btn{
+  display:inline-flex; align-items:center; gap:9px; cursor:pointer;
+  background:var(--hv2-blue); color:#fff; font-weight:700; font-size:15px;
+  padding:12px 22px; border-radius:9px; border:1.5px solid var(--hv2-blue);
+  box-shadow:0 10px 22px rgba(var(--hv2-blue-rgb),.26);
+  transition:background .2s ease,border-color .2s ease,transform .2s ease;
+}
+.hv2-btn:hover{background:var(--hv2-blue-deep); border-color:var(--hv2-blue-deep); transform:translateY(-1px)}
+.hv2-btn-sm{padding:9px 16px; font-size:13.5px; gap:7px; box-shadow:none}
+.hv2-btn-ghost{background:transparent; color:var(--hv2-blue); box-shadow:none}
+.hv2-btn-ghost:hover{background:rgba(var(--hv2-blue-rgb),.06); color:var(--hv2-blue-deep)}
+
+/* White rounded panel */
+.hv2-panel{
+  background:#fff; border-radius:22px; border:1px solid rgba(255,255,255,.6);
+  box-shadow:var(--hv2-card-shadow);
+  padding:clamp(24px,3vw,38px);
+}
+
+/* Round nav buttons (carousels) */
+.hv2-nav{
+  width:42px; height:42px; border-radius:50%; cursor:pointer;
+  background:#fff; color:var(--hv2-ink); border:1px solid var(--hv2-line);
+  box-shadow:0 10px 24px rgba(10,40,90,.14);
+  display:grid; place-items:center; flex:0 0 auto;
+  transition:color .2s ease,transform .2s ease;
+}
+.hv2-nav svg{width:18px; height:18px}
+.hv2-nav:hover{color:var(--hv2-blue); transform:scale(1.06)}
+
+/* Dots */
+.hv2-dots{display:flex; gap:8px; justify-content:center; align-items:center}
+.hv2-dot{
+  width:8px; height:8px; border-radius:99px; border:0; cursor:pointer; padding:0;
+  background:rgba(10,30,70,.18); transition:width .25s ease,background .25s ease;
+}
+.hv2-dot.is-on{width:20px; background:var(--hv2-blue)}
+
+/* ---------- 0 · Header ---------- */
+
+/* odyx.css styles the bare `header` element (fixed, flex, padded) —
+   neutralize all of it for this screen's own bar. */
+.hv2 .hv2-hdr{
+  position:sticky; top:0; left:auto; right:auto; z-index:60;
+  display:block; padding:0; min-height:0;
+  background:#F9F9FF; border-bottom:1px solid var(--hv2-line);
+  box-shadow:none;
+}
+.hv2 .hv2-hdr::before{display:none}
+.hv2-hdr-in{
+  max-width:var(--hv2-maxw); margin-inline:auto; padding-inline:24px;
+  height:62px; display:flex; align-items:center; gap:18px;
+}
+.hv2-logo{flex:0 0 auto; display:flex; align-items:center}
+.hv2-logo img{height:30px; width:auto; display:block}
+.hv2-hdr-nav{
+  flex:1; display:flex; justify-content:center; align-items:center;
+  gap:clamp(14px,2.2vw,30px);
+}
+.hv2-hdr-link{
+  display:inline-flex; align-items:center; gap:5px;
+  color:var(--hv2-ink); font-weight:600; font-size:14px;
+  transition:color .18s ease;
+}
+.hv2-hdr-link svg{color:var(--hv2-mut); margin-top:1px}
+.hv2-hdr-link:hover{color:var(--hv2-blue)}
+.hv2-hdr-link:hover svg{color:var(--hv2-blue)}
+
+/* ---------- 1 · Hero ---------- */
+
+.hv2-hero{
+  padding-top:clamp(28px,4vh,52px); padding-bottom:clamp(22px,2.8vw,40px);
+  /* Backdrop extracted from the client mock (hv2-section-bg.jpg): light
+     gradient field with the glow ellipses upper-right, aligned with the
+     product collage. Fades into the flat surface of the next sections. */
+  background:
+    linear-gradient(180deg, rgba(243,245,253,0) 88%, var(--hv2-surface) 100%),
+    url("/img/hv2-section-bg.jpg") center top / cover no-repeat;
+}
+/* Hero content (grid + why board) runs flush to the container edge. */
+.hv2-hero .hv2-wrap{padding-inline:0}
+.hv2-hero-grid{
+  display:grid; grid-template-columns:minmax(320px,.86fr) 1.14fr;
+  gap:clamp(18px,2.6vw,44px); align-items:center;
+}
+.hv2-h1{font-size:clamp(34px,3.9vw,50px); margin-bottom:14px}
+.hv2-lead{font-size:15.5px; max-width:24em; margin-bottom:22px}
+
+/* Product collage — static, no rings or motion. Raised so the cluster's
+   vertical center sits level with the "Endless Possibilities." line. */
+.hv2-orbit{
+  position:relative; height:clamp(320px,32vw,430px);
+  transform:translateY(clamp(-76px,-4.4vw,-28px));
+}
+.hv2-o-img{
+  position:absolute; height:auto;
+  filter:drop-shadow(0 22px 30px rgba(10,16,32,.26));
+}
+.hv2-o-scanner{left:0; bottom:3%; width:36%; z-index:3}
+.hv2-o-cure{left:36%; bottom:18%; width:24%; z-index:2}
+.hv2-o-printers{left:58%; bottom:19%; width:21%; z-index:3}
+.hv2-o-resins{left:77%; bottom:3%; width:23%; z-index:4}
+/* Chips are extracted discs (glow baked in) — no CSS surface. */
+.hv2-chip{
+  position:absolute; z-index:5; width:48px; height:48px; border-radius:50%;
+  box-shadow:0 10px 24px rgba(10,40,90,.14);
+}
+.hv2-chip img{width:100%; height:100%; display:block; border-radius:50%}
+.hv2-chip-tooth{left:28%; top:12%}
+.hv2-chip-cube{left:77%; top:18%}
+.hv2-chip-target{left:90%; top:34%}
+.hv2-chip-diamond{left:36%; bottom:3%}
+
+/* ---------- 2 · Why ODYX (lives inside the hero) ---------- */
+
+/* Sits below the hero grid, on the same backdrop, flush like the grid. */
+.hv2-hero .hv2-hero-why{
+  margin-top:clamp(20px,2.6vw,36px);
+  /* Half the outside gutter of a normal wrap: the board extends halfway
+     into the space a 1400px wrap (24px padding) would leave on each side. */
+  max-width:calc((100% + 1400px)/2);
+  padding-inline:12px;
+}
+
+/* Very light glass board. Backdrop is why-odyx-board-t.png — the client
+   composite with its flat background matted out to transparency, so only
+   the pillar photography and wave glows sit on the glass and the hero
+   backdrop reads through. Layered in ::before at partial opacity. */
+.hv2-why-glass{
+  position:relative;
+  background:rgba(255,255,255,.30);
+  border:1px solid rgba(255,255,255,.75);
+  border-radius:26px;
+  box-shadow:0 16px 44px rgba(10,40,90,.06);
+  /* Mock board is 2984x718. Covering (slight top/bottom crop) rather
+     than stretching keeps the photography unsquashed. */
+  aspect-ratio:2984/718;
+  padding-block:clamp(22px,2.6vw,36px) clamp(14px,1.8vw,24px);
+  padding-inline:clamp(10px,2.3vw,32px);
+}
+.hv2-why-glass::before{
+  content:""; position:absolute; inset:0; z-index:0; border-radius:inherit;
+  background:url("/img/why-odyx-board-t.png") center / cover no-repeat;
+  opacity:.85;
+}
+.hv2-why-glass > *{position:relative; z-index:1}
+
+/* Intro and pillar columns are both vertically centered, which puts the
+   pillar icons on the same line as the intro heading. */
+/* Track ratio and gaps measured off the client mock (2984px board):
+   intro : pillar tracks ≈ 2.2 : 1, column gap ≈ 57px at 1352px board. */
+.hv2-why{
+  display:grid; grid-template-columns:2.2fr repeat(4,1fr);
+  gap:clamp(18px,4vw,56px); align-items:center;
+}
+.hv2-why-intro .hv2-eyebrow{margin-bottom:16px}
+.hv2-why-intro .hv2-h2{font-size:clamp(20px,1.95vw,26px); line-height:1.3}
+.hv2-why-intro .hv2-body{font-size:12.5px; line-height:1.8; max-width:21em}
+.hv2-ic{
+  width:45px; height:45px; border-radius:50%; margin-block:0 22px;
+  color:var(--hv2-blue); border:1.5px solid rgba(var(--hv2-blue-rgb),.22);
+  background:#fff;
+  box-shadow:0 8px 18px rgba(10,40,90,.10);
+  display:grid; place-items:center;
+}
+.hv2-ic svg{width:20px; height:20px}
+/* Mock keeps all four icons on one line regardless of desc length:
+   top-align the pillars and push them to the mock's icon line
+   (~28% of board height ≈ 4vw below the board padding). */
+.hv2-why-col{align-self:start; margin-top:clamp(20px,4vw,60px)}
+.hv2-why-t{font-size:16.5px; line-height:1.32; margin-bottom:10px}
+.hv2-why-d{font-size:12px; line-height:1.8; color:var(--hv2-body); max-width:12em; white-space:pre-line}
+
+/* ---------- 3 · Choose your path ---------- */
+
+.hv2-path{margin-top:clamp(10px,1.6vw,20px)}
+.hv2-path-stage{
+  position:relative; width:100%;
+  height:clamp(225px,20vw,292px);
+  display:flex; justify-content:center; align-items:center;
+}
+/* No perspective on the ring: each slot carries its own perspective() in its
+   transform chain. A shared scene camera cannot render the outermost
+   near-profile cards — that far off-axis it re-projects their rotated depth
+   into a wide smear (and it compounds with any local perspective()), so the
+   outer slots can never look like the reference's thin spines under it.
+   Per-slot cameras keep every card's projection centered on itself; the arc
+   comes from the coordinated x/z/rotation/scale progression. */
+.hv2-path-ring{position:relative; width:min(452px,88vw); height:100%}
+/* Coverflow geometry: all cards share the same dimensions; depth comes from
+   translateZ + rotateY + a slight scale, never from resizing the card. */
+.hv2-pcard{
+  --pc1:#16309F; --pc2:#0D1C6B; --pc-btn:#1C39CC;
+  --w:min(452px,88vw);
+  position:absolute; top:0; bottom:0; left:50%;
+  width:var(--w); margin-left:calc(var(--w)/-2);
+  border-radius:18px; overflow:hidden;
+  background:linear-gradient(175deg,var(--pc1) 0%,var(--pc2) 100%);
+  box-shadow:0 28px 58px rgba(13,28,107,.28);
+  transition:transform .55s cubic-bezier(.2,.7,.2,1), opacity .55s ease,
+    filter .55s ease, box-shadow .55s ease;
+  isolation:isolate;
+}
+/* Per-card tint (the mock varies it): lab navy, dentist royal, guest slate. */
+.hv2-pcard-lab{--pc1:#1B2E96; --pc2:#0C1550; --pc-btn:#16268C}
+.hv2-pcard-dentist{--pc1:#1D3DDC; --pc2:#101F97; --pc-btn:#1C39CC}
+.hv2-pcard-guest{--pc1:#8C97A9; --pc2:#576276; --pc-btn:#4A566E}
+.hv2-pcard.is-active{transform:translateZ(0); z-index:4}
+/* Slot ±1: tilted toward center (left = +rotateY, right = -rotateY), pushed
+   back on Z, slightly smaller. Inner edges tuck behind the active card. */
+.hv2-pcard.is-side{
+  cursor:pointer; z-index:3;
+  filter:brightness(.9) saturate(.95);
+  box-shadow:0 22px 44px rgba(13,28,107,.2);
+}
+.hv2-pcard.is-left{transform:translateX(-410px) perspective(1300px) translateZ(-190px) rotateY(20deg) scale(.92)}
+.hv2-pcard.is-right{transform:translateX(410px) perspective(1300px) translateZ(-190px) rotateY(-20deg) scale(.92)}
+/* Outermost slots: thin near-profile "spines" standing just inside the
+   viewport edge (ghost1 fully visible, ghost2 half-clipped at the edge),
+   rotated near-90° toward center, deeper, dimmer, unreadable. */
+.hv2-pcard.is-ghost{
+  cursor:default; z-index:2; opacity:.65; pointer-events:none;
+  filter:brightness(.8) saturate(.85) blur(2.5px);
+  box-shadow:0 14px 30px rgba(13,28,107,.14);
+}
+.hv2-pcard.is-ghost.is-left{transform:translateX(-602px) perspective(1200px) translateZ(-90px) rotateY(80deg) scale(.82)}
+.hv2-pcard.is-ghost.is-right{transform:translateX(602px) perspective(1200px) translateZ(-90px) rotateY(-80deg) scale(.82)}
+.hv2-pcard.is-ghost2{
+  z-index:1; opacity:.3;
+  filter:brightness(.75) saturate(.8) blur(5px);
+  box-shadow:0 10px 22px rgba(13,28,107,.1);
+}
+.hv2-pcard.is-ghost2.is-left{transform:translateX(-742px) perspective(1200px) translateZ(-140px) rotateY(84deg) scale(.78)}
+.hv2-pcard.is-ghost2.is-right{transform:translateX(742px) perspective(1200px) translateZ(-140px) rotateY(-84deg) scale(.78)}
+[dir="rtl"] .hv2-pcard.is-left{transform:translateX(-410px) perspective(1300px) translateZ(-190px) rotateY(-20deg) scale(.92)}
+[dir="rtl"] .hv2-pcard.is-right{transform:translateX(410px) perspective(1300px) translateZ(-190px) rotateY(20deg) scale(.92)}
+[dir="rtl"] .hv2-pcard.is-ghost.is-left{transform:translateX(-602px) perspective(1200px) translateZ(-90px) rotateY(-80deg) scale(.82)}
+[dir="rtl"] .hv2-pcard.is-ghost.is-right{transform:translateX(602px) perspective(1200px) translateZ(-90px) rotateY(80deg) scale(.82)}
+[dir="rtl"] .hv2-pcard.is-ghost2.is-left{transform:translateX(-742px) perspective(1200px) translateZ(-140px) rotateY(-84deg) scale(.78)}
+[dir="rtl"] .hv2-pcard.is-ghost2.is-right{transform:translateX(742px) perspective(1200px) translateZ(-140px) rotateY(84deg) scale(.78)}
+/* Photo fades out of the card's right side, duotoned to the card tint.
+   Blend + mask live on the wrapper: on the img they'd fight each other
+   (each spawns a stacking context that cuts the blend off from the card
+   background), and the wrapper must NOT get a z-index for the same reason. */
+.hv2-pcard-art{
+  position:absolute; inset:0;
+  mix-blend-mode:luminosity;
+  /* Fade must be fully transparent until past the img's left edge (30%),
+     or the img edge prints as a hard seam mid-card. */
+  mask-image:linear-gradient(to right, transparent 30%, #000 64%);
+}
+[dir="rtl"] .hv2-pcard-art{mask-image:linear-gradient(to left, transparent 30%, #000 64%)}
+.hv2-pcard-art img{
+  position:absolute; top:0; inset-inline-end:0; width:70%; height:100%;
+  object-fit:cover; display:block;
+  /* Bright clinic photos blow out to pale lavender under luminosity —
+     pull them down so the duotone stays deep like the mock. */
+  filter:grayscale(1) brightness(.62) contrast(1.2);
+}
+.hv2-pcard-lab .hv2-pcard-art img{object-position:60% 62%}
+/* Zoom past the printer in clinic-scene.jpg to frame the chair + monitor. */
+.hv2-pcard-dentist .hv2-pcard-art img{object-position:100% 38%; transform:scale(1.9); transform-origin:100% 38%}
+.hv2-pcard-guest .hv2-pcard-art img{object-position:70% 45%}
+.hv2-pcard-body{
+  position:relative; z-index:1; height:100%;
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:clamp(20px,1.8vw,26px) clamp(22px,1.9vw,28px);
+}
+.hv2-pcard-ic{width:44px; height:44px; color:rgba(230,238,255,.8); margin-bottom:16px}
+.hv2-pcard-ic svg{width:100%; height:100%; display:block}
+.hv2-pcard h3{color:#fff; font-size:27px; margin-bottom:6px}
+.hv2-pcard p{color:rgba(255,255,255,.85); font-size:14.5px; line-height:1.5; max-width:13em}
+.hv2-pcard-btn{
+  display:inline-flex; align-items:center; gap:10px; margin-top:auto;
+  color:#fff; font-weight:700; font-size:14px;
+  border:1.5px solid rgba(255,255,255,.6); border-radius:10px; padding:10px 18px;
+  transition:background .2s ease, color .2s ease, border-color .2s ease;
+}
+.hv2-pcard-btn svg{transition:transform .25s ease}
+.hv2-pcard-btn:hover svg{transform:translateX(3px)}
+.hv2-pcard.is-active .hv2-pcard-btn{background:#fff; border-color:#fff; color:var(--pc-btn)}
+.hv2-pcard.is-active .hv2-pcard-btn:hover{background:#EEF2FF}
+.hv2-nav-prev,.hv2-nav-next{position:absolute; top:50%; translate:0 -50%; z-index:5}
+.hv2-nav-prev{inset-inline-start:clamp(16px,4vw,64px)}
+.hv2-nav-next{inset-inline-end:clamp(16px,4vw,64px)}
+.hv2-path .hv2-nav{color:var(--hv2-blue)}
+.hv2-path .hv2-dots{margin-top:26px; gap:10px}
+.hv2-path .hv2-dot{width:9px; height:9px}
+.hv2-path .hv2-dot.is-on{width:9px; background:var(--hv2-blue)}
+
+/* ---------- 4 · Ecosystem ----------
+   Pixel-faithful rebuild of the mock's ecosystem board. Geometry is
+   measured from the client reference at a 1434px viewport: panel
+   1358x485, art stage x356-1396 (1040x485). Node art ships as
+   soft-feathered patches (halo + glow baked, cut from the mock at 2x)
+   in /img/hv2-eco/; icons, labels, orbit sweeps and the chevron are
+   DOM. All type/controls scale in cqw so proportions hold at any
+   panel width. DOM icons sit exactly over the baked ones (`--eco-ic`
+   is sampled from the mock art, NOT the action-blue token, so edges
+   can't fringe). */
+
+.hv2-eco{
+  --eco-ic:#2350E4; /* sampled from the baked node badges */
+  position:relative; display:block; padding:0; container-type:inline-size;
+  /* No surface of its own — the shared .hv2-stack-in panel is the card. */
+  background:transparent; border:0; box-shadow:none; margin:0;
+}
+/* Background LAYER (not a card): carries the shell's top corners so the
+   gradient can't square them off. No border, no shadow — the step down to
+   the products band is a tone change on a straight edge. */
+.hv2-eco-bg{
+  position:absolute; inset:0; overflow:hidden;
+  border-radius:var(--stack-r) var(--stack-r) 0 0;
+  background:
+    radial-gradient(46% 62% at 52% 42%, rgba(255,255,255,.92), rgba(255,255,255,0) 72%),
+    linear-gradient(115deg,#F7F8FE 0%,#F2F5FC 48%,#F6F8FE 100%);
+}
+.hv2-eco-orbits{position:absolute; inset:0; width:100%; height:100%; display:block}
+/* Silk ribbon patch: pinned to the panel's right edge, clipped by the
+   bg layer's radius. Grid box x1120-1396, y125-600 of the 1358x485 panel. */
+.hv2-eco-silk{
+  position:absolute; left:79.68%; top:2.06%; width:20.32%; height:97.94%;
+  object-fit:fill; pointer-events:none;
+}
+.hv2-eco-copy{
+  position:absolute; z-index:3; inset-inline-start:2.14%; top:10.3%; width:24%;
+}
+.hv2-eco-copy .hv2-eyebrow{
+  font-size:clamp(10px,.89cqw,13px); letter-spacing:.1em;
+  margin-bottom:clamp(10px,1.32cqw,20px);
+}
+.hv2-eco-copy .hv2-h2{
+  font-size:clamp(26px,2.95cqw,42px); line-height:1.13; letter-spacing:-.005em;
+  margin-bottom:clamp(8px,1.1cqw,17px);
+}
+.hv2-eco-copy .hv2-body{font-size:clamp(11.5px,1.06cqw,15.5px); line-height:1.95; max-width:12.9em}
+.hv2-eco-stage{
+  position:relative; margin-inline-start:23.42%; width:76.58%;
+  aspect-ratio:1040/485;
+  /* The stage's last ~1% is empty in the art; the mock ends the ecosystem
+     band there so the products band starts higher. Pulled out of flow
+     rather than scaling the stage, which would shrink the artwork. */
+  margin-bottom:-1.09cqw;
+}
+.hv2-eco-patch{
+  position:absolute; display:block; height:auto; pointer-events:none;
+  user-select:none;
+}
+.hv2-eco-p-mouth   {left:11.73%; top:14.64%;  width:54.23%; z-index:1}
+.hv2-eco-p-scanner {left:28.27%; top:-11.75%; width:16.35%; z-index:2}
+.hv2-eco-p-resin   {left:2.79%;  top:6.80%;   width:16.83%; z-index:2}
+.hv2-eco-p-printer {left:59.23%; top:7.22%;   width:17.88%; z-index:2}
+.hv2-eco-p-software{left:7.31%;  top:52.16%;  width:19.42%; z-index:2}
+.hv2-eco-p-cure    {left:47.69%; top:51.75%;  width:19.23%; z-index:2}
+.hv2-eco-node{
+  position:absolute; z-index:3; translate:-50% 0;
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(3px,.5cqw,8px);
+}
+/* left = baked badge centre x, top = badge top edge (stage %) */
+.hv2-eco-n-scanner {left:36.44%; top:15.26%}
+.hv2-eco-n-resin   {left:11.15%; top:43.09%}
+.hv2-eco-n-printer {left:68.37%; top:43.09%}
+.hv2-eco-n-software{left:17.50%; top:86.39%}
+.hv2-eco-n-cure    {left:57.50%; top:86.39%}
+.hv2-eco-ic{
+  width:clamp(20px,2.07cqw,30px); aspect-ratio:1; border-radius:50%;
+  background:var(--eco-ic); color:#fff;
+  box-shadow:0 0 0 2px rgba(255,255,255,.85), 0 4px 12px rgba(35,80,228,.30);
+  display:grid; place-items:center;
+}
+.hv2-eco-ic svg{width:58%; height:58%}
+.hv2-eco-lbl{
+  font-size:clamp(10px,1.26cqw,18px); font-weight:700; letter-spacing:0;
+  color:#262B3C; white-space:nowrap;
+  /* soft white halo, as in the mock — also keeps labels legible where
+     they land on dark art at small sizes */
+  text-shadow:0 1px 6px rgba(255,255,255,.9), 0 0 2px rgba(255,255,255,.65);
+}
+.hv2-eco-more{
+  position:absolute; z-index:4; left:36.73%; top:94.6%; translate:-50% -50%;
+  width:clamp(24px,2.21cqw,31px); aspect-ratio:1; border-radius:50%;
+  background:#fff; color:#2452D8; border:0;
+  box-shadow:0 5px 14px rgba(10,40,90,.13);
+  display:grid; place-items:center;
+  transition:transform .2s ease;
+}
+.hv2-eco-more:hover{transform:translateY(2px)}
+
+/* ---------- 4 + 5 · Shared ecosystem + products panel ----------
+   The mock wraps both bands in ONE card: a single 1px border, a single
+   radius and one continuous background, with the ecosystem and products
+   sections meeting on a straight horizontal edge. Neither section may
+   carry a border, radius, shadow, outer margin or its own card surface —
+   all of that lives here. Dimensioned on the mock's 1440 canvas: the
+   panel spans x32 -> x1408 (1376 wide).                                  */
+
+.hv2-stack{
+  max-width:1440px; margin-inline:auto;
+  padding-inline:clamp(14px,2.22vw,32px);
+  padding-block:clamp(22px,2.8vw,36px) clamp(18px,1.9vw,28px);
+  background:var(--hv2-surface);
+}
+.hv2-stack-in{
+  --stack-r:16px;
+  position:relative;
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:var(--stack-r);
+  background:
+    radial-gradient(120% 60% at 22% 100%, rgba(255,255,255,.45), rgba(255,255,255,0) 62%),
+    radial-gradient(70% 50% at 88% 100%, rgba(0,80,216,.05), rgba(0,80,216,0) 70%),
+    rgba(255,255,255,.44);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset;
+  /* NOT clipped: the mock lets the scanner packshot and the carousel discs
+     cross the panel's edge. Corner-clipping is done by the background
+     layers instead (.hv2-eco-bg / the panel's own radius). */
+}
+
+/* ---------- 5 · Products ----------
+   Geometry is dimensioned against the client's 1440px mock canvas: a
+   1376-wide panel inset 32px, a 261px card track starting 35px below the
+   panel's top edge, edge-mounted nav discs and four page dots centred on the
+   panel (not on the rail). Every magic number below traces to that mock.   */
+
+.hv2-prod{
+  --pr-card-h:261px;          /* mock card height at 1440 */
+  --pr-radius:10px;           /* card corner radius */
+  --pr-pad:20px;              /* card horizontal padding */
+  --pr-pad-t:17.8px;          /* card top padding (per card: see -cure) */
+  --pr-go:36px;               /* in-card arrow disc */
+  --pr-go-inset:15.5px;
+  --pr-go-bottom:24.6px;
+  --pr-title:16.2px;
+  --pr-title-lh:22.0px;
+  --pr-title-scale:1;         /* per-card, see .hv2-pr-cure / -printer */
+  --pr-lead-scale:1;          /* first title line only (mock sets acronyms bigger) */
+  --pr-nav:37px;              /* carousel nav disc */
+  --pr-panel-pad-i:clamp(20px,2.5vw,44px);
+  /* Second band of the shared panel — no surface, no margins, no radius. */
+  display:block; margin:0; padding:0; border:0; background:transparent;
+  box-shadow:none; border-radius:0;
+}
+
+/* --- products band (inside the shared panel) --- */
+.hv2-prod-panel{
+  position:relative;
+  padding:29px var(--pr-panel-pad-i) 8px;
+}
+
+.hv2-prod-grid{
+  display:grid;
+  grid-template-columns:clamp(210px,17.5vw,280px) minmax(0,1fr);
+  gap:clamp(24px,3.958vw,70px);
+  align-items:start;
+}
+
+/* --- intro column --- */
+.hv2-prod-intro{padding-top:9px}
+.hv2-prod-intro .hv2-eyebrow{
+  font-size:14.7px; font-weight:500; letter-spacing:.028em; margin-bottom:0;
+  line-height:1.2;
+}
+/* The mock sets this headline in Tajawal Regular, not the site's usual 700. */
+.hv2-prod-intro .hv2-h2{
+  font-size:34px; font-weight:400; line-height:37.7px; letter-spacing:-.014em;
+  margin:19px 0 0; white-space:nowrap;
+}
+.hv2-prod-intro .hv2-body{
+  font-size:16px; line-height:28.2px; color:#4E5766;
+  max-width:13.5em; margin-top:12px;
+}
+.hv2-prod-cta{
+  margin-top:16px; width:197px; height:46px; padding:0 17px 0 18px;
+  border-radius:9px; font-size:14.5px; font-weight:700; gap:8px;
+  border:1px solid rgba(24,68,160,.42);
+  justify-content:space-between;
+}
+/* Tajawal's metrics sit high in a flex-centred box — nudge the label to the
+   optical centre the mock shows. */
+.hv2-prod-cta > span{margin-top:5px}
+.hv2-prod-cta svg{width:19px; height:19px; flex:0 0 auto}
+
+/* --- the rail --- */
+.hv2-rail-wrap{min-width:0; position:relative}
+.hv2-rail{
+  display:flex; overflow-x:auto;
+  padding-block:6px 18px;
+  scroll-snap-type:x mandatory; scrollbar-width:none;
+}
+.hv2-rail::-webkit-scrollbar{display:none}
+
+.hv2-pr-card{
+  position:relative; isolation:isolate; overflow:hidden;
+  flex:0 0 auto; min-width:148px; height:var(--pr-card-h);
+  scroll-snap-align:start;
+  border-radius:var(--pr-radius);
+  border:1px solid rgba(10,40,90,.055);
+  background:linear-gradient(180deg,#EFF1FB 0%,#EAEDF7 100%);
+  box-shadow:0 14px 26px -10px rgba(10,40,90,.16);
+  padding:var(--pr-pad-t) var(--pr-pad) 0;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.hv2-pr-card:hover{transform:translateY(-4px); box-shadow:0 22px 38px -12px rgba(10,40,90,.22)}
+
+/* Mock card widths and inter-card gaps — deliberately unequal, so both are
+   carried per card as a share of the rail's own width. */
+.hv2-pr-card{width:var(--pr-w); margin-inline-end:var(--pr-gap,0px)}
+.hv2-pr-scanner    {--pr-w:17.771%; --pr-gap:2.024%}
+.hv2-pr-printer    {--pr-w:17.690%; --pr-gap:1.954%}
+.hv2-pr-cure       {--pr-w:21.418%; --pr-gap:1.742%}
+.hv2-pr-resin      {--pr-w:18.366%; --pr-gap:1.803%}
+.hv2-pr-accessories{--pr-w:17.104%}
+
+.hv2 .hv2-pr-title{
+  position:relative; z-index:2;
+  font-size:calc(var(--pr-title) * var(--pr-title-scale));
+  line-height:var(--pr-title-lh);
+  font-weight:500; letter-spacing:-.004em;
+}
+.hv2-pr-lead{font-size:calc(var(--pr-title) * var(--pr-lead-scale))}
+/* The mock sets the two middle cards' titles larger, and gives the acronym
+   lead lines ("3D", "UV") another step up again. */
+.hv2-pr-printer{--pr-title-scale:1.05; --pr-lead-scale:1.10}
+.hv2-pr-cure{--pr-title-scale:1.068; --pr-title-lh:22.4px; --pr-lead-scale:1.367; --pr-pad-t:17.35px}
+
+/* --- packshots: per-product framing --------------------------------------
+   Each source is a square studio packshot on white with its own amount of
+   empty margin, so the frame is placed per card rather than scaled by one
+   shared rule. `--art-w` is the frame width as a share of the card's inner
+   width; `--art-x` / `--art-y` position that frame (percentages of the same
+   box) and may be negative — the card clips. Multiply blend drops the white
+   studio background onto the card's tint.                                  */
+/* No z-index here: a stacking context on the wrapper would cut the image off
+   from the card background and break the multiply blend below. */
+.hv2-pr-media{position:absolute; inset:0; display:block}
+.hv2-pr-media img{
+  position:absolute; display:block;
+  width:var(--art-w); height:auto; max-width:none;
+  inset-inline-start:var(--art-x); bottom:var(--art-y);
+  mix-blend-mode:multiply;
+}
+.hv2-pr-scanner    {--art-w:121.2%; --art-x:-2.5%;  --art-y:7.7%}
+.hv2-pr-printer    {--art-w:119.4%; --art-x:-0.1%;  --art-y:-1.9%}
+.hv2-pr-cure       {--art-w:113.2%; --art-x:2.8%;   --art-y:-2.3%}
+.hv2-pr-resin      {--art-w:127.3%; --art-x:-6.5%;  --art-y:-4.6%}
+.hv2-pr-accessories{--art-w:121.2%; --art-x:-11.6%; --art-y:-4.8%}
+
+/* --- in-card arrow --- */
+.hv2-pr-go{
+  position:absolute; z-index:2;
+  bottom:var(--pr-go-bottom); inset-inline-end:var(--pr-go-inset);
+  width:var(--pr-go); height:var(--pr-go); border-radius:50%;
+  color:var(--hv2-blue); border:1px solid rgba(26,58,132,.30);
+  /* the mock lifts the disc off the packshot with a translucent fill and a
+     soft white halo, so the glyph stays readable over any product */
+  background:rgba(255,255,255,.55);
+  box-shadow:0 0 16px 7px rgba(255,255,255,.5);
+  display:grid; place-items:center;
+  transition:background .2s ease,color .2s ease,border-color .2s ease;
+}
+.hv2-pr-go.is-start{inset-inline-end:auto; inset-inline-start:var(--pr-go-inset)}
+/* Forward-pointing arrows follow the reading direction. */
+[dir="rtl"] .hv2-pr-go svg,
+[dir="rtl"] .hv2-prod-cta svg{scale:-1 1}
+.hv2-pr-go svg{width:18px; height:18px}
+.hv2-pr-go.on-dark{
+  color:#fff; border-color:rgba(255,255,255,.8);
+  background:transparent; box-shadow:0 0 18px 4px rgba(255,255,255,.4);
+}
+.hv2-pr-card:hover .hv2-pr-go{background:var(--hv2-blue); color:#fff; border-color:var(--hv2-blue)}
+.hv2-pr-card:hover .hv2-pr-go.on-dark{background:#fff; color:var(--hv2-blue); border-color:#fff}
+
+/* --- panel-edge carousel nav --- */
+/* Anchored off the band's bottom (8 padding + 11 dots + 5 margin + 18 rail
+   padding) so the discs stay centred on the card track in both layouts. */
+.hv2-prod-nav{
+  position:absolute; bottom:calc(42px + var(--pr-card-h) / 2 + 2.2px);
+  translate:0 50%; z-index:6;
+  width:var(--pr-nav); height:var(--pr-nav);
+  color:var(--hv2-blue);
+  border:1px solid rgba(10,40,90,.07);
+  box-shadow:0 6px 18px rgba(10,40,90,.13);
+}
+.hv2-prod-nav svg{width:24px; height:24px}
+.hv2-prod-nav-prev{inset-inline-start:3px; translate:-50% 50%}
+.hv2-prod-nav-next{inset-inline-end:3px; translate:50% 50%}
+[dir="rtl"] .hv2-prod-nav-prev{translate:50% 50%}
+[dir="rtl"] .hv2-prod-nav-next{translate:-50% 50%}
+
+/* --- page dots: centred on the whole panel --- */
+.hv2-prod-dots{gap:23.5px; margin-top:5px}
+.hv2-prod-dots .hv2-dot{
+  width:11px; height:11px; border-radius:50%;
+  background:rgba(10,30,70,.19); transition:background .25s ease;
+}
+.hv2-prod-dots .hv2-dot.is-on{width:11px; background:var(--hv2-blue)}
+
+/* ---------- 6 · Clinical applications ----------
+   Layered card deck from the client reference. Every number below is
+   measured off that reference at a 2048px viewport, where the content
+   container is 1828px wide (calc(100% - 220px)) and the card box is
+   680x585. Divide a reference pixel by 18.28 to get its cqw value —
+   .hv2-ca-in is the query container, so the whole composition (copy,
+   deck offsets, nav discs) holds its proportions at any width.
+
+   Deck model: all five cards share one base box anchored to the right of
+   the container; depth is translateX + scale + a small rotate, never a
+   resize. Slot 0 is the active card, 4 the backmost. Slot offsets are
+   multiples of --ca-dx so a breakpoint can retune the whole fan at once. */
+
+.hv2-ca{
+  position:relative;
+  /* Pale clinical field: blue bloom under the lower middle of the deck, a
+     softer lavender wash off the active card's right shoulder, and a base
+     that stays nearly white behind the copy column. */
+  background:
+    radial-gradient(ellipse 36% 50% at 68% 90%, rgba(25,112,255,.28) 0%, rgba(55,130,255,.13) 26%, rgba(55,130,255,0) 62%),
+    radial-gradient(ellipse 26% 52% at 89% 47%, rgba(104,121,255,.10) 0%, rgba(104,121,255,0) 62%),
+    linear-gradient(90deg,#FAFBFF 0%,#F7F9FF 42%,#F5F7FD 100%);
+}
+.hv2-ca-in{
+  position:relative;
+  width:min(100% - clamp(40px,10.742%,220px), 1828px);
+  margin-inline:auto;
+  container-type:inline-size;
+  /* Card box, base anchor and fan step — reference px / 18.28. */
+  --ca-cw:37.20cqw;    /* 680 */
+  --ca-ch:32.00cqw;    /* 585 */
+  --ca-right:4.10cqw;  /* base box right edge, 75 from the container edge */
+  --ca-r:1.59cqw;      /* 29 corner radius */
+  --ca-dx:-9.55cqw;    /* 174.6 — the slot-1 step */
+}
+
+/* --- left copy column ---
+   Absolute so the deck can own the container's full width; the reference
+   y positions (96 / 153 / 316 / 356 / 472) are reproduced by this top
+   offset plus the gaps below. Returns to normal flow when it stacks. */
+.hv2-ca-copy{
+  position:absolute; z-index:6;
+  inset-inline-start:0; top:5.25cqw;   /* 96 */
+  width:21.33cqw;                      /* 390 */
+}
+.hv2 .hv2-ca-eyebrow{
+  color:#0757B8; font-size:1.286cqw; font-weight:700;
+  letter-spacing:.02em; line-height:1.2; margin-bottom:0;
+}
+.hv2 .hv2-ca-h{
+  color:#03102D; font-size:3.392cqw; font-weight:700;
+  line-height:1.123; letter-spacing:-.025em;
+  margin:1.58cqw 0 0;                  /* first line glyph top lands on y153 */
+}
+.hv2-ca-rule{
+  display:block; width:3.50cqw; height:.274cqw;
+  margin-top:1.19cqw; border-radius:1px;
+  background:#1671D9;
+}
+.hv2-ca-lead{
+  color:#26334C; font-size:1.395cqw; font-weight:400; line-height:1.6;
+  margin-top:1.92cqw;
+}
+.hv2 .hv2-ca-cta{
+  width:17.51cqw; height:3.28cqw; padding:0 1.37cqw;
+  margin-top:2.08cqw; border-radius:.657cqw;
+  font-size:1.149cqw; font-weight:600; gap:0;
+  justify-content:space-between; border:0;
+  background:linear-gradient(90deg,#0868E8 0%,#0876F4 100%);
+  box-shadow:0 12px 25px rgba(21,104,236,.18), 0 3px 8px rgba(20,92,220,.12);
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+/* Tajawal sits high in a flex-centred box — nudge to the optical centre. */
+.hv2-ca-cta > span{margin-top:.2cqw}
+.hv2-ca-cta svg{width:1.59cqw; height:1.59cqw; flex:0 0 auto}
+.hv2 .hv2-ca-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 30px rgba(21,104,236,.24), 0 4px 10px rgba(20,92,220,.16);
+}
+[dir="rtl"] .hv2-ca-cta svg{scale:-1 1}
+
+/* --- deck stage ---
+   Stage height is the card box; the margins reproduce the reference's
+   10.5px of headroom and 67.5px below, which makes the section 663px
+   tall at 2048. */
+.hv2-ca-stage{
+  position:relative;
+  height:var(--ca-ch);
+  margin-block:.574cqw 3.69cqw;
+}
+.hv2-ca-deck{position:absolute; inset:0}
+
+.hv2-ca-card{
+  position:absolute; top:0;
+  inset-inline-end:var(--ca-right);
+  width:var(--ca-cw); height:var(--ca-ch);
+  border-radius:var(--ca-r); overflow:hidden; isolation:isolate;
+  background:#080D1C;
+  /* Blue bloom hugging the bottom edge, then the diffused card shadow.
+     box-shadow is not clipped by the card's own overflow:hidden. */
+  box-shadow:
+    0 1.2cqw 2.0cqw -.45cqw rgba(24,110,255,.50),
+    0 1.9cqw 3.3cqw rgba(17,87,224,.24),
+    0 .66cqw 1.5cqw rgba(2,14,48,.15),
+    inset 0 0 0 1px rgba(214,231,255,.20);
+  transform-origin:50% 50%;
+  transition:transform .62s cubic-bezier(.22,1,.36,1),
+    filter .62s cubic-bezier(.22,1,.36,1),
+    box-shadow .62s cubic-bezier(.22,1,.36,1);
+}
+.hv2-ca-art{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; display:block;
+}
+/* Rear cards carry only a navy foot — the heavy left wash below is for the
+   active card, where copy sits on the art; on a rear card it would turn the
+   visible sliver black under the cool veil instead of showing its subject. */
+.hv2-ca-scrim{
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(0deg, rgba(6,17,48,.30) 0%, rgba(6,17,48,0) 30%);
+}
+.hv2-ca-card[data-slot="0"] .hv2-ca-scrim{
+  background:
+    linear-gradient(0deg, rgba(5,14,42,.74) 0%, rgba(5,14,42,.20) 22%, rgba(5,14,42,0) 42%),
+    linear-gradient(90deg, rgba(4,8,22,.95) 0%, rgba(4,8,22,.90) 29%, rgba(6,10,24,.44) 51%, rgba(4,6,16,.08) 73%, rgba(4,6,16,0) 86%);
+}
+/* Cool veil that lifts the rear cards toward frosted glass. */
+.hv2-ca-card::after{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:linear-gradient(150deg,
+    rgba(228,239,255,var(--ca-veil,0)) 0%,
+    rgba(207,225,253,var(--ca-veil,0)) 100%);
+  transition:background .62s cubic-bezier(.22,1,.36,1);
+}
+
+.hv2-ca-cbody{
+  position:relative; z-index:3; height:100%;
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding-inline-start:2.63cqw;        /* 48 */
+  padding-top:9.41cqw;                 /* icon top at y172 in the card */
+}
+.hv2-ca-ic{display:block; color:#fff}
+.hv2-ca-ic svg{width:2.66cqw; height:3.06cqw; display:block}
+.hv2 .hv2-ca-t{
+  color:#fff; font-size:1.860cqw; font-weight:600; line-height:1.2;
+  letter-spacing:-.005em; margin:2.13cqw 0 0;
+}
+.hv2-ca-t-rule{
+  display:block; width:3.23cqw; height:.219cqw;
+  margin-top:1.07cqw; border-radius:1px;
+  background:#126BE8;
+}
+.hv2-ca-d{
+  color:rgba(255,255,255,.88); font-size:1.149cqw; font-weight:400;
+  line-height:1.82; margin-top:2.35cqw; width:13.68cqw;
+  white-space:pre-line;
+}
+
+/* --- fan: slot 0 = active, 4 = backmost --- */
+.hv2-ca-card[data-slot="0"]{z-index:5; transform:perspective(1600px) rotateY(-1deg) rotate(2.8deg)}
+.hv2-ca-card[data-slot="1"]{z-index:4; --ca-veil:.34; filter:blur(.8px) saturate(.44) brightness(.95); transform:translateX(calc(var(--ca-dx) * 1)) scale(.91) rotate(.9deg)}
+.hv2-ca-card[data-slot="2"]{z-index:3; --ca-veil:.44; filter:blur(1.6px) saturate(.5) brightness(.80); transform:translateX(calc(var(--ca-dx) * 1.750)) scale(.84) rotate(.2deg)}
+.hv2-ca-card[data-slot="3"]{z-index:2; --ca-veil:.60; filter:blur(2.4px) saturate(.42) brightness(.86); transform:translateX(calc(var(--ca-dx) * 2.402)) scale(.79) rotate(-.4deg)}
+.hv2-ca-card[data-slot="4"]{z-index:1; --ca-veil:.86; filter:blur(3.2px) saturate(.3) brightness(1.02); transform:translateX(calc(var(--ca-dx) * 2.979)) scale(.75) rotate(-.8deg)}
+/* Rear cards keep their art but never their copy at rest. */
+.hv2-ca-card:not([data-slot="0"]) .hv2-ca-cbody{opacity:0}
+/* Negative spread keeps the bloom under the bottom edge instead of ringing
+   the pale slivers on the left. */
+.hv2-ca-card:not([data-slot="0"]){
+  box-shadow:
+    0 1.0cqw 1.5cqw -.62cqw rgba(24,110,255,.46),
+    0 1.3cqw 2.4cqw -.3cqw rgba(17,87,224,.16),
+    inset 0 0 0 1px rgba(228,240,255,.50);
+}
+.hv2-ca-cbody{transition:opacity .45s ease}
+[dir="rtl"] .hv2-ca-card[data-slot="0"]{transform:perspective(1600px) rotateY(1deg) rotate(-2.8deg)}
+[dir="rtl"] .hv2-ca-card[data-slot="1"]{transform:translateX(calc(var(--ca-dx) * -1)) scale(.91) rotate(-.9deg)}
+[dir="rtl"] .hv2-ca-card[data-slot="2"]{transform:translateX(calc(var(--ca-dx) * -1.750)) scale(.84) rotate(-.2deg)}
+[dir="rtl"] .hv2-ca-card[data-slot="3"]{transform:translateX(calc(var(--ca-dx) * -2.402)) scale(.79) rotate(.4deg)}
+[dir="rtl"] .hv2-ca-card[data-slot="4"]{transform:translateX(calc(var(--ca-dx) * -2.979)) scale(.75) rotate(.8deg)}
+[dir="rtl"] .hv2-ca-scrim{
+  background:
+    linear-gradient(0deg, rgba(6,17,48,.55) 0%, rgba(6,17,48,0) 34%),
+    linear-gradient(270deg, rgba(3,6,18,.92) 0%, rgba(4,7,20,.78) 26%, rgba(8,8,18,.26) 53%, rgba(4,4,10,.04) 75%);
+}
+[dir="rtl"] .hv2-ca-art{scale:-1 1}
+
+/* --- nav discs: on the stack's left shoulder and the active card's edge --- */
+.hv2 .hv2-ca-nav{
+  position:absolute; z-index:8; top:56.7%;
+  width:3.61cqw; height:3.61cqw;
+  background:rgba(255,255,255,.96); color:#0F63DA; border:0;
+  box-shadow:0 10px 26px rgba(22,75,166,.15), 0 2px 8px rgba(14,48,107,.08);
+}
+.hv2 .hv2-ca-nav svg{width:1.26cqw; height:1.26cqw}
+.hv2-ca-nav-prev{inset-inline-start:35.0cqw; translate:-50% -50%}
+.hv2-ca-nav-next{inset-inline-start:96.06cqw; translate:-50% -50%}
+[dir="rtl"] .hv2-ca-nav-prev,[dir="rtl"] .hv2-ca-nav-next{translate:50% -50%}
+
+/* ---------- 7 · Clinical cases ----------
+   The mirror of section 6: the deck fans backward to the LEFT with the active
+   card nearest the viewer, and the copy column sits on the right. Numbers are
+   measured off the client reference at a 2048px viewport, where the content
+   container is 1740px wide (calc(100% - 308px)). Divide a reference pixel by
+   17.40 for its cqw value — .hv2-cc-in is the query container, so the whole
+   composition scales as one.
+
+   Deck model: all four cards share one base box anchored to the LEFT of the
+   container, with transform-origin on the left edge so scale and rotation both
+   pivot there and translateX *is* the card's left edge. Depth is
+   translateX + scale; slot 0 additionally takes a real rotateY.
+
+   Perspective solve for slot 0. In the reference the card's left edge is
+   504px tall and its right edge 462 (ratio .916) across a projected 631px —
+   the right edge recedes, so the rotation is POSITIVE about a left-edge
+   origin (rotateY(-Ndeg) brings the right edge forward and magnifies it).
+   With theta = 10deg: box width W = 631 / (cos10 * .916) = 700, and the
+   perspective P satisfies P / (P + W*sin10) = .916, so P = 1325.
+
+   Order matters in that transform list: the translate has to come BEFORE the
+   perspective. A list is applied right-to-left, so `translateX() perspective()
+   rotateY()` rotates, divides by w about the card's own left edge, then slides
+   the result into place. Writing `perspective() translateX() rotateY()` instead
+   puts the translate inside the divide, which leaves the vanishing point at the
+   container's left edge and drags the whole card 24px narrower. */
+
+.hv2-cc{
+  position:relative;
+  /* Pale clinical field: blue bloom under the deck, a faint blue haze over the
+     upper middle, and a white wash toward the copy column. */
+  background:
+    radial-gradient(ellipse 34% 46% at 30% 96%, rgba(22,108,255,.30) 0%, rgba(55,130,255,.13) 30%, rgba(55,130,255,0) 64%),
+    radial-gradient(ellipse 30% 40% at 44% 2%, rgba(40,120,255,.13) 0%, rgba(40,120,255,0) 68%),
+    radial-gradient(ellipse 34% 62% at 92% 50%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 70%),
+    linear-gradient(96deg,#F2F5FE 0%,#F4F6FD 46%,#F7F9FE 100%);
+}
+/* The glows are keyed to where the deck sits, so they mirror with it. */
+[dir="rtl"] .hv2-cc{
+  background:
+    radial-gradient(ellipse 34% 46% at 70% 96%, rgba(22,108,255,.30) 0%, rgba(55,130,255,.13) 30%, rgba(55,130,255,0) 64%),
+    radial-gradient(ellipse 30% 40% at 56% 2%, rgba(40,120,255,.13) 0%, rgba(40,120,255,0) 68%),
+    radial-gradient(ellipse 34% 62% at 8% 50%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 70%),
+    linear-gradient(264deg,#F2F5FE 0%,#F4F6FD 46%,#F7F9FE 100%);
+}
+.hv2-cc-in{
+  position:relative;
+  width:min(100% - clamp(40px,15.04%,308px), 1740px);
+  margin-inline:auto;
+  container-type:inline-size;
+  /* Card box, fan step and radius — reference px / 17.40. */
+  --cc-cw:40.23cqw;    /* 700 — projects to the reference's 631 */
+  --cc-ch:28.97cqw;    /* 504 */
+  --cc-r:1.26cqw;      /* 22 corner radius */
+  --cc-dx:5.55cqw;     /* 96.6 — the fan unit; slot lefts are multiples of it */
+}
+
+/* --- deck stage --- */
+.hv2-cc-stage{
+  position:relative;
+  height:var(--cc-ch);
+  /* 70px of headroom above the active card, 85px below it: a 659px section. */
+  margin-block:4.02cqw 4.89cqw;
+}
+.hv2-cc-deck{position:absolute; inset:0}
+.hv2-cc-deck:focus-visible{outline-offset:6px}
+
+.hv2-cc-card{
+  position:absolute; top:0;
+  inset-inline-start:0;
+  width:var(--cc-cw); height:var(--cc-ch);
+  border-radius:var(--cc-r); overflow:hidden; isolation:isolate;
+  background:#070C1A;
+  /* Blue bloom hugging the bottom edge, then the diffused card shadow.
+     box-shadow is not clipped by the card's own overflow:hidden. */
+  box-shadow:
+    0 1.3cqw 2.1cqw -.4cqw rgba(20,104,255,.46),
+    0 2.0cqw 3.4cqw rgba(14,80,220,.22),
+    0 .69cqw 1.7cqw rgba(2,14,48,.16),
+    inset 0 0 0 1px rgba(214,231,255,.18);
+  transform-origin:0% 50%;
+  transition:transform .68s cubic-bezier(.22,1,.36,1),
+    filter .68s cubic-bezier(.22,1,.36,1),
+    box-shadow .68s cubic-bezier(.22,1,.36,1);
+}
+.hv2-cc-art{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; display:block;
+}
+/* Rear cards carry only a navy foot — the heavy left wash below is for the
+   active card, where copy sits on the art; on a rear card it would turn the
+   visible left strip black instead of showing its subject. */
+.hv2-cc-scrim{
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(0deg, rgba(6,17,48,.28) 0%, rgba(6,17,48,0) 30%);
+}
+.hv2-cc-card[data-slot="0"] .hv2-cc-scrim{
+  /* Three layers: a bottom fade, the reference's left wash, then an extra
+     left-third deepener. The reference photo is empty dark behind its copy;
+     ours has a bright foreground crown there, so the wash alone leaves it
+     ghosting through. The deepener is fully out by 52%, which is short of
+     where the bridge starts (36% of the frame is still under the wash). */
+  background:
+    linear-gradient(0deg, rgba(4,12,36,.52) 0%, rgba(4,12,36,.14) 20%, rgba(4,12,36,0) 40%),
+    linear-gradient(90deg, rgba(3,10,26,.58) 0%, rgba(3,10,26,.40) 34%, rgba(3,10,26,0) 52%),
+    linear-gradient(90deg, rgba(3,12,29,.97) 0%, rgba(3,12,29,.82) 31%, rgba(3,12,29,.28) 60%, rgba(3,12,29,.04) 100%);
+}
+/* Cool veil that lifts the rear cards toward frosted glass. */
+.hv2-cc-card::after{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:linear-gradient(155deg,
+    rgba(226,238,255,var(--cc-veil,0)) 0%,
+    rgba(203,222,252,var(--cc-veil,0)) 100%);
+  transition:background .68s cubic-bezier(.22,1,.36,1);
+}
+
+.hv2-cc-cbody{
+  position:relative; z-index:3; height:100%;
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding-inline-start:3.22cqw;        /* 56 */
+  padding-top:3.28cqw;                 /* 57 — icon top */
+  transition:opacity .48s ease;
+}
+.hv2-cc-ic{display:block; color:#fff}
+.hv2-cc-ic svg{width:2.47cqw; height:3.71cqw; display:block}  /* 43 x 64.5 */
+.hv2 .hv2-cc-t{
+  color:#fff; font-size:1.78cqw; font-weight:700; line-height:1.2;
+  letter-spacing:-.015em; margin:1.32cqw 0 0;
+}
+.hv2-cc-t-rule{
+  display:block; width:3.33cqw; height:.23cqw;
+  margin-top:1.26cqw; border-radius:1px;
+  background:#1268E6;
+}
+.hv2-cc-d{
+  color:rgba(255,255,255,.90); font-size:1.07cqw; font-weight:500;
+  line-height:1.88; margin-top:2.42cqw; width:12.90cqw;   /* 224 */
+}
+
+/* --- fan: slot 0 = active, 3 = backmost ---
+   Slot 0 keeps its own rotateY; the rear slots are pure translate+scale so
+   their left strips stay rectangular, as in the reference. Each slot's scale
+   is the reference's own left-edge height over 504 (468/438/409), and the
+   translateY is whatever is left once the scale has dropped the top edge —
+   which is why the three steps are uneven rather than a fixed rhythm. */
+.hv2-cc-card[data-slot="0"]{
+  z-index:5;
+  transform:translateX(calc(var(--cc-dx) * 3)) perspective(1325px) rotateY(10deg);
+}
+.hv2-cc-card[data-slot="1"]{z-index:4; --cc-veil:.26; filter:blur(.7px) saturate(.56) brightness(.95); transform:translate(calc(var(--cc-dx) * 1.780), .12cqw) scale(.929)}
+.hv2-cc-card[data-slot="2"]{z-index:3; --cc-veil:.38; filter:blur(1.5px) saturate(.46) brightness(.86); transform:translate(calc(var(--cc-dx) * .818), .29cqw) scale(.869)}
+.hv2-cc-card[data-slot="3"]{z-index:2; --cc-veil:.52; filter:blur(2.3px) saturate(.36) brightness(.92); transform:translate(calc(var(--cc-dx) * .104), .43cqw) scale(.811)}
+/* Rear cards keep their art but never their copy at rest. */
+.hv2-cc-card:not([data-slot="0"]) .hv2-cc-cbody{opacity:0}
+/* Negative spread keeps the bloom under the bottom edge instead of ringing
+   the pale left slivers. */
+.hv2-cc-card:not([data-slot="0"]){
+  box-shadow:
+    0 1.0cqw 1.6cqw -.6cqw rgba(20,104,255,.42),
+    0 1.4cqw 2.5cqw -.3cqw rgba(14,80,220,.15),
+    inset 0 0 0 1px rgba(228,240,255,.46);
+}
+[dir="rtl"] .hv2-cc-card{transform-origin:100% 50%}
+[dir="rtl"] .hv2-cc-card[data-slot="0"]{
+  transform:translateX(calc(var(--cc-dx) * -3)) perspective(1325px) rotateY(-10deg);
+}
+[dir="rtl"] .hv2-cc-card[data-slot="1"]{transform:translate(calc(var(--cc-dx) * -1.780), .12cqw) scale(.929)}
+[dir="rtl"] .hv2-cc-card[data-slot="2"]{transform:translate(calc(var(--cc-dx) * -.818), .29cqw) scale(.869)}
+[dir="rtl"] .hv2-cc-card[data-slot="3"]{transform:translate(calc(var(--cc-dx) * -.104), .43cqw) scale(.811)}
+[dir="rtl"] .hv2-cc-card[data-slot="0"] .hv2-cc-scrim{
+  background:
+    linear-gradient(0deg, rgba(4,12,36,.52) 0%, rgba(4,12,36,.14) 20%, rgba(4,12,36,0) 40%),
+    linear-gradient(270deg, rgba(3,10,26,.58) 0%, rgba(3,10,26,.40) 34%, rgba(3,10,26,0) 52%),
+    linear-gradient(270deg, rgba(3,12,29,.97) 0%, rgba(3,12,29,.82) 31%, rgba(3,12,29,.28) 60%, rgba(3,12,29,.04) 100%);
+}
+[dir="rtl"] .hv2-cc-art{scale:-1 1}
+
+/* --- nav discs: straddling the active card's two vertical edges ---
+   The reference sits them at 63% of the card's height, not its midpoint. */
+.hv2 .hv2-cc-nav{
+  position:absolute; z-index:8; top:62.9%;
+  width:3.68cqw; height:3.68cqw;
+  background:#fff; color:#0E5FD8; border:0;
+  box-shadow:0 12px 28px rgba(22,75,166,.16), 0 3px 9px rgba(14,48,107,.09);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.hv2 .hv2-cc-nav svg{width:1.26cqw; height:1.26cqw}
+/* Lift with `transform` only. The disc is centred by the `translate` property,
+   and the two compose (translate, then transform) — repeating the -50%s here
+   would double them and shove the disc a full width out from under the cursor
+   before mouseup, which swallows the click outright when the transition is off
+   under prefers-reduced-motion. */
+.hv2 .hv2-cc-nav:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 34px rgba(22,75,166,.22), 0 4px 11px rgba(14,48,107,.12);
+}
+.hv2-cc-nav-prev{inset-inline-start:14.89cqw; translate:-50% -50%}  /* 259 */
+.hv2-cc-nav-next{inset-inline-start:52.93cqw; translate:-50% -50%}  /* 921 */
+[dir="rtl"] .hv2-cc-nav-prev,[dir="rtl"] .hv2-cc-nav-next{translate:50% -50%}
+
+/* --- right copy column ---
+   Absolute so the deck owns the container's full width; returns to normal flow
+   when the section stacks. Reference x is 1245 in a 2048 shot = 62.7cqw in. */
+.hv2-cc-copy{
+  position:absolute; z-index:6;
+  inset-inline-start:62.70cqw; top:7.87cqw;   /* eyebrow cap-top at y137 */
+  width:24.14cqw;                             /* 420 */
+}
+.hv2 .hv2-cc-eyebrow{
+  color:#0750DE; font-size:1.09cqw; font-weight:700;
+  letter-spacing:.04em; line-height:1.2; margin-bottom:0;
+}
+/* No tracking on Arabic — this rule is more specific than the screen-wide
+   [dir="rtl"] .hv2-eyebrow reset, so it has to opt out itself. */
+[dir="rtl"] .hv2 .hv2-cc-eyebrow,
+[dir="rtl"] .hv2 .hv2-cc-h,
+[dir="rtl"] .hv2 .hv2-cc-t{letter-spacing:0}
+/* The reference's two heading lines are 112px tall together with the caps
+   almost touching — a ~66px face on a sub-1 line-height. Neither line has a
+   descender, so the tight leading is safe here. */
+.hv2 .hv2-cc-h{
+  color:#030817; font-size:3.79cqw; font-weight:700;
+  line-height:.98; letter-spacing:-.025em;
+  margin:1.98cqw 0 0;
+}
+.hv2-cc-rule{
+  display:block; width:3.39cqw; height:.20cqw;
+  margin-top:1.55cqw; border-radius:2px;
+  background:#0F5FD6;
+}
+.hv2-cc-lead{
+  color:#394158; font-size:1.18cqw; font-weight:500; line-height:1.8;
+  margin-top:1.67cqw;
+}
+.hv2 .hv2-cc-cta{
+  width:16.67cqw; height:3.62cqw; padding:0 1.55cqw;
+  margin-top:2.27cqw; border-radius:.66cqw;
+  font-size:1.01cqw; font-weight:700; gap:0;
+  justify-content:space-between; border:0;
+  background:linear-gradient(90deg,#0038D9 0%,#005BFF 100%);
+  box-shadow:0 13px 26px rgba(0,77,255,.24), 0 4px 9px rgba(0,50,190,.18);
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+/* Tajawal sits high in a flex-centred box — nudge to the optical centre. */
+.hv2-cc-cta > span{margin-top:.2cqw}
+.hv2-cc-cta svg{width:1.38cqw; height:1.38cqw; flex:0 0 auto}
+.hv2 .hv2-cc-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 17px 32px rgba(0,77,255,.30), 0 5px 11px rgba(0,50,190,.22);
+}
+[dir="rtl"] .hv2-cc-cta svg{scale:-1 1}
+
+/* ---------- 8 · Ecosystem hub — Learning / Support · Store / Registration ----
+   The mock's grid of connected panels: one shared container owns the border,
+   radius and clipping, and the cards are grid cells parted by a 14px white
+   gutter — no card has a surface, shadow or radius of its own.
+
+   Every number is measured off the client reference for each row (row 1:
+   2850x1116, cropped at the container's own edges; row 2: 2846x962, shot with
+   the row-1/row-2 gutter still in frame). Container 2836, gutter 14, cards
+   1411x886 on row 1 and 1411x875 on row 2 — the second row really is 11px
+   shorter. .hv2-hub-in is the query container, so a reference pixel is
+   value / 28.36 cqw and the composition holds at any width.
+
+   The product art is a soft-feathered patch of the mock (see
+   make-hub-art.py): the mock's own copy and chips are punched out of its
+   alpha, and the card's flat #F4F6FC field carries on underneath, so the
+   patch has no visible edge. The gaps BETWEEN the chip holes are left intact,
+   which is what keeps the laptop's screen edge showing through them. */
+
+.hv2-hub{
+  position:relative;
+  padding-block:clamp(20px,2.4vw,40px) clamp(28px,3.4vw,56px);
+  background:
+    radial-gradient(ellipse 40% 60% at 24% 6%, rgba(40,120,255,.08), rgba(40,120,255,0) 68%),
+    linear-gradient(180deg,#F7F9FE 0%,#F4F6FD 100%);
+}
+.hv2-hub-in{
+  position:relative;
+  width:min(100% - clamp(40px,10.742%,220px), 1828px);
+  margin-inline:auto;
+  container-type:inline-size;
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:18px;
+  overflow:hidden;                 /* the shared clip: cards square into it */
+  background:#fff;                 /* the gutter colour */
+  box-shadow:0 18px 46px rgba(10,40,90,.07);
+  /* Card box and the reference's gutter. */
+  --hub-ch:31.24cqw;   /* 886 — row 1 */
+  --hub-ch2:30.85cqw;  /* 875 — row 2 */
+  --hub-gap:.494cqw;   /* 14 */
+  --hub-pad:2.397cqw;  /* 68 — copy column inset from the card's edge */
+  --hub-hl:#D5E5FD;    /* the mock's marker highlight */
+  --hub-blue:#2B63DE;  /* sampled: eyebrow + rule */
+  --hub-ic:#2E6FE0;    /* sampled: chip icons */
+}
+.hv2-hub-grid{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:var(--hub-gap);
+  grid-template-rows:var(--hub-ch) var(--hub-ch2);
+}
+.hv2-hub-card{
+  position:relative; overflow:hidden;
+  /* The mock's field is all but flat — the blue lift under each product is
+     baked into the patch, so only the gutter bleed at the top is CSS. */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.75) 0%, rgba(255,255,255,0) 3.2%),
+    #F4F6FC;
+}
+
+/* --- copy column --- */
+.hv2-hub-copy{
+  position:absolute; z-index:3;
+  inset-inline-start:var(--hub-pad);
+  top:4.15cqw;                     /* eyebrow cap-top lands on y122 of the card */
+  width:25cqw;                     /* wide enough that the mock's own line
+                                      breaks (the <br>s) are the only breaks */
+}
+/* The pale marker bands are drawn as a background band on each line's span so
+   they hug the ink instead of joining into one block; --hlh/--hly place the
+   band inside the inline box, which padding alone cannot do. */
+.hv2-hub-hl{
+  background-image:linear-gradient(var(--hub-hl),var(--hub-hl));
+  background-repeat:no-repeat;
+  background-size:100% var(--hlh); background-position:0 var(--hly);
+  /* Inline vertical padding never moves a line box, so it is free headroom
+     for the band: Tajawal's content area is shorter than the mock's bands and
+     a background is clipped to the padding box. --hly then places the band
+     from the padding box's top. */
+  padding:var(--hlpad,1.2cqw) .28cqw; margin-inline:-.28cqw;
+  box-decoration-break:clone; -webkit-box-decoration-break:clone;
+}
+.hv2 .hv2-hub-eyebrow{
+  --hlh:1.375cqw; --hly:.86cqw;
+  color:var(--hub-blue); font-size:1.19cqw; font-weight:700;
+  letter-spacing:.02em; text-transform:uppercase; line-height:1.2;
+  margin:0;
+}
+[dir="rtl"] .hv2 .hv2-hub-eyebrow{letter-spacing:0; text-transform:none}
+.hv2 .hv2-hub-h{
+  --hlh:1.98cqw; --hly:1.00cqw;
+  color:#0D1B31; font-size:2.08cqw; font-weight:700;
+  line-height:1.187;               /* 72 between the two cap tops */
+  letter-spacing:-.025em;
+  margin:1.32cqw 0 0;
+}
+[dir="rtl"] .hv2 .hv2-hub-h{letter-spacing:0}
+.hv2-hub-rule{
+  display:block; width:2.12cqw; height:.141cqw;
+  margin:1.19cqw 0 0 .14cqw;       /* the mock aligns it to the ink, not the box */
+  border-radius:1px;
+  background:var(--hub-blue);
+}
+.hv2-hub-d{
+  --hlh:1.38cqw; --hly:1.20cqw;
+  color:#24354F; font-size:1.26cqw; font-weight:500;
+  line-height:1.485;               /* 53 between the two line tops */
+  letter-spacing:-.012em;
+  margin-top:1.71cqw;
+}
+
+/* --- CTA ---
+   Absolutely placed: the reference puts both buttons on the same y (684 from
+   the card top) regardless of how tall the copy above them runs. */
+.hv2 .hv2-hub-cta{
+  position:absolute; z-index:4;
+  inset-inline-start:var(--hub-pad); top:24.19cqw;
+  width:10.58cqw; height:2.96cqw; padding:0 .78cqw 0 1.23cqw;
+  border-radius:.494cqw; border:0; gap:0;
+  justify-content:space-between;
+  font-size:.95cqw; font-weight:700;
+  background:linear-gradient(180deg,#1A3FDB 0%,#1134BE 100%);
+  box-shadow:0 14px 30px rgba(21,60,225,.26), 0 4px 10px rgba(14,40,160,.16);
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+.hv2-hub-support .hv2-hub-cta{width:10.15cqw}
+/* Tajawal sits high in a flex-centred box — nudge to the optical centre. */
+.hv2-hub-cta > span{margin-top:.18cqw}
+.hv2-hub-cta svg{width:1.20cqw; height:1.20cqw; flex:0 0 auto}
+.hv2 .hv2-hub-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 36px rgba(21,60,225,.32), 0 5px 12px rgba(14,40,160,.20);
+}
+[dir="rtl"] .hv2-hub-cta svg{scale:-1 1}
+
+/* --- product art --- */
+.hv2-hub-art{
+  position:absolute; z-index:1; top:0; height:100%;
+  display:block; object-fit:fill; pointer-events:none;
+}
+.hv2-hub-art-learn{inset-inline-start:27.50%; width:61.16%}
+.hv2-hub-art-support{inset-inline-start:28.21%; width:48.05%}
+/* --- row 2: Store / Registration ---
+   Same copy block, rule, bands, type and CTA as row 1 — the reference confirms
+   it line for line (heading cap tops 72 apart, rule 58 under the last heading
+   baseline, body 61 under the rule, CTA 84 tall). Only three things move: the
+   block starts 15 reference px higher, the CTA sits 38 higher, and the card is
+   11 shorter. The two cards in the mock are 7px out of vertical step with each
+   other (its own inconsistency — the rule, body and CTA rows do line up), so
+   both take the Store card's numbers and read as one row. */
+.hv2-hub-act .hv2-hub-copy{top:3.62cqw}        /* eyebrow cap-top on y107 */
+.hv2 .hv2-hub-act .hv2-hub-cta{top:22.74cqw}   /* CTA top on y645 */
+.hv2 .hv2-hub-store .hv2-hub-cta{width:10.01cqw}  /* 284 */
+.hv2 .hv2-hub-reg .hv2-hub-cta{width:11.46cqw}    /* 325 */
+.hv2-hub-art-store{inset-inline-start:26.72%; width:73.28%}
+.hv2-hub-art-reg{inset-inline-start:29.12%; width:71.08%}
+/* In Arabic the whole composition mirrors. The laptop has to mirror with it —
+   the chip rail is pinned to its screen edge, and unmirrored that edge would
+   face away from the chips. The headset does NOT: its pedestal is centred, so
+   the mirrored placement reads fine on its own, and flipping it would reverse
+   the ODYX mark on the ear cup. Row 2's two patches stay unmirrored for the
+   same reason — the carton and the device both carry the mark. */
+[dir="rtl"] .hv2-hub-art-learn{scale:-1 1}
+
+/* --- feature chips ---
+   Each chip carries its own left/top/width (card %) because the mock steps
+   them left as they descend, following the laptop's perspective. */
+.hv2-hub-chips{list-style:none; margin:0; padding:0}
+.hv2-hub-chip{
+  position:absolute; z-index:2;
+  inset-inline-start:var(--l); top:var(--t);
+  width:var(--w); height:var(--h,9.93%);
+  display:flex; align-items:center; gap:.49cqw;
+  padding-inline:.78cqw;
+  border-radius:.63cqw;
+  /* Sampled off the mock: 87% white, which is why the chips over the laptop's
+     dark screen read grey while the ones on the field read white. The white
+     ring is the mock's own chip glow — it used to be baked into the art and is
+     now the DOM's job, since the art no longer carries the chips at all. */
+  background:rgba(255,255,255,.87);
+  backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
+  box-shadow:0 0 .95cqw .3cqw rgba(255,255,255,.5),
+    0 .28cqw .8cqw rgba(39,76,145,.07),
+    inset 0 0 0 1px rgba(222,232,248,.5);
+}
+.hv2-hub-support .hv2-hub-chip{--h:10.50%; padding-inline:1.10cqw; gap:.62cqw}
+.hv2-hub-chip-ic{display:grid; place-items:center; color:var(--hub-ic); flex:0 0 auto}
+.hv2-hub-chip-ic svg{width:1.85cqw; height:1.85cqw; display:block}
+.hv2-hub-chip-l{
+  color:#1B3050; font-size:1.05cqw; font-weight:500; line-height:1.2;
+  white-space:nowrap;
+  margin-top:.35cqw;               /* Tajawal sits high in a centred flex box */
+}
+
+/* ---------- Reveal motion ---------- */
+
+.hv2 .rv{opacity:0; transform:translateY(20px);
+  transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)}
+.hv2 .rv[data-rv="1"]{transition-delay:.08s}
+.hv2 .rv[data-rv="2"]{transition-delay:.16s}
+.hv2 .rv[data-rv="3"]{transition-delay:.24s}
+.hv2 .rv[data-rv="4"]{transition-delay:.32s}
+.hv2 .rv.rv-in{opacity:1; transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  .hv2 .rv{opacity:1; transform:none; transition:none}
+  .hv2-pcard{transition:none}
+  .hv2-ca-card,.hv2-ca-card::after,.hv2-ca-cbody,.hv2 .hv2-ca-cta{transition:none}
+  .hv2-cc-card,.hv2-cc-card::after,.hv2-cc-cbody,
+  .hv2 .hv2-cc-cta,.hv2 .hv2-cc-nav{transition:none}
+  .hv2 .hv2-hub-cta{transition:none}
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1100px){
+  .hv2-why{grid-template-columns:repeat(4,1fr); align-items:start}
+  .hv2-why-col{margin-top:0}
+  .hv2-why-intro{grid-column:1/-1; max-width:56em}
+  /* Columns reflow here, so the baked-in photo band no longer lines up
+     with the pillars — fade it way down and let the board hug its content. */
+  .hv2-why-glass{aspect-ratio:auto; background:rgba(255,255,255,.62)}
+  .hv2-why-glass::before{opacity:.22}
+}
+@media (max-width: 940px){
+  .hv2-hdr-nav{display:none}
+  .hv2-hdr-in{justify-content:space-between}
+}
+@media (max-width: 980px){
+  .hv2-hero-grid{grid-template-columns:1fr}
+  .hv2-orbit{height:min(80vw,400px); max-width:540px; margin-inline:auto; width:100%; transform:none}
+  .hv2-prod-grid{grid-template-columns:1fr}
+  /* Ecosystem: copy stacks above the art; the stage keeps its mock
+     aspect and scales every patch/node proportionally (cqw).
+     `relative` (not static) so the copy keeps painting above the
+     absolutely-positioned bg layer. */
+  .hv2-eco-copy{position:relative; inset-inline-start:0; top:0; width:auto; max-width:440px; padding:24px 22px 0}
+  .hv2-eco-stage{width:100%; margin-inline-start:0; margin-top:clamp(28px,7vw,48px)}
+  /* Stacked: the rail becomes a real scroller, so cards drop the mock's
+     unequal shares and take a fixed basis instead. */
+  .hv2-prod-grid{gap:clamp(20px,3.4vw,34px)}
+  .hv2-prod-intro .hv2-body{max-width:34em}
+  .hv2-pr-card{width:auto; margin-inline-end:0; flex:0 0 clamp(168px,23vw,210px)}
+  .hv2-rail{gap:16px}
+  .hv2-pr-title{--pr-title-scale:1}
+}
+@media (max-width: 760px){
+  .hv2-why{grid-template-columns:1fr 1fr}
+  /* Any visible side-card strip is mid-text at this width — single card,
+     arrows and dots carry the carousel on mobile. */
+  .hv2-pcard.is-side{display:none}
+  .hv2-nav-prev{inset-inline-start:4px}
+  .hv2-nav-next{inset-inline-end:4px}
+}
+/* Clinical applications: the mock's one-row composition only reads while the
+   copy column has room next to a card that is a third of the container. Below
+   that the copy returns to normal flow above a deck that keeps the same fan
+   but a much larger card share, and the rear slots drop off as they stop
+   contributing depth. */
+@media (max-width: 1080px){
+  .hv2-ca-in{
+    width:min(100% - 48px, 760px);
+    --ca-cw:74cqw; --ca-ch:63.7cqw; --ca-right:6cqw; --ca-r:3.1cqw;
+    --ca-dx:-11cqw;
+  }
+  .hv2-ca-copy{position:static; width:auto; max-width:34em; padding-top:6px}
+  .hv2 .hv2-ca-eyebrow{font-size:12.5px; letter-spacing:.06em}
+  .hv2 .hv2-ca-h{font-size:clamp(28px,4.6vw,40px); margin-top:14px}
+  .hv2-ca-rule{width:52px; height:4px; margin-top:16px}
+  .hv2-ca-lead{font-size:clamp(15px,1.9vw,17px); margin-top:16px}
+  .hv2 .hv2-ca-cta{
+    width:auto; height:52px; padding:0 20px; gap:18px;
+    margin-top:22px; border-radius:11px; font-size:15.5px;
+  }
+  .hv2-ca-cta svg{width:22px; height:22px}
+  .hv2-ca-stage{margin-block:clamp(24px,4vw,38px) clamp(26px,4vw,44px)}
+  .hv2 .hv2-ca-nav{width:46px; height:46px; top:50%}
+  .hv2 .hv2-ca-nav svg{width:19px; height:19px}
+  .hv2-ca-nav-prev{inset-inline-start:10cqw}
+  .hv2-ca-nav-next{inset-inline-start:97cqw}
+  .hv2-ca-cbody{padding-inline-start:5.4cqw; padding-top:19cqw}
+  .hv2-ca-ic svg{width:5.2cqw; height:6cqw}
+  .hv2 .hv2-ca-t{font-size:3.5cqw; margin-top:4.2cqw}
+  .hv2-ca-t-rule{width:6.4cqw; height:.45cqw; margin-top:2.1cqw}
+  .hv2-ca-d{font-size:2.2cqw; margin-top:4.6cqw; width:27cqw}
+}
+@media (max-width: 700px){
+  /* Two peeks is all the width supports; the rest would be slivers. Card
+     turns portrait so the copy block still fits at a readable size. */
+  .hv2-ca-card[data-slot="3"],.hv2-ca-card[data-slot="4"]{display:none}
+  .hv2-ca-in{--ca-cw:80cqw; --ca-ch:86cqw; --ca-right:5cqw; --ca-r:4cqw; --ca-dx:-8cqw}
+  .hv2-ca-nav-prev{inset-inline-start:11cqw}
+  .hv2-ca-nav-next{inset-inline-start:96cqw}
+  .hv2 .hv2-ca-nav{width:42px; height:42px}
+  .hv2 .hv2-ca-nav svg{width:17px; height:17px}
+  .hv2 .hv2-ca-cta{width:100%; justify-content:space-between}
+  .hv2-ca-cbody{padding-inline-start:7cqw; padding-top:20cqw}
+  .hv2-ca-ic svg{width:7.4cqw; height:8.5cqw}
+  .hv2 .hv2-ca-t{font-size:5.4cqw; margin-top:5cqw}
+  .hv2-ca-t-rule{width:9cqw; height:.62cqw; margin-top:3cqw}
+  .hv2-ca-d{font-size:3.8cqw; margin-top:4.6cqw; width:60cqw}
+}
+/* Clinical cases: same reasoning as section 6 — the side-by-side reference only
+   reads while the copy column has room beside a card that is well under half
+   the container. Below that the deck takes a much larger card share, the copy
+   returns to normal flow beneath it, and the fan tightens so the rear strips
+   stay visible without pushing the active card off-stage. */
+@media (max-width: 1120px){
+  .hv2-cc-in{
+    width:min(100% - 48px, 760px);
+    /* dx is set so the fan (3x on slot 0) plus the card lands on 99cqw — the
+       widest step the stage can hold, which keeps the rear strips readable
+       instead of the ~20px slivers a desktop-scale step would leave. */
+    --cc-cw:80cqw; --cc-ch:60.75cqw; --cc-r:3.1cqw; --cc-dx:6.4cqw;
+  }
+  .hv2-cc-stage{margin-block:clamp(20px,3.4vw,34px) clamp(26px,4vw,42px)}
+  /* Perspective at this share would swing the right edge off the container. */
+  .hv2-cc-card[data-slot="0"]{transform:translateX(calc(var(--cc-dx) * 3)) rotateY(0deg)}
+  [dir="rtl"] .hv2-cc-card[data-slot="0"]{transform:translateX(calc(var(--cc-dx) * -3)) rotateY(0deg)}
+  /* Straddle the active card's own edges (19.2cqw and 99.2cqw). */
+  .hv2-cc-nav-prev{inset-inline-start:19.2cqw}
+  .hv2-cc-nav-next{inset-inline-start:96cqw}
+  .hv2 .hv2-cc-nav{width:48px; height:48px}
+  .hv2 .hv2-cc-nav svg{width:19px; height:19px}
+  .hv2-cc-cbody{padding-inline-start:6cqw; padding-top:6cqw}
+  .hv2-cc-ic svg{width:5.2cqw; height:7.8cqw}
+  .hv2 .hv2-cc-t{font-size:3.6cqw; margin-top:2.8cqw}
+  .hv2-cc-t-rule{width:6.8cqw; height:.48cqw; margin-top:2.6cqw}
+  .hv2-cc-d{font-size:2.2cqw; margin-top:3cqw; width:29cqw}
+
+  .hv2-cc-copy{position:static; width:auto; max-width:34em; padding-bottom:6px}
+  .hv2 .hv2-cc-eyebrow{font-size:12.5px; letter-spacing:.06em}
+  .hv2 .hv2-cc-h{font-size:clamp(28px,4.6vw,40px); margin-top:14px}
+  .hv2-cc-rule{width:52px; height:4px; margin-top:16px}
+  .hv2-cc-lead{font-size:clamp(15px,1.9vw,17px); margin-top:16px}
+  .hv2-cc-lead br{display:none}
+  .hv2 .hv2-cc-cta{
+    width:auto; height:52px; padding:0 20px; gap:18px;
+    margin-top:22px; border-radius:11px; font-size:15.5px;
+  }
+  .hv2-cc-cta svg{width:22px; height:22px}
+}
+@media (max-width: 700px){
+  /* Two peeks is all the width supports; a third would be a sliver. Card turns
+     closer to square so the overlay copy still fits at a readable size. */
+  .hv2-cc-card[data-slot="3"]{display:none}
+  /* 82x68 keeps the card near the art's own ratio, so object-fit trims ~11%
+     total off the sides rather than cutting into the subject. */
+  .hv2-cc-in{--cc-cw:82cqw; --cc-ch:68cqw; --cc-r:4cqw; --cc-dx:5.8cqw}
+  .hv2-cc-nav-prev{inset-inline-start:17.4cqw}
+  .hv2-cc-nav-next{inset-inline-start:96cqw}
+  .hv2 .hv2-cc-nav{width:42px; height:42px}
+  .hv2 .hv2-cc-nav svg{width:17px; height:17px}
+  .hv2-cc-cbody{padding-inline-start:7.5cqw; padding-top:8cqw}
+  .hv2-cc-ic svg{width:7cqw; height:10.5cqw}
+  .hv2 .hv2-cc-t{font-size:5.2cqw; margin-top:3.6cqw}
+  .hv2-cc-t-rule{width:9cqw; height:.62cqw; margin-top:3.2cqw}
+  .hv2-cc-d{font-size:3.5cqw; margin-top:3.6cqw; width:55cqw}
+  /* The card is too narrow here for a left-third wash to clear the copy — the
+     description reaches ~76% across. Darken the whole frame instead, keeping
+     enough falloff that the crowns still read. */
+  .hv2-cc-card[data-slot="0"] .hv2-cc-scrim{
+    background:
+      linear-gradient(0deg, rgba(4,12,36,.55) 0%, rgba(4,12,36,.12) 34%, rgba(4,12,36,0) 56%),
+      linear-gradient(90deg, rgba(3,10,26,.94) 0%, rgba(3,10,26,.84) 46%, rgba(3,10,26,.55) 74%, rgba(3,10,26,.28) 100%);
+  }
+  [dir="rtl"] .hv2-cc-card[data-slot="0"] .hv2-cc-scrim{
+    background:
+      linear-gradient(0deg, rgba(4,12,36,.55) 0%, rgba(4,12,36,.12) 34%, rgba(4,12,36,0) 56%),
+      linear-gradient(270deg, rgba(3,10,26,.94) 0%, rgba(3,10,26,.84) 46%, rgba(3,10,26,.55) 74%, rgba(3,10,26,.28) 100%);
+  }
+  .hv2 .hv2-cc-cta{width:100%; justify-content:space-between}
+}
+/* Ecosystem hub: the mock's side-by-side composition (copy | product | chip
+   rail) needs three columns of room inside one card. Below that the cards
+   stack, the copy returns to normal flow, the chips become a wrap row under it
+   and the product moves to the lower right of the card — same hierarchy, no
+   overlap. Type leaves cqw here: at a 760px container the reference ratios
+   would render a 16px headline. */
+@media (max-width: 1360px){
+  .hv2-hub{padding-block:clamp(16px,2.6vw,30px) clamp(24px,4vw,44px)}
+  .hv2-hub-in{width:min(100% - 64px, 1360px); border-radius:16px; --hub-col:min(60%, 34em)}
+  .hv2-hub-grid{grid-template-rows:auto; gap:8px}
+  .hv2-hub-card{
+    min-height:560px;
+    padding:clamp(26px,4.4vw,36px) clamp(24px,4vw,34px) clamp(22px,3.4vw,30px);
+    display:flex; flex-direction:column; align-items:flex-start;
+  }
+  /* Bands hug the line box at these sizes — the reference's exact band
+     geometry is a desktop-only concern. */
+  .hv2-hub-hl{
+    --hlpad:.14em;
+    background-size:100% 100%; background-position:0 0;
+    padding-inline:.22em; margin-inline:-.22em;
+  }
+  /* DOM order already reads copy / chips / CTA / art — on desktop the paint
+     order comes from z-index, not the source, so nothing has to be reordered
+     here. */
+  .hv2-hub-copy{position:static; width:auto; max-width:var(--hub-col)}
+  .hv2-hub-chips{width:100%; max-width:var(--hub-col)}
+  .hv2 .hv2-hub-eyebrow{font-size:12.5px; letter-spacing:.06em}
+  .hv2 .hv2-hub-h{font-size:clamp(22px,2.3vw,32px); line-height:1.16; margin-top:14px}
+  .hv2-hub-rule{width:52px; height:4px; margin:16px 0 0}
+  .hv2-hub-d{font-size:clamp(15px,1.9vw,17.5px); line-height:1.6; margin-top:16px; letter-spacing:0}
+  /* Chips: a wrap row in flow, sized by their label. */
+  .hv2-hub-chips{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-top:clamp(18px,2.6vw,26px);
+  }
+  .hv2-hub-chip{
+    position:static; width:auto; height:auto; min-height:52px;
+    padding-inline:15px; gap:11px; border-radius:12px;
+  }
+  .hv2-hub-support .hv2-hub-chip{padding-inline:15px; gap:11px}
+  .hv2-hub-chip-ic svg{width:22px; height:22px}
+  .hv2-hub-chip-l{font-size:14.5px; margin-top:1px}
+  .hv2 .hv2-hub-cta{
+    position:static; width:auto; height:52px; padding:0 20px; gap:18px;
+    margin-top:clamp(20px,3vw,26px); border-radius:11px; font-size:15.5px;
+  }
+  .hv2-hub-cta > span{margin-top:1px}
+  .hv2-hub-cta svg{width:22px; height:22px}
+  /* Product sits in the card's lower right, clear of the copy column. */
+  .hv2-hub-art{
+    position:absolute; top:auto; bottom:0; height:auto;
+    inset-inline-start:auto; inset-inline-end:-2%;
+    width:54%; max-width:360px;
+  }
+  .hv2-hub-art-learn,.hv2-hub-art-support{inset-inline-start:auto; width:54%}
+  /* Row 2: the copy block goes back into flow with everything else, so its
+     desktop offsets have to be dropped or they'd push it off the card. Its
+     patches are landscape (1034x875, 1003x875) where row 1's are portrait, so
+     they take a wider share to keep the products at a comparable size. */
+  .hv2-hub-act .hv2-hub-copy{top:auto}
+  .hv2 .hv2-hub-act .hv2-hub-cta{top:auto}
+  .hv2 .hv2-hub-store .hv2-hub-cta,.hv2 .hv2-hub-reg .hv2-hub-cta{width:auto}
+  .hv2-hub-art-store,.hv2-hub-art-reg{inset-inline-start:auto; width:62%; max-width:430px}
+}
+/* One column once a card can no longer hold the copy beside the product. */
+@media (max-width: 1180px){
+  .hv2-hub-in{width:min(100% - 48px, 760px)}
+  .hv2-hub-grid{grid-template-columns:1fr}
+  .hv2 .hv2-hub-h{font-size:clamp(26px,4.2vw,36px)}
+  .hv2-hub-in{--hub-col:min(62%, 34em)}
+  .hv2-hub-art{width:58%; max-width:420px}
+  .hv2-hub-art-learn,.hv2-hub-art-support{width:58%}
+  .hv2-hub-art-store,.hv2-hub-art-reg{width:66%; max-width:500px}
+}
+@media (max-width: 760px){
+  /* Nothing sits beside the copy any more, so it takes the full card and the
+     mock's two heading lines stay two lines. */
+  .hv2-hub-in{--hub-col:min(100%, 34em)}
+  .hv2-hub-card{min-height:0; padding-bottom:0}
+  /* No room beside the copy any more — the product becomes the card's foot. */
+  .hv2-hub-art{
+    position:relative; inset:auto; align-self:flex-end;
+    width:min(100%, 380px); max-width:none;
+    margin-top:clamp(14px,3vw,24px); margin-inline-end:-4%;
+  }
+  .hv2-hub-art-learn,.hv2-hub-art-support{width:min(100%, 380px)}
+  .hv2-hub-art-store,.hv2-hub-art-reg{width:min(104%, 470px)}
+  .hv2-hub-chip{min-height:48px; padding-inline:13px; gap:9px}
+  .hv2-hub-chip-l{font-size:13.5px}
+}
+@media (max-width: 560px){
+  .hv2-why{grid-template-columns:1fr}
+  /* At phone widths the min label/icon sizes outgrow the proportional
+     stage — give the bottom row room so nothing clips. */
+  .hv2-eco{padding-bottom:26px}
+}
