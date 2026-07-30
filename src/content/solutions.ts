@@ -40,9 +40,9 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         img: "/img/feat-scanner.jpg",
       },
       {
-        name: "Design Software",
-        href: "/products/design",
-        why: "Design crowns and guides in-house",
+        name: "Design Services",
+        href: "/design-services",
+        why: "On-demand dental CAD design",
         img: "/img/odyx/design.webp",
       },
       {
@@ -99,8 +99,8 @@ export const SOLUTION_PATHS: SolutionPath[] = [
     ],
     recommendedProducts: [
       {
-        name: "Design Software",
-        href: "/products/design",
+        name: "Design Services",
+        href: "/design-services",
         why: "Batch design and nesting",
         img: "/img/odyx/design.webp",
       },

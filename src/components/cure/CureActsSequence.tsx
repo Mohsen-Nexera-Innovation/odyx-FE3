@@ -23,7 +23,7 @@ const ACTS = [
     title: 'Light reaches every surface.',
     body:
       'Inside the UV-02, 360° coverage and wavelengths matched to the resin complete polymerization — until the part is fully hardened.',
-    img: '/img/cure-uv02/act-cure.jpg',
+    img: '/img/cure-uv02/act-cure.png',
     alt: 'Cured crowns glowing orange on the curing plate inside the chamber',
   },
 ] as const;

@@ -172,12 +172,12 @@ export const PRODUCTS: ProductContent[] = [
     // This entry feeds nav/overview/shop surfaces; every value below traces to
     // knowledge_base/ODYX Products - 18.7.26.pdf via screens/036 content.md §7.
     slug: "3d-printers",
-    name: "ODYX P1-26 & HALOT-X1",
+    name: "ODYX P1-26",
     category: "3D Printers",
     layout: "cinematic",
-    tagline: "Two printers, two jobs — definitive work and volume.",
+    tagline: "The dental printer — for the work that goes in the mouth.",
     overview:
-      "Two ODYX dental 3D printers, sorted by what you print: the P1-26 for the definitive work that goes in the mouth, the HALOT-X1 for the models and appliances that support it. Both are open-material 405 nm LCD systems.",
+      "The ODYX P1-26 dental 3D printer: 18 µm X-Y accuracy on a 6.8″ 9K monochrome LCD, for definitive restorations, models and appliances. Open-material 405 nm system.",
     img: "/img/feat-printer.jpg",
     heroImg: "/img/cutouts/feat-printer-cutout.png",
     accent: "orange",
@@ -191,13 +191,12 @@ export const PRODUCTS: ProductContent[] = [
     ],
     models: [
       { name: "ODYX P1-26", tagline: "The dental printer — for the work that goes in the mouth", shopProductId: "printer-p1-26" },
-      { name: "ODYX HALOT-X1", tagline: "The volume printer — for everything that supports the case" },
     ],
     specs: [
       { label: "Technology", value: "405 nm monochrome LCD" },
-      { label: "X-Y accuracy (P1-26)", value: "18 µm" },
-      { label: "Build volume (P1-26)", value: "153 × 77 × 160 mm" },
-      { label: "Build volume (HALOT-X1)", value: "211.68 × 118.37 × 200 mm" },
+      { label: "X-Y accuracy", value: "18 µm" },
+      { label: "Build volume", value: "153 × 77 × 160 mm" },
+      { label: "Max print speed", value: "60 mm/h" },
       { label: "Materials", value: "Open material system" },
       { label: "Connectivity", value: "USB / WiFi, cloud printing" },
     ],
@@ -216,17 +215,77 @@ export const PRODUCTS: ProductContent[] = [
       {
         value: "18µm",
         label: "X-Y accuracy",
-        desc: "P1-26 precision for definitive restorations.",
+        desc: "Precision for definitive restorations.",
       },
       {
-        value: "2",
-        label: "Printers, two jobs",
-        desc: "P1-26 for definitive work, HALOT-X1 for volume.",
+        value: "9K",
+        label: "6.8″ LCD",
+        desc: "8520 × 4320 px monochrome screen.",
       },
       {
-        value: "16K",
-        label: "HALOT-X1 LCD",
-        desc: "10.1″ screen over a 211.68 × 118.37 mm plate.",
+        value: "6.6 kg",
+        label: "Operatory footprint",
+        desc: "221 × 221 × 404 mm — clinic, not just lab.",
+      },
+    ],
+  },
+  {
+    // Dedicated P1-26 marketing page (P126Page) — attached UI implementation.
+    slug: "odyx-p1-26",
+    name: "ODYX P1-26",
+    category: "3D Printers",
+    layout: "cinematic",
+    tagline: "Precision Printing. Better Dentistry.",
+    overview:
+      "Ultra-high precision resin printing engineered for definitive dental work — 18 µm X-Y accuracy on a 6.8″ 9K LCD with an open material workflow.",
+    img: "/img/printers/p126/hero-packshot.png",
+    heroImg: "/img/cutouts/feat-printer-cutout.png",
+    accent: "orange",
+    workflowStep: "print",
+    applications: [
+      "Crowns & bridges",
+      "Surgical guides",
+      "Dentures",
+      "Models",
+      "Splints & night guards",
+      "Temporary restorations",
+    ],
+    models: [
+      { name: "ODYX P1-26", tagline: "The dental printer — for the work that goes in the mouth", shopProductId: "printer-p1-26" },
+    ],
+    specs: [
+      { label: "Printing Technology", value: "405 nm monochrome LCD" },
+      { label: "XY Resolution", value: "18 µm" },
+      { label: "Build Volume", value: "153 × 77 × 160 mm" },
+      { label: "Max Print Speed", value: "60 mm/h" },
+      { label: "Layer Thickness", value: "0.01 – 0.1 mm" },
+      { label: "Screen", value: "6.8″ 9K monochrome LCD" },
+    ],
+    downloads: [
+      { name: "Datasheets — available on request", type: "PDF", href: "/support" },
+      { name: "Setup & calibration", type: "PDF", href: "/support#manuals" },
+    ],
+    benefits: [
+      "18 µm X-Y accuracy",
+      "Open material system",
+      "Clinic-ready footprint",
+      "ACF release film",
+    ],
+    stats: [
+      {
+        value: "18µm",
+        label: "X-Y accuracy",
+        desc: "Precision for definitive restorations.",
+      },
+      {
+        value: "9K",
+        label: "6.8″ LCD",
+        desc: "8520 × 4320 monochrome screen.",
+      },
+      {
+        value: "60",
+        label: "mm/h",
+        desc: "Quoted max print speed.",
       },
     ],
   },
@@ -238,8 +297,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Controlled light, heat, and time — the last clinical step.",
     overview:
       "ODYX Cure UV-02 applies validated light dose, regulated heat, and material-specific cycles so clinic and lab teams get consistent biocompatible outcomes without guesswork.",
-    img: "/img/feat-curing.jpg",
-    heroImg: "/img/cure-stitch/machine-hero-cutout.png",
+    img: "/img/uw03/hero-packshot.png",
+    heroImg: "/img/uw03/hero-packshot.png",
     accent: "teal",
     workflowStep: "cure",
     applications: [
@@ -297,8 +356,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Powerful Curing. Perfect Results.",
     overview:
       "The precision cure box for dental 3D printing: triple-wavelength UV light, 360° coverage, and validated timing for every application in the ODYX range.",
-    img: "/img/feat-curing.jpg",
-    heroImg: "/img/cure-stitch/odyx-cure-chamber-glow.png",
+    img: "/img/cure-uv02/hero-packshot.png",
+    heroImg: "/img/cure-uv02/hero-packshot.png",
     accent: "orange",
     workflowStep: "cure",
     applications: [

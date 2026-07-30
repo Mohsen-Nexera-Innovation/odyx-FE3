@@ -37,35 +37,8 @@ const HOME_SHOP_CARDS = [
   },
 ] as const;
 
-const PathUpArrow = ({ s = 22 }: { s?: number }) => (
-  <svg
-    width={s}
-    height={s}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 19V5" />
-    <path d="M7 10l5-5 5 5" />
-  </svg>
-);
-
-const PathLane = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => (
-  <div className="path-lane">
-    <div className="path-guide" aria-hidden="true">
-      <span className="path-guide-head">
-        <PathUpArrow />
-      </span>
-    </div>
-    {children}
-  </div>
+const PathLane = ({ children }: { children: React.ReactNode }) => (
+  <div className="path-lane">{children}</div>
 );
 
 const Arrow = ({ s = 16 }: { s?: number }) => (
@@ -288,97 +261,113 @@ export default function Home() {
           <div className="path-stage m-fan">
             {/* Dentist */}
             <PathLane>
-            <a href="/solutions/dentists" className="pcard teal">
-              <div className="pcard-art">
-                <img
-                  className="pimg parallax"
-                  src="/img/paths/dentist.jpg"
-                  alt="Dentist using a chairside scanner"
-                />
-                <span className="scrim2" />
-              </div>
-              <div className="pcard-body">
-                <div className="ic">
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden
-                  >
-                    <path d="M7.5 3.2C5.4 3.2 3.8 4.9 3.8 7c0 1.4.4 2.5.9 4 .5 1.4.7 2.8.9 4.6.2 1.5.4 3 1.3 3 .9 0 1.1-1.4 1.4-2.7.2-1.2.5-2.3 1.2-2.3s1 1.1 1.2 2.3c.3 1.3.5 2.7 1.4 2.7.9 0 1.1-1.5 1.3-3 .2-1.8.4-3.2.9-4.6.5-1.5.9-2.6.9-4 0-2.1-1.6-3.8-3.7-3.8-1.2 0-2 .6-2.6.6s-1.4-.6-2.6-.6Z" />
-                  </svg>
+              <a href="/solutions/dentists" className="pcard teal">
+                <div className="pcard-art">
+                  <img
+                    className="pimg parallax"
+                    src="/img/paths/dentist.jpg"
+                    alt="Dentist using a chairside scanner"
+                  />
+                  <span className="scrim2" />
                 </div>
-                <h3>Dentist</h3>
-                <p>Same-day chairside digital dentistry.</p>
-                <span className="more">
-                  Enter clinic journey <Arrow />
-                </span>
-              </div>
-            </a>
+                <div className="pcard-body">
+                  <div className="ic" aria-hidden="true">
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <path d="M7.5 3.2C5.4 3.2 3.8 4.9 3.8 7c0 1.4.4 2.5.9 4 .5 1.4.7 2.8.9 4.6.2 1.5.4 3 1.3 3 .9 0 1.1-1.4 1.4-2.7.2-1.2.5-2.3 1.2-2.3s1 1.1 1.2 2.3c.3 1.3.5 2.7 1.4 2.7.9 0 1.1-1.5 1.3-3 .2-1.8.4-3.2.9-4.6.5-1.5.9-2.6.9-4 0-2.1-1.6-3.8-3.7-3.8-1.2 0-2 .6-2.6.6s-1.4-.6-2.6-.6Z" />
+                    </svg>
+                  </div>
+                  <h3>Dentist</h3>
+                  <p>Same-day chairside digital dentistry.</p>
+                  <ul className="pcard-tags">
+                    <li>Same-day restorations</li>
+                    <li>Chairside scan</li>
+                  </ul>
+                  <span className="more">
+                    Enter clinic journey <Arrow />
+                  </span>
+                </div>
+              </a>
             </PathLane>
 
-            {/* Lab Technician */}
+            {/* Lab */}
             <PathLane>
-            <a href="/solutions/labs" className="pcard">
-              <div className="pcard-art">
-                <img
-                  className="pimg parallax"
-                  src="/img/paths/lab.jpg"
-                  alt="Dental lab production equipment"
-                />
-                <span className="scrim2" />
-              </div>
-              <div className="pcard-body">
-                <div className="ic">{I.labprint}</div>
-                <h3>Lab</h3>
-                <p>High-volume digital production for labs.</p>
-                <span className="more">
-                  Enter lab journey <Arrow />
-                </span>
-              </div>
-            </a>
+              <a href="/solutions/labs" className="pcard">
+                <div className="pcard-art">
+                  <img
+                    className="pimg parallax"
+                    src="/img/paths/lab.jpg"
+                    alt="Dental lab production equipment"
+                  />
+                  <span className="scrim2" />
+                </div>
+                <div className="pcard-body">
+                  <div className="ic" aria-hidden="true">
+                    {I.labprint}
+                  </div>
+                  <h3>Lab</h3>
+                  <p>High-volume digital production for labs.</p>
+                  <ul className="pcard-tags">
+                    <li>Batch printing</li>
+                    <li>CAD/CAM ready</li>
+                  </ul>
+                  <span className="more">
+                    Enter lab journey <Arrow />
+                  </span>
+                </div>
+              </a>
             </PathLane>
 
-            {/* Guest */}
+            {/* Distributor */}
             <PathLane>
-            <a href="/workflows" className="pcard teal">
-              <div className="pcard-art">
-                <img
-                  className="pimg parallax"
-                  src="/img/paths/guest.jpg"
-                  alt="Digital dentistry on screen"
-                />
-                <span className="scrim2" />
-              </div>
-              <div className="pcard-body">
-                <div className="ic">
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M3 12h18" />
-                    <path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9Z" />
-                  </svg>
+              <a href="/support#contact" className="pcard teal">
+                <div className="pcard-art">
+                  <img
+                    className="pimg parallax"
+                    src="/img/paths/guest.jpg"
+                    alt="ODYX partnership and distribution"
+                  />
+                  <span className="scrim2" />
                 </div>
-                <h3>Guest</h3>
-                <p>Explore the ODYX ecosystem freely.</p>
-                <span className="more">
-                  Explore freely <Arrow />
-                </span>
-              </div>
-            </a>
+                <div className="pcard-body">
+                  <div className="ic" aria-hidden="true">
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <path d="M3 9h18v11H3z" />
+                      <path d="M3 9l2.5-4h13L21 9" />
+                      <path d="M8 13h8" />
+                      <path d="M8 17h5" />
+                    </svg>
+                  </div>
+                  <h3>Distributor</h3>
+                  <p>Partner across Egypt and the MENA region.</p>
+                  <ul className="pcard-tags">
+                    <li>Regional coverage</li>
+                    <li>Sales support</li>
+                  </ul>
+                  <span className="more">
+                    Talk to partnerships <Arrow />
+                  </span>
+                </div>
+              </a>
             </PathLane>
           </div>
         </div>

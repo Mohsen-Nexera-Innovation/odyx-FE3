@@ -4,9 +4,6 @@ import IndicationRouter from '@/components/printers/IndicationRouter';
 import SpecTabs from '@/components/printers/SpecTabs';
 import {
   DOWNLOADS,
-  HALOT_HONEST_LINE,
-  HALOT_VIDEO,
-  HALOT_X1,
   HERO,
   MODELS_INTRO,
   ODYX_CHANGED,
@@ -166,7 +163,7 @@ export default function PrintersFamilyPage() {
         </div>
       </section>
 
-      {/* 3 · The two printers */}
+      {/* 3 · The printer */}
       <section className="pf-sec pf-sec--tint" id="models">
         <div className="pf-wrap">
           <SectionHead title={MODELS_INTRO.title} />
@@ -212,39 +209,6 @@ export default function PrintersFamilyPage() {
               </div>
             </div>
           </article>
-
-          <article className="pf-card pf-model pf-model--halot" id="halot-x1">
-            <div className="pf-model-media pf-model-media--stack reveal">
-              <img src={HALOT_X1.img} alt={HALOT_X1.imgAlt} width={1000} height={1000} loading="lazy" />
-              <figure className="pf-video pf-video--flush" aria-label={HALOT_VIDEO.posterAlt}>
-                <img src={HALOT_VIDEO.poster} alt={HALOT_VIDEO.posterAlt} loading="lazy" />
-                <button type="button" className="pf-video-play" aria-label="Play video">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                    <path d="M8.5 5.8v12.4c0 .8.9 1.3 1.6.9l10-6.2c.7-.4.7-1.4 0-1.8l-10-6.2c-.7-.4-1.6.1-1.6.9z" />
-                  </svg>
-                </button>
-                <figcaption className="pf-video-tag">{HALOT_VIDEO.caption}</figcaption>
-              </figure>
-            </div>
-            <div className="pf-model-copy">
-              <div className="pf-model-label reveal">{HALOT_X1.label}</div>
-              <h3 className="reveal">{HALOT_X1.name}</h3>
-              <p className="pf-model-headline reveal">{HALOT_X1.headline}</p>
-              <p className="pf-model-body reveal">{HALOT_X1.body}</p>
-              <SpecPull items={HALOT_X1.specPull} />
-              <ModelGallery model={HALOT_X1} />
-              <div className="pf-honest reveal">
-                <p>{HALOT_HONEST_LINE.body}</p>
-                <p>
-                  <b>Suitable for</b> {HALOT_HONEST_LINE.suitable}
-                </p>
-                <p>
-                  <b>Not recommended for</b> {HALOT_HONEST_LINE.notRecommended}
-                </p>
-              </div>
-              <p className="pf-micro reveal">{HALOT_HONEST_LINE.microcopy}</p>
-            </div>
-          </article>
         </div>
       </section>
 
@@ -284,7 +248,7 @@ export default function PrintersFamilyPage() {
         <div className="pf-wrap">
           <SectionHead title={SPECS_SECTION.title} />
           <div className="pf-card pf-card--pad reveal">
-            <SpecTabs models={[P1_26, HALOT_X1]} />
+            <SpecTabs models={[P1_26]} />
           </div>
         </div>
       </section>
@@ -300,15 +264,13 @@ export default function PrintersFamilyPage() {
                   <tr>
                     <th>Part</th>
                     <th>ODYX P1-26</th>
-                    <th>ODYX HALOT-X1</th>
                   </tr>
                 </thead>
                 <tbody>
                   {RUNNING_COSTS.rows.map((row) => (
                     <tr key={row.part}>
                       <td>{row.part}</td>
-                      <td>{row.p126}</td>
-                      <td>{row.halot}</td>
+                      <td>{row.value}</td>
                     </tr>
                   ))}
                 </tbody>

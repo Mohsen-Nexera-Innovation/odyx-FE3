@@ -19,7 +19,7 @@ export interface PrinterSpecRow {
 }
 
 export interface PrinterModel {
-  id: 'p1-26' | 'halot-x1';
+  id: 'p1-26';
   name: string;
   label: string;
   headline: string;
@@ -69,7 +69,7 @@ export interface IndicationRow {
 }
 
 export interface TechFeature {
-  model: 'P1-26' | 'HALOT-X1';
+  model: 'P1-26';
   title: string;
   line: string;
   img: string;
@@ -77,17 +77,19 @@ export interface TechFeature {
 }
 
 export const PRINTERS_META = {
-  title: 'Dental 3D Printers — ODYX P1-26 & HALOT-X1',
+  title: 'Dental 3D Printer — ODYX P1-26',
   description:
-    'Two ODYX dental 3D printers, sorted by what you print: the P1-26 for definitive restorations, the HALOT-X1 for models and appliances.',
+    'The ODYX P1-26 dental 3D printer — 18 µm X-Y accuracy for definitive restorations, models and appliances. Open-material 405 nm LCD.',
 };
 
 export const HERO = {
   eyebrow: 'STEP 3 OF 5 · PRINT',
-  headline: 'Dental 3D printers that finish what the scan started.',
+  headline: 'The dental 3D printer that finishes what the scan started.',
+  sub:
+    'The ODYX P1-26 prints the definitive work that goes in the mouth — crowns, bridges, guides and models — on an open-material 405 nm LCD system.',
   primaryCta: { label: 'Request a demo', href: '/support' },
   secondaryCta: { label: 'Download the datasheet', href: '#downloads' },
-  chipsLabel: 'Common to both printers',
+  chipsLabel: 'Built into the P1-26',
   chips: [
     '405 nm LCD light engine',
     'Open material system',
@@ -95,8 +97,8 @@ export const HERO = {
     'Wash & cure on one bench',
     'Cure times per application',
   ],
-  img: '/img/printers/p1-26-hero.jpg',
-  imgAlt: 'ODYX P1-26 resin 3D printer on a bench',
+  img: '/img/cutouts/feat-printer-cutout.png',
+  imgAlt: 'ODYX P1-26 resin 3D printer',
 };
 
 export const WHY_IN_HOUSE = {
@@ -119,8 +121,8 @@ export const WHY_IN_HOUSE = {
       img: '/img/printers/lab-scene.jpg',
       imgAlt: 'Lab printer with a build plate fully loaded with printed arches, crowns and splints',
       points: [
-        'The plate is the unit of economics — 211.68 × 118.37 × 200 mm',
-        'Up to 170 mm/h at a 0.20 mm layer changes what a night shift produces',
+        '153 × 77 × 160 mm plate — crowns, bridges, guides and models on one machine',
+        'Up to 60 mm/h with layers from 0.01 to 0.1 mm',
         'Open material — the catalog’s phrase: “keeps ongoing resin cost flexible”',
         'Cost per unit stays something you negotiate, not something you inherit',
       ],
@@ -129,9 +131,9 @@ export const WHY_IN_HOUSE = {
 };
 
 export const MODELS_INTRO = {
-  title: 'The two printers',
+  title: 'The ODYX P1-26',
   intro:
-    'Two printers. Not two tiers. They are built for different work, and the honest way to choose between them is to start from the thing you are making.',
+    'Engineered for the work that goes in the mouth — and for the models and appliances that support it.',
 };
 
 export const P1_26: PrinterModel = {
@@ -187,55 +189,6 @@ export const P1_26_RESINS = {
     'What a printed part is cleared for is a property of the resin, not the machine. Certification is stated per resin line.',
 };
 
-export const HALOT_X1: PrinterModel = {
-  id: 'halot-x1',
-  name: 'ODYX HALOT-X1',
-  label: 'THE VOLUME PRINTER',
-  headline: 'For everything that supports the case.',
-  body: 'A 10.1" 16K monochrome LCD at 15120 × 6230 px over a 211.68 × 118.37 × 200 mm plate, running up to 170 mm/h at a 0.20 mm layer. A honeycomb 405 nm matrix fires only the 92 zones under the model. Factory-calibrated and leveling-free — the vat and light source move while the plate stays still — and the Auto Feed Unit keeps resin topped up, heated to 30–45 °C and weighed in real time.',
-  specPull: ['16K · 10.1"', '170 mm/h', '211.68 × 118.37 × 200 mm', 'Leveling-free'],
-  img: '/img/printers/halot-x1.jpg',
-  imgAlt: 'ODYX HALOT-X1 three-quarter view',
-  gallery: [
-    { img: '/img/printers/halot-x1-hero.png', alt: 'HALOT-X1 with a printed full-arch model' },
-    { img: '/img/printers/halot-inprint.png', alt: 'Teeth printing on the HALOT-X1 build plate' },
-    { img: '/img/printers/parts-tray.png', alt: 'Printed crowns, bridge and splint on a tray' },
-  ],
-  specs: [
-    { label: 'X-Y resolution', value: '14 × 19 µm' },
-    { label: 'Print screen', value: '10.1" 16K monochrome LCD, 15120 × 6230 px' },
-    { label: 'Build volume', value: '211.68 × 118.37 × 200 mm' },
-    { label: 'Print speed', value: 'Up to 170 mm/h at a 0.20 mm layer' },
-    { label: 'Layer thickness', value: '0.01 – 0.2 mm' },
-    { label: 'Light source', value: 'Honeycomb 405 nm matrix, 92 intelligent zones' },
-    { label: 'Motion', value: 'Moving vat and light source, fixed build plate' },
-    { label: 'Leveling', value: 'Leveling-free, factory calibrated' },
-    { label: 'Resin feed', value: 'Auto Feed Unit — real-time level and bottle weight, heating 30–45 °C' },
-    { label: 'File formats', value: 'STL / OBJ — reads straight from EXOCAD and 3Shape' },
-    { label: 'Machine size', value: '344 × 331 × 434 mm' },
-    { label: 'Weight', value: '12.93 kg' },
-    { label: 'LCD lifetime', value: '~3000 h' },
-    { label: 'Release film life', value: '~30,000 layers' },
-    { label: 'UV lamp life', value: '~20,000 h' },
-  ],
-};
-
-/** Video placeholder — poster only until the client delivers the print-run footage. */
-export const HALOT_VIDEO = {
-  poster: '/img/printers/halot-x1-inprint.png',
-  posterAlt: 'Full-arch teeth printing on the HALOT-X1 build plate',
-  caption: 'The HALOT-X1 in action',
-};
-
-export const HALOT_HONEST_LINE = {
-  body: 'It has the larger screen, the larger plate and the faster quoted speed. It is still the narrower instrument.',
-  suitable:
-    'Study models, orthodontic models, surgical guides, splints and night guards, and temporary crowns.',
-  notRecommended:
-    'Final restorations, advanced implant surgical guides, or full-arch prosthetics. For those, print on the P1-26.',
-  microcopy: 'Reads STL and OBJ straight from EXOCAD and 3Shape.',
-};
-
 /** Technical features — image cards. Every line traces to the claims register. */
 export const TECH_FEATURES: { title: string; intro: string; cards: TechFeature[] } = {
   title: 'Technical features',
@@ -263,39 +216,25 @@ export const TECH_FEATURES: { title: string; intro: string; cards: TechFeature[]
       alt: 'P1-26 side view showing the dual linear guide rails',
     },
     {
-      model: 'HALOT-X1',
-      title: 'Honeycomb 405 nm matrix',
-      line: 'Fires only the 92 intelligent zones under the model.',
-      img: '/img/printers/halot-light.png',
-      alt: 'Honeycomb matrix light source visualization',
+      model: 'P1-26',
+      title: '153 × 77 × 160 mm plate',
+      line: 'Room for crowns, bridges, guides and models in one run.',
+      img: '/img/printers/parts-tray.png',
+      alt: 'Printed crowns, bridge and splint on a tray',
     },
     {
-      model: 'HALOT-X1',
-      title: '211.68 × 118.37 × 200 mm plate',
-      line: 'Full arches and batch production in one run.',
-      img: '/img/printers/halot-volume.png',
-      alt: 'HALOT-X1 build plate loaded with arches and crowns',
+      model: 'P1-26',
+      title: 'Optional small tank & platform',
+      line: '60 × 60 × 100 mm — less resin in the vat for single-unit cases.',
+      img: '/img/printers/p126-detail-tank.png',
+      alt: 'P1-26 tank and platform with ACF release film annotations',
     },
     {
-      model: 'HALOT-X1',
-      title: 'Auto Feed Unit',
-      line: 'Real-time resin level and bottle weight, heated 30–45 °C.',
-      img: '/img/printers/halot-afu.png',
-      alt: 'Auto Feed Unit with resin bottle',
-    },
-    {
-      model: 'HALOT-X1',
-      title: 'Leveling-free Z-axis',
-      line: 'Factory calibrated — moving vat and light source, fixed plate.',
-      img: '/img/printers/halot-zaxis.png',
-      alt: 'HALOT-X1 Z-axis and resin vat close-up',
-    },
-    {
-      model: 'HALOT-X1',
-      title: '14 × 19 µm X-Y resolution',
-      line: '16K screen, 0.01–0.2 mm layers, up to 170 mm/h.',
-      img: '/img/printers/halot-xy.png',
-      alt: 'Micro-detail comparison on a printed model',
+      model: 'P1-26',
+      title: 'Open material · cloud printing',
+      line: 'ODYX Box slicer, USB and WiFi, 13 UI languages.',
+      img: '/img/printers/p1-26-hero.jpg',
+      alt: 'ODYX P1-26 mid-print on the bench',
     },
   ],
 };
@@ -411,7 +350,6 @@ export const ROUTER = {
       id: 'temporary',
       pick: 'Temporary crown or bridge',
       printer: 'P1-26',
-      printerNote: 'HALOT-X1 for volume',
       resin: 'Temporary Restoration',
       resinId: 'temporary-restoration',
       certification: 'none',
@@ -425,7 +363,7 @@ export const ROUTER = {
     {
       id: 'study-model',
       pick: 'Study or orthodontic model',
-      printer: 'Either printer',
+      printer: 'P1-26',
       resin: 'Ortho Model 2.0',
       resinId: 'ortho-model',
       certification: 'ce-fda',
@@ -439,7 +377,7 @@ export const ROUTER = {
     {
       id: 'aligner-model',
       pick: 'Aligner / thermoform model',
-      printer: 'Either printer',
+      printer: 'P1-26',
       resin: 'Ortho Model 2.0',
       resinId: 'ortho-model',
       certification: 'ce-fda',
@@ -469,7 +407,7 @@ export const ROUTER = {
     {
       id: 'splint',
       pick: 'Splint or night guard',
-      printer: 'Either printer',
+      printer: 'P1-26',
       resin: 'No ODYX resin line — open material system',
       certification: 'open',
       cure: 'Set by your resin',
@@ -492,7 +430,7 @@ export const ROUTER = {
     },
   ] as IndicationRow[],
   openMaterialCopy:
-    'Both printers are open-material systems, so this one runs on the 405 nm resin you already use. There is no ODYX line for it yet.',
+    'The P1-26 is an open-material system, so this one runs on the 405 nm resin you already use. There is no ODYX line for it yet.',
   links: {
     resin: { label: 'See the resin', href: '/products/resins' },
     cure: { label: 'See the cure settings', href: '/products/curing-machines' },
@@ -511,12 +449,11 @@ export const RUNNING_COSTS = {
   intro:
     'Every LCD printer has consumables. Here is the schedule, in hours and layers, so it can be budgeted rather than discovered.',
   rows: [
-    { part: 'LCD screen', p126: '2000 h', halot: '~3000 h' },
-    { part: 'Release film', p126: 'ACF release sheet', halot: '~30,000 layers' },
-    { part: 'UV light source', p126: '—', halot: '~20,000 h' },
+    { part: 'LCD screen', value: '2000 h' },
+    { part: 'Release film', value: 'ACF release sheet' },
   ],
   microcopy:
-    'Resin is the ongoing cost, and both machines are open — so it stays negotiable.',
+    'Resin is the ongoing cost, and the machine is open — so it stays negotiable.',
 };
 
 export const ODYX_CHANGED = {
@@ -551,8 +488,8 @@ export const WORKFLOW_SECTION = {
   activeStep: 2,
   stepCopy:
     'The file becomes an object. Minutes to hours, depending on what it is and how many of them are on the plate.',
-  img: '/img/printers/halot-inprint.png',
-  imgAlt: 'Teeth mid-print on the build plate',
+  img: '/img/printers/p1-26-hero.jpg',
+  imgAlt: 'ODYX P1-26 mid-print, build platform lowered into the resin vat',
   back: {
     copy: 'The file that lands here came from the S1 or from your own CAD — STL or OBJ, from whatever software you already use.',
     link: { label: 'The step before: Design', href: '/workflows/design' },
@@ -575,8 +512,8 @@ export const WORKS_WITH = {
       img: '/img/cutouts/feat-scanner-cutout.png',
     },
     {
-      name: 'P1-26 / HALOT-X1',
-      body: 'Two printers, two jobs — definitive work and volume.',
+      name: 'ODYX P1-26',
+      body: 'The dental printer — definitive restorations, models and appliances.',
       href: '#models',
       img: '/img/cutouts/feat-printer-cutout.png',
     },
@@ -599,11 +536,11 @@ export const DOWNLOADS = {
   title: 'Downloads & demo',
   emptyCopy: 'Datasheets and the full specification sheet are available on request.',
   emptyCta: { label: 'Request a demo', href: '/support' },
-  img: '/img/printers/halot-ecosystem.png',
-  imgAlt: 'HALOT-X1 on a bench with resins, a printed model and CAD on a laptop',
+  img: '/img/printers/p1-26-angle.jpg',
+  imgAlt: 'ODYX P1-26 three-quarter view on a bench',
   closing: {
     headline: 'See it print the case you’re holding.',
-    sub: 'A demo runs on your file, in your resin, on the printer you’re considering.',
+    sub: 'A demo runs on your file, in your resin, on the P1-26.',
     cta: { label: 'Request a demo', href: '/support' },
     ctaMicrocopy: 'On your file, in your resin, on the printer you’re considering',
   },
@@ -611,7 +548,7 @@ export const DOWNLOADS = {
 
 export const SUBNAV = [
   { label: 'Overview', href: '#overview' },
-  { label: 'Models', href: '#models' },
+  { label: 'Printer', href: '#models' },
   { label: 'Specs', href: '#specs' },
   { label: 'Downloads', href: '#downloads' },
 ];

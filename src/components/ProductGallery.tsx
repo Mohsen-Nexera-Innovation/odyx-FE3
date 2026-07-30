@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent, type WheelEvent, type KeyboardEvent } from "react";
 import { formatMoney, getProductById } from "@/content/shop";
 import { readSession } from "@/lib/auth";
 import { addItemAsync, resolveCartProductId } from "@/lib/commerce";
@@ -171,15 +171,28 @@ const Chevron = ({ left }: { left?: boolean }) => (
   </svg>
 );
 
+const DRAG_THRESHOLD = 48;
+const WHEEL_COOLDOWN_MS = 550;
+
 export default function ProductGallery() {
   const router = useRouter();
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState(1);
   const [ringW, setRingW] = useState(640);
+  const [dragging, setDragging] = useState(false);
   const paused = useRef(false);
   const activeRef = useRef(0);
   const ringRef = useRef<HTMLDivElement>(null);
+  const deckRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    moved: boolean;
+  } | null>(null);
+  const suppressClickRef = useRef(false);
+  const wheelLockRef = useRef(0);
   activeRef.current = active;
 
   useEffect(() => {
@@ -219,6 +232,66 @@ export default function ProductGallery() {
   }, [reduceMotion]);
 
   const go = (d: number) => moveTo((a) => a + d);
+
+  const endDrag = (clientX: number) => {
+    const drag = dragRef.current;
+    dragRef.current = null;
+    setDragging(false);
+    if (!drag) return;
+    const dx = clientX - drag.startX;
+    if (Math.abs(dx) >= DRAG_THRESHOLD) {
+      suppressClickRef.current = true;
+      go(dx < 0 ? 1 : -1);
+    }
+  };
+
+  const onDeckPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    const target = e.target as HTMLElement;
+    if (target.closest(".pgx-nav")) return;
+    dragRef.current = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      moved: false,
+    };
+    deckRef.current?.setPointerCapture(e.pointerId);
+  };
+
+  const onDeckPointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== e.pointerId) return;
+    const dx = e.clientX - drag.startX;
+    const dy = e.clientY - drag.startY;
+    if (!drag.moved && Math.hypot(dx, dy) > 6) {
+      drag.moved = true;
+      setDragging(true);
+    }
+  };
+
+  const onDeckPointerUp = (e: PointerEvent<HTMLDivElement>) => {
+    if (dragRef.current?.pointerId !== e.pointerId) return;
+    if (deckRef.current?.hasPointerCapture(e.pointerId)) {
+      deckRef.current.releasePointerCapture(e.pointerId);
+    }
+    endDrag(e.clientX);
+  };
+
+  const onDeckPointerCancel = (e: PointerEvent<HTMLDivElement>) => {
+    if (dragRef.current?.pointerId !== e.pointerId) return;
+    dragRef.current = null;
+    setDragging(false);
+  };
+
+  const onDeckWheel = (e: WheelEvent<HTMLDivElement>) => {
+    // Prefer horizontal trackpad/mouse gestures so vertical page scroll stays free
+    if (Math.abs(e.deltaX) < Math.abs(e.deltaY) || Math.abs(e.deltaX) < 10) return;
+    const now = Date.now();
+    if (now < wheelLockRef.current) return;
+    wheelLockRef.current = now + WHEEL_COOLDOWN_MS;
+    go(e.deltaX > 0 ? 1 : -1);
+  };
+
   const current = PRODUCTS[active];
   const shopProduct = current.shopProductId
     ? getProductById(current.shopProductId)
@@ -250,12 +323,31 @@ export default function ProductGallery() {
       onMouseEnter={() => (paused.current = true)}
       onMouseLeave={() => (paused.current = false)}
     >
-      <div className="pgx-deck">
+      <div
+        ref={deckRef}
+        className={`pgx-deck${dragging ? " is-dragging" : ""}`}
+        onPointerDown={onDeckPointerDown}
+        onPointerMove={onDeckPointerMove}
+        onPointerUp={onDeckPointerUp}
+        onPointerCancel={onDeckPointerCancel}
+        onWheel={onDeckWheel}
+      >
         <div
           ref={ringRef}
           className="pgx-ring"
           role="listbox"
           aria-label="Featured products"
+          aria-roledescription="carousel"
+          tabIndex={0}
+          onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              go(-1);
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              go(1);
+            }
+          }}
         >
           <AnimatePresence initial={false} custom={direction}>
             {visible.map(({ slot, index }) => {
@@ -273,6 +365,10 @@ export default function ProductGallery() {
                   transition={transition}
                   style={{ zIndex: on ? 30 : 20, transformPerspective: 1200 }}
                   onClick={() => {
+                    if (suppressClickRef.current) {
+                      suppressClickRef.current = false;
+                      return;
+                    }
                     if (!on) moveTo(index);
                   }}
                   aria-selected={on}

@@ -160,16 +160,16 @@ export default function CuringPage() {
             loop
             playsInline
             preload="auto"
-            poster="/img/cure-stitch/odyx-cure-hero-poster.jpg"
+            poster="/img/uw03/hero-packshot.png?v=10"
           >
             <source src="/video/cure-uv02-hero.mp4?v=ext-1" type="video/mp4" />
           </video>
           <img
-            src="/img/cure-stitch/odyx-cure-hero-poster.jpg"
+            src="/img/uw03/hero-packshot.png?v=10"
             alt=""
             className="cure-hero__fallback"
-            width={1280}
-            height={720}
+            width={1223}
+            height={933}
           />
           <div className="cure-hero__veil" />
           <div className="cure-hero__amber" />
@@ -440,10 +440,10 @@ export default function CuringPage() {
       <section className="cure-close">
         <div className="cure-close__stage" aria-hidden>
           <img
-            src="/img/cure-stitch/odyx-cure-cinematic-hero.webp"
+            src="/img/uw03/hero-packshot.png?v=10"
             alt=""
-            width={1024}
-            height={683}
+            width={1223}
+            height={933}
           />
           <div className="cure-close__veil" />
         </div>

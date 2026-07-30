@@ -1,6 +1,9 @@
-# ODYX — Marketing Website (odyx-FE2)
+# ODYX — Marketing Website (odyx-FE3)
 
-Next.js marketing site for **ODYX** digital dentistry — homepage, products, workflows, solutions, support, and auth UI.
+Next.js marketing + commerce site for **ODYX** digital dentistry — homepage, products, workflows, solutions, support, shop, inbox, and auth/admin UI.
+
+**Project status (what works / what’s missing):** see [`PROJECT_STATUS.md`](./PROJECT_STATUS.md).  
+**Design authority:** see [`knowledge_base/README.md`](./knowledge_base/README.md).
 
 ## Getting started
 

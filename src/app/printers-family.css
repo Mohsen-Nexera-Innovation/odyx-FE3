@@ -211,15 +211,12 @@
 .pf-checklist li{display:grid; grid-template-columns:20px 1fr; gap:8px; font-size:13.5px; line-height:1.45; align-items:start}
 .pf-check{width:18px; height:18px; color:var(--pfa); margin-top:1px}
 
-/* 3 · The two printers */
+/* 3 · The printer */
 .pf-model{
   display:grid; grid-template-columns:.85fr 1.15fr; gap:0; align-items:stretch;
   margin-bottom:20px;
 }
 .pf-model:last-child{margin-bottom:0}
-/* Same 50/50 split as the flipped P1-26 card — the media/copy separator
-   sits at the card's midpoint on both cards */
-.pf-model--halot{grid-template-columns:1fr 1fr}
 /* P1-26 — copy on the inline-start side, image on the inline-end side */
 .pf-model--flip{grid-template-columns:1fr 1fr}
 .pf-model--flip .pf-model-copy{order:1}
@@ -246,19 +243,6 @@
 /* Top-anchored cover: whatever the card height, the crop eats the base/table,
    never the machine's hood and logo */
 .pf-model-media img{width:100%; height:100%; object-fit:cover; object-position:50% 0; display:block}
-/* The HALOT packshot is a square studio shot — shown whole at the top of the
-   column; a print-run video placeholder fills the space left under it */
-.pf-model--halot .pf-model-media{background:linear-gradient(180deg,#ECECEE,#CFD1D4)}
-.pf-model--halot .pf-model-media > img{object-position:50% 50%}
-@media (min-width: 961px){
-  .pf-model--halot .pf-model-media > img{height:auto; object-fit:contain}
-}
-.pf-model-media--stack{flex-direction:column; align-items:stretch; justify-content:flex-start}
-.pf-model-media--stack > img{flex:none}
-.pf-video.pf-video--flush{
-  flex:1; min-height:220px; margin:0; aspect-ratio:auto;
-  border:0; border-radius:0; box-shadow:none;
-}
 .pf-model-copy{padding:clamp(18px,2.6vw,32px)}
 .pf-model-label{font-size:12px; font-weight:700; letter-spacing:.16em; color:var(--pf-mut); margin-bottom:6px}
 [dir="rtl"] .pf-model-label{letter-spacing:0}
@@ -330,14 +314,6 @@
 .pf-micro{font-size:13px; color:var(--pf-mut)}
 .pf-micro a{color:var(--pfa); font-weight:500}
 .pf-micro a:hover{text-decoration:underline}
-
-/* HALOT honest line — ink on tint with a border; never color-coded */
-.pf-honest{
-  border:1.5px solid rgba(33,28,29,.3); border-radius:12px; background:var(--pf-tint);
-  padding:14px 18px; margin:0 0 10px; color:var(--pf-ink); font-size:14.5px;
-}
-.pf-honest p{margin:0 0 6px}
-.pf-honest p:last-child{margin:0}
 
 /* 4 · Technical features — image-card grid */
 .pf-feat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
@@ -591,10 +567,9 @@
   .pf-why-col + .pf-why-col{border-inline-start:none; border-top:1px solid var(--pf-rule)}
   .pf-checklist{grid-template-columns:1fr}
   .pf-rt-grid{grid-template-columns:1fr}
-  .pf-model,.pf-model--halot,.pf-model--flip{grid-template-columns:1fr}
+  .pf-model,.pf-model--flip{grid-template-columns:1fr}
   .pf-model--flip .pf-model-media{order:0} /* image back on top when stacked */
   .pf-model-media img{max-height:340px}
-  .pf-model--halot .pf-model-media > img{object-fit:contain}
   .pf-changed{grid-template-columns:1fr}
   .pf-workflow-grid{grid-template-columns:1fr}
   .pf-downloads{grid-template-columns:1fr}

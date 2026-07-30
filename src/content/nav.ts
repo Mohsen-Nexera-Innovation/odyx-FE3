@@ -67,7 +67,7 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "News",
-        href: "/#news",
+        href: "/about#news",
         desc: "Latest announcements and press",
       },
     ],
@@ -103,7 +103,7 @@ export const HEADER_MENUS: NavGroup[] = [
           },
           {
             label: "News",
-            href: "/#news",
+            href: "/about#news",
             desc: "Latest announcements and press",
           },
         ],
@@ -121,9 +121,9 @@ export const HEADER_MENUS: NavGroup[] = [
         desc: "ODYX-S1",
       },
       {
-        label: "Digital Products",
-        href: "/products/design",
-        desc: "Design software",
+        label: "Design Services",
+        href: "/design-services",
+        desc: "Design services",
       },
       {
         label: "3D Printers",
@@ -170,7 +170,7 @@ export const HEADER_MENUS: NavGroup[] = [
             items: [
               {
                 label: "ODYX P1-26",
-                href: "/products/3d-printers",
+                href: "/products/odyx-p1-26",
                 desc: "Desktop production for clinic and lab",
             img: "/img/cutouts/feat-printer-cutout.png",
           },
@@ -207,13 +207,13 @@ export const HEADER_MENUS: NavGroup[] = [
         ],
       },
       {
-        title: "Digital Products",
-        href: "/products/design",
+        title: "Design Services",
+        href: "/design-services",
         items: [
           {
-            label: "Design Software",
-            href: "/products/design",
-            desc: "CAD built for ODYX print parameters",
+            label: "Design Services",
+            href: "/design-services",
+            desc: "On-demand dental CAD design",
             img: "/img/cutouts/feat-design-cutout.png",
           },
         ],

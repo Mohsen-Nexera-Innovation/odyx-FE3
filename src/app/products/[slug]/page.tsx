@@ -4,11 +4,14 @@ import ProductDetailPage from '@/components/pages/ProductDetailPage';
 import CuringPage from '@/components/pages/CuringPage';
 import CuringUv02Page from '@/components/pages/CuringUv02Page';
 import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
+import P126Page from '@/components/pages/P126Page';
 import ResinsRangePage from '@/components/pages/ResinsRangePage';
 import ScannerS1Page from '@/components/pages/ScannerS1Page';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 import { PRINTERS_META } from '@/content/printers-3d';
+import { CURE_UV02_META, CURE_UV02_SLUG } from '@/content/cure-uv02';
+import { P1_26_META, P1_26_SLUG } from '@/content/p1-26';
 import { RESINS_META, RESINS_SLUG } from '@/content/resins';
 import { SCANNER_META, SCANNER_SLUG } from '@/content/scanner-s1';
 
@@ -26,6 +29,7 @@ const SLUG_ALIASES: Record<string, string> = {
   'cure-float': 'curing-machines',
   'cure-v4': 'curing-machines',
   'cure-v5': 'curing-machines',
+  'odyx-halot-x1': '3d-printers',
 };
 
 export function generateStaticParams() {
@@ -41,16 +45,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (slug === SCANNER_SLUG) {
     return { title: SCANNER_META.title, description: SCANNER_META.description };
   }
+  if (slug === P1_26_SLUG) {
+    return { title: P1_26_META.title, description: P1_26_META.description };
+  }
   if (slug === RESINS_SLUG) {
     return { title: RESINS_META.title, description: RESINS_META.description };
   }
-  if (slug === 'cure-v6') {
-    // 037 content.md §3 — title tag + meta description
-    return {
-      title: 'ODYX Cure UV-02 — Dental UV Curing Machine',
-      description:
-        'Triple-wavelength UV curing (365/385/405 nm) for every dental resin. 360° coverage, 8 presets, 1–5 minute typical cures. Meet the ODYX Cure UV-02.',
-    };
+  if (slug === CURE_UV02_SLUG || slug === 'cure-v6') {
+    return { title: CURE_UV02_META.title, description: CURE_UV02_META.description };
   }
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return { title: 'Product | ODYX' };
@@ -107,6 +109,15 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <PrintersFamilyPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  // Dedicated P1-26 landing — attached product UI
+  if (raw === P1_26_SLUG) {
+    return (
+      <>
+        <P126Page />
         <InnerPageMotion />
       </>
     );
