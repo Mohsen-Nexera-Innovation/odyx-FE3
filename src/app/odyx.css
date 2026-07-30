@@ -37,6 +37,25 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--orange),var(--orange-soft));z-index:2000;transition:width .1s}
 
 /* ===== HEADER — solid bar with bottom accent ===== */
+
+/* Main nav accent — the approved ODYX action blue #0050D8 (the home screen's
+   blue) replaces the site's sky cyan for the nav bar and its mega panels.
+   Re-pointing --sky/--orange on <header> retints every accent inside the bar
+   from one place; the rest of the site keeps its own palette.
+   The dark bar lifts the hue (#3D7DF0) so links, underlines and eyebrows stay
+   legible on near-black — #0050D8 itself is too dark there; the on-light bar
+   uses the approved blue directly. --nav-blue is the unlifted brand blue for
+   anything that must stay true in both modes (the demo CTA). */
+header{
+  --nav-blue:#0050D8; --nav-blue-deep:#0041AF; --nav-blue-deeper:#00337F;
+  --sky:#3D7DF0; --sky-soft:#9DBEFA; --sky-deep:#0050D8; --sky-rgb:61,125,240;
+  --orange:var(--sky); --orange-soft:var(--sky-soft);
+  --orange-deep:var(--sky-deep); --orange-rgb:var(--sky-rgb);
+}
+header.on-light{
+  --sky:#0050D8; --sky-soft:#5B93F5; --sky-deep:#0041AF; --sky-rgb:0,80,216;
+}
+
 header{
   position:fixed;top:0;left:0;right:0;z-index:1000;
   padding:17px 0;min-height:68px;display:flex;align-items:center;
@@ -90,9 +109,9 @@ header.on-light .search-kbd-hint{color:#8A858E;border-color:rgba(0,0,0,.12)}
 header.on-light .search-btn:hover .search-kbd-hint{color:#48657c;border-color:rgba(0,0,0,.22)}
 header.on-light .btn-ghost{color:#334155;border-color:rgba(0,0,0,.14);background:rgba(255,255,255,.45)}
 header.on-light .btn-ghost:hover{color:#211C1D;border-color:rgba(0,0,0,.24);background:#fff;box-shadow:none}
-header.on-light .nav-assist{color:#0581ad;border-color:rgba(var(--sky-rgb),.45);background:rgba(var(--sky-rgb),.08)}
-header.on-light .nav-assist-icon{color:#06a5df}
-header.on-light .nav-assist:hover{color:#047099;background:rgba(var(--sky-rgb),.14);border-color:#06a5df}
+header.on-light .nav-assist{color:var(--sky-deep);border-color:rgba(var(--sky-rgb),.45);background:rgba(var(--sky-rgb),.08)}
+header.on-light .nav-assist-icon{color:var(--sky)}
+header.on-light .nav-assist:hover{color:var(--nav-blue-deeper);background:rgba(var(--sky-rgb),.14);border-color:var(--sky)}
 header.on-light .mega{background:#fff;border-color:rgba(0,0,0,.08);box-shadow:0 20px 48px rgba(0,0,0,.10)}
 header.on-light .mega a{color:#48657c}
 header.on-light .mega a:hover{background:rgba(var(--sky-rgb),.10);color:var(--sky-deep)}
@@ -301,7 +320,7 @@ header.on-light .mega-featured__media img{
   filter:drop-shadow(0 10px 16px rgba(10,60,100,.22));
 }
 header.on-light .mega-featured__cta{color:var(--sky-deep)}
-header.on-light .mega-featured__cta:hover{color:#047099}
+header.on-light .mega-featured__cta:hover{color:var(--nav-blue-deeper)}
 @media(max-width:1100px) and (min-width:768px){
   .mega-panel__inner:has(.mega-featured){
     grid-template-columns:1fr;
@@ -331,8 +350,8 @@ header.on-light .mega-featured__cta:hover{color:#047099}
 .btn:hover svg{transform:translateX(3px)}
 .btn-ghost{background:transparent;border:1px solid var(--line-2);color:#fff}
 .btn-ghost:hover{border-color:#fff;box-shadow:none}
-header .nav-demo{background:var(--sky);color:#fff}
-header .nav-demo:hover{box-shadow:0 10px 28px rgba(6,165,223,.35)}
+header .nav-demo{background:var(--nav-blue);color:#fff}
+header .nav-demo:hover{background:var(--nav-blue-deep);box-shadow:0 10px 28px rgba(0,80,216,.35)}
 .btn-sm{padding:6px 11px;font-size:clamp(.68rem,1vw,.76rem);border-radius:8px}
 .nav-tools .btn-sm{padding:5px 9px;font-size:clamp(.66rem,.95vw,.74rem)}
 .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent}
@@ -355,10 +374,10 @@ header .nav-demo:hover{box-shadow:0 10px 28px rgba(6,165,223,.35)}
 .nav-assist{
   display:inline-flex;align-items:center;gap:6px;margin-left:4px;padding:clamp(5px,.8vw,7px) clamp(8px,1.2vw,13px);border-radius:30px;
   border:1px solid rgba(var(--sky-rgb),.4);background:rgba(var(--sky-rgb),.1);
-  color:#7fd0f3;font-size:clamp(.68rem,.9vw,.76rem);font-weight:500;font-family:var(--font-body);cursor:pointer;
+  color:var(--sky-soft);font-size:clamp(.68rem,.9vw,.76rem);font-weight:500;font-family:var(--font-body);cursor:pointer;
   transition:background .18s ease,border-color .18s ease,color .18s ease;white-space:nowrap;flex-shrink:0;box-shadow:none;touch-action:manipulation;
 }
-.nav-assist-icon{flex-shrink:0;color:#7fd0f3;transition:color .18s ease}
+.nav-assist-icon{flex-shrink:0;color:var(--sky-soft);transition:color .18s ease}
 .nav-assist:hover{background:rgba(var(--sky-rgb),.2);border-color:rgba(var(--sky-rgb),.7);color:#fff}
 .nav-assist:hover .nav-assist-icon{color:#fff}
 .nav-assist:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
@@ -3592,7 +3611,7 @@ main .sec + .sec{border-top:none}
 
 .nav-inbox{position:relative}
 .nav-inbox{position:relative}
-.nav-inbox-badge{position:absolute;top:-6px;right:-8px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--orange);color:var(--navy-deep);font-size:.62rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.nav-inbox-badge{position:absolute;top:-6px;right:-8px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--nav-blue);color:#fff;font-size:.62rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
 .nav-user-wrap{position:relative}
 .nav-user{
   display:inline-flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border:none;border-radius:30px;
@@ -4386,7 +4405,8 @@ main .sec + .sec{border-top:none}
 .nav-cart{position:relative;text-decoration:none}
 .nav-cart-badge{
   position:absolute;top:-6px;right:-8px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;
-  background:var(--orange);color:var(--navy-deep);font-size:.62rem;font-weight:800;
+  /* white on the nav's action blue — navy-on-accent only read on the old cyan */
+  background:var(--nav-blue);color:#fff;font-size:.62rem;font-weight:800;
   display:inline-flex;align-items:center;justify-content:center;
 }
 header.on-light .nav-cart{color:#48657c}

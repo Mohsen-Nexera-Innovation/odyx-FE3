@@ -1,13 +1,12 @@
-import Home from "@/components/Home";
-import OdyxMotion from "@/components/OdyxMotion";
-import Spine from "@/components/Spine";
+import type { Metadata } from "next";
+import HomeV2Page from "@/components/pages/HomeV2Page";
+
+export const metadata: Metadata = {
+  title: "ODYX — One Ecosystem. Endless Possibilities.",
+  description:
+    "Everything you need for digital dentistry in one seamless ecosystem — scanner, printer, curing and resins working as one connected workflow.",
+};
 
 export default function Page() {
-  return (
-    <>
-      <Spine />
-      <Home />
-      <OdyxMotion />
-    </>
-  );
+  return <HomeV2Page />;
 }
