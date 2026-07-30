@@ -1579,3 +1579,425 @@ body:has(.hv2) .fabs{display:none !important}
      stage — give the bottom row room so nothing clips. */
   .hv2-eco{padding-bottom:26px}
 }
+
+/* ============================================================
+   9 · Latest updates — the mock's five-up update carousel
+   ------------------------------------------------------------
+   Dimensioned against knowledge_base/screens/043-latest-updates-reference.png
+   (2852x1256 = a 2048-CSS-px viewport at 1.3926x).  .hv2-lu-in is the query
+   container and its reference width is 1878.7px, so EVERY reference pixel is
+   value / 18.787 cqw and the composition holds its proportions at any width.
+
+   The outer cards are not rotated — they are trapezoids whose vertical edges
+   stay vertical while the far edge is ~5% SHORTER, i.e. a Y-axis rotation under
+   its own perspective camera.  Each card therefore carries `perspective()`
+   inside its own transform list; a shared scene camera compounds off-axis (same
+   finding as the path carousel) and would smear the outer cards.
+
+   Two scales are in play.  Slot geometry (--s<n>-*) is written per breakpoint,
+   because showing four or three cards is a different composition, not a smaller
+   one.  Everything INSIDE a card is written once against the reference and
+   multiplied by --k, which each breakpoint sets to the factor by which its
+   cards grew relative to the five-up deck — so a 4-up card at 1280px carries
+   the same optical type size as a 5-up card at 2048px.
+
+   The component only publishes each card's ring position as [data-slot]; how
+   many slots are on screen, which one is emphasised and where the rest park is
+   entirely decided here.
+   ============================================================ */
+
+.hv2-lu{
+  position:relative;
+  /* Nearly white with a soft lift under the header and a whisper of blue in the
+     lower left — both sampled off the mock, which is flatter than it looks. */
+  background:
+    radial-gradient(46% 32% at 50% -3%, rgba(226,236,255,.85) 0%, rgba(245,247,253,0) 74%),
+    radial-gradient(34% 30% at 4% 86%, rgba(98,157,255,.09) 0%, rgba(245,247,253,0) 72%),
+    #F5F7FD;
+}
+.hv2-lu-in{
+  width:min(100% - clamp(32px, 8.26%, 169px), 1879px);
+  margin-inline:auto;
+  container-type:inline-size;
+  padding-block:3.314cqw 1.735cqw;
+
+  --k:1;                                     /* card-internal scale, see above */
+  --u:calc(1cqw * var(--k));
+  --lu-r:calc(1.437 * var(--u));              /* card radius 27 */
+  --lu-px:calc(1.330 * var(--u));             /* card side padding 25 */
+  --lu-persp:calc(74.52 * var(--u));          /* per-card camera, 1400 */
+  --lu-ease:cubic-bezier(.22,1,.36,1);
+  --lu-dur:.52s;
+  --lu-shadow:
+    0 calc(.958 * var(--u)) calc(2.022 * var(--u)) rgba(5,28,72,.12),
+    0 calc(.213 * var(--u)) calc(.639 * var(--u)) rgba(5,28,72,.06);
+  --lu-ring:
+    0 0 0 calc(.107 * var(--u)) rgba(10,90,255,.85),
+    0 0 0 calc(.27 * var(--u)) rgba(120,170,255,.32),
+    0 0 calc(1.4 * var(--u)) calc(.32 * var(--u)) rgba(60,130,255,.26),
+    0 calc(1.17 * var(--u)) calc(2.13 * var(--u)) rgba(0,25,70,.16);
+  --lu-hl:rgba(166,207,255,.5);
+}
+
+/* ---------- header ---------- */
+.hv2-lu-head{text-align:center}
+.hv2-lu-hl{
+  background-image:linear-gradient(var(--lu-hl),var(--lu-hl));
+  background-repeat:no-repeat;
+  background-size:100% var(--hlh); background-position:0 var(--hly);
+  /* Inline vertical padding never moves a line box, so it is free headroom for
+     the band (a background is clipped to the padding box and Tajawal's content
+     area is shorter than the mock's bands). --hly places it from that box's top. */
+  padding:1.3cqw var(--hlx,.27cqw); margin-inline:calc(-1 * var(--hlx,.27cqw));
+  box-decoration-break:clone; -webkit-box-decoration-break:clone;
+}
+.hv2 .hv2-lu-eyebrow{
+  --hlh:1.187cqw; --hly:1.535cqw; --hlx:.274cqw;
+  color:var(--hv2-blue); font-size:1.262cqw; font-weight:700;
+  letter-spacing:.0316em; text-transform:uppercase; line-height:1;
+}
+.hv2-lu-pip{margin-inline:.42cqw; font-size:.85em; vertical-align:.08em}
+.hv2 .hv2-lu-h{
+  --hlh:3.401cqw; --hly:1.485cqw; --hlx:.458cqw;
+  margin:.972cqw 0 0; color:#0D1B31;
+  font-size:3.358cqw; font-weight:800; line-height:1; letter-spacing:-.04em;
+}
+.hv2 .hv2-lu-sub{
+  --hlh:1.725cqw; --hly:1.682cqw; --hlx:.705cqw;
+  margin:.150cqw 0 0; color:#263E68;
+  font-size:1.192cqw; font-weight:600; line-height:1.25;
+}
+[dir="rtl"] .hv2 .hv2-lu-eyebrow{letter-spacing:0; text-transform:none}
+
+/* ---------- carousel ---------- */
+.hv2-lu-stage{position:relative; margin-top:2.081cqw}
+.hv2-lu-row{
+  position:relative;
+  height:30.460cqw;                        /* 572.3 */
+  /* slot 0 — trapezoid leaning away to the right */
+  --s0-x:-.256cqw;  --s0-w:18.326cqw; --s0-h:29.845cqw; --s0-y:.037cqw; --s0-r:13.2deg;  --s0-z:2;
+  /* slot 1 */
+  --s1-x:19.503cqw; --s1-w:18.731cqw; --s1-h:29.808cqw; --s1-y:0cqw;    --s1-r:0deg;     --s1-z:3;
+  /* slot 2 — the emphasised card */
+  --s2-x:39.804cqw; --s2-w:20.333cqw; --s2-h:29.925cqw; --s2-y:.037cqw; --s2-r:0deg;     --s2-z:5;
+  /* slot 3 */
+  --s3-x:61.585cqw; --s3-w:18.853cqw; --s3-h:29.925cqw; --s3-y:.383cqw; --s3-r:-6.6deg;  --s3-z:3;
+  /* slot 4 — trapezoid leaning away to the left */
+  --s4-x:81.972cqw; --s4-w:17.416cqw; --s4-h:30.154cqw; --s4-y:.266cqw; --s4-r:-15.5deg; --s4-z:2;
+}
+.hv2-lu-track{position:absolute; inset:0}
+.hv2 .hv2-lu-track:focus-visible{
+  outline:.16cqw solid var(--hv2-blue); outline-offset:.4cqw; border-radius:var(--lu-r);
+}
+
+.hv2-lu-card{
+  position:absolute; top:0; left:0;
+  width:var(--w); height:var(--h);
+  transform:translate3d(var(--x),var(--y),0) perspective(var(--lu-persp)) rotateY(var(--r));
+  transform-style:preserve-3d;
+  border-radius:var(--lu-r); overflow:hidden;
+  background:var(--bg); box-shadow:var(--ring, var(--lu-shadow));
+  z-index:var(--z);
+  transition:
+    width var(--lu-dur) var(--lu-ease), height var(--lu-dur) var(--lu-ease),
+    transform var(--lu-dur) var(--lu-ease), box-shadow var(--lu-dur) var(--lu-ease),
+    opacity calc(var(--lu-dur) * .8) ease, visibility var(--lu-dur);
+}
+/* Slot tokens -> card tokens. Anything past the deck parks off the END side,
+   except the card that has just left (the last ring position), which parks at
+   the START so it exits the way it came in. */
+.hv2-lu-card{
+  --x:104%; --y:0cqw; --w:var(--s0-w); --h:var(--s0-h); --r:0deg; --z:1;
+  opacity:0; visibility:hidden; pointer-events:none;
+}
+.hv2-lu-card[data-slot="7"]{--x:-22cqw}
+.hv2-lu-card[data-slot="0"]{--x:var(--s0-x); --y:var(--s0-y); --w:var(--s0-w); --h:var(--s0-h); --r:var(--s0-r); --z:var(--s0-z)}
+.hv2-lu-card[data-slot="1"]{--x:var(--s1-x); --y:var(--s1-y); --w:var(--s1-w); --h:var(--s1-h); --r:var(--s1-r); --z:var(--s1-z)}
+.hv2-lu-card[data-slot="2"]{--x:var(--s2-x); --y:var(--s2-y); --w:var(--s2-w); --h:var(--s2-h); --r:var(--s2-r); --z:var(--s2-z)}
+.hv2-lu-card[data-slot="3"]{--x:var(--s3-x); --y:var(--s3-y); --w:var(--s3-w); --h:var(--s3-h); --r:var(--s3-r); --z:var(--s3-z)}
+.hv2-lu-card[data-slot="4"]{--x:var(--s4-x); --y:var(--s4-y); --w:var(--s4-w); --h:var(--s4-h); --r:var(--s4-r); --z:var(--s4-z)}
+.hv2-lu-card[data-slot="0"],.hv2-lu-card[data-slot="1"],.hv2-lu-card[data-slot="2"],
+.hv2-lu-card[data-slot="3"],.hv2-lu-card[data-slot="4"]{opacity:1; visibility:visible; pointer-events:auto}
+/* The active ring rides the SLOT, not the card, so a breakpoint only has to
+   move --ring to whichever slot is centred there (`initial` makes the custom
+   property invalid-at-computed-value, so box-shadow falls back to --lu-shadow). */
+.hv2-lu-card[data-slot="2"]{--ring:var(--lu-ring)}
+
+/* ---------- card art ---------- */
+.hv2-lu-media{
+  position:absolute; inset-block-start:0; inset-inline:0;
+  aspect-ratio:var(--band); overflow:hidden;
+}
+.hv2-lu-art{
+  display:block; width:100%; height:100%;
+  object-fit:cover; object-position:center top;
+}
+/* The five mock cards already carry the mock's own fade into the card field, so
+   only the repo-sourced placeholders need one painted on. */
+.hv2-lu-card[data-fade] .hv2-lu-media::after{
+  content:""; position:absolute; inset-inline:0; bottom:0; height:46%;
+  background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, var(--bg) 92%);
+}
+
+/* ---------- badge ---------- */
+.hv2 .hv2-lu-cat{
+  position:absolute; z-index:2; margin:0;
+  inset-block-start:calc(1.341 * var(--u)); inset-inline-start:var(--lu-px);
+  height:calc(1.990 * var(--u));
+  /* Tajawal sets capitals high in the line box — the asymmetric padding drops
+     the label onto the pill's optical centre. */
+  padding:calc(.415 * var(--u)) calc(.585 * var(--u)) 0;
+  border-radius:999px;
+  display:inline-flex; align-items:center;
+  font-size:calc(.847 * var(--u)); font-weight:700; line-height:1;
+  letter-spacing:.045em; text-transform:uppercase;
+  background:var(--cat-bg); color:var(--cat-fg);
+  box-shadow:0 calc(.16 * var(--u)) calc(.43 * var(--u)) rgba(4,16,48,.22);
+}
+[dir="rtl"] .hv2 .hv2-lu-cat{letter-spacing:0; text-transform:none}
+
+/* ---------- copy ---------- */
+.hv2-lu-copy{
+  position:absolute; z-index:2;
+  inset-block-end:calc(.985 * var(--u)); inset-inline:var(--lu-px);
+}
+.hv2 .hv2-lu-t{
+  margin:0; color:var(--t-fg);
+  font-size:calc(1.737 * var(--u)); font-weight:700;
+  line-height:1.02; letter-spacing:-.025em;
+}
+.hv2-lu-link{color:inherit; text-decoration:none}
+.hv2-lu-link::after{content:""; position:absolute; inset:0; z-index:3; border-radius:var(--lu-r)}
+.hv2 .hv2-lu-link:focus-visible{outline:none}
+.hv2 .hv2-lu-link:focus-visible::after{
+  outline:calc(.16 * var(--u)) solid var(--hv2-blue); outline-offset:calc(-.32 * var(--u));
+}
+.hv2 .hv2-lu-d{
+  margin:calc(.705 * var(--u)) 0 0; color:var(--d-fg);
+  font-size:calc(1.099 * var(--u)); font-weight:500; line-height:1.53;
+}
+.hv2-lu-dline{display:block}
+.hv2-lu-foot{
+  margin-top:calc(1.064 * var(--u)); height:calc(2.528 * var(--u));
+  display:flex; align-items:center; justify-content:space-between; gap:calc(.8 * var(--u));
+}
+.hv2 .hv2-lu-date{
+  margin:0; color:var(--dt-fg);
+  display:inline-flex; align-items:center; gap:calc(.615 * var(--u));
+  font-size:calc(1.022 * var(--u)); font-weight:600; line-height:1.2; white-space:nowrap;
+}
+.hv2-lu-date time{display:block; margin-top:calc(.13 * var(--u))}
+.hv2-lu-cal{display:block; flex:0 0 auto}
+.hv2-lu-cal svg{display:block; width:calc(1.18 * var(--u)); height:calc(1.18 * var(--u))}
+.hv2-lu-go{
+  flex:0 0 auto; border-radius:50%;
+  width:calc(2.528 * var(--u)); height:calc(2.528 * var(--u));
+  display:grid; place-items:center;
+  background:var(--go-bg); color:var(--go-fg);
+  box-shadow:0 calc(.32 * var(--u)) calc(.8 * var(--u)) rgba(4,16,48,.24);
+  transition:transform .22s ease, filter .22s ease;
+}
+.hv2-lu-go svg{display:block; width:calc(1.278 * var(--u)); height:calc(1.278 * var(--u))}
+.hv2-lu-card:hover .hv2-lu-go{transform:scale(1.06); filter:brightness(1.06)}
+
+/* ---------- per-tone and per-card treatment (sampled off the mock) ---------- */
+.hv2-lu-card[data-tone="navy"]{
+  --bg:#040F28; --t-fg:#F2F5FF; --d-fg:rgba(255,255,255,.70);
+  --dt-fg:rgba(255,255,255,.86); --go-bg:#2450EC; --go-fg:#fff;
+}
+.hv2-lu-card[data-tone="light"]{
+  --bg:#F0F2F9; --t-fg:#0A1020; --d-fg:#6B7285;
+  --dt-fg:#3A4152; --go-bg:#FFFFFF; --go-fg:#1B4BE0;
+  /* An outline, not an inset shadow: the box-shadow slot is taken by --ring. */
+  outline:1px solid rgba(70,100,150,.14); outline-offset:-1px;
+}
+.hv2-lu-card[data-tone="beige"]{
+  --bg:#F0E1D2; --t-fg:#1A1510; --d-fg:#6E645C;
+  --dt-fg:#443B34; --go-bg:#D6A87C; --go-fg:#2A1C10;
+}
+/* The mock's three navies are not the same navy — matching each keeps the image
+   band's own last rows seamless with the card field. */
+.hv2-lu-card[data-id="workflow"]{--bg:#020A1D}
+.hv2-lu-card[data-id="partners"]{--bg:#0C1021}
+.hv2-lu-card[data-id="design-suite"]{--bg:#05101F}
+
+.hv2-lu-card[data-cat="Event"]{--cat-bg:#2B54DE; --cat-fg:#EAF1FF}
+.hv2-lu-card[data-cat="Product"]{--cat-bg:#C2D2FB; --cat-fg:#2F55C8}
+.hv2-lu-card[data-cat="Update"]{--cat-bg:#2049EF; --cat-fg:#FFFFFF}
+.hv2-lu-card[data-cat="Update"] .hv2-lu-cat{box-shadow:0 0 calc(1.1 * var(--u)) rgba(32,73,239,.55)}
+.hv2-lu-card[data-cat="Webinar"]{--cat-bg:#DCB088; --cat-fg:#3A2A1C}
+.hv2-lu-card[data-cat="News"]{--cat-bg:#3358D8; --cat-fg:#EAF1FF}
+
+/* ---------- side controls ---------- */
+/* The mock tucks them BEHIND the outer cards, ~60px above the row's centre. */
+.hv2 .hv2-lu-nav{
+  position:absolute; z-index:0;
+  top:calc(9.898 * var(--u));
+  width:calc(3.593 * var(--u)); height:calc(3.593 * var(--u));
+  color:var(--hv2-blue); border:0;
+  box-shadow:0 calc(.53 * var(--u)) calc(1.28 * var(--u)) rgba(10,40,90,.16);
+}
+.hv2 .hv2-lu-nav svg{width:calc(1.49 * var(--u)); height:calc(1.49 * var(--u))}
+.hv2-lu-nav-prev{inset-inline-start:calc(-2.928 * var(--u))}
+.hv2-lu-nav-next{inset-inline-end:calc(-2.928 * var(--u))}
+
+/* ---------- pagination ---------- */
+.hv2-lu-dots{
+  display:flex; justify-content:center; align-items:center;
+  gap:calc(1.331 * var(--u)); margin-top:calc(1.224 * var(--u));
+}
+.hv2 .hv2-lu-dot{
+  width:calc(.80 * var(--u)); height:calc(.80 * var(--u));
+  border:0; padding:0; border-radius:50%;
+  background:#D3DAE7; cursor:pointer;
+  transition:width .25s ease, height .25s ease, background .25s ease;
+}
+.hv2 .hv2-lu-dot[data-on]{
+  width:calc(.958 * var(--u)); height:calc(.958 * var(--u)); background:#1E46F1;
+}
+.hv2 .hv2-lu-dot:hover:not([data-on]){background:#B9C4D8}
+
+/* ---------- fewer cards ----------------------------------------------------
+   Each step drops the outermost slot(s) and scales what is left up to fill the
+   row, so the deck keeps the mock's rhythm (tilt · plain · ACTIVE · plain ·
+   tilt) with the emphasised card as close to centre as the count allows. --k is
+   the growth factor, which keeps the card type at its reference optical size. */
+
+/* 4-up: drop slot 4, everything else x1.237. */
+@media (max-width: 1439px){
+  .hv2-lu-in{--k:1.237}
+  .hv2-lu-row{
+    height:37.680cqw;
+    --s0-x:-.317cqw;  --s0-w:22.669cqw; --s0-h:36.918cqw; --s0-y:.046cqw; --s0-r:13.2deg; --s0-z:2;
+    --s1-x:24.126cqw; --s1-w:23.170cqw; --s1-h:36.872cqw; --s1-y:0cqw;    --s1-r:0deg;    --s1-z:3;
+    --s2-x:49.238cqw; --s2-w:25.152cqw; --s2-h:37.017cqw; --s2-y:.046cqw; --s2-r:0deg;    --s2-z:5;
+    --s3-x:76.181cqw; --s3-w:23.321cqw; --s3-h:37.017cqw; --s3-y:.474cqw; --s3-r:-9.4deg; --s3-z:2;
+  }
+  .hv2-lu-card[data-slot="4"]{--x:104%; opacity:0; visibility:hidden; pointer-events:none}
+}
+
+/* 3-up: the two plain slots go, so the deck is tilt · ACTIVE · tilt. */
+@media (max-width: 1179px){
+  .hv2-lu-in{--k:1.679}
+  .hv2-lu-row{
+    height:51.142cqw;
+    --s0-x:-.430cqw;  --s0-w:30.777cqw; --s0-h:50.110cqw; --s0-y:.062cqw; --s0-r:13.2deg;  --s0-z:2;
+    --s1-x:33.267cqw; --s1-w:34.139cqw; --s1-h:50.244cqw; --s1-y:0cqw;    --s1-r:0deg;     --s1-z:5;
+    --s2-x:70.319cqw; --s2-w:29.245cqw; --s2-h:50.628cqw; --s2-y:.447cqw; --s2-r:-15.5deg; --s2-z:2;
+  }
+  .hv2-lu-card[data-slot="1"]{--ring:var(--lu-ring)}
+  .hv2-lu-card[data-slot="2"]{--ring:initial}
+  .hv2-lu-card[data-slot="3"],.hv2-lu-card[data-slot="4"]{
+    --x:104%; opacity:0; visibility:hidden; pointer-events:none;
+  }
+  /* Below the reference width the header can no longer ride cqw — at a 700px
+     container the mock's ratios would render a 23px headline. */
+  .hv2 .hv2-lu-eyebrow{
+    --hlh:1.6em; --hly:-.14em; --hlx:.2em;
+    font-size:clamp(13px,1.55vw,20px);
+  }
+  .hv2 .hv2-lu-h{
+    --hlh:1.24em; --hly:-.03em; --hlx:.05em;
+    margin-top:.34em; font-size:clamp(38px,4.4vw,58px);
+  }
+  .hv2 .hv2-lu-sub{
+    --hlh:1.72em; --hly:-.24em; --hlx:.32em;
+    margin-top:.12em; font-size:clamp(15px,1.7vw,21px);
+  }
+  .hv2-lu-hl{padding-block:.7em}
+  .hv2-lu-in{padding-block:clamp(34px,4vw,62px) clamp(22px,2.4vw,34px)}
+  .hv2-lu-stage{margin-top:clamp(24px,2.6vw,42px)}
+}
+
+/* Tablet: two cards, the active one leading and the next peeking in. Rotation
+   comes almost all the way out — at this size the trapezoid reads as a mistake
+   rather than depth. */
+@media (max-width: 899px){
+  .hv2-lu-in{--k:2.30}
+  /* Card height is no longer a share of its width: at two-up the box is
+     relatively much wider than the mock's, so the height is set from what has to
+     fit — the widest image band (57cqw / 0.967) plus the copy block, which is
+     9.75 reference units tall and therefore 9.75 x --k in cqw. Getting this
+     wrong is what puts a title on top of the photograph. */
+  .hv2-lu-row{
+    height:87cqw;
+    --s0-x:0cqw;    --s0-w:57cqw; --s0-h:86cqw;   --s0-y:0cqw;  --s0-r:0deg;  --s0-z:5;
+    --s1-x:62cqw;   --s1-w:57cqw; --s1-h:86.5cqw; --s1-y:.5cqw; --s1-r:-4deg; --s1-z:2;
+  }
+  .hv2-lu-card[data-slot="0"]{--ring:var(--lu-ring)}
+  .hv2-lu-card[data-slot="1"]{--ring:initial}
+  .hv2-lu-card[data-slot="2"]{
+    --x:104%; opacity:0; visibility:hidden; pointer-events:none; --ring:initial;
+  }
+  /* The controls can no longer hide behind an outer card, so bring them in
+     front of the deck and onto its vertical centre. */
+  .hv2 .hv2-lu-nav{z-index:6; top:calc(50% - 1.8 * var(--u))}
+  .hv2-lu-nav-prev{inset-inline-start:calc(-1.4 * var(--u))}
+  .hv2-lu-nav-next{inset-inline-end:calc(-1.4 * var(--u))}
+}
+
+/* Phone: one card with the next just showing at the edge, no rotation at all,
+   and card type in px — the proportional scale would put a 34px title on a
+   300px card. */
+@media (max-width: 599px){
+  .hv2-lu-in{--k:3.05; width:min(100% - 40px, 1879px)}
+  /* Card type is px here (the proportional scale would put a 34px title on a
+     300px card), so the height is band + a fixed copy block: 88cqw / 0.967 for
+     the widest band, and ~172px for the copy. */
+  .hv2-lu-row{
+    height:calc(91cqw + 180px);
+    --s0-x:0cqw;  --s0-w:88cqw; --s0-h:calc(91cqw + 172px); --s0-y:0cqw; --s0-r:0deg; --s0-z:5;
+    --s1-x:92cqw; --s1-w:88cqw; --s1-h:calc(91cqw + 172px); --s1-y:0cqw; --s1-r:0deg; --s1-z:2;
+  }
+  .hv2-lu-in{
+    --lu-r:22px; --lu-px:20px;
+    --lu-shadow:0 14px 30px rgba(5,28,72,.14), 0 3px 9px rgba(5,28,72,.07);
+    --lu-ring:
+      0 0 0 2px rgba(10,90,255,.85), 0 0 0 5px rgba(120,170,255,.32),
+      0 0 22px 5px rgba(60,130,255,.26), 0 18px 34px rgba(0,25,70,.16);
+  }
+  .hv2 .hv2-lu-cat{
+    inset-block-start:18px; height:32px; padding:6px 12px 0;
+    font-size:12.5px;
+  }
+  .hv2-lu-copy{inset-block-end:16px}
+  .hv2 .hv2-lu-t{font-size:clamp(21px,5.6vw,26px); line-height:1.14}
+  .hv2 .hv2-lu-d{margin-top:10px; font-size:clamp(14px,3.9vw,16.5px); line-height:1.5}
+  .hv2-lu-foot{margin-top:16px; height:46px; gap:12px}
+  .hv2 .hv2-lu-date{font-size:13.5px; gap:9px}
+  .hv2-lu-date time{margin-top:1px}
+  .hv2-lu-cal svg{width:17px; height:17px}
+  .hv2-lu-go{width:46px; height:46px; box-shadow:0 5px 12px rgba(4,16,48,.24)}
+  .hv2-lu-go svg{width:21px; height:21px}
+  /* Touch-first: the arrows sit under the deck beside the dots rather than over
+     the one card that is on screen. */
+  .hv2-lu-stage{
+    display:grid; grid-template-columns:auto 1fr auto; align-items:center;
+    column-gap:14px; margin-top:clamp(20px,5vw,30px);
+  }
+  .hv2-lu-row{grid-column:1 / -1}
+  .hv2 .hv2-lu-nav{
+    position:static; z-index:1; width:44px; height:44px; margin-top:18px;
+  }
+  .hv2 .hv2-lu-nav svg{width:19px; height:19px}
+  .hv2-lu-nav-prev{grid-column:1; grid-row:2}
+  .hv2-lu-nav-next{grid-column:3; grid-row:2}
+  .hv2-lu-dots{grid-column:2; grid-row:2; gap:14px; margin-top:18px}
+  .hv2 .hv2-lu-dot{width:9px; height:9px}
+  .hv2 .hv2-lu-dot[data-on]{width:11px; height:11px}
+}
+
+/* RTL: the deck mirrors, so a card hangs off the inline END and both its slot
+   offset and its tilt flip sign. The ARTWORK is never mirrored — the booth's
+   ODYX sign and the tablet UI would read backwards — only the composition is. */
+[dir="rtl"] .hv2-lu-card{
+  left:auto; right:0;
+  transform:
+    translate3d(calc(-1 * var(--x)),var(--y),0)
+    perspective(var(--lu-persp)) rotateY(calc(-1 * var(--r)));
+}
+[dir="rtl"] .hv2-lu-nav svg,[dir="rtl"] .hv2-lu-go svg{transform:scaleX(-1)}
+
+@media (prefers-reduced-motion: reduce){
+  .hv2-lu-card,.hv2-lu-go,.hv2 .hv2-lu-dot,.hv2 .hv2-lu-nav{transition:none}
+}

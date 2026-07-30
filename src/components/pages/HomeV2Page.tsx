@@ -4,6 +4,7 @@ import ClinicalCasesShowcase from "@/components/home2/ClinicalCasesShowcase";
 import HubCardsSection from "@/components/home2/HubCardsSection";
 import Hv2Header from "@/components/home2/Hv2Header";
 import Hv2Motion from "@/components/home2/Hv2Motion";
+import LatestUpdatesSection from "@/components/home2/LatestUpdatesSection";
 import PathCarousel from "@/components/home2/PathCarousel";
 import ProductsRail from "@/components/home2/ProductsRail";
 
@@ -320,8 +321,11 @@ export default function HomeV2Page() {
       {/* ===== 7 · Clinical cases — the mirrored deck ===== */}
       <ClinicalCasesShowcase />
 
-      {/* ===== 8 · Ecosystem hub — Learning / Support ===== */}
+      {/* ===== 8 · Ecosystem hub — Learning / Support / Store / Registration ===== */}
       <HubCardsSection />
+
+      {/* ===== 9 · Latest updates — five-up update carousel ===== */}
+      <LatestUpdatesSection />
 
       <Hv2Motion />
     </div>
