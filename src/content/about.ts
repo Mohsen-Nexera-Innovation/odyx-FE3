@@ -4,6 +4,11 @@
  * No product specs invented here; links point to catalog-backed product pages.
  */
 
+import {
+  DIGITAL_WORKFLOW_LINKS,
+  isDigitalWorkflowDimmed,
+} from '@/content/digital-workflow-links';
+
 export const ABOUT_META = {
   title: 'About ODYX',
   description:
@@ -73,13 +78,14 @@ export const ABOUT_STORY = {
   ],
 };
 
-/** Five-step spine (SCAN → DESIGN → PRINT → WASH & CURE → DELIVER). */
+/** Four-step spine (SCAN → DESIGN → PRINT → CURE). Design is dimmed until ready. */
 export const ABOUT_SPINE = [
   {
     no: '01',
     label: 'Scan',
     blurb: 'Chairside digital impression — instant 3D data, no molds.',
-    href: '/workflows/scan',
+    href: DIGITAL_WORKFLOW_LINKS.scan,
+    dimmed: isDigitalWorkflowDimmed('scan'),
     img: '/img/scanner/step-scan.jpg',
     alt: 'Digital intraoral scan',
   },
@@ -87,7 +93,8 @@ export const ABOUT_SPINE = [
     no: '02',
     label: 'Design',
     blurb: 'Scan data becomes a precise restoration in CAD.',
-    href: '/workflows/design',
+    href: DIGITAL_WORKFLOW_LINKS.design,
+    dimmed: isDigitalWorkflowDimmed('design'),
     img: '/img/odyx/design.webp',
     alt: 'Dental restoration design',
   },
@@ -95,7 +102,8 @@ export const ABOUT_SPINE = [
     no: '03',
     label: 'Print',
     blurb: 'Layer by layer — crowns, guides, models, dentures.',
-    href: '/workflows/print',
+    href: DIGITAL_WORKFLOW_LINKS.print,
+    dimmed: isDigitalWorkflowDimmed('print'),
     img: '/img/scanner/step-print.jpg',
     alt: 'Dental 3D printing',
   },
@@ -103,17 +111,10 @@ export const ABOUT_SPINE = [
     no: '04',
     label: 'Cure',
     blurb: 'Controlled UV finishing for strength and biocompatibility.',
-    href: '/workflows/cure',
+    href: DIGITAL_WORKFLOW_LINKS.cure,
+    dimmed: isDigitalWorkflowDimmed('cure'),
     img: '/img/scanner/step-cure.jpg',
     alt: 'UV cure step',
-  },
-  {
-    no: '05',
-    label: 'Deliver',
-    blurb: 'The restoration reaches the patient — often same-day.',
-    href: '/workflows/deliver',
-    img: '/img/step-deliver.jpg',
-    alt: 'Delivered restoration',
   },
 ] as const;
 
@@ -236,7 +237,7 @@ export const ABOUT_NEWS = [
   },
   {
     tag: 'Workflow',
-    title: 'Scan to deliver — the five-step path',
+    title: 'Scan to cure — the four-step path',
     href: '/workflows',
     img: '/img/news-2.jpg',
     alt: 'ODYX digital workflow news',

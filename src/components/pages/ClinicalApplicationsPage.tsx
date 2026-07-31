@@ -7,6 +7,7 @@ import {
 } from '@/content/clinical-applications';
 import '@/app/odyx-clinical.css';
 
+/** Category icons — extracted from design strip (circle + white glyph) */
 const CAT_ICON_SRC: Record<string, string> = {
   restorative: '/img/clinical-hub/icons/cat-restorative.png',
   implant: '/img/clinical-hub/icons/cat-implant.png',
@@ -109,7 +110,15 @@ export default function ClinicalApplicationsPage() {
                   {cat.items.map((item) => (
                     <li key={item.id} className="cl-cat-item">
                       <Link href={item.href}>
-                        <span className="cl-cat-thumb cl-cat-thumb--cutout">
+                        <span
+                          className={[
+                            'cl-cat-thumb',
+                            cat.id === 'cases' ? 'cl-cat-thumb--photo' : 'cl-cat-thumb--cutout',
+                            item.id === 'restorative-cases' ? 'cl-cat-thumb--smile' : '',
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={item.thumb} alt="" />
                         </span>

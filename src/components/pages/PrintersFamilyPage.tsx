@@ -58,10 +58,6 @@ const STEP_ICONS: React.ReactNode[] = [
   <svg key="cure" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <path d="M12 3s6 6.6 6 11a6 6 0 1 1-12 0c0-4.4 6-11 6-11z" />
   </svg>,
-  // Deliver
-  <svg key="deliver" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <path d="M7 4c-2 0-3.5 1.8-3.5 4 0 4 2 12 3.8 12 1.3 0 1.6-3.5 4.7-3.5s3.4 3.5 4.7 3.5c1.8 0 3.8-8 3.8-12 0-2.2-1.5-4-3.5-4-2.2 0-3 1.5-5 1.5S9.2 4 7 4z" />
-  </svg>,
 ];
 
 const ArrowGlyph = () => (
@@ -316,13 +312,20 @@ export default function PrintersFamilyPage() {
             {WORKFLOW_SECTION.steps.map((step, i) => (
               <span
                 key={step.label}
-                className="pf-spine-step reveal"
+                className={`pf-spine-step reveal${step.dimmed ? ' is-dimmed' : ''}`}
                 data-active={i === WORKFLOW_SECTION.activeStep}
               >
-                <Link href={step.href} className="pf-spine-node">
-                  <span className="pf-spine-ic">{STEP_ICONS[i]}</span>
-                  <span className="pf-spine-name">{step.label}</span>
-                </Link>
+                {step.dimmed ? (
+                  <span className="pf-spine-node is-dimmed" aria-disabled="true" title="Coming soon">
+                    <span className="pf-spine-ic">{STEP_ICONS[i]}</span>
+                    <span className="pf-spine-name">{step.label}</span>
+                  </span>
+                ) : (
+                  <Link href={step.href} className="pf-spine-node">
+                    <span className="pf-spine-ic">{STEP_ICONS[i]}</span>
+                    <span className="pf-spine-name">{step.label}</span>
+                  </Link>
+                )}
                 {i < WORKFLOW_SECTION.steps.length - 1 && (
                   <span className="pf-spine-arrow" aria-hidden>
                     <ArrowGlyph />
@@ -337,9 +340,15 @@ export default function PrintersFamilyPage() {
               <div className="pf-neighbours">
                 <div className="pf-neighbour reveal">
                   <p>{WORKFLOW_SECTION.back.copy}</p>
-                  <Link href={WORKFLOW_SECTION.back.link.href}>
-                    {WORKFLOW_SECTION.back.link.label}
-                  </Link>
+                  {WORKFLOW_SECTION.back.link.dimmed ? (
+                    <span className="is-dimmed" aria-disabled="true" title="Coming soon">
+                      {WORKFLOW_SECTION.back.link.label}
+                    </span>
+                  ) : (
+                    <Link href={WORKFLOW_SECTION.back.link.href}>
+                      {WORKFLOW_SECTION.back.link.label}
+                    </Link>
+                  )}
                 </div>
                 <div className="pf-neighbour reveal">
                   <p>{WORKFLOW_SECTION.forward.copy}</p>

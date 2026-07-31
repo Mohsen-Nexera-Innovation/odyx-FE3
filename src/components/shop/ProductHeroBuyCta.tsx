@@ -78,7 +78,7 @@ export default function ProductHeroBuyCta({
         {added ? 'Added to cart' : 'Add to cart'}
       </button>
       <Link className={ghostClass} href={workflowHref}>
-        Workflow step <Arrow />
+        Related product <Arrow />
       </Link>
       <Link className={ghostClass} href="/support">
         Request a Demo

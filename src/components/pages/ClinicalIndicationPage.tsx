@@ -65,7 +65,7 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
 
   return (
     <div className="cl cl--sdc" style={{ ['--cl-badge' as string]: badge }}>
-      <section className="cl-hero" data-hero-dark>
+      <section className="cl-hero" data-hero-light>
         <div className="cl-wrap cl-hero-grid">
           <div className="cl-hero-copy">
             <p className="cl-badge">
@@ -98,18 +98,29 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
         <div className="cl-wrap">
           <h2 className="cl-sec-title">{d.productsTitle}</h2>
           <div className="cl-products">
-            {d.products.map((p) => (
-              <Link key={p.id} href={p.href} className="cl-prod">
-                <span className="cl-prod-media">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.img} alt="" />
+            {d.products.map((p) => {
+              const body = (
+                <>
+                  <span className="cl-prod-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.img} alt="" />
+                  </span>
+                  <span className="cl-prod-copy">
+                    <strong>{p.name}</strong>
+                    <span>{p.sub}</span>
+                  </span>
+                </>
+              );
+              return p.dimmed ? (
+                <span key={p.id} className="cl-prod is-dimmed" aria-disabled="true" title="Coming soon">
+                  {body}
                 </span>
-                <span className="cl-prod-copy">
-                  <strong>{p.name}</strong>
-                  <span>{p.sub}</span>
-                </span>
-              </Link>
-            ))}
+              ) : (
+                <Link key={p.id} href={p.href} className="cl-prod">
+                  {body}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

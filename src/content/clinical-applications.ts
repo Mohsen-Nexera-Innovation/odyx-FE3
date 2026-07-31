@@ -161,14 +161,14 @@ export const CLINICAL_CATEGORIES: ClinicalCategory[] = [
     accent: '#D65765',
     footerImg: '',
     footerAlt: '',
-    exploreAll: { label: 'Explore all cases →', href: clinicalPath('restorative-cases') },
+    exploreAll: { label: 'Explore all cases →', href: clinicalPath('all-cases') },
     items: [
       {
         id: 'restorative-cases',
         title: 'Restorative Cases',
-        body: 'Crowns, veneers, inlays & onlays',
+        body: 'Crowns, veneers — real patient photos',
         href: clinicalPath('restorative-cases'),
-        thumb: '/img/clinical-sdc/hero-model-cutout.png',
+        thumb: '/img/clinical-cases/_DSC0255_1.JPG',
       },
       {
         id: 'implant-cases',
@@ -187,9 +187,9 @@ export const CLINICAL_CATEGORIES: ClinicalCategory[] = [
       {
         id: 'prosthetic-cases',
         title: 'Prosthetic Cases',
-        body: 'Dentures & try-ins',
+        body: 'Dentures & try-ins — real photos',
         href: clinicalPath('prosthetic-cases'),
-        thumb: '/img/clinical/dentures/hero-cutout.png',
+        thumb: '/img/clinical-cases/_DSC0197_4.JPG',
       },
     ],
   },
@@ -199,12 +199,12 @@ export const CLINICAL_HUB_BANNER = {
   titleLine1: 'Real Cases.',
   titleLine2: 'Real Results.',
   body: 'Discover how ODYX workflows deliver exceptional outcomes every day.',
-  cta: { label: 'View All Clinical Cases →', href: clinicalPath('restorative-cases') },
+  cta: { label: 'View All Clinical Cases →', href: clinicalPath('all-cases') },
   thumbs: [
-    '/img/hv2-cases/restorative.webp',
-    '/img/hv2-cases/implant.webp',
-    '/img/hv2-cases/orthodontic.webp',
-    '/img/hv2-cases/surgical.webp',
+    '/img/clinical-cases/_DSC0255_1.JPG',
+    '/img/clinical-cases/_DSC0108_1.JPG',
+    '/img/clinical-cases/_DSC0245.JPG',
+    '/img/clinical-cases/_DSC0259_2.JPG',
   ],
 };
 

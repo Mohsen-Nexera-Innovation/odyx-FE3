@@ -118,46 +118,48 @@ body:has(.cure-page) main{
 
 /* Layered hero — machine left, props right; keep inside hero band */
 .cure-page .p126-hero{
-  overflow:hidden; /* stop layers bleeding into cards below */
+  /* visible so machine bottom isn't clipped; x clip via page if needed */
+  overflow:visible;
   /* padding / stack spacing: inherit p126 (same as printer page) */
+}
+.cure-page .p126-hero-grid{
+  gap:clamp(20px, 3vw, 40px); /* keep air between copy and larger media */
 }
 .cure-hero-media{
   position:relative;
   display:block;
-  overflow:hidden;
+  overflow:visible; /* allow machine bottom (feet/shadow) to fully show */
   min-height:100%;
   isolation:isolate;
 }
 .cure-hero-media .p126-hero-ground-shadow{
-  left:4%;
-  width:50%;
-  bottom:3%;
-  height:12%;
+  /* Machine PNG already has a soft studio contact shadow */
+  display:none;
 }
 .cure-layer{
   position:absolute;
   display:block;
   object-fit:contain;
-  object-position:bottom center;
+  object-position:center center;
   pointer-events:none;
 }
 .cure-layer--machine{
-  left:0;
-  top:6%;
+  left:-2%;
+  top:-6%;
   width:56%;
-  height:90%;
+  height:96%;
   z-index:5 !important;
-  /* Product photo already includes soft contact shadow — light lift only */
+  /* Light ground contact only — cutout is fully transparent */
   filter:
-    drop-shadow(0 10px 16px rgba(30,50,80,.12))
-    drop-shadow(0 2px 4px rgba(30,50,80,.08));
+    drop-shadow(0 14px 18px rgba(30,50,80,.14))
+    drop-shadow(0 3px 5px rgba(30,50,80,.08));
   animation:p126-float 5.5s ease-in-out infinite;
 }
 .cure-layer--arch{
-  left:60%;
-  bottom:22%;
-  width:32%;
-  height:42%;
+  left:64%;
+  bottom:36%;
+  width:34%;
+  height:46%;
   z-index:3 !important;
   transform:rotate(-4deg);
   filter:
@@ -166,10 +168,10 @@ body:has(.cure-page) main{
   animation:cure-float-arch 6.2s ease-in-out .2s infinite;
 }
 .cure-layer--aligner{
-  left:64%;
-  bottom:4%;
-  width:30%;
-  height:24%;
+  left:68%;
+  bottom:16%;
+  width:32%;
+  height:28%;
   z-index:4 !important;
   transform:rotate(6deg);
   /* rembg strips soft floor shadows on clear plastic — rebuild with CSS */
@@ -361,13 +363,13 @@ body:has(.cure-page) main{
     display:block;
   }
   .cure-layer--arch{
-    left:58%;
+    left:64%;
     bottom:20%;
     width:28%;
     height:34%;
   }
   .cure-layer--aligner{
-    left:62%;
+    left:68%;
     bottom:4%;
     width:28%;
     height:22%;

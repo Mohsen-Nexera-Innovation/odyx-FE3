@@ -44,6 +44,8 @@ function NavAnchor({
   className,
   onMouseEnter,
   onFocus,
+  dimmed,
+  navOnly,
 }: {
   href: string;
   children: React.ReactNode;
@@ -51,16 +53,44 @@ function NavAnchor({
   className?: string;
   onMouseEnter?: () => void;
   onFocus?: () => void;
+  /** Visible but blocked from navigating */
+  dimmed?: boolean;
+  /** Keep as link for hover/mega, but never navigate to href */
+  navOnly?: boolean;
 }) {
+  const cls = [className, dimmed ? 'is-dimmed' : ''].filter(Boolean).join(' ');
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (dimmed || navOnly) e.preventDefault();
+    onClick?.(e);
+  };
+
   if (href.startsWith('/')) {
     return (
-      <Link href={href} className={className} onClick={onClick} onMouseEnter={onMouseEnter} onFocus={onFocus}>
+      <Link
+        href={href}
+        className={cls || undefined}
+        onClick={handleClick}
+        onMouseEnter={onMouseEnter}
+        onFocus={onFocus}
+        aria-disabled={dimmed || navOnly ? true : undefined}
+        title={dimmed ? 'Coming soon' : undefined}
+        tabIndex={dimmed ? -1 : undefined}
+      >
         {children}
       </Link>
     );
   }
   return (
-    <a href={href} className={className} onClick={onClick} onMouseEnter={onMouseEnter} onFocus={onFocus}>
+    <a
+      href={href}
+      className={cls || undefined}
+      onClick={handleClick}
+      onMouseEnter={onMouseEnter}
+      onFocus={onFocus}
+      aria-disabled={dimmed || navOnly ? true : undefined}
+      title={dimmed ? 'Coming soon' : undefined}
+      tabIndex={dimmed ? -1 : undefined}
+    >
       {children}
     </a>
   );
@@ -82,7 +112,13 @@ function MegaLink({
     ? { onMouseEnter: () => onPreview(item), onFocus: () => onPreview(item) }
     : {};
   return (
-    <NavAnchor href={item.href} className="mega-link" onClick={onClick} {...previewProps}>
+    <NavAnchor
+      href={item.href}
+      className="mega-link"
+      onClick={onClick}
+      dimmed={item.dimmed}
+      {...previewProps}
+    >
       <span className="mega-link__label">{item.label}</span>
     </NavAnchor>
   );
@@ -103,7 +139,12 @@ function MegaColumnBlock({
   return (
     <div className="mega-col">
       {column.href ? (
-        <NavAnchor href={column.href} className="mega-col__title" onClick={onClick}>
+        <NavAnchor
+          href={column.href}
+          className="mega-col__title"
+          onClick={onClick}
+          dimmed={column.dimmed}
+        >
           {column.title}
         </NavAnchor>
       ) : (
@@ -176,7 +217,12 @@ function MegaPanel({
               <span className="mega-featured__eyebrow">{shown.eyebrow}</span>
               <strong className="mega-featured__title">{shown.title}</strong>
               <p className="mega-featured__desc">{shown.desc}</p>
-              <NavAnchor href={shown.href} className="mega-featured__cta" onClick={onClick}>
+              <NavAnchor
+                href={shown.href}
+                className="mega-featured__cta"
+                onClick={onClick}
+                dimmed={preview?.item.dimmed || featured?.dimmed}
+              >
                 {shown.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                   <path d="M5 12h14M13 6l6 6-6 6" />
@@ -192,7 +238,7 @@ function MegaPanel({
   return (
     <div className="mega">
       {menu.items.map((item) => (
-        <NavAnchor key={item.label} href={item.href} onClick={onClick}>
+        <NavAnchor key={item.label} href={item.href} onClick={onClick} dimmed={item.dimmed || menu.dimmed}>
           {item.label}
         </NavAnchor>
       ))}
@@ -446,10 +492,15 @@ export default function Header() {
         <nav className={`nav-menu${open ? ' open' : ''}`} aria-label="Main">
           {HEADER_MENUS.map((m) => (
             <div
-              className={`nav-item${m.columns ? ' nav-item--mega' : ''}${expandedNav === m.label ? ' exp' : ''}`}
+              className={`nav-item${m.columns ? ' nav-item--mega' : ''}${m.dimmed ? ' is-dimmed' : ''}${expandedNav === m.label ? ' exp' : ''}`}
               key={m.label}
             >
-              <NavAnchor href={m.href} onClick={(e) => toggleMobileSection(m.label, e)}>
+              <NavAnchor
+                href={m.href}
+                dimmed={m.dimmed}
+                navOnly={m.navOnly}
+                onClick={(e) => toggleMobileSection(m.label, e)}
+              >
                 <span className={isMenuActive(m.href) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
               </NavAnchor>
               <MegaPanel menu={m} onClick={closeMenu} />
@@ -457,12 +508,12 @@ export default function Header() {
           ))}
           <div className="nav-mobile-auth" aria-label="Account">
             {session ? (
-              <Link className="btn-ghost btn btn-sm" href="/support#register" onClick={closeMenu}>Register device</Link>
+              <span className="btn-ghost btn btn-sm is-dimmed" aria-disabled="true" title="Coming soon">Register device</span>
             ) : (
               <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
             )}
-            <Link className="btn-ghost btn btn-sm" href="/support#contact" onClick={closeMenu}>Contact Sales</Link>
-            <Link className="btn btn-sm nav-demo" href="/support" onClick={closeMenu}>Request a Demo</Link>
+            <span className="btn-ghost btn btn-sm is-dimmed" aria-disabled="true" title="Coming soon">Contact Sales</span>
+            <span className="btn btn-sm nav-demo is-dimmed" aria-disabled="true" title="Coming soon">Request a Demo</span>
           </div>
         </nav>
         <div className="nav-tools">
@@ -500,10 +551,10 @@ export default function Header() {
                 </Link>
               ) : (
                 <>
-                  <Link className="btn-ghost btn btn-sm nav-reg-device" href="/support#register">
+                  <span className="btn-ghost btn btn-sm nav-reg-device is-dimmed" aria-disabled="true" title="Coming soon">
                     <span className="nav-label-long">Register device</span>
                     <span className="nav-label-short">Device</span>
-                  </Link>
+                  </span>
                   <Link className="btn-ghost btn btn-sm nav-inbox" href="/inbox" aria-label={inboxUnread > 0 ? `Inbox, ${inboxUnread} unread` : 'Inbox'}>
                     Inbox
                     {inboxUnread > 0 ? <span className="nav-inbox-badge">{inboxUnread}</span> : null}
@@ -520,14 +571,14 @@ export default function Header() {
           ) : (
             <Link className="btn-ghost btn btn-sm nav-login" href="/login">Sign in</Link>
           )}
-          <Link className="btn-ghost btn btn-sm nav-sales" href="/support#contact">
+          <span className="btn-ghost btn btn-sm nav-sales is-dimmed" aria-disabled="true" title="Coming soon">
             <span className="nav-label-long">Contact Sales</span>
             <span className="nav-label-short">Sales</span>
-          </Link>
-          <Link className="btn btn-sm nav-demo" href="/support">
+          </span>
+          <span className="btn btn-sm nav-demo is-dimmed" aria-disabled="true" title="Coming soon">
             <span className="nav-label-long">Request a Demo</span>
             <span className="nav-label-short">Demo</span>
-          </Link>
+          </span>
           <button
             type="button"
             className="burger"

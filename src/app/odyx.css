@@ -129,6 +129,48 @@ header .wrap.nav{
 .logo:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:6px}
 .nav-menu{display:flex;gap:clamp(4px,1vw,10px);align-items:center;margin-left:clamp(8px,1.6vw,20px);min-width:0;flex:1 1 auto}
 .nav-item{position:relative;flex-shrink:0}
+/* Preview-only / not-ready nav — stay visible, reduced contrast, no navigation */
+.nav-item.is-dimmed>a,
+.nav-item>a.is-dimmed,
+.mega-link.is-dimmed,
+.mega > a.is-dimmed,
+.mega-col__title.is-dimmed,
+.mega-featured.is-dimmed,
+.mega-featured__cta.is-dimmed,
+header .btn.is-dimmed,
+header .btn-ghost.is-dimmed,
+header span.is-dimmed{
+  opacity:.38;
+  cursor:not-allowed;
+  pointer-events:none;
+  filter:grayscale(.25);
+}
+.nav-item:hover .mega-link.is-dimmed{
+  opacity:.38;
+  transform:none;
+}
+.nav-item.is-dimmed:hover>a::after{width:0}
+.nav-item.is-dimmed:hover>a,
+header.on-light .nav-item.is-dimmed>a,
+header.on-light .nav-item>a.is-dimmed{
+  color:rgba(255,255,255,.42);
+}
+header.on-light .nav-item.is-dimmed>a,
+header.on-light .nav-item>a.is-dimmed{
+  color:rgba(90,85,92,.45);
+}
+/* Dimmed top-level still opens mega on hover so clients can see structure */
+.nav-item.is-dimmed{pointer-events:auto}
+.nav-item.is-dimmed>a{pointer-events:auto;cursor:default}
+.nav-item.is-dimmed .mega-link,
+.nav-item.is-dimmed .mega-col__title,
+.nav-item.is-dimmed .mega-featured__cta,
+.nav-item.is-dimmed .mega > a{
+  opacity:.38;
+  pointer-events:none;
+  cursor:not-allowed;
+}
+.nav-item.is-dimmed:hover .mega-link{opacity:.38;transform:none}
 .nav-item>a{
   position:relative;
   display:inline-flex;align-items:center;gap:4px;padding:8px clamp(6px,.8vw,10px);

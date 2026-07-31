@@ -260,12 +260,9 @@ export default function CuringPage() {
           <div className="p126-card p126-flow-card reveal in">
             <h2 className="p126-card-title">Digital Workflow</h2>
             <ol className="p126-flow">
-              {CURE_UV02_WORKFLOW.map((step, i) => (
-                <li
-                  key={step.id}
-                  className={`p126-flow-step${step.id === 'cure' ? ' is-current' : ''}`}
-                >
-                  <Link href={step.href} className="p126-flow-link">
+              {CURE_UV02_WORKFLOW.map((step, i) => {
+                const body = (
+                  <>
                     <span className="p126-flow-icon">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={`${FLOW_ICONS[step.id]}?v=4`} alt="" loading="lazy" />
@@ -274,14 +271,30 @@ export default function CuringPage() {
                       <strong>{step.bold}</strong>
                       {step.rest}
                     </span>
-                  </Link>
-                  {i < CURE_UV02_WORKFLOW.length - 1 ? (
-                    <span className="p126-flow-arrow" aria-hidden>
-                      {FLOW_CHEVRON}
-                    </span>
-                  ) : null}
-                </li>
-              ))}
+                  </>
+                );
+                return (
+                  <li
+                    key={step.id}
+                    className={`p126-flow-step${step.id === 'cure' ? ' is-current' : ''}${step.dimmed ? ' is-dimmed' : ''}`}
+                  >
+                    {step.dimmed ? (
+                      <span className="p126-flow-link is-dimmed" aria-disabled="true" title="Coming soon">
+                        {body}
+                      </span>
+                    ) : (
+                      <Link href={step.href} className="p126-flow-link">
+                        {body}
+                      </Link>
+                    )}
+                    {i < CURE_UV02_WORKFLOW.length - 1 ? (
+                      <span className="p126-flow-arrow" aria-hidden>
+                        {FLOW_CHEVRON}
+                      </span>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ol>
           </div>
           <CureRoiMini />

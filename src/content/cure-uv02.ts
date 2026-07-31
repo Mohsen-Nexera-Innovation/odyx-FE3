@@ -3,6 +3,11 @@
  * Uses the same layout system as P1-26 (odyx-p126.css).
  */
 
+import {
+  DIGITAL_WORKFLOW_LINKS,
+  isDigitalWorkflowDimmed,
+} from '@/content/digital-workflow-links';
+
 export const CURE_UV02_SLUG = 'curing-machines';
 
 export const CURE_UV02_META = {
@@ -20,7 +25,7 @@ export const CURE_UV02_HERO = {
   outputArchImg: '/img/cure-uv02/hero/output-arch-cutout.png',
   outputAlignerImg: '/img/cure-uv02/hero/output-aligner-cutout.png',
   imgAlt: 'ODYX Cure UV-02 dental UV curing station with cured models',
-  imgVersion: '7',
+  imgVersion: '18',
   primaryCta: { label: 'Request Demo', href: '/support' },
   secondaryCta: { label: 'Download Brochure', href: '/support' },
 };
@@ -76,11 +81,10 @@ export const CURE_UV02_APPS = [
 ] as const;
 
 export const CURE_UV02_WORKFLOW = [
-  { id: 'scan', label: 'Scan', bold: 'Scan', rest: '', href: '/workflows/scan' },
-  { id: 'design', label: 'Design', bold: 'Design', rest: '', href: '/workflows/design' },
-  { id: 'print', label: 'Print', bold: 'Print', rest: '', href: '/workflows/print' },
-  { id: 'cure', label: 'Cure', bold: 'Cure', rest: '', href: '/workflows/cure' },
-  { id: 'deliver', label: 'Deliver', bold: 'Deliver', rest: '', href: '/workflows/deliver' },
+  { id: 'scan', label: 'Scan', bold: 'Scan', rest: '', href: DIGITAL_WORKFLOW_LINKS.scan, dimmed: isDigitalWorkflowDimmed('scan') },
+  { id: 'design', label: 'Design', bold: 'Design', rest: '', href: DIGITAL_WORKFLOW_LINKS.design, dimmed: isDigitalWorkflowDimmed('design') },
+  { id: 'print', label: 'Print', bold: 'Print', rest: '', href: DIGITAL_WORKFLOW_LINKS.print, dimmed: isDigitalWorkflowDimmed('print') },
+  { id: 'cure', label: 'Cure', bold: 'Cure', rest: '', href: DIGITAL_WORKFLOW_LINKS.cure, dimmed: isDigitalWorkflowDimmed('cure') },
 ] as const;
 
 export const CURE_UV02_ROI = {

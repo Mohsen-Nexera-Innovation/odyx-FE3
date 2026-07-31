@@ -17,10 +17,10 @@ const BEGINNER = [
 ];
 
 const COURSES = [
-  { title: 'Crown workflow', href: '/workflows/print' },
-  { title: 'Implant guide', href: '/workflows/design' },
-  { title: 'Orthodontic model', href: '/workflows/print' },
-  { title: 'Denture workflow', href: '/workflows/deliver' },
+  { title: 'Crown workflow', href: '/products/odyx-p1-26' },
+  { title: 'Implant guide', href: '/products/design' },
+  { title: 'Orthodontic model', href: '/products/odyx-p1-26' },
+  { title: 'Denture workflow', href: '/products/resins' },
 ];
 
 const ARTICLES = [
@@ -30,7 +30,7 @@ const ARTICLES = [
 ];
 
 const VIDEOS = [
-  { title: 'Scan to smile overview', href: '/workflows' },
+  { title: 'Scan to smile overview', href: '/products' },
   { title: 'P1-26 setup walkthrough', href: '/products/3d-printers' },
   { title: 'Cure profiles explained', href: '/products/curing-machines' },
 ];

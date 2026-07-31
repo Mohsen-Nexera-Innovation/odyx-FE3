@@ -647,7 +647,8 @@ body:has(.s1l-page) main{
   margin:0 0 10px;
   font-size:clamp(1.15rem,2vw,1.45rem);
   font-weight:700;
-  color:var(--s1l-navy);
+  /* Design: brighter indigo than the title (mock ~#282DA9) */
+  color:#282da9;
   letter-spacing:-.01em;
 }
 .s1l-tagline{
@@ -658,7 +659,8 @@ body:has(.s1l-page) main{
   letter-spacing:-.015em;
 }
 .s1l-title{
-  color:var(--s1l-navy);
+  /* Design: near-black navy (mock ~#00034C), not the shared #0d1b4d navy */
+  color:#00034c;
   font-size:clamp(2.6rem,5.6vw,3.8rem);
   font-weight:800;
   letter-spacing:-.035em;

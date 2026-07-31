@@ -1,5 +1,7 @@
 /** Shared types for clinical indication detail pages (Same-Day Crown chrome). */
 
+import { DIGITAL_WORKFLOW_LINKS } from '@/content/digital-workflow-links';
+
 export type ClinicalCategoryId =
   | 'restorative'
   | 'implant'
@@ -22,6 +24,8 @@ export type ClinicalProduct = {
   img: string;
   href: string;
   layout?: 'stack';
+  /** Visible but non-navigable (page not ready) */
+  dimmed?: boolean;
 };
 
 export type ClinicalTimelineStep = {
@@ -112,8 +116,9 @@ export const ECOSYSTEM_PRODUCTS = {
     name: 'CAD Software',
     sub: '(exocad)',
     img: '/img/clinical-sdc/card-cad-software.png',
-    href: '/workflows/design',
+    href: DIGITAL_WORKFLOW_LINKS.design,
     layout: 'stack' as const,
+    dimmed: true,
   },
   printer: {
     id: 'printer',

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ClinicalIndicationPage from '@/components/pages/ClinicalIndicationPage';
 import ClinicalCasesListingPage from '@/components/pages/ClinicalCasesListingPage';
+import ClinicalAllCasesPage from '@/components/pages/ClinicalAllCasesPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import {
   CLINICAL_INDICATION_META,
@@ -9,6 +10,7 @@ import {
   getClinicalIndication,
 } from '@/content/clinical-indications';
 import {
+  ALL_CLINICAL_CASES_SLUG,
   CLINICAL_CASE_LISTING_META,
   CLINICAL_CASE_LISTING_SLUGS,
   getClinicalCaseListing,
@@ -18,7 +20,9 @@ type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   const indicationSlugs = CLINICAL_INDICATION_SLUGS.filter((slug) => slug !== 'same-day-crown');
-  return [...indicationSlugs, ...CLINICAL_CASE_LISTING_SLUGS].map((slug) => ({ slug }));
+  return [...indicationSlugs, ...CLINICAL_CASE_LISTING_SLUGS, ALL_CLINICAL_CASES_SLUG].map(
+    (slug) => ({ slug }),
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -32,6 +36,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ClinicalIndicationRoute({ params }: Props) {
   const { slug } = await params;
+
+  if (slug === ALL_CLINICAL_CASES_SLUG) {
+    return (
+      <>
+        <ClinicalAllCasesPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
 
   const listing = getClinicalCaseListing(slug);
   if (listing) {

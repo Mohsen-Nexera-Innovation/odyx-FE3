@@ -297,8 +297,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Powerful Curing. Perfect Results.",
     overview:
       "The ODYX Cure UV-02 delivers uniform, reliable, and efficient curing for all your dental 3D printed applications.",
-    img: "/img/cure-uv02/hero/machine-cutout.png?v=6",
-    heroImg: "/img/cure-uv02/hero/machine-cutout.png?v=6",
+    img: "/img/cure-uv02/hero/machine-cutout.png?v=18",
+    heroImg: "/img/cure-uv02/hero/machine-cutout.png?v=18",
     accent: "teal",
     workflowStep: "cure",
     applications: [

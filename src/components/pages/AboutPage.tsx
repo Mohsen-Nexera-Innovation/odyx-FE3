@@ -121,8 +121,8 @@ export default function AboutPage() {
               <p key={p.slice(0, 24)}>{p}</p>
             ))}
             <div className="about-story__actions">
-              <Link className="btn" href="/workflows">
-                See the workflow <Arrow />
+              <Link className="btn" href="/products">
+                See the products <Arrow />
               </Link>
               <Link className="btn btn-ghost" href="/support">
                 Request a Demo
@@ -152,24 +152,37 @@ export default function AboutPage() {
       >
         <div className="wrap about-spine__head reveal">
           <span className="eyebrow">The connected workflow</span>
-          <h2>Five steps. One system.</h2>
-          <p>Scroll sideways — each step opens the matching workflow guide.</p>
+          <h2>Four steps. One system.</h2>
+          <p>Scroll sideways — each step opens the matching product page.</p>
         </div>
 
         <div className="about-spine__viewport">
           <ol className="about-spine__rail build-group" tabIndex={0} aria-label="Workflow steps">
             {ABOUT_SPINE.map((step) => (
-              <li key={step.no} className="about-spine__step build reveal">
-                <Link href={step.href} className="about-spine__card">
-                  <div className="about-spine__media">
-                    <img src={step.img} alt={step.alt} loading="lazy" />
-                  </div>
-                  <div className="about-spine__meta">
-                    <span className="about-spine__no">{step.no}</span>
-                    <strong>{step.label}</strong>
-                    <p>{step.blurb}</p>
-                  </div>
-                </Link>
+              <li key={step.no} className={`about-spine__step build reveal${step.dimmed ? ' is-dimmed' : ''}`}>
+                {step.dimmed ? (
+                  <span className="about-spine__card is-dimmed" aria-disabled="true" title="Coming soon">
+                    <div className="about-spine__media">
+                      <img src={step.img} alt={step.alt} loading="lazy" />
+                    </div>
+                    <div className="about-spine__meta">
+                      <span className="about-spine__no">{step.no}</span>
+                      <strong>{step.label}</strong>
+                      <p>{step.blurb}</p>
+                    </div>
+                  </span>
+                ) : (
+                  <Link href={step.href} className="about-spine__card">
+                    <div className="about-spine__media">
+                      <img src={step.img} alt={step.alt} loading="lazy" />
+                    </div>
+                    <div className="about-spine__meta">
+                      <span className="about-spine__no">{step.no}</span>
+                      <strong>{step.label}</strong>
+                      <p>{step.blurb}</p>
+                    </div>
+                  </Link>
+                )}
               </li>
             ))}
           </ol>

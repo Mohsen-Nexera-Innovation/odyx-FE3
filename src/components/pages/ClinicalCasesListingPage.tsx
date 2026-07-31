@@ -1,62 +1,46 @@
 import Link from 'next/link';
+import ClinicalCasesHero from '@/components/clinical/ClinicalCasesHero';
+import RealCaseGallery from '@/components/clinical/RealCaseGallery';
 import {
   caseListingBadgeAccent,
-  resolveCaseListingItems,
+  listingHeroImages,
+  resolveRealCases,
   type ClinicalCaseListing,
 } from '@/content/clinical-case-listings';
 import '@/app/odyx-clinical.css';
 
-/** Category case listing — heroes from indication pages, links to detail. */
+/** Category clinical cases — real before/after photography only. */
 export default function ClinicalCasesListingPage({ data }: { data: ClinicalCaseListing }) {
-  const items = resolveCaseListingItems(data);
+  const cases = resolveRealCases(data);
+  const heroImages = listingHeroImages(data);
   const badge = caseListingBadgeAccent(data);
 
   return (
-    <div className="cl cl--sdc cl--cases-list" style={{ ['--cl-badge' as string]: badge }}>
-      <section className="cl-hero cl-hero--cases-list" data-hero-dark>
-        <div className="cl-wrap">
-          <p className="cl-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path
-                d="M12 3c2.5 2.2 4 5.2 4 8.2A4 4 0 0 1 8 11.2C8 8.2 9.5 5.2 12 3z"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Clinical Cases
-          </p>
-          <h1>{data.title}</h1>
-          <p className="cl-hero-sub">{data.subtitle}</p>
-          <p className="cl-hero-body cl-hero-body--wide">{data.body}</p>
-          <Link className="cl-cases-back" href="/solutions/clinical-applications">
-            ← All clinical applications
-          </Link>
-        </div>
-      </section>
+    <div className="cl cl--cases-list" style={{ ['--cl-badge' as string]: badge }}>
+      <ClinicalCasesHero
+        title={data.title}
+        subtitle={data.subtitle}
+        body={data.body}
+        images={heroImages}
+      />
 
       <section className="cl-sec cl-sec--cases-grid">
         <div className="cl-wrap">
-          <h2 className="cl-sec-title">Applications in this category</h2>
-          <div className="cl-cases-grid">
-            {items.map((item) => (
-              <Link key={item.slug} href={item.href} className="cl-cases-card">
-                <span className="cl-cases-card-media">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={item.img} alt={item.imgAlt} />
-                </span>
-                <span className="cl-cases-card-copy">
-                  <strong>{item.title}</strong>
-                  <span className="cl-cases-card-sub">{item.subtitle}</span>
-                  <span className="cl-cases-card-body">{item.body}</span>
-                  <span className="cl-cases-card-cta">
-                    View workflow
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                      <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </span>
-              </Link>
-            ))}
+          <div className="cl-cases-section-head">
+            <h2 className="cl-sec-title">
+              Patient cases
+              {cases.length > 0 ? (
+                <span className="cl-cases-count">{cases.length}</span>
+              ) : null}
+            </h2>
+            <Link className="cl-cases-section-link" href="/solutions/clinical-applications/all-cases">
+              All clinical cases
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
           </div>
+          <RealCaseGallery cases={cases} />
         </div>
       </section>
     </div>

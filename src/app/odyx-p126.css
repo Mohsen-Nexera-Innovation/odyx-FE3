@@ -746,6 +746,17 @@
   object-fit:contain;
   display:block;
 }
+.p126-flow-step.is-dimmed .p126-flow-link,
+.p126-flow-link.is-dimmed{
+  opacity:.38;
+  cursor:not-allowed;
+  pointer-events:none;
+  filter:grayscale(.2);
+}
+.p126-flow-step.is-dimmed .p126-flow-icon,
+.p126-flow-step.is-dimmed:hover .p126-flow-icon{
+  transform:none;
+}
 .p126-flow-step:hover .p126-flow-icon{
   transform:translateY(-2px);
 }

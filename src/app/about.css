@@ -556,6 +556,13 @@
   flex:0 0 min(300px, 78vw);
   scroll-snap-align:start;
 }
+.about-spine__step.is-dimmed .about-spine__card,
+.about-spine__card.is-dimmed{
+  opacity:.42;
+  cursor:not-allowed;
+  pointer-events:none;
+  filter:grayscale(.2);
+}
 .about-spine__card{
   display:flex;flex-direction:column;
   height:100%;
