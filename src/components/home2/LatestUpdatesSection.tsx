@@ -204,10 +204,19 @@ const CardArrow = () => (
 export default function LatestUpdatesSection() {
   // `offset` is the ring position of the card in slot 0.
   const [offset, setOffset] = useState(0);
+  // Counts real navigations (arrow, dot, key, swipe). Its parity is published
+  // as data-anim="a"/"b", which is what restarts the CSS travel animations —
+  // the depth dip, content stagger and sheen (see "motion" in home-v2.css).
+  // Keyed to navigation rather than render so unrelated rerenders never
+  // replay them, and 0 renders no attribute at all so SSR markup is inert.
+  const [phase, setPhase] = useState(0);
   // Pointer swipe: one gesture = one step, threshold in px so a tap never fires.
   const drag = useRef<{ x: number; id: number } | null>(null);
 
-  const step = useCallback((d: number) => setOffset((o) => mod(o + d, N)), []);
+  const step = useCallback((d: number) => {
+    setOffset((o) => mod(o + d, N));
+    setPhase((p) => p + 1);
+  }, []);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
@@ -230,18 +239,12 @@ export default function LatestUpdatesSection() {
       <div className="hv2-lu-in">
         <div className="hv2-lu-head rv">
           <p className="hv2-lu-eyebrow">
-            <span className="hv2-lu-hl">
-              <span className="hv2-lu-pip" aria-hidden>&bull;</span>
-              Stay Informed
-              <span className="hv2-lu-pip" aria-hidden>&bull;</span>
-            </span>
+            <span className="hv2-lu-pip" aria-hidden>&bull;</span>
+            Stay Informed
+            <span className="hv2-lu-pip" aria-hidden>&bull;</span>
           </p>
-          <h2 className="hv2-lu-h" id="hv2-lu-h">
-            <span className="hv2-lu-hl">Latest Updates</span>
-          </h2>
-          <p className="hv2-lu-sub">
-            <span className="hv2-lu-hl">News, events, product updates and more from ODYX.</span>
-          </p>
+          <h2 className="hv2-lu-h" id="hv2-lu-h">Latest Updates</h2>
+          <p className="hv2-lu-sub">News, events, product updates and more from ODYX.</p>
         </div>
 
         <div className="hv2-lu-stage rv" data-rv="1">
@@ -249,6 +252,7 @@ export default function LatestUpdatesSection() {
             {/* aria-roledescription needs a real role to attach to. */}
             <div
               className="hv2-lu-track"
+              data-anim={phase === 0 ? undefined : phase % 2 ? "a" : "b"}
               role="group"
               aria-roledescription="carousel"
               aria-label="Latest ODYX updates"
@@ -339,7 +343,12 @@ export default function LatestUpdatesSection() {
                   aria-label={`Updates ${k * PER_DOT + 1}\u2013${k * PER_DOT + PER_DOT}`}
                   aria-current={on || undefined}
                   data-on={on ? "" : undefined}
-                  onClick={() => setOffset(k * PER_DOT)}
+                  onClick={() => {
+                    const t = k * PER_DOT;
+                    if (t === offset) return; // no travel, no replay
+                    setOffset(t);
+                    setPhase((p) => p + 1);
+                  }}
                 />
               );
             })}
