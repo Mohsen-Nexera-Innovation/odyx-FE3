@@ -110,6 +110,7 @@ export default function P126Page() {
       {/* Hero — fidelity to printer-odyx-p1-26.jpeg */}
       <section
         className="p126-hero"
+        data-hero-light
         aria-label="ODYX P1-26"
         style={{ ['--p126-hero-bg' as string]: `url('${hero.bg}?v=12')` }}
       >
@@ -253,23 +254,41 @@ export default function P126Page() {
           <div className="p126-card p126-flow-card reveal">
             <h2 className="p126-card-title">Digital Workflow</h2>
             <ol className="p126-flow">
-              {P1_26_WORKFLOW.map((step, i) => (
-                <li key={step.id} className="p126-flow-step">
-                  <span className="p126-flow-icon">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`${FLOW_ICONS[step.id]}?v=41`} alt="" loading="lazy" />
-                  </span>
-                  <span className="p126-flow-label">
-                    <strong>{step.bold}</strong>
-                    {step.rest}
-                  </span>
-                  {i < P1_26_WORKFLOW.length - 1 ? (
-                    <span className="p126-flow-arrow" aria-hidden>
-                      {FLOW_CHEVRON}
+              {P1_26_WORKFLOW.map((step, i) => {
+                const body = (
+                  <>
+                    <span className="p126-flow-icon">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`${FLOW_ICONS[step.id]}?v=42`} alt="" loading="lazy" />
                     </span>
-                  ) : null}
-                </li>
-              ))}
+                    <span className="p126-flow-label">
+                      <strong>{step.bold}</strong>
+                      {step.rest}
+                    </span>
+                  </>
+                );
+                return (
+                  <li
+                    key={step.id}
+                    className={`p126-flow-step${step.id === 'print' ? ' is-current' : ''}${step.dimmed ? ' is-dimmed' : ''}`}
+                  >
+                    {step.dimmed ? (
+                      <span className="p126-flow-link is-dimmed" aria-disabled="true" title="Coming soon">
+                        {body}
+                      </span>
+                    ) : (
+                      <Link href={step.href} className="p126-flow-link">
+                        {body}
+                      </Link>
+                    )}
+                    {i < P1_26_WORKFLOW.length - 1 ? (
+                      <span className="p126-flow-arrow" aria-hidden>
+                        {FLOW_CHEVRON}
+                      </span>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ol>
           </div>
           <P126RoiMini />

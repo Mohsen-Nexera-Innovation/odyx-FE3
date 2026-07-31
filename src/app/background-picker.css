@@ -43,12 +43,12 @@
   transition:color .2s,border-color .2s,background .2s,transform .2s;
 }
 .dev-preview-tools-toggle:hover{
-  color:var(--sky,#06a5df);
-  border-color:rgba(6,165,223,.35);
+  color:var(--sky,#0050D8);
+  border-color:rgba(0,80,216,.35);
   transform:translateY(-1px);
 }
 .dev-preview-tools-toggle:focus-visible{
-  outline:2px solid var(--sky,#06a5df);
+  outline:2px solid var(--sky,#0050D8);
   outline-offset:2px;
 }
 
@@ -93,8 +93,8 @@
   outline:none;
 }
 .bg-picker-select:focus{
-  border-color:var(--sky,#06a5df);
-  box-shadow:0 0 0 2px rgba(6,165,223,.2);
+  border-color:var(--sky,#0050D8);
+  box-shadow:0 0 0 2px rgba(0,80,216,.2);
 }
 .bg-picker-swatch{
   width:22px;
@@ -273,8 +273,8 @@ html[data-bg-preview][data-bg-tone="light"] .product-page--print-signature .page
   max-width:140px;
 }
 .font-picker-select:focus{
-  border-color:var(--sky,#06a5df);
-  box-shadow:0 0 0 2px rgba(6,165,223,.2);
+  border-color:var(--sky,#0050D8);
+  box-shadow:0 0 0 2px rgba(0,80,216,.2);
 }
 
 /* Ecosystem section color preview — overrides #ecosystem band background */
@@ -348,8 +348,8 @@ html[data-eco-shadow-preview][data-eco-pill-tone] #ecosystem .hl-pill.on{
   outline:none;
 }
 .eco-shadow-picker-select:focus{
-  border-color:var(--sky,#06a5df);
-  box-shadow:0 0 0 2px rgba(6,165,223,.2);
+  border-color:var(--sky,#0050D8);
+  box-shadow:0 0 0 2px rgba(0,80,216,.2);
 }
 .eco-shadow-picker-color{
   width:32px;
@@ -370,7 +370,7 @@ html[data-eco-shadow-preview][data-eco-pill-tone] #ecosystem .hl-pill.on{
 }
 .eco-shadow-picker-range{
   width:min(18vw,100px);
-  accent-color:var(--sky,#06a5df);
+  accent-color:var(--sky,#0050D8);
   cursor:pointer;
 }
 .eco-shadow-picker-opacity-val{

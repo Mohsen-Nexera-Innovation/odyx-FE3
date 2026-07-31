@@ -9,8 +9,8 @@
   --admin-panel-2: #252128;
   --admin-line: rgba(255, 255, 255, 0.1);
   --admin-line-2: rgba(255, 255, 255, 0.16);
-  --admin-sky: #7fd0f3;
-  --admin-sky-rgb: 6, 165, 223;
+  --admin-sky: #5B93F5;
+  --admin-sky-rgb: 0, 80, 216;
   --admin-ok: #5ddf8a;
 
   min-height: 100vh;
@@ -660,7 +660,7 @@ body:has(.admin-shell) .site-bg {
 }
 
 .admin-chat-hero h1 span {
-  background: linear-gradient(120deg, var(--admin-sky) 0%, #0581ad 100%);
+  background: linear-gradient(120deg, var(--admin-sky) 0%, #0041AF 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -737,7 +737,7 @@ body:has(.admin-shell) .site-bg {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, var(--admin-sky), #0581ad);
+  background: linear-gradient(145deg, var(--admin-sky), #0041AF);
   color: #081018;
   font-size: 0.7rem;
   font-weight: 800;

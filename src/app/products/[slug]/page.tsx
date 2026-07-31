@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
 import CuringPage from '@/components/pages/CuringPage';
-import CuringUv02Page from '@/components/pages/CuringUv02Page';
 import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
 import P126Page from '@/components/pages/P126Page';
 import ResinsRangePage from '@/components/pages/ResinsRangePage';
@@ -17,18 +16,17 @@ import { SCANNER_META, SCANNER_SLUG } from '@/content/scanner-s1';
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Legacy product slugs → current (301 — the scanner slug carries the model name, review #22;
- *  the resins slug is plural lowercase per 039 content.md §3;
- *  curing demo variants collapse to the single Cure page) */
+/** Legacy product slugs → current (301 — curing demo variants collapse to one Cure page) */
 const SLUG_ALIASES: Record<string, string> = {
   Resin: RESINS_SLUG,
   Resins: RESINS_SLUG,
   'intraoral-scanner': SCANNER_SLUG,
-  'cure-cutout': 'curing-machines',
-  'cure-editorial': 'curing-machines',
-  'cure-float': 'curing-machines',
-  'cure-v4': 'curing-machines',
-  'cure-v5': 'curing-machines',
+  'cure-cutout': CURE_UV02_SLUG,
+  'cure-editorial': CURE_UV02_SLUG,
+  'cure-float': CURE_UV02_SLUG,
+  'cure-v4': CURE_UV02_SLUG,
+  'cure-v5': CURE_UV02_SLUG,
+  'cure-v6': CURE_UV02_SLUG,
   'odyx-halot-x1': '3d-printers',
 };
 
@@ -51,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (slug === RESINS_SLUG) {
     return { title: RESINS_META.title, description: RESINS_META.description };
   }
-  if (slug === CURE_UV02_SLUG || slug === 'cure-v6') {
+  if (slug === CURE_UV02_SLUG) {
     return { title: CURE_UV02_META.title, description: CURE_UV02_META.description };
   }
   const product = PRODUCTS.find((p) => p.slug === slug);
@@ -76,19 +74,11 @@ export default async function Page({ params }: Props) {
       </>
     );
   }
-  if (raw === 'curing-machines') {
+  // Cure UV-02 — same layout system as P1-26; content from cure.jpeg
+  if (raw === CURE_UV02_SLUG) {
     return (
       <>
         <CuringPage />
-        <InnerPageMotion />
-      </>
-    );
-  }
-  // 037 · spec-faithful ODYX Cure UV-02 build — knowledge_base/screens/037 Curing Machines
-  if (raw === 'cure-v6') {
-    return (
-      <>
-        <CuringUv02Page />
         <InnerPageMotion />
       </>
     );

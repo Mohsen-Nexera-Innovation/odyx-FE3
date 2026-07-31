@@ -14,9 +14,11 @@
   /* Palette follows the home screen (light.css tokens), per Khaled 2026-07-25:
      sky accent + paper surfaces + charcoal ink. Print-family orange stays as
      the section accent. Falls back to the same values if a var is missing. */
-  --pfa:var(--sky,#06A5DF); --pfa-h:var(--sky-deep,#0581AD); --pfa-soft:var(--sky-soft,#7FD0F3);
+  --pfa:var(--sky,#0050D8); --pfa-h:var(--sky-deep,#0041AF); --pfa-soft:var(--sky-soft,#5B93F5);
   --pf-ink:var(--ink,#211C1D); --pf-body:var(--ink-muted,#5A555C); --pf-mut:var(--ink-faint,#8A858E);
-  --pf-tint:var(--paper-2,#E9F4FB); --pf-dark:var(--navy-deep,#141216); --pf-acc:#F5761E;
+  --pf-tint:var(--paper-2,#E9F4FB); --pf-dark:var(--navy-deep,#141216);
+  /* Family accent follows logo/home blue (no orange on product chrome). */
+  --pf-acc:var(--sky,#0050D8);
   --pf-rule:var(--paper-line,rgba(10,60,100,.10));
   --pf-shadow:0 6px 24px rgba(10,60,100,.08);
   background:#fff; color:var(--pf-body);
@@ -66,7 +68,7 @@
 }
 .pf-btn:hover{background:var(--pfa-soft); border-color:var(--pfa-soft)}
 .pf-btn--ghost{background:transparent; color:var(--pfa-h)}
-.pf-btn--ghost:hover{background:rgba(6,165,223,.08)}
+.pf-btn--ghost:hover{background:rgba(0,80,216,.08)}
 .pf-btn--onDark{background:transparent; color:#fff; border-color:rgba(255,255,255,.5)}
 .pf-btn--onDark:hover{background:rgba(255,255,255,.1); border-color:#fff}
 .pf-cta-micro{font-size:13px; color:var(--pf-mut); margin-top:8px}
@@ -99,8 +101,8 @@
    hardware exists, and synthesizing one is forbidden). */
 .ph-hero{
   background:
-    radial-gradient(720px 400px at 82% 88%, rgba(245,118,30,.16), transparent 60%),
-    radial-gradient(640px 380px at 12% 6%, rgba(6,165,223,.14), transparent 62%),
+    radial-gradient(720px 400px at 82% 88%, rgba(0,80,216,.16), transparent 60%),
+    radial-gradient(640px 380px at 12% 6%, rgba(0,80,216,.14), transparent 62%),
     linear-gradient(180deg, #191519 0%, var(--navy-deep,#141216) 55%, #100D10 100%);
   color:#C9CFDE;
   padding-block:clamp(108px,12vw,140px) clamp(40px,5vw,60px);
@@ -129,11 +131,11 @@
 .ph-glow{position:absolute; border-radius:50%; filter:blur(48px); pointer-events:none}
 .ph-glow--amber{
   width:56%; height:38%; inset-inline-end:6%; bottom:4%;
-  background:radial-gradient(closest-side, rgba(245,118,30,.4), transparent 70%);
+  background:radial-gradient(closest-side, rgba(0,80,216,.4), transparent 70%);
 }
 .ph-glow--sky{
   width:46%; height:32%; inset-inline-start:2%; top:6%;
-  background:radial-gradient(closest-side, rgba(6,165,223,.3), transparent 70%);
+  background:radial-gradient(closest-side, rgba(0,80,216,.3), transparent 70%);
 }
 /* Duo scene — background-free cutout of both printers, floating on the
    tilting stage. drop-shadow follows the printers' silhouette (a box-shadow
@@ -143,7 +145,7 @@
   transform:translate(-50%,-50%) translateZ(46px);
   filter:
     drop-shadow(0 34px 44px rgba(0,0,0,.55))
-    drop-shadow(0 0 60px rgba(245,118,30,.12));
+    drop-shadow(0 0 60px rgba(0,80,216,.12));
 }
 .ph-tile{
   position:absolute; margin:0; border-radius:14px; overflow:hidden;
@@ -177,7 +179,7 @@
 .pf-hero{
   padding-block:clamp(104px,12vw,132px) clamp(32px,4vw,48px);
   background:
-    radial-gradient(900px 480px at 78% 10%, rgba(6,165,223,.12), transparent 60%),
+    radial-gradient(900px 480px at 78% 10%, rgba(0,80,216,.12), transparent 60%),
     linear-gradient(180deg, var(--paper,#F5FAFD) 0%, #EEF6FC 55%, #FFFFFF 100%);
 }
 .pf-hero .pf-wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(28px,4vw,56px); align-items:center}
@@ -328,7 +330,7 @@
   padding:3px 9px; border-radius:999px;
 }
 [dir="rtl"] .pf-badge{letter-spacing:0}
-.pf-badge[data-model="P1-26"]{background:rgba(245,118,30,.92); border-color:transparent; color:#241000}
+.pf-badge[data-model="P1-26"]{background:rgba(0,80,216,.92); border-color:transparent; color:#041820}
 .pf-feat-body{padding:13px 15px 15px}
 .pf-feat-body h3{font-size:15.5px; margin-bottom:4px}
 .pf-feat-body p{font-size:13.5px; margin:0}
@@ -397,7 +399,7 @@
 .pf-rt-cert-label{font-size:12px; font-weight:500; color:var(--pf-mut)}
 .pf-rt-badge{
   font-size:11.5px; font-weight:700; color:var(--pf-ink);
-  background:rgba(6,165,223,.1); border:1px solid rgba(6,165,223,.3);
+  background:rgba(0,80,216,.1); border:1px solid rgba(0,80,216,.3);
   padding:2px 8px; border-radius:999px; white-space:nowrap;
 }
 .pf-rt-resin-cta{
@@ -479,7 +481,7 @@
 .pf-callout-n{
   width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
   border:2px solid var(--pf-acc); color:var(--pf-ink); font-weight:700; font-size:13px;
-  background:rgba(245,118,30,.08);
+  background:rgba(0,80,216,.08);
 }
 .pf-callout h3{font-size:15.5px; margin-bottom:2px}
 .pf-callout p{font-size:13.5px; margin:0}
@@ -488,14 +490,29 @@
 .pf-sec--dark .pf-h2{border-inline-start-color:var(--pfa)}
 .pf-spine{display:flex; align-items:center; flex-wrap:wrap; gap:2px; margin:clamp(20px,3vw,32px) 0}
 .pf-spine-step{display:flex; align-items:center}
-.pf-spine-node{display:flex; flex-direction:column; align-items:center; gap:8px; min-width:86px}
+.pf-spine-step.is-dimmed .pf-spine-node,
+.pf-spine-node.is-dimmed,
+.pf-neighbour .is-dimmed{
+  opacity:.38;
+  cursor:not-allowed;
+  pointer-events:none;
+  filter:grayscale(.2);
+}
+.pf-spine-node{
+  display:flex; flex-direction:column; align-items:center; gap:8px; min-width:86px;
+  text-decoration:none; color:inherit; cursor:pointer;
+}
+.pf-spine-node:hover .pf-spine-name{color:var(--pf-acc)}
+.pf-spine-node:focus-visible{
+  outline:2px solid var(--pf-acc); outline-offset:4px; border-radius:10px;
+}
 .pf-spine-ic{
   width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
   background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.6);
 }
 .pf-spine-ic svg{width:24px; height:24px}
 .pf-spine-name{font-weight:700; font-size:14px; color:rgba(255,255,255,.55); white-space:nowrap}
-.pf-spine-step[data-active="true"] .pf-spine-ic{background:rgba(245,118,30,.16); border-color:var(--pf-acc); color:var(--pf-acc)}
+.pf-spine-step[data-active="true"] .pf-spine-ic{background:rgba(var(--sky-rgb,0,80,216),.16); border-color:var(--pf-acc); color:var(--pf-acc)}
 .pf-spine-step[data-active="true"] .pf-spine-name{color:var(--pf-acc)}
 .pf-spine-arrow{margin:0 clamp(6px,1.4vw,16px); color:rgba(255,255,255,.3); padding-bottom:22px}
 [dir="rtl"] .pf-spine-arrow svg{transform:scaleX(-1)}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import P126Footer from '@/components/P126Footer';
+import Hv2Footer from '@/components/home2/Hv2Footer';
 
 const COLUMNS = [
   {
@@ -21,7 +21,7 @@ const COLUMNS = [
     links: [
       { label: 'For Dentists', href: '/solutions/dentists' },
       { label: 'For Dental Labs', href: '/solutions/labs' },
-      { label: 'Clinical Applications', href: '/#clinical' },
+      { label: 'Clinical Applications', href: '/solutions/clinical-applications' },
     ],
   },
   {
@@ -103,8 +103,13 @@ function SocialIcon({ kind }: { kind: (typeof SOCIAL)[number]['icon'] }) {
 export default function Footer() {
   const pathname = usePathname();
   if (pathname?.startsWith('/admin')) return null;
-  /* P1-26 design footer — interactive nav/controls, not a raster */
-  if (pathname?.includes('/odyx-p1-26')) return <P126Footer />;
+  /* Product / clinical landings use the home navy band (Hv2), not the near-black P126 footer */
+  if (
+    pathname?.startsWith('/products') ||
+    pathname?.includes('/solutions/clinical-applications')
+  ) {
+    return <Hv2Footer />;
+  }
 
   return (
     <footer className="site-footer">

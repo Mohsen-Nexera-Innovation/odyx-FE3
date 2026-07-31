@@ -19,7 +19,7 @@ export const ROI_PRINTER = {
   productId: 'printer-p1-26',
   name: 'ODYX P1-26',
   price: shopPrice('odyx-p1-26'),
-  href: '/products/3d-printers',
+  href: '/products/odyx-p1-26',
 };
 
 export const ROI_CURING = {

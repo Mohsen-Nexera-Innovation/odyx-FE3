@@ -84,7 +84,7 @@ export default function ClinicalApplicationsSection() {
             <br />
             every clinical indication.
           </p>
-          <Link className="hv2-btn hv2-ca-cta" href="/workflows">
+          <Link className="hv2-btn hv2-ca-cta" href="/solutions/clinical-applications">
             <span>Explore All Applications</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M4 12h15M13 6l6 6-6 6" />

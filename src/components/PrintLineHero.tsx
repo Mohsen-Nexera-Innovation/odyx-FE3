@@ -1,5 +1,9 @@
 import Link from 'next/link';
 import { Arrow, PageActions } from '@/components/PageHero';
+import {
+  digitalWorkflowHref,
+  isDigitalWorkflowDimmed,
+} from '@/content/digital-workflow-links';
 import type { ProductContent } from '@/content/products';
 
 const HERO_IMG_WIDTH = 964;
@@ -40,9 +44,15 @@ export default function PrintLineHero({ product }: { product: ProductContent }) 
               <Link className="btn btn-sign" href="/support">
                 Request a Demo <Arrow />
               </Link>
-              <Link className="btn btn-ghost prod-print-hero__ghost" href={`/workflows/${product.workflowStep}`}>
-                Workflow step <Arrow />
-              </Link>
+              {isDigitalWorkflowDimmed(product.workflowStep) ? (
+                <span className="btn btn-ghost prod-print-hero__ghost is-dimmed" aria-disabled="true" title="Coming soon">
+                  Workflow step <Arrow />
+                </span>
+              ) : (
+                <Link className="btn btn-ghost prod-print-hero__ghost" href={digitalWorkflowHref(product.workflowStep)}>
+                  Workflow step <Arrow />
+                </Link>
+              )}
             </PageActions>
           </div>
 

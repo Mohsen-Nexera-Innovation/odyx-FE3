@@ -9,12 +9,12 @@
    ============================================================ */
 
 .c6{
-  --c6-sky:var(--sky,#06A5DF); --c6-sky-h:var(--sky-deep,#0581AD); --c6-sky-soft:var(--sky-soft,#7FD0F3);
+  --c6-sky:var(--sky,#0050D8); --c6-sky-h:var(--sky-deep,#0041AF); --c6-sky-soft:var(--sky-soft,#5B93F5);
   --c6-ink:var(--ink,#211C1D); --c6-body:var(--ink-muted,#5A555C); --c6-mut:var(--ink-faint,#8A858E);
   --c6-tint:var(--paper-2,#E9F4FB); --c6-dark:#141216;
   /* Accent = site sky-blue (bullets, icons, rules, fills). --c6-acc-text
      is the 4.5:1-safe darkened sky for small accent text on white. */
-  --c6-acc:var(--c6-sky); --c6-acc-rgb:6,165,223; --c6-acc-text:#04708F;
+  --c6-acc:var(--c6-sky); --c6-acc-rgb:0,80,216; --c6-acc-text:#04708F;
   --c6-rule:var(--paper-line,rgba(10,60,100,.10));
   --c6-shadow:0 6px 24px rgba(10,60,100,.08);
   background:#fff; color:var(--c6-body);
@@ -59,7 +59,7 @@
 }
 .c6-btn:hover{background:var(--c6-sky-soft); border-color:var(--c6-sky-soft)}
 .c6-btn--ghost{background:transparent; color:var(--c6-sky-h)}
-.c6-btn--ghost:hover{background:rgba(6,165,223,.08)}
+.c6-btn--ghost:hover{background:rgba(0,80,216,.08)}
 .c6-cta-micro{font-size:13px; color:var(--c6-mut); margin-top:8px}
 
 .c6-card{
@@ -71,7 +71,7 @@
 .c6-hero{
   background:
     radial-gradient(760px 420px at 82% 20%, rgba(var(--c6-acc-rgb),.10), transparent 62%),
-    radial-gradient(560px 340px at 8% 90%, rgba(6,165,223,.09), transparent 62%),
+    radial-gradient(560px 340px at 8% 90%, rgba(0,80,216,.09), transparent 62%),
     linear-gradient(180deg,#FDFEFF 0%, var(--c6-tint) 100%);
   padding-block:clamp(104px,11vw,140px) clamp(32px,4vw,44px);
 }
@@ -238,7 +238,7 @@
   font-size:14.5px; font-weight:700; color:var(--c6-ink); text-decoration:none;
   transition:border-color .2s ease, background .2s ease;
 }
-.c6-dl a:hover{border-color:var(--c6-sky); background:rgba(6,165,223,.06)}
+.c6-dl a:hover{border-color:var(--c6-sky); background:rgba(0,80,216,.06)}
 .c6-dl svg{width:18px; height:18px; color:var(--c6-sky-h)}
 
 /* ---------- 8 · Workflow position (tint band) ---------- */

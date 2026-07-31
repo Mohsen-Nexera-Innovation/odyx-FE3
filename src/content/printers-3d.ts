@@ -13,6 +13,11 @@
  * (production photography pending — OPEN-QUESTIONS #12).
  */
 
+import {
+  DIGITAL_WORKFLOW_LINKS,
+  isDigitalWorkflowDimmed,
+} from '@/content/digital-workflow-links';
+
 export interface PrinterSpecRow {
   label: string;
   value: string;
@@ -484,7 +489,12 @@ export const ODYX_CHANGED = {
 
 export const WORKFLOW_SECTION = {
   title: 'Where printing sits',
-  steps: ['Scan', 'Design', 'Print', 'Wash & Cure', 'Deliver'],
+  steps: [
+    { label: 'Scan', href: DIGITAL_WORKFLOW_LINKS.scan, dimmed: isDigitalWorkflowDimmed('scan') },
+    { label: 'Design', href: DIGITAL_WORKFLOW_LINKS.design, dimmed: isDigitalWorkflowDimmed('design') },
+    { label: 'Print', href: DIGITAL_WORKFLOW_LINKS.print, dimmed: isDigitalWorkflowDimmed('print') },
+    { label: 'Cure', href: DIGITAL_WORKFLOW_LINKS.cure, dimmed: isDigitalWorkflowDimmed('cure') },
+  ],
   activeStep: 2,
   stepCopy:
     'The file becomes an object. Minutes to hours, depending on what it is and how many of them are on the plate.',
@@ -492,13 +502,17 @@ export const WORKFLOW_SECTION = {
   imgAlt: 'ODYX P1-26 mid-print, build platform lowered into the resin vat',
   back: {
     copy: 'The file that lands here came from the S1 or from your own CAD — STL or OBJ, from whatever software you already use.',
-    link: { label: 'The step before: Design', href: '/workflows/design' },
+    link: {
+      label: 'The step before: Design',
+      href: DIGITAL_WORKFLOW_LINKS.design,
+      dimmed: isDigitalWorkflowDimmed('design'),
+    },
   },
   forward: {
-    copy: 'Nothing comes off the plate finished. It is washed, then post-cured — and the time depends on the resin, not the printer.',
-    link: { label: 'The step after: Wash & Cure', href: '/workflows/cure' },
+    copy: 'Printed parts move to post-cure — time depends on the resin, not the printer.',
+    link: { label: 'The step after: Cure', href: DIGITAL_WORKFLOW_LINKS.cure },
   },
-  followAll: { label: 'Follow the whole workflow', href: '/workflows/print' },
+  followAll: { label: 'Follow the whole workflow', href: DIGITAL_WORKFLOW_LINKS.print },
 };
 
 export const WORKS_WITH = {

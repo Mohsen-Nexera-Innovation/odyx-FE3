@@ -8,10 +8,10 @@
   --cure-muted: #5c636c;
   --cure-line: rgba(20, 18, 22, 0.1);
   /* Accent = brand sky (orange reduced for this version) */
-  --cure-amber: #0581ad;
+  --cure-amber: #0041AF;
   --cure-amber-deep: #046689;
   --cure-amber-rgb: 5, 129, 173;
-  --cure-sky: #0581ad;
+  --cure-sky: #0041AF;
   --cure-max: 1200px;
   --cure-margin: clamp(20px, 4vw, 48px);
 

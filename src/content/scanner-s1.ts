@@ -6,6 +6,8 @@
  * Price, video, clinical cases and downloads are client-blocked (screen-details §13).
  */
 
+import { DIGITAL_WORKFLOW_LINKS } from '@/content/digital-workflow-links';
+
 export const SCANNER_META = {
   title: 'ODYX-S1 Intraoral Scanner — Full-Arch Scans in 40 Seconds',
   description:
@@ -21,7 +23,7 @@ export const SUBNAV = [
   { label: 'Downloads', href: '#downloads' },
 ];
 
-export const WORKFLOW_STEPS = ['Scan', 'Design', 'Print', 'Wash & Cure', 'Deliver'];
+export const WORKFLOW_STEPS = ['Scan', 'Design', 'Print', 'Cure', 'Deliver'];
 
 export const HERO = {
   eyebrow: 'SCAN · STEP 1 OF 5',
@@ -177,7 +179,7 @@ export const NEXT_STEP = {
     {
       name: 'P1-26 3D Printer',
       line: 'prints your scan at 18 µm',
-      href: '/products/3d-printers',
+      href: '/products/odyx-p1-26',
       img: '/img/scanner/eco-printer.jpg',
     },
     {
@@ -194,7 +196,7 @@ export const NEXT_STEP = {
       fit: 'cover',
     },
   ],
-  linkOut: { label: 'See the full workflow, step by step', href: '/workflows/scan' },
+  linkOut: { label: 'See the full workflow, step by step', href: DIGITAL_WORKFLOW_LINKS.scan },
 };
 
 /* Section 9 · Clinical cases & reviews — client-supplied only (screen-details §13.3,

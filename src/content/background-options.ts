@@ -22,8 +22,8 @@ export const BACKGROUND_GROUPS: BackgroundGroup[] = [
       { id: 'solid-white', label: 'Pure white', value: '#ffffff' },
       { id: 'solid-paper', label: 'Off-white paper', value: '#f5fafd' },
       { id: 'solid-sky-light', label: 'Light sky', value: '#eef6fc' },
-      { id: 'solid-sky', label: 'Sky blue', value: '#06a5df' },
-      { id: 'solid-sky-soft', label: 'Soft sky', value: '#7fd0f3' },
+      { id: 'solid-sky', label: 'Sky blue', value: '#0050D8' },
+      { id: 'solid-sky-soft', label: 'Soft sky', value: '#5B93F5' },
       { id: 'solid-teal', label: 'Teal', value: '#0d9696' },
       { id: 'solid-mint', label: 'Mint', value: '#e8f7f5' },
       { id: 'solid-navy', label: 'Navy', value: '#15263f' },
@@ -42,7 +42,7 @@ export const BACKGROUND_GROUPS: BackgroundGroup[] = [
         id: 'linear-sky-fade',
         label: 'Sky fade (current)',
         value:
-          'radial-gradient(1100px 680px at 12% 8%, rgba(6,165,223,.10), transparent 58%), radial-gradient(900px 560px at 88% 18%, rgba(6,165,223,.06), transparent 55%), linear-gradient(180deg, #f5fafd 0%, #eef6fc 40%, #e9f4fb 70%, #f5fafd 100%)',
+          'radial-gradient(1100px 680px at 12% 8%, rgba(0,80,216,.10), transparent 58%), radial-gradient(900px 560px at 88% 18%, rgba(0,80,216,.06), transparent 55%), linear-gradient(180deg, #f5fafd 0%, #eef6fc 40%, #e9f4fb 70%, #f5fafd 100%)',
       },
       {
         id: 'linear-navy-depth',
@@ -78,7 +78,7 @@ export const BACKGROUND_GROUPS: BackgroundGroup[] = [
       {
         id: 'linear-diagonal-sky',
         label: 'Diagonal sky',
-        value: 'linear-gradient(135deg, #f5fafd 0%, #06a5df 100%)',
+        value: 'linear-gradient(135deg, #f5fafd 0%, #0050D8 100%)',
       },
       {
         id: 'linear-horizontal-bands',
@@ -94,7 +94,7 @@ export const BACKGROUND_GROUPS: BackgroundGroup[] = [
       {
         id: 'radial-sky-glow',
         label: 'Sky glow center',
-        value: 'radial-gradient(circle at 50% 40%, rgba(6,165,223,.35), #f5fafd 70%)',
+        value: 'radial-gradient(circle at 50% 40%, rgba(0,80,216,.35), #f5fafd 70%)',
       },
       {
         id: 'radial-orange-spot',
@@ -110,7 +110,7 @@ export const BACKGROUND_GROUPS: BackgroundGroup[] = [
         id: 'radial-dual-glow',
         label: 'Dual glow (sky + orange)',
         value:
-          'radial-gradient(900px 600px at 15% 10%, rgba(6,165,223,.18), transparent 55%), radial-gradient(800px 500px at 85% 20%, rgba(255,132,0,.12), transparent 50%), #f5fafd',
+          'radial-gradient(900px 600px at 15% 10%, rgba(0,80,216,.18), transparent 55%), radial-gradient(800px 500px at 85% 20%, rgba(255,132,0,.12), transparent 50%), #f5fafd',
       },
       {
         id: 'radial-navy-vignette',
@@ -132,19 +132,19 @@ export const BACKGROUND_GROUPS: BackgroundGroup[] = [
         id: 'mesh-sky-mesh',
         label: 'Sky mesh (light)',
         value:
-          'radial-gradient(1100px 680px at 12% 8%, rgba(6,165,223,.14), transparent 58%), radial-gradient(900px 560px at 88% 18%, rgba(6,165,223,.08), transparent 55%), radial-gradient(700px 400px at 50% 90%, rgba(13,150,150,.06), transparent 60%), linear-gradient(180deg, #f5fafd, #eef6fc)',
+          'radial-gradient(1100px 680px at 12% 8%, rgba(0,80,216,.14), transparent 58%), radial-gradient(900px 560px at 88% 18%, rgba(0,80,216,.08), transparent 55%), radial-gradient(700px 400px at 50% 90%, rgba(13,150,150,.06), transparent 60%), linear-gradient(180deg, #f5fafd, #eef6fc)',
       },
       {
         id: 'mesh-aurora',
         label: 'Aurora',
         value:
-          'radial-gradient(800px 500px at 20% 30%, rgba(13,150,150,.20), transparent 55%), radial-gradient(700px 450px at 80% 25%, rgba(6,165,223,.18), transparent 50%), radial-gradient(600px 400px at 50% 80%, rgba(127,208,243,.15), transparent 55%), linear-gradient(180deg, #0d1a2e, #15263f)',
+          'radial-gradient(800px 500px at 20% 30%, rgba(13,150,150,.20), transparent 55%), radial-gradient(700px 450px at 80% 25%, rgba(0,80,216,.18), transparent 50%), radial-gradient(600px 400px at 50% 80%, rgba(127,208,243,.15), transparent 55%), linear-gradient(180deg, #0d1a2e, #15263f)',
       },
       {
         id: 'mesh-warm-cool',
         label: 'Warm / cool split',
         value:
-          'radial-gradient(900px 600px at 0% 50%, rgba(255,132,0,.12), transparent 55%), radial-gradient(900px 600px at 100% 50%, rgba(6,165,223,.14), transparent 55%), #f5fafd',
+          'radial-gradient(900px 600px at 0% 50%, rgba(255,132,0,.12), transparent 55%), radial-gradient(900px 600px at 100% 50%, rgba(0,80,216,.14), transparent 55%), #f5fafd',
       },
       {
         id: 'mesh-clinical',
@@ -161,19 +161,19 @@ export const BACKGROUND_GROUPS: BackgroundGroup[] = [
         id: 'pattern-dot-grid',
         label: 'Dot grid',
         value:
-          'radial-gradient(circle, rgba(6,165,223,.18) 1px, transparent 1px), #f5fafd',
+          'radial-gradient(circle, rgba(0,80,216,.18) 1px, transparent 1px), #f5fafd',
       },
       {
         id: 'pattern-line-grid',
         label: 'Line grid',
         value:
-          'linear-gradient(rgba(6,165,223,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(6,165,223,.08) 1px, transparent 1px), #f5fafd',
+          'linear-gradient(rgba(0,80,216,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,80,216,.08) 1px, transparent 1px), #f5fafd',
       },
       {
         id: 'pattern-diagonal',
         label: 'Diagonal stripes',
         value:
-          'repeating-linear-gradient(135deg, rgba(6,165,223,.06) 0 2px, transparent 2px 14px), #f5fafd',
+          'repeating-linear-gradient(135deg, rgba(0,80,216,.06) 0 2px, transparent 2px 14px), #f5fafd',
       },
       {
         id: 'pattern-crosshatch',

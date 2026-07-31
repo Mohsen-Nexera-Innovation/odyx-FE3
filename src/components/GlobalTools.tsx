@@ -36,9 +36,9 @@ export function useGlobalTools() {
 
 const SEARCH_ITEMS = [
   { label: "Workflow Hub", href: "/workflows" },
-  { label: "Scan step", href: "/workflows/scan" },
+  { label: "ODYX-S1 Scanner", href: "/products/odyx-s1-intraoral-scanner" },
   { label: "ODYX-S1", href: "/products/odyx-s1-intraoral-scanner" },
-  { label: "ODYX P1-26", href: "/products/3d-printers" },
+  { label: "ODYX P1-26", href: "/products/odyx-p1-26" },
   { label: "ODYX Cure", href: "/products/curing-machines" },
   { label: "Resin & Materials", href: "/products/resins" },
   { label: "For Dentists", href: "/solutions/dentists" },

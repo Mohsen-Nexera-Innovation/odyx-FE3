@@ -39,7 +39,7 @@ export const ECOSYSTEM_SHADOW_OPTIONS: EcosystemShadowOption[] = [
     id: 'sky',
     label: 'Sky',
     tintRgb: { r: 6, g: 165, b: 223 },
-    swatch: '#06a5df',
+    swatch: '#0050D8',
   },
   {
     id: 'orange',

@@ -2,7 +2,13 @@ import Link from 'next/link';
 import { Arrow } from '@/components/PageHero';
 import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
+import { digitalWorkflowHref } from '@/content/digital-workflow-links';
 import { WORKFLOW_STEPS } from '@/content/workflow';
+
+function stepProductHref(step: (typeof WORKFLOW_STEPS)[number]) {
+  if (step.productSlug) return `/products/${step.productSlug}`;
+  return digitalWorkflowHref(step.id);
+}
 
 export default function WorkflowHubPage() {
   return (
@@ -16,7 +22,7 @@ export default function WorkflowHubPage() {
         desc="Walk the sequence ODYX is built around, from the first chairside scan to the final delivered restoration."
         heroImg="/img/odyx/dental-frame.webp"
         heroAlt="ODYX connected workflow"
-        primaryAction={{ label: 'Start with Scan', href: '/workflows/scan' }}
+        primaryAction={{ label: 'Start with Scan', href: digitalWorkflowHref('scan') }}
         secondaryAction={{ label: 'Products', href: '/products' }}
       />
 
@@ -35,14 +41,20 @@ export default function WorkflowHubPage() {
           <SecHead eyebrow="Steps" />
           <div className="wf-hub-grid build-group">
             {WORKFLOW_STEPS.map((s) => (
-              <Link key={s.id} href={`/workflows/${s.id}`} className={`wf-hub-card build${s.accent === 'teal' ? ' teal' : ''}`}>
+              <Link
+                key={s.id}
+                href={stepProductHref(s)}
+                className={`wf-hub-card build${s.accent === 'teal' ? ' teal' : ''}`}
+              >
                 <span className="wf-hub-no">Step {s.no}</span>
                 <div className="wf-hub-img">
                   <img src={s.img} alt={s.label} loading="lazy" />
                 </div>
                 <h3>{s.label}</h3>
                 <p>{s.lead}</p>
-                <span className="more">Explore step <Arrow /></span>
+                <span className="more">
+                  {s.productName ? `Explore ${s.productName}` : 'Explore product'} <Arrow />
+                </span>
               </Link>
             ))}
           </div>

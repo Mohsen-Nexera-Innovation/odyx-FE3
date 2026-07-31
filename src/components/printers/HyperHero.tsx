@@ -53,7 +53,7 @@ export default function HyperHero({
   }, []);
 
   return (
-    <section className="ph-hero" id="overview" data-hero-dark ref={heroRef}>
+    <section className="ph-hero" id="overview" data-hero-light ref={heroRef}>
       <div className="pf-wrap ph-grid">
         <div className="ph-copy">
           <span className="pf-eyebrow reveal">{HERO.eyebrow}</span>

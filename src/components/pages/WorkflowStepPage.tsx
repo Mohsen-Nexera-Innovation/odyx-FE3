@@ -3,7 +3,13 @@ import { notFound } from 'next/navigation';
 import { Arrow } from '@/components/PageHero';
 import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
+import { digitalWorkflowHref } from '@/content/digital-workflow-links';
 import { getAdjacentSteps, getWorkflowStep, type WorkflowId } from '@/content/workflow';
+
+function stepProductHref(step: { id: string; productSlug: string }) {
+  if (step.productSlug) return `/products/${step.productSlug}`;
+  return digitalWorkflowHref(step.id);
+}
 
 export default function WorkflowStepPage({ slug }: { slug: string }) {
   const step = getWorkflowStep(slug);
@@ -80,15 +86,17 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
       <section className="sec">
         <div className="wrap wf-step-nav reveal">
           {prev ? (
-            <Link href={`/workflows/${prev.id}`} className="btn btn-ghost btn-sm">
+            <Link href={stepProductHref(prev)} className="btn btn-ghost btn-sm">
               &larr; {prev.label}
             </Link>
           ) : (
             <span />
           )}
-          <Link href="/workflows" className="btn btn-ghost btn-sm">All steps</Link>
+          <Link href="/products" className="btn btn-ghost btn-sm">
+            All products
+          </Link>
           {next ? (
-            <Link href={`/workflows/${next.id}`} className="btn btn-sm">
+            <Link href={stepProductHref(next)} className="btn btn-sm">
               {next.label} &rarr;
             </Link>
           ) : (

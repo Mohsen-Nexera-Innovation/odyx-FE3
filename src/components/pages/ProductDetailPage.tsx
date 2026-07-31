@@ -9,6 +9,10 @@ import SecHead from '@/components/SecHead';
 import ProductBuyActions from '@/components/shop/ProductBuyActions';
 import ProductHeroBuyCta from '@/components/shop/ProductHeroBuyCta';
 import PrinterRoiSection from '@/components/roi/PrinterRoiSection';
+import {
+  digitalWorkflowHref,
+  isDigitalWorkflowDimmed,
+} from '@/content/digital-workflow-links';
 import { getProduct, type ProductLayout } from '@/content/products';
 
 const BENEFIT_ICONS: React.ReactNode[] = [
@@ -129,7 +133,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           <SecHead eyebrow="Applications" />
           <div className="prod-applications reveal">
             {product.applications.map((a, i) => (
-              <Link key={a} href="/#clinical" className="prod-application">
+              <Link key={a} href="/solutions/clinical-applications" className="prod-application">
                 <span className="prod-application__num">
                   {String(i + 1).padStart(2, '0')}
                 </span>
@@ -165,7 +169,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
               buyableModel?.shopProductId ? (
                 <ProductHeroBuyCta
                   shopProductId={buyableModel.shopProductId}
-                  workflowHref={`/workflows/${product.workflowStep}`}
+                  workflowHref={digitalWorkflowHref(product.workflowStep)}
                   accent={heroAccent}
                 />
               ) : undefined
@@ -209,7 +213,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             {buyableModel?.shopProductId ? (
               <ProductHeroBuyCta
                 shopProductId={buyableModel.shopProductId}
-                workflowHref={`/workflows/${product.workflowStep}`}
+                workflowHref={digitalWorkflowHref(product.workflowStep)}
                 accent="orange"
               />
             ) : (
@@ -217,9 +221,15 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
                 <Link className="btn btn-sign" href="/support">
                   Request a Demo <Arrow />
                 </Link>
-                <Link className="btn btn-ghost" href={`/workflows/${product.workflowStep}`}>
-                  Workflow step <Arrow />
-                </Link>
+                {isDigitalWorkflowDimmed(product.workflowStep) ? (
+                  <span className="btn btn-ghost is-dimmed" aria-disabled="true" title="Coming soon">
+                    Related product <Arrow />
+                  </span>
+                ) : (
+                  <Link className="btn btn-ghost" href={digitalWorkflowHref(product.workflowStep)}>
+                    Related product <Arrow />
+                  </Link>
+                )}
               </PageActions>
             )}
           </div>
@@ -273,7 +283,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           buyableModel?.shopProductId ? (
             <ProductHeroBuyCta
               shopProductId={buyableModel.shopProductId}
-              workflowHref={`/workflows/${product.workflowStep}`}
+              workflowHref={digitalWorkflowHref(product.workflowStep)}
               accent={layout === 'signature' ? 'orange' : 'sky'}
             />
           ) : (
@@ -330,7 +340,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           <SecHead eyebrow="Applications" />
           <div className="pill-list reveal">
             {product.applications.map((a) => (
-              <Link key={a} href="/#clinical">{a}</Link>
+              <Link key={a} href="/solutions/clinical-applications">{a}</Link>
             ))}
           </div>
         </div>

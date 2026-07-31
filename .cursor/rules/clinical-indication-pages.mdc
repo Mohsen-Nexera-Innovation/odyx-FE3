@@ -1,0 +1,56 @@
+---
+description: Clinical indication detail pages — Same-Day Crown fidelity locked
+globs: src/content/clinical-*.ts,src/content/clinical-indications/**/*,src/components/pages/ClinicalIndicationPage.tsx,src/components/pages/SameDayCrownPage.tsx,src/app/solutions/clinical-applications/**/*,src/app/odyx-clinical.css,public/img/clinical/**/*
+alwaysApply: false
+---
+
+# Clinical Indication Detail Pages
+
+Every clinical application subtype page must reuse the Same-Day Crown chrome. **Only content and images change.**
+
+## Shell (required)
+
+- Root: `cl cl--sdc` via `ClinicalIndicationPage`
+- CSS: `@/app/odyx-clinical.css` — do not fork per-indication stylesheets
+- Font: Inter only (`var(--font-inter)`) — never Sora/Tajawal on detail pages
+- Type scale: only `--sdc-*` tokens — no per-page font-size inventing
+- Accent CTAs / timeline / tips / why icons: `#0050D8` (`--cl-blue`)
+- Badge: category accent via `--cl-badge` (restorative `#8153CF`, implant `#5480EB`, orthodontics `#56B1A3`, prosthetics `#ED9E5E`, cases `#D65765`)
+- Footer: routes under `/solutions/clinical-applications` use `Hv2Footer`
+
+## Fixed section order
+
+1. Hero `[data-hero-dark]` — transparent PNG cutout, no card chrome
+2. Products (5 cards)
+3. Workflow Timeline (5 photo-circle steps; title left-aligned with Scan)
+4. Before & After + Why ODYX?
+5. Printing Parameters + Clinical Tips + Real Case
+
+## UI rules
+
+- Tips: **square checkboxes** only (`TipCheck`) — never circular/radio marks
+- Timeline icons: circular photo assets, not low-res line icons
+- Hero image: true alpha PNG; subject matches indication
+- Why icons: blue outline line-art mapped by `why.items[].id`
+- Content shape: `ClinicalIndicationContent` in the indications registry
+
+## Assets
+
+Per slug under `public/img/clinical/{slug}/`:
+
+- `hero-cutout.png` — transparent background
+- `tl/tl-*.png` — circular workflow icons
+- Before/after and case thumbs indication-specific
+
+## Clinical Cases column (hub)
+
+- Hub **Clinical Cases** items link to **category listing** pages (`restorative-cases`, `implant-cases`, `ortho-cases`, `prosthetic-cases`) via `ClinicalCasesListingPage`
+- Listings aggregate indication heroes from that category and link to detail workflows
+- Do **not** render case listings with the full Same-Day Crown section stack
+
+## Do not
+
+- Point multiple hub items at Same-Day Crown as a placeholder
+- Reuse crown hero/timeline finish art on unrelated indications
+- Change layout classes, type tokens, or brand blue for accents
+- Missing `tl-scan` / `tl-print` / `tl-cure` in `public/img/clinical/{slug}/tl/` (always ship all five icons)

@@ -4,6 +4,11 @@
  * No product specs invented here; links point to catalog-backed product pages.
  */
 
+import {
+  DIGITAL_WORKFLOW_LINKS,
+  isDigitalWorkflowDimmed,
+} from '@/content/digital-workflow-links';
+
 export const ABOUT_META = {
   title: 'About ODYX',
   description:
@@ -47,7 +52,7 @@ export const ABOUT_STORY = {
   h2: 'Built for the full clinical path',
   paragraphs: [
     'ODYX covers the technology a dental clinic or laboratory needs to run a complete digital workflow — from the first scan of a patient’s mouth to the final delivered restoration.',
-    'That connected path is the brand. Scanner, design, print, wash & cure, and resin are steps in one system — not isolated products on a shelf.',
+    'That connected path is the brand. Scanner, design, print, cure, and resin are steps in one system — not isolated products on a shelf.',
   ],
   mosaic: [
     {
@@ -73,13 +78,14 @@ export const ABOUT_STORY = {
   ],
 };
 
-/** Five-step spine (SCAN → DESIGN → PRINT → WASH & CURE → DELIVER). */
+/** Four-step spine (SCAN → DESIGN → PRINT → CURE). Design is dimmed until ready. */
 export const ABOUT_SPINE = [
   {
     no: '01',
     label: 'Scan',
     blurb: 'Chairside digital impression — instant 3D data, no molds.',
-    href: '/workflows/scan',
+    href: DIGITAL_WORKFLOW_LINKS.scan,
+    dimmed: isDigitalWorkflowDimmed('scan'),
     img: '/img/scanner/step-scan.jpg',
     alt: 'Digital intraoral scan',
   },
@@ -87,7 +93,8 @@ export const ABOUT_SPINE = [
     no: '02',
     label: 'Design',
     blurb: 'Scan data becomes a precise restoration in CAD.',
-    href: '/workflows/design',
+    href: DIGITAL_WORKFLOW_LINKS.design,
+    dimmed: isDigitalWorkflowDimmed('design'),
     img: '/img/odyx/design.webp',
     alt: 'Dental restoration design',
   },
@@ -95,25 +102,19 @@ export const ABOUT_SPINE = [
     no: '03',
     label: 'Print',
     blurb: 'Layer by layer — crowns, guides, models, dentures.',
-    href: '/workflows/print',
+    href: DIGITAL_WORKFLOW_LINKS.print,
+    dimmed: isDigitalWorkflowDimmed('print'),
     img: '/img/scanner/step-print.jpg',
     alt: 'Dental 3D printing',
   },
   {
     no: '04',
-    label: 'Wash & Cure',
+    label: 'Cure',
     blurb: 'Controlled UV finishing for strength and biocompatibility.',
-    href: '/workflows/cure',
+    href: DIGITAL_WORKFLOW_LINKS.cure,
+    dimmed: isDigitalWorkflowDimmed('cure'),
     img: '/img/scanner/step-cure.jpg',
-    alt: 'Wash and UV cure step',
-  },
-  {
-    no: '05',
-    label: 'Deliver',
-    blurb: 'The restoration reaches the patient — often same-day.',
-    href: '/workflows/deliver',
-    img: '/img/step-deliver.jpg',
-    alt: 'Delivered restoration',
+    alt: 'UV cure step',
   },
 ] as const;
 
@@ -194,7 +195,7 @@ export const ABOUT_FAMILIES = [
   },
   {
     name: 'Digital Printing',
-    desc: 'Print, wash & cure, and clinical resins as one production line.',
+    desc: 'Print, cure, and clinical resins as one production line.',
     img: '/img/cutouts/feat-printer-cutout.png',
     brand: '/brand/odyx-digital-printing.png',
     href: '/products/3d-printers',
@@ -236,7 +237,7 @@ export const ABOUT_NEWS = [
   },
   {
     tag: 'Workflow',
-    title: 'Scan to deliver — the five-step path',
+    title: 'Scan to cure — the four-step path',
     href: '/workflows',
     img: '/img/news-2.jpg',
     alt: 'ODYX digital workflow news',

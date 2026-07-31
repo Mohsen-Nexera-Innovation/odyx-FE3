@@ -3,6 +3,11 @@
  * Specs/claims aligned with printers-3d.ts P1_26 (claims register).
  */
 
+import {
+  DIGITAL_WORKFLOW_LINKS,
+  isDigitalWorkflowDimmed,
+} from '@/content/digital-workflow-links';
+
 export const P1_26_SLUG = 'odyx-p1-26';
 
 export const P1_26_META = {
@@ -100,11 +105,10 @@ export const P1_26_PRINT_APPS = [
 ] as const;
 
 export const P1_26_WORKFLOW = [
-  { id: 'scan', label: 'Scan', bold: 'Scan', rest: '' },
-  { id: 'design', label: 'Design', bold: 'Design', rest: '' },
-  { id: 'print', label: 'Print', bold: 'Print', rest: '' },
-  { id: 'cure', label: 'Wash & Cure', bold: 'Wash', rest: ' & Cure' },
-  { id: 'deliver', label: 'Deliver', bold: 'Deliver', rest: '' },
+  { id: 'scan', label: 'Scan', bold: 'Scan', rest: '', href: DIGITAL_WORKFLOW_LINKS.scan, dimmed: isDigitalWorkflowDimmed('scan') },
+  { id: 'design', label: 'Design', bold: 'Design', rest: '', href: DIGITAL_WORKFLOW_LINKS.design, dimmed: isDigitalWorkflowDimmed('design') },
+  { id: 'print', label: 'Print', bold: 'Print', rest: '', href: DIGITAL_WORKFLOW_LINKS.print, dimmed: isDigitalWorkflowDimmed('print') },
+  { id: 'cure', label: 'Cure', bold: 'Cure', rest: '', href: DIGITAL_WORKFLOW_LINKS.cure, dimmed: isDigitalWorkflowDimmed('cure') },
 ] as const;
 
 export const P1_26_ROI = {
@@ -144,7 +148,7 @@ export const P1_26_ECOSYSTEM = {
     {
       name: 'ODYX Cure UV-02',
       subtitle: 'UV Curing Station',
-      href: '/products/cure-v6',
+      href: '/products/curing-machines',
       img: '/img/printers/p126/eco/cure.png',
     },
   ],
