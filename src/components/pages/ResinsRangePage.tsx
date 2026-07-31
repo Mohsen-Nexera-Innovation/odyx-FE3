@@ -30,7 +30,7 @@ const DOCS_ICON = `/img/resins/icons/why-docs.png?v=${ICON_V}`;
 export default function ResinsRangePage() {
   return (
     <div className="rs">
-      <section className="rs-hero" data-hero-light>
+      <section className="rs-hero" data-hero-dark>
         <div className="rs-hero-glow" aria-hidden />
         <div className="rs-hero-glow rs-hero-glow--streak" aria-hidden />
         <div className="rs-wrap rs-hero-grid">
@@ -94,7 +94,7 @@ export default function ResinsRangePage() {
                 <div className="rs-line-body">
                   <h3>{line.name}</h3>
                   <p>{line.highlight}</p>
-                  <a className="rs-line-cta" href={line.href ?? '#why'}>
+                  <a className="rs-line-cta" role="button" tabIndex={0}>
                     {LINE_CTA_LABEL} <span aria-hidden>→</span>
                   </a>
                 </div>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 
 // Ecosystem hub — the client mock's grid of connected panels below the
 // clinical cases deck: Learning / Support on the first row, Store /
@@ -149,10 +148,10 @@ function HubActionCard({ card, rv }: { card: ActionCard; rv: number }) {
           {card.desc[1]}
         </p>
       </div>
-      <Link className="hv2-btn hv2-hub-cta" href={card.href}>
+      <a className="hv2-btn hv2-hub-cta" role="button" tabIndex={0}>
         <span>{card.cta}</span>
         <CtaArrow />
-      </Link>
+      </a>
       <img
         className={`hv2-hub-art ${card.art.cls}`}
         src={card.art.src}
@@ -199,10 +198,10 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
-            <Link className="hv2-btn hv2-hub-cta" href="/learning">
+            <a className="hv2-btn hv2-hub-cta" role="button" tabIndex={0}>
               <span>Start Learning</span>
               <CtaArrow />
-            </Link>
+            </a>
             <img
               className="hv2-hub-art hv2-hub-art-learn"
               src="/img/hv2-hub/learning-laptop.webp"
@@ -242,10 +241,10 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
-            <Link className="hv2-btn hv2-hub-cta" href="/support">
+            <a className="hv2-btn hv2-hub-cta" role="button" tabIndex={0}>
               <span>Get Support</span>
               <CtaArrow />
-            </Link>
+            </a>
             <img
               className="hv2-hub-art hv2-hub-art-support"
               src="/img/hv2-hub/support-headset.webp"

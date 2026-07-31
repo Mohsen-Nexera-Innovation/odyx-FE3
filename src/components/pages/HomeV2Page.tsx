@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ClinicalApplicationsSection from "@/components/home2/ClinicalApplicationsSection";
+import EcoPrinterVideo from "@/components/home2/EcoPrinterVideo";
 import ClinicalCasesShowcase from "@/components/home2/ClinicalCasesShowcase";
 import HubCardsSection from "@/components/home2/HubCardsSection";
 import Hv2Footer from "@/components/home2/Hv2Footer";
@@ -225,6 +226,7 @@ export default function HomeV2Page() {
                   <span className="hv2-eco-lbl">{n.label}</span>
                 </div>
               ))}
+              <EcoPrinterVideo />
               <a className="hv2-eco-more" href="#products" aria-label="Continue to products">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="m6 9 6 6 6-6" />

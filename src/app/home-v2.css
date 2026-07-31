@@ -898,6 +898,28 @@ body:has(.hv2) .fabs{display:none !important}
      they land on dark art at small sizes */
   text-shadow:0 1px 6px rgba(255,255,255,.9), 0 0 2px rgba(255,255,255,.65);
 }
+/* Printer hover video: a circular disc pinned to the orbit's centre
+   (ellipse cx 732 cy 200 of the 1358x485 panel → 39.8% / 41.2% in stage
+   coords). Hidden until the printer hotspot is hovered; the ring + glow
+   echo the baked node halos. */
+.hv2-eco-vid{
+  position:absolute; z-index:4; left:39.8%; top:41.2%; translate:-50% -50%;
+  width:31%; aspect-ratio:1; border-radius:50%; overflow:hidden;
+  background:#fff;
+  box-shadow:0 0 0 clamp(3px,.4cqw,6px) rgba(255,255,255,.92),
+             0 0 0 clamp(4px,.55cqw,8px) rgba(35,80,228,.18),
+             0 18px 44px rgba(10,40,90,.28);
+  opacity:0; scale:.82; pointer-events:none;
+  transition:opacity .28s ease, scale .32s cubic-bezier(.2,.9,.3,1.05);
+}
+.hv2-eco-vid[data-active]{opacity:1; scale:1}
+.hv2-eco-vid video{width:100%; height:100%; object-fit:cover; display:block}
+/* Invisible hover surface over the printer patch + its icon/label node
+   (the baked patches themselves are pointer-events:none). */
+.hv2-eco-hot-printer{
+  position:absolute; z-index:5; left:58.5%; top:5%; width:20.5%; height:47%;
+  cursor:pointer;
+}
 .hv2-eco-more{
   position:absolute; z-index:4; left:36.73%; top:94.6%; translate:-50% -50%;
   width:clamp(24px,2.21cqw,31px); aspect-ratio:1; border-radius:50%;
@@ -1022,6 +1044,10 @@ body:has(.hv2) .fabs{display:none !important}
   transition:transform .25s ease, box-shadow .25s ease;
 }
 .hv2-pr-card:hover{transform:translateY(-4px); box-shadow:0 22px 38px -12px rgba(10,40,90,.22)}
+
+/* Not-yet-available category (Accessories): dimmed, no navigation. */
+.hv2-pr-card.is-disabled{opacity:.45; filter:saturate(.35); cursor:default; pointer-events:none}
+.hv2-pr-card.is-disabled:hover{transform:none; box-shadow:0 14px 26px -10px rgba(10,40,90,.16)}
 
 /* Mock card widths and inter-card gaps — deliberately unequal, so both are
    carried per card as a share of the rail's own width. */
