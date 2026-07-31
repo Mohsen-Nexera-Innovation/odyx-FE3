@@ -1,0 +1,56 @@
+/* ODYX colour foundations — as implemented on the Home and P1-26 screens.
+ *
+ * These mirror the values the components actually compile against. The full
+ * application stylesheet (_ds_bundle.css) is imported after this file and stays
+ * authoritative; this file exists so the palette is legible as a foundation
+ * rather than buried in a 2MB blob.
+ */
+:root {
+  /* ── Action blue ───────────────────────────────────────────────────────
+   * The approved brand action colour. It reaches the UI two ways: the Home
+   * screen sets it locally as --hv2-blue, and the site header scopes it as
+   * --nav-blue / --sky on `header.on-light`. */
+  --odyx-action: #0050D8;
+  --odyx-action-deep: #0041AF;
+  --odyx-action-rgb: 0, 80, 216;
+
+  /* ── Legacy site accent ────────────────────────────────────────────────
+   * The older sky blue still driving --acc across shared (non-Home) surfaces.
+   * Prefer --odyx-action for new work. */
+  --sky: #06A5DF;
+  --sky-soft: #7FD0F3;
+  --sky-deep: #0581AD;
+
+  /* ── Home screen palette (--hv2-*) ─────────────────────────────────────── */
+  --hv2-blue: #0050D8;
+  --hv2-blue-deep: #0041AF;
+  --hv2-ink: #0A1020;      /* headings */
+  --hv2-body: #525C70;     /* body copy */
+  --hv2-mut: #8A93A6;      /* muted / meta */
+  --hv2-navy: #0A1745;     /* deep navy, footer + cinematic cards */
+  --hv2-surface: #F3F5FD;  /* raised panel */
+  --hv2-bg: #EEF2F9;       /* page canvas */
+  --hv2-line: rgba(10, 40, 90, .10);
+
+  /* ── P1-26 product palette (--p126-*) ──────────────────────────────────── */
+  --p126-blue: #0057C2;
+  --p126-blue-soft: #1A6FD4;
+  --p126-blue-label: #3B7DD6;
+  --p126-card: #F1F7FE;
+  --p126-divider: #DCE2EE;
+  --p126-title: #1F2738;
+  --p126-body: #4A5568;
+  --p126-ft-bg: #070D18;
+
+  /* ── Dark surfaces ─────────────────────────────────────────────────────
+   * Reserved for cinematic product moments, never for general layout. */
+  --navy: #201C1E;
+  --navy-deep: #141216;
+  --navy-card: #2A262C;
+
+  /* ── Neutrals ──────────────────────────────────────────────────────────── */
+  --white: #F6F8FA;
+  --grey: #9AA1A8;
+  --grey-d: #6A6E75;
+  --ok: #36C46E;
+}

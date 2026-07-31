@@ -1,0 +1,25 @@
+/* ODYX layout foundations — radius, container width, elevation. */
+:root {
+  /* Radii climb with the size of the surface: controls are tight, panels and
+   * bands are generous. Pills are fully round in practice. */
+  --r-btn: 10px;
+  --r-chip: 13px;
+  --r-card: 18px;
+  --r-panel: 24px;
+  --r-band: 26px;
+  --r-pill: 30px;
+
+  /* Content column. The Home screen mock is drawn on a 1400px canvas; sections
+   * centre inside it and gutters collapse below that. */
+  --hv2-maxw: 1400px;
+
+  /* Elevation is soft and blue-tinted on light surfaces — never neutral grey.
+   * The dark variant is reserved for cinematic product cards. */
+  --hv2-card-shadow: 0 16px 44px rgba(10, 40, 90, .09);
+  --shadow-card-light: 0 18px 44px rgba(8, 80, 130, .10);
+  --shadow-card-dark: 0 24px 60px rgba(0, 0, 0, .5);
+
+  /* Hairlines */
+  --hv2-line: rgba(10, 40, 90, .10);
+  --p126-divider: #DCE2EE;
+}

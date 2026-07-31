@@ -1,0 +1,26 @@
+<!-- @dsCard group="Type" viewport="760x300" name="Families & RTL" subtitle="Sora / Space Grotesk, swapped to Tajawal / IBM Plex Sans Arabic under [dir=rtl]" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;padding:18px;background:#fff;font-family:var(--font-body);color:var(--hv2-ink)}
+.pair{padding:12px 0;border-bottom:1px solid var(--hv2-line)}
+.pair:last-child{border-bottom:0}
+.t{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hv2-mut);font-weight:700;margin:0 0 6px}
+.d{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.02em}
+.b{font-family:var(--font-body);font-size:15px;color:var(--hv2-body)}
+.ar{font-family:'Tajawal',sans-serif;font-size:28px;font-weight:700;letter-spacing:0;line-height:1.3}
+.arb{font-family:'IBM Plex Sans Arabic',sans-serif;font-size:15px;color:var(--hv2-body);line-height:1.7}
+code{font-size:.64rem;color:var(--hv2-mut)}
+.note{margin:12px 0 0;font-size:.72rem;color:var(--hv2-body);line-height:1.5}
+</style></head><body>
+<div class="pair"><p class="t">Latin — display / body</p>
+  <div class="d">Precision Printing.</div>
+  <div class="b">Built for precision. Designed for you.</div>
+  <code>--font-display: Sora 700 · --font-body: Space Grotesk</code>
+</div>
+<div class="pair" dir="rtl"><p class="t" style="letter-spacing:0">Arabic — display / body</p>
+  <div class="ar">طباعة دقيقة.</div>
+  <div class="arb">كل ما تحتاجه لطب الأسنان الرقمي في منظومة واحدة.</div>
+  <code style="direction:ltr;display:block">[dir=rtl] --font-display: Tajawal · --font-body: IBM Plex Sans Arabic</code>
+</div>
+<p class="note">Arabic is a first-class locale: setting <code>dir="rtl"</code> rebinds both family tokens automatically. Never apply letter-spacing, uppercase or italic to Arabic text — tracking drops to 0 and leading opens to 1.3.</p>
+</body></html>
