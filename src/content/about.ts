@@ -47,7 +47,7 @@ export const ABOUT_STORY = {
   h2: 'Built for the full clinical path',
   paragraphs: [
     'ODYX covers the technology a dental clinic or laboratory needs to run a complete digital workflow — from the first scan of a patient’s mouth to the final delivered restoration.',
-    'That connected path is the brand. Scanner, design, print, wash & cure, and resin are steps in one system — not isolated products on a shelf.',
+    'That connected path is the brand. Scanner, design, print, cure, and resin are steps in one system — not isolated products on a shelf.',
   ],
   mosaic: [
     {
@@ -101,11 +101,11 @@ export const ABOUT_SPINE = [
   },
   {
     no: '04',
-    label: 'Wash & Cure',
+    label: 'Cure',
     blurb: 'Controlled UV finishing for strength and biocompatibility.',
     href: '/workflows/cure',
     img: '/img/scanner/step-cure.jpg',
-    alt: 'Wash and UV cure step',
+    alt: 'UV cure step',
   },
   {
     no: '05',
@@ -194,7 +194,7 @@ export const ABOUT_FAMILIES = [
   },
   {
     name: 'Digital Printing',
-    desc: 'Print, wash & cure, and clinical resins as one production line.',
+    desc: 'Print, cure, and clinical resins as one production line.',
     img: '/img/cutouts/feat-printer-cutout.png',
     brand: '/brand/odyx-digital-printing.png',
     href: '/products/3d-printers',

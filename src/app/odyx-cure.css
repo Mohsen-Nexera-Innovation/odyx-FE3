@@ -33,16 +33,50 @@
 .cure-page .p126-chip-icon{
   width:34px;
   height:34px;
-  color:#1a355f;
+  color:var(--p126-blue, var(--sky, #0050D8));
   flex-shrink:0;
 }
 .cure-page .p126-chip-label{
   font-size:clamp(.52rem, .95vw, .64rem);
   line-height:1.1;
-  color:#1a355f;
+  color:#111827;
   gap:0;
 }
 .cure-page .p126-chip-label span:first-child{font-weight:700}
+
+/* Why ODYX Cure — smaller copy so list clears the product image */
+.cure-page .p126-why-card .p126-card-title{
+  font-size:clamp(1.05rem, 1.5vw, 1.2rem);
+  margin-bottom:10px;
+}
+/* Why card +15% wider than the shared rail (1.1fr → 1.265fr) for more text↔image air */
+.cure-page .p126-row--why{
+  grid-template-columns:minmax(0, 1.265fr) minmax(0, 1fr);
+}
+.cure-page .p126-why-grid{
+  grid-template-columns:minmax(0, 1fr) minmax(200px, 1.05fr);
+  gap:clamp(55px, 6.3vw, 88px); /* gap also +~15% */
+  align-items:center;
+}
+.cure-page .p126-why-list{
+  gap:10px;
+  padding-right:4px;
+  max-width:none;
+}
+.cure-page .p126-why-list li{
+  font-size:clamp(.72rem, .95vw, .8rem);
+  line-height:1.25;
+  white-space:nowrap; /* one line per item — same as printer page */
+  gap:8px;
+}
+.cure-page .p126-why-list .p126-check{
+  width:18px;
+  height:18px;
+}
+.cure-page .p126-why-list .p126-check svg{
+  width:10px;
+  height:10px;
+}
 
 body:has(.cure-page),
 body:has(.cure-page) .site-bg,
@@ -260,7 +294,7 @@ body:has(.cure-page) main{
 .cure-roi-input:focus{
   outline:none;
   border-color:var(--p126-blue);
-  box-shadow:0 0 0 3px rgba(6,165,223,.14);
+  box-shadow:0 0 0 3px rgba(0,80,216,.14);
 }
 .cure-roi-input--span{
   grid-column:1 / -1;

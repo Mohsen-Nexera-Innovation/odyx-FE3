@@ -21,7 +21,7 @@ export const SUBNAV = [
   { label: 'Downloads', href: '#downloads' },
 ];
 
-export const WORKFLOW_STEPS = ['Scan', 'Design', 'Print', 'Wash & Cure', 'Deliver'];
+export const WORKFLOW_STEPS = ['Scan', 'Design', 'Print', 'Cure', 'Deliver'];
 
 export const HERO = {
   eyebrow: 'SCAN · STEP 1 OF 5',

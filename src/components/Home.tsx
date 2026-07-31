@@ -386,12 +386,12 @@ export default function Home() {
             >
               <defs>
                 <linearGradient id="ecoGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stopColor="#06a5df" />
+                  <stop offset="0" stopColor="#0050D8" />
                   <stop offset="1" stopColor="#0D9696" />
                 </linearGradient>
                 <radialGradient id="ecoPulseG" cx="50%" cy="50%" r="50%">
-                  <stop offset="0" stopColor="#06a5df" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#06a5df" stopOpacity="0" />
+                  <stop offset="0" stopColor="#0050D8" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#0050D8" stopOpacity="0" />
                 </radialGradient>
               </defs>
               <line
@@ -424,7 +424,7 @@ export default function Home() {
                 cx="40"
                 cy="30"
                 r="5"
-                fill="#06a5df"
+                fill="#0050D8"
               />
             </svg>
             {ECO.map(([icon, label, step], k) => (

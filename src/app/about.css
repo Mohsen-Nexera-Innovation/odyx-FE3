@@ -147,7 +147,7 @@
   font-weight:800;
   letter-spacing:-.04em;
   line-height:.9;
-  background:linear-gradient(120deg, #fff 20%, #7fd0f3 55%, #fff 90%);
+  background:linear-gradient(120deg, #fff 20%, #5B93F5 55%, #fff 90%);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
@@ -620,7 +620,7 @@
   padding:clamp(32px,5vw,56px);
   max-width:36rem;
 }
-.about-vm__body .eyebrow{color:#7fd0f3;display:inline-block;margin-bottom:10px}
+.about-vm__body .eyebrow{color:#5B93F5;display:inline-block;margin-bottom:10px}
 .about-vm__body h2{
   margin:0 0 14px;
   font-size:clamp(1.8rem, 3vw, 2.6rem);
@@ -714,7 +714,7 @@
   color:#fff;
 }
 .about-audiences__head{margin-bottom:28px}
-.about-audiences__head .eyebrow{display:inline-block;margin-bottom:10px;color:#7fd0f3}
+.about-audiences__head .eyebrow{display:inline-block;margin-bottom:10px;color:#5B93F5}
 .about-audiences__head h2{
   margin:0;
   font-size:clamp(1.7rem, 3vw, 2.5rem);
@@ -768,7 +768,7 @@
   display:inline-flex;align-items:center;gap:8px;
   margin-top:8px;
   font-weight:600;font-size:.92rem;
-  color:#7fd0f3;
+  color:#5B93F5;
 }
 
 /* —— Families —— */
@@ -971,7 +971,7 @@
     linear-gradient(180deg, rgba(7,11,20,.55), rgba(7,11,20,.88));
 }
 .about-cta__inner{position:relative;z-index:2;max-width:720px;margin:0 auto}
-.about-cta__inner .eyebrow{display:inline-block;margin-bottom:12px;color:#7fd0f3}
+.about-cta__inner .eyebrow{display:inline-block;margin-bottom:12px;color:#5B93F5}
 .about-cta__inner h2{
   margin:0 0 14px;
   font-size:clamp(1.8rem, 3.4vw, 2.8rem);

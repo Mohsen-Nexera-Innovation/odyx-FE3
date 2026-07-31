@@ -54,7 +54,7 @@ const STEP_ICONS: React.ReactNode[] = [
   <svg key="print" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <path d="M7 8V4h10v4M5 8h14a1 1 0 0 1 1 1v6h-4v4H8v-4H4V9a1 1 0 0 1 1-1z" />
   </svg>,
-  // Wash & Cure
+  // Cure
   <svg key="cure" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <path d="M12 3s6 6.6 6 11a6 6 0 1 1-12 0c0-4.4 6-11 6-11z" />
   </svg>,
@@ -315,14 +315,14 @@ export default function PrintersFamilyPage() {
           <div className="pf-spine" aria-label="The ODYX workflow, five steps">
             {WORKFLOW_SECTION.steps.map((step, i) => (
               <span
-                key={step}
+                key={step.label}
                 className="pf-spine-step reveal"
                 data-active={i === WORKFLOW_SECTION.activeStep}
               >
-                <span className="pf-spine-node">
+                <Link href={step.href} className="pf-spine-node">
                   <span className="pf-spine-ic">{STEP_ICONS[i]}</span>
-                  <span className="pf-spine-name">{step}</span>
-                </span>
+                  <span className="pf-spine-name">{step.label}</span>
+                </Link>
                 {i < WORKFLOW_SECTION.steps.length - 1 && (
                   <span className="pf-spine-arrow" aria-hidden>
                     <ArrowGlyph />

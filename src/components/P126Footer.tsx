@@ -21,11 +21,11 @@ const PRODUCTS = [
 ] as const;
 
 const WORKFLOWS = [
-  { label: 'Restorative', href: '/workflows/restorative' },
-  { label: 'Implant', href: '/workflows/implant' },
-  { label: 'Orthodontics', href: '/workflows/orthodontics' },
-  { label: 'Prosthetics', href: '/workflows/prosthetics' },
-  { label: 'All Workflows', href: '/workflows' },
+  { label: 'Restorative', href: '/solutions/clinical-applications/same-day-crown' },
+  { label: 'Implant', href: '/solutions/clinical-applications' },
+  { label: 'Orthodontics', href: '/solutions/clinical-applications' },
+  { label: 'Prosthetics', href: '/solutions/clinical-applications' },
+  { label: 'All Applications', href: '/solutions/clinical-applications' },
 ] as const;
 
 const LEARNING = [

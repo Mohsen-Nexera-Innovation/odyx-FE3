@@ -484,7 +484,13 @@ export const ODYX_CHANGED = {
 
 export const WORKFLOW_SECTION = {
   title: 'Where printing sits',
-  steps: ['Scan', 'Design', 'Print', 'Wash & Cure', 'Deliver'],
+  steps: [
+    { label: 'Scan', href: '/workflows/scan' },
+    { label: 'Design', href: '/workflows/design' },
+    { label: 'Print', href: '/workflows/print' },
+    { label: 'Cure', href: '/workflows/cure' },
+    { label: 'Deliver', href: '/workflows/deliver' },
+  ],
   activeStep: 2,
   stepCopy:
     'The file becomes an object. Minutes to hours, depending on what it is and how many of them are on the plate.',
@@ -495,8 +501,8 @@ export const WORKFLOW_SECTION = {
     link: { label: 'The step before: Design', href: '/workflows/design' },
   },
   forward: {
-    copy: 'Nothing comes off the plate finished. It is washed, then post-cured — and the time depends on the resin, not the printer.',
-    link: { label: 'The step after: Wash & Cure', href: '/workflows/cure' },
+    copy: 'Printed parts move to post-cure — time depends on the resin, not the printer.',
+    link: { label: 'The step after: Cure', href: '/workflows/cure' },
   },
   followAll: { label: 'Follow the whole workflow', href: '/workflows/print' },
 };

@@ -44,7 +44,7 @@ export default function ScannerS1Page() {
   return (
     <main className="s1l-page" id="top">
       {/* Hero uses wider rail than body sections (mock) */}
-      <section className="s1l-hero" aria-label="ODYX-S1 Intraoral Scanner">
+      <section className="s1l-hero" data-hero-light aria-label="ODYX-S1 Intraoral Scanner">
         <div className="s1l-wrap s1l-wrap--hero s1l-hero-grid">
           <div className="s1l-hero-copy">
             <h1 className="s1l-title">{hero.title}</h1>

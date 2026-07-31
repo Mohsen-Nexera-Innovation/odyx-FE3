@@ -110,6 +110,7 @@ export default function P126Page() {
       {/* Hero — fidelity to printer-odyx-p1-26.jpeg */}
       <section
         className="p126-hero"
+        data-hero-light
         aria-label="ODYX P1-26"
         style={{ ['--p126-hero-bg' as string]: `url('${hero.bg}?v=12')` }}
       >
@@ -254,15 +255,20 @@ export default function P126Page() {
             <h2 className="p126-card-title">Digital Workflow</h2>
             <ol className="p126-flow">
               {P1_26_WORKFLOW.map((step, i) => (
-                <li key={step.id} className="p126-flow-step">
-                  <span className="p126-flow-icon">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`${FLOW_ICONS[step.id]}?v=41`} alt="" loading="lazy" />
-                  </span>
-                  <span className="p126-flow-label">
-                    <strong>{step.bold}</strong>
-                    {step.rest}
-                  </span>
+                <li
+                  key={step.id}
+                  className={`p126-flow-step${step.id === 'print' ? ' is-current' : ''}`}
+                >
+                  <Link href={step.href} className="p126-flow-link">
+                    <span className="p126-flow-icon">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`${FLOW_ICONS[step.id]}?v=42`} alt="" loading="lazy" />
+                    </span>
+                    <span className="p126-flow-label">
+                      <strong>{step.bold}</strong>
+                      {step.rest}
+                    </span>
+                  </Link>
                   {i < P1_26_WORKFLOW.length - 1 ? (
                     <span className="p126-flow-arrow" aria-hidden>
                       {FLOW_CHEVRON}

@@ -129,7 +129,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           <SecHead eyebrow="Applications" />
           <div className="prod-applications reveal">
             {product.applications.map((a, i) => (
-              <Link key={a} href="/#clinical" className="prod-application">
+              <Link key={a} href="/solutions/clinical-applications" className="prod-application">
                 <span className="prod-application__num">
                   {String(i + 1).padStart(2, '0')}
                 </span>
@@ -330,7 +330,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           <SecHead eyebrow="Applications" />
           <div className="pill-list reveal">
             {product.applications.map((a) => (
-              <Link key={a} href="/#clinical">{a}</Link>
+              <Link key={a} href="/solutions/clinical-applications">{a}</Link>
             ))}
           </div>
         </div>

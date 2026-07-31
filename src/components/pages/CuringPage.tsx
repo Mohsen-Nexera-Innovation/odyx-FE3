@@ -78,12 +78,11 @@ const CHIP_ICONS: Record<string, ReactNode> = {
   ),
 };
 
-/** Local 6-step set — wash droplet + cure cube (not the eco packshot) */
+/** Digital Workflow icons — 5 steps (no wash) */
 const FLOW_ICONS: Record<string, string> = {
   scan: '/img/cure-uv02/flow/scan.png',
   design: '/img/cure-uv02/flow/design.png',
   print: '/img/cure-uv02/flow/print.png',
-  wash: '/img/cure-uv02/flow/wash.png',
   cure: '/img/cure-uv02/flow/cure.png',
   deliver: '/img/cure-uv02/flow/deliver.png',
 };
@@ -121,7 +120,7 @@ export default function CuringPage() {
 
   return (
     <main className="p126-page cure-page" id="top">
-      <section className="p126-hero" aria-label="ODYX Cure UV-02">
+      <section className="p126-hero" data-hero-light aria-label="ODYX Cure UV-02">
         <div className="p126-hero-bg" aria-hidden />
         <div className="p126-wrap p126-hero-grid">
           <div className="p126-hero-left">
@@ -266,14 +265,16 @@ export default function CuringPage() {
                   key={step.id}
                   className={`p126-flow-step${step.id === 'cure' ? ' is-current' : ''}`}
                 >
-                  <span className="p126-flow-icon">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`${FLOW_ICONS[step.id]}?v=3`} alt="" loading="lazy" />
-                  </span>
-                  <span className="p126-flow-label">
-                    <strong>{step.bold}</strong>
-                    {step.rest}
-                  </span>
+                  <Link href={step.href} className="p126-flow-link">
+                    <span className="p126-flow-icon">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`${FLOW_ICONS[step.id]}?v=4`} alt="" loading="lazy" />
+                    </span>
+                    <span className="p126-flow-label">
+                      <strong>{step.bold}</strong>
+                      {step.rest}
+                    </span>
+                  </Link>
                   {i < CURE_UV02_WORKFLOW.length - 1 ? (
                     <span className="p126-flow-arrow" aria-hidden>
                       {FLOW_CHEVRON}

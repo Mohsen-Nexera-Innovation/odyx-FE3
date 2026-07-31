@@ -3,9 +3,9 @@
    ============================================================ */
 
 .rs{
-  --rsa:var(--sky,#06A5DF); --rsa-h:var(--sky-deep,#0581AD);
+  --rsa:var(--sky,#0050D8); --rsa-h:var(--sky-deep,#0041AF);
   --rs-ink:#1a2740; --rs-body:#5a6478; --rs-mut:#8a92a3;
-  --rs-tint:#eef4fa; --rs-acc:#06A5DF;
+  --rs-tint:#eef4fa; --rs-acc:#0050D8;
   --rs-rule:rgba(26,50,90,.10);
   --rs-shadow:0 8px 24px rgba(20,40,80,.07);
   --rs-shadow-lift:0 16px 40px rgba(20,40,80,.14);
@@ -58,20 +58,20 @@
   overflow:hidden;
 }
 .rs-hero::before{
-  /* Soft purple fill behind the product row */
+  /* Soft logo-blue fill behind the product row */
   content:""; position:absolute; inset:auto 0 4% 38%; height:70%;
   background:
-    radial-gradient(ellipse 70% 55% at 68% 48%, rgba(140,60,210,.42), transparent 70%),
-    radial-gradient(ellipse 45% 40% at 90% 40%, rgba(100,50,180,.28), transparent 72%);
+    radial-gradient(ellipse 70% 55% at 68% 48%, rgba(0,80,216,.42), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 90% 40%, rgba(0,65,175,.28), transparent 72%);
   pointer-events:none; z-index:0;
 }
 .rs-hero-glow{
   position:absolute; inset:auto -2% 10% 48%; height:55%;
   background:linear-gradient(105deg,
     transparent 0%,
-    rgba(168,70,220,.0) 16%,
-    rgba(168,70,220,.55) 48%,
-    rgba(100,80,210,.32) 70%,
+    rgba(0,80,216,.0) 16%,
+    rgba(0,80,216,.55) 48%,
+    rgba(0,65,175,.32) 70%,
     transparent 100%);
   filter:blur(20px); pointer-events:none; z-index:0;
   opacity:.9;
@@ -81,8 +81,8 @@
   inset:auto 0 22% 55%; height:20%;
   background:linear-gradient(95deg,
     transparent 0%,
-    rgba(190,90,255,.65) 38%,
-    rgba(120,100,255,.3) 72%,
+    rgba(127,208,243,.65) 38%,
+    rgba(0,80,216,.3) 72%,
     transparent 100%);
   filter:blur(10px);
   opacity:.95;

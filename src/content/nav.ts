@@ -233,7 +233,7 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "Clinical Applications",
-        href: "/#clinical",
+        href: "/solutions/clinical-applications",
         desc: "Crowns, aligners, guides and more",
       },
       {
@@ -263,13 +263,13 @@ export const HEADER_MENUS: NavGroup[] = [
         items: [
           {
             label: "Clinical Applications",
-            href: "/#clinical",
+            href: "/solutions/clinical-applications",
             desc: "Crowns, aligners, guides and more",
           },
           {
-            label: "Solutions Overview",
-            href: "/solutions/dentists",
-            desc: "Find the right fit for you",
+            label: "Same-Day Crown",
+            href: "/solutions/clinical-applications/same-day-crown",
+            desc: "Scan to cementation in one visit",
           },
         ],
       },

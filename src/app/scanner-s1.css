@@ -13,7 +13,7 @@
   --sca:#3A9C96;                          /* family-scan accent — graphics/large text only */
   --sca-text:#2E7E78;                     /* darkened teal for small text, 4.5:1 on white */
   --sca-tint:rgba(58,156,150,.12);        /* gradient environments, .STL fills */
-  --scb:var(--sky,#06A5DF); --scb-h:var(--sky-deep,#0581AD); --scb-soft:var(--sky-soft,#7FD0F3);
+  --scb:var(--sky,#0050D8); --scb-h:var(--sky-deep,#0041AF); --scb-soft:var(--sky-soft,#5B93F5);
   --sc-ink:var(--ink,#211C1D); --sc-body:var(--ink-muted,#5A555C); --sc-mut:var(--ink-faint,#8A858E);
   --sc-tint:var(--paper-2,#E9F4FB); --sc-dark:var(--navy-deep,#141216);
   --sc-rule:var(--paper-line,rgba(10,60,100,.10));
@@ -72,7 +72,7 @@
 }
 .sc-btn:hover{background:var(--scb-soft); border-color:var(--scb-soft)}
 .sc-btn--ghost{background:transparent; color:var(--scb-h)}
-.sc-btn--ghost:hover{background:rgba(6,165,223,.08)}
+.sc-btn--ghost:hover{background:rgba(0,80,216,.08)}
 .sc-cta-micro{font-size:13px; color:var(--sc-mut); margin-top:8px}
 .sc-micro{font-size:13px; color:var(--sc-mut)}
 .sc-micro a{color:var(--sca-text); font-weight:500}

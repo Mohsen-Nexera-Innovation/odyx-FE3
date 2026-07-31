@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import P126Footer from '@/components/P126Footer';
+import Hv2Footer from '@/components/home2/Hv2Footer';
 
 const COLUMNS = [
   {
@@ -21,7 +21,7 @@ const COLUMNS = [
     links: [
       { label: 'For Dentists', href: '/solutions/dentists' },
       { label: 'For Dental Labs', href: '/solutions/labs' },
-      { label: 'Clinical Applications', href: '/#clinical' },
+      { label: 'Clinical Applications', href: '/solutions/clinical-applications' },
     ],
   },
   {
@@ -103,14 +103,12 @@ function SocialIcon({ kind }: { kind: (typeof SOCIAL)[number]['icon'] }) {
 export default function Footer() {
   const pathname = usePathname();
   if (pathname?.startsWith('/admin')) return null;
-  /* Dark product-page footer (P1-26 / S1 / Cure / Resins design system) */
+  /* Product / clinical landings use the home navy band (Hv2), not the near-black P126 footer */
   if (
-    pathname?.includes('/odyx-p1-26') ||
-    pathname?.includes('/odyx-s1-intraoral-scanner') ||
-    pathname?.includes('/curing-machines') ||
-    pathname?.includes('/products/resins')
+    pathname?.startsWith('/products') ||
+    pathname?.includes('/solutions/clinical-applications')
   ) {
-    return <P126Footer />;
+    return <Hv2Footer />;
   }
 
   return (

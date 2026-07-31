@@ -76,12 +76,11 @@ export const CURE_UV02_APPS = [
 ] as const;
 
 export const CURE_UV02_WORKFLOW = [
-  { id: 'scan', label: 'Scan', bold: 'Scan', rest: '' },
-  { id: 'design', label: 'Design', bold: 'Design', rest: '' },
-  { id: 'print', label: 'Print', bold: 'Print', rest: '' },
-  { id: 'wash', label: 'Wash', bold: 'Wash', rest: '' },
-  { id: 'cure', label: 'Cure', bold: 'Cure', rest: '' },
-  { id: 'deliver', label: 'Deliver', bold: 'Deliver', rest: '' },
+  { id: 'scan', label: 'Scan', bold: 'Scan', rest: '', href: '/workflows/scan' },
+  { id: 'design', label: 'Design', bold: 'Design', rest: '', href: '/workflows/design' },
+  { id: 'print', label: 'Print', bold: 'Print', rest: '', href: '/workflows/print' },
+  { id: 'cure', label: 'Cure', bold: 'Cure', rest: '', href: '/workflows/cure' },
+  { id: 'deliver', label: 'Deliver', bold: 'Deliver', rest: '', href: '/workflows/deliver' },
 ] as const;
 
 export const CURE_UV02_ROI = {

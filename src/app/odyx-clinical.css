@@ -1,0 +1,694 @@
+/* Clinical Applications — hub + Same-Day Crown
+   Fidelity: knowledge_base/.../clinical-application*.jpeg */
+
+.cl{
+  --cl-ink:#1a1f2e;
+  --cl-body:#5b6475;
+  --cl-mut:#8b93a3;
+  --cl-blue:var(--sky, #0050D8);
+  --cl-blue-h:var(--sky-deep, #0041AF);
+  --cl-page:#fafafc;
+  --cl-soft:#f5f5f7;
+  --cl-line:#eceef3;
+  --cl-max:1400px;
+  --cl-radius:18px;
+  background:var(--cl-page);
+  color:var(--cl-body);
+  font-family:var(--font-sora),'Sora',ui-sans-serif,system-ui,sans-serif;
+  overflow-x:clip;
+}
+.cl--hub{background:#fafafc}
+.cl h1,.cl h2,.cl h3,.cl h4{
+  font-family:var(--font-sora),'Sora',ui-sans-serif,system-ui,sans-serif;
+  color:var(--cl-ink);
+  letter-spacing:-.02em;
+  line-height:1.15;
+  margin:0;
+}
+.cl-wrap{
+  max-width:var(--cl-max);
+  margin-inline:auto;
+  padding-inline:clamp(20px,3.2vw,48px);
+}
+.cl-sec{padding-block:clamp(36px,4.5vw,56px)}
+
+/* ===== Hub ===== */
+.cl-hub{padding:clamp(96px,11vh,118px) 0 clamp(40px,5vw,64px)}
+.cl-hub-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:16px;
+  align-items:stretch;
+}
+.cl-cat{
+  display:flex;
+  flex-direction:column;
+  background:#fff;
+  border:1px solid var(--cl-line);
+  border-radius:var(--cl-radius);
+  box-shadow:0 10px 28px rgba(24,36,64,.05);
+  overflow:hidden;
+  min-height:100%;
+  min-width:0;
+}
+.cl-cat-head{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:18px 16px 14px;
+  width:auto;
+  z-index:auto;
+  background:transparent;
+}
+.cl-cat-dot{
+  width:34px;height:34px;border-radius:999px;
+  display:grid;place-items:center;flex-shrink:0;
+  overflow:hidden;
+  background:transparent;
+}
+.cl-cat-dot img{
+  width:34px;height:34px;display:block;object-fit:cover;
+}
+.cl h2.cl-cat-title{
+  margin:0;
+  font-size:1.05rem;font-weight:700;letter-spacing:-.015em;line-height:1.2;
+  color:var(--cat, var(--cl-ink));
+}
+.cl-cat-list{
+  list-style:none;margin:0;padding:0 10px 4px;flex:1;
+  display:flex;flex-direction:column;gap:2px;
+}
+.cl-cat-item a{
+  display:grid;
+  grid-template-columns:44px minmax(0,1fr) 14px;
+  gap:10px;
+  align-items:center;
+  padding:8px 6px;
+  border-radius:10px;
+  text-decoration:none;
+  color:inherit;
+  transition:background .18s ease;
+}
+.cl-cat-item a:hover{background:rgba(24,36,64,.035)}
+.cl-cat-thumb{
+  width:44px;height:44px;border-radius:9px;overflow:hidden;
+  background:#f3f4f8;display:grid;place-items:center;flex-shrink:0;
+  border:1px solid rgba(24,36,64,.04);
+}
+.cl-cat-thumb img{width:100%;height:100%;display:block}
+.cl-cat-thumb--cutout img{
+  width:88%;height:88%;object-fit:contain;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.12));
+}
+.cl-cat-thumb--photo img{object-fit:cover}
+.cl-cat-copy{min-width:0}
+.cl-cat-copy strong{
+  display:block;font-size:.78rem;font-weight:700;
+  color:var(--cl-ink);line-height:1.25;letter-spacing:-.01em;
+}
+.cl-cat-copy span{
+  display:block;margin-top:2px;font-size:.68rem;font-weight:400;
+  color:#7a8292;line-height:1.3;
+}
+.cl-cat-chev{
+  color:#c0c6d2;display:grid;place-items:center;width:14px;
+}
+.cl-cat-chev svg{width:12px;height:12px}
+.cl-cat-explore{
+  display:inline-flex;align-self:flex-start;
+  margin:8px 16px 4px;padding:0;
+  font-size:.8rem;font-weight:700;color:var(--cat,#D04858);
+  text-decoration:none;letter-spacing:-.01em;
+}
+.cl-cat-explore:hover{opacity:.85}
+.cl-cat-foot{
+  margin-top:auto;
+  padding:8px 8px 14px;
+  background:#fff;
+  display:flex;align-items:flex-end;justify-content:center;
+  min-height:170px;
+}
+.cl-cat-foot img{
+  width:100%;height:auto;max-height:190px;
+  object-fit:contain;object-position:center bottom;display:block;
+}
+.cl-cat-foot--spacer{min-height:12px;padding:0}
+.cl-cat--cases .cl-cat-list{padding-bottom:8px}
+.cl-cat--cases .cl-cat-explore{margin-top:auto;margin-bottom:18px}
+
+.cl-banner{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns:minmax(220px,.95fr) minmax(280px,1.35fr) auto;
+  gap:22px;
+  align-items:center;
+  background:#f5f5f7;
+  border:1px solid #eceef2;
+  border-radius:22px;
+  padding:22px 24px;
+  box-shadow:none;
+}
+.cl-banner-copy{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  column-gap:12px;
+  row-gap:6px;
+  align-items:start;
+}
+.cl-banner-kicker{
+  grid-row:1 / span 2;
+  width:40px;height:40px;border-radius:12px;
+  background:#efe6ff;
+  color:#8153CF;
+  display:grid;place-items:center;margin-top:2px;
+}
+.cl-banner-kicker svg{width:20px;height:20px}
+.cl h2.cl-banner-title,
+.cl-banner h2{
+  grid-column:2;
+  font-size:1.35rem;font-weight:800;letter-spacing:-.03em;line-height:1.12;
+  display:flex;flex-direction:column;color:var(--cl-ink);
+}
+.cl-banner p{
+  grid-column:2;
+  margin:0;font-size:.84rem;line-height:1.45;color:#6b7385;max-width:34ch;
+}
+.cl-banner-thumbs{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+}
+.cl-banner-thumbs img{
+  width:100%;aspect-ratio:5/3.4;object-fit:cover;border-radius:12px;display:block;
+  box-shadow:0 4px 12px rgba(20,30,50,.08);
+}
+.cl-banner-cta{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 16px;border-radius:12px;
+  border:1.5px solid #c9d4ef;
+  color:var(--cl-blue);font-weight:700;font-size:.86rem;
+  text-decoration:none;background:#fff;white-space:nowrap;
+  box-shadow:0 4px 12px rgba(37,99,235,.08);
+  transition:background .18s ease, border-color .18s ease, transform .18s ease;
+}
+.cl-banner-cta:hover{
+  background:#f5f8ff;border-color:#9db4ef;transform:translateY(-1px);
+}
+
+.cl-hub-feats{
+  margin-top:28px;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  list-style:none;padding:8px 0 4px;margin-left:0;margin-right:0;
+  background:transparent;
+  border:none;
+  border-radius:0;
+  overflow:visible;
+}
+.cl-hub-feat{
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:10px;
+  align-items:center;
+  padding:10px 14px 10px 4px;
+  position:relative;
+}
+.cl-hub-feat:not(:last-child)::after{
+  content:"";
+  position:absolute;top:10px;bottom:10px;right:0;
+  width:1px;background:#e6e8ef;
+}
+.cl-hub-feat-ic{color:var(--cl-blue);width:26px;height:26px;display:grid;place-items:center}
+.cl-hub-feat-ic svg{width:24px;height:24px;display:block}
+.cl-hub-feat-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cl-hub-feat strong{font-size:.82rem;font-weight:700;color:var(--cl-ink);letter-spacing:-.01em}
+.cl-hub-feat-copy > span{font-size:.72rem;color:#7a8292;line-height:1.3}
+
+body:has(.cl--hub),
+body:has(.cl--hub) .site-bg,
+body:has(.cl--hub) main{background:#fafafc !important}
+
+/* ===== Same-Day Crown detail (clinical-applications-restorative) =====
+   Type: Inter (mock is clean Latin UI sans — not Sora display).
+   Sizes tuned text-by-text against the design reference. */
+.cl--sdc{
+  --cl-page:#f7f8fb;
+  --cl-ink:#111827;
+  --cl-body:#5b6475;
+  --cl-mut:#8b93a3;
+  --cl-line:#e8ebf2;
+  --cl-soft:#f3f5f9;
+  --cl-radius:16px;
+  /* Type scale from mock (≈1440 content) */
+  --sdc-hero-title:clamp(2.75rem, 4.2vw, 3.25rem);   /* ~52–52px */
+  --sdc-hero-sub:clamp(1.2rem, 1.7vw, 1.4rem);       /* ~22–24px */
+  --sdc-hero-body:clamp(1rem, 1.15vw, 1.125rem);     /* ~16–18px */
+  --sdc-btn:0.9375rem;                               /* 15px */
+  --sdc-badge:0.6875rem;                             /* 11px */
+  --sdc-sec:clamp(1.25rem, 1.6vw, 1.375rem);         /* 20–22px section H2 */
+  --sdc-card-h:1.25rem;                              /* 20px card titles */
+  --sdc-prod-name:0.9375rem;                         /* 15px */
+  --sdc-prod-sub:0.8125rem;                          /* 13px */
+  --sdc-tl-total:0.875rem;                           /* 14px */
+  --sdc-tl-step:0.9375rem;                           /* 15px */
+  --sdc-tl-body:0.8125rem;                           /* 13px */
+  --sdc-tl-time:0.75rem;                             /* 12px */
+  --sdc-why-title:0.9375rem;                         /* 15px */
+  --sdc-why-body:0.8125rem;                          /* 13px */
+  --sdc-params:0.875rem;                             /* 14px */
+  --sdc-tips:0.875rem;                               /* 14px */
+  --sdc-case:0.875rem;                               /* 14px */
+  --sdc-link:0.875rem;                               /* 14px */
+  --sdc-ba-label:0.75rem;                            /* 12px */
+  background:var(--cl-page);
+  font-family:var(--font-inter),'Inter',ui-sans-serif,system-ui,sans-serif;
+  font-size:16px;
+  font-weight:400;
+  color:var(--cl-body);
+  -webkit-font-smoothing:antialiased;
+}
+.cl--sdc h1,.cl--sdc h2,.cl--sdc h3{
+  font-family:var(--font-inter),'Inter',ui-sans-serif,system-ui,sans-serif;
+  color:var(--cl-ink);
+  letter-spacing:-.02em;
+  font-weight:700;
+}
+.cl--sdc .cl-sec{padding-block:clamp(28px,3.6vw,40px)}
+.cl--sdc .cl-sec--bottom{padding-bottom:clamp(48px,6vw,72px)}
+.cl--sdc .cl-wrap{max-width:1240px}
+
+.cl-hero{
+  position:relative;
+  background:#05070c;
+  color:#fff;
+  padding:clamp(96px,11vh,118px) 0 clamp(28px,4vw,40px);
+  overflow:hidden;
+}
+.cl-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(280px,.92fr) minmax(300px,1.2fr);
+  gap:clamp(12px,2.5vw,28px);
+  align-items:center;
+  min-height:clamp(300px,38vh,420px);
+}
+.cl-hero-copy{position:relative;z-index:2;max-width:38ch}
+/* Category badge — accent via --cl-badge (defaults restorative purple) */
+.cl-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 12px 5px 8px;border-radius:999px;
+  background:var(--cl-badge,#8153CF);color:#fff;
+  font-family:var(--font-inter),'Inter',sans-serif;
+  font-size:var(--sdc-badge);font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  margin:0 0 18px;line-height:1.2;
+}
+.cl-badge svg{width:13px;height:13px}
+/* Same-Day Crown */
+.cl-hero h1{
+  color:#fff;font-size:var(--sdc-hero-title);font-weight:700;
+  margin:0 0 14px;letter-spacing:-.03em;line-height:1.08;
+}
+/* From scan to cementation… */
+.cl-hero-sub{
+  margin:0 0 12px;font-size:var(--sdc-hero-sub);
+  font-weight:600;color:rgba(255,255,255,.95);letter-spacing:-.015em;line-height:1.3;
+}
+/* Deliver strong, esthetic… */
+.cl-hero-body{
+  margin:0 0 26px;max-width:36ch;font-size:var(--sdc-hero-body);
+  line-height:1.55;color:rgba(226,232,240,.78);font-weight:400;
+}
+/* Download Workflow PDF */
+.cl-btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:13px 20px;border-radius:10px;
+  background:var(--cl-blue);color:#fff;
+  font-family:var(--font-inter),'Inter',sans-serif;
+  font-weight:600;font-size:var(--sdc-btn);
+  text-decoration:none;border:none;letter-spacing:-.01em;
+  box-shadow:0 10px 24px rgba(0,80,216,.28);
+  transition:background .2s ease, transform .2s ease;
+}
+.cl-btn:hover{background:var(--cl-blue-h);transform:translateY(-1px)}
+.cl-btn svg{width:16px;height:16px}
+
+/* Hero photo — no card chrome; transparent cutout blends into black */
+.cl-hero-media{
+  position:relative;margin:0;
+  border-radius:0;overflow:visible;
+  aspect-ratio:auto;background:transparent;
+  box-shadow:none;justify-self:end;width:100%;
+  max-width:620px;
+}
+.cl-hero-media img{
+  width:100%;height:auto;max-height:min(420px,52vh);
+  object-fit:contain;object-position:right center;display:block;
+  filter:drop-shadow(0 18px 28px rgba(0,0,0,.35));
+}
+
+/* Shared section titles — same left edge as content below */
+.cl--sdc .cl-sec-title,
+.cl--sdc .cl-products-title,
+.cl--sdc .cl-tl-head h2,
+.cl--sdc .cl-card h2{
+  font-size:var(--sdc-sec);font-weight:700;margin:0 0 16px;
+  color:var(--cl-ink);letter-spacing:-.02em;
+  text-align:left;
+}
+.cl--sdc .cl-card h2{font-size:var(--sdc-card-h);margin:0 0 14px}
+
+.cl-products{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;
+}
+.cl-prod{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:10px;padding:18px 12px 16px;border-radius:14px;
+  background:#fff;border:1px solid var(--cl-line);
+  box-shadow:0 4px 14px rgba(20,40,80,.04);
+  text-decoration:none;color:inherit;min-height:100%;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.cl-prod:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(20,40,80,.1)}
+.cl-prod-media{
+  width:100%;aspect-ratio:1;display:grid;place-items:center;
+  background:linear-gradient(180deg,#f8fafc,#eef2f7);
+  border-radius:12px;overflow:hidden;
+}
+.cl-prod-media img{
+  width:88%;height:88%;object-fit:contain;object-position:center;
+  display:block;
+  filter:drop-shadow(0 8px 14px rgba(0,0,0,.12));
+}
+.cl--sdc .cl-prod-media img{width:92%;height:92%}
+.cl-prod-copy{display:flex;flex-direction:column;gap:2px;align-items:center}
+/* ODYX S1 / CAD Software / … */
+.cl-prod-copy strong{
+  font-size:var(--sdc-prod-name);font-weight:700;color:var(--cl-ink);
+  line-height:1.25;letter-spacing:-.015em;
+}
+/* Intraoral Scanner / (exocad) / … */
+.cl-prod-copy span{
+  font-size:var(--sdc-prod-sub);font-weight:400;color:var(--cl-mut);line-height:1.3;
+}
+
+/* Workflow Timeline — title left edge aligns with Scan step (left-aligned columns) */
+.cl-tl-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;margin-bottom:20px;flex-wrap:wrap;
+}
+.cl-tl-head .cl-sec-title{margin:0}
+/* Total Time: ~30–45 min */
+.cl-tl-total{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:var(--sdc-tl-total);font-weight:500;color:var(--cl-ink);
+}
+.cl-tl-total svg{width:15px;height:15px;color:var(--cl-mut)}
+.cl-tl{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  column-gap:clamp(8px,1.2vw,16px);
+}
+.cl-tl-step{
+  --tl-ic:64px;
+  position:relative;
+  display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+  gap:8px;padding:0;
+  min-width:0;
+}
+/* Connector from icon center → next icon center */
+.cl-tl-step:not(:last-child)::after{
+  content:"";
+  position:absolute;
+  top:calc(26px + 8px + var(--tl-ic) / 2);
+  left:calc(var(--tl-ic) / 2);
+  width:calc(100% + clamp(8px,1.2vw,16px));
+  height:2px;background:var(--cl-blue);
+  pointer-events:none;z-index:0;
+}
+.cl-tl-step:not(:last-child)::before{
+  content:"";
+  position:absolute;
+  top:calc(26px + 8px + var(--tl-ic) / 2 - 5px);
+  left:calc(100% + clamp(8px,1.2vw,16px) - 2px);
+  width:0;height:0;
+  border-top:6px solid transparent;border-bottom:6px solid transparent;
+  border-left:8px solid var(--cl-blue);
+  z-index:1;
+}
+.cl-tl-n{
+  width:26px;height:26px;border-radius:999px;background:var(--cl-blue);color:#fff;
+  font-size:.75rem;font-weight:700;display:grid;place-items:center;z-index:1;
+  font-family:var(--font-inter),'Inter',sans-serif;
+}
+.cl-tl-ic{
+  width:var(--tl-ic);height:var(--tl-ic);border-radius:999px;
+  background:#f3f5f8;
+  display:grid;place-items:center;z-index:1;
+  border:none;overflow:hidden;
+  box-shadow:none;
+}
+.cl-tl-ic img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+/* Scan / Design / Print… */
+.cl-tl-step strong{
+  font-size:var(--sdc-tl-step);font-weight:700;color:var(--cl-ink);
+  margin-top:2px;letter-spacing:-.015em;
+}
+/* Full arch or quadrant… */
+.cl-tl-step p{
+  margin:0;font-size:var(--sdc-tl-body);font-weight:400;
+  color:var(--cl-body);line-height:1.4;max-width:20ch;
+}
+/* ~30 sec */
+.cl-tl-time{
+  display:inline-flex;padding:4px 11px;border-radius:999px;
+  background:#eef1f6;font-size:var(--sdc-tl-time);font-weight:500;color:var(--cl-ink);
+  margin-top:2px;
+}
+
+/* Before & After + Why ODYX? */
+.cl-split{
+  display:grid;grid-template-columns:1.2fr .9fr;gap:14px;align-items:stretch;
+}
+.cl-card{
+  background:#fff;border:1px solid var(--cl-line);border-radius:16px;
+  box-shadow:0 6px 18px rgba(20,40,80,.04);
+  padding:clamp(18px,2vw,22px);
+}
+.cl-ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cl-ba-shot{position:relative;margin:0;border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:var(--cl-soft)}
+.cl-ba-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.cl-ba-label{
+  position:absolute;left:10px;bottom:10px;
+  padding:4px 10px;border-radius:8px;background:rgba(17,24,39,.82);
+  color:#fff;font-size:var(--sdc-ba-label);font-weight:600;
+  font-family:var(--font-inter),'Inter',sans-serif;
+}
+.cl-ba-dots{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.cl-ba-dot{
+  width:7px;height:7px;border-radius:999px;border:none;padding:0;
+  background:#c8d0dc;cursor:pointer;
+}
+.cl-ba-dot[data-active="true"]{background:var(--cl-blue);width:18px;border-radius:999px}
+
+.cl-why-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.cl-why-item{
+  display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;
+  padding:14px 14px;border-radius:12px;background:var(--cl-soft);
+}
+.cl-why-ic{
+  width:44px;height:44px;border-radius:11px;
+  border:1px solid rgba(var(--sky-rgb,0,80,216),.22);background:#fff;
+  color:var(--cl-blue);display:grid;place-items:center;flex-shrink:0;
+}
+.cl-why-ic svg{width:22px;height:22px}
+.cl-why-copy{min-width:0}
+/* One-Visit Dentistry */
+.cl-why-copy strong{
+  display:block;font-size:var(--sdc-why-title);font-weight:700;
+  color:var(--cl-ink);margin-bottom:3px;letter-spacing:-.015em;
+}
+/* Increase patient satisfaction… */
+.cl-why-copy > span{
+  display:block;font-size:var(--sdc-why-body);font-weight:400;
+  color:var(--cl-body);line-height:1.4;
+}
+
+/* Bottom trio */
+.cl-trio{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+}
+.cl-trio .cl-card{height:100%}
+.cl-params{width:100%;border-collapse:collapse;font-size:var(--sdc-params)}
+.cl-params tr:nth-child(even){background:var(--cl-soft)}
+.cl-params th,.cl-params td{
+  padding:10px 12px;border:none;vertical-align:middle;
+  font-family:var(--font-inter),'Inter',sans-serif;
+}
+/* Layer Thickness */
+.cl-params th{font-weight:600;color:var(--cl-ink);text-align:left}
+/* 50 μm */
+.cl-params td{font-weight:400;color:var(--cl-body);text-align:right}
+
+.cl-tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.cl-tips li{
+  display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:flex-start;
+  font-size:var(--sdc-tips);line-height:1.4;color:var(--cl-ink);font-weight:400;
+}
+/* Square checkbox — never circular / radio-style */
+.cl-tip-check{
+  width:18px;height:18px;margin-top:2px;
+  background:transparent;color:var(--cl-blue);
+  display:grid;place-items:center;
+  border-radius:0;
+  flex-shrink:0;
+}
+.cl-tip-check-svg{display:block;width:18px;height:18px}
+.cl-tip-check-svg circle{display:none !important}
+
+.cl-card--case .cl-case-grid{
+  display:grid;grid-template-columns:1fr 1.05fr;gap:12px;align-items:start;
+}
+/* Single molar crown… */
+.cl-case-body{
+  margin:0 0 12px;font-size:var(--sdc-case);line-height:1.5;
+  color:var(--cl-body);font-weight:400;
+}
+/* Watch the case video */
+.cl-case-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--cl-blue);font-weight:600;font-size:var(--sdc-link);
+  text-decoration:none;letter-spacing:-.01em;
+}
+.cl-case-link:hover{color:var(--cl-blue-h)}
+.cl-case-link svg{width:13px;height:13px}
+.cl-case-thumb{
+  position:relative;display:block;border-radius:12px;overflow:hidden;
+  aspect-ratio:16/11;background:var(--cl-soft);margin:0;
+}
+.cl-case-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.cl-case-play{
+  position:absolute;inset:0;display:grid;place-items:center;
+  background:rgba(10,16,28,.16);
+}
+.cl-case-play span{
+  width:46px;height:46px;border-radius:999px;background:rgba(255,255,255,.94);
+  display:grid;place-items:center;color:var(--cl-blue);
+  box-shadow:0 8px 20px rgba(0,0,0,.16);
+}
+.cl-case-play svg{width:17px;height:17px;margin-left:2px}
+
+body:has(.cl--sdc),
+body:has(.cl--sdc) .site-bg,
+body:has(.cl--sdc) main{background:var(--cl-page,#f7f8fb) !important}
+body:has(.cl:not(.cl--hub):not(.cl--sdc)),
+body:has(.cl:not(.cl--hub):not(.cl--sdc)) .site-bg,
+body:has(.cl:not(.cl--hub):not(.cl--sdc)) main{background:#fff !important}
+
+/* ===== Clinical Cases category listing ===== */
+.cl--cases-list .cl-hero--cases-list{
+  min-height:0;
+  padding-bottom:clamp(36px,5vw,52px);
+}
+.cl--cases-list .cl-hero--cases-list .cl-wrap{max-width:1240px}
+.cl--cases-list .cl-hero-body--wide{max-width:52ch}
+.cl-cases-back{
+  display:inline-flex;margin-top:18px;
+  color:rgba(255,255,255,.78);font-size:var(--sdc-link);font-weight:600;
+  text-decoration:none;letter-spacing:-.01em;
+}
+.cl-cases-back:hover{color:#fff}
+.cl-sec--cases-grid{padding-block:clamp(32px,4vw,48px)}
+.cl-cases-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.cl-cases-card{
+  display:flex;flex-direction:column;
+  background:#fff;border:1px solid var(--cl-line);border-radius:16px;
+  overflow:hidden;text-decoration:none;color:inherit;
+  box-shadow:0 6px 18px rgba(20,40,80,.04);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.cl-cases-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 32px rgba(20,40,80,.1);
+}
+.cl-cases-card-media{
+  display:grid;place-items:center;
+  aspect-ratio:16/11;
+  background:linear-gradient(160deg,#0a0d14 0%,#151a24 100%);
+  padding:18px 20px 8px;
+}
+.cl-cases-card-media img{
+  width:100%;height:100%;object-fit:contain;object-position:center bottom;
+  display:block;
+  filter:drop-shadow(0 12px 20px rgba(0,0,0,.35));
+}
+.cl-cases-card-copy{
+  display:flex;flex-direction:column;gap:6px;
+  padding:16px 18px 18px;
+}
+.cl-cases-card-copy strong{
+  font-size:var(--sdc-card-h);font-weight:700;color:var(--cl-ink);
+  letter-spacing:-.02em;line-height:1.2;
+}
+.cl-cases-card-sub{
+  font-size:var(--sdc-prod-name);font-weight:600;color:var(--cl-ink);
+  letter-spacing:-.01em;line-height:1.3;
+}
+.cl-cases-card-body{
+  font-size:var(--sdc-tips);font-weight:400;color:var(--cl-body);
+  line-height:1.45;margin-top:2px;
+}
+.cl-cases-card-cta{
+  display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  font-size:var(--sdc-link);font-weight:600;color:var(--cl-blue);
+  letter-spacing:-.01em;
+}
+.cl-cases-card-cta svg{width:14px;height:14px}
+.cl-cases-card:hover .cl-cases-card-cta{color:var(--cl-blue-h)}
+
+@media (max-width:1100px){
+  .cl-cases-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:700px){
+  .cl-cases-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:1280px){
+  .cl-cat-copy strong{font-size:.74rem}
+  .cl-cat-copy span{font-size:.64rem}
+  .cl-cat-thumb{width:40px;height:40px}
+  .cl-cat-item a{grid-template-columns:40px minmax(0,1fr) 14px}
+  .cl-hub-feat{padding:14px 10px 14px 12px;gap:8px}
+  .cl-hub-feat strong{font-size:.76rem}
+  .cl-hub-feat-copy > span{font-size:.68rem}
+}
+@media (max-width:1100px){
+  .cl-hub-grid{grid-template-columns:repeat(3,1fr)}
+  .cl-banner{grid-template-columns:1fr;gap:16px}
+  .cl-banner-cta{justify-self:start}
+  .cl-hub-feats{grid-template-columns:1fr}
+  .cl-hub-feat:not(:last-child)::after{
+    top:auto;bottom:0;left:16px;right:16px;width:auto;height:1px;
+  }
+  .cl-products{grid-template-columns:repeat(3,1fr)}
+  .cl-split,.cl-trio{grid-template-columns:1fr}
+  .cl-hero-grid{grid-template-columns:1fr;min-height:0;gap:20px}
+  .cl-hero-media{justify-self:center;max-width:480px}
+  .cl-hero-copy{max-width:none}
+  .cl-card--case .cl-case-grid{grid-template-columns:1fr}
+}
+@media (max-width:800px){
+  .cl-hub-grid{grid-template-columns:1fr 1fr}
+  .cl-tl{grid-template-columns:1fr;gap:18px}
+  .cl-tl-step:not(:last-child)::after,
+  .cl-tl-step:not(:last-child)::before{display:none}
+  .cl-products{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .cl-hub-grid,.cl-products,.cl-banner-thumbs{grid-template-columns:1fr}
+  .cl-banner-copy{grid-template-columns:1fr}
+  .cl-banner-kicker{grid-row:auto}
+}
