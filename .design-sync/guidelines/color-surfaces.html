@@ -1,0 +1,28 @@
+<!-- @dsCard group="Colors" viewport="760x260" name="Surfaces & ink" subtitle="Light canvas, panels, hairlines and the reserved dark surfaces" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;padding:18px;background:#fff;font-family:var(--font-body);color:var(--hv2-ink)}
+.t{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hv2-mut);font-weight:700;margin:0 0 10px}
+.row{display:flex;gap:10px;margin-bottom:14px}
+.sw{flex:1;min-width:0;border-radius:var(--r-card);padding:10px 12px;height:92px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--hv2-line)}
+.sw b{font-size:.78rem;font-weight:700}
+.sw code{font-size:.64rem;opacity:.85}
+.note{margin:0;font-size:.72rem;color:var(--hv2-body);line-height:1.5}
+</style></head><body>
+<p class="t">Light surfaces</p>
+<div class="row">
+  <div class="sw" style="background:#EEF2F9"><b>Canvas</b><code>--hv2-bg</code><code>#EEF2F9</code></div>
+  <div class="sw" style="background:#F3F5FD"><b>Panel</b><code>--hv2-surface</code><code>#F3F5FD</code></div>
+  <div class="sw" style="background:#F1F7FE"><b>P1-26 card</b><code>--p126-card</code><code>#F1F7FE</code></div>
+  <div class="sw" style="background:#fff"><b>Paper</b><code>#FFFFFF</code></div>
+</div>
+<p class="t">Ink &amp; dark surfaces</p>
+<div class="row">
+  <div class="sw" style="background:#0A1020;color:#fff"><b>Ink</b><code>--hv2-ink</code><code>#0A1020</code></div>
+  <div class="sw" style="background:#525C70;color:#fff"><b>Body</b><code>--hv2-body</code><code>#525C70</code></div>
+  <div class="sw" style="background:#8A93A6;color:#fff"><b>Muted</b><code>--hv2-mut</code><code>#8A93A6</code></div>
+  <div class="sw" style="background:#0A1745;color:#fff"><b>Navy</b><code>--hv2-navy</code><code>#0A1745</code></div>
+  <div class="sw" style="background:#070D18;color:#fff"><b>Footer</b><code>--p126-ft-bg</code><code>#070D18</code></div>
+</div>
+<p class="note">Surfaces are light-dominant. Dark navy is reserved for the footer and cinematic product cards — never for general layout. Hairlines are blue-tinted alpha (<code>--hv2-line</code>), not neutral grey.</p>
+</body></html>

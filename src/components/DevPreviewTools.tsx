@@ -49,6 +49,9 @@ export default function DevPreviewTools() {
   const toggle = () => setCollapsed((v) => !v);
   const isCollapsed = mounted && collapsed;
 
+  // Preview-only affordance: it must never reach a production build.
+  if (process.env.NODE_ENV === 'production') return null;
+
   return (
     <div
       className={`dev-preview-tools${isCollapsed ? ' is-collapsed' : ''}`}

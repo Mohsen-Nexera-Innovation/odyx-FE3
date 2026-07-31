@@ -136,17 +136,17 @@ function HubActionCard({ card, rv }: { card: ActionCard; rv: number }) {
   return (
     <article className={`hv2-hub-card hv2-hub-act hv2-hub-${card.id} rv`} data-rv={rv}>
       <div className="hv2-hub-copy">
-        <p className="hv2-hub-eyebrow"><span className="hv2-hub-hl">{card.label}</span></p>
+        <p className="hv2-hub-eyebrow">{card.label}</p>
         <h3 className="hv2-hub-h">
-          <span className="hv2-hub-hl">{card.title[0]}</span>
+          {card.title[0]}
           <br />
-          <span className="hv2-hub-hl">{card.title[1]}</span>
+          {card.title[1]}
         </h3>
         <span className="hv2-hub-rule" aria-hidden />
         <p className="hv2-hub-d">
-          <span className="hv2-hub-hl">{card.desc[0]}</span>
+          {card.desc[0]}
           <br />
-          <span className="hv2-hub-hl">{card.desc[1]}</span>
+          {card.desc[1]}
         </p>
       </div>
       <Link className="hv2-btn hv2-hub-cta" href={card.href}>
@@ -174,17 +174,17 @@ export default function HubCardsSection() {
           {/* ---- Learning ---- */}
           <article className="hv2-hub-card hv2-hub-learn rv" data-rv="1">
             <div className="hv2-hub-copy">
-              <p className="hv2-hub-eyebrow"><span className="hv2-hub-hl">Learning</span></p>
+              <p className="hv2-hub-eyebrow">Learning</p>
               <h3 className="hv2-hub-h">
-                <span className="hv2-hub-hl">Grow Your Skills.</span>
+                Grow Your Skills.
                 <br />
-                <span className="hv2-hub-hl">Master Digital Dentistry.</span>
+                Master Digital Dentistry.
               </h3>
               <span className="hv2-hub-rule" aria-hidden />
               <p className="hv2-hub-d">
-                <span className="hv2-hub-hl">Access courses, webinars</span>
+                Access courses, webinars
                 <br />
-                <span className="hv2-hub-hl">and step-by-step guides.</span>
+                and step-by-step guides.
               </p>
             </div>
             <ul className="hv2-hub-chips" aria-label="What the learning centre covers">
@@ -217,17 +217,17 @@ export default function HubCardsSection() {
           {/* ---- Support ---- */}
           <article className="hv2-hub-card hv2-hub-support rv" data-rv="2">
             <div className="hv2-hub-copy">
-              <p className="hv2-hub-eyebrow"><span className="hv2-hub-hl">Support</span></p>
+              <p className="hv2-hub-eyebrow">Support</p>
               <h3 className="hv2-hub-h">
-                <span className="hv2-hub-hl">We&rsquo;re Here</span>
+                We&rsquo;re Here
                 <br />
-                <span className="hv2-hub-hl">When You Need Us.</span>
+                When You Need Us.
               </h3>
               <span className="hv2-hub-rule" aria-hidden />
               <p className="hv2-hub-d">
-                <span className="hv2-hub-hl">Get technical support,</span>
+                Get technical support,
                 <br />
-                <span className="hv2-hub-hl">resources and live help.</span>
+                resources and live help.
               </p>
             </div>
             <ul className="hv2-hub-chips" aria-label="Ways to get support">

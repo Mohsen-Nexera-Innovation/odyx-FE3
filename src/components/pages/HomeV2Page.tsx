@@ -7,6 +7,7 @@ import Hv2Motion from "@/components/home2/Hv2Motion";
 import LatestUpdatesSection from "@/components/home2/LatestUpdatesSection";
 import PathCarousel from "@/components/home2/PathCarousel";
 import ProductsRail from "@/components/home2/ProductsRail";
+import WhyOdyxOrbit from "@/components/home2/WhyOdyxOrbit";
 
 // Home V2 — rebuild of the home screen to the client hero-collage mock
 // (light surfaces, action blue #0050D8, orbit hero, why-pillars, path
@@ -44,31 +45,10 @@ const IC = {
       <path d="M2 9h20M9.5 4 8 9l4 12M14.5 4 16 9l-4 12" />
     </svg>
   ),
-  badge: (
+  shield: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="9" r="4.9" />
-      <path d="M9.2 12.9 5.9 19.8l2.25-1 1.45 2.1 1.1-7.3" />
-      <path d="M14.8 12.9l3.3 6.9-2.25-1-1.45 2.1-1.1-7.3" />
-    </svg>
-  ),
-  person: (
-    // 1.4 stroke (not the house 1.8): the nested halo+head needs the
-    // thinner line to keep a visible gap at this size.
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="13.3" cy="10.4" r="2.6" />
-      <path d="M9.6 13.2H7.7A5.9 5.9 0 1 1 16.3 12.9" />
-      <path d="M7.5 20.9c.7-2.5 2.4-3.8 4.7-3.8s4 1.3 4.7 3.8" />
-    </svg>
-  ),
-  cap: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="m2 9 10-5 10 5-10 5L2 9Z" />
-      <path d="M6.5 11.5V16c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.5M22 9v5" />
-    </svg>
-  ),
-  heart: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M12 20.5 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 1 1 19.3 13L12 20.5Z" />
+      <path d="M12 2.6 20 7.2v9.6l-8 4.6-8-4.6V7.2l8-4.6Z" />
+      <path d="M12 8.4l3.1 1.8v3.6L12 15.6l-3.1-1.8v-3.6L12 8.4Z" />
     </svg>
   ),
   scan: (
@@ -111,31 +91,6 @@ const IC = {
   ),
 } as const;
 
-// Pillar photography is baked into the board backdrop (why-odyx-board.jpg),
-// so columns carry only icon + copy.
-const WHY = [
-  {
-    icon: "badge",
-    title: ["Engineered", "to Perform"],
-    desc: "Built with precision.\nTested to the highest standards.",
-  },
-  {
-    icon: "person",
-    title: ["People", "Who Care"],
-    desc: "Real experts. Real support. Whenever you need us.",
-  },
-  {
-    icon: "cap",
-    title: ["Knowledge", "That Empowers"],
-    desc: "Training, resources, and education to keep you ahead.",
-  },
-  {
-    icon: "heart",
-    title: ["Growing", "Together"],
-    desc: "Your success is our mission. Today and for the future.",
-  },
-] as const;
-
 // Ecosystem art: soft-feathered patches cut from the client mock
 // (public/img/hv2-eco/, 2x). Each node patch bakes the product, its
 // white halo ring and glow; icons + labels are DOM on top.
@@ -152,7 +107,10 @@ export default function HomeV2Page() {
     <div className="hv2" id="top">
       {/* ===== 1 · Hero — headline + orbit product collage ===== */}
       <section className="hv2-hero" data-hero-light id="hero">
-        <div className="hv2-wrap hv2-hero-grid">
+        {/* The hero band is the client's 2048x628 desktop composition;
+            copy and collage are placed in those reference pixels (--u)
+            so the whole band scales as one piece. */}
+        <div className="hv2-hero-band">
           <div className="hv2-hero-copy">
             <p className="hv2-eyebrow rv">Digital Dentistry Reimagined</p>
             <h1 className="hv2-h1 rv" data-rv="1">
@@ -165,55 +123,41 @@ export default function HomeV2Page() {
               ecosystem.
             </p>
             <div className="rv" data-rv="3">
-              <Link className="hv2-btn" href="/support">
-                Request a Demo <Arrow />
+              <Link className="hv2-btn hv2-hero-cta" href="/support">
+                <span>Request a Demo</span> <Arrow s={23} />
               </Link>
             </div>
           </div>
 
-          {/* Products + icon chips extracted from the client hero art
-              (Vision cutouts in /img/hv2-cut/, 2x), arranged to the
-              mock. Static composition — no rings, no float motion. */}
+          {/* Products extracted from the client hero art (Vision cutouts
+              in /img/hv2-cut/, 2x) over glowing orbit sweeps, with soft
+              floor shadows and DOM icon bubbles. Static composition. */}
           <div className="hv2-orbit rv" data-rv="2" aria-hidden>
+            <svg className="hv2-o-orbits" viewBox="0 0 2048 628" fill="none" aria-hidden>
+              <g transform="rotate(-8 1340 320)" stroke="#fff" strokeLinecap="round">
+                <ellipse cx="1340" cy="315" rx="655" ry="252" strokeWidth="9" opacity=".22" />
+                <ellipse cx="1340" cy="315" rx="655" ry="252" strokeWidth="2.2" opacity=".85" />
+                <ellipse cx="1310" cy="348" rx="520" ry="196" strokeWidth="1.8" opacity=".5" />
+              </g>
+              <ellipse cx="1430" cy="295" rx="735" ry="296" transform="rotate(-8 1430 295)" stroke="#7FA8F2" strokeWidth="2.4" opacity=".55" strokeLinecap="round" />
+            </svg>
+            <i className="hv2-o-sh hv2-sh-scanner" />
+            <i className="hv2-o-sh hv2-sh-cure" />
+            <i className="hv2-o-sh hv2-sh-printers" />
+            <i className="hv2-o-sh hv2-sh-resins" />
             <img className="hv2-o-img hv2-o-scanner" src="/img/hv2-cut/scanner-hd.png" alt="" />
             <img className="hv2-o-img hv2-o-cure" src="/img/hv2-cut/cure-hd.png" alt="" />
             <img className="hv2-o-img hv2-o-printers" src="/img/hv2-cut/printer-hd.png" alt="" />
             <img className="hv2-o-img hv2-o-resins" src="/img/hv2-cut/resins-hd.png" alt="" />
-            <span className="hv2-chip hv2-chip-tooth"><img src="/img/hv2-cut/chip-tooth.png" alt="" /></span>
-            <span className="hv2-chip hv2-chip-cube"><img src="/img/hv2-cut/chip-cube.png" alt="" /></span>
-            <span className="hv2-chip hv2-chip-target"><img src="/img/hv2-cut/chip-hex.png" alt="" /></span>
-            <span className="hv2-chip hv2-chip-diamond"><img src="/img/hv2-cut/chip-diamond.png" alt="" /></span>
+            <span className="hv2-chip hv2-chip-tooth">{IC.tooth}</span>
+            <span className="hv2-chip hv2-chip-cube">{IC.cube}</span>
+            <span className="hv2-chip hv2-chip-target">{IC.shield}</span>
+            <span className="hv2-chip hv2-chip-diamond">{IC.diamond}</span>
           </div>
         </div>
 
-        {/* ===== 2 · Why ODYX — light glass board on the hero backdrop ===== */}
-        <div className="hv2-wrap hv2-hero-why" id="why">
-          <div className="hv2-panel hv2-why hv2-why-glass rv">
-            <div className="hv2-why-intro">
-              <p className="hv2-eyebrow">Why ODYX</p>
-              <h2 className="hv2-h2">
-                More Than Technology.
-                <br />
-                <span className="hv2-blue">A Partner You Can Rely On.</span>
-              </h2>
-              <p className="hv2-body">
-                At ODYX, we combine cutting-edge technology with real support,
-                deep expertise, and a commitment to help you grow.
-              </p>
-            </div>
-            {WHY.map((w, k) => (
-              <div className="hv2-why-col rv" data-rv={k + 1} key={w.icon}>
-                <span className="hv2-ic">{IC[w.icon]}</span>
-                <h3 className="hv2-why-t">
-                  {w.title[0]}
-                  <br />
-                  {w.title[1]}
-                </h3>
-                <p className="hv2-why-d">{w.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* ===== 2 · Why ODYX — orbit infographic on the hero backdrop ===== */}
+        <WhyOdyxOrbit />
       </section>
 
       {/* ===== 3 · Choose your path ===== */}

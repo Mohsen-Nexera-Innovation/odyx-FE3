@@ -1,0 +1,36 @@
+/* ODYX motion foundations.
+ *
+ * Motion is restrained: short transitions on interaction, one reveal per
+ * element on scroll, and no looping animation outside the product hero.
+ * Every reveal has a prefers-reduced-motion branch that lands on the settled
+ * state — motion is never load-bearing for legibility.
+ */
+:root {
+  /* Durations actually used across the two screens. .2s dominates hovers and
+   * colour changes; .6s+ is reserved for reveals and hero float. */
+  --dur-fast: .17s;
+  --dur-base: .2s;
+  --dur-mid: .25s;
+  --dur-slow: .6s;
+
+  /* Easings. `ease` carries most interaction; the two custom curves are the
+   * signature decelerations used for reveals and card movement. */
+  --ease-standard: ease;
+  --ease-out-expo: cubic-bezier(.22, 1, .36, 1);
+  --ease-out-quint: cubic-bezier(.16, 1, .3, 1);
+  --ease-out-soft: cubic-bezier(.2, .7, .2, 1);
+
+  /* Reveal-on-scroll: elements start 20px low and fade up, staggered by
+   * data-rv index in 80ms steps. */
+  --reveal-shift: 20px;
+  --reveal-stagger: .08s;
+}
+
+/* The two reveal systems, documented because they are the single most common
+ * cause of a component appearing blank when composed outside its page:
+ *
+ *   Home   .hv2 .rv            -> .rv-in   (added by Hv2Motion)
+ *   P1-26  .p126-page .reveal  -> .reveal.in
+ *
+ * Render Hv2Motion once inside a .hv2 root, or the content stays at opacity 0.
+ */

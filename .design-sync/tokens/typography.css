@@ -1,0 +1,44 @@
+/* ODYX type foundations.
+ *
+ * Two Latin families, swapped wholesale for Arabic under [dir="rtl"]. The
+ * families ship with the design system in fonts/fonts.css; next/font provides
+ * them at runtime in the app, which is why the --font-* variables are bound
+ * explicitly here rather than left to the host.
+ */
+:root {
+  --font-sora: 'Sora';
+  --font-space: 'Space Grotesk';
+  --font-tajawal: 'Tajawal';
+  --font-plex-ar: 'IBM Plex Sans Arabic';
+
+  --font-display: var(--font-sora), 'Sora', sans-serif;
+  --font-body: var(--font-space), 'Space Grotesk', sans-serif;
+
+  /* Home screen scale — fluid, measured off the client mock.
+   * h1/h2 clamp between a phone and a 1400px canvas. */
+  --hv2-h1-size: clamp(34px, 3.9vw, 50px);
+  --hv2-h2-size: clamp(24px, 2.5vw, 31px);
+  --hv2-lead-size: 15.5px;
+  --hv2-body-size: 14.5px;
+  --hv2-eyebrow-size: 12px;
+  --hv2-eyebrow-tracking: .15em;
+
+  /* P1-26 card scale */
+  --p126-card-title-size: 1.25rem;
+  --p126-card-title-weight: 700;
+  --p126-card-body-size: .875rem;
+
+  /* Headings are display-weight 700 with tight tracking; body runs 1.6 line
+   * height. Arabic drops tracking entirely and opens the leading. */
+  --heading-weight: 700;
+  --heading-tracking: -.02em;
+  --heading-leading: 1.08;
+  --body-leading: 1.6;
+}
+
+[dir="rtl"] {
+  --font-display: var(--font-tajawal), 'Tajawal', sans-serif;
+  --font-body: var(--font-plex-ar), 'IBM Plex Sans Arabic', sans-serif;
+  --heading-tracking: 0;
+  --heading-leading: 1.3;
+}

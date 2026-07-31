@@ -1,0 +1,42 @@
+{
+  "pkg": "web",
+  "globalName": "OdyxDS",
+  "projectId": "493d03eb-67d2-4b67-8504-9d18af6ec65c",
+  "shape": "package",
+  "srcDir": "src",
+  "tsconfig": ".design-sync/tsconfig.dssync.json",
+  "cssEntry": ".design-sync/.cache/ds-styles.css",
+  "extraFonts": [".design-sync/.cache/fonts/fonts.css"],
+  "readmeHeader": ".design-sync/conventions.md",
+  "provider": { "component": "GlobalToolsProvider" },
+  "overrides": {
+    "Header": { "cardMode": "single", "primaryStory": "HomeNavigation", "viewport": "1920x300" },
+    "Hv2Footer": { "cardMode": "single", "primaryStory": "SiteFooter", "viewport": "1920x900" },
+    "PathCarousel": { "cardMode": "single", "primaryStory": "AudiencePaths", "viewport": "1920x1000" },
+    "ProductsRail": { "cardMode": "single", "primaryStory": "EcosystemRail", "viewport": "1920x1000" },
+    "ClinicalApplicationsSection": { "cardMode": "single", "primaryStory": "Indications", "viewport": "1920x1000" },
+    "ClinicalCasesShowcase": { "cardMode": "single", "primaryStory": "CaseGallery", "viewport": "1920x1000" },
+    "HubCardsSection": { "cardMode": "single", "primaryStory": "EcosystemHubs", "viewport": "1920x1200" },
+    "LatestUpdatesSection": { "cardMode": "single", "primaryStory": "NewsCarousel", "viewport": "1920x1000" },
+    "P126Cases": { "cardMode": "single", "primaryStory": "CaseTabs", "viewport": "1920x1000" },
+    "P126RoiMini": { "cardMode": "single", "primaryStory": "SavingsEstimator", "viewport": "1920x700" },
+    "P126Video": { "cardMode": "single", "primaryStory": "PosterState", "viewport": "1920x900" },
+    "HomeV2Page": { "cardMode": "single", "primaryStory": "FullScreen", "viewport": "1920x1080" },
+    "P126Page": { "cardMode": "single", "primaryStory": "FullScreen", "viewport": "1920x1080" }
+  },
+  "componentSrcMap": {
+    "Header": "src/components/Header.tsx",
+    "Hv2Footer": "src/components/home2/Hv2Footer.tsx",
+    "PathCarousel": "src/components/home2/PathCarousel.tsx",
+    "ProductsRail": "src/components/home2/ProductsRail.tsx",
+    "ClinicalApplicationsSection": "src/components/home2/ClinicalApplicationsSection.tsx",
+    "ClinicalCasesShowcase": "src/components/home2/ClinicalCasesShowcase.tsx",
+    "HubCardsSection": "src/components/home2/HubCardsSection.tsx",
+    "LatestUpdatesSection": "src/components/home2/LatestUpdatesSection.tsx",
+    "P126Cases": "src/components/p126/P126Cases.tsx",
+    "P126RoiMini": "src/components/p126/P126RoiMini.tsx",
+    "P126Video": "src/components/p126/P126Video.tsx",
+    "HomeV2Page": "src/components/pages/HomeV2Page.tsx",
+    "P126Page": "src/components/pages/P126Page.tsx"
+  }
+}
