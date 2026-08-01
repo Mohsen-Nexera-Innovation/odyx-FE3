@@ -38,15 +38,8 @@ import {
   replyToThreadApi,
   upsertThread,
 } from '@/lib/inbox-api';
-import {
-  listThreads,
-  markDesignDownloaded,
-  markThreadRead,
-  notifyInboxChange,
-  unreadTotal,
-  type AccountSession,
-} from '@/lib/inbox-store';
-import { isApiMode } from '@/lib/config';
+import { notifyInboxChange } from '@/lib/inbox-store-events';
+import type { AccountSession } from '@/lib/auth-session';
 import { subscribeChatSocket } from '@/lib/chat-socket';
 import InnerPageMotion from '@/components/InnerPageMotion';
 
@@ -204,7 +197,6 @@ export default function InboxWorkspace() {
   const [apiThreads, setApiThreads] = useState<InboxThread[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState('');
-  const apiMode = isApiMode();
   const selectedIdRef = useRef<string | null>(null);
   const hasLoadedRef = useRef(false);
 
@@ -235,7 +227,7 @@ export default function InboxWorkspace() {
   }, [reload]);
 
   useEffect(() => {
-    if (!session || !apiMode || session.accountType === 'GUEST' || session.role === 'guest') {
+    if (!session || session.accountType === 'GUEST' || session.role === 'guest') {
       setApiThreads([]);
       setLoading(false);
       setLoadError('');
@@ -275,11 +267,11 @@ export default function InboxWorkspace() {
     return () => {
       cancelled = true;
     };
-  }, [session, apiMode, tick]);
+  }, [session, tick]);
 
   // Realtime chat via Socket.IO (+ slow poll fallback)
   useEffect(() => {
-    if (!session || !apiMode || session.accountType === 'GUEST' || session.role === 'guest') {
+    if (!session || session.accountType === 'GUEST' || session.role === 'guest') {
       return;
     }
 
@@ -307,13 +299,12 @@ export default function InboxWorkspace() {
       unsub();
       window.clearInterval(fallback);
     };
-  }, [session, apiMode, reload]);
+  }, [session, reload]);
 
   const threads = useMemo(() => {
-    if (!session) return [];
-    if (apiMode && session.role !== 'guest') return apiThreads;
-    return listThreads(session);
-  }, [session, apiMode, apiThreads, tick]);
+    if (!session || session.role === 'guest') return [];
+    return apiThreads;
+  }, [session, apiThreads, tick]);
 
   const filtered = useMemo(() => {
     let list = filterThreads(threads, folder);
@@ -380,10 +371,8 @@ export default function InboxWorkspace() {
     setPaneMode('read');
     setMobileView('detail');
     if (!session) return;
-    if (apiMode && session.role !== 'guest') {
-      void (async () => {
+    void (async () => {
         try {
-          // mark-read returns the full conversation — use it so history is never stubbed.
           const full =
             (await markThreadReadApi(session, id)) ?? (await getThreadApi(session, id));
           if (full) {
@@ -393,10 +382,6 @@ export default function InboxWorkspace() {
           reload();
         }
       })();
-      return;
-    }
-    markThreadRead(session, id);
-    reload();
   };
 
   const onSent = (threadId: string, thread?: InboxThread) => {
@@ -406,7 +391,7 @@ export default function InboxWorkspace() {
     setFolder('inbox');
     if (thread) {
       setApiThreads((prev) => upsertThread(prev, thread));
-    } else if (session && apiMode && session.role !== 'guest') {
+    } else if (session && session.role !== 'guest') {
       void getThreadApi(session, threadId).then((full) => {
         if (full) setApiThreads((prev) => upsertThread(prev, full));
       });
@@ -421,7 +406,7 @@ export default function InboxWorkspace() {
 
   if (!session) return null;
 
-  const unread = apiMode && !isGuest ? unreadFromThreads(threads) : unreadTotal(session);
+  const unread = unreadFromThreads(threads);
   const designsReady = threads.filter(
     (t) => hasDesignAttachment(t) && t.status === 'design_delivered',
   ).length;
@@ -436,37 +421,21 @@ export default function InboxWorkspace() {
             <div className="mail-hero-panel">
               <div className="mail-hero-text">
                 <div className="mail-hero-kicker">
-                  <span className="mail-eyebrow">
-                    {apiMode ? 'Client inbox' : 'Design inbox'}
-                  </span>
+                  <span className="mail-eyebrow">Client inbox</span>
                   {session.org ? (
                     <span className="mail-hero-org">{session.org}</span>
                   ) : null}
                 </div>
                 <h1 className="mail-title">
-                  {apiMode ? (
-                    <>
-                      Message <span className="mail-title-brand">ODYX</span>.
-                      <br />
-                      Track your cases.
-                    </>
-                  ) : (
-                    'Send scans. Receive designs.'
-                  )}
+                  <>
+                    Message <span className="mail-title-brand">ODYX</span>.
+                    <br />
+                    Track your cases.
+                  </>
                 </h1>
                 <p className="mail-sub">
-                  {apiMode ? (
-                    <>
-                      Chat with the ODYX team, upload scan files, and keep every reply in one
-                      thread.
-                    </>
-                  ) : (
-                    <>
-                      Email your STL scan to the ODYX design team at{' '}
-                      <strong>{DESIGN_TEAM_EMAIL}</strong> — finished design files arrive back in
-                      this inbox, in the same conversation.
-                    </>
-                  )}
+                  Chat with the ODYX team, upload scan files, and keep every reply in one
+                  thread.
                 </p>
                 <div className="mail-hero-stats" aria-label="Inbox summary">
                   <button
@@ -502,22 +471,22 @@ export default function InboxWorkspace() {
                 <li>
                   <span>1</span>
                   <div>
-                    <b>{apiMode ? 'Request a design' : 'Attach scan'}</b>
-                    <small>{apiMode ? 'Service → form → checkout' : 'STL file'}</small>
+                    <b>Request a design</b>
+                    <small>Service → form → checkout</small>
                   </div>
                 </li>
                 <li>
                   <span>2</span>
                   <div>
-                    <b>{apiMode ? 'ODYX replies' : 'Design works'}</b>
-                    <small>{apiMode ? 'Staff chat in-thread' : 'Partner lab process'}</small>
+                    <b>ODYX replies</b>
+                    <small>Staff chat in-thread</small>
                   </div>
                 </li>
                 <li>
                   <span>3</span>
                   <div>
-                    <b>{apiMode ? 'Keep talking' : 'Download'}</b>
-                    <small>{apiMode ? 'Follow-ups stay here' : 'Design files return'}</small>
+                    <b>Keep talking</b>
+                    <small>Follow-ups stay here</small>
                   </div>
                 </li>
               </ol>
@@ -527,10 +496,9 @@ export default function InboxWorkspace() {
           {isGuest ? (
             <div className="mail-banner mail-banner--guest">
               <div>
-                <strong>Preview mode</strong>
+                <strong>Sign in required</strong>
                 <p>
-                  You&apos;re browsing demo conversations. Register as a Dentist or Lab to message
-                  ODYX and send scans.
+                  Register as a Dentist or Lab to message ODYX and send scans.
                 </p>
               </div>
               <Link href="/register?role=dentist" className="btn btn-sm">
@@ -840,14 +808,10 @@ export default function InboxWorkspace() {
                   session={session}
                   thread={selected}
                   isGuest={!!isGuest}
-                  apiMode={apiMode}
                   onCompose={openCompose}
                   onBack={backToList}
                   onReplied={onReplied}
-                  onDownload={() => {
-                    markDesignDownloaded(session, selected.id);
-                    reload();
-                  }}
+                  onDownload={() => reload()}
                 />
               ) : handoffThreadId || orderConfirmed ? (
                 <div className="mail-read-empty">
@@ -904,7 +868,6 @@ function ThreadReadingPane({
   session,
   thread,
   isGuest,
-  apiMode,
   onCompose,
   onBack,
   onReplied,
@@ -913,7 +876,6 @@ function ThreadReadingPane({
   session: AccountSession;
   thread: InboxThread;
   isGuest: boolean;
-  apiMode: boolean;
   onCompose: () => void;
   onBack: () => void;
   onReplied: (thread: InboxThread) => void;
@@ -950,7 +912,7 @@ function ThreadReadingPane({
   const submitReply = useCallback(
     async (e?: FormEvent) => {
       e?.preventDefault();
-      if (!reply.trim() || isGuest || !apiMode || busy) return;
+      if (!reply.trim() || isGuest || busy) return;
       setBusy(true);
       setError('');
       try {
@@ -965,7 +927,7 @@ function ThreadReadingPane({
         setBusy(false);
       }
     },
-    [reply, isGuest, apiMode, busy, session, thread.id, onReplied],
+    [reply, isGuest, busy, session, thread.id, onReplied],
   );
 
   return (
@@ -999,9 +961,7 @@ function ThreadReadingPane({
         </div>
         {awaitingDesign ? (
           <p className="mail-thread-wait">
-            {apiMode
-              ? 'Waiting for the ODYX team — replies will show in this thread.'
-              : `Scan sent — design team is working on your case. You'll receive the design file here when ready (${SLA_LABEL[thread.sla]}).`}
+            Waiting for the ODYX team — replies will show in this thread.
           </p>
         ) : null}
       </div>
@@ -1067,7 +1027,7 @@ function ThreadReadingPane({
         </footer>
       ) : null}
 
-      {apiMode && !isGuest ? (
+      {!isGuest ? (
         <form className="mail-reply-form" onSubmit={submitReply}>
           <label htmlFor="client-reply" className="visually-hidden">
             Reply to ODYX
@@ -1101,10 +1061,10 @@ function ThreadReadingPane({
         </form>
       ) : null}
 
-      {isGuest && designFiles.length > 0 ? (
+      {isGuest ? (
         <p className="mail-demo-note">
-          Demo conversation — <Link href="/register?role=dentist">register</Link> to send and
-          download.
+          <Link href="/register?role=dentist">Sign in</Link> to send messages and download
+          design files.
         </p>
       ) : null}
     </div>

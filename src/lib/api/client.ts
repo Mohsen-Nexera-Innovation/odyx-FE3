@@ -1,6 +1,6 @@
 import { getApiBaseUrl } from '@/lib/config';
 import { clearTokens, getAccessToken, getRefreshToken, setTokens } from '@/lib/auth-tokens';
-import { clearSession } from '@/lib/auth-store';
+import { clearSession } from '@/lib/auth-session';
 
 export class ApiError extends Error {
   status: number;

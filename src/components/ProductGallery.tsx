@@ -8,7 +8,6 @@ import { useEffect, useRef, useState, type PointerEvent, type WheelEvent, type K
 import { formatMoney, getProductById } from "@/content/shop";
 import { readSession } from "@/lib/auth";
 import { addItemAsync, resolveCartProductId } from "@/lib/commerce";
-import { isApiMode } from "@/lib/config";
 
 type Accent = "teal" | "orange";
 interface Product {
@@ -299,7 +298,7 @@ export default function ProductGallery() {
 
   async function onBuyNow() {
     if (!current.shopProductId) return;
-    if (isApiMode() && !readSession()) {
+    if (!readSession()) {
       router.push("/login");
       return;
     }

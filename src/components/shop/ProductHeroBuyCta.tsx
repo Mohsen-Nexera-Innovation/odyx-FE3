@@ -11,7 +11,6 @@ import {
   fetchShopProducts,
   resolveCartProductId,
 } from '@/lib/commerce';
-import { isApiMode } from '@/lib/config';
 
 export default function ProductHeroBuyCta({
   shopProductId,
@@ -29,7 +28,6 @@ export default function ProductHeroBuyCta({
   );
 
   useEffect(() => {
-    if (!isApiMode()) return;
     void fetchShopProducts().then((list) => {
       const slugMap: Record<string, string> = {
         'printer-p1-26': 'odyx-p1-26',
@@ -49,7 +47,7 @@ export default function ProductHeroBuyCta({
     accent === 'orange' ? 'btn btn-ghost prod-print-hero__ghost' : 'btn btn-ghost';
 
   async function ensureAdd() {
-    if (isApiMode() && !readSession()) {
+    if (!readSession()) {
       router.push('/login');
       return false;
     }

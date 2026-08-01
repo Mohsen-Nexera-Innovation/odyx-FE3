@@ -9,7 +9,6 @@ import { FREE_SHIPPING_THRESHOLD, calcShipping, formatMoney } from '@/content/sh
 import { useCart } from '@/hooks/useCart';
 import { readSession } from '@/lib/auth';
 import { isDesignCart, isMixedCart, removeItemAsync } from '@/lib/commerce';
-import { isApiMode } from '@/lib/config';
 import { placeOrderFacade, previewShipping, type OrderShipping } from '@/lib/orders';
 import { designInboxHandoffHref, finalizeDesignCaseAfterPayment, readDesignCaseDraft } from '@/lib/design-case-draft';
 import { isDesignServiceSlug } from '@/content/design-services';
@@ -134,7 +133,6 @@ function BrandMark({ brand }: { brand: CardBrand }) {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const apiMode = isApiMode();
   const { lines, count, loading: cartLoading } = useCart();
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
@@ -155,18 +153,16 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     setReady(true);
-    if (apiMode) {
-      const session = readSession();
-      if (session) {
-        setForm((f) => ({
-          ...f,
-          name: f.name || session.name,
-          email: f.email || session.email,
-          country: f.country || session.country || 'Egypt',
-        }));
-      }
+    const session = readSession();
+    if (session) {
+      setForm((f) => ({
+        ...f,
+        name: f.name || session.name,
+        email: f.email || session.email,
+        country: f.country || session.country || 'Egypt',
+      }));
     }
-  }, [apiMode]);
+  }, []);
 
   const digital = isDesignCart(lines);
   const mixed = isMixedCart(lines);
@@ -199,7 +195,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (!ready || cartLoading) return;
-    if (apiMode && !readSession()) {
+    if (!readSession()) {
       router.replace('/login');
       return;
     }
@@ -225,7 +221,7 @@ export default function CheckoutPage() {
         /* ignore */
       }
     }
-  }, [ready, cartLoading, count, router, apiMode, awaitingPaymob, digital, designHandoff]);
+  }, [ready, cartLoading, count, router, awaitingPaymob, digital, designHandoff]);
 
   useEffect(() => {
     if (digital) {
@@ -233,7 +229,7 @@ export default function CheckoutPage() {
       setApiShipping(0);
       return;
     }
-    if (!apiMode || !form.city.trim()) {
+    if (!form.city.trim()) {
       setApiShipping(null);
       return;
     }
@@ -251,10 +247,10 @@ export default function CheckoutPage() {
     return () => {
       cancelled = true;
     };
-  }, [apiMode, form.city, payMethod, digital]);
+  }, [form.city, payMethod, digital]);
 
   useEffect(() => {
-    if (!apiMode || !digital || count === 0) return;
+    if (!digital || count === 0) return;
     let cancelled = false;
     void previewShipping({ paymentMethod: 'ONLINE' })
       .then((q) => {
@@ -266,32 +262,18 @@ export default function CheckoutPage() {
     return () => {
       cancelled = true;
     };
-  }, [apiMode, digital, count]);
+  }, [digital, count]);
 
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const shippingFee = digital
-    ? 0
-    : apiMode
-      ? (apiShipping ?? 0)
-      : calcShipping(subtotal);
+  const shippingFee = digital ? 0 : (apiShipping ?? 0);
   const total = subtotal + shippingFee;
 
   const contactDone =
     form.name.trim() !== '' && isValidEmail(form.email) && digitsOnly(form.phone).length >= 8;
   const shippingDone = digital
     ? true
-    : apiMode
-      ? form.line1.trim() !== '' && form.city.trim() !== ''
-      : form.line1.trim() !== '' &&
-        form.city.trim() !== '' &&
-        form.country.trim() !== '' &&
-        form.postal.trim() !== '';
-  const paymentDone = apiMode
-    ? true
-    : form.cardName.trim() !== '' &&
-      digitsOnly(form.cardNumber).length >= 15 &&
-      isValidExpiry(form.expiry) &&
-      digitsOnly(form.cvc).length >= 3;
+    : form.line1.trim() !== '' && form.city.trim() !== '';
+  const paymentDone = true;
 
   const brand = cardBrand(form.cardNumber);
 
@@ -312,17 +294,7 @@ export default function CheckoutPage() {
     if (!form.phone.trim() || digitsOnly(form.phone).length < 8) next.phone = 'Valid phone required';
     if (!digital) {
       if (!form.line1.trim()) next.line1 = 'Required';
-      if (!form.city.trim()) next.city = apiMode ? 'Governorate / city required (Bosta)' : 'Required';
-      if (!apiMode) {
-        if (!form.country.trim()) next.country = 'Required';
-        if (!form.postal.trim()) next.postal = 'Required';
-      }
-    }
-    if (!apiMode) {
-      if (!form.cardName.trim()) next.cardName = 'Required';
-      if (digitsOnly(form.cardNumber).length < 15) next.cardNumber = 'Enter a valid card number';
-      if (!isValidExpiry(form.expiry)) next.expiry = 'Use MM/YY';
-      if (digitsOnly(form.cvc).length < 3) next.cvc = 'Invalid CVC';
+      if (!form.city.trim()) next.city = 'Governorate / city required (Bosta)';
     }
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -351,7 +323,7 @@ export default function CheckoutPage() {
       };
       const result = await placeOrderFacade({
         shipping,
-        paymentMethod: apiMode ? (digital ? 'ONLINE' : payMethod) : 'ONLINE',
+        paymentMethod: digital ? 'ONLINE' : payMethod,
       });
 
       if ('pixel' in result && result.pixel) {
@@ -371,8 +343,7 @@ export default function CheckoutPage() {
         return;
       }
 
-      const orderId =
-        'order' in result && result.order ? result.order.id : (result as { id: string }).id;
+      const orderId = result.order.id;
 
       // Design services: create inbox thread, then open conversation.
       if (digital || readDesignCaseDraft()) {
@@ -581,33 +552,12 @@ export default function CheckoutPage() {
                   />
                   <Field
                     id="co-city"
-                    label={apiMode ? 'Governorate / city (Bosta)' : 'City'}
+                    label="Governorate / city (Bosta)"
                     autoComplete="address-level2"
                     value={form.city}
                     onChange={(v) => setField('city', v)}
                     error={errors.city}
                   />
-                  {!apiMode ? (
-                    <>
-                      <Field
-                        id="co-country"
-                        label="Country"
-                        autoComplete="country-name"
-                        value={form.country}
-                        onChange={(v) => setField('country', v)}
-                        error={errors.country}
-                      />
-                      <Field
-                        id="co-postal"
-                        label="Postal code"
-                        autoComplete="postal-code"
-                        full
-                        value={form.postal}
-                        onChange={(v) => setField('postal', v)}
-                        error={errors.postal}
-                      />
-                    </>
-                  ) : null}
                 </div>
               </section>
               ) : (
@@ -629,125 +579,34 @@ export default function CheckoutPage() {
                     <h2>Payment</h2>
                     <p>
                       {digital
-                        ? apiMode
-                          ? 'Paymob Pixel — enter your card on this page'
-                          : 'Demo mode — no real charges are made'
-                        : apiMode
-                          ? 'Paymob Pixel (card) or cash on delivery (Bosta COD)'
-                          : 'Demo mode — no real charges are made'}
+                        ? 'Paymob Pixel — enter your card on this page'
+                        : 'Paymob Pixel (card) or cash on delivery (Bosta COD)'}
                     </p>
                   </div>
                 </div>
 
-                {apiMode ? (
-                  <div className="pay-methods" role="radiogroup" aria-label="Payment method">
+                <div className="pay-methods" role="radiogroup" aria-label="Payment method">
+                  <button
+                    type="button"
+                    className={`pay-method${payMethod === 'ONLINE' ? ' on' : ''}`}
+                    role="radio"
+                    aria-checked={payMethod === 'ONLINE'}
+                    onClick={() => setPayMethod('ONLINE')}
+                  >
+                    <LockIcon /> Paymob Pixel (card)
+                  </button>
+                  {!digital ? (
                     <button
                       type="button"
-                      className={`pay-method${payMethod === 'ONLINE' ? ' on' : ''}`}
+                      className={`pay-method${payMethod === 'CASH' ? ' on' : ''}`}
                       role="radio"
-                      aria-checked={payMethod === 'ONLINE'}
-                      onClick={() => setPayMethod('ONLINE')}
+                      aria-checked={payMethod === 'CASH'}
+                      onClick={() => setPayMethod('CASH')}
                     >
-                      <LockIcon /> Paymob Pixel (card)
+                      Cash on delivery
                     </button>
-                    {!digital ? (
-                      <button
-                        type="button"
-                        className={`pay-method${payMethod === 'CASH' ? ' on' : ''}`}
-                        role="radio"
-                        aria-checked={payMethod === 'CASH'}
-                        onClick={() => setPayMethod('CASH')}
-                      >
-                        Cash on delivery
-                      </button>
-                    ) : null}
-                  </div>
-                ) : (
-                  <>
-                    <div className="pay-methods" role="radiogroup" aria-label="Payment method">
-                      <button type="button" className="pay-method on" role="radio" aria-checked="true">
-                        <LockIcon /> Card
-                      </button>
-                      <button type="button" className="pay-method" role="radio" aria-checked="false" disabled>
-                        Bank transfer <em>Soon</em>
-                      </button>
-                      <button type="button" className="pay-method" role="radio" aria-checked="false" disabled>
-                        Pay on delivery <em>Soon</em>
-                      </button>
-                    </div>
-
-                    <div className={`pay-card${cvcFocus ? ' flip' : ''}`} aria-hidden>
-                      <div className="pay-card-inner">
-                        <div className="pay-card-front">
-                          <div className="pay-card-top">
-                            <span className="pay-chip" />
-                            <BrandMark brand={brand} />
-                          </div>
-                          <p className="pay-card-num">{form.cardNumber || '•••• •••• •••• ••••'}</p>
-                          <div className="pay-card-bottom">
-                            <span>
-                              <em>Card holder</em>
-                              <strong>{form.cardName.toUpperCase() || 'YOUR NAME'}</strong>
-                            </span>
-                            <span>
-                              <em>Expires</em>
-                              <strong>{form.expiry || 'MM/YY'}</strong>
-                            </span>
-                          </div>
-                        </div>
-                        <div className="pay-card-back">
-                          <span className="pay-card-stripe" />
-                          <span className="pay-card-sig">
-                            <i>{form.cvc || '•••'}</i>
-                          </span>
-                          <BrandMark brand={brand} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="co-fields">
-                      <Field
-                        id="co-card-name"
-                        label="Name on card"
-                        autoComplete="cc-name"
-                        full
-                        value={form.cardName}
-                        onChange={(v) => setField('cardName', v)}
-                        error={errors.cardName}
-                      />
-                      <Field
-                        id="co-card-num"
-                        label="Card number"
-                        inputMode="numeric"
-                        autoComplete="cc-number"
-                        full
-                        value={form.cardNumber}
-                        onChange={(v) => setField('cardNumber', formatCardNumber(v))}
-                        error={errors.cardNumber}
-                      />
-                      <Field
-                        id="co-expiry"
-                        label="Expiry (MM/YY)"
-                        inputMode="numeric"
-                        autoComplete="cc-exp"
-                        value={form.expiry}
-                        onChange={(v) => setField('expiry', formatExpiry(v))}
-                        error={errors.expiry}
-                      />
-                      <Field
-                        id="co-cvc"
-                        label="CVC"
-                        inputMode="numeric"
-                        autoComplete="cc-csc"
-                        value={form.cvc}
-                        onChange={(v) => setField('cvc', digitsOnly(v).slice(0, 4))}
-                        onFocus={() => setCvcFocus(true)}
-                        onBlur={() => setCvcFocus(false)}
-                        error={errors.cvc}
-                      />
-                    </div>
-                  </>
-                )}
+                  ) : null}
+                </div>
               </section>
 
               {formError ? <p className="co-form-error">{formError}</p> : null}

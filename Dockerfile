@@ -9,9 +9,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # NEXT_PUBLIC_* must be present at build time (inlined into the client bundle).
-ARG NEXT_PUBLIC_USE_API=true
 ARG NEXT_PUBLIC_API_URL=https://api.odyx.com
-ENV NEXT_PUBLIC_USE_API=$NEXT_PUBLIC_USE_API
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 RUN npm run build

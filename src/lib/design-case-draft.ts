@@ -9,9 +9,7 @@ import {
 } from '@/content/design-services';
 import { clearPendingScan, readPendingScan } from '@/lib/pending-scan';
 import { createThreadFromComposeApi } from '@/lib/inbox-api';
-import { sendScanToDesignTeam, scheduleDesignReply } from '@/lib/inbox-store';
-import type { AccountSession } from '@/lib/auth-store';
-import { isApiMode } from '@/lib/config';
+import type { AccountSession } from '@/lib/auth-session';
 import { clearDesignCaseDraft, readDesignCaseDraft } from '@/lib/design-case-draft-storage';
 
 export type { DesignCaseDraft } from '@/lib/design-case-draft-storage';
@@ -71,7 +69,6 @@ export async function finalizeDesignCaseAfterPayment(
     ? `Order ${orderNumber} confirmed — ${indicationLabel}${draft.tooth ? ` ${draft.tooth}` : ''} (${draft.patientLabel})`
     : `Order ${orderNumber} confirmed`;
 
-  // Doctor message = case details. API adds the ODYX confirmation as a separate message.
   const body =
     draft
       ? [
@@ -90,7 +87,6 @@ export async function finalizeDesignCaseAfterPayment(
           .join('\n')
       : `Design case submitted for order ${orderNumber}.`;
 
-  // Prefer creating the conversation even if the STL blob was lost after payment.
   if (!draft && !indication) {
     return designInboxHandoffHref({
       orderNumber,
@@ -109,60 +105,31 @@ export async function finalizeDesignCaseAfterPayment(
   }
 
   try {
-    if (isApiMode()) {
-      // Paymob Pixel may confirm in the UI before the webhook marks the order PAID.
-      let thread = null as Awaited<ReturnType<typeof createApiThread>> | null;
-      let lastErr: unknown;
-      for (let attempt = 0; attempt < 8; attempt++) {
-        try {
-          thread = await createApiThread();
-          break;
-        } catch (err) {
-          lastErr = err;
-          const msg = err instanceof Error ? err.message : String(err);
-          const retryable = /must be paid|not found|pending/i.test(msg);
-          if (!retryable || attempt === 7) throw err;
-          await new Promise((r) => setTimeout(r, 700));
-        }
+    let thread = null as Awaited<ReturnType<typeof createApiThread>> | null;
+    let lastErr: unknown;
+    for (let attempt = 0; attempt < 8; attempt++) {
+      try {
+        thread = await createApiThread();
+        break;
+      } catch (err) {
+        lastErr = err;
+        const msg = err instanceof Error ? err.message : String(err);
+        const retryable = /must be paid|not found|pending/i.test(msg);
+        if (!retryable || attempt === 7) throw err;
+        await new Promise((r) => setTimeout(r, 700));
       }
-      if (!thread) throw lastErr instanceof Error ? lastErr : new Error('Could not open design case');
-
-      await clearPendingScan();
-      clearDesignCaseDraft();
-      return designInboxHandoffHref({
-        orderNumber,
-        serviceSlug: draft?.serviceSlug,
-        confirmed: true,
-        threadId: thread.id,
-      });
     }
+    if (!thread) throw lastErr instanceof Error ? lastErr : new Error('Could not open design case');
 
-    if (!indication || !draft) {
-      return designInboxHandoffHref({ orderNumber, confirmed: true });
-    }
-
-    const thread = sendScanToDesignTeam(session, {
-      indication,
-      patientRef: draft.patientLabel,
-      tooth: draft.tooth,
-      notes: body,
-      sla: draft.sla,
-      orderNumber,
-      stlFile: scan
-        ? { name: scan.name, size: scan.size }
-        : { name: draft.attachmentName, size: draft.attachmentSize },
-    });
-    scheduleDesignReply(session, thread.id);
     await clearPendingScan();
     clearDesignCaseDraft();
     return designInboxHandoffHref({
       orderNumber,
-      serviceSlug: draft.serviceSlug,
+      serviceSlug: draft?.serviceSlug,
       confirmed: true,
       threadId: thread.id,
     });
   } catch {
-    // Still land on confirmed inbox (not compose). Thread may already exist.
     return designInboxHandoffHref({
       orderNumber,
       serviceSlug: draft?.serviceSlug,

@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { type FormEvent, useState } from 'react';
 import { DESIGN_TEAM_EMAIL, type InboxThread } from '@/content/inbox';
 import { createThreadFromComposeApi } from '@/lib/inbox-api';
-import type { AccountSession } from '@/lib/inbox-store';
-import { isApiMode } from '@/lib/config';
+import type { AccountSession } from '@/lib/auth-session';
 
 type InboxComposeFormProps = {
   session: AccountSession;
@@ -23,7 +22,6 @@ export default function InboxComposeForm({
   variant = 'inline',
   disabled = false,
 }: InboxComposeFormProps) {
-  const apiMode = isApiMode();
   const [notes, setNotes] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -33,10 +31,6 @@ export default function InboxComposeForm({
     if (disabled) return;
     setError('');
 
-    if (!apiMode) {
-      setError('Register and use Design services to submit a paid design case.');
-      return;
-    }
     if (!notes.trim()) {
       setError('Write a message before sending.');
       return;
@@ -78,43 +72,31 @@ export default function InboxComposeForm({
         </span>
       </div>
 
-      <div className="mail-compose-field">
-        <label htmlFor="cmp-body">Your message</label>
-        <textarea
-          id="cmp-body"
-          rows={6}
-          disabled={disabled}
-          placeholder="Describe your question — order help, account issue, or an existing case…"
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-        />
-      </div>
-
-      <p className="mail-compose-support-hint">
-        Need a new design instead?{' '}
-        <Link href="/design-services">Go to Design services</Link>
-      </p>
+      <label htmlFor="inbox-compose-body" className="mail-compose-label">
+        Message
+      </label>
+      <textarea
+        id="inbox-compose-body"
+        rows={6}
+        value={notes}
+        onChange={(e) => setNotes(e.target.value)}
+        placeholder="Describe your question or issue…"
+        disabled={disabled || busy}
+        required
+      />
 
       {error ? <p className="mail-compose-error">{error}</p> : null}
 
-      <footer className="mail-compose-foot">
+      <div className="mail-compose-actions">
         {onCancel ? (
-          <button
-            type="button"
-            className="btn-ghost btn btn-sm"
-            onClick={onCancel}
-          >
+          <button type="button" className="btn btn-ghost" onClick={onCancel} disabled={busy}>
             Cancel
           </button>
         ) : null}
-        <button
-          type="submit"
-          className="btn btn-send-scan"
-          disabled={busy || disabled || !notes.trim()}
-        >
-          {busy ? 'Sending…' : 'Send support message'}
+        <button type="submit" className="btn btn-send-scan" disabled={disabled || busy || !notes.trim()}>
+          {busy ? 'Sending…' : 'Send message'}
         </button>
-      </footer>
+      </div>
     </form>
   );
 }

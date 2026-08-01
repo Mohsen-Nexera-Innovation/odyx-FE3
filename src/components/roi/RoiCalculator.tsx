@@ -12,7 +12,6 @@ import {
 } from '@/content/roi';
 import { formatMoney } from '@/content/shop';
 import { createLeadApi } from '@/lib/api/leads';
-import { isApiMode } from '@/lib/config';
 import {
   calculateRoi,
   scenarioSnapshot,
@@ -167,13 +166,6 @@ export default function RoiCalculator({ scope = 'printer' }: Props) {
       note: note.trim() || undefined,
       scenario,
     };
-
-    if (!isApiMode()) {
-      setMsg(
-        'Thanks — your scenario is ready. (Demo mode: lead was not sent to the API.)',
-      );
-      return;
-    }
 
     setBusy(true);
     try {

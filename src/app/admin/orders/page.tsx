@@ -9,7 +9,6 @@ import {
 } from '@/lib/api/admin';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { hasPermission } from '@/lib/permissions';
-import { isApiMode } from '@/lib/config';
 
 export default function AdminOrdersPage() {
   const { session } = useAuthSession();
@@ -19,10 +18,6 @@ export default function AdminOrdersPage() {
   const [error, setError] = useState('');
 
   const load = async () => {
-    if (!isApiMode()) {
-      setError('Orders require API mode.');
-      return;
-    }
     try {
       setOrders(await listAdminOrdersApi());
       setError('');

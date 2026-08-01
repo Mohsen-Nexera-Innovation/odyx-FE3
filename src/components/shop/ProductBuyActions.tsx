@@ -9,7 +9,6 @@ import {
   fetchShopProducts,
   resolveCartProductId,
 } from '@/lib/commerce';
-import { isApiMode } from '@/lib/config';
 
 const Arrow = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -34,7 +33,6 @@ export default function ProductBuyActions({
   );
 
   useEffect(() => {
-    if (!isApiMode()) return;
     void fetchShopProducts().then((list) => {
       const slugMap: Record<string, string> = {
         'printer-p1-26': 'odyx-p1-26',
@@ -52,7 +50,7 @@ export default function ProductBuyActions({
   const primaryClass = accent === 'orange' ? 'btn btn-sign btn-sm' : 'btn btn-sm';
 
   async function ensureAdd() {
-    if (isApiMode() && !readSession()) {
+    if (!readSession()) {
       router.push('/login');
       return false;
     }

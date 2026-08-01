@@ -1,5 +1,5 @@
 /**
- * Clinic patients — demo localStorage or Nest /patients API.
+ * Clinic patients — Nest /patients API.
  */
 
 import {
@@ -8,8 +8,7 @@ import {
   type ApiPatient,
   type PatientSex,
 } from '@/lib/api/patients';
-import { isApiMode } from '@/lib/config';
-import type { AccountSession } from '@/lib/auth-store';
+import type { AccountSession } from '@/lib/auth-session';
 
 export type { PatientSex };
 
@@ -24,12 +23,6 @@ export type Patient = {
   updatedAt: string;
 };
 
-const STORAGE_KEY = 'odyx_patients';
-
-function ownerKey(session: AccountSession): string {
-  return session.email.trim().toLowerCase() || 'anon';
-}
-
 function mapApi(p: ApiPatient): Patient {
   return {
     id: p.id,
@@ -43,47 +36,18 @@ function mapApi(p: ApiPatient): Patient {
   };
 }
 
-function readDemo(session: AccountSession): Patient[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const all = JSON.parse(raw) as Record<string, Patient[]>;
-    return all[ownerKey(session)] ?? [];
-  } catch {
-    return [];
-  }
-}
-
-function writeDemo(session: AccountSession, patients: Patient[]) {
-  if (typeof window === 'undefined') return;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const all = raw ? (JSON.parse(raw) as Record<string, Patient[]>) : {};
-    all[ownerKey(session)] = patients;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  } catch {
-    /* ignore */
-  }
-}
-
 export function patientLabel(p: Pick<Patient, 'firstName' | 'lastName' | 'ref'>): string {
   const name = `${p.firstName} ${p.lastName}`.trim();
   return p.ref ? `${name} (${p.ref})` : name;
 }
 
-export async function listPatients(session: AccountSession): Promise<Patient[]> {
-  if (!isApiMode()) {
-    return readDemo(session).sort((a, b) =>
-      a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName),
-    );
-  }
+export async function listPatients(_session: AccountSession): Promise<Patient[]> {
   const list = await listPatientsApi();
   return list.map(mapApi);
 }
 
 export async function createPatient(
-  session: AccountSession,
+  _session: AccountSession,
   input: {
     firstName: string;
     lastName: string;
@@ -92,20 +56,5 @@ export async function createPatient(
     notes?: string;
   },
 ): Promise<Patient> {
-  if (!isApiMode()) {
-    const now = new Date().toISOString();
-    const patient: Patient = {
-      id: `pt-${Date.now()}`,
-      firstName: input.firstName.trim(),
-      lastName: input.lastName.trim(),
-      ref: input.ref?.trim() || undefined,
-      sex: input.sex ?? 'UNSPECIFIED',
-      notes: input.notes?.trim() || undefined,
-      createdAt: now,
-      updatedAt: now,
-    };
-    writeDemo(session, [patient, ...readDemo(session)]);
-    return patient;
-  }
   return mapApi(await createPatientApi(input));
 }

@@ -6,17 +6,15 @@ import QtyStepper from '@/components/shop/QtyStepper';
 import {
   FREE_SHIPPING_THRESHOLD,
   SHOP_CATEGORY_LABEL,
-  calcShipping,
   formatMoney,
 } from '@/content/shop';
 import { useCart } from '@/hooks/useCart';
 import { removeItemAsync, updateQtyAsync } from '@/lib/commerce';
-import { isApiMode } from '@/lib/config';
 
 export default function CartPage() {
   const { lines, count } = useCart();
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const shipping = isApiMode() ? 0 : calcShipping(subtotal);
+  const shipping = 0;
   const total = subtotal + shipping;
   const shipProgress = Math.min(1, subtotal / FREE_SHIPPING_THRESHOLD);
   const toFreeShip = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
@@ -197,11 +195,7 @@ export default function CartPage() {
                   <div className="cart-sum-row">
                     <span>Shipping</span>
                     <span>
-                      {isApiMode()
-                        ? 'Calculated at checkout'
-                        : shipping === 0
-                          ? 'Free'
-                          : formatMoney(shipping)}
+                      Calculated at checkout
                     </span>
                   </div>
                   <div className="cart-sum-row cart-sum-total">

@@ -1,4 +1,4 @@
-/** JWT tokens for API mode only. Demo mode never writes these. */
+/** JWT access + refresh tokens for Nest API auth. */
 
 const ACCESS_KEY = 'odyx_access_token';
 const REFRESH_KEY = 'odyx_refresh_token';

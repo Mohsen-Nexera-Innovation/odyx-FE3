@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { listClientsApi, type ApiClientUser } from '@/lib/api/admin';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { hasPermission } from '@/lib/permissions';
-import { isApiMode } from '@/lib/config';
 
 export default function AdminClientsPage() {
   const { session } = useAuthSession();
@@ -13,10 +12,7 @@ export default function AdminClientsPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!canRead || !isApiMode()) {
-      if (!isApiMode()) setError('Clients require API mode.');
-      return;
-    }
+    if (!canRead) return;
     void listClientsApi()
       .then(setClients)
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load'));

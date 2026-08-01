@@ -5,7 +5,7 @@ import {
   cartCountAsync,
   getResolvedCartAsync,
 } from '@/lib/commerce';
-import type { CartLineResolved } from '@/lib/cart-store';
+import type { CartLineResolved } from '@/lib/cart-events';
 
 export function useCart() {
   const [lines, setLines] = useState<CartLineResolved[]>([]);

@@ -6,9 +6,7 @@ import { HEADER_MENUS, type MegaColumn, type NavGroup, type NavLink } from '@/co
 import { LOCALE_LABEL, useGlobalTools, type Locale } from './GlobalTools';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { logout, type AccountSession } from '@/lib/auth';
-import { unreadTotal } from '@/lib/inbox-store';
 import { unreadTotalApi } from '@/lib/inbox-api';
-import { isApiMode } from '@/lib/config';
 import { subscribeChatSocket } from '@/lib/chat-socket';
 import { cartCountAsync } from '@/lib/commerce';
 
@@ -335,17 +333,13 @@ export default function Header() {
   const isMenuActive = (href: string) => currentSeg !== '' && topSeg(href) === currentSeg;
 
   const refreshUnread = () => {
-    if (!session) {
+    if (!session || session.accountType !== 'CLIENT') {
       setInboxUnread(0);
       return;
     }
-    if (isApiMode() && session.accountType === 'CLIENT') {
-      void unreadTotalApi(session)
-        .then(setInboxUnread)
-        .catch(() => setInboxUnread(0));
-      return;
-    }
-    setInboxUnread(unreadTotal(session));
+    void unreadTotalApi(session)
+      .then(setInboxUnread)
+      .catch(() => setInboxUnread(0));
   };
 
   useEffect(() => {
@@ -359,7 +353,7 @@ export default function Header() {
   }, [session]);
 
   useEffect(() => {
-    if (!session || !isApiMode() || session.accountType !== 'CLIENT') return;
+    if (!session || session.accountType !== 'CLIENT') return;
     return subscribeChatSocket({
       onConversationCreated: () => refreshUnread(),
       onConversationMessage: () => refreshUnread(),

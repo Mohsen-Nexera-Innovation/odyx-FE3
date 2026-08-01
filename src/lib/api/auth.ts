@@ -6,7 +6,7 @@ import {
   type StaffRank,
 } from '@/content/auth';
 import { apiFetch } from '@/lib/api/client';
-import type { AccountSession, RegisterInput } from '@/lib/auth-store';
+import type { AccountSession, RegisterInput } from '@/lib/auth-session';
 
 export type ApiPublicUser = {
   id?: string;

@@ -11,7 +11,6 @@ import {
 } from '@/lib/api/admin';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { hasPermission } from '@/lib/permissions';
-import { isApiMode } from '@/lib/config';
 
 export default function AdminUsersPage() {
   const { session } = useAuthSession();
@@ -31,10 +30,6 @@ export default function AdminUsersPage() {
   const [reinvitingId, setReinvitingId] = useState('');
 
   const load = async () => {
-    if (!isApiMode()) {
-      setFormError('Staff management requires API mode.');
-      return;
-    }
     try {
       const [s, r] = await Promise.all([listStaffApi(), listRolesApi()]);
       setStaff(s);

@@ -14,7 +14,6 @@ import { INDICATION_LABEL, SLA_LABEL, type SlaTier } from '@/content/inbox';
 import { formatMoney, type ShopProduct } from '@/content/shop';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { addItemAsync, clearCartAsync, fetchShopProducts } from '@/lib/commerce';
-import { isApiMode } from '@/lib/config';
 import { saveDesignCaseDraft } from '@/lib/design-case-draft';
 import { savePendingScan } from '@/lib/pending-scan';
 import {
@@ -82,7 +81,7 @@ function DesignRequestBody() {
   useEffect(() => {
     // Wait until session is read from storage — otherwise logged-in users get bounced.
     if (!ready) return;
-    if (isApiMode() && !session) {
+    if (!session) {
       router.replace(
         `/login?next=${encodeURIComponent(`/design-services/request?service=${serviceParam}`)}`,
       );
@@ -142,7 +141,7 @@ function DesignRequestBody() {
     );
   }
 
-  if (isApiMode() && !session) {
+  if (!session) {
     return (
       <section className="sec store-sec">
         <div className="wrap">

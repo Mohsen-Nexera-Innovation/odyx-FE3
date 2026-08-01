@@ -1,4 +1,4 @@
-import type { AccountSession } from '@/lib/auth-store';
+import type { AccountSession } from '@/lib/auth-session';
 
 export function hasPermission(
   session: AccountSession | null | undefined,

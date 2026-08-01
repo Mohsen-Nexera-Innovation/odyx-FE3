@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { listLeadsApi, type ApiLead } from '@/lib/api/leads';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { hasPermission } from '@/lib/permissions';
-import { isApiMode } from '@/lib/config';
 import { formatMoney } from '@/content/shop';
 
 function scenarioSummary(lead: ApiLead): string {
@@ -43,10 +42,7 @@ export default function AdminLeadsPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!canRead || !isApiMode()) {
-      if (!isApiMode()) setError('Leads require API mode.');
-      return;
-    }
+    if (!canRead) return;
     void listLeadsApi()
       .then(setLeads)
       .catch((e) =>

@@ -11,7 +11,6 @@ import {
 } from '@/lib/api/admin';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { hasPermission } from '@/lib/permissions';
-import { isApiMode } from '@/lib/config';
 
 export default function AdminRolesPage() {
   const { session } = useAuthSession();
@@ -27,10 +26,6 @@ export default function AdminRolesPage() {
   const [busy, setBusy] = useState(false);
 
   const load = async () => {
-    if (!isApiMode()) {
-      setError('Admin roles require API mode.');
-      return;
-    }
     try {
       const [r, p] = await Promise.all([listRolesApi(), listPermissionsApi()]);
       setRoles(r);

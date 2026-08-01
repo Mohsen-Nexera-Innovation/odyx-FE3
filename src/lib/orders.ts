@@ -1,5 +1,5 @@
 /**
- * Orders facade: demo localStorage vs Nest checkout + Paymob.
+ * Orders facade — Nest checkout + Paymob.
  */
 
 import {
@@ -11,14 +11,8 @@ import {
   type ApiOrder,
   type PricingQuote,
 } from '@/lib/api/commerce';
-import { isApiMode } from '@/lib/config';
-import {
-  getOrderById as demoGetOrder,
-  placeOrder as demoPlaceOrder,
-  type OrderShipping,
-  type StoredOrder,
-} from '@/lib/order-store';
-import { notifyCartChange } from '@/lib/cart-store';
+import { notifyCartChange } from '@/lib/cart-events';
+import type { OrderShipping, StoredOrder } from '@/lib/order-types';
 
 export type { OrderShipping, StoredOrder };
 
@@ -56,7 +50,6 @@ export async function previewShipping(input: {
   shippingGovernorate?: string;
   paymentMethod: 'CASH' | 'ONLINE';
 }): Promise<PricingQuote | null> {
-  if (!isApiMode()) return null;
   return previewOrderApi(input);
 }
 
@@ -73,11 +66,7 @@ export type ApiCheckoutResult = {
 export async function placeOrderFacade(input: {
   shipping: OrderShipping;
   paymentMethod: 'CASH' | 'ONLINE';
-}): Promise<ApiCheckoutResult | StoredOrder> {
-  if (!isApiMode()) {
-    return demoPlaceOrder({ shipping: input.shipping });
-  }
-
+}): Promise<ApiCheckoutResult> {
   const apiOrder = await checkoutApi({
     shippingAddress: input.shipping.line1 || undefined,
     shippingGovernorate: input.shipping.city || undefined,
@@ -117,7 +106,6 @@ export async function placeOrderFacade(input: {
       }
       throw new Error('Paymob intent missing pixel or iframe payload');
     } catch {
-      // Paymob not configured — simulate paid for local API mode
       await simulatePaymentApi(apiOrder.id);
       return {
         order: mapApiOrder(apiOrder),
@@ -133,7 +121,6 @@ export async function placeOrderFacade(input: {
 export async function getOrderFacade(
   orderNumber: string,
 ): Promise<StoredOrder | undefined> {
-  if (!isApiMode()) return demoGetOrder(orderNumber);
   try {
     const order = await getOrderByNumberApi(orderNumber);
     return mapApiOrder(order);

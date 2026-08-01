@@ -13,7 +13,6 @@ import {
   type ShopProduct,
 } from '@/content/shop';
 import { addItemAsync, fetchShopProducts } from '@/lib/commerce';
-import { isApiMode } from '@/lib/config';
 import { readSession } from '@/lib/auth';
 
 function isCategory(v: string | null): v is ShopCategory {
@@ -130,7 +129,7 @@ export default function ShopPage() {
     filter === 'all' ? 'All products' : SHOP_CATEGORY_LABEL[filter];
 
   async function onAdd(productId: string) {
-    if (isApiMode() && !readSession()) {
+    if (!readSession()) {
       router.push('/login');
       return;
     }
@@ -144,7 +143,7 @@ export default function ShopPage() {
   }
 
   async function onBuyNow(productId: string) {
-    if (isApiMode() && !readSession()) {
+    if (!readSession()) {
       router.push('/login');
       return;
     }
@@ -195,9 +194,7 @@ export default function ShopPage() {
               <p className="store-toolbar-meta">
                 {products.length} product{products.length === 1 ? '' : 's'}
                 <span aria-hidden>·</span>
-                {isApiMode()
-                  ? 'Shipping via Bosta · Pay with Paymob or COD'
-                  : `Free shipping from ${formatMoney(FREE_SHIPPING_THRESHOLD)}`}
+                Shipping via Bosta · Pay with Paymob or COD
               </p>
             </div>
 

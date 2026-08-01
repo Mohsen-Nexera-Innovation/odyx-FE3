@@ -9,7 +9,7 @@ import {
   type InboxThread,
   type ThreadStatus,
 } from '@/content/inbox';
-import type { AccountSession } from '@/lib/auth-store';
+import type { AccountSession } from '@/lib/auth-session';
 import {
   createConversationApi,
   getConversationApi,

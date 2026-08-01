@@ -10,7 +10,6 @@ import {
 } from '@/lib/api/conversations';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { hasPermission } from '@/lib/permissions';
-import { isApiMode } from '@/lib/config';
 import { subscribeChatSocket } from '@/lib/chat-socket';
 
 function initialsFrom(name: string) {
@@ -87,10 +86,6 @@ export default function AdminChatPage() {
   const messagesRef = useRef<HTMLDivElement>(null);
 
   const loadList = async (silent = false) => {
-    if (!isApiMode()) {
-      setError('Chat requires API mode.');
-      return;
-    }
     if (!silent) setLoading(true);
     try {
       const list = await listConversationsApi();

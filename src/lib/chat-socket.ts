@@ -3,7 +3,7 @@
  */
 
 import { io, type Socket } from 'socket.io-client';
-import { getApiBaseUrl, isApiMode } from '@/lib/config';
+import { getApiBaseUrl } from '@/lib/config';
 import { getAccessToken } from '@/lib/auth-tokens';
 import type { ApiConversation, ApiMessage } from '@/lib/api/conversations';
 
@@ -25,7 +25,7 @@ type ChatHandlers = {
 let socket: Socket | null = null;
 
 function ensureSocket(): Socket | null {
-  if (typeof window === 'undefined' || !isApiMode()) return null;
+  if (typeof window === 'undefined') return null;
   const base = getApiBaseUrl();
   if (!base) return null;
 
@@ -95,7 +95,6 @@ export function subscribeChatSocket(handlers: ChatHandlers): () => void {
   s.on('conversation:updated', onUpdated);
   s.on('connect_error', onError);
 
-  // If already connected from a previous page, still fire ready-ish state via reconnect noop.
   if (!s.connected) {
     s.connect();
   }

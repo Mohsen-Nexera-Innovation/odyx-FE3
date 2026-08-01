@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import { isDesignServiceSlug } from '@/content/design-services';
 import { formatMoney } from '@/content/shop';
-import { isApiMode } from '@/lib/config';
 import { designInboxHandoffHref, finalizeDesignCaseAfterPayment } from '@/lib/design-case-draft';
 import { getOrderFacade, type StoredOrder } from '@/lib/orders';
 import { readSession } from '@/lib/auth';
@@ -138,9 +137,7 @@ function SuccessBody() {
             )}
           </p>
           <p className="suc-demo-note">
-            {isApiMode()
-              ? 'Order saved on ODYX API · Paymob / Bosta when configured'
-              : 'Demo checkout · No real charge was made'}
+            Order saved on ODYX · Paymob / Bosta when configured
           </p>
         </div>
 

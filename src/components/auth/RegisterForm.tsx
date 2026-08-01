@@ -10,17 +10,15 @@ import {
   type RegisterRole,
 } from '@/content/auth';
 import GoogleSignInButton from '@/components/auth/GoogleSignInButton';
-import { initAuthStore, loginWithGoogle, register } from '@/lib/auth';
-import { isApiMode, isGoogleSignInEnabled } from '@/lib/config';
+import { loginWithGoogle, register } from '@/lib/auth';
+import { isGoogleSignInEnabled } from '@/lib/config';
 import { peekGoogleIdToken, stashGoogleIdToken } from '@/lib/google-identity';
-import { seedInboxForUser } from '@/lib/inbox-seed';
 import AuthRoleRail from './AuthRoleRail';
 
 export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: RegisterRole | null) => void }) {
   const router = useRouter();
   const search = useSearchParams();
   const initialRole = roleById(search.get('role'))?.id ?? null;
-  const apiMode = isApiMode();
   const googleEnabled = isGoogleSignInEnabled();
 
   const [step, setStep] = useState(initialRole ? 1 : 0);
@@ -38,7 +36,6 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
   const roleMeta = useMemo(() => roleById(role ?? undefined), [role]);
 
   useEffect(() => {
-    initAuthStore();
     if (peekGoogleIdToken()) {
       router.replace('/complete-google');
     }
@@ -125,12 +122,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
       setError(true);
       return;
     }
-    if (!apiMode) seedInboxForUser(result.session);
-    setMsg(
-      apiMode
-        ? 'Account created via API (JWT stored). Inbox API comes later — local sample cases not seeded.'
-        : 'Account created — inbox ready with sample cases.',
-    );
+    setMsg(`Account created — welcome, ${result.session.name}.`);
     setTimeout(() => router.push(sessionDestination(result.session)), 900);
   };
 

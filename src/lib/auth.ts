@@ -1,6 +1,6 @@
 /**
- * Auth facade: demo localStorage store vs Nest API, switched by isApiMode().
- * UI should import from here — not from auth-store or api/auth directly.
+ * Auth facade — Nest API with client session cache.
+ * UI should import from here — not from auth-session or api/auth directly.
  */
 
 import { ApiError } from '@/lib/api/client';
@@ -19,23 +19,11 @@ import {
   type GoogleAuthInput,
 } from '@/lib/api/auth';
 import { clearTokens, hasTokens, setTokens } from '@/lib/auth-tokens';
-import { getApiBaseUrl, isApiMode } from '@/lib/config';
+import { getApiBaseUrl } from '@/lib/config';
 import {
-  DEMO_ACCOUNTS,
-  loginWithSocial as demoLoginWithSocial,
-  type SocialProvider,
-  changePassword as demoChangePassword,
   clearSession,
-  forgotPassword as demoForgotPassword,
-  initAuthStore as initDemoAuthStore,
-  login as demoLogin,
-  loginAsGuest as demoLoginAsGuest,
-  logout as demoLogout,
   notifyAuthChange,
-  readSession as demoReadSession,
-  register as demoRegister,
-  resetPassword as demoResetPassword,
-  updateProfile as demoUpdateProfile,
+  readSession as readCachedSession,
   writeSession,
   type AccountSession,
   type LoginResult,
@@ -44,7 +32,9 @@ import {
   type RegisterResult,
   type UpdateProfileInput,
   type UpdateProfileResult,
-} from '@/lib/auth-store';
+} from '@/lib/auth-session';
+
+export type SocialProvider = 'google' | 'linkedin';
 
 export type {
   AccountSession,
@@ -52,26 +42,20 @@ export type {
   OkResult,
   RegisterInput,
   RegisterResult,
-  SocialProvider,
   UpdateProfileInput,
   UpdateProfileResult,
 };
-export { DEMO_ACCOUNTS, notifyAuthChange, writeSession };
+export { notifyAuthChange, writeSession };
 export { hasPermission, isStaff, isClient, isGuest } from '@/lib/permissions';
 
 export type GoogleAuthResult =
   | { ok: true; session: AccountSession }
   | { ok: false; error: string; needsRegistration?: boolean };
 
-export function initAuthStore() {
-  if (!isApiMode()) initDemoAuthStore();
-}
-
 export function readSession(): AccountSession | null {
-  const session = demoReadSession();
+  const session = readCachedSession();
   if (!session) return null;
   if (
-    isApiMode() &&
     session.accountType !== 'GUEST' &&
     session.role !== 'guest' &&
     !hasTokens()
@@ -99,10 +83,6 @@ async function applyApiAuth(response: {
 }
 
 export async function login(email: string, password: string): Promise<LoginResult> {
-  if (!isApiMode()) {
-    return demoLogin(email, password);
-  }
-
   try {
     const data = await loginApi(email, password);
     const session = await applyApiAuth(data);
@@ -115,10 +95,6 @@ export async function login(email: string, password: string): Promise<LoginResul
 export async function loginWithGoogle(
   input: GoogleAuthInput,
 ): Promise<GoogleAuthResult> {
-  if (!isApiMode()) {
-    return { ok: false, error: 'Google sign-in requires API mode.' };
-  }
-
   try {
     const data = await loginWithGoogleApi(input);
     const session = await applyApiAuth(data);
@@ -133,28 +109,13 @@ export async function loginWithGoogle(
   }
 }
 
-/** Demo-mode simulated social sign-in (no backend). */
-export function loginWithSocialDemo(provider: SocialProvider): LoginResult {
-  return demoLoginWithSocial(provider);
-}
-
-/**
- * LinkedIn sign-in entry. Demo mode simulates locally; API mode hands off to the
- * Nest OAuth redirect flow (`GET /auth/linkedin`) and returns 'redirect'.
- */
-export function startLinkedInSignIn(): LoginResult | 'redirect' {
-  if (!isApiMode()) {
-    return demoLoginWithSocial('linkedin');
-  }
+/** LinkedIn OAuth redirect via Nest (`GET /auth/linkedin`). */
+export function startLinkedInSignIn(): 'redirect' {
   window.location.assign(`${getApiBaseUrl()}/auth/linkedin`);
   return 'redirect';
 }
 
 export async function register(input: RegisterInput): Promise<RegisterResult> {
-  if (!isApiMode()) {
-    return demoRegister(input);
-  }
-
   try {
     const data = await registerApi(input);
     const session = await applyApiAuth(data);
@@ -169,9 +130,6 @@ export async function acceptInvite(input: {
   name: string;
   password: string;
 }): Promise<LoginResult> {
-  if (!isApiMode()) {
-    return { ok: false, error: 'Staff invites require API mode.' };
-  }
   try {
     const data = await acceptInviteApi(input);
     const session = await applyApiAuth(data);
@@ -181,18 +139,7 @@ export async function acceptInvite(input: {
   }
 }
 
-/** Guest stays client-only in both modes (API rejects guest register). */
-export function loginAsGuest() {
-  if (isApiMode()) clearTokens();
-  demoLoginAsGuest();
-}
-
 export async function logout(): Promise<void> {
-  if (!isApiMode()) {
-    demoLogout();
-    return;
-  }
-
   try {
     await logoutApi();
   } catch {
@@ -202,9 +149,9 @@ export async function logout(): Promise<void> {
   clearSession();
 }
 
-/** Best-effort session hydrate from /auth/me (API mode). */
+/** Best-effort session hydrate from /auth/me. */
 export async function syncSessionFromApi(): Promise<AccountSession | null> {
-  if (!isApiMode() || !hasTokens()) return readSession();
+  if (!hasTokens()) return readSession();
   try {
     const user = await meApi();
     const session = toSession(user);
@@ -220,10 +167,6 @@ export async function syncSessionFromApi(): Promise<AccountSession | null> {
 export async function updateProfile(
   input: UpdateProfileInput,
 ): Promise<UpdateProfileResult> {
-  if (!isApiMode()) {
-    return demoUpdateProfile(input);
-  }
-
   try {
     const user = await updateProfileApi(input);
     const session = toSession(user);
@@ -238,10 +181,6 @@ export async function changePassword(
   currentPassword: string,
   newPassword: string,
 ): Promise<OkResult> {
-  if (!isApiMode()) {
-    return demoChangePassword(currentPassword, newPassword);
-  }
-
   try {
     await changePasswordApi(currentPassword, newPassword);
     return { ok: true };
@@ -254,10 +193,6 @@ export async function changePassword(
 }
 
 export async function forgotPassword(email: string): Promise<OkResult> {
-  if (!isApiMode()) {
-    return demoForgotPassword(email);
-  }
-
   try {
     await forgotPasswordApi(email.trim().toLowerCase());
     return { ok: true };
@@ -273,10 +208,6 @@ export async function resetPassword(
   token: string,
   newPassword: string,
 ): Promise<OkResult> {
-  if (!isApiMode()) {
-    return demoResetPassword(token, newPassword);
-  }
-
   try {
     await resetPasswordApi(token, newPassword);
     return { ok: true };
