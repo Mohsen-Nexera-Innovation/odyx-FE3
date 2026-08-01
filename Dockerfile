@@ -11,6 +11,8 @@ COPY . .
 # NEXT_PUBLIC_* must be present at build time (inlined into the client bundle).
 ARG NEXT_PUBLIC_API_URL=https://api.odyx.com
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID=
+ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 RUN npm run build
 
