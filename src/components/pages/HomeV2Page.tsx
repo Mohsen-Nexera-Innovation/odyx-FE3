@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ClinicalApplicationsSection from "@/components/home2/ClinicalApplicationsSection";
+import EcoPrinterVideo from "@/components/home2/EcoPrinterVideo";
 import ClinicalCasesShowcase from "@/components/home2/ClinicalCasesShowcase";
 import HubCardsSection from "@/components/home2/HubCardsSection";
 import Hv2Footer from "@/components/home2/Hv2Footer";
@@ -124,14 +125,15 @@ export default function HomeV2Page() {
             </p>
             <div className="rv" data-rv="3">
               <Link className="hv2-btn hv2-hero-cta" href="/support">
-                <span>Request a Demo</span> <Arrow s={23} />
+                <span>Request a Demo</span>
+                <Arrow s={23} />
               </Link>
             </div>
           </div>
 
-          {/* Products extracted from the client hero art (Vision cutouts
-              in /img/hv2-cut/, 2x) over glowing orbit sweeps, with soft
-              floor shadows and DOM icon bubbles. Static composition. */}
+          {/* Real product cutouts (same photography as the product
+              screens, prepared in /img/hv2-cut/) over glowing orbit
+              sweeps, with soft floor shadows and DOM icon bubbles. */}
           <div className="hv2-orbit rv" data-rv="2" aria-hidden>
             <svg className="hv2-o-orbits" viewBox="0 0 2048 628" fill="none" aria-hidden>
               <g transform="rotate(-8 1340 320)" stroke="#fff" strokeLinecap="round">
@@ -145,10 +147,10 @@ export default function HomeV2Page() {
             <i className="hv2-o-sh hv2-sh-cure" />
             <i className="hv2-o-sh hv2-sh-printers" />
             <i className="hv2-o-sh hv2-sh-resins" />
-            <img className="hv2-o-img hv2-o-scanner" src="/img/hv2-cut/scanner-hd.png" alt="" />
-            <img className="hv2-o-img hv2-o-cure" src="/img/hv2-cut/cure-hd.png" alt="" />
-            <img className="hv2-o-img hv2-o-printers" src="/img/hv2-cut/printer-hd.png" alt="" />
-            <img className="hv2-o-img hv2-o-resins" src="/img/hv2-cut/resins-hd.png" alt="" />
+            <img className="hv2-o-img hv2-o-scanner" src="/img/hv2-cut/scanner-product.webp" alt="" />
+            <img className="hv2-o-img hv2-o-cure" src="/img/hv2-cut/cure-product.webp" alt="" />
+            <img className="hv2-o-img hv2-o-printers" src="/img/hv2-cut/printer-product.webp" alt="" />
+            <img className="hv2-o-img hv2-o-resins" src="/img/hv2-cut/resins-product.webp" alt="" />
             <span className="hv2-chip hv2-chip-tooth">{IC.tooth}</span>
             <span className="hv2-chip hv2-chip-cube">{IC.cube}</span>
             <span className="hv2-chip hv2-chip-target">{IC.shield}</span>
@@ -225,6 +227,7 @@ export default function HomeV2Page() {
                   <span className="hv2-eco-lbl">{n.label}</span>
                 </div>
               ))}
+              <EcoPrinterVideo />
               <a className="hv2-eco-more" href="#products" aria-label="Continue to products">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="m6 9 6 6 6-6" />

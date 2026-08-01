@@ -10,7 +10,7 @@ const COLUMNS = [
     links: [
       { label: 'Intraoral Scanners', href: '/products/odyx-s1-intraoral-scanner' },
       { label: 'Design Services', href: '/design-services' },
-      { label: '3D Printers', href: '/products/3d-printers' },
+      { label: '3D Printers', href: '/products/odyx-p1-26' },
       { label: 'ODYX Cure', href: '/products/curing-machines' },
       { label: 'Resins', href: '/products/resins' },
       { label: 'All Products', href: '/products' },
@@ -103,10 +103,15 @@ function SocialIcon({ kind }: { kind: (typeof SOCIAL)[number]['icon'] }) {
 export default function Footer() {
   const pathname = usePathname();
   if (pathname?.startsWith('/admin')) return null;
-  /* Product / clinical landings use the home navy band (Hv2), not the near-black P126 footer */
+  /* Product / clinical landings and auth screens use the home navy band (Hv2), not the near-black P126 footer */
   if (
     pathname?.startsWith('/products') ||
-    pathname?.includes('/solutions/clinical-applications')
+    pathname?.includes('/solutions/clinical-applications') ||
+    pathname === '/login' ||
+    pathname === '/register' ||
+    pathname === '/forgot-password' ||
+    pathname === '/reset-password' ||
+    pathname === '/complete-google'
   ) {
     return <Hv2Footer />;
   }

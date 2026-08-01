@@ -15,36 +15,33 @@ import Link from "next/link";
 const CARDS = [
   {
     key: "scanner",
-    title: ["Intraoral", "Scanners"],
+    title: ["ODYX S1", "Intraoral Scanner"],
     href: "/products/odyx-s1-intraoral-scanner",
-    img: "/img/cutouts/feat-scanner-cutout.png",
-    alt: "ODYX S1 intraoral scanner",
+    img: "/img/hv2-cut/scanner-product.webp",
+    alt: "The ODYX S1 intraoral scanner wand",
   },
   {
     key: "printer",
-    title: ["3D", "Printers"],
-    href: "/products/3d-printers",
-    img: "/img/printers/duo-cutout.png",
-    alt: "ODYX resin 3D printers",
-    // The packshot is near-black behind this card's arrow — flip it to the
-    // on-dark treatment so the glyph stays legible (as in the mock).
-    onDark: true,
+    title: ["ODYX P1-26", "3D Printer"],
+    href: "/products/odyx-p1-26",
+    img: "/img/hv2-cut/printer-product.webp",
+    alt: "The ODYX P1-26 resin 3D printer",
   },
   {
     key: "cure",
-    title: ["UV", "Curing Units"],
+    title: ["ODYX Cure", "UV-02"],
     href: "/products/curing-machines",
-    img: "/img/cure-stitch/odyx-cure-chamber-glow-cutout.png",
-    alt: "ODYX UV curing unit with a glowing chamber",
+    img: "/img/hv2-cut/cure-product.webp",
+    alt: "The ODYX Cure UV-02 curing station",
     // Wider card in the mock; its device leans right, so the arrow sits left.
     arrowStart: true,
   },
   {
     key: "resin",
-    title: ["Premium", "Resins"],
+    title: ["ODYX", "Resins"],
     href: "/products/resins",
-    img: "/img/cutouts/feat-resin-cutout.png",
-    alt: "The ODYX premium resin bottle",
+    img: "/img/hv2-cut/resins-product.webp",
+    alt: "Three ODYX resin bottles",
   },
   {
     key: "accessories",
@@ -52,6 +49,8 @@ const CARDS = [
     href: "/shop",
     img: "/img/shop-accessories.jpg",
     alt: "Finishing and characterization accessories",
+    // Category not live yet — shown dimmed and non-navigable.
+    disabled: true,
   },
 ] as const;
 
@@ -103,30 +102,43 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
 
         <div className="hv2-rail-wrap rv" data-rv="1">
           <div className="hv2-rail" ref={railRef} onScroll={onScroll}>
-            {CARDS.map((c) => (
-              <Link className={`hv2-pr-card hv2-pr-${c.key}`} href={c.href} key={c.href}>
-                <span className="hv2-pr-media">
-                  <img src={c.img} alt={c.alt} loading="lazy" />
-                </span>
-                <h3 className="hv2-pr-title">
-                  <span className="hv2-pr-lead">{c.title[0]}</span>
-                  {c.title[1] ? (
-                    <>
-                      <br />
-                      {c.title[1]}
-                    </>
-                  ) : null}
-                </h3>
-                <span
-                  className={`hv2-pr-go${"arrowStart" in c && c.arrowStart ? " is-start" : ""}${
-                    "onDark" in c && c.onDark ? " on-dark" : ""
-                  }`}
-                  aria-hidden
-                >
-                  <ArrowRight />
-                </span>
-              </Link>
-            ))}
+            {CARDS.map((c) => {
+              const disabled = "disabled" in c && c.disabled;
+              const inner = (
+                <>
+                  <span className="hv2-pr-media">
+                    <img src={c.img} alt={c.alt} loading="lazy" />
+                  </span>
+                  <h3 className="hv2-pr-title">
+                    <span className="hv2-pr-lead">{c.title[0]}</span>
+                    {c.title[1] ? (
+                      <>
+                        <br />
+                        {c.title[1]}
+                      </>
+                    ) : null}
+                  </h3>
+                  <span
+                    className={`hv2-pr-go${"arrowStart" in c && c.arrowStart ? " is-start" : ""}${
+                      "onDark" in c && c.onDark ? " on-dark" : ""
+                    }`}
+                    aria-hidden
+                  >
+                    <ArrowRight />
+                  </span>
+                </>
+              );
+              const cls = `hv2-pr-card hv2-pr-${c.key}${disabled ? " is-disabled" : ""}`;
+              return disabled ? (
+                <div className={cls} key={c.href} aria-disabled>
+                  {inner}
+                </div>
+              ) : (
+                <Link className={cls} href={c.href} key={c.href}>
+                  {inner}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

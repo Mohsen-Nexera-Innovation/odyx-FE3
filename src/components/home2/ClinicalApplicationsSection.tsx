@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type PointerEvent } from "react";
 import Link from "next/link";
 
 // Clinical Applications — the mock's layered card deck: left copy column and
@@ -65,6 +65,24 @@ const Tooth = () => (
   </svg>
 );
 
+// Pointer-follow tilt while a card is hovered: writes --ca-mx/--ca-my (max
+// ~2.2deg) that the hover transform in home-v2.css adds to its rotateY/rotateX.
+// Mouse only — touch never sets the vars, and reduced-motion overrides the
+// hover transform entirely so the vars go unused there.
+const setTilt = (e: PointerEvent<HTMLElement>) => {
+  if (e.pointerType !== "mouse") return;
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width - 0.5;
+  const y = (e.clientY - r.top) / r.height - 0.5;
+  el.style.setProperty("--ca-mx", `${(x * 4.4).toFixed(2)}deg`);
+  el.style.setProperty("--ca-my", `${(y * -3.2).toFixed(2)}deg`);
+};
+const clearTilt = (e: PointerEvent<HTMLElement>) => {
+  e.currentTarget.style.removeProperty("--ca-mx");
+  e.currentTarget.style.removeProperty("--ca-my");
+};
+
 export default function ClinicalApplicationsSection() {
   const [active, setActive] = useState(0);
 
@@ -103,6 +121,11 @@ export default function ClinicalApplicationsSection() {
                   key={a.id}
                   data-slot={slot}
                   aria-hidden={slot !== 0 ? true : undefined}
+                  /* Active card is keyboard-reachable so :focus-visible can
+                     mirror the hover lift; rear cards stay aria-hidden. */
+                  tabIndex={slot === 0 ? 0 : undefined}
+                  onPointerMove={setTilt}
+                  onPointerLeave={clearTilt}
                 >
                   <img
                     className="hv2-ca-art"

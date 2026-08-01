@@ -65,7 +65,7 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
 
   return (
     <div className="cl cl--sdc" style={{ ['--cl-badge' as string]: badge }}>
-      <section className="cl-hero" data-hero-light>
+      <section className="cl-hero" data-hero-dark>
         <div className="cl-wrap cl-hero-grid">
           <div className="cl-hero-copy">
             <p className="cl-badge">

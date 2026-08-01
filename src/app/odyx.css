@@ -2742,6 +2742,19 @@ main .sec + .sec{border-top:none}
 .auth-link:hover{text-decoration:underline;text-underline-offset:3px}
 .auth-submit{width:100%;justify-content:center;margin-top:8px;padding:clamp(14px,2vw,16px) 22px;font-size:clamp(.92rem,2vw,1rem)}
 .auth-alt{margin-top:16px}
+.auth-social{width:100%;margin-top:14px;display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.auth-social-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.auth-social-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;padding:0 16px;border-radius:14px;
+  border:1.5px solid rgba(10,60,100,.14);background:#fff;color:#211C1D;
+  font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.auth-social-btn:hover{border-color:var(--sky);box-shadow:0 6px 18px rgba(0,80,216,.14);transform:translateY(-1px)}
+.auth-social-btn:disabled{opacity:.55;cursor:default;box-shadow:none;transform:none;border-color:rgba(10,60,100,.14)}
+.auth-social-btn svg{width:18px;height:18px;flex-shrink:0}
+@media (max-width:420px){.auth-social-row{grid-template-columns:1fr}}
 .auth-google{width:100%;margin-top:14px;display:flex;flex-direction:column;align-items:stretch;gap:12px}
 .auth-google-btn{width:100%;min-height:44px;display:flex;justify-content:center}
 .auth-google-btn.is-disabled{opacity:.55;pointer-events:none}
@@ -2772,6 +2785,16 @@ main .sec + .sec{border-top:none}
   background:rgba(10,60,100,.04);border:1px solid rgba(10,60,100,.08);
 }
 .auth-demo-label{margin:0 0 10px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7e95a7}
+.auth-demo-toggle{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin:0;padding:0;border:0;background:none;cursor:pointer;text-align:left;
+  font-family:var(--font-body);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7e95a7;
+  transition:color .2s;
+}
+.auth-demo-toggle:hover{color:#211C1D}
+.auth-demo-chev{flex-shrink:0;transition:transform .25s ease}
+.auth-demo-chev.open{transform:rotate(180deg)}
+.auth-demo-toggle[aria-expanded="true"]{margin-bottom:10px}
 .auth-demo-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
 .auth-demo-btn{
   width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(10,60,100,.10);
