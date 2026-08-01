@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Hv2Footer from '@/components/home2/Hv2Footer';
+import { isAuthShellPath } from '@/content/auth';
 
 const COLUMNS = [
   {
@@ -102,16 +103,11 @@ function SocialIcon({ kind }: { kind: (typeof SOCIAL)[number]['icon'] }) {
 
 export default function Footer() {
   const pathname = usePathname();
-  if (pathname?.startsWith('/admin')) return null;
-  /* Product / clinical landings and auth screens use the home navy band (Hv2), not the near-black P126 footer */
+  if (pathname?.startsWith('/admin') || isAuthShellPath(pathname)) return null;
+  /* Product / clinical landings use the home navy band (Hv2), not the near-black P126 footer */
   if (
     pathname?.startsWith('/products') ||
-    pathname?.includes('/solutions/clinical-applications') ||
-    pathname === '/login' ||
-    pathname === '/register' ||
-    pathname === '/forgot-password' ||
-    pathname === '/reset-password' ||
-    pathname === '/complete-google'
+    pathname?.includes('/solutions/clinical-applications')
   ) {
     return <Hv2Footer />;
   }

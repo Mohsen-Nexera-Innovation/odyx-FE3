@@ -36,6 +36,8 @@ export default function AuthRoleRail({
     ? `${(activeIndex / (roles.length - 1)) * 100}%`
     : '0%';
 
+  const selectedRole = value ? roles.find((r) => r.id === value) : null;
+
   return (
     <div className="auth-role-rail" role="radiogroup" aria-label="Your role">
       <div className="auth-role-icons-wrap">
@@ -74,6 +76,12 @@ export default function AuthRoleRail({
           </span>
         ))}
       </div>
+      {/* Role description on selection */}
+      {selectedRole && (
+        <p className="auth-role-desc" key={selectedRole.id}>
+          {selectedRole.short}
+        </p>
+      )}
     </div>
   );
 }

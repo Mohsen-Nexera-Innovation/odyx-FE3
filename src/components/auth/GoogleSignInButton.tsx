@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import SocialSignInButton from '@/components/auth/SocialSignInButton';
 import { getGoogleClientId } from '@/lib/config';
 import { renderGoogleButton } from '@/lib/google-identity';
 
@@ -9,6 +10,15 @@ type Props = {
   onCredential: (idToken: string) => void;
   onError?: (message: string) => void;
   disabled?: boolean;
+};
+
+const VISIBLE_LABEL: Record<
+  NonNullable<Props['text']>,
+  string
+> = {
+  continue_with: 'Continue with Google',
+  signup_with: 'Sign up with Google',
+  signin_with: 'Sign in with Google',
 };
 
 export default function GoogleSignInButton({
@@ -55,11 +65,30 @@ export default function GoogleSignInButton({
     };
   }, [text, disabled]);
 
+  const triggerGoogleSignIn = useCallback(() => {
+    if (disabled) return;
+    const host = hostRef.current;
+    if (!host) {
+      onErrorRef.current?.('Google sign-in is not ready yet.');
+      return;
+    }
+    const googleBtn = host.querySelector<HTMLElement>('[role="button"]');
+    if (!googleBtn) {
+      onErrorRef.current?.('Google sign-in is not ready yet.');
+      return;
+    }
+    googleBtn.click();
+  }, [disabled]);
+
   return (
-    <div
-      className={`auth-google-btn${disabled ? ' is-disabled' : ''}`}
-      ref={hostRef}
-      aria-busy={disabled || undefined}
-    />
+    <div className="auth-google-wrap">
+      <SocialSignInButton
+        provider="google"
+        label={VISIBLE_LABEL[text]}
+        disabled={disabled}
+        onClick={triggerGoogleSignIn}
+      />
+      <div ref={hostRef} className="auth-google-host" aria-hidden="true" />
+    </div>
   );
 }

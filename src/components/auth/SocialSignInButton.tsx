@@ -3,7 +3,7 @@
 import type { SocialProvider } from '@/lib/auth';
 
 const LABEL: Record<SocialProvider, string> = {
-  google: 'Google',
+  google: 'Continue with Google',
   linkedin: 'LinkedIn',
 };
 
@@ -37,10 +37,12 @@ const ICON: Record<SocialProvider, React.ReactNode> = {
 
 export default function SocialSignInButton({
   provider,
+  label,
   onClick,
   disabled = false,
 }: {
   provider: SocialProvider;
+  label?: string;
   onClick: () => void;
   disabled?: boolean;
 }) {
@@ -52,7 +54,7 @@ export default function SocialSignInButton({
       disabled={disabled}
     >
       {ICON[provider]}
-      <span>{LABEL[provider]}</span>
+      <span>{label ?? LABEL[provider]}</span>
     </button>
   );
 }

@@ -15,6 +15,86 @@ import { isGoogleSignInEnabled } from '@/lib/config';
 import { peekGoogleIdToken, stashGoogleIdToken } from '@/lib/google-identity';
 import AuthRoleRail from './AuthRoleRail';
 
+/* ── Inline SVG Icons ───────────────────────────────────────────────────── */
+function UserIcon() {
+  return (
+    <svg className="auth-field-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="10" cy="7" r="4" />
+      <path d="M2 18c0-3.3 3.6-6 8-6s8 2.7 8 6" />
+    </svg>
+  );
+}
+
+function EmailIcon() {
+  return (
+    <svg className="auth-field-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="2" y="4" width="16" height="12" rx="2" />
+      <path d="M2 4l8 6 8-6" />
+    </svg>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg className="auth-field-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="4" y="9" width="12" height="8" rx="2" />
+      <path d="M7 9V6a3 3 0 0 1 6 0v3" />
+    </svg>
+  );
+}
+
+function GlobeIcon() {
+  return (
+    <svg className="auth-field-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="10" cy="10" r="8" />
+      <path d="M2 10h16M10 2c2.2 2.5 3.5 5.2 3.5 8s-1.3 5.5-3.5 8c-2.2-2.5-3.5-5.2-3.5-8s1.3-5.5 3.5-8z" />
+    </svg>
+  );
+}
+
+function BuildingIcon() {
+  return (
+    <svg className="auth-field-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3 18V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v14" />
+      <path d="M13 10h3a1 1 0 0 1 1 1v7" />
+      <path d="M3 18h14" />
+      <path d="M6 6h2M6 9h2M6 12h2M10 6h1M10 9h1" />
+    </svg>
+  );
+}
+
+function EyeIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M1 10s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z" />
+      <circle cx="10" cy="10" r="3" />
+    </svg>
+  );
+}
+
+function EyeOffIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M8.7 3.6A8.3 8.3 0 0 1 10 3.5c5.5 0 9 6 9 6a15.8 15.8 0 0 1-1.8 2.5M5.7 5.2A14.6 14.6 0 0 0 1 10s3.5 6 9 6c1.8 0 3.4-.6 4.8-1.5" />
+      <path d="M2 2l16 16" />
+      <path d="M8.2 8.2a2.5 2.5 0 0 0 3.5 3.5" />
+    </svg>
+  );
+}
+
+/* ── Password strength helper ───────────────────────────────────────────── */
+function getPasswordStrength(pw: string): { level: number; label: string } {
+  if (!pw) return { level: 0, label: '' };
+  let score = 0;
+  if (pw.length >= 8) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+  return { level: score, label: labels[score] || '' };
+}
+
+/* ── Component ──────────────────────────────────────────────────────────── */
 export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: RegisterRole | null) => void }) {
   const router = useRouter();
   const search = useSearchParams();
@@ -26,6 +106,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [org, setOrg] = useState('');
   const [country, setCountry] = useState('');
   const [terms, setTerms] = useState(false);
@@ -34,6 +115,7 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
   const [busy, setBusy] = useState(false);
 
   const roleMeta = useMemo(() => roleById(role ?? undefined), [role]);
+  const pwStrength = useMemo(() => getPasswordStrength(password), [password]);
 
   useEffect(() => {
     if (peekGoogleIdToken()) {
@@ -133,8 +215,10 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
       {step >= 1 && roleMeta && (
         <form className="auth-form auth-form-register" onSubmit={submit}>
           <div className="auth-form-grid">
-            <div className="auth-field">
+            {/* Full name */}
+            <div className="auth-field has-icon">
               <label htmlFor="reg-name">Full name</label>
+              <UserIcon />
               <input
                 id="reg-name"
                 autoComplete="name"
@@ -143,8 +227,11 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="auth-field">
+
+            {/* Email */}
+            <div className="auth-field has-icon">
               <label htmlFor="reg-email">Email</label>
+              <EmailIcon />
               <input
                 id="reg-email"
                 type="email"
@@ -154,19 +241,51 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="auth-field">
+
+            {/* Password with toggle + strength */}
+            <div className="auth-field has-icon">
               <label htmlFor="reg-pass">Password</label>
+              <LockIcon />
               <input
                 id="reg-pass"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 autoComplete="new-password"
                 placeholder="8+ characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                style={{ paddingRight: '52px' }}
               />
+              <button
+                type="button"
+                className="auth-field-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+              </button>
+              {password.length > 0 && (
+                <>
+                  <div className="auth-strength">
+                    <span
+                      className="auth-strength-fill"
+                      data-level={pwStrength.level}
+                    />
+                  </div>
+                  <span
+                    className="auth-strength-label"
+                    data-level={pwStrength.level}
+                  >
+                    {pwStrength.label}
+                  </span>
+                </>
+              )}
             </div>
-            <div className="auth-field">
+
+            {/* Country */}
+            <div className="auth-field has-icon">
               <label htmlFor="reg-country">Country</label>
+              <GlobeIcon />
               <input
                 id="reg-country"
                 autoComplete="country-name"
@@ -176,9 +295,12 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
               />
             </div>
           </div>
+
+          {/* Organization (conditional) */}
           {role !== 'guest' && (
-            <div className="auth-field">
+            <div className="auth-field has-icon">
               <label htmlFor="reg-org">{roleMeta.orgLabel}</label>
+              <BuildingIcon />
               <input
                 id="reg-org"
                 placeholder={roleMeta.orgPlaceholder}
@@ -187,14 +309,28 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
               />
             </div>
           )}
+
           <label className="auth-check auth-check-block">
-            <input type="checkbox" checked={terms} onChange={(e) => setTerms(e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={terms}
+              onChange={(e) => setTerms(e.target.checked)}
+            />
             <span>
-              I agree to the <Link href="/about">Terms</Link> &amp; <Link href="/about">Privacy</Link>
+              I agree to the <Link href="/about">Terms</Link> &amp;{' '}
+              <Link href="/about">Privacy</Link>
             </span>
           </label>
+
           <button type="submit" className="btn auth-submit" disabled={busy}>
-            {busy ? 'Creating…' : 'Create account'}
+            {busy ? (
+              <>
+                <span className="auth-spinner" />
+                Creating…
+              </>
+            ) : (
+              'Create account'
+            )}
           </button>
         </form>
       )}
@@ -214,7 +350,8 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
             }}
           />
           <p className="auth-google-hint">
-            You’ll confirm clinic details on the next step. Password is optional there.
+            You'll confirm clinic details on the next step. Password is optional
+            there.
           </p>
         </div>
       )}

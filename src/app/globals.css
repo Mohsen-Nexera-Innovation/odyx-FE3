@@ -10,6 +10,7 @@
 @import "./about.css";
 @import "./home-v2.css";
 @import "./background-picker.css";
+@import "./auth.css";
 
 /* ODYX design tokens — from tokens.css */
 :root{

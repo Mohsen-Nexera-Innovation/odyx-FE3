@@ -109,3 +109,18 @@ export function roleDestination(role: UserRole): string {
 }
 
 export const AUTH_STORAGE_KEY = 'odyx_account';
+
+/** Auth screens use a focused card layout — no global header or footer. */
+export const AUTH_SHELL_PATHS = [
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+  '/complete-google',
+  '/accept-invite',
+] as const;
+
+export function isAuthShellPath(pathname: string | null | undefined): boolean {
+  if (!pathname) return false;
+  return AUTH_SHELL_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}

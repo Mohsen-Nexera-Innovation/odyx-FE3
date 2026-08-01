@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { HEADER_MENUS, type MegaColumn, type NavGroup, type NavLink } from '@/content/nav';
 import { LOCALE_LABEL, useGlobalTools, type Locale } from './GlobalTools';
 import { useAuthSession } from '@/hooks/useAuthSession';
+import { isAuthShellPath } from '@/content/auth';
 import { logout, type AccountSession } from '@/lib/auth';
 import { unreadTotalApi } from '@/lib/inbox-api';
 import { subscribeChatSocket } from '@/lib/chat-socket';
@@ -475,8 +476,8 @@ export default function Header() {
     .filter(Boolean)
     .join(' ');
 
-  // Admin has its own shell — avoid double chrome / sticky offset bugs.
-  if (pathname?.startsWith('/admin')) return null;
+  // Admin and auth screens use their own shell — avoid double chrome / sticky offset bugs.
+  if (pathname?.startsWith('/admin') || isAuthShellPath(pathname)) return null;
 
   return (
     <header id="hdr" ref={headerRef} className={headerClass} onMouseMove={onSpotlightMove}>
