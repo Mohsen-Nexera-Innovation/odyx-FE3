@@ -256,6 +256,37 @@ export function login(email: string, password: string): LoginResult {
   return { ok: true, session };
 }
 
+export type SocialProvider = 'google' | 'linkedin';
+
+const SOCIAL_LABEL: Record<SocialProvider, string> = {
+  google: 'Google',
+  linkedin: 'LinkedIn',
+};
+
+/** Demo-mode social sign-in: find-or-create a provider demo account (dentist client). */
+export function loginWithSocial(provider: SocialProvider): LoginResult {
+  initAuthStore();
+  const email = `${provider}@demo.com`;
+  let user = findUser(email);
+  if (!user) {
+    user = {
+      email,
+      password: 'demo12345',
+      name: `${SOCIAL_LABEL[provider]} Demo User`,
+      accountType: 'CLIENT',
+      clientType: 'DENTIST',
+      permissions: [],
+      createdAt: new Date().toISOString(),
+    };
+    const users = readUsersDb();
+    users.push(user);
+    writeUsersDb(users);
+  }
+  const session = toSession(user);
+  writeSession(session);
+  return { ok: true, session };
+}
+
 export type RegisterInput = {
   name: string;
   email: string;

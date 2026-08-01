@@ -25,7 +25,7 @@ export default function AuthPageShell({
   foot?: React.ReactNode;
 }) {
   return (
-    <div className="auth-page" data-accent={ACCENT[accent]} data-wide={wide ? 'true' : undefined}>
+    <div className="auth-page" data-hero-light data-accent={ACCENT[accent]} data-wide={wide ? 'true' : undefined}>
       <div className="auth-ambient" aria-hidden>
         <span className="auth-orb auth-orb-a" />
         <span className="auth-orb auth-orb-b" />

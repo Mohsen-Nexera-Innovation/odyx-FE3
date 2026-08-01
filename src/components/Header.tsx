@@ -476,6 +476,7 @@ export default function Header() {
     onLight ? 'on-light' : '',
     !transparent && !onLight ? 'solid' : '',
     scrolled && !onLight ? 'scrolled' : '',
+    !scrolled ? 'at-top' : '',
   ]
     .filter(Boolean)
     .join(' ');

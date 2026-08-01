@@ -15,36 +15,33 @@ import Link from "next/link";
 const CARDS = [
   {
     key: "scanner",
-    title: ["Intraoral", "Scanners"],
+    title: ["ODYX S1", "Intraoral Scanner"],
     href: "/products/odyx-s1-intraoral-scanner",
-    img: "/img/cutouts/feat-scanner-cutout.png",
-    alt: "ODYX S1 intraoral scanner",
+    img: "/img/hv2-cut/scanner-product.webp",
+    alt: "The ODYX S1 intraoral scanner wand",
   },
   {
     key: "printer",
-    title: ["3D", "Printers"],
+    title: ["ODYX P1-26", "3D Printer"],
     href: "/products/odyx-p1-26",
-    img: "/img/printers/duo-cutout.png",
-    alt: "ODYX resin 3D printers",
-    // The packshot is near-black behind this card's arrow — flip it to the
-    // on-dark treatment so the glyph stays legible (as in the mock).
-    onDark: true,
+    img: "/img/hv2-cut/printer-product.webp",
+    alt: "The ODYX P1-26 resin 3D printer",
   },
   {
     key: "cure",
-    title: ["UV", "Curing Units"],
+    title: ["ODYX Cure", "UV-02"],
     href: "/products/curing-machines",
-    img: "/img/cure-stitch/odyx-cure-chamber-glow-cutout.png",
-    alt: "ODYX UV curing unit with a glowing chamber",
+    img: "/img/hv2-cut/cure-product.webp",
+    alt: "The ODYX Cure UV-02 curing station",
     // Wider card in the mock; its device leans right, so the arrow sits left.
     arrowStart: true,
   },
   {
     key: "resin",
-    title: ["Premium", "Resins"],
+    title: ["ODYX", "Resins"],
     href: "/products/resins",
-    img: "/img/cutouts/feat-resin-cutout.png",
-    alt: "The ODYX premium resin bottle",
+    img: "/img/hv2-cut/resins-product.webp",
+    alt: "Three ODYX resin bottles",
   },
   {
     key: "accessories",

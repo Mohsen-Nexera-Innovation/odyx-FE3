@@ -14,6 +14,15 @@
    variant from the top. No floating support FABs on this screen. */
 body:has(.hv2) .fabs{display:none !important}
 
+/* At the very top of the home screen the bar is fully transparent —
+   dark on-light link colors stay readable over the light hero; the
+   frosted background fades back in as soon as the user scrolls. */
+body:has(.hv2) header#hdr.on-light.at-top{
+  background:transparent;
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+  box-shadow:none;
+}
+
 .hv2{
   --hv2-blue:#0050D8;
   --hv2-blue-deep:#0041AF;
@@ -147,16 +156,24 @@ body:has(.hv2) .fabs{display:none !important}
   max-width:calc(345 * var(--u)); margin-bottom:calc(44 * var(--u));
 }
 .hv2-hero-cta{
-  display:flex; justify-content:space-between; align-items:center; gap:0;
-  width:calc(292 * var(--u)); height:calc(71 * var(--u));
-  padding:0 calc(26 * var(--u)); border-radius:calc(11 * var(--u));
+  display:inline-flex; justify-content:center; align-items:center;
+  gap:calc(14 * var(--u));
+  width:auto; height:calc(71 * var(--u)); white-space:nowrap;
+  padding:0 calc(30 * var(--u)); border-radius:calc(11 * var(--u));
   font-size:calc(17.5 * var(--u));
   box-shadow:0 calc(10 * var(--u)) calc(24 * var(--u)) rgba(var(--hv2-blue-rgb),.3);
 }
-.hv2-hero-cta svg{width:calc(23 * var(--u)); height:calc(23 * var(--u)); flex:0 0 auto}
+.hv2-hero-cta svg{display:block; width:calc(23 * var(--u)); height:calc(23 * var(--u)); flex:0 0 auto}
 
 /* Product collage — fills the band; orbit sweeps lowest, then floor
-   shadows, products, icon bubbles on top. Static, no motion. */
+   shadows, products, icon bubbles on top.
+
+   3D presentation: each cutout carries a resting perspective tilt
+   (rotateX/rotateY, varied per product via --oty), a pointer-parallax
+   that follows --hx/--hy written on .hv2-hero-band by Hv2Motion
+   (mouse only, -.5...5), and an idle float on the individual
+   `translate` property so it composes with the tilt transform. --op
+   scales the parallax by depth (front products travel further). */
 .hv2-orbit{
   position:absolute; inset:0; z-index:1; pointer-events:none;
   container-type:inline-size;
@@ -165,21 +182,44 @@ body:has(.hv2) .fabs{display:none !important}
 .hv2-o-img{
   position:absolute; height:auto;
   filter:drop-shadow(0 calc(14 * var(--u)) calc(22 * var(--u)) rgba(10,16,32,.14));
+  transform:
+    perspective(calc(1400 * var(--u)))
+    translate3d(
+      calc(var(--hx,0) * var(--op,1) * -22 * var(--u)),
+      calc(var(--hy,0) * var(--op,1) * -12 * var(--u)),
+      0)
+    rotateX(calc(2deg + var(--hy,0) * -4deg))
+    rotateY(calc(var(--oty,-4deg) * var(--odir,1) + var(--hx,0) * 6deg));
+  transition:transform .8s cubic-bezier(.22,1,.36,1);
+  animation:hv2-o-float var(--ofd,7s) ease-in-out var(--ofo,0s) infinite;
 }
-.hv2-o-scanner{inset-inline-start:calc(735 * var(--u)); top:calc(185 * var(--u)); width:calc(430 * var(--u)); z-index:3}
-.hv2-o-cure{inset-inline-start:calc(1168 * var(--u)); top:calc(60 * var(--u)); width:calc(320 * var(--u)); z-index:2}
-.hv2-o-printers{inset-inline-start:calc(1462 * var(--u)); top:calc(150 * var(--u)); width:calc(230 * var(--u)); z-index:3}
-.hv2-o-resins{inset-inline-start:calc(1678 * var(--u)); top:calc(250 * var(--u)); width:calc(275 * var(--u)); z-index:4}
-/* Soft elliptical floor shadows keep the products floating. */
+[dir="rtl"] .hv2-orbit{--odir:-1}
+@keyframes hv2-o-float{
+  0%,100%{translate:0 0}
+  50%{translate:0 calc(-8 * var(--u))}
+}
+/* Widths/tops follow each cutout's aspect so every product's base lands
+   on its floor shadow (bottoms ≈ 476–544 reference px). */
+.hv2-o-scanner{inset-inline-start:calc(740 * var(--u)); top:calc(258 * var(--u)); width:calc(380 * var(--u)); z-index:3; --oty:-5deg; --op:1.05; --ofd:7.2s}
+.hv2-o-cure{inset-inline-start:calc(1040 * var(--u)); top:calc(200 * var(--u)); width:calc(340 * var(--u)); z-index:2; --oty:-3deg; --op:.9; --ofd:8.4s; --ofo:-2.8s}
+.hv2-o-printers{inset-inline-start:calc(1400 * var(--u)); top:calc(85 * var(--u)); width:calc(220 * var(--u)); z-index:3; --oty:-6deg; --op:.75; --ofd:6.6s; --ofo:-1.4s}
+.hv2-o-resins{inset-inline-start:calc(1670 * var(--u)); top:calc(284 * var(--u)); width:calc(290 * var(--u)); z-index:4; --oty:-4deg; --op:1.2; --ofd:7.8s; --ofo:-4s}
+/* Soft elliptical floor shadows keep the products floating; they breathe
+   in counter-phase with the float so the levitation reads as depth. */
 .hv2-o-sh{
   position:absolute; z-index:1; border-radius:50%;
   background:radial-gradient(closest-side, rgba(30,58,118,.30), rgba(30,58,118,0));
   filter:blur(calc(9 * var(--u)));
+  animation:hv2-sh-float var(--ofd,7s) ease-in-out var(--ofo,0s) infinite;
 }
-.hv2-sh-scanner{inset-inline-start:calc(760 * var(--u)); top:calc(520 * var(--u)); width:calc(270 * var(--u)); height:calc(46 * var(--u))}
-.hv2-sh-cure{inset-inline-start:calc(1152 * var(--u)); top:calc(494 * var(--u)); width:calc(348 * var(--u)); height:calc(52 * var(--u))}
-.hv2-sh-printers{inset-inline-start:calc(1455 * var(--u)); top:calc(462 * var(--u)); width:calc(245 * var(--u)); height:calc(44 * var(--u))}
-.hv2-sh-resins{inset-inline-start:calc(1662 * var(--u)); top:calc(520 * var(--u)); width:calc(305 * var(--u)); height:calc(48 * var(--u))}
+@keyframes hv2-sh-float{
+  0%,100%{opacity:1; scale:1}
+  50%{opacity:.78; scale:.95}
+}
+.hv2-sh-scanner{inset-inline-start:calc(795 * var(--u)); top:calc(520 * var(--u)); width:calc(270 * var(--u)); height:calc(46 * var(--u)); --ofd:7.2s}
+.hv2-sh-cure{inset-inline-start:calc(1036 * var(--u)); top:calc(494 * var(--u)); width:calc(348 * var(--u)); height:calc(52 * var(--u)); --ofd:8.4s; --ofo:-2.8s}
+.hv2-sh-printers{inset-inline-start:calc(1388 * var(--u)); top:calc(462 * var(--u)); width:calc(245 * var(--u)); height:calc(44 * var(--u)); --ofd:6.6s; --ofo:-1.4s}
+.hv2-sh-resins{inset-inline-start:calc(1662 * var(--u)); top:calc(520 * var(--u)); width:calc(305 * var(--u)); height:calc(48 * var(--u)); --ofd:7.8s; --ofo:-4s}
 /* Icon bubbles — white discs with crisp blue SVG icons. */
 .hv2-chip{
   position:absolute; z-index:6; width:calc(62 * var(--u)); height:calc(62 * var(--u));
@@ -208,7 +248,7 @@ body:has(.hv2) .fabs{display:none !important}
   position:relative; isolation:isolate; margin-top:clamp(10px,1.4vw,20px);
   /* Faint hairline closing the band below — hero + why read as one
      section, and the line marks where it ends. */
-  border-bottom:1px solid rgba(11,22,64,.08);
+  border-bottom:3px solid #fff;
   padding-bottom:clamp(14px,1.8vw,26px);
 }
 
@@ -975,8 +1015,8 @@ body:has(.hv2) .fabs{display:none !important}
   --pr-go-bottom:24.6px;
   --pr-title:16.2px;
   --pr-title-lh:22.0px;
-  --pr-title-scale:1;         /* per-card, see .hv2-pr-cure / -printer */
-  --pr-lead-scale:1;          /* first title line only (mock sets acronyms bigger) */
+  --pr-title-scale:1;
+  --pr-lead-scale:1;          /* first title line only */
   --pr-nav:37px;              /* carousel nav disc */
   --pr-panel-pad-i:clamp(20px,2.5vw,44px);
   /* Second band of the shared panel — no surface, no margins, no radius. */
@@ -1065,32 +1105,33 @@ body:has(.hv2) .fabs{display:none !important}
   font-weight:500; letter-spacing:-.004em;
 }
 .hv2-pr-lead{font-size:calc(var(--pr-title) * var(--pr-lead-scale))}
-/* The mock sets the two middle cards' titles larger, and gives the acronym
-   lead lines ("3D", "UV") another step up again. */
-.hv2-pr-printer{--pr-title-scale:1.05; --pr-lead-scale:1.10}
-.hv2-pr-cure{--pr-title-scale:1.068; --pr-title-lh:22.4px; --pr-lead-scale:1.367; --pr-pad-t:17.35px}
+/* Cards lead with the real product name (ODYX S1, ODYX P1-26, …), so every
+   title runs at the shared scale — no per-card acronym boosts. */
 
-/* --- packshots: per-product framing --------------------------------------
-   Each source is a square studio packshot on white with its own amount of
-   empty margin, so the frame is placed per card rather than scaled by one
-   shared rule. `--art-w` is the frame width as a share of the card's inner
-   width; `--art-x` / `--art-y` position that frame (percentages of the same
-   box) and may be negative — the card clips. Multiply blend drops the white
-   studio background onto the card's tint.                                  */
+/* --- packshots: contain-fit ----------------------------------------------
+   The product cards use the real cutouts from the product screens
+   (public/img/hv2-cut/, transparent webp). Every packshot must be fully
+   visible, so the media box spans from below the two-line title to the
+   card's bottom edge and the image contain-fits inside it, bottom-anchored
+   and centred. Multiply blend keeps any remaining white studio pixels
+   sitting on the card's tint.                                              */
 /* No z-index here: a stacking context on the wrapper would cut the image off
    from the card background and break the multiply blend below. */
-.hv2-pr-media{position:absolute; inset:0; display:block}
+.hv2-pr-media{
+  position:absolute;
+  inset:var(--art-top,68px) var(--art-pad,10px) var(--art-bottom,10px);
+  display:flex; align-items:flex-end; justify-content:center;
+}
 .hv2-pr-media img{
-  position:absolute; display:block;
-  width:var(--art-w); height:auto; max-width:none;
-  inset-inline-start:var(--art-x); bottom:var(--art-y);
+  display:block;
+  width:auto; height:auto; max-width:100%; max-height:100%;
   mix-blend-mode:multiply;
 }
-.hv2-pr-scanner    {--art-w:121.2%; --art-x:-2.5%;  --art-y:7.7%}
-.hv2-pr-printer    {--art-w:119.4%; --art-x:-0.1%;  --art-y:-1.9%}
-.hv2-pr-cure       {--art-w:113.2%; --art-x:2.8%;   --art-y:-2.3%}
-.hv2-pr-resin      {--art-w:127.3%; --art-x:-6.5%;  --art-y:-4.6%}
-.hv2-pr-accessories{--art-w:121.2%; --art-x:-11.6%; --art-y:-4.8%}
+/* The scanner wand is much wider than tall — centre it in the card's media
+   area instead of pinning it to the bottom edge. */
+.hv2-pr-scanner .hv2-pr-media{align-items:center; --art-bottom:26px}
+/* Lift the resin bottles off the bottom edge so they sit mid-card. */
+.hv2-pr-resin .hv2-pr-media{align-items:center; --art-bottom:22px}
 
 /* --- in-card arrow --- */
 .hv2-pr-go{
@@ -1248,9 +1289,14 @@ body:has(.hv2) .fabs{display:none !important}
     0 .66cqw 1.5cqw rgba(2,14,48,.15),
     inset 0 0 0 1px rgba(214,231,255,.20);
   transform-origin:50% 50%;
-  transition:transform .62s cubic-bezier(.22,1,.36,1),
-    filter .62s cubic-bezier(.22,1,.36,1),
-    box-shadow .62s cubic-bezier(.22,1,.36,1);
+  /* Slot geometry lives in vars so the hover lift can rebuild the same
+     translate/scale/rotate and add depth on top. --ca-dir flips for RTL. */
+  transform:translateX(var(--ca-tx,0cqw)) scale(var(--ca-sc,1)) rotate(var(--ca-rz,0deg));
+  filter:var(--ca-flt,none);
+  transition:transform .48s cubic-bezier(.22,1,.36,1),
+    filter .48s cubic-bezier(.22,1,.36,1),
+    box-shadow .48s cubic-bezier(.22,1,.36,1),
+    opacity .48s cubic-bezier(.22,1,.36,1);
 }
 .hv2-ca-art{
   position:absolute; inset:0; width:100%; height:100%;
@@ -1262,8 +1308,10 @@ body:has(.hv2) .fabs{display:none !important}
 .hv2-ca-scrim{
   position:absolute; inset:0; z-index:1;
   background:linear-gradient(0deg, rgba(6,17,48,.30) 0%, rgba(6,17,48,0) 30%);
+  transition:background .48s cubic-bezier(.22,1,.36,1);
 }
-.hv2-ca-card[data-slot="0"] .hv2-ca-scrim{
+.hv2-ca-card[data-slot="0"] .hv2-ca-scrim,
+.hv2-ca-card:is(:hover,:focus-visible) .hv2-ca-scrim{
   background:
     linear-gradient(0deg, rgba(5,14,42,.74) 0%, rgba(5,14,42,.20) 22%, rgba(5,14,42,0) 42%),
     linear-gradient(90deg, rgba(4,8,22,.95) 0%, rgba(4,8,22,.90) 29%, rgba(6,10,24,.44) 51%, rgba(4,6,16,.08) 73%, rgba(4,6,16,0) 86%);
@@ -1300,12 +1348,15 @@ body:has(.hv2) .fabs{display:none !important}
   white-space:pre-line;
 }
 
-/* --- fan: slot 0 = active, 4 = backmost --- */
-.hv2-ca-card[data-slot="0"]{z-index:5; transform:perspective(1600px) rotateY(-1deg) rotate(2.8deg)}
-.hv2-ca-card[data-slot="1"]{z-index:4; --ca-veil:.34; filter:blur(.8px) saturate(.44) brightness(.95); transform:translateX(calc(var(--ca-dx) * 1)) scale(.91) rotate(.9deg)}
-.hv2-ca-card[data-slot="2"]{z-index:3; --ca-veil:.44; filter:blur(1.6px) saturate(.5) brightness(.80); transform:translateX(calc(var(--ca-dx) * 1.750)) scale(.84) rotate(.2deg)}
-.hv2-ca-card[data-slot="3"]{z-index:2; --ca-veil:.60; filter:blur(2.4px) saturate(.42) brightness(.86); transform:translateX(calc(var(--ca-dx) * 2.402)) scale(.79) rotate(-.4deg)}
-.hv2-ca-card[data-slot="4"]{z-index:1; --ca-veil:.86; filter:blur(3.2px) saturate(.3) brightness(1.02); transform:translateX(calc(var(--ca-dx) * 2.979)) scale(.75) rotate(-.8deg)}
+/* --- fan: slot 0 = active, 4 = backmost ---
+   Cards sit flat at rest (no tilt/perspective); the reference's dramatic
+   3D pose is reserved for the hover/focus lift below. */
+.hv2-ca-card[data-slot="0"]{z-index:5}
+.hv2-ca-card[data-slot="1"]{z-index:4; --ca-veil:.34; --ca-flt:blur(.8px) saturate(.44) brightness(.95); --ca-tx:calc(var(--ca-dx) * 1 * var(--ca-dir,1)); --ca-sc:.91; --ca-rz:calc(.9deg * var(--ca-dir,1))}
+.hv2-ca-card[data-slot="2"]{z-index:3; --ca-veil:.44; --ca-flt:blur(1.6px) saturate(.5) brightness(.80); --ca-tx:calc(var(--ca-dx) * 1.750 * var(--ca-dir,1)); --ca-sc:.84; --ca-rz:calc(.2deg * var(--ca-dir,1))}
+.hv2-ca-card[data-slot="3"]{z-index:2; --ca-veil:.60; --ca-flt:blur(2.4px) saturate(.42) brightness(.86); --ca-tx:calc(var(--ca-dx) * 2.402 * var(--ca-dir,1)); --ca-sc:.79; --ca-rz:calc(-.4deg * var(--ca-dir,1)); --ca-hrz:-1.8deg}
+.hv2-ca-card[data-slot="4"]{z-index:1; --ca-veil:.86; --ca-flt:blur(3.2px) saturate(.3) brightness(1.02); --ca-tx:calc(var(--ca-dx) * 2.979 * var(--ca-dir,1)); --ca-sc:.75; --ca-rz:calc(-.8deg * var(--ca-dir,1)); --ca-hrz:-1.8deg}
+[dir="rtl"] .hv2-ca-in{--ca-dir:-1}
 /* Rear cards keep their art but never their copy at rest. */
 .hv2-ca-card:not([data-slot="0"]) .hv2-ca-cbody{opacity:0}
 /* Negative spread keeps the bloom under the bottom edge instead of ringing
@@ -1317,11 +1368,38 @@ body:has(.hv2) .fabs{display:none !important}
     inset 0 0 0 1px rgba(228,240,255,.50);
 }
 .hv2-ca-cbody{transition:opacity .45s ease}
-[dir="rtl"] .hv2-ca-card[data-slot="0"]{transform:perspective(1600px) rotateY(1deg) rotate(-2.8deg)}
-[dir="rtl"] .hv2-ca-card[data-slot="1"]{transform:translateX(calc(var(--ca-dx) * -1)) scale(.91) rotate(-.9deg)}
-[dir="rtl"] .hv2-ca-card[data-slot="2"]{transform:translateX(calc(var(--ca-dx) * -1.750)) scale(.84) rotate(-.2deg)}
-[dir="rtl"] .hv2-ca-card[data-slot="3"]{transform:translateX(calc(var(--ca-dx) * -2.402)) scale(.79) rotate(.4deg)}
-[dir="rtl"] .hv2-ca-card[data-slot="4"]{transform:translateX(calc(var(--ca-dx) * -2.979)) scale(.75) rotate(.8deg)}
+
+/* --- hover / focus lift: the reference's elevated, tilted hero pose ---
+   The lift rebuilds the slot's own translate/scale/rotate and layers the
+   3D pose on top, so a rear card rises in place instead of snapping to
+   the front anchor. --ca-mx/--ca-my are the pointer-follow tilt set by
+   the component (max ~2deg); z stays under the nav discs (z8). */
+.hv2-ca-card:focus-visible{outline:2px solid #7FB2FF; outline-offset:4px}
+@media (hover:hover){
+  .hv2-ca-card:is(:hover,:focus-visible){
+    z-index:7;
+    --ca-veil:0;
+    filter:none;
+    will-change:transform;
+    transition-duration:.58s;
+    transform:
+      perspective(1500px)
+      translateX(var(--ca-tx,0cqw)) translateY(var(--ca-hy,-.66cqw))
+      rotateX(calc(var(--ca-hrx,1.1deg) + var(--ca-my,0deg)))
+      rotateY(calc(var(--ca-hry,-1.6deg) * var(--ca-dir,1) + var(--ca-mx,0deg)))
+      rotate(calc(var(--ca-rz,0deg) + var(--ca-hrz,2.4deg) * var(--ca-dir,1)))
+      scale(calc(var(--ca-sc,1) * var(--ca-hsc,1.055)));
+    box-shadow:
+      0 2.1cqw 3.8cqw -.5cqw rgba(24,110,255,.55),
+      0 3.0cqw 5.4cqw rgba(10,40,110,.30),
+      0 .9cqw 2cqw rgba(2,14,48,.24),
+      inset 0 0 0 1px rgba(214,231,255,.28);
+  }
+  .hv2-ca-card:is(:hover,:focus-visible) .hv2-ca-cbody{opacity:1}
+  /* Siblings step back a touch — dimmed, never hidden. */
+  .hv2-ca-deck:has(.hv2-ca-card:is(:hover,:focus-visible))
+    .hv2-ca-card:not(:hover,:focus-visible){opacity:.82}
+}
 [dir="rtl"] .hv2-ca-scrim{
   background:
     linear-gradient(0deg, rgba(6,17,48,.55) 0%, rgba(6,17,48,0) 34%),
@@ -1779,12 +1857,20 @@ body:has(.hv2) .fabs{display:none !important}
 
 @media (prefers-reduced-motion: reduce){
   .hv2 .rv{opacity:1; transform:none; transition:none}
+  /* Hero collage: no float, no tilt, no parallax. */
+  .hv2-o-img{animation:none; transform:none; transition:none}
+  .hv2-o-sh{animation:none}
   .hv2-pcard{transition:none}
   .hv2-pcard h3,.hv2-pcard p,.hv2-pcard-btn{transition:none}
   .hv2-path .hv2-dot{transition:none}
   .hv2-path .hv2-dot.is-on{animation:none}
   .hv2-path .hv2-nav,.hv2-path .hv2-nav svg{transition:none}
-  .hv2-ca-card,.hv2-ca-card::after,.hv2-ca-cbody,.hv2 .hv2-ca-cta{transition:none}
+  .hv2-ca-card,.hv2-ca-card::after,.hv2-ca-cbody,.hv2-ca-scrim,.hv2 .hv2-ca-cta{transition:none}
+  /* No 3D under reduced motion — the lift is shadow/opacity/scrim only. */
+  .hv2-ca-card:is(:hover,:focus-visible){
+    transform:translateX(var(--ca-tx,0cqw)) scale(var(--ca-sc,1)) rotate(var(--ca-rz,0deg));
+    will-change:auto;
+  }
   .hv2-cc-card,.hv2-cc-card::after,.hv2-cc-cbody,
   .hv2 .hv2-cc-cta,.hv2 .hv2-cc-nav{transition:none}
   .hv2 .hv2-hub-cta{transition:none}
@@ -1850,6 +1936,9 @@ body:has(.hv2) .fabs{display:none !important}
     --ca-cw:74cqw; --ca-ch:63.7cqw; --ca-right:6cqw; --ca-r:3.1cqw;
     --ca-dx:-11cqw;
   }
+  /* Tablet: gentler lift — less rotation, scale and shadow travel. */
+  .hv2-ca-card{--ca-hy:-.4cqw; --ca-hsc:1.03; --ca-hrz:1.2deg; --ca-hry:-.9deg; --ca-hrx:.7deg}
+  .hv2-ca-card[data-slot="3"],.hv2-ca-card[data-slot="4"]{--ca-hrz:-1deg}
   .hv2-ca-copy{position:static; width:auto; max-width:34em; padding-top:6px}
   .hv2 .hv2-ca-eyebrow{font-size:12.5px; letter-spacing:.06em}
   .hv2 .hv2-ca-h{font-size:clamp(28px,4.6vw,40px); margin-top:14px}
@@ -2737,7 +2826,10 @@ body:has(.hv2) .site-footer{display:none !important}
 
 /* ---------- nav columns + newsletter head ---------- */
 .hv2-ft-col,.hv2-ft-news{padding-top:calc(45 * var(--fu))}
-.hv2-ft-h{
+/* .hv2-ft prefix: on the home screen the footer sits inside .hv2, where the
+   generic `.hv2 h2 { color:var(--hv2-ink) }` rule would otherwise win and
+   paint the column headings dark on the navy band. */
+.hv2-ft .hv2-ft-h{
   margin:0; color:var(--ft-heading);
   font-size:calc(18 * var(--fu)); font-weight:800;
   line-height:calc(22 * var(--fu));

@@ -19,9 +19,11 @@ import {
   type GoogleAuthInput,
 } from '@/lib/api/auth';
 import { clearTokens, hasTokens, setTokens } from '@/lib/auth-tokens';
-import { isApiMode } from '@/lib/config';
+import { getApiBaseUrl, isApiMode } from '@/lib/config';
 import {
   DEMO_ACCOUNTS,
+  loginWithSocial as demoLoginWithSocial,
+  type SocialProvider,
   changePassword as demoChangePassword,
   clearSession,
   forgotPassword as demoForgotPassword,
@@ -50,6 +52,7 @@ export type {
   OkResult,
   RegisterInput,
   RegisterResult,
+  SocialProvider,
   UpdateProfileInput,
   UpdateProfileResult,
 };
@@ -128,6 +131,23 @@ export async function loginWithGoogle(
       /complete registration/i.test(message);
     return { ok: false, error: message, needsRegistration };
   }
+}
+
+/** Demo-mode simulated social sign-in (no backend). */
+export function loginWithSocialDemo(provider: SocialProvider): LoginResult {
+  return demoLoginWithSocial(provider);
+}
+
+/**
+ * LinkedIn sign-in entry. Demo mode simulates locally; API mode hands off to the
+ * Nest OAuth redirect flow (`GET /auth/linkedin`) and returns 'redirect'.
+ */
+export function startLinkedInSignIn(): LoginResult | 'redirect' {
+  if (!isApiMode()) {
+    return demoLoginWithSocial('linkedin');
+  }
+  window.location.assign(`${getApiBaseUrl()}/auth/linkedin`);
+  return 'redirect';
 }
 
 export async function register(input: RegisterInput): Promise<RegisterResult> {
