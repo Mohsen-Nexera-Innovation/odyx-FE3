@@ -415,6 +415,48 @@ export const PRODUCTS: ProductContent[] = [
       },
     ],
   },
+  {
+    slug: "temporary-restoration-resin",
+    name: "Temporary Restoration Resin",
+    category: "Resin",
+    layout: "classic",
+    tagline: "Fast. Strong. Esthetic. Provisionals for crowns, bridges and long-span restorations.",
+    overview:
+      "ODYX Temporary Restoration Resin for temporary crowns, bridges and provisional restorations — strength, comfort and esthetics for chairside and lab workflows.",
+    img: "/images/hero-resin-bottle-and-teeth.png",
+    heroImg: "/images/hero-resin-bottle-and-teeth.png",
+    accent: "orange",
+    workflowStep: "print",
+    applications: [
+      "Temporary crowns",
+      "Temporary bridges",
+      "Long-span provisionals",
+    ],
+    models: [
+      { name: "Temporary Restoration Resin", tagline: "Fast provisionals", shopProductId: "resin-odyx" },
+    ],
+    specs: [
+      { label: "Hardness", value: "85–90 Shore D" },
+      { label: "Flexural Strength", value: "100–140 MPa" },
+      { label: "Tensile Strength", value: "65–85 MPa" },
+      { label: "Water Absorption", value: "< 1.5 %" },
+      { label: "Elongation at Break", value: "10–15 %" },
+      { label: "Applicable Light Source", value: "385–405 nm" },
+    ],
+    downloads: [
+      {
+        name: "Product datasheet",
+        type: "PDF",
+        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Temporary%20Restoration%20Resin",
+      },
+    ],
+    benefits: [
+      "Excellent strength",
+      "Comfortable wear",
+      "Low shrinkage",
+      "Multiple tooth shades",
+    ],
+  },
 ];
 
 /** Sitemap product family order */

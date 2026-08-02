@@ -94,7 +94,10 @@ export default function ResinsRangePage() {
                 <div className="rs-line-body">
                   <h3>{line.name}</h3>
                   <p>{line.highlight}</p>
-                  <a className="rs-line-cta" role="button" tabIndex={0}>
+                  <a
+                    className="rs-line-cta"
+                    href={line.href ?? '#why'}
+                  >
                     {LINE_CTA_LABEL} <span aria-hidden>→</span>
                   </a>
                 </div>

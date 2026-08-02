@@ -1,0 +1,125 @@
+/* Page-level integration only; component layout is implemented with Tailwind. */
+body:has(.trr-page),
+body:has(.trr-page) main,
+body:has(.trr-page) .site-bg {
+  background: #fff !important;
+}
+
+body.grain:has(.trr-page)::before {
+  display: none !important;
+}
+
+body:has(.trr-page) .dev-preview-tools,
+body:has(.trr-page) .fabs,
+body:has(.trr-page) nextjs-portal {
+  display: none !important;
+}
+
+.trr-page {
+  background: #fff !important;
+  /* Fixed header is min-height 68px + 17px padding; clear it so content isn't covered. */
+  padding-top: 88px;
+  /* Keep the last section from sitting against the site footer. */
+  padding-bottom: 72px;
+}
+
+.trr-page h1,
+.trr-page h2 {
+  font-family: inherit;
+}
+
+/* Hero CTAs — matched to mock (Request a Demo ≈ 162×38, soft #0050D8). */
+.trr-page .trr-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 22px !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  transition: filter 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.trr-page .trr-btn:focus-visible {
+  outline: 2px solid #0050d8 !important;
+  outline-offset: 2px !important;
+}
+
+.trr-page .trr-btn-primary {
+  min-width: 162px !important;
+  border: none !important;
+  background: #0050d8 !important;
+  color: #fff !important;
+}
+
+.trr-page .trr-btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+.trr-page .trr-btn-secondary {
+  gap: 10px !important;
+  min-width: 178px !important;
+  border: 1px solid #6c6c6c !important;
+  background: #fff !important;
+  color: #1a1a1a !important;
+}
+
+.trr-page .trr-btn-secondary:hover {
+  border-color: #404040 !important;
+}
+
+/* Applications cards — tight gutters matching mock (~8px).
+   Must beat unlayered global `.grid { gap: 20px }` in odyx.css. */
+.trr-page ul.trr-app-grid.grid {
+  display: grid !important;
+  gap: 8px !important;
+  column-gap: 8px !important;
+  row-gap: 8px !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.trr-page ul.trr-app-grid > li {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
+}
+
+@media (max-width: 639px) {
+  .trr-page ul.trr-app-grid.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trr-page .trr-app-media {
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.trr-page .trr-app-media img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/* Feature icon bar — dividers only, no grid gap. */
+.trr-page .trr-features-grid {
+  gap: 0 !important;
+}
+
+/* Specs table — kill global `.grid { gap: 20px }` so columns share one border. */
+.trr-page .trr-specs-grid,
+.trr-page .trr-specs-row {
+  gap: 0 !important;
+  column-gap: 0 !important;
+  row-gap: 0 !important;
+}
+

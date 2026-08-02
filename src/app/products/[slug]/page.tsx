@@ -6,6 +6,7 @@ import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
 import P126Page from '@/components/pages/P126Page';
 import ResinsRangePage from '@/components/pages/ResinsRangePage';
 import ScannerS1Page from '@/components/pages/ScannerS1Page';
+import TemporaryResinPage from '@/components/pages/TemporaryResinPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 import { PRINTERS_META } from '@/content/printers-3d';
@@ -13,6 +14,10 @@ import { CURE_UV02_META, CURE_UV02_SLUG } from '@/content/cure-uv02';
 import { P1_26_META, P1_26_SLUG } from '@/content/p1-26';
 import { RESINS_META, RESINS_SLUG } from '@/content/resins';
 import { SCANNER_META, SCANNER_SLUG } from '@/content/scanner-s1';
+import {
+  TEMPORARY_RESIN_META,
+  TEMPORARY_RESIN_SLUG,
+} from '@/content/temporary-resin';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -51,6 +56,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === CURE_UV02_SLUG) {
     return { title: CURE_UV02_META.title, description: CURE_UV02_META.description };
+  }
+  if (slug === TEMPORARY_RESIN_SLUG) {
+    return {
+      title: TEMPORARY_RESIN_META.title,
+      description: TEMPORARY_RESIN_META.description,
+    };
   }
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return { title: 'Product | ODYX' };
@@ -108,6 +119,15 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <P126Page />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  // Temporary Restoration Resin — fidelity to temp-restro-resign mock
+  if (raw === TEMPORARY_RESIN_SLUG) {
+    return (
+      <>
+        <TemporaryResinPage />
         <InnerPageMotion />
       </>
     );

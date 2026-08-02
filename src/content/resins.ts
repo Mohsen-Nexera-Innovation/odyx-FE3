@@ -81,7 +81,7 @@ export const LINES: ResinLine[] = [
       'Reliable and easy-to-finish resin for temporary crowns and provisional restorations.',
     img: '/img/resins/card-temporary.png',
     imgAlt: 'ODYX Temporary Resin bottle with printed temporary crowns',
-    href: docsMail('Temporary Resin'),
+    href: '/products/temporary-restoration-resin',
   },
   {
     id: 'surgical-guide',

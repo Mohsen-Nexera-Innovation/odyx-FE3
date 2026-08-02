@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  images: {
+    // Allow high-quality product shots (default allowlist is only [75]).
+    qualities: [75, 95],
+  },
 };
 
 export default nextConfig;
