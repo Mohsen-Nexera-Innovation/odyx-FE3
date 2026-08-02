@@ -13,9 +13,11 @@ import {
   logoutApi,
   meApi,
   registerApi,
+  resendVerificationApi,
   resetPasswordApi,
   toSession,
   updateProfileApi,
+  verifyEmailApi,
   type GoogleAuthInput,
 } from '@/lib/api/auth';
 import { clearTokens, hasTokens, setTokens } from '@/lib/auth-tokens';
@@ -118,10 +120,38 @@ export function startLinkedInSignIn(): 'redirect' {
 export async function register(input: RegisterInput): Promise<RegisterResult> {
   try {
     const data = await registerApi(input);
+    return {
+      ok: true,
+      email: data.email,
+      verificationRequired: true,
+    };
+  } catch (err) {
+    return { ok: false, error: apiErrorMessage(err, 'Registration failed.') };
+  }
+}
+
+export async function verifyEmail(token: string): Promise<LoginResult> {
+  try {
+    const data = await verifyEmailApi(token);
     const session = await applyApiAuth(data);
     return { ok: true, session };
   } catch (err) {
-    return { ok: false, error: apiErrorMessage(err, 'Registration failed.') };
+    return {
+      ok: false,
+      error: apiErrorMessage(err, 'Could not verify email.'),
+    };
+  }
+}
+
+export async function resendVerification(email: string): Promise<OkResult> {
+  try {
+    await resendVerificationApi(email.trim().toLowerCase());
+    return { ok: true };
+  } catch (err) {
+    return {
+      ok: false,
+      error: apiErrorMessage(err, 'Could not resend verification email.'),
+    };
   }
 }
 

@@ -10,7 +10,7 @@ import {
   type RegisterRole,
 } from '@/content/auth';
 import GoogleSignInButton from '@/components/auth/GoogleSignInButton';
-import { loginWithGoogle, register } from '@/lib/auth';
+import { loginWithGoogle, register, resendVerification } from '@/lib/auth';
 import { isGoogleSignInEnabled } from '@/lib/config';
 import { peekGoogleIdToken, stashGoogleIdToken } from '@/lib/google-identity';
 import AuthRoleRail from './AuthRoleRail';
@@ -113,6 +113,8 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
   const [msg, setMsg] = useState('');
   const [error, setError] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [resendBusy, setResendBusy] = useState(false);
 
   const roleMeta = useMemo(() => roleById(role ?? undefined), [role]);
   const pwStrength = useMemo(() => getPasswordStrength(password), [password]);
@@ -204,9 +206,62 @@ export default function RegisterForm({ onRoleChange }: { onRoleChange?: (role: R
       setError(true);
       return;
     }
-    setMsg(`Account created — welcome, ${result.session.name}.`);
-    setTimeout(() => router.push(sessionDestination(result.session)), 900);
+    setPendingEmail(result.email);
+    setMsg(`Check your inbox at ${result.email} to verify your email and finish signing up.`);
+    setError(false);
   };
+
+  const onResend = async () => {
+    if (!pendingEmail) return;
+    setResendBusy(true);
+    setError(false);
+    const result = await resendVerification(pendingEmail);
+    setResendBusy(false);
+    if (!result.ok) {
+      setMsg(result.error);
+      setError(true);
+      return;
+    }
+    setMsg(`Verification email sent again to ${pendingEmail}.`);
+  };
+
+  if (pendingEmail) {
+    return (
+      <>
+        <div className="auth-form">
+          <p className="auth-hint">
+            We sent a verification link to <strong>{pendingEmail}</strong>. Open
+            it to finish creating your account.
+          </p>
+          <button
+            type="button"
+            className="btn auth-submit"
+            disabled={resendBusy}
+            onClick={onResend}
+          >
+            {resendBusy ? (
+              <>
+                <span className="auth-spinner" />
+                Sending…
+              </>
+            ) : (
+              'Resend verification email'
+            )}
+          </button>
+        </div>
+
+        {msg && (
+          <p className={`auth-toast${error ? '' : ' ok'}`} role="status">
+            {msg}
+          </p>
+        )}
+
+        <p className="auth-switch">
+          Already verified? <Link href="/login">Sign in</Link>
+        </p>
+      </>
+    );
+  }
 
   return (
     <>

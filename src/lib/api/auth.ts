@@ -90,12 +90,18 @@ export function loginWithGoogleApi(input: GoogleAuthInput) {
   });
 }
 
+export type RegisterPendingResponse = {
+  ok: true;
+  email: string;
+  verificationRequired: true;
+};
+
 export function registerApi(input: RegisterInput) {
   const clientType = registerRoleToClientType(input.role);
   if (!clientType) {
     return Promise.reject(new Error('Choose Dentist or Lab to register.'));
   }
-  return apiFetch<AuthTokensResponse>('/auth/register', {
+  return apiFetch<RegisterPendingResponse>('/auth/register', {
     method: 'POST',
     body: JSON.stringify({
       name: input.name,
@@ -105,6 +111,20 @@ export function registerApi(input: RegisterInput) {
       org: input.org || undefined,
       country: input.country || undefined,
     }),
+  });
+}
+
+export function verifyEmailApi(token: string) {
+  return apiFetch<AuthTokensResponse>('/auth/verify-email', {
+    method: 'POST',
+    body: JSON.stringify({ token }),
+  });
+}
+
+export function resendVerificationApi(email: string) {
+  return apiFetch<{ ok: boolean }>('/auth/resend-verification', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
   });
 }
 

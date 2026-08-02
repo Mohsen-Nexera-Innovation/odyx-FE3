@@ -48,7 +48,7 @@ export type LoginResult =
   | { ok: false; error: string };
 
 export type RegisterResult =
-  | { ok: true; session: AccountSession }
+  | { ok: true; email: string; verificationRequired: true }
   | { ok: false; error: string };
 
 export type UpdateProfileResult =

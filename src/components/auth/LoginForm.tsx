@@ -6,7 +6,12 @@ import { type FormEvent, useCallback, useEffect, useState } from 'react';
 import { sessionDestination } from '@/content/auth';
 import GoogleSignInButton from '@/components/auth/GoogleSignInButton';
 import SocialSignInButton from '@/components/auth/SocialSignInButton';
-import { login, loginWithGoogle, startLinkedInSignIn } from '@/lib/auth';
+import {
+  login,
+  loginWithGoogle,
+  resendVerification,
+  startLinkedInSignIn,
+} from '@/lib/auth';
 import { isGoogleSignInEnabled } from '@/lib/config';
 
 /* ── Inline SVG Icons ───────────────────────────────────────────────────── */
@@ -82,6 +87,8 @@ export default function LoginForm() {
   const [msg, setMsg] = useState('');
   const [error, setError] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(false);
+  const [resendBusy, setResendBusy] = useState(false);
   const googleEnabled = isGoogleSignInEnabled();
 
   useEffect(() => {
@@ -114,16 +121,36 @@ export default function LoginForm() {
     setBusy(true);
     setMsg('');
     setError(false);
+    setNeedsVerification(false);
 
     const result = await login(email.trim(), password);
     setBusy(false);
     if (!result.ok) {
       setMsg(result.error);
       setError(true);
+      setNeedsVerification(/verify your email/i.test(result.error));
       return;
     }
     setMsg(`Welcome back, ${result.session.name}.`);
     goAfterAuth(result.session);
+  };
+
+  const onResendVerification = async () => {
+    if (!email.trim()) {
+      setMsg('Enter your email to resend the verification link.');
+      setError(true);
+      return;
+    }
+    setResendBusy(true);
+    const result = await resendVerification(email.trim());
+    setResendBusy(false);
+    if (!result.ok) {
+      setMsg(result.error);
+      setError(true);
+      return;
+    }
+    setError(false);
+    setMsg('If an unverified account exists for that email, a new link was sent.');
   };
 
   const onGoogleCredential = useCallback(
@@ -259,6 +286,26 @@ export default function LoginForm() {
       {msg && (
         <p className={`auth-toast${error ? ' err' : ' ok'}`} role="status">
           {msg}
+        </p>
+      )}
+
+      {needsVerification && (
+        <p className="auth-switch">
+          <button
+            type="button"
+            className="auth-link"
+            disabled={resendBusy}
+            onClick={onResendVerification}
+            style={{
+              background: 'none',
+              border: 0,
+              padding: 0,
+              cursor: resendBusy ? 'wait' : 'pointer',
+              font: 'inherit',
+            }}
+          >
+            {resendBusy ? 'Sending…' : 'Resend verification email'}
+          </button>
         </p>
       )}
 
