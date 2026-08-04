@@ -7,6 +7,10 @@ import P126Page from '@/components/pages/P126Page';
 import ResinsRangePage from '@/components/pages/ResinsRangePage';
 import ScannerS1Page from '@/components/pages/ScannerS1Page';
 import TemporaryResinPage from '@/components/pages/TemporaryResinPage';
+import CeramicCrownResinPage from '@/components/pages/CeramicCrownResinPage';
+import CrownBridgeResinPage from '@/components/pages/CrownBridgeResinPage';
+import ModelResinPage from '@/components/pages/ModelResinPage';
+import SurgicalGuideResinPage from '@/components/pages/SurgicalGuideResinPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
 import { PRINTERS_META } from '@/content/printers-3d';
@@ -18,6 +22,19 @@ import {
   TEMPORARY_RESIN_META,
   TEMPORARY_RESIN_SLUG,
 } from '@/content/temporary-resin';
+import {
+  CERAMIC_CROWN_RESIN_META,
+  CERAMIC_CROWN_RESIN_SLUG,
+} from '@/content/ceramic-crown-resin';
+import {
+  CROWN_BRIDGE_RESIN_META,
+  CROWN_BRIDGE_RESIN_SLUG,
+} from '@/content/crown-bridge-resin';
+import { MODEL_RESIN_META, MODEL_RESIN_SLUG } from '@/content/model-resin';
+import {
+  SURGICAL_GUIDE_RESIN_META,
+  SURGICAL_GUIDE_RESIN_SLUG,
+} from '@/content/surgical-guide-resin';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -61,6 +78,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: TEMPORARY_RESIN_META.title,
       description: TEMPORARY_RESIN_META.description,
+    };
+  }
+  if (slug === CERAMIC_CROWN_RESIN_SLUG) {
+    return {
+      title: CERAMIC_CROWN_RESIN_META.title,
+      description: CERAMIC_CROWN_RESIN_META.description,
+    };
+  }
+  if (slug === CROWN_BRIDGE_RESIN_SLUG) {
+    return {
+      title: CROWN_BRIDGE_RESIN_META.title,
+      description: CROWN_BRIDGE_RESIN_META.description,
+    };
+  }
+  if (slug === MODEL_RESIN_SLUG) {
+    return {
+      title: MODEL_RESIN_META.title,
+      description: MODEL_RESIN_META.description,
+    };
+  }
+  if (slug === SURGICAL_GUIDE_RESIN_SLUG) {
+    return {
+      title: SURGICAL_GUIDE_RESIN_META.title,
+      description: SURGICAL_GUIDE_RESIN_META.description,
     };
   }
   const product = PRODUCTS.find((p) => p.slug === slug);
@@ -128,6 +169,39 @@ export default async function Page({ params }: Props) {
     return (
       <>
         <TemporaryResinPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  // Ceramic Crown Resin — fidelity to ceremic-crown-resign mock
+  if (raw === CERAMIC_CROWN_RESIN_SLUG) {
+    return (
+      <>
+        <CeramicCrownResinPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === CROWN_BRIDGE_RESIN_SLUG) {
+    return (
+      <>
+        <CrownBridgeResinPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === MODEL_RESIN_SLUG) {
+    return (
+      <>
+        <ModelResinPage />
+        <InnerPageMotion />
+      </>
+    );
+  }
+  if (raw === SURGICAL_GUIDE_RESIN_SLUG) {
+    return (
+      <>
+        <SurgicalGuideResinPage />
         <InnerPageMotion />
       </>
     );

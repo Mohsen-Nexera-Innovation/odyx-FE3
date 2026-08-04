@@ -1,0 +1,124 @@
+/* Shared resin detail page chrome (Crown & Bridge / Model / Surgical Guide). */
+body:has(.rd-page),
+body:has(.rd-page) main,
+body:has(.rd-page) .site-bg {
+  background: #fff !important;
+}
+
+body.grain:has(.rd-page)::before {
+  display: none !important;
+}
+
+body:has(.rd-page) .dev-preview-tools,
+body:has(.rd-page) .fabs,
+body:has(.rd-page) nextjs-portal {
+  display: none !important;
+}
+
+.rd-page {
+  background: #fff !important;
+  padding-top: 88px;
+  padding-bottom: 72px;
+  --rd-app-cols: 6;
+}
+
+.rd-page h1,
+.rd-page h2 {
+  font-family: inherit;
+}
+
+.rd-page .rd-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 22px !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  transition: filter 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.rd-page .rd-btn:focus-visible {
+  outline: 2px solid #0050d8 !important;
+  outline-offset: 2px !important;
+}
+
+.rd-page .rd-btn-primary {
+  min-width: 162px !important;
+  border: none !important;
+  background: #0050d8 !important;
+  color: #fff !important;
+}
+
+.rd-page .rd-btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+.rd-page .rd-btn-secondary {
+  gap: 10px !important;
+  min-width: 178px !important;
+  border: 1px solid #6c6c6c !important;
+  background: #fff !important;
+  color: #1a1a1a !important;
+}
+
+.rd-page .rd-btn-secondary:hover {
+  border-color: #404040 !important;
+}
+
+.rd-page ul.rd-app-grid.grid {
+  display: grid !important;
+  gap: 8px !important;
+  column-gap: 8px !important;
+  row-gap: 8px !important;
+  grid-template-columns: repeat(var(--rd-app-cols), minmax(0, 1fr));
+}
+
+.rd-page ul.rd-app-grid > li {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
+}
+
+@media (max-width: 1023px) {
+  .rd-page ul.rd-app-grid.grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .rd-page ul.rd-app-grid.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rd-page .rd-app-media {
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.rd-page .rd-app-media img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.rd-page .rd-features-grid {
+  gap: 0 !important;
+}
+
+.rd-page .rd-specs-grid,
+.rd-page .rd-specs-row {
+  gap: 0 !important;
+  column-gap: 0 !important;
+  row-gap: 0 !important;
+}

@@ -72,7 +72,7 @@ export const LINES: ResinLine[] = [
       'High-strength, highly esthetic resin for long-lasting crowns with natural translucency.',
     img: '/img/resins/card-ceramic.png',
     imgAlt: 'ODYX Ceramic Crown Resin bottle with printed crowns',
-    href: docsMail('Ceramic Crown Resin'),
+    href: '/products/ceramic-crown-resin',
   },
   {
     id: 'temporary',
@@ -90,7 +90,7 @@ export const LINES: ResinLine[] = [
       'Biocompatible and precise resin for accurate surgical guides and drilling templates.',
     img: '/img/resins/card-surgical.png',
     imgAlt: 'ODYX Surgical Resin bottle with printed surgical guide',
-    href: docsMail('Surgical Resin'),
+    href: '/products/surgical-guide-resin-pro',
   },
   {
     id: 'ortho-model',
@@ -99,7 +99,7 @@ export const LINES: ResinLine[] = [
       'High-precision resin for detailed study models with sharp features and accuracy.',
     img: '/img/resins/card-model.png',
     imgAlt: 'ODYX Model Resin bottle with printed dental model',
-    href: docsMail('Model Resin'),
+    href: '/products/model-resin',
   },
   {
     id: 'crown-bridge',
@@ -108,7 +108,7 @@ export const LINES: ResinLine[] = [
       'Durable and strong resin for long-span bridges and high-load restorations.',
     img: '/img/resins/card-crown-bridge.png',
     imgAlt: 'ODYX Crown & Bridge Resin bottle with printed bridge',
-    href: docsMail('Crown & Bridge Resin'),
+    href: '/products/crown-bridge-resin',
   },
 ];
 

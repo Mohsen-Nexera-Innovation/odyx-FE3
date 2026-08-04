@@ -457,6 +457,172 @@ export const PRODUCTS: ProductContent[] = [
       "Multiple tooth shades",
     ],
   },
+  {
+    slug: "ceramic-crown-resin",
+    name: "Ceramic Crown Resin",
+    category: "Resin",
+    layout: "classic",
+    tagline: "Permanent strength. Natural esthetics. Crowns, inlays, onlays, veneers, bridges and denture teeth.",
+    overview:
+      "ODYX Ceramic Crown Resin for permanent single units and bridges — high hardness, low shrinkage, and natural tooth shades.",
+    img: "/images/hero-ceramic-crown-resin.png",
+    heroImg: "/images/hero-ceramic-crown-resin.png",
+    accent: "teal",
+    workflowStep: "print",
+    applications: [
+      "Crowns",
+      "Inlays",
+      "Onlays",
+      "Veneers",
+      "Bridges",
+      "Denture teeth",
+    ],
+    models: [
+      { name: "Ceramic Crown Resin", tagline: "Permanent restorations", shopProductId: "resin-odyx" },
+    ],
+    specs: [
+      { label: "Hardness", value: "93–95 Shore D" },
+      { label: "Flexural Strength", value: "110–140 MPa" },
+      { label: "Tensile Strength", value: "70–80 MPa" },
+      { label: "Heat Deflection Temperature", value: "100–110 °C" },
+      { label: "Elongation at Break", value: "5–8 %" },
+      { label: "Applicable Light Source", value: "385–405 nm" },
+    ],
+    downloads: [
+      {
+        name: "Product datasheet",
+        type: "PDF",
+        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Ceramic%20Crown%20Resin",
+      },
+    ],
+    benefits: [
+      "High hardness",
+      "Low shrinkage",
+      "Natural tooth shades",
+      "385–405nm compatibility",
+    ],
+  },
+  {
+    slug: "crown-bridge-resin",
+    name: "Crown & Bridge Resin",
+    category: "Resin",
+    layout: "classic",
+    tagline: "Strong. Precise. Reliable. Crowns, bridges, veneers, inlays and onlays.",
+    overview:
+      "ODYX Crown & Bridge Resin for long-term restorations — high hardness, impact resistance, and excellent marginal accuracy.",
+    img: "/images/hero-crown-bridge-resin.png",
+    heroImg: "/images/hero-crown-bridge-resin.png",
+    accent: "teal",
+    workflowStep: "print",
+    applications: ["Crowns", "Bridges", "Veneers", "Inlays", "Onlays"],
+    models: [
+      { name: "Crown & Bridge Resin", tagline: "Long-term restorations", shopProductId: "resin-odyx" },
+    ],
+    specs: [
+      { label: "Hardness", value: "92–94 Shore D" },
+      { label: "Flexural Strength", value: "140–160 MPa" },
+      { label: "Tensile Strength", value: "80–90 MPa" },
+      { label: "Heat Deflection Temperature", value: "100–110 °C" },
+      { label: "Elongation at Break", value: "8–10 %" },
+      { label: "Applicable Light Source", value: "385–405 nm" },
+    ],
+    downloads: [
+      {
+        name: "Product datasheet",
+        type: "PDF",
+        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Crown%20%26%20Bridge%20Resin",
+      },
+    ],
+    benefits: [
+      "High hardness",
+      "Impact resistant",
+      "Excellent marginal accuracy",
+      "Tooth shade options",
+    ],
+  },
+  {
+    slug: "model-resin",
+    name: "Model Resin",
+    category: "Resin",
+    layout: "classic",
+    tagline: "High Accuracy. Exceptional Detail. Diagnostic, working, prosthetic and thermoforming models.",
+    overview:
+      "ODYX Model Resin for high-accuracy dental models — smooth matte surface, low shrinkage, and fast printing.",
+    img: "/images/hero-model-resin.png",
+    heroImg: "/images/hero-model-resin.png",
+    accent: "orange",
+    workflowStep: "print",
+    applications: [
+      "Diagnostic models",
+      "Working models",
+      "Crown & bridge models",
+      "Implant models",
+      "Thermoforming models",
+      "Clear aligner models",
+    ],
+    models: [
+      { name: "Model Resin", tagline: "High-accuracy models", shopProductId: "resin-odyx" },
+    ],
+    specs: [
+      { label: "Hardness", value: "85–90 Shore D" },
+      { label: "Flexural Strength", value: "80–95 MPa" },
+      { label: "Tensile Strength", value: "40–50 MPa" },
+      { label: "Heat Deflection Temperature", value: "75–85 °C" },
+      { label: "Elongation at Break", value: "10–15 %" },
+      { label: "Applicable Light Source", value: "385–405 nm" },
+    ],
+    downloads: [
+      {
+        name: "Product datasheet",
+        type: "PDF",
+        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Model%20Resin",
+      },
+    ],
+    benefits: [
+      "High dimensional accuracy",
+      "Smooth matte surface",
+      "Excellent detail reproduction",
+      "Fast printing",
+    ],
+  },
+  {
+    slug: "surgical-guide-resin-pro",
+    name: "Surgical Guide Resin Pro",
+    category: "Resin",
+    layout: "classic",
+    tagline: "Confidence in every implant surgery. Highly transparent biocompatible resin for accurate surgical guides.",
+    overview:
+      "ODYX Surgical Guide Resin Pro — transparent, sterilizable, and biocompatible for implant surgical guides.",
+    img: "/images/hero-surgical-guide-resin.png",
+    heroImg: "/images/hero-surgical-guide-resin.png",
+    accent: "teal",
+    workflowStep: "print",
+    applications: ["Implant guides", "Surgical templates", "Orthopedic guides"],
+    models: [
+      { name: "Surgical Guide Resin Pro", tagline: "Transparent guides", shopProductId: "resin-odyx" },
+    ],
+    specs: [
+      { label: "Transparency", value: "High" },
+      { label: "Hardness", value: "75–80 Shore D" },
+      { label: "Flexural Strength", value: ">40 MPa" },
+      { label: "Elongation at Break", value: "110–140 %" },
+      { label: "Sterilization Temperature", value: "135 °C" },
+      { label: "Applicable Light Source", value: "385–405 nm" },
+    ],
+    downloads: [
+      {
+        name: "Product datasheet",
+        type: "PDF",
+        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Surgical%20Guide%20Resin%20Pro",
+      },
+    ],
+    benefits: [
+      "High transparency",
+      "Sterilizable up to 135°C",
+      "Excellent flexibility",
+      "Biocompatible",
+    ],
+  },
 ];
 
 /** Sitemap product family order */
