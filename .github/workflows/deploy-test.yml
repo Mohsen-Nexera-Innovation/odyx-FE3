@@ -13,16 +13,27 @@ concurrency:
 
 jobs:
   deploy:
-    # Runs on the VPS itself (outbound to GitHub). No inbound SSH required.
-    runs-on: [self-hosted, odyx-vps]
+    runs-on: ubuntu-latest
     if: >
       github.event_name == 'workflow_dispatch' ||
       github.event.workflow_run.conclusion == 'success'
     steps:
-      - name: Deploy web on this VPS
-        run: |
-          set -euo pipefail
-          cd /opt/odyx/api
-          chmod +x deploy/vps-deploy.sh
-          ./deploy/vps-deploy.sh web
-          echo "Deployed WEB commit: $(git -C /opt/odyx/web log -1 --oneline)"
+      - name: Deploy web to Hostinger test VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 2222 }}
+          timeout: 60s
+          command_timeout: 30m
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd "${{ secrets.VPS_DEPLOY_PATH }}"
+            chmod +x deploy/vps-deploy.sh
+            git fetch --prune origin master
+            git checkout -B master origin/master
+            git reset --hard origin/master
+            ./deploy/vps-deploy.sh web
+            echo "Deployed WEB commit: $(git -C /opt/odyx/web log -1 --oneline)"
