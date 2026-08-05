@@ -21,7 +21,7 @@
   --fab-inset:22px;
   --fab-clearance:204px;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+@layer base { *{margin:0;padding:0;box-sizing:border-box} }
 html{scroll-behavior:smooth}
 body{background:var(--navy-deep);color:var(--white);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 ::selection{background:var(--orange);color:var(--navy-deep)}

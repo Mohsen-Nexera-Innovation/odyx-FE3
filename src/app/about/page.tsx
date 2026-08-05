@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AboutPage from '@/components/pages/AboutPage';
+import AboutPage from './components/AboutPage';
 import { ABOUT_META } from '@/content/about';
 
 export const metadata: Metadata = {
