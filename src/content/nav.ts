@@ -53,7 +53,6 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "About ODYX",
     href: "/about",
-    dimmed: true,
     items: [
       {
         label: "Who We Are",

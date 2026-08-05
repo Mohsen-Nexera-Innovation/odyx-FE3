@@ -31,6 +31,19 @@
 [data-accent="teal"]  { --acc:var(--teal);   --acc-rgb:var(--teal-rgb); }
 [data-accent="orange"]{ --acc:var(--orange); --acc-rgb:var(--orange-rgb);  }
 [dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,[dir="rtl"] h4{ letter-spacing:0; line-height:1.3; }
+:root {
+  /* New Design System Tokens */
+  --color-sky-action: #06A5DF;
+  --color-sky-deep: #0581AD;
+  --color-charcoal-ink: #211C1D;
+  --color-paper-light: #F5FAFD;
+  --color-paper-dark: #E9F4FB;
+  --color-dark-ground: #141216;
+  --color-accent-scanner: #3A9C96;
+  --color-accent-print: #F5761E;
+  --color-accent-master: #06A5DE;
+  --color-accent-gold: #F0B838;
+}
 
 @theme inline {
   --color-navy-deep: var(--navy-deep);
@@ -40,6 +53,28 @@
   --color-teal: var(--teal);
   --color-ink: var(--white);
   --color-muted: var(--grey);
+
+  --color-sky-action: var(--color-sky-action);
+  --color-sky-deep: var(--color-sky-deep);
+  --color-charcoal-ink: var(--color-charcoal-ink);
+  --color-paper-light: var(--color-paper-light);
+  --color-paper-dark: var(--color-paper-dark);
+  --color-dark-ground: var(--color-dark-ground);
+  --color-accent-scanner: var(--color-accent-scanner);
+  --color-accent-print: var(--color-accent-print);
+  --color-accent-master: var(--color-accent-master);
+  --color-accent-gold: var(--color-accent-gold);
+
+  --font-sans: var(--font-tajawal, 'Tajawal'), sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
 }
 
 /* next/font variables drive the brand font tokens */
@@ -52,7 +87,9 @@
   --font-body: var(--font-plex-ar), 'IBM Plex Sans Arabic', sans-serif;
 }
 
-*{margin:0;box-sizing:border-box}
+@layer base {
+  *{margin:0;box-sizing:border-box}
+}
 html{-webkit-text-size-adjust:100%}
 body{
   background:var(--navy-deep); color:var(--white);
