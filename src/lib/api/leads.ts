@@ -12,6 +12,23 @@ export type CreateLeadInput = {
   scenario: Record<string, unknown>;
 };
 
+export type QuoteRequestProduct =
+  | 'scanner'
+  | 'printer'
+  | 'cure'
+  | 'resin'
+  | 'ecosystem';
+
+export type CreateQuoteRequestInput = {
+  fullName: string;
+  clinicName: string;
+  phone: string;
+  email: string;
+  city: string;
+  product: QuoteRequestProduct;
+  message?: string;
+};
+
 export type ApiLead = {
   id: string;
   source: string;
@@ -29,6 +46,13 @@ export type ApiLead = {
 
 export function createLeadApi(input: CreateLeadInput) {
   return apiFetch<ApiLead>('/leads', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}
+
+export function createQuoteRequestApi(input: CreateQuoteRequestInput) {
+  return apiFetch<ApiLead>('/leads/quote-request', {
     method: 'POST',
     body: JSON.stringify(input),
   });

@@ -10,11 +10,32 @@ function scenarioSummary(lead: ApiLead): string {
   const scenario = lead.scenario;
   if (!scenario || typeof scenario !== 'object') return '—';
   const s = scenario as {
+    kind?: string;
     mode?: string;
     focus?: string;
     product?: string;
+    city?: string;
     results?: Record<string, unknown>;
   };
+
+  if (lead.source === 'CONTACT_SALES' || s.kind === 'quote-request') {
+    const productLabels: Record<string, string> = {
+      scanner: 'Scanner',
+      printer: '3D Printer',
+      cure: 'Cure Unit',
+      resin: 'Resin Materials',
+      ecosystem: 'Complete Ecosystem',
+    };
+    const parts: string[] = ['Quote'];
+    if (typeof s.product === 'string') {
+      parts.push(productLabels[s.product] ?? s.product);
+    }
+    if (typeof s.city === 'string') {
+      parts.push(s.city);
+    }
+    return parts.join(' · ');
+  }
+
   const results = s.results;
   const monthly = results?.monthlySavings;
   const payback = results?.paybackMonths;
@@ -66,7 +87,7 @@ export default function AdminLeadsPage() {
       <div className="admin-page-head">
         <h1>Leads</h1>
         <p className="admin-sub">
-          ROI calculator submissions and marketing follow-ups.
+          ROI calculator and Contact Sales quote requests.
         </p>
       </div>
       {error ? <p className="admin-error">{error}</p> : null}
@@ -83,6 +104,7 @@ export default function AdminLeadsPage() {
               <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Source</th>
                 <th>Type</th>
                 <th>Org</th>
                 <th>Scenario</th>
@@ -100,6 +122,15 @@ export default function AdminLeadsPage() {
                     ) : null}
                   </td>
                   <td>{lead.email}</td>
+                  <td>
+                    <span className="admin-badge admin-badge--muted">
+                      {lead.source === 'CONTACT_SALES'
+                        ? 'Contact Sales'
+                        : lead.source === 'ROI_CALCULATOR'
+                          ? 'ROI'
+                          : lead.source}
+                    </span>
+                  </td>
                   <td>
                     <span className="admin-badge admin-badge--sky">
                       {lead.clientType}
@@ -119,7 +150,7 @@ export default function AdminLeadsPage() {
               ))}
               {leads.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="admin-empty">
+                  <td colSpan={8} className="admin-empty">
                     No leads yet.
                   </td>
                 </tr>

@@ -6,6 +6,8 @@ import {
   CONTACT_SALES_QUOTE,
   type ProductInterestId,
 } from '@/content/contact-sales';
+import { ApiError } from '@/lib/api/client';
+import { createQuoteRequestApi } from '@/lib/api/leads';
 import { ArrowIcon, ProductInterestIcon } from './SalesIcons';
 
 const QuoteFormSchema = z.object({
@@ -14,7 +16,7 @@ const QuoteFormSchema = z.object({
   phone: z.string().min(5, 'Phone number is required'),
   email: z.string().email('Invalid email address'),
   city: z.string().min(1, 'City is required'),
-  product: z.string(),
+  product: z.enum(['scanner', 'printer', 'cure', 'resin', 'ecosystem']),
   message: z.string().optional(),
 });
 
@@ -42,7 +44,10 @@ export function QuoteForm() {
   const formId = useId();
   const [form, setForm] = useState<FormState>(INITIAL);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'sent'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>(
+    'idle',
+  );
+  const [submitError, setSubmitError] = useState('');
 
   const fields = CONTACT_SALES_QUOTE.fields;
 
@@ -53,10 +58,11 @@ export function QuoteForm() {
     }
   }
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('submitting');
     setErrors({});
+    setSubmitError('');
 
     const result = QuoteFormSchema.safeParse(form);
     if (!result.success) {
@@ -69,24 +75,28 @@ export function QuoteForm() {
       return;
     }
 
-    const subject = encodeURIComponent(
-      `Quote request — ${form.product} — ${form.clinicName || form.fullName}`,
-    );
-    const body = encodeURIComponent(
-      [
-        `Full name: ${form.fullName}`,
-        `Clinic / Lab: ${form.clinicName}`,
-        `Phone: ${form.phone}`,
-        `Email: ${form.email}`,
-        `City: ${form.city}`,
-        `Interested product: ${form.product}`,
-        '',
-        form.message || '(No message)',
-      ].join('\n'),
-    );
-
-    window.location.href = `mailto:sales@odyxegypt.net?subject=${subject}&body=${body}`;
-    setStatus('sent');
+    try {
+      await createQuoteRequestApi({
+        fullName: result.data.fullName,
+        clinicName: result.data.clinicName,
+        phone: result.data.phone,
+        email: result.data.email,
+        city: result.data.city,
+        product: result.data.product,
+        message: result.data.message?.trim() || undefined,
+      });
+      setForm(INITIAL);
+      setStatus('sent');
+    } catch (err) {
+      const message =
+        err instanceof ApiError
+          ? err.message
+          : err instanceof Error
+            ? err.message
+            : 'Something went wrong. Please try again.';
+      setSubmitError(message);
+      setStatus('error');
+    }
   }
 
   return (
@@ -260,15 +270,20 @@ export function QuoteForm() {
         className="cs-primary-btn"
         disabled={status === 'submitting'}
       >
-        {CONTACT_SALES_QUOTE.submitLabel}
+        {status === 'submitting' ? 'Submitting…' : CONTACT_SALES_QUOTE.submitLabel}
         <ArrowIcon className="h-4 w-4 rtl:rotate-180" aria-hidden />
       </button>
 
       {status === 'sent' && (
         <p className="text-[13px] font-medium text-[#0050D8]" role="status">
-          Opening your email client with the quote request…
+          Thanks — our sales team will contact you shortly.
         </p>
       )}
+      {status === 'error' && submitError ? (
+        <p className="text-[13px] font-medium text-red-600" role="alert">
+          {submitError}
+        </p>
+      ) : null}
     </form>
   );
 }
