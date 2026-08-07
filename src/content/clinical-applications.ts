@@ -161,7 +161,7 @@ export const CLINICAL_CATEGORIES: ClinicalCategory[] = [
     accent: '#D65765',
     footerImg: '',
     footerAlt: '',
-    exploreAll: { label: 'Explore all cases →', href: clinicalPath('all-cases') },
+    exploreAll: { label: 'Explore all cases →', href: '/cases#featured-cases' },
     items: [
       {
         id: 'restorative-cases',
@@ -199,7 +199,7 @@ export const CLINICAL_HUB_BANNER = {
   titleLine1: 'Real Cases.',
   titleLine2: 'Real Results.',
   body: 'Discover how ODYX workflows deliver exceptional outcomes every day.',
-  cta: { label: 'View All Clinical Cases →', href: clinicalPath('all-cases') },
+  cta: { label: 'View All Clinical Cases →', href: '/cases#featured-cases' },
   thumbs: [
     '/img/clinical-cases/_DSC0255_1.JPG',
     '/img/clinical-cases/_DSC0108_1.JPG',

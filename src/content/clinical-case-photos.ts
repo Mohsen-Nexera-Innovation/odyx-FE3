@@ -1,13 +1,9 @@
 /**
- * Real clinical case photos from `src/content/clinical cases/`
- * (served from `/img/clinical-cases/`).
+ * Real clinical case photos served from `/img/clinical-cases/`.
  *
- * Drop classification (56 images, one full-mouth aesthetic rehab):
- * - Veneers — upper-arch smile makeover (majority)
- * - Same-day crown — lower anterior crowns + single-unit match
- * - Try-ins — printed prep model → fabricated units / prosthetic check
- * - No photos yet for inlays, surgical-guide, implant-model,
- *   aligners, retainers, or dentures
+ * Batch A — existing aesthetic rehab set (veneers / crowns / try-ins).
+ * Batch B — imported from Downloads/real cases (posterior restorative / endo /
+ * amalgam replacement / onlay / crown sequences + radiographs).
  */
 
 import type { ClinicalBaSlide } from '@/content/clinical-indication-types';
@@ -69,6 +65,12 @@ export const CLINICAL_CASE_BA: Record<string, ClinicalBaSlide[]> = {
       'Seated lower anterior crowns — final result',
     ),
     pair(
+      '_DSC0804_4.jpg',
+      '_DSC0809_2.jpg',
+      'Posterior restoration under rubber-dam isolation',
+      'Seated posterior crown in occlusion',
+    ),
+    pair(
       '_DSC0187_2.JPG',
       '_DSC0244.JPG',
       'Lower crown preparations with cervical staining',
@@ -79,12 +81,6 @@ export const CLINICAL_CASE_BA: Record<string, ClinicalBaSlide[]> = {
       '_DSC0250_2.JPG',
       'Discolored upper canine before single-unit crown',
       'Matched crown restorations after seating',
-    ),
-    pair(
-      '_DSC0238_1.JPG',
-      '_DSC0241.JPG',
-      'Lower arch newly restored against natural upper teeth',
-      'Retractor view of completed lower crown arch',
     ),
   ],
 
@@ -114,12 +110,6 @@ export const CLINICAL_CASE_BA: Record<string, ClinicalBaSlide[]> = {
       'Veneers bonded under rubber-dam isolation',
     ),
     pair(
-      '_DSC0186_2.JPG',
-      '_DSC0202_3.JPG',
-      'Prepared upper anteriors before bonding',
-      'Anterior veneers seated under isolation',
-    ),
-    pair(
       '_DSC0112_1.JPG',
       '_DSC0253_1.JPG',
       'Pre-treatment smile with chipped, worn incisors',
@@ -135,15 +125,110 @@ export const CLINICAL_CASE_BA: Record<string, ClinicalBaSlide[]> = {
       'Fabricated ceramic units ready for clinical try-in',
     ),
     pair(
+      '_DSC0558.jpg',
+      '_DSC0562_2.jpg',
+      'Prepared abutment with ceramic restorations ready to bond',
+      'Fiber reinforcement placed inside the preparation',
+    ),
+    pair(
       '_DSC0193_2.JPG',
       '_DSC0246.JPG',
       'Printed model in occlusion before prosthetic check',
       'Prosthetic try-in evaluated in occlusion',
     ),
   ],
+
+  inlays: [
+    pair(
+      '_DSC0441_1.jpg',
+      '_DSC0452_1.jpg',
+      'Failing amalgam restoration under rubber dam',
+      'Amalgam removed — cavity preparation for bonded restoration',
+    ),
+    pair(
+      '_DSC0263_2.jpg',
+      '_DSC0272_2.jpg',
+      'Distal caries on posterior molar',
+      'Matrix isolation during posterior composite preparation',
+    ),
+  ],
 };
 
 const RESTORATIVE_REAL_CASES: RealClinicalCase[] = [
+  // Batch B — posterior restorative / endo from Downloads
+  realCase(
+    'molar-deep-caries-endo',
+    'Endo',
+    'Deep molar caries to canal fill',
+    '_DSC0184_4.jpg',
+    '_DSC0199_3.jpg',
+    'Severely carious molar before treatment',
+    'Root canal orifices obturated under rubber-dam isolation',
+  ),
+  realCase(
+    'molar-access-obturation',
+    'Endo',
+    'Access cavity and obturation',
+    '_DSC0185_4.jpg',
+    '_DSC0198_3.jpg',
+    'Carious molar before endodontic access',
+    'Pulp chamber with gutta-percha canal fills',
+  ),
+  realCase(
+    'distal-caries-matrix',
+    'Composite',
+    'Distal caries to matrix prep',
+    '_DSC0263_2.jpg',
+    '_DSC0272_2.jpg',
+    'Posterior molar with distal caries',
+    'Rubber-dam isolation with matrix band and wedge',
+  ),
+  realCase(
+    'amalgam-removal-prep',
+    'Inlay',
+    'Amalgam removal and prep',
+    '_DSC0441_1.jpg',
+    '_DSC0452_1.jpg',
+    'Failing occlusal amalgam under rubber dam',
+    'Old amalgam removed — cavity prepared for bonded restoration',
+  ),
+  realCase(
+    'posterior-composite-finish',
+    'Composite',
+    'Isolated posterior composite',
+    '_DSC0802_3.jpg',
+    '_DSC0804_4.jpg',
+    'Posterior tooth under rubber-dam isolation',
+    'Finished occlusal composite restoration',
+  ),
+  realCase(
+    'posterior-crown-seat',
+    'Crowns',
+    'Posterior crown seating',
+    '_DSC0804_4.jpg',
+    '_DSC0809_2.jpg',
+    'Restored posterior tooth before crown delivery',
+    'Seated posterior crown in the arch',
+  ),
+  realCase(
+    'buccal-restoration',
+    'Composite',
+    'Buccal composite restoration',
+    '_DSC0667_1.jpg',
+    '_DSC0681_4.jpg',
+    'Isolated teeth during restorative build-up',
+    'Finished buccal composite restoration',
+  ),
+  realCase(
+    'radiograph-diagnostic',
+    'Radiograph',
+    'Periapical diagnostic pair',
+    'IMG-20260121-WA0000.jpg',
+    'IMG-20260121-WA0016.jpg',
+    'Pre-treatment periapical radiograph',
+    'Follow-up periapical radiograph',
+  ),
+  // Batch A — aesthetic set
   realCase(
     'veneers-closeup',
     'Veneers',
@@ -221,6 +306,15 @@ const RESTORATIVE_REAL_CASES: RealClinicalCase[] = [
 
 const PROSTHETIC_REAL_CASES: RealClinicalCase[] = [
   realCase(
+    'onlay-fiber-reinforce',
+    'Onlay',
+    'Ceramic onlay and fiber core',
+    '_DSC0558.jpg',
+    '_DSC0562_2.jpg',
+    'Prepared tooth with ceramic restorations ready to bond',
+    'Fiber reinforcement seated inside the preparation',
+  ),
+  realCase(
     'tryin-units',
     'Try-in',
     'Model to fabricated units',
@@ -268,13 +362,12 @@ export function heroCaseImages(listingSlug?: string): string[] {
     ? realCasesForListing(listingSlug)
     : Object.values(REAL_CASES_BY_LISTING).flat();
   const afters = pool.map((c) => c.after.img);
-  // Prefer smile/portrait results first when available
   const preferred = [
+    img('_DSC0809_2.jpg'),
+    img('_DSC0681_4.jpg'),
     img('_DSC0255_1.JPG'),
-    img('_DSC0108_1.JPG'),
     img('_DSC0245.JPG'),
-    img('_DSC0259_2.JPG'),
-    img('_DSC0197_4.JPG'),
+    img('_DSC0199_3.jpg'),
   ];
   const ordered = [...preferred.filter((p) => afters.includes(p)), ...afters];
   return Array.from(new Set(ordered)).slice(0, 4);
