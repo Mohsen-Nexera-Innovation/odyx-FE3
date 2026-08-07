@@ -17,7 +17,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" dir="ltr" className={fontVars} suppressHydrationWarning>
+    <html lang="en" dir="ltr" className={fontVars} suppressHydrationWarning data-scroll-behavior="smooth">
       <body className="grain" suppressHydrationWarning>
         <SiteBackground />
         <GlobalToolsProvider>

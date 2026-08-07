@@ -508,7 +508,7 @@ export default function Header() {
             ) : (
               <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
             )}
-            <span className="btn-ghost btn btn-sm is-dimmed" aria-disabled="true" title="Coming soon">Contact Sales</span>
+            <Link className="btn-ghost btn btn-sm" href="/sales" onClick={closeMenu}>Contact Sales</Link>
             <span className="btn btn-sm nav-demo is-dimmed" aria-disabled="true" title="Coming soon">Request a Demo</span>
           </div>
         </nav>
@@ -567,10 +567,10 @@ export default function Header() {
           ) : (
             <Link className="btn-ghost btn btn-sm nav-login" href="/login">Sign in</Link>
           )}
-          <span className="btn-ghost btn btn-sm nav-sales is-dimmed" aria-disabled="true" title="Coming soon">
+          <Link className="btn-ghost btn btn-sm nav-sales" href="/sales">
             <span className="nav-label-long">Contact Sales</span>
             <span className="nav-label-short">Sales</span>
-          </span>
+          </Link>
           <span className="btn btn-sm nav-demo is-dimmed" aria-disabled="true" title="Coming soon">
             <span className="nav-label-long">Request a Demo</span>
             <span className="nav-label-short">Demo</span>
