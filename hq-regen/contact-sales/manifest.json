@@ -1,0 +1,19 @@
+{
+  "screenId": "contact-sales",
+  "createdAt": "2026-08-06T09:47:09.790422+00:00",
+  "repoRoot": "/home/sanhouri/projects/odyx-FE3",
+  "packDir": "/home/sanhouri/projects/odyx-FE3/hq-regen/contact-sales",
+  "assets": [
+    {
+      "filename": "hero-products.png",
+      "role": "hero",
+      "source": "public/images/contact-sales/hero-products.png",
+      "pack_path": "lq/hero-products.png",
+      "size": {
+        "width": 1696,
+        "height": 1083
+      }
+    }
+  ],
+  "instructions": "Attach every file in lq/ to ChatGPT, paste PROMPT.md, then save HQ outputs with the same filenames into the original source paths."
+}

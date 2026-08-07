@@ -91,7 +91,7 @@ export default function SupportHubPage() {
             <div className="card build reveal">
               <h3>Contact Sales Team</h3>
               <p>Pricing, quotes and distributor questions.</p>
-              <Link className="btn btn-sm" href="mailto:sales@odyx.dental?subject=Sales%20inquiry">
+              <Link className="btn btn-sm" href="/sales">
                 Contact sales <Arrow />
               </Link>
             </div>

@@ -164,7 +164,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             heroImg={product.heroImg ?? product.img}
             heroAlt={product.name}
             primaryAction={{ label: 'Request a Demo', href: '/support' }}
-            secondaryAction={{ label: 'Contact Sales', href: '/support#contact' }}
+              secondaryAction={{ label: 'Contact Sales', href: '/sales' }}
             actions={
               buyableModel?.shopProductId ? (
                 <ProductHeroBuyCta
