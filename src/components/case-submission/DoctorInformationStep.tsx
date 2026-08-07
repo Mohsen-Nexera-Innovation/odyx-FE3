@@ -43,7 +43,7 @@ export default function DoctorInformationStep({
               required
             />
           </label>
-          <label className="case-field case-field--wide">
+          <label className="case-field">
             <span>WhatsApp Number <b>*</b></span>
             <span className="case-phone">
               <select
@@ -114,7 +114,7 @@ export default function DoctorInformationStep({
           <label className="case-field case-field--wide">
             <span>Address <small>(Optional)</small></span>
             <textarea
-              rows={3}
+              rows={2}
               value={value.address}
               onChange={(event) => update('address', event.target.value)}
               placeholder="Enter clinic address"
