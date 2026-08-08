@@ -1,4 +1,5 @@
 import type { CasesPageData } from '../types';
+import { clinicalCaseMedia } from '@/lib/clinical-media-url';
 
 const IMG = '/img/real-case-library';
 
@@ -9,8 +10,14 @@ export const casesData: CasesPageData = {
     titleRest: 'Real Confidence.',
     body: 'Browse real clinical cases completed with ODYX solutions across different applications and products.',
     searchPlaceholder: 'Search cases by treatment, product, or keyword...',
-    before: { img: '/img/clinical-cases/_DSC0184_4.jpg', alt: 'Severely carious molar before treatment' },
-    after: { img: '/img/clinical-cases/_DSC0809_2.jpg', alt: 'Seated posterior crown after restoration' },
+    before: {
+      img: clinicalCaseMedia('_DSC0184_4.jpg'),
+      alt: 'Severely carious molar before treatment',
+    },
+    after: {
+      img: clinicalCaseMedia('_DSC0809_2.jpg'),
+      alt: 'Seated posterior crown after restoration',
+    },
     actions: [
       {
         label: 'Browse by Application',
@@ -43,7 +50,7 @@ export const casesData: CasesPageData = {
         title: 'Restorative',
         countLabel: '128 Cases',
         href: '/solutions/clinical-applications/restorative-cases',
-        img: '/img/clinical-cases/_DSC0255_1.JPG',
+        img: clinicalCaseMedia('_DSC0255_1.JPG'),
         imgAlt: 'Restorative smile after veneer delivery',
         icon: 'restorative',
       },
@@ -70,7 +77,7 @@ export const casesData: CasesPageData = {
         title: 'Denture',
         countLabel: '52 Cases',
         href: '/solutions/clinical-applications/prosthetic-cases',
-        img: '/img/clinical-cases/_DSC0197_4.JPG',
+        img: clinicalCaseMedia('_DSC0197_4.JPG'),
         imgAlt: 'Fabricated prosthetic units ready for try-in',
         icon: 'denture',
       },
@@ -128,14 +135,14 @@ export const casesData: CasesPageData = {
         title: 'Posterior Crown Seating',
         tags: ['Crowns'],
         href: '/solutions/clinical-applications/restorative-cases',
-        img: '/img/clinical-cases/_DSC0809_2.jpg',
+        img: clinicalCaseMedia('_DSC0809_2.jpg'),
         imgAlt: 'Seated posterior crown in the arch',
         before: {
-          img: '/img/clinical-cases/_DSC0804_4.jpg',
+          img: clinicalCaseMedia('_DSC0804_4.jpg'),
           alt: 'Restored posterior tooth before crown delivery',
         },
         after: {
-          img: '/img/clinical-cases/_DSC0809_2.jpg',
+          img: clinicalCaseMedia('_DSC0809_2.jpg'),
           alt: 'Seated posterior crown in the arch',
         },
         products: [
@@ -150,14 +157,14 @@ export const casesData: CasesPageData = {
         title: 'Buccal Composite Restoration',
         tags: ['Composite'],
         href: '/solutions/clinical-applications/restorative-cases',
-        img: '/img/clinical-cases/_DSC0681_4.jpg',
+        img: clinicalCaseMedia('_DSC0681_4.jpg'),
         imgAlt: 'Finished buccal composite restoration',
         before: {
-          img: '/img/clinical-cases/_DSC0667_1.jpg',
+          img: clinicalCaseMedia('_DSC0667_1.jpg'),
           alt: 'Isolated teeth during restorative build-up',
         },
         after: {
-          img: '/img/clinical-cases/_DSC0681_4.jpg',
+          img: clinicalCaseMedia('_DSC0681_4.jpg'),
           alt: 'Finished buccal composite restoration',
         },
         products: [
@@ -172,14 +179,14 @@ export const casesData: CasesPageData = {
         title: 'Deep Molar Caries to Endo Fill',
         tags: ['Endo'],
         href: '/solutions/clinical-applications/restorative-cases',
-        img: '/img/clinical-cases/_DSC0199_3.jpg',
+        img: clinicalCaseMedia('_DSC0199_3.jpg'),
         imgAlt: 'Root canal orifices obturated under rubber dam',
         before: {
-          img: '/img/clinical-cases/_DSC0184_4.jpg',
+          img: clinicalCaseMedia('_DSC0184_4.jpg'),
           alt: 'Severely carious molar before treatment',
         },
         after: {
-          img: '/img/clinical-cases/_DSC0199_3.jpg',
+          img: clinicalCaseMedia('_DSC0199_3.jpg'),
           alt: 'Root canal orifices obturated under rubber dam',
         },
         products: [
@@ -194,14 +201,14 @@ export const casesData: CasesPageData = {
         title: 'Ceramic Onlay and Fiber Core',
         tags: ['Onlay'],
         href: '/solutions/clinical-applications/prosthetic-cases',
-        img: '/img/clinical-cases/_DSC0562_2.jpg',
+        img: clinicalCaseMedia('_DSC0562_2.jpg'),
         imgAlt: 'Fiber reinforcement seated inside the preparation',
         before: {
-          img: '/img/clinical-cases/_DSC0558.jpg',
+          img: clinicalCaseMedia('_DSC0558.jpg'),
           alt: 'Ceramic restorations ready to bond',
         },
         after: {
-          img: '/img/clinical-cases/_DSC0562_2.jpg',
+          img: clinicalCaseMedia('_DSC0562_2.jpg'),
           alt: 'Fiber reinforcement seated inside the preparation',
         },
         products: [

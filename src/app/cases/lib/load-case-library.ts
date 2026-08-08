@@ -1,5 +1,6 @@
 import { getApiBaseUrl } from '@/lib/config';
 import { resolveMediaUrl, type CaseLibraryPublic } from '@/lib/api/case-library';
+import { clinicalCaseMedia } from '@/lib/clinical-media-url';
 import type { BrowseSectionData, FeaturedCase, FeaturedSectionData } from '../types';
 import { casesData } from '../data/cases.data';
 import {
@@ -91,7 +92,7 @@ export function buildApplicationsFromLibrary(
       imgAlt: 'Printed denture case photography',
     },
     restorative: {
-      img: '/img/clinical-cases/_DSC0255_1.JPG',
+      img: clinicalCaseMedia('_DSC0255_1.JPG'),
       imgAlt: 'Restorative smile after veneer delivery',
     },
   };

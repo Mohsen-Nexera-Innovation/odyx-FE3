@@ -1,19 +1,12 @@
 /**
- * Real clinical case photos.
- * Prefer Cloudflare R2 (`NEXT_PUBLIC_MEDIA_BASE_URL`) when set; otherwise FE /img.
+ * Real clinical case photos on Cloudflare R2 (`NEXT_PUBLIC_MEDIA_BASE_URL`).
  */
 
 import type { ClinicalBaSlide } from '@/content/clinical-indication-types';
-
-const MEDIA_BASE =
-  process.env.NEXT_PUBLIC_MEDIA_BASE_URL?.replace(/\/+$/, '') ||
-  '';
-const BASE = MEDIA_BASE
-  ? `${MEDIA_BASE}/case-library/static`
-  : '/img/clinical-cases';
+import { clinicalCaseMedia } from '@/lib/clinical-media-url';
 
 function img(file: string) {
-  return `${BASE}/${file}`;
+  return clinicalCaseMedia(file);
 }
 
 function pair(
