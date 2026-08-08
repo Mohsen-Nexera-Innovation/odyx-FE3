@@ -38,11 +38,11 @@ const COLUMNS = [
     title: 'Support',
     links: [
       { label: 'Help Center', href: '/support' },
-      { label: 'Manuals', href: '/support#manuals' },
-      { label: 'FAQs', href: '/support#troubleshooting' },
-      { label: 'Warranty', href: '/support#warranty' },
+      { label: 'Manuals', href: '/support/manuals' },
+      { label: 'Downloads', href: '/support/downloads' },
+      { label: 'FAQs', href: '/support/faqs' },
+      { label: 'Warranty', href: '/support/warranty' },
       { label: 'Design Services', href: '/design-services' },
-      { label: 'Store', href: '/shop' },
     ],
   },
   {
