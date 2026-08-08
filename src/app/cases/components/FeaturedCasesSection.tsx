@@ -153,7 +153,7 @@ export function FeaturedCasesSection({
 
                     <Link
                       href={item.href}
-                      className="mt-auto inline-flex items-center gap-1.5 text-[#0050D8] text-[12px] font-bold hover:gap-2 transition-all"
+                      className="mt-auto inline-flex items-center gap-1.5 !text-[#0050D8] text-[12px] font-bold hover:gap-2 transition-all"
                     >
                       View Case
                       <ArrowIcon className="w-3.5 h-3.5" />

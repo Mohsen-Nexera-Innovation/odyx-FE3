@@ -37,7 +37,7 @@ const PATHS = [
     cta: "I'm a Lab Tech",
     href: "/solutions/labs",
     // Lab bench scene: printer, models, counters and a wall screen. The
-    // laptop shot (paths/guest.jpg) reads as an office, not a laboratory.
+    // distributor path card — keep distinct from guest explore CTA imagery.
     img: "/img/printers/lab-scene.jpg",
     alt: "A dental laboratory bench with a printer, printed models and workstation screens",
     icon: (

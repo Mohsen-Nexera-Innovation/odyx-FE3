@@ -80,11 +80,11 @@ const CHIP_ICONS: Record<string, ReactNode> = {
 
 /** Digital Workflow icons — 5 steps (no wash) */
 const FLOW_ICONS: Record<string, string> = {
-  scan: '/img/cure-uv02/flow/scan.png',
-  design: '/img/cure-uv02/flow/design.png',
-  print: '/img/cure-uv02/flow/print.png',
+  scan: '/img/workflow/flow/scan.png',
+  design: '/img/workflow/flow/design.png',
+  print: '/img/workflow/flow/print.png',
   cure: '/img/cure-uv02/flow/cure.png',
-  deliver: '/img/cure-uv02/flow/deliver.png',
+  deliver: '/img/workflow/flow/deliver.png',
 };
 
 const FLOW_CHEVRON = (
