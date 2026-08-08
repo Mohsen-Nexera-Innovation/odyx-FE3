@@ -30,7 +30,7 @@ export const SURGICAL_GUIDE_RESIN_CONTENT: ResinDetailContent = {
     imgAlt: 'ODYX Surgical Guide Resin Pro bottle with a transparent surgical guide',
     imgWidth: 2180,
     imgHeight: 1420,
-    primaryCta: { label: 'Request a Demo', href: '/support' },
+    primaryCta: { label: 'Request a Demo', href: '/request-demo' },
     secondaryCta: {
       label: 'Download Datasheet',
       href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Surgical%20Guide%20Resin%20Pro',

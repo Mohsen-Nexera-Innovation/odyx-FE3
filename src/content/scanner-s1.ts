@@ -31,7 +31,7 @@ export const HERO = {
   sub: 'Intraoral Scanner — AI-powered. Accurate. Effortless.',
   body:
     'Full-arch digital impressions in 40 seconds, accurate to 20 microns — and open to whatever workflow you already run. The ODYX-S1 is where the digital chain starts.',
-  ctaPrimary: { label: 'Request a Demo', href: '/support' },
+  ctaPrimary: { label: 'Request a Demo', href: '/request-demo' },
   ctaSecondary: { label: 'Download Brochure', href: '#downloads' },
   // "Buy online" (tertiary) is held back: price unconfirmed — screen-details §13.1
   ctaMicrocopy: 'Demos available chairside or online, in Arabic, English or French.',
@@ -233,7 +233,7 @@ export const DOWNLOADS = {
   closing: {
     headline: 'Put the S1 in your hand',
     sub: 'Book a chairside demo and scan a full arch yourself — in your clinic, on your cases.',
-    cta: { label: 'Request a Demo', href: '/support' },
+    cta: { label: 'Request a Demo', href: '/request-demo' },
     ctaMicrocopy: 'Demos available chairside or online, in Arabic, English or French.',
     secondary: { label: 'Talk to a Representative', href: '/support' },
     secondaryMicrocopy: 'For labs and distributors — coverage across Egypt and MENA.',

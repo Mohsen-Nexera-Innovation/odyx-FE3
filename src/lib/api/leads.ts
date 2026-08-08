@@ -29,6 +29,55 @@ export type CreateQuoteRequestInput = {
   message?: string;
 };
 
+export type DemoRequestRole =
+  | 'dentist'
+  | 'lab'
+  | 'distributor'
+  | 'university'
+  | 'student'
+  | 'other';
+
+export type DemoRequestProduct =
+  | 'scanner'
+  | 'design'
+  | 'printer'
+  | 'cure'
+  | 'resins'
+  | 'workflow';
+
+export type DemoRequestApplication =
+  | 'crown-bridge'
+  | 'implant'
+  | 'surgical-guide'
+  | 'orthodontics'
+  | 'denture'
+  | 'smile-design'
+  | 'general';
+
+export type DemoRequestType = 'online' | 'onsite' | 'distributor';
+
+export type CreateDemoRequestInput = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  country: string;
+  city?: string;
+  language?: string;
+  role: DemoRequestRole;
+  clinicName: string;
+  chairs: string;
+  specialty?: string;
+  products: DemoRequestProduct[];
+  applications?: DemoRequestApplication[];
+  demoType: DemoRequestType;
+  preferredDate: string;
+  preferredTime: string;
+  timezone?: string;
+  notes?: string;
+  marketingOptIn?: boolean;
+};
+
 export type ApiLead = {
   id: string;
   source: string;
@@ -53,6 +102,13 @@ export function createLeadApi(input: CreateLeadInput) {
 
 export function createQuoteRequestApi(input: CreateQuoteRequestInput) {
   return apiFetch<ApiLead>('/leads/quote-request', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}
+
+export function createDemoRequestApi(input: CreateDemoRequestInput) {
+  return apiFetch<ApiLead>('/leads/demo-request', {
     method: 'POST',
     body: JSON.stringify(input),
   });

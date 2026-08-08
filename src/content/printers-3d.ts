@@ -92,7 +92,7 @@ export const HERO = {
   headline: 'The dental 3D printer that finishes what the scan started.',
   sub:
     'The ODYX P1-26 prints the definitive work that goes in the mouth — crowns, bridges, guides and models — on an open-material 405 nm LCD system.',
-  primaryCta: { label: 'Request a demo', href: '/support' },
+  primaryCta: { label: 'Request a demo', href: '/request-demo' },
   secondaryCta: { label: 'Download the datasheet', href: '#downloads' },
   chipsLabel: 'Built into the P1-26',
   chips: [
@@ -549,13 +549,13 @@ export const WORKS_WITH = {
 export const DOWNLOADS = {
   title: 'Downloads & demo',
   emptyCopy: 'Datasheets and the full specification sheet are available on request.',
-  emptyCta: { label: 'Request a demo', href: '/support' },
+  emptyCta: { label: 'Request a demo', href: '/request-demo' },
   img: '/img/printers/p1-26-angle.jpg',
   imgAlt: 'ODYX P1-26 three-quarter view on a bench',
   closing: {
     headline: 'See it print the case you’re holding.',
     sub: 'A demo runs on your file, in your resin, on the P1-26.',
-    cta: { label: 'Request a demo', href: '/support' },
+    cta: { label: 'Request a demo', href: '/request-demo' },
     ctaMicrocopy: 'On your file, in your resin, on the printer you’re considering',
   },
 };

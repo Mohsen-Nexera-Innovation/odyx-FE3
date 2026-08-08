@@ -509,7 +509,7 @@ export default function Header() {
               <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
             )}
             <Link className="btn-ghost btn btn-sm" href="/sales" onClick={closeMenu}>Contact Sales</Link>
-            <span className="btn btn-sm nav-demo is-dimmed" aria-disabled="true" title="Coming soon">Request a Demo</span>
+            <Link className="btn btn-sm nav-demo" href="/request-demo" onClick={closeMenu}>Request a Demo</Link>
           </div>
         </nav>
         <div className="nav-tools">
@@ -571,10 +571,10 @@ export default function Header() {
             <span className="nav-label-long">Contact Sales</span>
             <span className="nav-label-short">Sales</span>
           </Link>
-          <span className="btn btn-sm nav-demo is-dimmed" aria-disabled="true" title="Coming soon">
+          <Link className="btn btn-sm nav-demo" href="/request-demo">
             <span className="nav-label-long">Request a Demo</span>
             <span className="nav-label-short">Demo</span>
-          </span>
+          </Link>
           <button
             type="button"
             className="burger"

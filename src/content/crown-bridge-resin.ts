@@ -30,7 +30,7 @@ export const CROWN_BRIDGE_RESIN_CONTENT: ResinDetailContent = {
     imgAlt: 'ODYX Crown & Bridge Resin bottle with printed dental restorations',
     imgWidth: 2080,
     imgHeight: 1420,
-    primaryCta: { label: 'Request a Demo', href: '/support' },
+    primaryCta: { label: 'Request a Demo', href: '/request-demo' },
     secondaryCta: {
       label: 'Download Datasheet',
       href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Crown%20%26%20Bridge%20Resin',

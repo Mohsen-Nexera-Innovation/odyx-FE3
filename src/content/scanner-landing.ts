@@ -10,7 +10,7 @@ export const S1_LANDING_HERO = {
   body: 'The ODYX S1 delivers high-precision scans with AI-driven features for a seamless digital workflow.',
   img: '/img/scanner/s1-hero-waves.png',
   imgAlt: 'ODYX-S1 intraoral scanner on its charging base with soft signal waves',
-  primaryCta: { label: 'Request Demo', href: '/support' },
+  primaryCta: { label: 'Request Demo', href: '/request-demo' },
   secondaryCta: { label: 'Download Brochure', href: '/support' },
 };
 

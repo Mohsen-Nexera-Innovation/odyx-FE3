@@ -36,6 +36,25 @@ function scenarioSummary(lead: ApiLead): string {
     return parts.join(' · ');
   }
 
+  if (lead.source === 'REQUEST_DEMO' || s.kind === 'demo-request') {
+    const demo = scenario as {
+      role?: string;
+      demoType?: string;
+      preferredDate?: string;
+      products?: string[];
+      country?: string;
+    };
+    const parts: string[] = ['Demo'];
+    if (typeof demo.demoType === 'string') parts.push(demo.demoType);
+    if (typeof demo.role === 'string') parts.push(demo.role);
+    if (Array.isArray(demo.products) && demo.products.length) {
+      parts.push(`${demo.products.length} products`);
+    }
+    if (typeof demo.preferredDate === 'string') parts.push(demo.preferredDate);
+    if (typeof demo.country === 'string') parts.push(demo.country);
+    return parts.join(' · ');
+  }
+
   const results = s.results;
   const monthly = results?.monthlySavings;
   const payback = results?.paybackMonths;

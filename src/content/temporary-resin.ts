@@ -20,7 +20,7 @@ export const TEMPORARY_RESIN_HERO = {
   img: '/images/hero-resin-bottle-and-teeth.png',
   imgAlt:
     'ODYX Temporary Restoration Resin bottle with 3D-printed temporary dental restorations',
-  primaryCta: { label: 'Request a Demo', href: '/support' },
+  primaryCta: { label: 'Request a Demo', href: '/request-demo' },
   secondaryCta: {
     label: 'Download Datasheet',
     href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Temporary%20Restoration%20Resin',

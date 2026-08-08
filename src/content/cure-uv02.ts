@@ -26,7 +26,7 @@ export const CURE_UV02_HERO = {
   outputAlignerImg: '/img/cure-uv02/hero/output-aligner-cutout.png',
   imgAlt: 'ODYX Cure UV-02 dental UV curing station with cured models',
   imgVersion: '18',
-  primaryCta: { label: 'Request Demo', href: '/support' },
+  primaryCta: { label: 'Request Demo', href: '/request-demo' },
   secondaryCta: { label: 'Download Brochure', href: '/support' },
 };
 
