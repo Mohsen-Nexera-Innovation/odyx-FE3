@@ -18,21 +18,21 @@ const CARDS = [
     title: ["ODYX S1", "Intraoral Scanner"],
     href: "/products/odyx-s1-intraoral-scanner",
     img: "/img/hv2-cut/scanner-product.webp",
-    alt: "The ODYX S1 intraoral scanner wand",
+    alt: "The ODYX S1 intraoral scanner on its docking stand",
   },
   {
     key: "printer",
     title: ["ODYX P1-26", "3D Printer"],
     href: "/products/odyx-p1-26",
     img: "/img/hv2-cut/printer-product.webp",
-    alt: "The ODYX P1-26 resin 3D printer",
+    alt: "The ODYX P1-26 resin 3D printer with red cover and touchscreen",
   },
   {
     key: "cure",
     title: ["ODYX Cure", "UV-02"],
     href: "/products/curing-machines",
     img: "/img/hv2-cut/cure-product.webp",
-    alt: "The ODYX Cure UV-02 curing station",
+    alt: "The ODYX Cure Box UV curing chamber with purple light grid",
     // Wider card in the mock; its device leans right, so the arrow sits left.
     arrowStart: true,
   },
@@ -41,7 +41,7 @@ const CARDS = [
     title: ["ODYX", "Resins"],
     href: "/products/resins",
     img: "/img/hv2-cut/resins-product.webp",
-    alt: "Three ODYX resin bottles",
+    alt: "An ODYX dental resin bottle",
   },
   {
     key: "accessories",

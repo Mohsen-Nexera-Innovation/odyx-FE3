@@ -70,7 +70,7 @@ const UPDATES: Update[] = [
     href: "/products/resins",
     art: {
       src: "/img/hv2-news/resin-line.webp",
-      alt: "A dark ODYX resin bottle and a printed restoration on a grey pedestal in a bright studio",
+      alt: "A dark ODYX resin bottle on a stone pedestal in a bright studio",
       w: 704,
       h: 728,
     },
@@ -152,7 +152,7 @@ const UPDATES: Update[] = [
     fade: true,
     art: {
       src: "/img/hv2-news/open-house.webp",
-      alt: "Two visitors reviewing a digital arch scan on a screen at an ODYX stand",
+      alt: "The ODYX showroom booth with a glowing blue logo, dental chair and product displays",
       w: 764,
       h: 720,
     },

@@ -80,7 +80,7 @@ export const P1_26_PRINT_APPS = [
   {
     label: 'Surgical Guides',
     img: '/img/printers/p126/app-guide.png',
-    alt: '3D-printed surgical guide',
+    alt: 'Clear surgical guide with metal and colored sleeves',
   },
   {
     label: 'Dentures',
@@ -100,7 +100,7 @@ export const P1_26_PRINT_APPS = [
   {
     label: 'Temporary Restorations',
     img: '/img/printers/p126/app-temporary.png',
-    alt: '3D-printed temporary restorations',
+    alt: 'Tan temporary arch restoration',
   },
 ] as const;
 
@@ -169,7 +169,7 @@ export const P1_26_CASE_TABS = [
     label: 'Surgical Guide',
     steps: [
       { label: 'Before', img: '/img/printers/p126/case-before.png', alt: 'Pre-op clinical view' },
-      { label: 'Printed with P1-26', img: '/img/printers/p126/app-guide.png', alt: 'Printed surgical guide' },
+      { label: 'Printed with P1-26', img: '/img/printers/p126/app-guide.png', alt: 'Clear surgical guide with metal and colored sleeves' },
       { label: 'Final Restoration', img: '/img/printers/p126/case-guide-strip.png', alt: 'Guide case outcome' },
     ],
   },
