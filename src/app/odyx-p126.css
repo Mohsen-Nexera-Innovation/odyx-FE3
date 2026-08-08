@@ -50,8 +50,10 @@
   width:100%;
   max-width:var(--p126-max);
   margin:0 auto;
-  /* Design side margins ~6–7% — slightly more air than prior gutters */
-  padding:0 clamp(36px, 6vw, 96px);
+  padding:0 32px;
+}
+@media(max-width:620px) {
+  .p126-wrap { padding:0 16px; }
 }
 .p126-stack{
   display:flex;
@@ -1242,7 +1244,7 @@
   width:100%;
   max-width:1360px;
   margin:0 auto;
-  padding:0 clamp(36px, 6vw, 96px);
+  padding:0 32px;
 }
 .p126-ft__main{
   display:grid;

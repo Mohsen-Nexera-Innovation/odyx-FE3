@@ -28,7 +28,7 @@ export function DownloadsPage() {
   }, [query, category]);
 
   return (
-    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4 font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4">
       <SupportContainer className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <SupportBreadcrumb crumbs={[{ label: 'Support', href: '/support' }, { label: 'Downloads' }]} />
@@ -51,7 +51,7 @@ export function DownloadsPage() {
                 {['Name', 'Category', 'Version', 'Release Date', 'Size', 'Action'].map((head, idx) => (
                   <th
                     key={head}
-                    className={`py-4 text-[13px] font-semibold text-[#6B7280] whitespace-nowrap ${idx === 0 ? 'pl-4 sm:pl-6 pr-4' : 'px-4 sm:px-6'} ${idx === 5 ? 'text-right' : ''}`}
+                    className={`py-4 text-sm font-medium text-[#6B7280] whitespace-nowrap ${idx === 0 ? 'pl-4 sm:pl-6 pr-4' : 'px-4 sm:px-6'} ${idx === 5 ? 'text-right' : ''}`}
                   >
                     {head}
                   </th>
@@ -69,17 +69,17 @@ export function DownloadsPage() {
                           <FileText size={20} strokeWidth={2} aria-hidden />
                         </div>
                         <div>
-                          <p className="text-[13px] font-bold text-[#0A1020]">{item.name}</p>
-                          <p className="mt-0.5 text-[12px] font-medium text-[#6B7280]">{item.description}</p>
+                          <p className="text-sm font-bold text-[#0A1020]">{item.name}</p>
+                          <p className="mt-0.5 text-xs font-medium text-[#6B7280]">{item.description}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-[13px] font-medium text-[#374151] whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm font-medium text-[#374151] whitespace-nowrap">
                       {DOWNLOAD_CATEGORIES.find((c) => c.id === item.category)?.label}
                     </td>
-                    <td className="px-6 py-4 text-[13px] font-medium text-[#374151] whitespace-nowrap">{item.version}</td>
-                    <td className="px-6 py-4 text-[13px] font-medium text-[#374151] whitespace-nowrap">{item.date}</td>
-                    <td className="px-6 py-4 text-[13px] font-medium text-[#374151] whitespace-nowrap">{item.size}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-[#374151] whitespace-nowrap">{item.version}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-[#374151] whitespace-nowrap">{item.date}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-[#374151] whitespace-nowrap">{item.size}</td>
                     <td className="px-6 py-4 text-right">
                       <a
                         href={item.downloadHref}
@@ -94,7 +94,7 @@ export function DownloadsPage() {
               })}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-[13px] font-medium text-[#6B7280]">
+                  <td colSpan={6} className="px-6 py-10 text-center text-sm font-medium text-[#6B7280]">
                     No downloads match your filters.
                   </td>
                 </tr>

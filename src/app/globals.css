@@ -79,8 +79,8 @@
 
 /* next/font variables drive the brand font tokens */
 :root{
-  --font-display: var(--font-sora), 'Sora', sans-serif;
-  --font-body: var(--font-space), 'Space Grotesk', sans-serif;
+  --font-display: var(--font-tajawal), 'Tajawal', sans-serif;
+  --font-body: var(--font-tajawal), 'Tajawal', sans-serif;
 }
 [dir="rtl"]{
   --font-display: var(--font-tajawal), 'Tajawal', sans-serif;

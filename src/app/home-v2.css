@@ -113,6 +113,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
 .hv2-dot.is-on{width:20px; background:var(--hv2-blue)}
 
 /* ---------- 1 · Hero ---------- */
+ 
 
 .hv2-hero{
   /* Band starts under the global fixed header. The header's rendered

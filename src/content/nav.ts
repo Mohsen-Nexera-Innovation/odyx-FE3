@@ -132,9 +132,8 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "Design Services",
-        href: "/design-services",
-        desc: "Design services",
-        dimmed: true,
+        href: "/case-submission",
+        desc: "On-demand dental CAD design",
       },
       {
         label: "3D Printers",
@@ -207,15 +206,13 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         title: "Design Services",
-        href: "/design-services",
-        dimmed: true,
+        href: "/case-submission",
         items: [
           {
             label: "Design Services",
-            href: "/design-services",
+            href: "/case-submission",
             desc: "On-demand dental CAD design",
             img: "/img/cutouts/feat-design-cutout.png",
-            dimmed: true,
           },
         ],
       },

@@ -23,7 +23,10 @@
 .rs-wrap{
   max-width:var(--rs-max);
   margin-inline:auto;
-  padding-inline:clamp(28px, 4.5vw, 72px);
+  padding-inline:32px;
+}
+@media(max-width:620px) {
+  .rs-wrap { padding-inline:16px; }
 }
 .rs [id]{scroll-margin-top:96px}
 .rs-sec{padding-block:clamp(48px,5.5vw,72px)}

@@ -64,7 +64,7 @@ export default function SupportHubPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-white pb-4 font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="min-h-dvh bg-white pb-4">
       <div className="w-full bg-[url('/img/hv2-section-bg.jpg')] bg-no-repeat bg-[center_top] bg-cover pt-[100px] lg:pt-[140px] pb-20 lg:pb-28">
         <SupportContainer className="flex flex-col items-center gap-6">
           <SupportPageHero />
@@ -80,14 +80,14 @@ export default function SupportHubPage() {
       </div>
 
       <SupportContainer className="flex flex-col gap-3 md:gap-4">
-        <section aria-labelledby="quick-access-heading" className="flex flex-col gap-4 md:gap-5 pt-5">
+        <section aria-labelledby="quick-access-heading" className="flex flex-col gap-0 pt-5">
           <div className="flex items-center justify-between">
-            <h2 id="quick-access-heading" className="text-[20px] font-extrabold text-[#0A1020]">
+            <h2 id="quick-access-heading" className="text-2xl font-bold text-[#0A1020]">
               Quick Access
             </h2>
             <Link
               href="/support/manuals"
-              className="inline-flex items-center gap-1 text-[13px] font-bold text-[#0050D8] hover:underline"
+              className="inline-flex items-center gap-1 text-sm font-bold !text-[#0050D8] hover:underline"
             >
               View all
               <ArrowRight size={14} aria-hidden />
@@ -100,14 +100,14 @@ export default function SupportHubPage() {
           </div>
         </section>
 
-        <section aria-labelledby="support-by-product-heading" className="flex flex-col gap-4 md:gap-5">
+        <section aria-labelledby="support-by-product-heading" className="flex flex-col gap-0">
           <div className="flex items-center justify-between">
-            <h2 id="support-by-product-heading" className="text-[20px] font-extrabold text-[#0A1020]">
+            <h2 id="support-by-product-heading" className="text-2xl font-bold text-[#0A1020]">
               Support by Product
             </h2>
             <Link
               href="/products"
-              className="inline-flex items-center gap-1 text-[13px] font-bold text-[#0050D8] hover:underline"
+              className="inline-flex items-center gap-1 text-sm font-bold !text-[#0050D8] hover:underline"
             >
               View all products
               <ArrowRight size={14} aria-hidden />
@@ -133,10 +133,10 @@ export default function SupportHubPage() {
 function SupportPageHero() {
   return (
     <div className="text-center max-w-[640px]">
-      <h1 className="text-[28px] sm:text-[36px] lg:text-[42px] font-extrabold text-[#0A1020] tracking-tight leading-[1.15]">
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1020] leading-[1.15]">
         How can we help you?
       </h1>
-      <p className="mt-3 text-[14px] sm:text-[15px] text-[#6B7280] font-medium leading-relaxed">
+      <p className="mt-3 text-base sm:text-lg text-[#6B7280] font-medium leading-relaxed">
         Search our help center for answers, FAQs, downloads and more.
       </p>
     </div>

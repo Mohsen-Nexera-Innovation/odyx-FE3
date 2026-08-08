@@ -22,7 +22,10 @@
 .s1l-wrap{
   width:100%;
   margin:0 auto;
-  padding:0 clamp(20px, 4vw, 40px);
+  padding:0 32px;
+}
+@media(max-width:620px) {
+  .s1l-wrap { padding:0 16px; }
 }
 .s1l-stack{
   display:flex;
@@ -637,7 +640,7 @@ body:has(.s1l-page) main{
 .s1l-wrap{
   width:100%;
   margin:0 auto;
-  padding:0 clamp(28px, 5vw, 64px);
+  padding:0 32px;
 }
 .s1l-wrap--hero{max-width:var(--s1l-max-hero)}
 .s1l-wrap--body{max-width:var(--s1l-max-body)}

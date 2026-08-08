@@ -9,7 +9,7 @@
 }
 .cure-page .p126-wrap{
   max-width:var(--p126-max);
-  padding:0 clamp(28px, 4.5vw, 72px);
+  padding:0 32px;
 }
 
 /* Hero left — nudge copy + chips slightly down */
