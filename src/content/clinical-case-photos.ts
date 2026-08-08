@@ -1,14 +1,16 @@
 /**
- * Real clinical case photos served from `/img/clinical-cases/`.
- *
- * Batch A — existing aesthetic rehab set (veneers / crowns / try-ins).
- * Batch B — imported from Downloads/real cases (posterior restorative / endo /
- * amalgam replacement / onlay / crown sequences + radiographs).
+ * Real clinical case photos.
+ * Prefer Cloudflare R2 (`NEXT_PUBLIC_MEDIA_BASE_URL`) when set; otherwise FE /img.
  */
 
 import type { ClinicalBaSlide } from '@/content/clinical-indication-types';
 
-const BASE = '/img/clinical-cases';
+const MEDIA_BASE =
+  process.env.NEXT_PUBLIC_MEDIA_BASE_URL?.replace(/\/+$/, '') ||
+  '';
+const BASE = MEDIA_BASE
+  ? `${MEDIA_BASE}/case-library/static`
+  : '/img/clinical-cases';
 
 function img(file: string) {
   return `${BASE}/${file}`;

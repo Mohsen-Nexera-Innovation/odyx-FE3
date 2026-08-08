@@ -264,9 +264,8 @@ export default function AdminCaseLibraryPage() {
         <h1>Case Library CMS</h1>
         <p className="admin-sub">
           Upload cover / before / after images for the public <a href="/cases">/cases</a> page.
-          Files are stored on the API server today (<code>uploads/media</code>) and served from{' '}
-          <code>/media/case-library/…</code>. Switch to Cloudflare R2 later with{' '}
-          <code>MEDIA_STORAGE=r2</code>.
+          Files go to Cloudflare R2 when <code>MEDIA_STORAGE=r2</code> (absolute public URL), or
+          local <code>/media/case-library/…</code> when <code>MEDIA_STORAGE=local</code>.
         </p>
       </div>
 
@@ -360,8 +359,12 @@ export default function AdminCaseLibraryPage() {
           />
 
           <label>
-            Detail link (href)
-            <input value={form.href} onChange={(e) => setField('href', e.target.value)} />
+            Detail link (href) — leave empty to use /cases/your-slug
+            <input
+              value={form.href}
+              onChange={(e) => setField('href', e.target.value)}
+              placeholder="/cases/your-case-slug"
+            />
           </label>
           <label>
             Sort order

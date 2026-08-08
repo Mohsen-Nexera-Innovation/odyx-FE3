@@ -17,7 +17,7 @@ function CaseMedia({ item }: { item: FeaturedCase }) {
 
   if (before && after) {
     return (
-      <div className="relative h-[140px] sm:h-[150px] w-full overflow-hidden bg-gray-100 grid grid-cols-2">
+      <div className="relative h-[140px] sm:h-[150px] w-full shrink-0 overflow-hidden bg-gray-100 grid grid-cols-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={before.img} alt={before.alt} className="h-full w-full object-cover" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -34,7 +34,7 @@ function CaseMedia({ item }: { item: FeaturedCase }) {
   }
 
   return (
-    <div className="relative h-[140px] sm:h-[150px] w-full overflow-hidden bg-gray-100">
+    <div className="relative h-[140px] sm:h-[150px] w-full shrink-0 overflow-hidden bg-gray-100">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={item.img} alt={item.imgAlt} className="w-full h-full object-cover" />
       <span className="absolute top-3 left-3 z-10 rounded-full bg-[#0A1020]/78 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
@@ -78,8 +78,13 @@ export function FeaturedCasesSection({
 
         <div className="relative">
           <style jsx global>{`
+            .cases-featured-swiper .swiper-wrapper {
+              align-items: stretch;
+            }
             .cases-featured-swiper .swiper-slide {
               height: auto;
+              display: flex;
+              box-sizing: border-box;
             }
           `}</style>
 
@@ -100,7 +105,7 @@ export function FeaturedCasesSection({
             className="cases-featured-swiper"
           >
             {data.items.length === 0 ? (
-              <SwiperSlide className="!h-auto flex">
+              <SwiperSlide className="!h-auto !flex">
                 <p className="w-full rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-10 text-center text-[14px] text-[#667085]">
                   {productFilter
                     ? 'No clinical cases are tagged with this product yet.'
@@ -109,58 +114,58 @@ export function FeaturedCasesSection({
               </SwiperSlide>
             ) : (
               data.items.map((item) => (
-              <SwiperSlide key={item.id} className="!h-auto flex">
-                <article className="flex flex-col w-full bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-300">
-                  <CaseMedia item={item} />
+                <SwiperSlide key={item.id} className="!h-auto !flex">
+                  <article className="flex flex-col w-full h-full min-h-0 bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-300">
+                    <CaseMedia item={item} />
 
-                  <div className="flex flex-col flex-1 p-4 lg:p-5 gap-3!">
-                    <h3 className="text-[14px] lg:text-[15px] font-extrabold text-[#0A1020] leading-snug m-0!">
-                      {item.title}
-                    </h3>
+                    <div className="flex flex-col flex-1 p-4 lg:p-5 gap-3! min-h-0">
+                      <h3 className="text-[14px] lg:text-[15px] font-extrabold text-[#0A1020] leading-snug m-0! line-clamp-2 min-h-[2.6em]">
+                        {item.title}
+                      </h3>
 
-                    <div className="flex flex-wrap gap-1.5!">
-                      {item.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-[#F2F4F7] px-2.5 py-1 text-[11px] font-semibold text-[#475467]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div>
-                      <span className="block text-[11px] font-semibold text-[#667085] mb-2">
-                        Products Used
-                      </span>
-                      <div className="flex items-center gap-2!">
-                        {item.products.map((p) => (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            key={p.id}
-                            src={p.img}
-                            alt={p.alt}
-                            className="w-7 h-7 object-contain rounded-md border border-gray-100 bg-[#F5F8FC] p-0.5"
-                          />
-                        ))}
-                        {item.moreProducts > 0 ? (
-                          <span className="min-w-7 h-7 px-1.5 rounded-md bg-[#EEF3FF] text-[#0050D8] text-[11px] font-bold flex items-center justify-center">
-                            +{item.moreProducts}
+                      <div className="flex flex-wrap gap-1.5! min-h-[28px]">
+                        {item.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full bg-[#F2F4F7] px-2.5 py-1 text-[11px] font-semibold text-[#475467]"
+                          >
+                            {tag}
                           </span>
-                        ) : null}
+                        ))}
+                      </div>
+
+                      <div className="mt-auto">
+                        <span className="block text-[11px] font-semibold text-[#667085] mb-2">
+                          Products Used
+                        </span>
+                        <div className="flex items-center gap-2! min-h-7">
+                          {item.products.map((p) => (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              key={p.id}
+                              src={p.img}
+                              alt={p.alt}
+                              className="w-7 h-7 object-contain rounded-md border border-gray-100 bg-[#F5F8FC] p-0.5"
+                            />
+                          ))}
+                          {item.moreProducts > 0 ? (
+                            <span className="min-w-7 h-7 px-1.5 rounded-md bg-[#EEF3FF] text-[#0050D8] text-[11px] font-bold flex items-center justify-center">
+                              +{item.moreProducts}
+                            </span>
+                          ) : null}
+                        </div>
+
+                        <Link
+                          href={item.href}
+                          className="mt-3 inline-flex items-center gap-1.5 !text-[#0050D8] text-[12px] font-bold hover:gap-2 transition-all"
+                        >
+                          View Case
+                          <ArrowIcon className="w-3.5 h-3.5" />
+                        </Link>
                       </div>
                     </div>
-
-                    <Link
-                      href={item.href}
-                      className="mt-auto inline-flex items-center gap-1.5 !text-[#0050D8] text-[12px] font-bold hover:gap-2 transition-all"
-                    >
-                      View Case
-                      <ArrowIcon className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </article>
-              </SwiperSlide>
+                  </article>
+                </SwiperSlide>
               ))
             )}
           </Swiper>

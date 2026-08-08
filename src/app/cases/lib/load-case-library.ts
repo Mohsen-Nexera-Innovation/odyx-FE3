@@ -15,7 +15,7 @@ function toFeaturedItems(library: CaseLibraryPublic): FeaturedCase[] {
     badge: c.badge,
     title: c.title,
     tags: c.tags,
-    href: c.href || '/cases#featured-cases',
+    href: caseDetailHref(c),
     img: resolveMediaUrl(c.coverImageUrl),
     imgAlt: c.coverImageAlt || c.title,
     before: c.beforeImageUrl
@@ -33,19 +33,33 @@ function toFeaturedItems(library: CaseLibraryPublic): FeaturedCase[] {
   }));
 }
 
+/** Prefer a real case detail URL; never loop via /all-cases → /cases. */
+function caseDetailHref(c: { slug: string; href?: string | null }): string {
+  const href = c.href?.trim() || '';
+  if (
+    !href ||
+    href === '/cases' ||
+    href.startsWith('/cases#') ||
+    href.includes('/all-cases')
+  ) {
+    return `/cases/${c.slug}`;
+  }
+  return href;
+}
+
 /**
- * Inject the old clinical photo library into the mock featured carousel.
- * CMS featured cases are used only when the clinical library is empty.
+ * Prefer CMS featured cases when the API returns them.
+ * Fall back to the static clinical photo library, then mock data.
  */
 export function buildFeaturedFromLibrary(
   library: CaseLibraryPublic | null,
   clinicalFallback: FeaturedCase[],
 ): FeaturedSectionData {
   const fromCms = library?.featured?.length ? toFeaturedItems(library) : [];
-  const items = clinicalFallback.length
-    ? clinicalFallback
-    : fromCms.length
-      ? fromCms
+  const items = fromCms.length
+    ? fromCms
+    : clinicalFallback.length
+      ? clinicalFallback
       : casesData.featured.items;
   return {
     ...casesData.featured,

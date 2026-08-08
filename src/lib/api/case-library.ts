@@ -90,6 +90,10 @@ export function listCaseLibraryPublicApi() {
   return apiFetch<CaseLibraryPublic>('/case-library');
 }
 
+export function getShowcaseCaseBySlugApi(slug: string) {
+  return apiFetch<ShowcaseCase>(`/case-library/${encodeURIComponent(slug)}`);
+}
+
 export function listShowcaseCasesAdminApi() {
   return apiFetch<ShowcaseCase[]>('/admin/case-library', { auth: true });
 }
