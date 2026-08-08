@@ -4,7 +4,7 @@ export interface NavLink {
   desc?: string;
   /** Background-free cutout shown in the mega menu's featured card while this link is hovered */
   img?: string;
-  /** Visible but non-navigable (preview / not ready) */
+  /** Hidden from the navbar until ready (kept in data for later) */
   dimmed?: boolean;
 }
 
@@ -20,7 +20,7 @@ export interface MegaColumn {
   href?: string;
   groups?: MegaGroup[];
   items?: NavLink[];
-  /** Dim column title link (and treat as not ready) */
+  /** Hidden column until ready */
   dimmed?: boolean;
 }
 
@@ -43,7 +43,7 @@ export interface NavGroup {
   /** Full-width multi-column mega (SprintRay-inspired) */
   columns?: MegaColumn[];
   featured?: MegaFeatured;
-  /** Top-level visible but non-navigable; mega still opens on hover */
+  /** Hidden top-level item until ready */
   dimmed?: boolean;
   /** Opens mega / mobile accordion only — never navigates to href */
   navOnly?: boolean;
@@ -248,6 +248,21 @@ export const HEADER_MENUS: NavGroup[] = [
         href: "/solutions/clinical-applications",
         desc: "Crowns, aligners, guides and more",
       },
+      {
+        label: "Real Cases",
+        href: "/cases",
+        desc: "Browse real clinical cases",
+      },
+      {
+        label: "By Application",
+        href: "/cases#by-application",
+        desc: "Restorative, implant, ortho, denture",
+      },
+      {
+        label: "By Product",
+        href: "/cases#by-product",
+        desc: "Scanner, printer, cure, resin",
+      },
     ],
     columns: [
       {
@@ -269,11 +284,35 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         title: "Applications",
-        items: [
+        groups: [
           {
-            label: "Clinical Applications",
-            href: "/solutions/clinical-applications",
-            desc: "Crowns, aligners, guides and more",
+            items: [
+              {
+                label: "Clinical Applications",
+                href: "/solutions/clinical-applications",
+                desc: "Crowns, aligners, guides and more",
+              },
+            ],
+          },
+          {
+            label: "Real Cases",
+            items: [
+              {
+                label: "Case Library",
+                href: "/cases",
+                desc: "Browse real clinical cases",
+              },
+              {
+                label: "By Application",
+                href: "/cases#by-application",
+                desc: "Restorative, implant, ortho, denture",
+              },
+              {
+                label: "By Product",
+                href: "/cases#by-product",
+                desc: "Scanner, printer, cure, resin",
+              },
+            ],
           },
         ],
       },
@@ -354,50 +393,6 @@ export const HEADER_MENUS: NavGroup[] = [
             label: "Deliver",
             href: "/workflows/deliver",
             desc: "Seat the final result",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Real Cases",
-    href: "/cases",
-    items: [
-      {
-        label: "Case Library",
-        href: "/cases",
-        desc: "Browse real clinical cases",
-      },
-      {
-        label: "By Application",
-        href: "/cases#by-application",
-        desc: "Restorative, implant, ortho, denture",
-      },
-      {
-        label: "By Product",
-        href: "/cases#by-product",
-        desc: "Scanner, printer, cure, resin",
-      },
-    ],
-    columns: [
-      {
-        title: "Library",
-        href: "/cases",
-        items: [
-          {
-            label: "Case Library",
-            href: "/cases",
-            desc: "Browse real clinical cases",
-          },
-          {
-            label: "By Application",
-            href: "/cases#by-application",
-            desc: "Restorative, implant, ortho, denture",
-          },
-          {
-            label: "By Product",
-            href: "/cases#by-product",
-            desc: "Scanner, printer, cure, resin",
           },
         ],
       },

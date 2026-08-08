@@ -37,7 +37,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         name: "ODYX-S1",
         href: "/products/odyx-s1-intraoral-scanner",
         why: "Start digital with chairside scans",
-        img: "/img/feat-scanner.jpg",
+        img: "/img/feat-scanner.png",
       },
       {
         name: "Design Services",

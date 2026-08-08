@@ -92,13 +92,13 @@ export const S1_CASES = [
     title: 'Crown Prep Case',
     body: 'AI margin detection kept the prep line clear for the lab.',
     author: 'Dr. Sara M.',
-    img: '/img/scanner/s1-scanlight.jpg',
+    img: '/img/scanner/s1-scanlight.png',
   },
   {
     title: 'Implant Scan Body',
     body: 'Deep margins and scan bodies captured in a single pass.',
     author: 'Dr. Youssef R.',
-    img: '/img/scanner/s1-chairside.jpg',
+    img: '/img/scanner/s1-chairside.png',
   },
 ] as const;
 

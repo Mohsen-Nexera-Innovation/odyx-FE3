@@ -56,7 +56,7 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Chairside 3D impressions in seconds.",
     overview:
       "The ODYX-S1 intraoral scanner captures full-arch color scans with real-time mesh preview. Open export formats connect directly to design and lab workflows without proprietary lock-in.",
-    img: "/img/feat-scanner.jpg",
+    img: "/img/feat-scanner.png",
     heroImg: "/img/cutouts/feat-scanner-cutout.png",
     accent: "teal",
     workflowStep: "scan",

@@ -222,7 +222,7 @@ const FEAT = [
     i: "scan",
     t: "ODYX-S1",
     d: "Real-time 3D digital impressions, chairside.",
-    img: "/img/feat-scanner.jpg",
+    img: "/img/feat-scanner.png",
   },
   {
     i: "print",

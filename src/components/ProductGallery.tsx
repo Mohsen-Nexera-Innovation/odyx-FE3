@@ -63,7 +63,7 @@ const PRODUCTS: Product[] = [
     name: "ODYX-S1",
     desc: "Real-time 3D digital impressions, chairside - no molds, just instant accurate data.",
     chips: ["~20s capture", "Open .STL", "Powder-free"],
-    img: "/img/feat-scanner.jpg",
+    img: "/img/feat-scanner.png",
     accent: "teal",
     href: "/products/odyx-s1-intraoral-scanner",
     shopProductId: "scanner-s1",

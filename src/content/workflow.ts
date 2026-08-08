@@ -31,7 +31,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     accent: "teal",
     productSlug: "odyx-s1-intraoral-scanner",
     productName: "ODYX-S1",
-    img: "/img/feat-scanner.jpg",
+    img: "/img/feat-scanner.png",
     lead: "Digital impressions in seconds - no molds, no mess, instant 3D data.",
     whatHappens:
       "A chairside ODYX-S1 scan captures the patient's anatomy in full color 3D. The file exports in open formats and flows directly into design - no manual steps, no compatibility guesswork.",

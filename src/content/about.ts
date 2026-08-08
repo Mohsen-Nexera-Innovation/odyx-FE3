@@ -56,7 +56,7 @@ export const ABOUT_STORY = {
   ],
   mosaic: [
     {
-      src: '/img/scanner/s1-chairside.jpg',
+      src: '/img/scanner/s1-chairside.png',
       alt: 'ODYX S1 intraoral scanner in a clinical chairside setting',
       caption: 'Scan',
     },
@@ -86,7 +86,7 @@ export const ABOUT_SPINE = [
     blurb: 'Chairside digital impression — instant 3D data, no molds.',
     href: DIGITAL_WORKFLOW_LINKS.scan,
     dimmed: isDigitalWorkflowDimmed('scan'),
-    img: '/img/scanner/step-scan.jpg',
+    img: '/img/scanner/step-scan.png',
     alt: 'Digital intraoral scan',
   },
   {

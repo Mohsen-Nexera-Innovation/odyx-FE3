@@ -73,7 +73,7 @@ const PATHS = [
     href: "/workflows",
     // Scanner upright in its cradle on the right of the frame, clinic behind;
     // the card blurs it back so it reads as a soft product scene.
-    img: "/img/scanner/s1-open-scene.jpg",
+    img: "/img/scanner/s1-open-scene.png",
     alt: "An ODYX intraoral scanner upright in its cradle beside scanning software",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
