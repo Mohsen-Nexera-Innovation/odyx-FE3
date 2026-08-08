@@ -17,7 +17,7 @@ export interface SupportProduct {
 export const SUPPORT_PRODUCTS: SupportProduct[] = [
   { id: 's1-scanner', name: 'ODYX S1 Scanner', image: '/img/scanner/s1-hero-cutout.png' },
   { id: 'p1-26-printer', name: 'ODYX P1-26 3D Printer', image: '/img/cutouts/feat-printer-cutout.png' },
-  { id: 'cure-unit', name: 'ODYX Cure UV Curing Unit', image: '/img/cutouts/feat-curing-cutout.png' },
+  { id: 'cure-unit', name: 'ODYX Cure UV Curing Unit', image: '/img/cure-uv02/hero/machine-cutout.png' },
   { id: 'resin-materials', name: 'ODYX Resin Materials', image: '/img/resins/all-resins-cutout.png' },
 ];
 

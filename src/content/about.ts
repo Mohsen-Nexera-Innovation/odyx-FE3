@@ -33,8 +33,8 @@ export const ABOUT_HERO = {
       className: 'about-hero__float--printer',
     },
     {
-      src: '/img/cure-stitch/odyx-cure-chamber-glow-cutout.png',
-      alt: 'ODYX Cure with glowing chamber',
+      src: '/img/cure-uv02/hero/machine-cutout.png',
+      alt: 'ODYX Cure UV-02 curing station',
       className: 'about-hero__float--cure',
     },
   ],

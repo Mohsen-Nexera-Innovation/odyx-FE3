@@ -1105,6 +1105,8 @@ body:has(.hv2) header#hdr.on-light.at-top{
   width:auto; height:auto; max-width:100%; max-height:100%;
   mix-blend-mode:multiply;
 }
+/* Cure UV-02 is a white packshot — multiply would wash it into the card tint. */
+.hv2-pr-cure .hv2-pr-media img{mix-blend-mode:normal; filter:drop-shadow(0 10px 18px rgba(10,40,90,.14))}
 /* The scanner wand is much wider than tall — centre it in the card's media
    area instead of pinning it to the bottom edge. */
 .hv2-pr-scanner .hv2-pr-media{align-items:center; --art-bottom:26px}

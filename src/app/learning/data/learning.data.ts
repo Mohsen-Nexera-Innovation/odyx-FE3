@@ -8,7 +8,7 @@ import type { LearningPageData } from '../types';
 const WEB = {
   scanner: '/img/scanner/s1-hero.png',
   printer: '/img/hv2-cut/printer-product.webp',
-  curing: '/img/hv2-cut/cure-product.webp',
+  curing: '/img/cure-uv02/hero/machine-cutout.png',
   resins: '/img/hv2-cut/resins-product.webp',
   crown: '/img/hv2-clinical/restorative.webp',
   implant: '/img/hv2-clinical/implant-dentistry.webp',
@@ -20,7 +20,7 @@ const WEB = {
   newsScan: '/img/hv2-news/scan-live.webp',
   ecoScanner: '/img/scanner/s1-hero-cutout.png',
   ecoPrinter: '/img/hv2-eco/eco-printer.webp',
-  ecoCure: '/img/hv2-eco/eco-cure.webp',
+  ecoCure: '/img/cure-uv02/hero/machine-cutout.png',
   ecoResin: '/img/hv2-eco/eco-resin.webp',
 } as const;
 

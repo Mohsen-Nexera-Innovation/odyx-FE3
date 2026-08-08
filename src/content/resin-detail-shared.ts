@@ -10,7 +10,7 @@ export const RESIN_DETAIL_COMPATIBLE = [
   {
     id: 'uv-02',
     label: 'ODYX UV-02 Curing Unit',
-    img: '/images/compat-uv-02.png',
+    img: '/img/cure-uv02/hero/machine-cutout.png',
     imgAlt: 'ODYX UV-02 curing unit',
     href: '/products/curing-machines',
   },

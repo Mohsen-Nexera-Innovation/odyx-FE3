@@ -55,7 +55,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     name: 'ODYX Cure',
     desc: 'Standard clinic and lab curing unit with resin-specific presets for consistent, biocompatible outcomes.',
     price: 2499 * USD_TO_EGP_DUMMY,
-    image: '/img/feat-curing.jpg',
+    image: '/img/cure-uv02/hero/machine-cutout.png',
     category: 'curing',
     unit: '1 unit',
     href: '/products/curing-machines',

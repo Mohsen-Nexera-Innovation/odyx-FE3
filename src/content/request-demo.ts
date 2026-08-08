@@ -115,7 +115,7 @@ export const DEMO_PRODUCTS = [
     id: 'cure' as const,
     title: 'Curing Unit',
     subtitle: 'ODYX Cure',
-    image: '/img/hv2-cut/cure-product.webp',
+    image: '/img/cure-uv02/hero/machine-cutout.png',
   },
   {
     id: 'resins' as const,

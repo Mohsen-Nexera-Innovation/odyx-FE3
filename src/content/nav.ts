@@ -144,7 +144,7 @@ export const HEADER_MENUS: NavGroup[] = [
         label: "ODYX Cure",
         href: "/products/curing-machines",
         desc: "Powerful curing. Perfect results.",
-        img: "/img/cutouts/feat-curing-cutout.png",
+        img: "/img/cure-uv02/hero/machine-cutout.png",
       },
       {
         label: "Resins",
@@ -187,7 +187,7 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "ODYX Cure",
                 href: "/products/curing-machines",
                 desc: "Powerful curing. Perfect results.",
-                img: "/img/cutouts/feat-curing-cutout.png",
+                img: "/img/cure-uv02/hero/machine-cutout.png",
               },
             ],
           },

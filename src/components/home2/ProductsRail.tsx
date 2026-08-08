@@ -31,8 +31,8 @@ const CARDS = [
     key: "cure",
     title: ["ODYX Cure", "UV-02"],
     href: "/products/curing-machines",
-    img: "/img/hv2-cut/cure-product.webp",
-    alt: "The ODYX Cure Box UV curing chamber with purple light grid",
+    img: "/img/cure-uv02/hero/machine-cutout.png",
+    alt: "The ODYX Cure UV-02 dental UV curing station",
     // Wider card in the mock; its device leans right, so the arrow sits left.
     arrowStart: true,
   },

@@ -83,7 +83,7 @@ const PRODUCTS: Product[] = [
     name: "ODYX Cure",
     desc: "Controlled UV completes polymerization for final strength and biocompatibility.",
     chips: ["Controlled UV", "Full strength", "Biocompatible"],
-    img: "/img/feat-curing.jpg",
+    img: "/img/cure-uv02/hero/machine-cutout.png",
     accent: "orange",
     href: "/products/curing-machines",
     shopProductId: "curing-odyx-cure",

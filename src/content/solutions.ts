@@ -55,7 +55,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         name: "ODYX Cure",
         href: "/products/curing-machines",
         why: "Validated cure for safe delivery",
-        img: "/img/feat-curing.jpg",
+        img: "/img/cure-uv02/hero/machine-cutout.png",
       },
       {
         name: "Clinical Resin",
@@ -114,7 +114,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         name: "ODYX Cure",
         href: "/products/curing-machines",
         why: "QA-friendly cure profiles",
-        img: "/img/feat-curing.jpg",
+        img: "/img/cure-uv02/hero/machine-cutout.png",
       },
       {
         name: "Resin & Materials",
