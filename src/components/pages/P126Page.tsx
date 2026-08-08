@@ -68,11 +68,11 @@ const CHIP_ICONS: Record<string, ReactNode> = {
 
 /** Exact icons cropped from printer-odyx-p1-26.jpeg — do not replace with SVGs */
 const FLOW_ICONS: Record<string, string> = {
-  scan: '/img/printers/p126/flow/scan.png',
-  design: '/img/printers/p126/flow/design.png',
-  print: '/img/printers/p126/flow/print.png',
-  cure: '/img/printers/p126/flow/cure.png',
-  deliver: '/img/printers/p126/flow/deliver.png',
+  scan: '/img/workflow/flow/scan.png',
+  design: '/img/workflow/flow/design.png',
+  print: '/img/workflow/flow/print.png',
+  cure: '/img/workflow/flow/cure.png',
+  deliver: '/img/workflow/flow/deliver.png',
 };
 
 const FLOW_CHEVRON = (

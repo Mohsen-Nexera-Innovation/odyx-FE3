@@ -66,22 +66,10 @@ export const CLINICAL_CASE_LISTINGS: Record<string, ClinicalCaseListing> = Objec
 
 export const CLINICAL_CASE_LISTING_SLUGS = LISTING_DEFS.map((d) => d.slug);
 
-/** Hub “View All Clinical Cases” destination — every category, not restorative only */
+/** Legacy slug — permanently redirected to `/cases`. */
 export const ALL_CLINICAL_CASES_SLUG = 'all-cases';
 
-export const ALL_CLINICAL_CASES = {
-  slug: ALL_CLINICAL_CASES_SLUG,
-  title: 'All Clinical Cases',
-  subtitle: 'Real cases. Real results.',
-  body: 'Browse patient photography across restorative, implant, orthodontics, and prosthetics — before and after.',
-} as const;
-
 export const CLINICAL_CASE_LISTING_META: Record<string, { title: string; description: string }> = {
-  [ALL_CLINICAL_CASES_SLUG]: {
-    title: 'All Clinical Cases | ODYX Clinical Applications',
-    description:
-      'Browse all ODYX clinical case photography — restorative, implant, orthodontics, and prosthetics.',
-  },
   'restorative-cases': {
     title: 'Restorative Cases | ODYX Clinical Applications',
     description: 'Real restorative clinical cases — veneers and crowns, before and after.',
@@ -119,7 +107,7 @@ export function listingHeroImages(listing: ClinicalCaseListing): string[] {
   return heroCaseImages(listing.slug);
 }
 
-/** All category sections that have real photos (empty categories omitted on all-cases). */
+/** All category sections that have real photos (shown on `/cases#all-cases`). */
 export function getAllClinicalCaseSections(): ClinicalCaseSection[] {
   const bySlug = Object.fromEntries(LISTING_DEFS.map((d) => [d.slug, d]));
   return allRealClinicalCases()

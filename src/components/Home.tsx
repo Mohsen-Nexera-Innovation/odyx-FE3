@@ -333,7 +333,7 @@ export default function Home() {
                 <div className="pcard-art">
                   <img
                     className="pimg parallax"
-                    src="/img/paths/guest.jpg"
+                    src="/img/paths/distributor.jpg"
                     alt="ODYX partnership and distribution"
                   />
                   <span className="scrim2" />

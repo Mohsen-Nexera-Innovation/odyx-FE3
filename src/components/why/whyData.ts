@@ -27,7 +27,7 @@ export const WHY_REASONS: WhyReason[] = [
     suf: '%',
     lbl: 'first-fit accuracy',
     img: '/img/why/why-precision-cutout.png',
-    bg: '/img/why/billboard-precision.jpg',
+    bg: '/img/why/why-precision.png',
     alt: 'Precise digital dental scan and restoration workflow',
   },
   {
@@ -41,7 +41,7 @@ export const WHY_REASONS: WhyReason[] = [
     suf: '',
     lbl: 'connected steps',
     img: '/img/why/why-integrated-cutout.png',
-    bg: '/img/why/billboard-integrated.jpg',
+    bg: '/img/why/why-integrated.png',
     alt: 'Connected ODYX scanner, design software and 3D printer in a clinic',
   },
   {
@@ -55,7 +55,7 @@ export const WHY_REASONS: WhyReason[] = [
     suf: '/7',
     lbl: 'support access',
     img: '/img/why/why-training-cutout.png',
-    bg: '/img/why/billboard-training.jpg',
+    bg: '/img/why/why-training.png',
     alt: 'ODYX training and clinical support',
   },
   {
@@ -69,7 +69,7 @@ export const WHY_REASONS: WhyReason[] = [
     suf: '',
     lbl: 'clinical resin lines',
     img: '/img/why/why-clinical-cutout.png',
-    bg: '/img/why/billboard-clinical.jpg',
+    bg: '/img/why/why-clinical.png',
     alt: 'Clinically validated ODYX materials and curing',
   },
 ];
