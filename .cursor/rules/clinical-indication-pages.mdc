@@ -39,8 +39,12 @@ Every clinical application subtype page must reuse the Same-Day Crown chrome. **
 Per slug under `public/img/clinical/{slug}/`:
 
 - `hero-cutout.png` — transparent background
-- `tl/tl-*.png` — circular workflow icons
+- `tl/tl-finish.png` — indication-specific finish step icon
 - Before/after and case thumbs indication-specific
+
+Shared timeline icons (scan / design / print / cure) live in
+`public/img/clinical-sdc/tl/` and `public/img/clinical/shared/` — do not copy them
+into every indication folder.
 
 ## Clinical Cases column (hub)
 
@@ -53,4 +57,5 @@ Per slug under `public/img/clinical/{slug}/`:
 - Point multiple hub items at Same-Day Crown as a placeholder
 - Reuse crown hero/timeline finish art on unrelated indications
 - Change layout classes, type tokens, or brand blue for accents
-- Missing `tl-scan` / `tl-print` / `tl-cure` in `public/img/clinical/{slug}/tl/` (always ship all five icons)
+- Duplicate shared `tl-scan` / `tl-print` / `tl-cure` / `tl-design` into each slug folder
+  (use `SHARED_TL` / `tlIcons()` instead). Always ship `tl-finish.png` per indication.

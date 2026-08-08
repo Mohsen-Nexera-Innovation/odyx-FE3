@@ -212,7 +212,7 @@ export default function ClinicalCasesShowcase() {
             <br />
             achieve more with ODYX.
           </p>
-          <Link className="hv2-btn hv2-cc-cta" href="/solutions/clinical-applications/all-cases">
+          <Link className="hv2-btn hv2-cc-cta" href="/cases#featured-cases">
             <span>View Clinical Cases</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M4 12h15M13 6l6 6-6 6" />

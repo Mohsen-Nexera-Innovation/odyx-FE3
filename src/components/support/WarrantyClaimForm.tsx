@@ -1,8 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { CheckCircle2, Upload } from 'lucide-react';
-import { WARRANTY_CLAIM_PRODUCT_OPTIONS } from './data';
+import { ApiError } from '@/lib/api/client';
+import {
+  createWarrantyClaimApi,
+  type WarrantyClaimProduct,
+} from '@/lib/api/leads';
+import { SUPPORT_PRODUCTS } from './data';
 
 const inputClass =
   'w-full h-[42px] rounded-[8px] border border-[#E5E7EB] bg-white px-3.5 text-[13px] font-medium text-[#0A1020] placeholder:text-[#9CA3AF] outline-none transition-colors focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]';
@@ -10,8 +15,12 @@ const labelClass = 'text-[13px] font-bold text-[#0A1020]';
 
 export function WarrantyClaimForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [invoiceName, setInvoiceName] = useState('');
   const [imagesName, setImagesName] = useState('');
+  const [invoiceFile, setInvoiceFile] = useState<File | null>(null);
+  const [evidenceFiles, setEvidenceFiles] = useState<File[]>([]);
 
   if (submitted) {
     return (
@@ -27,12 +36,54 @@ export function WarrantyClaimForm() {
     );
   }
 
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const fullName = String(data.get('fullName') ?? '').trim();
+    const email = String(data.get('email') ?? '').trim();
+    const phone = String(data.get('phone') ?? '').trim();
+    const clinicName = String(data.get('clinicName') ?? '').trim();
+    const product = String(data.get('product') ?? '').trim() as WarrantyClaimProduct;
+    const serialNumber = String(data.get('serialNumber') ?? '').trim();
+    const purchaseDate = String(data.get('purchaseDate') ?? '').trim();
+    const dealer = String(data.get('dealer') ?? '').trim();
+    const problemDescription = String(data.get('problemDescription') ?? '').trim();
+
+    setSubmitting(true);
+    try {
+      await createWarrantyClaimApi({
+        fullName,
+        email,
+        phone,
+        clinicName: clinicName || undefined,
+        product,
+        serialNumber,
+        purchaseDate,
+        dealer,
+        problemDescription,
+        invoice: invoiceFile,
+        evidence: evidenceFiles,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      const message =
+        err instanceof ApiError
+          ? err.message
+          : err instanceof Error
+            ? err.message
+            : 'Could not submit your claim. Please try again.';
+      setError(message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
+      onSubmit={onSubmit}
       className="overflow-hidden rounded-[12px] border border-[#E5E7EB] bg-white"
     >
       <div className="flex flex-col justify-center bg-[#F9FAFB] border-b border-[#E5E7EB] px-5 py-3 sm:px-6">
@@ -45,14 +96,57 @@ export function WarrantyClaimForm() {
       <div className="p-5 sm:p-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Full Name</span>
+            <input
+              required
+              name="fullName"
+              type="text"
+              placeholder="Your full name"
+              className={inputClass}
+            />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Email</span>
+            <input
+              required
+              name="email"
+              type="email"
+              placeholder="you@clinic.com"
+              className={inputClass}
+            />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Phone</span>
+            <input
+              required
+              name="phone"
+              type="tel"
+              placeholder="+20 100 123 4567"
+              className={inputClass}
+            />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Clinic / Lab (Optional)</span>
+            <input
+              name="clinicName"
+              type="text"
+              placeholder="Clinic or lab name"
+              className={inputClass}
+            />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
             <span className={labelClass}>Product</span>
-            <select required defaultValue="" className={`${inputClass} appearance-none`}>
+            <select required name="product" defaultValue="" className={`${inputClass} appearance-none`}>
               <option value="" disabled>
                 Select Product
               </option>
-              {WARRANTY_CLAIM_PRODUCT_OPTIONS.map((name) => (
-                <option key={name} value={name}>
-                  {name}
+              {SUPPORT_PRODUCTS.map((product) => (
+                <option key={product.id} value={product.id}>
+                  {product.name}
                 </option>
               ))}
             </select>
@@ -60,17 +154,29 @@ export function WarrantyClaimForm() {
 
           <label className="flex flex-col gap-1.5">
             <span className={labelClass}>Serial Number</span>
-            <input required type="text" placeholder="Enter serial number" className={inputClass} />
+            <input
+              required
+              name="serialNumber"
+              type="text"
+              placeholder="Enter serial number"
+              className={inputClass}
+            />
           </label>
 
           <label className="flex flex-col gap-1.5">
             <span className={labelClass}>Purchase Date</span>
-            <input required type="date" className={inputClass} />
+            <input required name="purchaseDate" type="date" className={inputClass} />
           </label>
 
           <label className="flex flex-col gap-1.5">
             <span className={labelClass}>Dealer / Store</span>
-            <input required type="text" placeholder="Enter dealer or store name" className={inputClass} />
+            <input
+              required
+              name="dealer"
+              type="text"
+              placeholder="Enter dealer or store name"
+              className={inputClass}
+            />
           </label>
         </div>
 
@@ -78,7 +184,9 @@ export function WarrantyClaimForm() {
         <span className={labelClass}>Problem Description</span>
         <textarea
           required
+          name="problemDescription"
           rows={4}
+          minLength={10}
           placeholder="Describe the issue you are experiencing..."
           className="w-full resize-vertical rounded-[8px] border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-[13px] font-medium text-[#0A1020] placeholder:text-[#9CA3AF] outline-none transition-colors focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]"
         />
@@ -97,7 +205,11 @@ export function WarrantyClaimForm() {
               type="file"
               accept="application/pdf,image/*"
               className="sr-only"
-              onChange={(e) => setInvoiceName(e.target.files?.[0]?.name ?? '')}
+              onChange={(e) => {
+                const file = e.target.files?.[0] ?? null;
+                setInvoiceFile(file);
+                setInvoiceName(file?.name ?? '');
+              }}
             />
           </label>
         </div>
@@ -112,21 +224,38 @@ export function WarrantyClaimForm() {
             <span className="truncate">{imagesName || 'Choose File'}</span>
             <input
               type="file"
-              accept="image/*"
+              accept="image/*,video/*"
               multiple
               className="sr-only"
-              onChange={(e) => setImagesName(e.target.files?.[0]?.name ?? '')}
+              onChange={(e) => {
+                const files = Array.from(e.target.files ?? []).slice(0, 5);
+                setEvidenceFiles(files);
+                setImagesName(
+                  files.length === 0
+                    ? ''
+                    : files.length === 1
+                      ? files[0].name
+                      : `${files.length} files`,
+                );
+              }}
             />
           </label>
         </div>
       </div>
 
+        {error ? (
+          <p className="mt-4 text-center text-[13px] font-medium text-[#DC2626]" role="alert">
+            {error}
+          </p>
+        ) : null}
+
         <div className="mt-8 flex justify-center">
           <button
             type="submit"
-            className="inline-flex h-[46px] w-[200px] items-center justify-center rounded-[8px] bg-[#0050D8] px-7 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0]"
+            disabled={submitting}
+            className="inline-flex h-[46px] w-[200px] items-center justify-center rounded-[8px] bg-[#0050D8] px-7 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0] disabled:opacity-60"
           >
-            Submit Claim
+            {submitting ? 'Submitting…' : 'Submit Claim'}
           </button>
         </div>
       </div>

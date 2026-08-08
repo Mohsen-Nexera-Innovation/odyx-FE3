@@ -82,7 +82,8 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
   const { auth, skipRefresh, headers: initHeaders, ...rest } = options;
   const headers = new Headers(initHeaders);
   if (!headers.has('Accept')) headers.set('Accept', 'application/json');
-  if (rest.body && !headers.has('Content-Type')) {
+  const isFormData = typeof FormData !== 'undefined' && rest.body instanceof FormData;
+  if (rest.body && !isFormData && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
   }
   if (auth) {
@@ -98,7 +99,7 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
     if (refreshed) {
       const retryHeaders = new Headers(initHeaders);
       if (!retryHeaders.has('Accept')) retryHeaders.set('Accept', 'application/json');
-      if (rest.body && !retryHeaders.has('Content-Type')) {
+      if (rest.body && !isFormData && !retryHeaders.has('Content-Type')) {
         retryHeaders.set('Content-Type', 'application/json');
       }
       const next = getAccessToken();

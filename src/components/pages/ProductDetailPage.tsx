@@ -87,13 +87,13 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
                     shopProductId={m.shopProductId}
                     accent={product.accent === 'orange' ? 'orange' : 'sky'}
                     extra={
-                      <Link className="btn btn-ghost btn-sm" href="/support">
+                      <Link className="btn btn-ghost btn-sm" href="/request-demo">
                         Request a Demo <Arrow />
                       </Link>
                     }
                   />
                 ) : (
-                  <Link className="btn btn-ghost btn-sm" href="/support">
+                  <Link className="btn btn-ghost btn-sm" href="/request-demo">
                     Request a Demo <Arrow />
                   </Link>
                 )}
@@ -163,7 +163,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             desc={product.overview}
             heroImg={product.heroImg ?? product.img}
             heroAlt={product.name}
-            primaryAction={{ label: 'Request a Demo', href: '/support' }}
+            primaryAction={{ label: 'Request a Demo', href: '/request-demo' }}
               secondaryAction={{ label: 'Contact Sales', href: '/sales' }}
             actions={
               buyableModel?.shopProductId ? (
@@ -218,7 +218,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
               />
             ) : (
               <PageActions>
-                <Link className="btn btn-sign" href="/support">
+                <Link className="btn btn-sign" href="/request-demo">
                   Request a Demo <Arrow />
                 </Link>
                 {isDigitalWorkflowDimmed(product.workflowStep) ? (
@@ -288,12 +288,12 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             />
           ) : (
             <PageActions>
-              <Link className={layout === 'signature' ? 'btn btn-sign' : 'btn'} href="/support">
+              <Link className={layout === 'signature' ? 'btn btn-sign' : 'btn'} href="/request-demo">
                 Request a Demo <Arrow />
               </Link>
               <Link
                 className={`btn btn-ghost${layout === 'signature' ? ' prod-print-hero__ghost' : ''}`}
-                href="/support#contact"
+                href="/sales"
               >
                 Contact Sales <Arrow />
               </Link>

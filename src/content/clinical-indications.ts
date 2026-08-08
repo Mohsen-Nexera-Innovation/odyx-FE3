@@ -285,7 +285,7 @@ const surgicalGuide: ClinicalIndicationContent = {
     imgAlt: 'Clear implant surgical guide with metal sleeve',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Surgical Guide Resin', 'Rigid. Precise. Autoclavable class.', '/img/printers/x1/resin-surgical-guide.jpg')),
+  products: products(resin('Surgical Guide Resin', 'Rigid. Precise. Autoclavable class.', '/img/resins/surgical-guide-pro.jpg')),
   timeline: tl(
     'surgical-guide',
     [
@@ -362,7 +362,7 @@ const implantModel: ClinicalIndicationContent = {
     imgAlt: 'Detailed 3D-printed implant planning model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Model Resin', 'Sharp detail. Stable geometry.', '/img/printers/x1/resin-model.jpg')),
+  products: products(resin('Model Resin', 'Sharp detail. Stable geometry.', '/img/resins/model-resin.jpg')),
   timeline: tl(
     'implant-model',
     [
@@ -441,7 +441,7 @@ const aligners: ClinicalIndicationContent = {
     imgAlt: 'Clear aligner on a printed dental model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Model Resin', 'Batch-ready. Sharp cusps.', '/img/printers/x1/resin-model.jpg')),
+  products: products(resin('Model Resin', 'Batch-ready. Sharp cusps.', '/img/resins/model-resin.jpg')),
   timeline: tl(
     'aligners',
     [
@@ -518,7 +518,7 @@ const retainers: ClinicalIndicationContent = {
     imgAlt: 'Clear retainer on a printed model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Model Resin', 'Stable. Replacement-ready.', '/img/printers/x1/resin-model.jpg')),
+  products: products(resin('Model Resin', 'Stable. Replacement-ready.', '/img/resins/model-resin.jpg')),
   timeline: tl(
     'retainers',
     [
@@ -587,7 +587,7 @@ const dentures: ClinicalIndicationContent = {
     imgAlt: 'Full-arch prosthetic teeth set in a pink gum base',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Denture Base Resin', 'Biocompatible. Esthetic pink.', '/img/printers/x1/resin-temporary.jpg')),
+  products: products(resin('Denture Base Resin', 'Biocompatible. Esthetic pink.', '/img/resins/temporary-restoration.jpg')),
   timeline: tl(
     'dentures',
     [
@@ -664,7 +664,7 @@ const tryIns: ClinicalIndicationContent = {
     imgAlt: 'Printed try-in prosthesis on a model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Temporary Resin', 'Fast try-ins. Easy adjust.', '/img/printers/x1/resin-temporary.jpg')),
+  products: products(resin('Temporary Resin', 'Fast try-ins. Easy adjust.', '/img/resins/temporary-restoration.jpg')),
   timeline: tl(
     'try-ins',
     [

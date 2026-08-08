@@ -29,6 +29,55 @@ export type CreateQuoteRequestInput = {
   message?: string;
 };
 
+export type DemoRequestRole =
+  | 'dentist'
+  | 'lab'
+  | 'distributor'
+  | 'university'
+  | 'student'
+  | 'other';
+
+export type DemoRequestProduct =
+  | 'scanner'
+  | 'design'
+  | 'printer'
+  | 'cure'
+  | 'resins'
+  | 'workflow';
+
+export type DemoRequestApplication =
+  | 'crown-bridge'
+  | 'implant'
+  | 'surgical-guide'
+  | 'orthodontics'
+  | 'denture'
+  | 'smile-design'
+  | 'general';
+
+export type DemoRequestType = 'online' | 'onsite' | 'distributor';
+
+export type CreateDemoRequestInput = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  country: string;
+  city?: string;
+  language?: string;
+  role: DemoRequestRole;
+  clinicName: string;
+  chairs: string;
+  specialty?: string;
+  products: DemoRequestProduct[];
+  applications?: DemoRequestApplication[];
+  demoType: DemoRequestType;
+  preferredDate: string;
+  preferredTime: string;
+  timezone?: string;
+  notes?: string;
+  marketingOptIn?: boolean;
+};
+
 export type ApiLead = {
   id: string;
   source: string;
@@ -55,6 +104,55 @@ export function createQuoteRequestApi(input: CreateQuoteRequestInput) {
   return apiFetch<ApiLead>('/leads/quote-request', {
     method: 'POST',
     body: JSON.stringify(input),
+  });
+}
+
+export function createDemoRequestApi(input: CreateDemoRequestInput) {
+  return apiFetch<ApiLead>('/leads/demo-request', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}
+
+export type WarrantyClaimProduct =
+  | 's1-scanner'
+  | 'p1-26-printer'
+  | 'cure-unit'
+  | 'resin-materials';
+
+export type CreateWarrantyClaimInput = {
+  fullName: string;
+  email: string;
+  phone: string;
+  clinicName?: string;
+  product: WarrantyClaimProduct;
+  serialNumber: string;
+  purchaseDate: string;
+  dealer: string;
+  problemDescription: string;
+  invoice?: File | null;
+  evidence?: File[];
+};
+
+export function createWarrantyClaimApi(input: CreateWarrantyClaimInput) {
+  const body = new FormData();
+  body.append('fullName', input.fullName);
+  body.append('email', input.email);
+  body.append('phone', input.phone);
+  if (input.clinicName?.trim()) body.append('clinicName', input.clinicName.trim());
+  body.append('product', input.product);
+  body.append('serialNumber', input.serialNumber);
+  body.append('purchaseDate', input.purchaseDate);
+  body.append('dealer', input.dealer);
+  body.append('problemDescription', input.problemDescription);
+  if (input.invoice) body.append('invoice', input.invoice);
+  for (const file of input.evidence ?? []) {
+    body.append('evidence', file);
+  }
+
+  return apiFetch<ApiLead>('/leads/warranty-claim', {
+    method: 'POST',
+    body,
   });
 }
 

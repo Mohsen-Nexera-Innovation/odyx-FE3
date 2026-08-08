@@ -46,7 +46,7 @@ const SEARCH_ITEMS = [
   { label: "Support Hub", href: "/support" },
   { label: "Register your device", href: "/support#register" },
   { label: "Learning Center", href: "/learning" },
-  { label: "Request a Demo", href: "/support" },
+  { label: "Request a Demo", href: "/request-demo" },
 ];
 
 const AI_ANSWERS: Record<string, string> = {

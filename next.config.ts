@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
     // Allow high-quality product shots (default allowlist is only [75]).
     qualities: [75, 95],
   },
+  async redirects() {
+    return [
+      {
+        source: "/solutions/clinical-applications/all-cases",
+        destination: "/cases",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

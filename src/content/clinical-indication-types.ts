@@ -140,17 +140,18 @@ export const ECOSYSTEM_PRODUCTS = {
 
 export const SHARED_TL = {
   scan: '/img/clinical-sdc/tl/tl-scan.png',
+  design: '/img/clinical/shared/tl-design.png',
   print: '/img/clinical-sdc/tl/tl-print.png',
   cure: '/img/clinical-sdc/tl/tl-cure.png',
 } as const;
 
+/** Per-indication finish icon; scan/design/print/cure are shared across indications. */
 export function tlIcons(slug: string) {
-  const base = `/img/clinical/${slug}/tl`;
   return {
-    scan: `${base}/tl-scan.png`,
-    design: `${base}/tl-design.png`,
-    print: `${base}/tl-print.png`,
-    cure: `${base}/tl-cure.png`,
-    finish: `${base}/tl-finish.png`,
+    scan: SHARED_TL.scan,
+    design: SHARED_TL.design,
+    print: SHARED_TL.print,
+    cure: SHARED_TL.cure,
+    finish: `/img/clinical/${slug}/tl/tl-finish.png`,
   };
 }

@@ -21,7 +21,7 @@ export const CERAMIC_CROWN_RESIN_HERO = {
   img: '/images/hero-ceramic-crown-resin.png',
   imgAlt:
     'ODYX Ceramic Crown Resin bottle with a 3D-printed ceramic crown',
-  primaryCta: { label: 'Request a Demo', href: '/support' },
+  primaryCta: { label: 'Request a Demo', href: '/request-demo' },
   secondaryCta: {
     label: 'Download Datasheet',
     href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Ceramic%20Crown%20Resin',

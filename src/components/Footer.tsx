@@ -31,7 +31,7 @@ const COLUMNS = [
       { label: 'Academy', href: '/learning' },
       { label: 'Webinars', href: '/learning#videos' },
       { label: 'Guides', href: '/learning#articles' },
-      { label: 'Cases', href: '/#cases-preview' },
+      { label: 'Cases', href: '/cases' },
     ],
   },
   {

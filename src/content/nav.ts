@@ -360,6 +360,50 @@ export const HEADER_MENUS: NavGroup[] = [
     ],
   },
   {
+    label: "Real Cases",
+    href: "/cases",
+    items: [
+      {
+        label: "Case Library",
+        href: "/cases",
+        desc: "Browse real clinical cases",
+      },
+      {
+        label: "By Application",
+        href: "/cases#by-application",
+        desc: "Restorative, implant, ortho, denture",
+      },
+      {
+        label: "By Product",
+        href: "/cases#by-product",
+        desc: "Scanner, printer, cure, resin",
+      },
+    ],
+    columns: [
+      {
+        title: "Library",
+        href: "/cases",
+        items: [
+          {
+            label: "Case Library",
+            href: "/cases",
+            desc: "Browse real clinical cases",
+          },
+          {
+            label: "By Application",
+            href: "/cases#by-application",
+            desc: "Restorative, implant, ortho, denture",
+          },
+          {
+            label: "By Product",
+            href: "/cases#by-product",
+            desc: "Scanner, printer, cure, resin",
+          },
+        ],
+      },
+    ],
+  },
+  {
     label: "Learning",
     href: "/learning",
     dimmed: true,

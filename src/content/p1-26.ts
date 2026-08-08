@@ -26,7 +26,7 @@ export const P1_26_HERO = {
   outputBridgeImg: '/img/printers/p126/hero/output-bridge.png',
   outputArchImg: '/img/printers/p126/hero/output-arch.png',
   imgAlt: 'ODYX P1-26 dental 3D printer with printed dental models',
-  primaryCta: { label: 'Request Demo', href: '/support' },
+  primaryCta: { label: 'Request Demo', href: '/request-demo' },
   secondaryCta: {
     label: 'Download Brochure',
     href: '/products/3d-printers#downloads',

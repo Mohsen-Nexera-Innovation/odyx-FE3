@@ -30,7 +30,7 @@ export const MODEL_RESIN_CONTENT: ResinDetailContent = {
     imgAlt: 'ODYX Model Resin bottle with a 3D-printed dental arch model',
     imgWidth: 2320,
     imgHeight: 1120,
-    primaryCta: { label: 'Request a Demo', href: '/support' },
+    primaryCta: { label: 'Request a Demo', href: '/request-demo' },
     secondaryCta: {
       label: 'Download Datasheet',
       href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Model%20Resin',

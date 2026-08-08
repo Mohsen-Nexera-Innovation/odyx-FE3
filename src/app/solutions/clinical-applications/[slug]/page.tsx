@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import ClinicalIndicationPage from '@/components/pages/ClinicalIndicationPage';
 import ClinicalCasesListingPage from '@/components/pages/ClinicalCasesListingPage';
-import ClinicalAllCasesPage from '@/components/pages/ClinicalAllCasesPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import {
   CLINICAL_INDICATION_META,
@@ -20,13 +19,14 @@ type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   const indicationSlugs = CLINICAL_INDICATION_SLUGS.filter((slug) => slug !== 'same-day-crown');
-  return [...indicationSlugs, ...CLINICAL_CASE_LISTING_SLUGS, ALL_CLINICAL_CASES_SLUG].map(
-    (slug) => ({ slug }),
-  );
+  return [...indicationSlugs, ...CLINICAL_CASE_LISTING_SLUGS].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === ALL_CLINICAL_CASES_SLUG) {
+    return { title: 'Real Case Library | ODYX' };
+  }
   const caseMeta = CLINICAL_CASE_LISTING_META[slug];
   if (caseMeta) return { title: caseMeta.title, description: caseMeta.description };
   const meta = CLINICAL_INDICATION_META[slug];
@@ -37,13 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ClinicalIndicationRoute({ params }: Props) {
   const { slug } = await params;
 
+  // Old all-cases gallery → Real Case Library
   if (slug === ALL_CLINICAL_CASES_SLUG) {
-    return (
-      <>
-        <ClinicalAllCasesPage />
-        <InnerPageMotion />
-      </>
-    );
+    permanentRedirect('/cases');
   }
 
   const listing = getClinicalCaseListing(slug);
