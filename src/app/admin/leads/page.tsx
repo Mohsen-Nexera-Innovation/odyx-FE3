@@ -55,6 +55,21 @@ function scenarioSummary(lead: ApiLead): string {
     return parts.join(' · ');
   }
 
+  if (lead.source === 'WARRANTY_CLAIM' || s.kind === 'warranty-claim') {
+    const claim = scenario as {
+      productLabel?: string;
+      product?: string;
+      serialNumber?: string;
+      dealer?: string;
+    };
+    const parts: string[] = ['Warranty'];
+    if (typeof claim.productLabel === 'string') parts.push(claim.productLabel);
+    else if (typeof claim.product === 'string') parts.push(claim.product);
+    if (typeof claim.serialNumber === 'string') parts.push(claim.serialNumber);
+    if (typeof claim.dealer === 'string') parts.push(claim.dealer);
+    return parts.join(' · ');
+  }
+
   const results = s.results;
   const monthly = results?.monthlySavings;
   const payback = results?.paybackMonths;

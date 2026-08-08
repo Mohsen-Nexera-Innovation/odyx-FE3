@@ -114,6 +114,48 @@ export function createDemoRequestApi(input: CreateDemoRequestInput) {
   });
 }
 
+export type WarrantyClaimProduct =
+  | 's1-scanner'
+  | 'p1-26-printer'
+  | 'cure-unit'
+  | 'resin-materials';
+
+export type CreateWarrantyClaimInput = {
+  fullName: string;
+  email: string;
+  phone: string;
+  clinicName?: string;
+  product: WarrantyClaimProduct;
+  serialNumber: string;
+  purchaseDate: string;
+  dealer: string;
+  problemDescription: string;
+  invoice?: File | null;
+  evidence?: File[];
+};
+
+export function createWarrantyClaimApi(input: CreateWarrantyClaimInput) {
+  const body = new FormData();
+  body.append('fullName', input.fullName);
+  body.append('email', input.email);
+  body.append('phone', input.phone);
+  if (input.clinicName?.trim()) body.append('clinicName', input.clinicName.trim());
+  body.append('product', input.product);
+  body.append('serialNumber', input.serialNumber);
+  body.append('purchaseDate', input.purchaseDate);
+  body.append('dealer', input.dealer);
+  body.append('problemDescription', input.problemDescription);
+  if (input.invoice) body.append('invoice', input.invoice);
+  for (const file of input.evidence ?? []) {
+    body.append('evidence', file);
+  }
+
+  return apiFetch<ApiLead>('/leads/warranty-claim', {
+    method: 'POST',
+    body,
+  });
+}
+
 export function listLeadsApi() {
   return apiFetch<ApiLead[]>('/admin/leads', { auth: true });
 }
