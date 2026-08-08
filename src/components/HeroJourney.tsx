@@ -89,7 +89,7 @@ export default function HeroJourney() {
   const step = STEPS[active];
   return (
     <div className="herocard hero-video" data-accent={step.accent}>
-      <video id="bgvideo" className="hc-video" autoPlay muted loop playsInline preload="auto" poster="/img/feat-scanner.png" aria-hidden>
+      <video id="bgvideo" className="hc-video" autoPlay muted loop playsInline preload="auto" poster="/img/scanner/s1-hero.png" aria-hidden>
         {/* Replace /video/dental-scan-animation.mp4 with official ODYX hero film when delivered */}
         <source src="/video/dental-scan-animation.mp4" type="video/mp4" />
       </video>

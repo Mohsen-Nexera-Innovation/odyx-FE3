@@ -67,7 +67,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     name: 'ODYX-S1',
     desc: 'Intraoral scanner for full-arch color impressions with real-time mesh preview and open STL / PLY / OBJ export.',
     price: 8999 * USD_TO_EGP_DUMMY,
-    image: '/img/feat-scanner.png',
+    image: '/img/scanner/s1-hero.png',
     category: 'scanner',
     unit: '1 unit',
     href: '/products/odyx-s1-intraoral-scanner',

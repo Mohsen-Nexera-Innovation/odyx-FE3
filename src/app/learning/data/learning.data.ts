@@ -6,7 +6,7 @@ import type { LearningPageData } from '../types';
  * 2) High-quality product/clinical renders under /images/ otherwise
  */
 const WEB = {
-  scanner: '/img/hv2-cut/scanner-product.webp',
+  scanner: '/img/scanner/s1-hero.png',
   printer: '/img/hv2-cut/printer-product.webp',
   curing: '/img/hv2-cut/cure-product.webp',
   resins: '/img/hv2-cut/resins-product.webp',
@@ -18,7 +18,7 @@ const WEB = {
   newsWorkflow: '/img/hv2-news/workflow.webp',
   newsResin: '/img/hv2-news/resin-line.webp',
   newsScan: '/img/hv2-news/scan-live.webp',
-  ecoScanner: '/img/hv2-eco/eco-scanner.webp',
+  ecoScanner: '/img/scanner/s1-hero-cutout.png',
   ecoPrinter: '/img/hv2-eco/eco-printer.webp',
   ecoCure: '/img/hv2-eco/eco-cure.webp',
   ecoResin: '/img/hv2-eco/eco-resin.webp',

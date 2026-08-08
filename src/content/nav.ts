@@ -161,7 +161,7 @@ export const HEADER_MENUS: NavGroup[] = [
             label: "ODYX-S1",
             href: "/products/odyx-s1-intraoral-scanner",
             desc: "Chairside 3D impressions in seconds",
-            img: "/img/cutouts/feat-scanner-cutout.png",
+            img: "/img/scanner/s1-hero-cutout.png",
           },
         ],
       },

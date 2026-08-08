@@ -109,7 +109,7 @@ export const CURE_UV02_ECOSYSTEM = {
       name: 'ODYX S1',
       subtitle: 'Intra-oral Scanner',
       href: '/products/odyx-s1-intraoral-scanner',
-      img: '/img/printers/p126/eco/scanner.png',
+      img: '/img/scanner/s1-hero-cutout.png',
     },
     {
       name: 'P1-26',

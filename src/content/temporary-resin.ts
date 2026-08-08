@@ -98,7 +98,7 @@ export const TEMPORARY_RESIN_COMPATIBLE = [
   {
     id: 's1',
     label: 'ODYX S1 Intraoral Scanner',
-    img: '/images/compat-s1.png',
+    img: '/img/scanner/s1-hero-cutout.png',
     imgAlt: 'ODYX S1 intraoral scanner',
     href: '/products/odyx-s1-intraoral-scanner',
   },

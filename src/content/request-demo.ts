@@ -97,7 +97,7 @@ export const DEMO_PRODUCTS = [
     id: 'scanner' as const,
     title: 'Scanner',
     subtitle: 'ODYX IO Scanner',
-    image: '/img/hv2-cut/scanner-product.webp',
+    image: '/img/scanner/s1-hero-cutout.png',
   },
   {
     id: 'design' as const,

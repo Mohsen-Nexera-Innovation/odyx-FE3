@@ -147,7 +147,7 @@ export default function HomeV2Page() {
             <i className="hv2-o-sh hv2-sh-cure" />
             <i className="hv2-o-sh hv2-sh-printers" />
             <i className="hv2-o-sh hv2-sh-resins" />
-            <img className="hv2-o-img hv2-o-scanner" src="/img/hv2-cut/scanner-product.webp" alt="" />
+            <img className="hv2-o-img hv2-o-scanner" src="/img/scanner/s1-hero-cutout.png" alt="" />
             <img className="hv2-o-img hv2-o-cure" src="/img/hv2-cut/cure-product.webp" alt="" />
             <img className="hv2-o-img hv2-o-printers" src="/img/hv2-cut/printer-product.webp" alt="" />
             <img className="hv2-o-img hv2-o-resins" src="/img/hv2-cut/resins-product.webp" alt="" />

@@ -16,7 +16,7 @@ const WORKFLOW_ORDER = [
 
 /** Transparent PNGs for the light products overview (studio bg removed). */
 const CUTOUTS: Partial<Record<(typeof WORKFLOW_ORDER)[number], string>> = {
-  'odyx-s1-intraoral-scanner': '/img/cutouts/feat-scanner-cutout.png',
+  'odyx-s1-intraoral-scanner': '/img/scanner/s1-hero-cutout.png',
   design: '/img/cutouts/feat-design-cutout.png',
   '3d-printers': '/img/cutouts/feat-printer-cutout.png',
   'curing-machines': '/img/cutouts/feat-curing-cutout.png',

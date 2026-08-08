@@ -107,7 +107,7 @@ export const ECOSYSTEM_PRODUCTS = {
     id: 'scanner',
     name: 'ODYX S1',
     sub: 'Intraoral Scanner',
-    img: '/img/clinical-sdc/card-scanner.png',
+    img: '/img/scanner/s1-hero-cutout.png',
     href: '/products/odyx-s1-intraoral-scanner',
     layout: 'stack' as const,
   },

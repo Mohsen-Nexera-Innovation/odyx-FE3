@@ -523,7 +523,7 @@ export const WORKS_WITH = {
       name: 'ODYX-S1 scanner',
       body: 'Exports STL and OBJ to any CAD, with no ecosystem restriction.',
       href: '/products/odyx-s1-intraoral-scanner',
-      img: '/img/cutouts/feat-scanner-cutout.png',
+      img: '/img/scanner/s1-hero-cutout.png',
     },
     {
       name: 'ODYX P1-26',

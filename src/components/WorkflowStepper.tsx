@@ -12,7 +12,7 @@ const BRAND_SCANNERS = { src: '/brand/odyx-scanners-wide.png', alt: 'ODYX Scanne
 const BRAND_PRINTING = { src: '/brand/odyx-digital-printing.png', alt: 'ODYX Digital Printing' };
 
 const STEPS: WStep[] = [
-  { no: '01', label: 'Scan', product: 'ODYX-S1', desc: 'A chairside ODYX-S1 scan captures the mouth in seconds, with no molds, just instant accurate 3D data.', img: '/img/feat-scanner.png', accent: 'teal', brand: BRAND_SCANNERS },
+  { no: '01', label: 'Scan', product: 'ODYX-S1', desc: 'A chairside ODYX-S1 scan captures the mouth in seconds, with no molds, just instant accurate 3D data.', img: '/img/scanner/s1-hero.png', accent: 'teal', brand: BRAND_SCANNERS },
   { no: '02', label: 'Design', product: 'Design Software', desc: 'Scan data flows into CAD, where the restoration is designed with precise, repeatable accuracy.', img: '/img/odyx/design.webp', accent: 'teal', brand: BRAND_SCANNERS },
   { no: '03', label: 'Print', product: 'ODYX P1-26', desc: 'The restoration is built layer by layer on the ODYX P1-26 using validated ODYX resin.', img: '/img/feat-printer.jpg', accent: 'orange', brand: BRAND_PRINTING },
   { no: '04', label: 'Cure', product: 'ODYX Cure', desc: 'Controlled UV on ODYX Cure completes polymerization for full strength and biocompatibility.', img: '/img/feat-curing.jpg', accent: 'orange', brand: BRAND_PRINTING },

@@ -17,7 +17,7 @@ const CARDS = [
     key: "scanner",
     title: ["ODYX S1", "Intraoral Scanner"],
     href: "/products/odyx-s1-intraoral-scanner",
-    img: "/img/hv2-cut/scanner-product.webp",
+    img: "/img/scanner/s1-hero-cutout.png",
     alt: "The ODYX S1 intraoral scanner on its docking stand",
   },
   {
