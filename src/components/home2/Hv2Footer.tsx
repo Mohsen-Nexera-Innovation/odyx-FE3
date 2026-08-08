@@ -26,7 +26,6 @@ const COLUMNS: FooterColumn[] = [
       { label: "Our Mission", href: "/about#vision-mission" },
       { label: "Careers", href: "/about#team" },
       { label: "News & Events", href: "/about#news" },
-      { label: "Contact Us", href: "/support#contact" },
     ],
   },
   {
@@ -67,6 +66,7 @@ const COLUMNS: FooterColumn[] = [
       { label: "Live Chat", href: "/support#chat" },
       { label: "Downloads", href: "/support#manuals" },
       { label: "Warranty", href: "/support#warranty" },
+      { label: "Contact Us", href: "/support#contact" },
     ],
   },
 ];

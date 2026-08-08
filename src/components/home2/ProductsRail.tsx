@@ -68,14 +68,47 @@ function ArrowRight() {
 export default function ProductsRail({ children }: { children?: ReactNode }) {
   const railRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(0);
+  const [stopCount, setStopCount] = useState(0);
+
+  // Snap stops are each card's own start edge (the rail scroll-snaps to
+  // `.hv2-pr-card { scroll-snap-align: start }`), not an even fraction of
+  // the scrollable range — the cards are deliberately unequal widths, so a
+  // fraction-based target rarely lands on a real snap point and the browser's
+  // mandatory snap immediately pulled it back, which is why the arrows/dots
+  // looked inert. Reading the actual card offsets keeps every programmatic
+  // scroll on a position the browser will actually hold. At some breakpoints
+  // a couple of the trailing cards clamp to the same max scroll position
+  // (little overflow left to give); those collapse into one stop so a dot
+  // never claims a position the rail can't actually reach.
+  const getStops = useCallback((el: HTMLDivElement) => {
+    const max = el.scrollWidth - el.clientWidth;
+    if (max <= 1) return [0];
+    const cards = Array.from(el.querySelectorAll<HTMLElement>(".hv2-pr-card")).slice(0, PAGES);
+    const stops: number[] = [];
+    for (const c of cards) {
+      const v = Math.max(0, Math.min(c.offsetLeft, max));
+      if (!stops.length || v - stops[stops.length - 1] > 4) stops.push(v);
+    }
+    if (stops[stops.length - 1] !== max) stops.push(max);
+    return stops;
+  }, []);
 
   const onScroll = useCallback(() => {
     const el = railRef.current;
     if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    const t = max > 0 ? el.scrollLeft / max : 0;
-    setPage(Math.round(t * (PAGES - 1)));
-  }, []);
+    const stops = getStops(el);
+    setStopCount(stops.length);
+    let closest = 0;
+    let closestDist = Infinity;
+    stops.forEach((stop, i) => {
+      const dist = Math.abs(el.scrollLeft - stop);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = i;
+      }
+    });
+    setPage(closest);
+  }, [getStops]);
 
   useEffect(() => {
     onScroll();
@@ -89,11 +122,13 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
   const goTo = (k: number) => {
     const el = railRef.current;
     if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    const t = Math.min(Math.max(k, 0), PAGES - 1);
-    el.scrollTo({ left: (max * t) / (PAGES - 1), behavior: "smooth" });
+    const stops = getStops(el);
+    const t = Math.min(Math.max(k, 0), stops.length - 1);
+    el.scrollTo({ left: stops[t] ?? 0, behavior: "smooth" });
     setPage(t);
   };
+
+  const canScroll = stopCount > 1;
 
   return (
     <div className="hv2-prod-panel">
@@ -143,39 +178,47 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
         </div>
       </div>
 
-      <div className="hv2-dots hv2-prod-dots">
-        {Array.from({ length: PAGES }, (_, k) => (
-          <button
-            key={k}
-            type="button"
-            className={`hv2-dot${k === page ? " is-on" : ""}`}
-            aria-label={`Show products page ${k + 1} of ${PAGES}`}
-            aria-current={k === page}
-            onClick={() => goTo(k)}
-          />
-        ))}
-      </div>
+      {canScroll && (
+        <div className="hv2-dots hv2-prod-dots">
+          {Array.from({ length: stopCount }, (_, k) => (
+            <button
+              key={k}
+              type="button"
+              className={`hv2-dot${k === page ? " is-on" : ""}`}
+              aria-label={`Show products page ${k + 1} of ${stopCount}`}
+              aria-current={k === page}
+              onClick={() => goTo(k)}
+            />
+          ))}
+        </div>
+      )}
 
-      <button
-        type="button"
-        className="hv2-nav hv2-prod-nav hv2-prod-nav-prev"
-        aria-label="Show previous products"
-        onClick={() => goTo(page - 1)}
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="m15 6-6 6 6 6" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        className="hv2-nav hv2-prod-nav hv2-prod-nav-next"
-        aria-label="Show next products"
-        onClick={() => goTo(page + 1)}
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="m9 6 6 6-6 6" />
-        </svg>
-      </button>
+      {canScroll && (
+        <>
+          <button
+            type="button"
+            className="hv2-nav hv2-prod-nav hv2-prod-nav-prev"
+            aria-label="Show previous products"
+            onClick={() => goTo(page - 1)}
+            disabled={page === 0}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="m15 6-6 6 6 6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="hv2-nav hv2-prod-nav hv2-prod-nav-next"
+            aria-label="Show next products"
+            onClick={() => goTo(page + 1)}
+            disabled={page === stopCount - 1}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="m9 6 6 6-6 6" />
+            </svg>
+          </button>
+        </>
+      )}
     </div>
   );
 }

@@ -148,7 +148,7 @@ function HubActionCard({ card, rv }: { card: ActionCard; rv: number }) {
           {card.desc[1]}
         </p>
       </div>
-      <a className="hv2-btn hv2-hub-cta" role="button" tabIndex={0}>
+      <a className="hv2-btn hv2-hub-cta" href={card.href}>
         <span>{card.cta}</span>
         <CtaArrow />
       </a>
@@ -198,7 +198,7 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
-            <a className="hv2-btn hv2-hub-cta" role="button" tabIndex={0}>
+            <a className="hv2-btn hv2-hub-cta" href="/learning">
               <span>Start Learning</span>
               <CtaArrow />
             </a>
@@ -241,7 +241,7 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
-            <a className="hv2-btn hv2-hub-cta" role="button" tabIndex={0}>
+            <a className="hv2-btn hv2-hub-cta" href="/support">
               <span>Get Support</span>
               <CtaArrow />
             </a>
