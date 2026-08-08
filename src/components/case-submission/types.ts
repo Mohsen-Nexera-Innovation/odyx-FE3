@@ -1,4 +1,4 @@
-export type SendMethod = 'whatsapp' | 'email';
+export type SendMethod = 'whatsapp' | 'email' | '';
 
 export type DoctorInformation = {
   fullName: string;
@@ -48,6 +48,6 @@ export const INITIAL_CASE_DATA: CaseSubmissionData = {
     colorNotes: '',
     instructions: '',
   },
-  sendMethod: 'whatsapp',
+  sendMethod: '',
   confirmed: false,
 };
