@@ -120,7 +120,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
      min-height, so a flat 68px offset let the orbit ring/product collage
      clip behind the navbar; this adds a small, fixed clearance instead of
      an oversized gap. */
-  padding-top:100px; padding-bottom:clamp(22px,2.8vw,40px);
+  padding-top:100px; padding-bottom:0;
   /* Backdrop extracted from the client mock (hv2-section-bg.jpg): light
      gradient field with the glow ellipses upper-right, aligned with the
      product collage. Fades into the flat surface of the next sections. */
@@ -141,7 +141,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
   --u:0.048828cqw; /* one reference pixel = 100cqw / 2048 */
   /* Subtle light-blue top separator + cool tint pooling behind the
      products; the left text field stays clean white. */
-  border-top:1px solid rgba(0,80,216,.09);
+  border-top:0;
   background:
     radial-gradient(46% 70% at 64% 46%, rgba(122,156,235,.10), transparent 70%),
     radial-gradient(30% 46% at 90% 28%, rgba(150,170,240,.08), transparent 72%);
@@ -252,10 +252,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
 
 .wo{
   position:relative; isolation:isolate; margin-top:clamp(10px,1.4vw,20px);
-  /* Faint hairline closing the band below — hero + why read as one
-     section, and the line marks where it ends. */
-  border-bottom:3px solid #fff;
-  padding-bottom:clamp(14px,1.8vw,26px);
+  padding-bottom:0;
 }
 
 /* Client-supplied backdrop (hv2-why-bg.png, 1672x941): cool-white field
@@ -522,10 +519,10 @@ body:has(.hv2) header#hdr.on-light.at-top{
   --pc-prev-s:1;
 }
 
-/* Section rhythm: the reference puts 56px between the previous panel's bottom
-   edge and the eyebrow's cap top, and keeps the heading tight to the deck. */
+/* Tight handoff from Why ODYX — previous hero/wo bottom padding was stacking
+   into a large empty band; keep only a small breath before the eyebrow. */
 #path{
-  padding-top:calc(8 * var(--pc-u)); padding-bottom:calc(30 * var(--pc-u));
+  padding-top:clamp(4px,.8vw,10px); padding-bottom:calc(30 * var(--pc-u));
   /* Cleaner than the shared surface — the reference runs this band close to
      white and carries only a faint blue pool behind the deck. */
   background:linear-gradient(180deg,var(--hv2-surface) 0%,#FAFCFF 40%,#F6F8FE 100%);
@@ -2125,7 +2122,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
 @media (max-width: 1000px){
   .wo-stage{
     aspect-ratio:auto; container-type:normal;
-    padding:clamp(26px,6vw,44px) 24px clamp(30px,6vw,48px);
+    padding:clamp(26px,6vw,44px) 24px clamp(12px,3vw,20px);
     display:flex; flex-direction:column; align-items:center;
   }
   .wo-orbit{display:none}

@@ -14,16 +14,16 @@ import { cartCountAsync } from '@/lib/commerce';
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
 
 const SearchIcon = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
   </svg>
 );
 
 const CartIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <path d="M6 6h15l-1.5 9h-12z" />
     <path d="M6 6l-1-3H2" />
-    <circle cx="9" cy="20" r="1.2" fill="currentColor" stroke="none" />
+    <circle cx="9" cy="20" r="1.5" fill="currentColor" stroke="none" />
     <circle cx="18" cy="20" r="1.2" fill="currentColor" stroke="none" />
   </svg>
 );
@@ -326,6 +326,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [expandedNav, setExpandedNav] = useState<string | null>(null);
   const [langOpen, setLangOpen] = useState(false);
+  const [forceClose, setForceClose] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -410,18 +411,18 @@ export default function Header() {
   }, [pathname]);
 
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth > 767) {
+    const handleResize = () => {
+      if (window.innerWidth > 1024) {
         setOpen(false);
         setExpandedNav(null);
       }
     };
-    window.addEventListener('resize', onResize, { passive: true });
-    return () => window.removeEventListener('resize', onResize);
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open && window.innerWidth <= 767 ? 'hidden' : '';
+    document.body.style.overflow = open && window.innerWidth <= 1024 ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
@@ -434,6 +435,21 @@ export default function Header() {
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
   }, []);
+
+  useEffect(() => {
+    if (forceClose) {
+      const reset = () => setForceClose(false);
+      const timer = setTimeout(() => {
+        window.addEventListener('mousemove', reset, { once: true });
+        window.addEventListener('scroll', reset, { once: true });
+      }, 50);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('mousemove', reset);
+        window.removeEventListener('scroll', reset);
+      };
+    }
+  }, [forceClose]);
 
   const signOut = async () => {
     await logout();
@@ -448,10 +464,11 @@ export default function Header() {
   const closeMenu = () => {
     setOpen(false);
     setExpandedNav(null);
+    setForceClose(true);
   };
 
   const toggleMobileSection = (label: string, e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (window.innerWidth > 767) return;
+    if (window.innerWidth > 1024) return;
     e.preventDefault();
     setExpandedNav((prev) => (prev === label ? null : label));
   };
@@ -485,7 +502,7 @@ export default function Header() {
         <Link href="/" className="logo" aria-label="ODYX home">
           <img className="logo-img" src="/brand/odyx-company.png" alt="ODYX" />
         </Link>
-        <nav className={`nav-menu${open ? ' open' : ''}`} aria-label="Main">
+        <nav className={`nav-menu${open ? ' open' : ''}${forceClose ? ' force-close' : ''}`} aria-label="Main">
           {HEADER_MENUS.map((m) => (
             <div
               className={`nav-item${m.columns ? ' nav-item--mega' : ''}${m.dimmed ? ' is-dimmed' : ''}${expandedNav === m.label ? ' exp' : ''}`}

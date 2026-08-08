@@ -83,17 +83,25 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
   const getStops = useCallback((el: HTMLDivElement) => {
     const max = el.scrollWidth - el.clientWidth;
     if (max <= 1) return [0];
+    // Prefer layout offsets relative to the rail itself — offsetLeft can
+    // resolve against `.hv2-rail-wrap` (position:relative) rather than the
+    // scrolling element, so derive from bounding rects for reliability.
+    const railLeft = el.getBoundingClientRect().left;
     const cards = Array.from(el.querySelectorAll<HTMLElement>(".hv2-pr-card")).slice(0, PAGES);
     const stops: number[] = [];
     for (const c of cards) {
-      const v = Math.max(0, Math.min(c.offsetLeft, max));
+      const v = Math.max(
+        0,
+        Math.min(el.scrollLeft + (c.getBoundingClientRect().left - railLeft), max),
+      );
       if (!stops.length || v - stops[stops.length - 1] > 4) stops.push(v);
     }
+    if (!stops.length) stops.push(0);
     if (stops[stops.length - 1] !== max) stops.push(max);
     return stops;
   }, []);
 
-  const onScroll = useCallback(() => {
+  const measure = useCallback(() => {
     const el = railRef.current;
     if (!el) return;
     const stops = getStops(el);
@@ -111,13 +119,29 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
   }, [getStops]);
 
   useEffect(() => {
-    onScroll();
     const el = railRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(onScroll);
+    measure();
+    // Images loading grow scrollWidth without changing the rail's client
+    // box — observe cards too, and remeasure on load / late layout.
+    const ro = new ResizeObserver(measure);
     ro.observe(el);
-    return () => ro.disconnect();
-  }, [onScroll]);
+    el.querySelectorAll<HTMLElement>(".hv2-pr-card").forEach((c) => ro.observe(c));
+    const imgs = el.querySelectorAll("img");
+    imgs.forEach((img) => {
+      if (!img.complete) img.addEventListener("load", measure);
+    });
+    const t1 = window.setTimeout(measure, 100);
+    const t2 = window.setTimeout(measure, 600);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      imgs.forEach((img) => img.removeEventListener("load", measure));
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.removeEventListener("resize", measure);
+    };
+  }, [measure]);
 
   const goTo = (k: number) => {
     const el = railRef.current;
@@ -136,7 +160,7 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
         {children}
 
         <div className="hv2-rail-wrap rv" data-rv="1">
-          <div className="hv2-rail" ref={railRef} onScroll={onScroll}>
+          <div className="hv2-rail" ref={railRef} onScroll={measure}>
             {CARDS.map((c) => {
               const disabled = "disabled" in c && c.disabled;
               const inner = (
