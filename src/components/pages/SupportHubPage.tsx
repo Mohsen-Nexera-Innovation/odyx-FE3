@@ -19,6 +19,7 @@ const QUICK_ACCESS = [
     description: 'Step-by-step guides and product manuals',
     linkLabel: 'View Manuals',
     href: '/support/manuals',
+    theme: 'blue' as const,
   },
   {
     icon: Download,
@@ -26,6 +27,7 @@ const QUICK_ACCESS = [
     description: 'Software, firmware and other resources',
     linkLabel: 'View Downloads',
     href: '/support/downloads',
+    theme: 'purple' as const,
   },
   {
     icon: HelpCircle,
@@ -33,6 +35,7 @@ const QUICK_ACCESS = [
     description: 'Find answers to the most common questions',
     linkLabel: 'Browse FAQs',
     href: '/support/faqs',
+    theme: 'green' as const,
   },
   {
     icon: ShieldCheck,
@@ -40,6 +43,7 @@ const QUICK_ACCESS = [
     description: 'Check coverage and submit a claim',
     linkLabel: 'Warranty Details',
     href: '/support/warranty',
+    theme: 'orange' as const,
   },
   {
     icon: Headphones,
@@ -47,8 +51,9 @@ const QUICK_ACCESS = [
     description: 'Contact our technical support team',
     linkLabel: 'Contact Support',
     href: '/sales',
+    theme: 'indigo' as const,
   },
-] as const;
+];
 
 export default function SupportHubPage() {
   const router = useRouter();
@@ -59,11 +64,9 @@ export default function SupportHubPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-white pt-[90px] pb-16 font-[var(--font-tajawal),Tajawal,sans-serif]">
-      <SupportContainer className="flex flex-col gap-10 sm:gap-12">
-        <SupportBreadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Support' }]} />
-
-        <div className="flex flex-col items-center gap-6 pt-2 sm:pt-4">
+    <div className="min-h-dvh bg-white pb-4 font-[var(--font-tajawal),Tajawal,sans-serif]">
+      <div className="w-full bg-[url('/img/hv2-section-bg.jpg')] bg-no-repeat bg-[center_top] bg-cover pt-[100px] lg:pt-[140px] pb-20 lg:pb-28">
+        <SupportContainer className="flex flex-col items-center gap-6">
           <SupportPageHero />
           <SupportSearchBar
             value={query}
@@ -71,11 +74,13 @@ export default function SupportHubPage() {
             onSubmit={search}
             size="lg"
             placeholder="Search manuals, FAQs, downloads, or support articles..."
-            className="max-w-[640px]"
+            className="max-w-[640px] w-full"
           />
-        </div>
+        </SupportContainer>
+      </div>
 
-        <section aria-labelledby="quick-access-heading" className="flex flex-col gap-5">
+      <SupportContainer className="flex flex-col gap-3 md:gap-4">
+        <section aria-labelledby="quick-access-heading" className="flex flex-col gap-4 md:gap-5 pt-5">
           <div className="flex items-center justify-between">
             <h2 id="quick-access-heading" className="text-[20px] font-extrabold text-[#0A1020]">
               Quick Access
@@ -95,7 +100,7 @@ export default function SupportHubPage() {
           </div>
         </section>
 
-        <section aria-labelledby="support-by-product-heading" className="flex flex-col gap-5">
+        <section aria-labelledby="support-by-product-heading" className="flex flex-col gap-4 md:gap-5">
           <div className="flex items-center justify-between">
             <h2 id="support-by-product-heading" className="text-[20px] font-extrabold text-[#0A1020]">
               Support by Product
@@ -115,7 +120,7 @@ export default function SupportHubPage() {
           </div>
         </section>
 
-        <section aria-label="Service status" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <section aria-label="Service status" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-[12px] border border-gray-100/60 shadow-[0_4px_40px_rgba(0,0,0,0.02)] divide-y sm:divide-y-0 sm:divide-x divide-gray-100/60 overflow-hidden bg-white">
           {STATUS_CARDS.map((status) => (
             <StatusCard key={status.id} status={status} />
           ))}

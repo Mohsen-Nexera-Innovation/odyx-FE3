@@ -18,9 +18,8 @@ export function CategorySidebar({
   onSelect: (id: string) => void;
 }) {
   return (
-    <nav aria-label={title} className="rounded-[12px] border border-[#E5E7EB] bg-white p-3">
-      <p className="px-2 pb-2 pt-1 text-[12px] font-bold uppercase tracking-wide text-[#9CA3AF]">{title}</p>
-      <ul className="flex flex-col gap-0.5">
+    <nav aria-label={title} className="w-full rounded-[12px] border border-gray-100/60 bg-[#F9FAFB] p-4 shadow-[0_4px_40px_rgba(0,0,0,0.02)]">
+      <ul className="flex flex-col gap-1">
         {items.map((item) => {
           const active = item.id === activeId;
           return (
@@ -29,14 +28,19 @@ export function CategorySidebar({
                 type="button"
                 onClick={() => onSelect(item.id)}
                 aria-current={active ? 'true' : undefined}
-                className={`flex w-full items-center justify-between gap-2 rounded-[8px] px-3 py-2.5 text-left text-[13px] font-semibold transition-colors ${
-                  active ? 'bg-[#0050D8] text-white' : 'text-[#374151] hover:bg-[#F3F7FF] hover:text-[#0050D8]'
+                className={`relative flex w-full items-center justify-between gap-2 px-4 py-2.5 text-start text-[13.5px] transition-colors rounded-[8px] ${
+                  active 
+                    ? 'bg-[#F4F8FD] font-bold text-[#0050D8]' 
+                    : 'bg-transparent font-medium text-[#4B5563] hover:text-[#0050D8] hover:bg-black/5'
                 }`}
               >
+                {active && (
+                  <span className="absolute left-0 top-1/2 h-[18px] w-[3px] -translate-y-1/2 rounded-full bg-[#0050D8]" />
+                )}
                 <span>{item.label}</span>
                 {typeof item.count === 'number' && (
                   <span
-                    className={`text-[11px] font-bold ${active ? 'text-white/80' : 'text-[#9CA3AF]'}`}
+                    className={`text-[11px] font-bold ${active ? 'text-[#0050D8]' : 'text-[#9CA3AF]'}`}
                   >
                     {item.count}
                   </span>

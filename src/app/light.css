@@ -58,6 +58,11 @@ main{
     radial-gradient(900px 560px at 88% 18%, rgba(var(--sky-rgb),.06), transparent 55%),
     linear-gradient(180deg, var(--paper) 0%, #eef6fc 40%, var(--paper-2) 70%, var(--paper) 100%);
 }
+/* Support pages: white background, natural height */
+main:has(.support-page){
+  min-height:0;
+  background:#ffffff;
+}
 
 /* ---------- Token flip inside every section + footer (hero is not .sec) ---------- */
 .sec, footer{

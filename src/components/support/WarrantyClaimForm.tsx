@@ -33,53 +33,46 @@ export function WarrantyClaimForm() {
         e.preventDefault();
         setSubmitted(true);
       }}
-      className="rounded-[12px] border border-[#E5E7EB] bg-white p-5 sm:p-6"
+      className="overflow-hidden rounded-[12px] border border-[#E5E7EB] bg-white"
     >
-      <h3 className="text-[16px] font-bold text-[#0A1020]">Submit a Warranty Claim</h3>
-      <p className="mt-1 text-[13px] font-medium text-[#6B7280]">
-        Please fill out the form and we will review your warranty claim.
-      </p>
-
-      <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <label className="flex flex-col gap-1.5">
-          <span className={labelClass}>Product</span>
-          <select required defaultValue="" className={`${inputClass} appearance-none`}>
-            <option value="" disabled>
-              Select product
-            </option>
-            {WARRANTY_CLAIM_PRODUCT_OPTIONS.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1.5">
-          <span className={labelClass}>Serial Number</span>
-          <input required type="text" placeholder="e.g. ODYX-S1-000123" className={inputClass} />
-        </label>
-
-        <label className="flex flex-col gap-1.5">
-          <span className={labelClass}>Full Name</span>
-          <input required type="text" placeholder="Your full name" className={inputClass} />
-        </label>
-
-        <label className="flex flex-col gap-1.5">
-          <span className={labelClass}>Email</span>
-          <input required type="email" placeholder="you@clinic.com" className={inputClass} />
-        </label>
-
-        <label className="flex flex-col gap-1.5">
-          <span className={labelClass}>Purchase Date</span>
-          <input required type="date" className={inputClass} />
-        </label>
-
-        <label className="flex flex-col gap-1.5">
-          <span className={labelClass}>Date of Issue</span>
-          <input required type="date" className={inputClass} />
-        </label>
+      <div className="flex flex-col justify-center bg-[#F9FAFB] border-b border-[#E5E7EB] px-5 py-3 sm:px-6">
+        <h3 className="text-[16px] font-bold text-[#0A1020]">Submit a Warranty Claim</h3>
+        <p className="mt-1 text-[13px] font-medium text-[#6B7280]">
+          Please fill out the form below and our team will review your claim.
+        </p>
       </div>
+
+      <div className="p-5 sm:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Product</span>
+            <select required defaultValue="" className={`${inputClass} appearance-none`}>
+              <option value="" disabled>
+                Select Product
+              </option>
+              {WARRANTY_CLAIM_PRODUCT_OPTIONS.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Serial Number</span>
+            <input required type="text" placeholder="Enter serial number" className={inputClass} />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Purchase Date</span>
+            <input required type="date" className={inputClass} />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className={labelClass}>Dealer / Store</span>
+            <input required type="text" placeholder="Enter dealer or store name" className={inputClass} />
+          </label>
+        </div>
 
       <label className="mt-4 flex flex-col gap-1.5">
         <span className={labelClass}>Problem Description</span>
@@ -91,11 +84,14 @@ export function WarrantyClaimForm() {
         />
       </label>
 
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="flex flex-col gap-1.5">
-          <span className={labelClass}>Upload Invoice / Proof of Purchase</span>
-          <label className="flex h-[42px] cursor-pointer items-center gap-2 rounded-[8px] border border-dashed border-[#D1D5DB] bg-[#F7F9FB] px-3.5 text-[13px] font-semibold text-[#6B7280] transition-colors hover:border-[#0050D8] hover:text-[#0050D8]">
-            <Upload size={15} aria-hidden />
+          <div>
+            <span className={labelClass}>Upload Invoice / Proof of Purchase</span>
+            <p className="mt-0.5 text-[11px] font-medium text-[#6B7280]">(PDF, JPG, PNG, Max 10MB)</p>
+          </div>
+          <label className="mt-2 inline-flex h-[38px] w-[130px] cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#0050D8]/20 bg-white px-3.5 text-[13px] font-bold text-[#0050D8] transition-colors hover:bg-[#F3F7FF] hover:border-[#0050D8]/40">
+            <Upload size={14} aria-hidden />
             <span className="truncate">{invoiceName || 'Choose File'}</span>
             <input
               type="file"
@@ -107,9 +103,12 @@ export function WarrantyClaimForm() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <span className={labelClass}>Upload Images (Optional)</span>
-          <label className="flex h-[42px] cursor-pointer items-center gap-2 rounded-[8px] border border-dashed border-[#D1D5DB] bg-[#F7F9FB] px-3.5 text-[13px] font-semibold text-[#6B7280] transition-colors hover:border-[#0050D8] hover:text-[#0050D8]">
-            <Upload size={15} aria-hidden />
+          <div>
+            <span className={labelClass}>Upload Images / Videos (Optional)</span>
+            <p className="mt-0.5 text-[11px] font-medium text-[#6B7280]">(Show the issue clearly)</p>
+          </div>
+          <label className="mt-2 inline-flex h-[38px] w-[130px] cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#0050D8]/20 bg-white px-3.5 text-[13px] font-bold text-[#0050D8] transition-colors hover:bg-[#F3F7FF] hover:border-[#0050D8]/40">
+            <Upload size={14} aria-hidden />
             <span className="truncate">{imagesName || 'Choose File'}</span>
             <input
               type="file"
@@ -122,12 +121,15 @@ export function WarrantyClaimForm() {
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="mt-6 inline-flex h-[46px] w-full sm:w-auto items-center justify-center rounded-[8px] bg-[#0050D8] px-7 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0]"
-      >
-        Submit Claim
-      </button>
+        <div className="mt-8 flex justify-center">
+          <button
+            type="submit"
+            className="inline-flex h-[46px] w-[200px] items-center justify-center rounded-[8px] bg-[#0050D8] px-7 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0]"
+          >
+            Submit Claim
+          </button>
+        </div>
+      </div>
     </form>
   );
 }

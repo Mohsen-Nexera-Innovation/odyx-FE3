@@ -27,27 +27,38 @@ export function FAQsPage() {
   }, [query, category]);
 
   const filterPills = [
-    { id: 'all', label: 'All', count: FAQS.length },
-    ...FAQ_CATEGORIES.map((c) => ({ id: c.id, label: c.label, count: c.count })),
+    { id: 'all', label: 'All' },
+    ...FAQ_CATEGORIES.map((c) => ({ id: c.id, label: c.label })),
   ];
 
+  const sidebarItems = FAQ_CATEGORIES.map((c) => ({
+    id: c.id,
+    label: c.label,
+    count: FAQS.filter((f) => f.category === c.id).length,
+  }));
+
   return (
-    <div className="min-h-dvh bg-white pt-[90px] pb-16 font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4 font-[var(--font-tajawal),Tajawal,sans-serif]">
       <SupportContainer className="flex flex-col gap-6">
-        <SupportBreadcrumb
-          crumbs={[{ label: 'Home', href: '/' }, { label: 'Support', href: '/support' }, { label: 'FAQs' }]}
-        />
 
-        <SupportPageHeader title="FAQs" description="Answers to the most common questions." />
 
-        <div className="flex flex-col gap-3">
-          <SupportSearchBar value={query} onChange={setQuery} placeholder="Search FAQs..." />
-          <FilterPills items={filterPills} activeId={category} onSelect={setCategory} />
+        <div className="flex flex-col gap-4">
+          <SupportBreadcrumb crumbs={[{ label: 'Support', href: '/support' }, { label: 'FAQs' }]} />
+          <SupportPageHeader title="FAQs" description="Find answers to the most common questions." />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-6 items-start">
-          <div className="lg:sticky lg:top-[100px]">
-            <CategorySidebar title="Categories" items={FAQ_CATEGORIES} activeId={category} onSelect={setCategory} />
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="w-full sm:w-[320px] shrink-0">
+            <SupportSearchBar value={query} onChange={setQuery} placeholder="Search FAQs..." />
+          </div>
+          <div className="flex-none">
+            <FilterPills items={filterPills} activeId={category} onSelect={setCategory} />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-4 lg:gap-6 items-start">
+          <div className="hidden lg:block lg:sticky lg:top-[100px]">
+            <CategorySidebar title="Categories" items={sidebarItems} activeId={category} onSelect={setCategory} />
           </div>
 
           <div className="min-w-0">

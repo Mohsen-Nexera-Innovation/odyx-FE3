@@ -16,9 +16,9 @@ export function SupportBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
             <li key={crumb.label} className="flex items-center gap-1.5">
               {i > 0 && <ChevronRight size={13} className="text-[#C9D1DC]" aria-hidden />}
               {crumb.href && !isLast ? (
-                <Link href={crumb.href} className="text-[#6B7280] hover:text-[#0050D8] transition-colors">
+                <a href={crumb.href} className="!text-[#6B7280] hover:text-[#0050D8] transition-colors">
                   {crumb.label}
-                </Link>
+                </a>
               ) : (
                 <span aria-current={isLast ? 'page' : undefined} className="text-[#0A1020] font-semibold">
                   {crumb.label}
