@@ -35,14 +35,10 @@ export function useGlobalTools() {
 }
 
 const SEARCH_ITEMS = [
-  { label: "Workflow Hub", href: "/workflows" },
   { label: "ODYX-S1 Scanner", href: "/products/odyx-s1-intraoral-scanner" },
-  { label: "ODYX-S1", href: "/products/odyx-s1-intraoral-scanner" },
   { label: "ODYX P1-26", href: "/products/odyx-p1-26" },
   { label: "ODYX Cure", href: "/products/curing-machines" },
   { label: "Resin & Materials", href: "/products/resins" },
-  { label: "For Dentists", href: "/solutions/dentists" },
-  { label: "For Dental Labs", href: "/solutions/labs" },
   { label: "Support Hub", href: "/support" },
   { label: "Register your device", href: "/support#register" },
   { label: "Learning Center", href: "/learning" },
