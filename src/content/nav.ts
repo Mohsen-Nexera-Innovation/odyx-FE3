@@ -409,7 +409,6 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Learning",
     href: "/learning",
-    dimmed: true,
     items: [
       {
         label: "Learning Center",
