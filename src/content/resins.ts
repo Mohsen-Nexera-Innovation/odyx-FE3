@@ -71,7 +71,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'High-strength, highly esthetic resin for long-lasting crowns with natural translucency.',
     img: '/img/resins/card-ceramic.png',
-    imgAlt: 'ODYX Ceramic Crown Resin bottle with printed crowns',
+    imgAlt: 'ODYX Ceramic Crown Resin 1kg bottle, shade A1',
     href: '/products/ceramic-crown-resin',
   },
   {
@@ -80,7 +80,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'Reliable and easy-to-finish resin for temporary crowns and provisional restorations.',
     img: '/img/resins/card-temporary.png',
-    imgAlt: 'ODYX Temporary Resin bottle with printed temporary crowns',
+    imgAlt: 'ODYX Temporary Restoration Resin bottle, shade A2, 1 kg',
     href: '/products/temporary-restoration-resin',
   },
   {
@@ -98,7 +98,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'High-precision resin for detailed study models with sharp features and accuracy.',
     img: '/img/resins/card-model.png',
-    imgAlt: 'ODYX Model Resin bottle with printed dental model',
+    imgAlt: 'ODYX Model Resin Toughness 1kg bottle, shade A2',
     href: '/products/model-resin',
   },
   {
@@ -107,7 +107,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'Durable and strong resin for long-span bridges and high-load restorations.',
     img: '/img/resins/card-crown-bridge.png',
-    imgAlt: 'ODYX Crown & Bridge Resin bottle with printed bridge',
+    imgAlt: 'ODYX Crown & Bridge Resin 1kg bottle, shade A2',
     href: '/products/crown-bridge-resin',
   },
 ];

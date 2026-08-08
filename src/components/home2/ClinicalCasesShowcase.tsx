@@ -29,7 +29,7 @@ const CASES: ClinicalCase[] = [
     title: "Implant Cases",
     description: "See real cases of implant planning and placement with precision.",
     image: "/img/hv2-cases/implant.webp",
-    alt: "Ceramic crowns and an implant-supported bridge on a dark reflective surface",
+    alt: "Four-unit ceramic posterior bridge on a white studio background",
     icon: "implant",
   },
   {
@@ -37,7 +37,7 @@ const CASES: ClinicalCase[] = [
     title: "Restorative Cases",
     description: "Crowns, bridges and veneers finished to a natural, lasting result.",
     image: "/img/hv2-cases/restorative.webp",
-    alt: "A sectioned dental model carrying a row of finished ceramic crowns",
+    alt: "Seven-unit ceramic bridge on a white studio background",
     icon: "crown",
   },
   {
@@ -45,7 +45,7 @@ const CASES: ClinicalCase[] = [
     title: "Full-Arch Cases",
     description: "Guided full-arch restorations planned and delivered end to end.",
     image: "/img/hv2-cases/surgical.webp",
-    alt: "A printed implant surgical guide with metal sleeves seated on an arch model",
+    alt: "Clear full-arch implant surgical guide on a white studio background",
     icon: "arch",
   },
   {
@@ -53,7 +53,7 @@ const CASES: ClinicalCase[] = [
     title: "Aligner Cases",
     description: "Clear aligner treatments tracked from first scan to final retainer.",
     image: "/img/hv2-cases/orthodontic.webp",
-    alt: "Clear orthodontic aligners in front of two printed arch models",
+    alt: "Clear orthodontic aligner tray isolated on a white background",
     icon: "aligner",
   },
 ];

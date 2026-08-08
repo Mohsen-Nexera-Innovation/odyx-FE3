@@ -72,12 +72,12 @@ export const CURE_UV02_SPECS = [
 ] as const;
 
 export const CURE_UV02_APPS = [
-  { label: 'Surgical Guides', img: '/img/cure-uv02/apps/guides.png', alt: 'Surgical guide' },
+  { label: 'Surgical Guides', img: '/img/cure-uv02/apps/guides.png', alt: 'Clear surgical guide with metal and colored sleeves' },
   { label: 'Crowns & Bridges', img: '/img/cure-uv02/apps/crowns.png', alt: 'Crowns and bridges' },
   { label: 'Denture Bases', img: '/img/cure-uv02/apps/dentures.png', alt: 'Denture base' },
   { label: 'Models', img: '/img/cure-uv02/apps/models.png', alt: 'Dental model' },
   { label: 'Splints & Night Guards', img: '/img/cure-uv02/apps/splints.png', alt: 'Splint' },
-  { label: 'Temporary Restorations', img: '/img/cure-uv02/apps/temps.png', alt: 'Temporary restoration' },
+  { label: 'Temporary Restorations', img: '/img/cure-uv02/apps/temps.png', alt: 'Tan temporary arch restoration' },
 ] as const;
 
 export const CURE_UV02_WORKFLOW = [
@@ -137,7 +137,7 @@ export const CURE_UV02_CASE_TABS = [
     id: 'crown',
     label: 'Crown',
     steps: [
-      { label: 'Before Curing', img: '/img/cure-uv02/app-temps.jpg', alt: 'Printed temporary before cure' },
+      { label: 'Before Curing', img: '/img/cure-uv02/app-temps.jpg', alt: 'Tan temporary arch before cure' },
       { label: 'Curing with UV-02', img: '/img/cure-uv02/act-cure.png', alt: 'Curing cycle in UV-02' },
       { label: 'Finished Restoration', img: '/img/cure-uv02/app-crowns.jpg', alt: 'Finished cured crown' },
     ],
@@ -146,9 +146,9 @@ export const CURE_UV02_CASE_TABS = [
     id: 'guide',
     label: 'Surgical Guide',
     steps: [
-      { label: 'Before Curing', img: '/img/cure-uv02/app-guides.jpg', alt: 'Guide before cure' },
+      { label: 'Before Curing', img: '/img/cure-uv02/app-guides.jpg', alt: 'Clear surgical guide before cure' },
       { label: 'Curing with UV-02', img: '/img/cure-uv02/act-cure.png', alt: 'Guide in chamber' },
-      { label: 'Finished Restoration', img: '/img/cure-uv02/app-guides.jpg', alt: 'Cured surgical guide' },
+      { label: 'Finished Restoration', img: '/img/cure-uv02/app-guides.jpg', alt: 'Cured clear surgical guide' },
     ],
   },
   {

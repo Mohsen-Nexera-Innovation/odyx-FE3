@@ -30,14 +30,14 @@ export default function TemporaryResinPage() {
       data-hero-light
       style={{
         fontFamily:
-          'var(--font-inter), var(--font-tajawal), Inter, Tajawal, system-ui, sans-serif',
+          'var(--font-tajawal), Tajawal, system-ui, sans-serif',
       }}
     >
-      <div className="mx-auto! w-full max-w-[1031px] px-5! pb-16! pt-4! sm:px-8! lg:px-[46px]! lg:pb-20! lg:pt-2!">
+      <div className="mx-auto! w-full max-w-[1240px] px-4! sm:px-8! pb-16! pt-4! lg:pb-20! lg:pt-2!">
         <section className="grid items-center gap-7 lg:min-h-[307px] lg:grid-cols-[44%_56%] lg:gap-0">
           <div className="relative z-10 lg:-translate-y-[10px]">
             <p
-              className="text-xs font-bold uppercase leading-none tracking-[0.16em]"
+              className="text-sm font-bold leading-none"
               style={{ color: BLUE }}
             >
               {hero.kicker}
@@ -47,10 +47,10 @@ export default function TemporaryResinPage() {
               <span className="font-bold">Restoration</span>{' '}
               <span className="font-normal">Resin</span>
             </h1>
-            <p className="mt-3! text-xl font-bold leading-tight" style={{ color: BLUE }}>
+            <p className="mt-3! text-2xl font-bold leading-tight" style={{ color: BLUE }}>
               {hero.tagline}
             </p>
-            <p className="mt-4! max-w-[340px] text-sm font-medium leading-[1.65] text-gray-700">
+            <p className="mt-4! max-w-[340px] text-base font-medium leading-[1.65] text-gray-700">
               {hero.body}
             </p>
             <div className="trr-hero-ctas mt-7! flex flex-wrap items-center gap-[18px]!">
@@ -81,7 +81,7 @@ export default function TemporaryResinPage() {
         <section aria-labelledby="applications-title" className="mt-1!">
           <h2
             id="applications-title"
-            className="text-[15px] font-bold leading-5"
+            className="text-base font-bold leading-5"
             style={{ color: BLUE }}
           >
             Applications
@@ -108,7 +108,7 @@ export default function TemporaryResinPage() {
                       className="h-full w-full object-contain object-center"
                     />
                   </div>
-                  <p className="flex h-8 items-center justify-center px-2! text-center text-xs font-bold text-gray-900">
+                  <p className="flex h-8 items-center justify-center px-2! text-center text-sm font-bold text-gray-900">
                     {application.label}
                   </p>
                 </Link>
@@ -133,7 +133,7 @@ export default function TemporaryResinPage() {
                   ].join(' ')}
                 >
                   <Icon className="size-11" />
-                  <span className="mt-1.5! max-w-[120px] text-[11px] font-semibold leading-[1.3] text-gray-900">
+                  <span className="mt-1.5! max-w-[120px] text-xs font-medium leading-[1.3] text-gray-900">
                     {feature.label}
                   </span>
                 </li>
@@ -144,7 +144,7 @@ export default function TemporaryResinPage() {
 
         <section className="mt-5! grid items-start gap-6 lg:grid-cols-[minmax(0,1.65fr)_minmax(280px,1fr)] lg:gap-6!">
           <div>
-            <h2 className="text-[15px] font-bold leading-5" style={{ color: BLUE }}>
+            <h2 className="text-base font-bold leading-5" style={{ color: BLUE }}>
               Technical Specifications
             </h2>
             <div className="trr-specs-grid mt-[9px]! grid overflow-hidden rounded-lg border border-gray-200 sm:grid-cols-2">
@@ -159,7 +159,7 @@ export default function TemporaryResinPage() {
                 >
                   <div
                     className={[
-                      'trr-specs-row grid h-[30px] border-b border-gray-200 bg-gray-50/60 text-[11px] font-bold',
+                      'trr-specs-row grid h-[30px] border-b border-gray-200 bg-gray-50/60 text-xs font-bold',
                       columnIndex === 0 ? 'grid-cols-[48%_52%]' : 'grid-cols-[64%_36%]',
                     ].join(' ')}
                   >
@@ -172,7 +172,7 @@ export default function TemporaryResinPage() {
                     <div
                       key={spec.property}
                       className={[
-                        'trr-specs-row grid min-h-[30px] border-b border-gray-200 text-[11px] last:border-b-0',
+                        'trr-specs-row grid min-h-[30px] border-b border-gray-200 text-xs last:border-b-0',
                         columnIndex === 0 ? 'grid-cols-[48%_52%]' : 'grid-cols-[64%_36%]',
                       ].join(' ')}
                     >
@@ -190,7 +190,7 @@ export default function TemporaryResinPage() {
           </div>
 
           <div className="h-full border-gray-200 lg:border-l lg:ps-6!">
-            <h2 className="text-[15px] font-bold leading-5" style={{ color: BLUE }}>
+            <h2 className="text-base font-bold leading-5" style={{ color: BLUE }}>
               Compatible With
             </h2>
             <ul className="mt-1! grid grid-cols-3 gap-1">
@@ -214,7 +214,7 @@ export default function TemporaryResinPage() {
                           className="h-full w-full object-contain"
                         />
                       </div>
-                      <p className="text-[10px] font-semibold leading-[1.35] text-gray-900">
+                      <p className="text-xs font-medium leading-[1.35] text-gray-900">
                         <strong>{brand}</strong> {description.join(' ')}
                       </p>
                     </Link>
@@ -228,7 +228,7 @@ export default function TemporaryResinPage() {
         <section aria-labelledby="cases-title" className="mt-8! mb-4!">
           <h2
             id="cases-title"
-            className="text-[15px] font-bold leading-5"
+            className="text-base font-bold leading-5"
             style={{ color: BLUE }}
           >
             Clinical Cases &amp; Reviews
@@ -257,7 +257,7 @@ export default function TemporaryResinPage() {
             </ul>
             <Link
               href={TEMPORARY_RESIN_CASES_CTA.href}
-              className="inline-flex h-12 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white px-8! text-xs font-bold transition hover:border-blue-300 hover:bg-blue-50/30 focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-[206px] sm:px-0!"
+              className="inline-flex h-12 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white px-8! text-sm font-bold transition hover:border-blue-300 hover:bg-blue-50/30 focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-[206px] sm:px-0!"
               style={{ color: BLUE, outlineColor: BLUE }}
             >
               {TEMPORARY_RESIN_CASES_CTA.label}

@@ -100,7 +100,7 @@ const sameDayCrown: ClinicalIndicationContent = {
         after: { img: '/img/printers/p126/case-final.png', alt: 'Finished restoration' },
       },
       {
-        before: { img: '/img/hv2-cases/restorative.webp', alt: 'Pre-op clinical view' },
+        before: { img: '/img/hv2-cases/restorative.webp', alt: 'Seven-unit ceramic bridge restoration' },
         after: { img: '/img/printers/p126/case-crown-strip.png', alt: 'Completed crown case' },
       },
     ],
@@ -127,7 +127,7 @@ const sameDayCrown: ClinicalIndicationContent = {
     videoLabel: 'Watch the case video',
     videoHref: '/support',
     thumb: '/img/hv2-cases/restorative.webp',
-    thumbAlt: 'Same-day crown clinical case',
+    thumbAlt: 'Seven-unit ceramic bridge clinical case',
   },
 };
 
@@ -169,7 +169,7 @@ const veneers: ClinicalIndicationContent = {
         after: { img: '/img/clinical/veneers/ba-after.png', alt: 'Seated ceramic veneers' },
       },
       {
-        before: { img: '/img/hv2-cases/restorative.webp', alt: 'Pre-op smile view' },
+        before: { img: '/img/hv2-cases/restorative.webp', alt: 'Seven-unit ceramic bridge restoration' },
         after: { img: '/img/printers/p126/case-final.png', alt: 'Finished veneer case' },
       },
     ],
@@ -282,7 +282,7 @@ const surgicalGuide: ClinicalIndicationContent = {
       href: 'mailto:info@odyx.dental?subject=Surgical%20Guide%20Workflow%20PDF',
     },
     img: '/img/clinical/surgical-guide/hero-cutout.png',
-    imgAlt: '3D-printed surgical guide on implant model',
+    imgAlt: 'Clear implant surgical guide with metal sleeve',
   },
   productsTitle: 'Products Used in This Workflow',
   products: products(resin('Surgical Guide Resin', 'Rigid. Precise. Autoclavable class.', '/img/resins/surgical-guide-pro.jpg')),
@@ -301,11 +301,11 @@ const surgicalGuide: ClinicalIndicationContent = {
     title: 'Before & After',
     slides: [
       {
-        before: { img: '/img/hv2-cases/implant.webp', alt: 'Planning model before guide' },
+        before: { img: '/img/hv2-cases/implant.webp', alt: 'Four-unit ceramic posterior bridge' },
         after: { img: '/img/clinical/surgical-guide/ba-after.png', alt: 'Guide seated on model' },
       },
       {
-        before: { img: '/img/printers/p126/app-guide.png', alt: 'Printed surgical guide' },
+        before: { img: '/img/printers/p126/app-guide.png', alt: 'Clear surgical guide with metal and colored sleeves' },
         after: { img: '/img/clinical-hub/foot-implant.png', alt: 'Guide on implant model' },
       },
     ],
@@ -342,7 +342,7 @@ const surgicalGuide: ClinicalIndicationContent = {
     videoLabel: 'Watch the case video',
     videoHref: '/support',
     thumb: '/img/clinical/surgical-guide/case-thumb.jpg',
-    thumbAlt: 'Surgical guide clinical case',
+    thumbAlt: 'Clear printed implant surgical guide',
   },
 };
 
@@ -378,8 +378,8 @@ const implantModel: ClinicalIndicationContent = {
     title: 'Before & After',
     slides: [
       {
-        before: { img: '/img/hv2-cases/implant.webp', alt: 'Digital implant plan' },
-        after: { img: '/img/clinical/implant-model/ba-after.png', alt: 'Printed implant model' },
+        before: { img: '/img/hv2-cases/implant.webp', alt: 'Four-unit ceramic posterior bridge' },
+        after: { img: '/img/clinical/implant-model/ba-after.png', alt: 'Tan 3D-printed lower dental arch model' },
       },
       {
         before: { img: '/img/printers/p126/app-models.png', alt: 'Raw printed models' },
@@ -419,7 +419,7 @@ const implantModel: ClinicalIndicationContent = {
     videoLabel: 'Watch the case video',
     videoHref: '/support',
     thumb: '/img/clinical/implant-model/case-thumb.jpg',
-    thumbAlt: 'Implant model clinical case',
+    thumbAlt: 'Four-unit ceramic posterior bridge clinical case',
   },
 };
 
@@ -457,8 +457,8 @@ const aligners: ClinicalIndicationContent = {
     title: 'Before & After',
     slides: [
       {
-        before: { img: '/img/hv2-cases/orthodontic.webp', alt: 'Pre-aligner dentition' },
-        after: { img: '/img/clinical/aligners/ba-after.png', alt: 'Clear aligner seated' },
+        before: { img: '/img/hv2-cases/orthodontic.webp', alt: 'Clear aligner tray ready for delivery' },
+        after: { img: '/img/clinical/aligners/ba-after.png', alt: 'Clear aligner seated on upper teeth' },
       },
       {
         before: { img: '/img/printers/p126/app-models.png', alt: 'Printed staging models' },
@@ -498,7 +498,7 @@ const aligners: ClinicalIndicationContent = {
     videoLabel: 'Watch the case video',
     videoHref: '/support',
     thumb: '/img/clinical/aligners/case-thumb.jpg',
-    thumbAlt: 'Aligner clinical case',
+    thumbAlt: 'Clear aligner seated on upper front teeth',
   },
 };
 
@@ -534,7 +534,7 @@ const retainers: ClinicalIndicationContent = {
     title: 'Before & After',
     slides: [
       {
-        before: { img: '/img/hv2-cases/orthodontic.webp', alt: 'Post-ortho dentition' },
+        before: { img: '/img/hv2-cases/orthodontic.webp', alt: 'Clear aligner tray on white background' },
         after: { img: '/img/clinical/retainers/ba-after.png', alt: 'Clear retainer delivered' },
       },
       {
@@ -584,7 +584,7 @@ const dentures: ClinicalIndicationContent = {
       href: 'mailto:info@odyx.dental?subject=Dentures%20Workflow%20PDF',
     },
     img: '/img/clinical/dentures/hero-cutout.png',
-    imgAlt: '3D-printed denture on a model',
+    imgAlt: 'Full-arch prosthetic teeth set in a pink gum base',
   },
   productsTitle: 'Products Used in This Workflow',
   products: products(resin('Denture Base Resin', 'Biocompatible. Esthetic pink.', '/img/resins/temporary-restoration.jpg')),
@@ -603,8 +603,8 @@ const dentures: ClinicalIndicationContent = {
     title: 'Before & After',
     slides: [
       {
-        before: { img: '/img/hv2-cases/surgical.webp', alt: 'Edentulous ridge before denture' },
-        after: { img: '/img/clinical/dentures/ba-after.png', alt: 'Delivered printed denture' },
+        before: { img: '/img/hv2-cases/surgical.webp', alt: 'Clear full-arch implant surgical guide' },
+        after: { img: '/img/clinical/dentures/ba-after.png', alt: 'Full-arch prosthetic with pink gum base' },
       },
       {
         before: { img: '/img/printers/p126/app-denture.png', alt: 'Printed denture components' },
@@ -644,7 +644,7 @@ const dentures: ClinicalIndicationContent = {
     videoLabel: 'Watch the case video',
     videoHref: '/support',
     thumb: '/img/clinical/dentures/case-thumb.jpg',
-    thumbAlt: 'Denture clinical case',
+    thumbAlt: 'Full-arch prosthetic with pink gum base',
   },
 };
 
@@ -680,7 +680,7 @@ const tryIns: ClinicalIndicationContent = {
     title: 'Before & After',
     slides: [
       {
-        before: { img: '/img/hv2-cases/surgical.webp', alt: 'Setup before try-in' },
+        before: { img: '/img/hv2-cases/surgical.webp', alt: 'Clear full-arch implant surgical guide' },
         after: { img: '/img/clinical/try-ins/ba-after.png', alt: 'Try-in seated for evaluation' },
       },
       {
@@ -711,7 +711,7 @@ const tryIns: ClinicalIndicationContent = {
     videoLabel: 'Watch the case video',
     videoHref: '/support',
     thumb: '/img/clinical/try-ins/case-thumb.jpg',
-    thumbAlt: 'Try-in clinical case',
+    thumbAlt: 'Tan temporary arch try-in restoration',
   },
 };
 

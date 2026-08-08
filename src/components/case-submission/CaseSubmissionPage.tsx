@@ -79,7 +79,7 @@ export default function CaseSubmissionPage() {
 
   if (submissionResult) {
     return (
-      <div className="min-h-dvh bg-[#F4F8FD] flex items-center justify-center pt-[80px] pb-14 font-[var(--font-tajawal),Tajawal,sans-serif]">
+      <div className="min-h-dvh bg-[#F4F8FD] flex items-center justify-center pt-[80px] pb-14">
         <CaseSuccess sendMethod={data.sendMethod} caseId={submissionResult.caseId} />
       </div>
     );
@@ -88,7 +88,7 @@ export default function CaseSubmissionPage() {
   const copy = STEP_COPY[currentStep - 1];
 
   return (
-    <div className="min-h-dvh bg-white pt-[90px]  pb-14 font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="min-h-dvh bg-white pt-[90px]  pb-14">
       <div className="w-[min(1240px,calc(100%-24px))] sm:w-[min(1240px,calc(100%-clamp(40px,8vw,112px)))] mx-auto flex flex-col gap-5">
 
         
@@ -105,13 +105,13 @@ export default function CaseSubmissionPage() {
           <div className="min-w-0">
             {/* Step heading */}
             <div className="mb-6">
-              <span className="block text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.12em] mb-2.5">
+              <span className="block text-[#0050D8] text-xs font-bold mb-2.5">
                 Step {currentStep} of 4
               </span>
               <h2 className="text-[clamp(22px,2.2vw,28px)] font-extrabold text-[#0A1020] tracking-tight leading-snug m-0">
                 {copy.title}
               </h2>
-              <p className="text-[14px] font-medium text-[#6B7280] mt-1.5 leading-relaxed">
+              <p className="text-base font-medium text-[#6B7280] mt-1.5 leading-relaxed">
                 {copy.description}
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function CaseSubmissionPage() {
                 {currentStep === 1 ? (
                   <Link
                     href="/"
-                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-[6px] bg-white !text-[#0A1020] text-[13px] font-bold transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8]"
+                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-[6px] bg-white !text-[#0A1020] text-sm font-bold transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8]"
                   >
                     Cancel
                   </Link>
@@ -164,7 +164,7 @@ export default function CaseSubmissionPage() {
                   <button
                     type="button"
                     onClick={() => moveToStep(currentStep - 1)}
-                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-[6px] bg-white text-[#0A1020] text-[13px] font-bold cursor-pointer transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
+                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-[6px] bg-white text-[#0A1020] text-sm font-bold cursor-pointer transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
                   >
                     <ArrowLeft size={16} aria-hidden />
                     Back
@@ -175,7 +175,7 @@ export default function CaseSubmissionPage() {
                   <button
                     type="button"
                     onClick={continueToNextStep}
-                    className="inline-flex items-center justify-center gap-2 min-w-[160px] min-h-[42px] px-6 py-2.5 rounded-[6px] bg-[#0A1020] text-white text-[13px] font-bold cursor-pointer shadow-[0_4px_14px_rgba(10,16,32,.18)] transition-all hover:bg-[#1a2540] hover:shadow-[0_6px_18px_rgba(10,16,32,.22)] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
+                    className="inline-flex items-center justify-center gap-2 min-w-[160px] min-h-[42px] px-6 py-2.5 rounded-[6px] bg-[#0A1020] text-white text-sm font-bold cursor-pointer shadow-[0_4px_14px_rgba(10,16,32,.18)] transition-all hover:bg-[#1a2540] hover:shadow-[0_6px_18px_rgba(10,16,32,.22)] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
                   >
                     Next Step
                     <ArrowRight size={16} aria-hidden />
@@ -184,7 +184,7 @@ export default function CaseSubmissionPage() {
                   <button
                     type="submit"
                     disabled={!data.confirmed}
-                    className="inline-flex items-center justify-center gap-2.5 min-w-[154px] min-h-[42px] px-5 py-2.5 rounded-[6px] bg-[#16A34A] text-white text-[13px] font-bold cursor-pointer transition-all hover:bg-[#15803d] disabled:opacity-45 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-[rgba(22,163,74,.2)] focus-visible:outline-offset-2 active:translate-y-px"
+                    className="inline-flex items-center justify-center gap-2.5 min-w-[154px] min-h-[42px] px-5 py-2.5 rounded-[6px] bg-[#16A34A] text-white text-sm font-bold cursor-pointer transition-all hover:bg-[#15803d] disabled:opacity-45 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-[rgba(22,163,74,.2)] focus-visible:outline-offset-2 active:translate-y-px"
                   >
                     Submit Case
                     <Check size={16} strokeWidth={2.5} aria-hidden />
@@ -193,7 +193,7 @@ export default function CaseSubmissionPage() {
               </div>
 
               {currentStep === 4 && (
-                <p className="text-center text-[#6B7280] text-[11px] mt-3">
+                <p className="text-center text-[#6B7280] text-xs mt-3">
                   By submitting, you agree to our{' '}
                   <Link href="/about#terms" className="text-[#0050D8] font-semibold hover:underline">Terms of Service</Link>
                   {' '}and{' '}

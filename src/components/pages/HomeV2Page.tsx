@@ -153,7 +153,7 @@ export default function HomeV2Page() {
             <img className="hv2-o-img hv2-o-resins" src="/img/hv2-cut/resins-product.webp" alt="" />
             <span className="hv2-chip hv2-chip-tooth">{IC.tooth}</span>
             <span className="hv2-chip hv2-chip-cube">{IC.cube}</span>
-            <span className="hv2-chip hv2-chip-target">{IC.shield}</span>
+            <span className="hv2-chip hv2-chip-target">{IC.target}</span>
             <span className="hv2-chip hv2-chip-diamond">{IC.diamond}</span>
           </div>
         </div>

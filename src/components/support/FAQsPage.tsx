@@ -38,9 +38,8 @@ export function FAQsPage() {
   }));
 
   return (
-    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4 font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4">
       <SupportContainer className="flex flex-col gap-6">
-
 
         <div className="flex flex-col gap-4">
           <SupportBreadcrumb crumbs={[{ label: 'Support', href: '/support' }, { label: 'FAQs' }]} />

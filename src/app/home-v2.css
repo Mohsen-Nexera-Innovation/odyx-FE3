@@ -101,6 +101,8 @@ body:has(.hv2) header#hdr.on-light.at-top{
 }
 .hv2-nav svg{width:18px; height:18px}
 .hv2-nav:hover{color:var(--hv2-blue); transform:scale(1.06)}
+.hv2-nav:disabled{opacity:.4; cursor:default; pointer-events:none}
+.hv2-nav:disabled:hover{color:var(--hv2-ink); transform:none}
 
 /* Dots */
 .hv2-dots{display:flex; gap:8px; justify-content:center; align-items:center}
@@ -111,10 +113,15 @@ body:has(.hv2) header#hdr.on-light.at-top{
 .hv2-dot.is-on{width:20px; background:var(--hv2-blue)}
 
 /* ---------- 1 · Hero ---------- */
+ 
 
 .hv2-hero{
-  /* Band starts right under the global fixed header (68px). */
-  padding-top:68px; padding-bottom:clamp(22px,2.8vw,40px);
+  /* Band starts under the global fixed header. The header's rendered
+     height (71–73px incl. border) is slightly taller than its 68px
+     min-height, so a flat 68px offset let the orbit ring/product collage
+     clip behind the navbar; this adds a small, fixed clearance instead of
+     an oversized gap. */
+  padding-top:100px; padding-bottom:0;
   /* Backdrop extracted from the client mock (hv2-section-bg.jpg): light
      gradient field with the glow ellipses upper-right, aligned with the
      product collage. Fades into the flat surface of the next sections. */
@@ -135,7 +142,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
   --u:0.048828cqw; /* one reference pixel = 100cqw / 2048 */
   /* Subtle light-blue top separator + cool tint pooling behind the
      products; the left text field stays clean white. */
-  border-top:1px solid rgba(0,80,216,.09);
+  border-top:0;
   background:
     radial-gradient(46% 70% at 64% 46%, rgba(122,156,235,.10), transparent 70%),
     radial-gradient(30% 46% at 90% 28%, rgba(150,170,240,.08), transparent 72%);
@@ -246,10 +253,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
 
 .wo{
   position:relative; isolation:isolate; margin-top:clamp(10px,1.4vw,20px);
-  /* Faint hairline closing the band below — hero + why read as one
-     section, and the line marks where it ends. */
-  border-bottom:3px solid #fff;
-  padding-bottom:clamp(14px,1.8vw,26px);
+  padding-bottom:0;
 }
 
 /* Client-supplied backdrop (hv2-why-bg.png, 1672x941): cool-white field
@@ -419,63 +423,47 @@ body:has(.hv2) header#hdr.on-light.at-top{
   color:#4B5364; margin:calc(3.5 * var(--u)) 0 0; white-space:pre-line;
 }
 
-/* Orbit motion: the five benefit cards ride the drawn ellipse like objects
-   circling the sphere. Each li collapses to a point that travels the path
-   (offset-path, so Safari's missing offset-anchor doesn't matter); the card
-   hangs off that point with the icon centred on the line. Depth comes from
-   a second, phase-locked animation: cards swell at the front of the orbit
-   (bottom), shrink and duck behind the orb (z-index) across the back. The
-   static mock layout stays for reduced-motion and the stacked mobile list. */
+/* Card motion: the five benefit cards stay put at their mock coordinates
+   (the layout that measures zero overlap with the central orb — the icon is
+   absolutely placed off the text block via --icx/--icy, so text never rides
+   over the sphere) and get a small "alive" wobble in place. An earlier
+   version rode the cards around the drawn ellipse with a phase-locked depth
+   scale; because the card's icon-left/text-right shape is fixed regardless
+   of where it sits on the ring, the back half of the orbit pushed each
+   card's text straight over the orb, and the per-card scale desync (each
+   card mid-animation at a different point in its own cycle) is what made
+   "Open & Flexible" read at a different size than its neighbours at any
+   given instant. Keeping the proven static position and only adding a
+   tiny synchronized float preserves motion without reintroducing either
+   bug. The static mock layout stays as-is for reduced-motion and the
+   stacked mobile list. */
 @media (min-width:1001px) and (prefers-reduced-motion: no-preference){
-  .wo{--wo-period:46s}
-  .wo-orb{z-index:2}
   .wo-item{
-    inset-inline-start:0; top:0; width:0; height:0; z-index:3;
-    offset-path:ellipse(calc(273 * var(--u)) calc(141 * var(--u))
-      at calc(501 * var(--u)) calc(245 * var(--u)));
-    offset-rotate:0deg;
-    animation:wo-orbit var(--wo-period) linear infinite;
-    animation-delay:calc(var(--ph) * -1 * var(--wo-period));
+    animation:wo-wobble 7s ease-in-out infinite;
+    animation-delay:calc(var(--ph) * -7s);
   }
-  .wo-card{
-    position:absolute; inset-inline-start:calc(-26 * var(--u)); top:0;
-    translate:0 -50%;
-    width:calc(203 * var(--u));
-    display:grid; grid-template-columns:calc(52 * var(--u)) minmax(0,1fr);
-    align-items:center; column-gap:calc(12 * var(--u));
-    /* Depth scaling pivots on the icon centre, where the card meets the path. */
-    transform-origin:calc(26 * var(--u)) 50%;
-    animation:wo-depth var(--wo-period) linear infinite;
-    animation-delay:calc(var(--ph) * -1 * var(--wo-period));
-  }
-  [dir="rtl"] .wo-card{transform-origin:calc(100% - 26 * var(--u)) 50%}
-  /* Arabic reads the sweep the other way, like the mirrored orbit art. */
-  [dir="rtl"] .wo-item, [dir="rtl"] .wo-card{animation-direction:reverse}
-  .wo-item .wo-ic{position:static; grid-row:1 / span 2}
-  .wo-t{grid-column:2}
-  .wo-d{grid-column:2; margin-top:calc(2 * var(--u))}
-  /* Freeze the carousel while the visitor is reading it. */
-  .wo-list:hover .wo-item, .wo-list:hover .wo-card{animation-play-state:paused}
+  /* Freeze the wobble while the visitor is reading. */
+  .wo-list:hover .wo-item{animation-play-state:paused}
 
   /* The two water droplets drift the same direction on their own ellipses —
      one just inside the drawn line, one just outside — at off-tempo speeds,
-     so they read as loose satellites rather than part of the card train.
+     so they read as loose satellites circling the sphere.
      Guarded by @supports: without offset-path, transform:none would strand
      them at the svg origin instead of their mock positions. */
   @supports (offset-path: ellipse(1px 1px at 0px 0px)){
     .wo-bead{
       transform:none; offset-rotate:0deg;
-      animation:wo-bead var(--wo-period) linear infinite;
+      animation:wo-bead 46s linear infinite;
     }
     .wo-bead-a{
       offset-path:ellipse(256px 128px at 501px 245px);
-      animation-duration:calc(var(--wo-period) * .8);
-      animation-delay:calc(.64 * -.8 * var(--wo-period));
+      animation-duration:36.8s;
+      animation-delay:-23.552s;
     }
     .wo-bead-b{
       offset-path:ellipse(294px 158px at 501px 245px);
-      animation-duration:calc(var(--wo-period) * 1.2);
-      animation-delay:calc(.86 * -1.2 * var(--wo-period));
+      animation-duration:55.2s;
+      animation-delay:-47.472s;
     }
   }
   @keyframes wo-bead{
@@ -483,21 +471,11 @@ body:has(.hv2) header#hdr.on-light.at-top{
     to{offset-distance:100%}
   }
 
-  /* z-index swaps happen at the far left/right of the orbit, where a card
-     can't overlap the orb, so the discrete jump is never visible. */
-  @keyframes wo-orbit{
-    0%{offset-distance:0%; z-index:3}
-    50%{z-index:3}
-    54%{z-index:1}
-    96%{z-index:1}
-    100%{offset-distance:100%; z-index:3}
-  }
-  @keyframes wo-depth{
-    0%  {scale:1.02; opacity:1}
-    25% {scale:1.15; opacity:1}   /* front of the orbit — closest */
-    50% {scale:1.02; opacity:1}
-    75% {scale:.78; opacity:.85}  /* back of the orbit — behind the orb */
-    100%{scale:1.02; opacity:1}
+  /* Tiny synchronized lift — same amplitude and timing for every card, so
+     none ever reads larger/smaller than the rest. */
+  @keyframes wo-wobble{
+    0%,100%{translate:0 0}
+    50%{translate:0 calc(-4 * var(--u))}
   }
 }
 
@@ -542,10 +520,10 @@ body:has(.hv2) header#hdr.on-light.at-top{
   --pc-prev-s:1;
 }
 
-/* Section rhythm: the reference puts 56px between the previous panel's bottom
-   edge and the eyebrow's cap top, and keeps the heading tight to the deck. */
+/* Tight handoff from Why ODYX — previous hero/wo bottom padding was stacking
+   into a large empty band; keep only a small breath before the eyebrow. */
 #path{
-  padding-top:calc(8 * var(--pc-u)); padding-bottom:calc(30 * var(--pc-u));
+  padding-top:clamp(4px,.8vw,10px); padding-bottom:calc(30 * var(--pc-u));
   /* Cleaner than the shared surface — the reference runs this band close to
      white and carries only a faint blue pool behind the deck. */
   background:linear-gradient(180deg,var(--hv2-surface) 0%,#FAFCFF 40%,#F6F8FE 100%);
@@ -2145,7 +2123,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
 @media (max-width: 1000px){
   .wo-stage{
     aspect-ratio:auto; container-type:normal;
-    padding:clamp(26px,6vw,44px) 24px clamp(30px,6vw,48px);
+    padding:clamp(26px,6vw,44px) 24px clamp(12px,3vw,20px);
     display:flex; flex-direction:column; align-items:center;
   }
   .wo-orbit{display:none}
@@ -2856,7 +2834,7 @@ body:has(.hv2) .site-footer{display:none !important}
   display:flex; align-items:stretch;
   width:calc(312 * var(--fu)); height:calc(57 * var(--fu));
   margin-top:calc(32 * var(--fu));
-  border-radius:calc(11.5 * var(--fu));
+  border-radius: 0;
   background:var(--ft-input-bg);
   border:1px solid var(--ft-input-line);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.03), 0 2px 10px rgba(1,9,26,.25);
