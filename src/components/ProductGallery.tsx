@@ -93,7 +93,7 @@ const PRODUCTS: Product[] = [
     name: "Resin",
     desc: "Five clinical resin lines engineered for the full ODYX workflow.",
     chips: ["5 clinical lines", "Validated", "Biocompatible"],
-    img: "/img/feat-resin.jpg",
+    img: "/img/resins/all-resins-cutout.png",
     accent: "orange",
     href: "/products/resins",
     shopProductId: "resin-odyx",

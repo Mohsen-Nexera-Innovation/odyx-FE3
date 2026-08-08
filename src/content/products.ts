@@ -354,8 +354,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Five clinical lines validated for the ODYX workflow.",
     overview:
       "Ceramic Resin 51%, Crown & Bridge, Temporary Restoration, Model 2.0 and Surgical Guide Pro — each with datasheets, cure profiles and safety documentation. The materials layer that makes the ecosystem clinically complete.",
-    img: "/img/feat-resin.jpg",
-    heroImg: "/img/cutouts/feat-resin-cutout.png",
+    img: "/img/resins/all-resins-cutout.png",
+    heroImg: "/img/resins/all-resins-cutout.png",
     accent: "orange",
     workflowStep: "print",
     applications: [

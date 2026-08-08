@@ -144,12 +144,13 @@ export default function HomeV2Page() {
               <ellipse cx="1430" cy="295" rx="735" ry="296" transform="rotate(-8 1430 295)" stroke="#7FA8F2" strokeWidth="2.4" opacity=".55" strokeLinecap="round" />
             </svg>
             <i className="hv2-o-sh hv2-sh-scanner" />
-            <i className="hv2-o-sh hv2-sh-cure" />
             <i className="hv2-o-sh hv2-sh-printers" />
+            <i className="hv2-o-sh hv2-sh-cure" />
             <i className="hv2-o-sh hv2-sh-resins" />
-            <img className="hv2-o-img hv2-o-scanner" src="/img/scanner/s1-hero-cutout.png" alt="" />
-            <img className="hv2-o-img hv2-o-cure" src="/img/cure-uv02/hero/machine-cutout.png" alt="" />
+            {/* Workflow order: SCAN → PRINT → WASH & CURE → resins */}
+            <img className="hv2-o-img hv2-o-scanner" src="/img/hv2-cut/scanner-product.webp" alt="" />
             <img className="hv2-o-img hv2-o-printers" src="/img/hv2-cut/printer-product.webp" alt="" />
+            <img className="hv2-o-img hv2-o-cure" src="/img/hv2-cut/cure-product.webp" alt="" />
             <img className="hv2-o-img hv2-o-resins" src="/img/hv2-cut/resins-product.webp" alt="" />
             <span className="hv2-chip hv2-chip-tooth">{IC.tooth}</span>
             <span className="hv2-chip hv2-chip-cube">{IC.cube}</span>

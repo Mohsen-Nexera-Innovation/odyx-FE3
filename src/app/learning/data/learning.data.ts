@@ -18,7 +18,7 @@ const WEB = {
   newsWorkflow: '/img/hv2-news/workflow.webp',
   newsResin: '/img/hv2-news/resin-line.webp',
   newsScan: '/img/hv2-news/scan-live.webp',
-  ecoScanner: '/img/scanner/s1-hero-cutout.png',
+  ecoScanner: '/img/hv2-eco/eco-scanner.webp',
   ecoPrinter: '/img/hv2-eco/eco-printer.webp',
   ecoCure: '/img/cure-uv02/hero/machine-cutout.png',
   ecoResin: '/img/hv2-eco/eco-resin.webp',

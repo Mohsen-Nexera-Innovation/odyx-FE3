@@ -20,7 +20,7 @@ const CUTOUTS: Partial<Record<(typeof WORKFLOW_ORDER)[number], string>> = {
   design: '/img/cutouts/feat-design-cutout.png',
   '3d-printers': '/img/cutouts/feat-printer-cutout.png',
   'curing-machines': '/img/cure-uv02/hero/machine-cutout.png',
-  resins: '/img/cutouts/feat-resin-cutout.png',
+  resins: '/img/resins/all-resins-cutout.png',
 };
 
 const LINEUP = WORKFLOW_ORDER.map((slug) =>

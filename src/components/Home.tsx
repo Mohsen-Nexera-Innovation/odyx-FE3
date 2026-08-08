@@ -240,7 +240,7 @@ const FEAT = [
     i: "resin",
     t: "Resin",
     d: "Five clinical resin lines.",
-    img: "/img/feat-resin.jpg",
+    img: "/img/resins/all-resins-cutout.png",
   },
 ] as const;
 export default function Home() {

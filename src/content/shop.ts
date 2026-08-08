@@ -79,7 +79,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     name: 'ODYX Resin',
     desc: 'Clinical resin lines — Ceramic Resin 51%, Crown & Bridge, Temporary Restoration, Model 2.0 and Surgical Guide Pro — validated for ODYX print and cure.',
     price: 899 * USD_TO_EGP_DUMMY,
-    image: '/img/feat-resin.jpg',
+    image: '/img/resins/all-resins-cutout.png',
     category: 'resin',
     unit: '1 bottle',
     href: '/products/resins',
