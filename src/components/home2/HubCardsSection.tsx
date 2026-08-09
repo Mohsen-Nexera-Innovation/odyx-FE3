@@ -234,6 +234,8 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Store",
     title: ["Everything You Need.", "In One Place."],
     desc: ["Resins, accessories and more –", "delivered to your door."],
+    cta: "Go to Store",
+    href: "/shop",
     artClass: HUB_ART_STORE,
     art: {
       src: "/img/hv2-hub/store-shelf.webp",
@@ -247,6 +249,9 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Registration",
     title: ["Register Your Device.", "Stay Protected."],
     desc: ["Activate warranty and get", "the full ODYX experience."],
+    cta: "Register Device",
+    // Same target GlobalTools / support content use — /register is account sign-up.
+    href: "/support#register",
     artClass: HUB_ART_REG,
     art: {
       src: "/img/hv2-hub/registration-device.webp",
