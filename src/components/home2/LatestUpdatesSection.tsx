@@ -77,22 +77,6 @@ const UPDATES: Update[] = [
     },
   },
   {
-    id: "workflow",
-    cat: "Update",
-    tone: "navy",
-    title: "ODYX Workflow",
-    desc: ["Simplify your", "digital workflow."],
-    date: "April 28, 2025",
-    iso: "2025-04-28",
-    href: "/workflows",
-    art: {
-      src: "/img/hv2-news/workflow.webp",
-      alt: "A robotic manufacturing arm over a glowing blue platform in a dark chamber",
-      w: 764,
-      h: 720,
-    },
-  },
-  {
     id: "webinar",
     cat: "Webinar",
     tone: "beige",
@@ -178,8 +162,8 @@ const UPDATES: Update[] = [
 ];
 
 const N = UPDATES.length;
-const PER_DOT = 2;        // the mock shows four dots for eight items
-const DOTS = N / PER_DOT;
+const PER_DOT = 2;
+const DOTS = Math.ceil(N / PER_DOT);
 // How many cards are on screen, which one is emphasised and where the off-deck
 // ones park is entirely a CSS concern (see the --s<n>-* slot tokens), so this
 // component only publishes each card's ring position as data-slot.
@@ -344,7 +328,7 @@ const LU_CARD =
   " data-[tone=light]:[--bg:#F0F2F9] data-[tone=light]:[--t-fg:#0A1020] data-[tone=light]:[--d-fg:#6B7285] data-[tone=light]:[--dt-fg:#3A4152] data-[tone=light]:[--go-bg:#FFFFFF] data-[tone=light]:[--go-fg:#1B4BE0]" +
   " data-[tone=light]:outline data-[tone=light]:outline-1 data-[tone=light]:outline-[rgba(70,100,150,.14)] data-[tone=light]:-outline-offset-1" +
   " data-[tone=beige]:[--bg:#F0E1D2] data-[tone=beige]:[--t-fg:#1A1510] data-[tone=beige]:[--d-fg:#6E645C] data-[tone=beige]:[--dt-fg:#443B34] data-[tone=beige]:[--go-bg:#D6A87C] data-[tone=beige]:[--go-fg:#2A1C10]" +
-  " data-[id=workflow]:[--bg:#020A1D] data-[id=partners]:[--bg:#0C1021] data-[id=design-suite]:[--bg:#05101F]" +
+  " data-[id=partners]:[--bg:#0C1021] data-[id=design-suite]:[--bg:#05101F]" +
   " data-[cat=Event]:[--cat-bg:#2B54DE] data-[cat=Event]:[--cat-fg:#EAF1FF]" +
   " data-[cat=Product]:[--cat-bg:#C2D2FB] data-[cat=Product]:[--cat-fg:#2F55C8]" +
   " data-[cat=Update]:[--cat-bg:#2049EF] data-[cat=Update]:[--cat-fg:#FFFFFF]" +
@@ -599,12 +583,14 @@ export default function LatestUpdatesSection() {
           <div className={LU_DOTS} role="group" aria-label="Update pages">
             {Array.from({ length: DOTS }, (_, k) => {
               const on = Math.floor(offset / PER_DOT) === k;
+              const from = k * PER_DOT + 1;
+              const to = Math.min((k + 1) * PER_DOT, N);
               return (
                 <button
                   type="button"
                   className={LU_DOT}
                   key={k}
-                  aria-label={`Updates ${k * PER_DOT + 1}\u2013${k * PER_DOT + PER_DOT}`}
+                  aria-label={from === to ? `Update ${from}` : `Updates ${from}\u2013${to}`}
                   aria-current={on || undefined}
                   data-on={on ? "" : undefined}
                   onClick={() => {

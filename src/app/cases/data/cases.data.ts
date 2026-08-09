@@ -31,12 +31,6 @@ export const casesData: CasesPageData = {
         variant: 'outline',
         icon: 'box',
       },
-      {
-        label: 'Submit Your Case',
-        href: '/design-services/request',
-        variant: 'outline',
-        icon: 'cloud-upload',
-      },
     ],
   },
   applications: {
@@ -87,7 +81,6 @@ export const casesData: CasesPageData = {
     id: 'by-product',
     kicker: 'CASE BY PRODUCT',
     title: 'Browse cases by the ODYX products.',
-    viewAll: { label: 'View All Products', href: '/cases#featured-cases' },
     productStyle: true,
     items: [
       {
@@ -127,7 +120,6 @@ export const casesData: CasesPageData = {
   featured: {
     kicker: 'FEATURED CLINICAL CASES',
     title: 'Explore real results from dental professionals.',
-    viewAll: { label: 'View All Cases', href: '/cases#featured-cases' },
     items: [
       {
         id: 'posterior-crown',

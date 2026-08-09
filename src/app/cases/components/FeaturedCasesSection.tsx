@@ -70,10 +70,12 @@ export function FeaturedCasesSection({
               {data.title}
             </h2>
           </div>
-          <Link href={data.viewAll.href} className={CASES_TEXT_LINK}>
-            {data.viewAll.label}
-            <ArrowIcon className="w-3.5 h-3.5" />
-          </Link>
+          {data.viewAll ? (
+            <Link href={data.viewAll.href} className={CASES_TEXT_LINK}>
+              {data.viewAll.label}
+              <ArrowIcon className="w-3.5 h-3.5" />
+            </Link>
+          ) : null}
         </div>
 
         <div className="relative">

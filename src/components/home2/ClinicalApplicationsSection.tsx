@@ -51,7 +51,7 @@ const APPLICATIONS: ClinicalApplication[] = [
     id: "orthodontics",
     title: "Orthodontics",
     description: "Clear aligners and\nretainers for lasting\nresults.",
-    image: "/img/hv2-clinical/clear-aligners.webp",
+    image: "/img/clinical/aligners/hero-cutout.png",
     alt: "Clear orthodontic aligner tray isolated on a white background",
   },
 ];

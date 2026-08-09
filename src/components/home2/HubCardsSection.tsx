@@ -89,8 +89,8 @@ type ActionCard = {
   label: string;
   title: [string, string];
   desc: [string, string];
-  cta: string;
-  href: string;
+  cta?: string;
+  href?: string;
   artClass: string;
   art: { src: string; alt: string; w: number; h: number };
 };
@@ -234,8 +234,6 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Store",
     title: ["Everything You Need.", "In One Place."],
     desc: ["Resins, accessories and more –", "delivered to your door."],
-    cta: "Go to Store",
-    href: "/shop",
     artClass: HUB_ART_STORE,
     art: {
       src: "/img/hv2-hub/store-shelf.webp",
@@ -249,10 +247,6 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Registration",
     title: ["Register Your Device.", "Stay Protected."],
     desc: ["Activate warranty and get", "the full ODYX experience."],
-    cta: "Register Device",
-    // Same target the global header's "Register device" uses — /register is
-    // the account sign-up route, not device registration.
-    href: "/support#register",
     artClass: HUB_ART_REG,
     art: {
       src: "/img/hv2-hub/registration-device.webp",
@@ -280,10 +274,12 @@ function HubActionCard({ card, rv }: { card: ActionCard; rv: number }) {
           {card.desc[1]}
         </p>
       </div>
-      <a className={`${HUB_CTA}${HUB_CTA_ACT}`} href={card.href}>
-        <span>{card.cta}</span>
-        <CtaArrow />
-      </a>
+      {card.cta && card.href ? (
+        <a className={`${HUB_CTA}${HUB_CTA_ACT}`} href={card.href}>
+          <span>{card.cta}</span>
+          <CtaArrow />
+        </a>
+      ) : null}
       <img
         className={`${HUB_ART}${card.artClass}`}
         src={card.art.src}
