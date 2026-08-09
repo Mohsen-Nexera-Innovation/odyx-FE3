@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import {
   motion,
   animate,
@@ -13,7 +12,6 @@ import {
   type MotionValue,
   type AnimationPlaybackControls,
 } from "motion/react";
-import { HV2_BTN, HV2_BTN_SIZE, HV2_DOT, HV2_DOTS, HV2_NAV } from "@/components/home2/hv2Chrome";
 
 // Coverflow path picker matching the design reference: a wide, front-facing
 // active card, a narrower 3D-turned card on each side whose bottom sits on the
@@ -35,8 +33,6 @@ const PATHS = [
     key: "lab",
     title: "Lab Technician",
     desc: "Powerful tools for dental laboratories.",
-    cta: "I'm a Lab Tech",
-    href: "/solutions/labs",
     // Lab bench scene: printer, models, counters and a wall screen. The
     // distributor path card — keep distinct from guest explore CTA imagery.
     img: "/img/printers/lab-scene.jpg",
@@ -54,8 +50,6 @@ const PATHS = [
     key: "dentist",
     title: "Dentist",
     desc: "Digital solutions for clinics of all sizes.",
-    cta: "I'm a Dentist",
-    href: "/solutions/dentists",
     // Wide operatory: chair and delivery unit on the right half, framed
     // radiograph and cabinetry behind. Framed loosely so the room reads.
     img: "/img/printers/clinic-scene.jpg",
@@ -70,8 +64,6 @@ const PATHS = [
     key: "guest",
     title: "Guest",
     desc: "Explore ODYX as a guest.",
-    cta: "Continue as Guest",
-    href: "/workflows",
     // Scanner upright in its cradle on the right of the frame, clinic behind;
     // the card blurs it back so it reads as a soft product scene.
     img: "/img/scanner/s1-hero.png",
@@ -139,7 +131,7 @@ type Path = (typeof PATHS)[number];
 // inert. Only opacity/filter/box-shadow/cursor/pointer-events (which carry
 // their own CSS transitions) and typography still need slot-state classes.
 const PCARD_BASE =
-  "[--pc1:#16309F] [--pc2:#0D1C6B] [--pc-btn:#1C39CC] [--w:var(--pc-w)] absolute top-0 left-0 h-[calc(var(--pc-h)*var(--pc-u))] w-[calc(var(--w)*var(--pc-u))] ml-[calc(var(--w)*var(--pc-u)/-2)] rounded-[calc(var(--pc-r)*var(--pc-u))] overflow-hidden [background:linear-gradient(175deg,var(--pc1)_0%,var(--pc2)_100%)] [box-shadow:0_calc(20*var(--pc-u))_calc(34*var(--pc-u))_calc(-16*var(--pc-u))_rgba(9,22,72,.55)] [transform-origin:50%_100%] transition-[opacity,filter,box-shadow] duration-[.8s] [transition-timing-function:cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none! [will-change:transform] isolate" +
+  "[--pc1:#16309F] [--pc2:#0D1C6B] [--w:var(--pc-w)] absolute top-0 left-0 h-[calc(var(--pc-h)*var(--pc-u))] w-[calc(var(--w)*var(--pc-u))] ml-[calc(var(--w)*var(--pc-u)/-2)] rounded-[calc(var(--pc-r)*var(--pc-u))] overflow-hidden [background:linear-gradient(175deg,var(--pc1)_0%,var(--pc2)_100%)] [box-shadow:0_calc(20*var(--pc-u))_calc(34*var(--pc-u))_calc(-16*var(--pc-u))_rgba(9,22,72,.55)] [transform-origin:50%_100%] transition-[opacity,filter,box-shadow] duration-[.8s] [transition-timing-function:cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none! [will-change:transform] isolate" +
   // Per-slot cursor/opacity/filter/shadow — the only genuinely effective
   // slot-state styling (see note above).
   " [&.is-side]:cursor-pointer [&.is-side]:[box-shadow:0_calc(18*var(--pc-u))_calc(30*var(--pc-u))_calc(-15*var(--pc-u))_rgba(9,22,72,.5)]" +
@@ -153,10 +145,10 @@ const PCARD_BASE =
 // Per-card tint (the reference varies it): lab navy, dentist navy→royal
 // (own full gradient), guest desaturated blue-grey.
 const PCARD_VARIANT: Record<Path["key"], string> = {
-  lab: "[--pc1:#16317F] [--pc2:#060C34] [--pc-btn:#16268C]",
+  lab: "[--pc1:#16317F] [--pc2:#060C34]",
   dentist:
-    "[--pc-btn:#173BC4] [background:linear-gradient(99deg,#070F44_0%,#0B1A66_38%,#1739B4_76%,#2350E2_100%)]",
-  guest: "[--pc1:#7A8598] [--pc2:#39424F] [--pc-btn:#41506B]",
+    "[background:linear-gradient(99deg,#070F44_0%,#0B1A66_38%,#1739B4_76%,#2350E2_100%)]",
+  guest: "[--pc1:#7A8598] [--pc2:#39424F]",
 };
 
 // One crop per card (a zoom about a per-card focal point) plus, for lab and
@@ -191,39 +183,6 @@ const PCARD_PARA_MAXW: Record<Path["key"], string> = {
   guest: "max-w-[calc(124*var(--pc-u))]",
 };
 
-// Optional min-width so longer CTA labels don't wrap on the active card.
-const PCARD_BTN_MINW: Record<Path["key"], string> = {
-  lab: "min-w-[calc(168*var(--pc-u))]!",
-  dentist: "min-w-[calc(168*var(--pc-u))]!",
-  guest: "min-w-[calc(188*var(--pc-u))]!",
-};
-
-const PCARD_CTA =
-  `${HV2_BTN} ${HV2_BTN_SIZE} mt-auto! w-auto! whitespace-nowrap` +
-  " inline-flex! items-center! justify-center! leading-none!" +
-  " [&>span]:leading-none! [&>span]:mt-px" +
-  " [&>svg]:block! [&>svg]:shrink-0! [&>svg]:transition-transform [&>svg]:duration-[.25s] [&>svg]:ease-out" +
-  " hover:[&>svg]:translate-x-[3px] rtl:[&>svg]:scale-x-[-1] rtl:hover:[&>svg]:translate-x-[-3px]";
-
-// Nav discs: outside the previews, hard against the viewport edges, a touch
-// above the deck's midpoint. `!` overrides the shared HV2_NAV base (42px,
-// generic hover/scale) reused by the other carousels on this page.
-const PATH_NAV_BASE =
-  `${HV2_NAV} absolute! z-[6]! text-[var(--hv2-blue)]! top-[calc(50%_-_30*var(--pc-u))]! [translate:0_-50%]! w-[calc(66*var(--pc-u))]! h-[calc(66*var(--pc-u))]! border-0! [box-shadow:0_calc(10*var(--pc-u))_calc(26*var(--pc-u))_rgba(10,40,90,.16)]!` +
-  " [transition:transform_.25s_cubic-bezier(.22,1,.36,1),box-shadow_.25s_ease,color_.2s_ease]! motion-reduce:transition-none!" +
-  " hover:scale-[1.05]! hover:[box-shadow:0_calc(13*var(--pc-u))_calc(32*var(--pc-u))_rgba(10,40,90,.24)]!" +
-  " active:scale-[.95]! active:[box-shadow:0_calc(8*var(--pc-u))_calc(20*var(--pc-u))_rgba(10,40,90,.18)]!" +
-  " [&>svg]:w-[calc(26*var(--pc-u))]! [&>svg]:h-[calc(26*var(--pc-u))]! [&>svg]:transition-transform [&>svg]:duration-[.22s] [&>svg]:ease-linear motion-reduce:[&>svg]:transition-none!";
-
-// Direction-specific edge position + chevron lean (prev leans out on hover,
-// further on press; next mirrors it).
-const PATH_NAV_PREV =
-  "start-[calc(47*var(--pc-u))]! max-[760px]:start-[4px]!" +
-  " hover:[&>svg]:-translate-x-[2.5px] active:[&>svg]:-translate-x-[5px]";
-const PATH_NAV_NEXT =
-  "end-[calc(47*var(--pc-u))]! max-[760px]:end-[4px]!" +
-  " hover:[&>svg]:translate-x-[2.5px] active:[&>svg]:translate-x-[5px]";
-
 // Outer deck: card geometry lives here as CSS custom properties (mirrors the
 // old .hv2-path rule) so `.hv2-pcard`'s own arbitrary values can reach them,
 // plus the deck's soft pale-blue backdrop pool.
@@ -239,12 +198,6 @@ const PATH_ROOT =
 const PATH_STAGE =
   "relative w-full h-[calc(var(--pc-h)*var(--pc-u))] overflow-visible [touch-action:pan-y] select-none";
 const PATH_RING = "absolute top-0 bottom-0 left-1/2 w-0";
-
-const PATH_DOTS = `${HV2_DOTS} mt-[calc(28*var(--pc-u))]! gap-[calc(26*var(--pc-u))]!`;
-const PATH_DOT =
-  `${HV2_DOT} w-[calc(12*var(--pc-u))]! h-[calc(12*var(--pc-u))]! bg-[rgba(10,30,70,.16)]! transition-[background-color]! duration-[.35s]! ease-[ease]! motion-reduce:transition-none!`;
-const PATH_DOT_ON =
-  " bg-[var(--hv2-blue)]! [animation:hv2DotOn_.5s_cubic-bezier(.22,1,.36,1)] motion-reduce:[animation:none]!";
 
 function PathCard({
   j, d, v, dir, artX, path, sweep, reduce, onPick, suppressClick,
@@ -361,20 +314,6 @@ function PathCard({
         >
           {path.desc}
         </p>
-        <Link
-          className={`${PCARD_CTA} ${PCARD_BTN_MINW[path.key]}`}
-          href={path.href}
-          tabIndex={d === 0 ? 0 : -1}
-          draggable={false}
-          onClick={(e) => {
-            if (suppressClick.current) e.preventDefault();
-          }}
-        >
-          <span>{path.cta}</span>
-          <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </Link>
       </div>
       <div
         className="absolute top-0 bottom-0 left-0 w-[60%] z-[2] opacity-0 pointer-events-none [background:linear-gradient(100deg,transparent_18%,rgba(255,255,255,.4)_50%,transparent_82%)]"
@@ -438,16 +377,10 @@ export default function PathCarousel() {
   };
 
   const go = (delta: number) => goTo(targetRef.current + delta);
-  const goToPath = (k: number) => {
-    let d = mod(k - mod(targetRef.current));
-    if (d === 2) d = -1; // shortest way around the 3-card ring
-    goTo(targetRef.current + d);
-  };
 
   // --- drag / swipe -------------------------------------------------------
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    if ((e.target as Element).closest(".hv2-nav, .hv2-dot")) return;
     const stage = stageRef.current;
     if (!stage) return;
     const u = stage.offsetHeight / 401; // stage height is 401 reference px
@@ -531,18 +464,6 @@ export default function PathCarousel() {
         onPointerUp={settleDrag}
         onPointerCancel={settleDrag}
       >
-        <button
-          type="button"
-          className={`${PATH_NAV_BASE} ${PATH_NAV_PREV}`}
-          aria-label="Previous path"
-          aria-controls="hv2-path-ring"
-          onClick={() => go(-1)}
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="m15 6-6 6 6 6" />
-          </svg>
-        </button>
-
         <div className={PATH_RING} id="hv2-path-ring">
           {cards.map((j) => (
             <PathCard
@@ -560,37 +481,11 @@ export default function PathCarousel() {
             />
           ))}
         </div>
-
-        <button
-          type="button"
-          className={`${PATH_NAV_BASE} ${PATH_NAV_NEXT}`}
-          aria-label="Next path"
-          aria-controls="hv2-path-ring"
-          onClick={() => go(1)}
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="m9 6 6 6-6 6" />
-          </svg>
-        </button>
       </div>
 
       <p className="sr-only" aria-live="polite">
         {`${PATHS[mod(target)].title}, ${mod(target) + 1} of ${N}`}
       </p>
-
-      <div className={PATH_DOTS} role="tablist" aria-label="Paths">
-        {PATHS.map((p, k) => (
-          <button
-            key={p.key}
-            type="button"
-            role="tab"
-            aria-selected={k === mod(target)}
-            aria-label={p.title}
-            className={`${PATH_DOT}${k === mod(target) ? PATH_DOT_ON : ""}`}
-            onClick={() => goToPath(k)}
-          />
-        ))}
-      </div>
     </div>
   );
 }
