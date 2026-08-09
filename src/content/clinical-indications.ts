@@ -457,12 +457,12 @@ const aligners: ClinicalIndicationContent = {
     title: 'Before & After',
     slides: [
       {
-        before: { img: '/img/hv2-cases/orthodontic.webp', alt: 'Clear aligner tray ready for delivery' },
-        after: { img: '/img/clinical/aligners/ba-after.png', alt: 'Clear aligner seated on upper teeth' },
+        before: { img: '/img/clinical/aligners/ba-before.png', alt: 'Crowded teeth before clear aligner treatment' },
+        after: { img: '/img/clinical/aligners/ba-after.png', alt: 'Aligned smile after clear aligner treatment' },
       },
       {
-        before: { img: '/img/printers/p126/app-models.png', alt: 'Printed staging models' },
-        after: { img: '/img/clinical-hub/foot-orthodontics.png', alt: 'Finished aligner set' },
+        before: { img: '/img/clinical/aligners/ba-before-2.png', alt: 'Misaligned teeth before clear aligner treatment' },
+        after: { img: '/img/clinical/aligners/ba-after-2.png', alt: 'Straight teeth with clear aligners seated' },
       },
     ],
   },
