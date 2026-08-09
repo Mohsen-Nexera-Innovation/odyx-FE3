@@ -1,6 +1,14 @@
 import React from 'react';
 import { Building2, User, Package, Heart } from 'lucide-react';
 import { WhyOdyxData } from '../types';
+import {
+  ABOUT_BLUE,
+  ABOUT_BODY,
+  ABOUT_CARD_DESC,
+  ABOUT_CARD_TITLE,
+  ABOUT_EYEBROW,
+  ABOUT_H2,
+} from '../aboutChrome';
 
 const ICON_MAP: Record<string, React.ElementType> = {
   settings: Building2,
@@ -19,19 +27,19 @@ export function WhyOdyxSection({ data }: { data: WhyOdyxData }) {
           <div className="w-full lg:w-[45%] flex flex-col justify-center">
             
             {/* Kicker */}
-            <p className="text-[#0050D8] text-[12px] font-bold uppercase tracking-[0.15em] mb-4">
+            <p className={`${ABOUT_EYEBROW} mb-4!`}>
               {data.kicker}
             </p>
 
             {/* Main Heading */}
-            <h2 className="text-4xl md:text-5xl lg:text-[44px] font-extrabold text-[#0A1020] leading-[1.15] tracking-tight mb-5">
+            <h2 className={`${ABOUT_H2} mb-5!`}>
               {data.title.split(', ').map((chunk, index, array) => (
                 <React.Fragment key={index}>
                   {chunk.split('partner').map((part, i, arr) => 
                     i < arr.length - 1 ? (
                       <React.Fragment key={i}>
                         {part}
-                        <span className="text-[#0050D8]">partner</span>
+                        <span className={ABOUT_BLUE}>partner</span>
                       </React.Fragment>
                     ) : part
                   )}
@@ -46,7 +54,7 @@ export function WhyOdyxSection({ data }: { data: WhyOdyxData }) {
             </h2>
 
             {/* Subtitle */}
-            <p className="text-[#0A1020] text-[15px] lg:text-[16px] leading-relaxed max-w-[95%] mb-6 font-medium">
+            <p className={`${ABOUT_BODY} max-w-[95%] mb-6`}>
               We stand by clinicians with reliable solutions,
               <br className="hidden lg:block" />
               real support, and a commitment to help
@@ -60,15 +68,15 @@ export function WhyOdyxSection({ data }: { data: WhyOdyxData }) {
                 const Icon = ICON_MAP[feature.icon] || Building2;
                 return (
                   <div key={i} className="flex flex-col items-start">
-                    <div className="text-[#0050D8] mb-4 w-12 h-12 flex items-center justify-center rounded-full bg-[#F0F6FA]">
+                    <div className="text-[var(--hv2-blue)] mb-4 w-12 h-12 flex items-center justify-center rounded-full bg-[#F0F6FA]">
                       <Icon className="w-6 h-6" strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-[13px] lg:text-[14px] font-extrabold text-[#0A1020] leading-tight mb-2">
+                    <h3 className={`${ABOUT_CARD_TITLE} mb-2`}>
                       {feature.title.split(' ')[0]}
                       <br />
                       {feature.title.split(' ').slice(1).join(' ')}
                     </h3>
-                    <p className="text-[12px] lg:text-[13px] text-[#0A1020] font-medium leading-relaxed pr-2">
+                    <p className={`${ABOUT_CARD_DESC} pr-2`}>
                       {feature.description}
                     </p>
                   </div>
@@ -97,10 +105,10 @@ export function WhyOdyxSection({ data }: { data: WhyOdyxData }) {
                   
                   {/* Text Content at Bottom */}
                   <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-6 flex flex-col justify-end">
-                    <h3 className="text-white text-[15px] lg:text-[16px] font-bold mb-1.5">
+                    <h3 className="text-white! text-[length:clamp(14px,1.2vw,16px)] font-bold mb-1.5 leading-snug">
                       {card.title}
                     </h3>
-                    <p className="text-white/80 text-[12px] lg:text-[13px] leading-relaxed">
+                    <p className="text-white/80! text-[length:clamp(12px,1vw,14.5px)] font-normal leading-relaxed">
                       {card.description}
                     </p>
                   </div>

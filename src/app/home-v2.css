@@ -43,6 +43,28 @@ body:has(.hv2) header#hdr.on-light.at-top{
 .hv2 :focus-visible{outline:2px solid var(--hv2-blue); outline-offset:2px; border-radius:4px}
 .hv2 [id]{scroll-margin-top:84px}
 
+/* About page — same Tajawal / type tokens as Home V2 (no Home atmosphere). */
+.about{
+  --hv2-blue:#0050D8;
+  --hv2-blue-deep:#0041AF;
+  --hv2-blue-rgb:0,80,216;
+  --hv2-ink:#0A1020;
+  --hv2-body:#525C70;
+  color:var(--hv2-body);
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  font-size:16px; line-height:1.6;
+}
+.about h1,.about h2,.about h3{
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  color:var(--hv2-ink); font-weight:700; line-height:1.15; letter-spacing:-.01em;
+}
+/* Buttons inherit Tajawal from `.about` — beat global `odyx.css` body fonts. */
+.about a,.about button{
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+}
+.about :focus-visible{outline:2px solid var(--hv2-blue); outline-offset:2px; border-radius:4px}
+.about [id]{scroll-margin-top:84px}
+
 /* Reveal-on-scroll (Hv2Motion toggles .rv-in; data-rv staggers delay) */
 .hv2 .rv{opacity:0; transform:translateY(20px);
   transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)}

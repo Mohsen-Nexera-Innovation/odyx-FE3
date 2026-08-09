@@ -10,7 +10,7 @@ import { aboutData } from '../data/about.data';
 
 export default function AboutPage() {
   return (
-    <div className="bg-white w-full min-h-screen flex flex-col gap-3 md:gap-4 pb-4">
+    <div className="about bg-white w-full min-h-screen flex flex-col gap-3 md:gap-4 pb-4">
       <AboutHero data={aboutData.hero} />
       <WhyOdyxSection data={aboutData.why} />
       <ValuesSection data={aboutData.values} />

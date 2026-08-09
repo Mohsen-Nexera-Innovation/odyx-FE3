@@ -2,6 +2,16 @@ import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Users, Lightbulb, Globe } from 'lucide-react';
 import { AboutHeroData } from '../types';
+import {
+  ABOUT_BLUE,
+  ABOUT_BODY,
+  ABOUT_BTN,
+  ABOUT_BTN_SIZE,
+  ABOUT_CARD_DESC,
+  ABOUT_CARD_TITLE,
+  ABOUT_EYEBROW,
+  ABOUT_H1,
+} from '../aboutChrome';
 
 const ICON_MAP: Record<string, React.ElementType> = {
   'shield-check': ShieldCheck,
@@ -23,19 +33,19 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
           <div className="w-full xl:w-[35%] flex flex-col justify-center">
 
             {/* Kicker */}
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-4">
+            <p className={`${ABOUT_EYEBROW} mb-4!`}>
               {data.kicker}
             </p>
 
             {/* Main Heading */}
-            <h1 className="text-[36px] lg:text-[44px] font-extrabold text-[#0A1020] leading-[1.15] tracking-tight mb-5">
+            <h1 className={ABOUT_H1}>
               Built to Transform
               <br />
-              <span className="text-[#1D4ED8]">Digital Dentistry.</span>
+              <span className={ABOUT_BLUE}>Digital Dentistry.</span>
             </h1>
 
             {/* Body Text */}
-            <p className="text-[#0A1020] text-[15px] lg:text-[16px] leading-relaxed mb-8 max-w-[95%] font-medium">
+            <p className={`${ABOUT_BODY} mb-8 max-w-[95%]`}>
               {data.subtitle}
             </p>
 
@@ -44,9 +54,9 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
               <div>
                 <Link
                   href={data.primaryCta.href}
-                  className="inline-flex items-center gap-2 bg-[#0050D8] hover:bg-[#0040B0] text-white text-[14px] lg:text-[15px] font-semibold px-7 py-3 rounded-[10px] transition-colors shadow-[0_4px_14px_rgba(0,80,216,0.35)]"
+                  className={`${ABOUT_BTN} ${ABOUT_BTN_SIZE} px-7!`}
                 >
-                  {data.primaryCta.label}
+                  <span>{data.primaryCta.label}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
                 </Link>
               </div>
@@ -66,15 +76,15 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
                     }`}
                   >
                     {/* Icon */}
-                    <div className="mb-4 text-[#0050D8] w-14 h-14 rounded-full bg-gradient-to-b from-white to-[#F1F5F9] border border-white/60 shadow-[0_8px_16px_rgba(0,80,216,0.06)] flex items-center justify-center">
+                    <div className="mb-4 text-[var(--hv2-blue)] w-14 h-14 rounded-full bg-gradient-to-b from-white to-[#F1F5F9] border border-white/60 shadow-[0_8px_16px_rgba(0,80,216,0.06)] flex items-center justify-center">
                       <Icon className="w-6 h-6" strokeWidth={1.5} />
                     </div>
                     {/* Title */}
-                    <h3 className="text-[13px] lg:text-[14px] font-extrabold text-[#0A1020] mb-2">
+                    <h3 className={`${ABOUT_CARD_TITLE} mb-2`}>
                       {feature.title}
                     </h3>
                     {/* Description */}
-                    <p className="text-[12px] lg:text-[13px] text-[#0A1020] font-medium leading-relaxed px-1">
+                    <p className={`${ABOUT_CARD_DESC} px-1`}>
                       {feature.description}
                     </p>
                   </div>
