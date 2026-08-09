@@ -102,6 +102,14 @@ export function sessionDestination(session: {
   return '/inbox';
 }
 
+/** Where to send the user after finishing registration (verify email / Google complete). */
+export function postRegisterDestination(session: {
+  accountType: AccountType | 'GUEST';
+}): string {
+  if (session.accountType === 'STAFF') return '/admin';
+  return '/';
+}
+
 /** @deprecated Use sessionDestination(session) */
 export function roleDestination(role: UserRole): string {
   if (role === 'admin') return '/admin';

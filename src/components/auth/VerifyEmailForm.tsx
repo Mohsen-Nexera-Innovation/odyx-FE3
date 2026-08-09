@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { sessionDestination } from '@/content/auth';
+import { postRegisterDestination } from '@/content/auth';
 import { resendVerification, verifyEmail } from '@/lib/auth';
 
 export default function VerifyEmailForm() {
@@ -36,7 +36,7 @@ export default function VerifyEmailForm() {
       }
       setStatus('ok');
       setMsg(`Email verified — welcome, ${result.session.name}.`);
-      setTimeout(() => router.push(sessionDestination(result.session)), 900);
+      setTimeout(() => router.push(postRegisterDestination(result.session)), 900);
     })();
 
     return () => {
