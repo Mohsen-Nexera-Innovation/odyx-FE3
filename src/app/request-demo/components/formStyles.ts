@@ -27,5 +27,6 @@ export const shellClass =
 export const choiceCardClass =
   'relative flex w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-[1.5px] border-[#E5E7EB] bg-white px-[0.55rem] py-[0.85rem] text-center transition-[border-color,background-color,box-shadow] duration-150 hover:border-[#C5CDD8]';
 
+/** Apply instead of stacking on choiceCardClass — avoids conflicting Tailwind utilities. */
 export const choiceCardSelectedClass =
-  'border-[#0050D8] bg-[#F3F7FF] shadow-[0_0_0_1px_#0050D8]';
+  '!border-[#0050D8] !bg-[#F3F7FF] shadow-[0_0_0_1px_#0050D8]';
