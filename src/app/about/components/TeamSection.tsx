@@ -11,6 +11,13 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import { TeamData } from '../types';
+import {
+  ABOUT_BLUE,
+  ABOUT_BODY,
+  ABOUT_CTA_OUTLINE,
+  ABOUT_EYEBROW,
+  ABOUT_H2,
+} from '../aboutChrome';
 
 export function TeamSection({ data }: { data: TeamData }) {
   return (
@@ -20,32 +27,32 @@ export function TeamSection({ data }: { data: TeamData }) {
           
           {/* Left Column (Text & CTA) */}
           <div className="w-full lg:w-[25%] flex flex-col items-start pr-0 lg:pr-6 shrink-0">
-            <p className="text-[#0050D8] text-[12px] font-bold uppercase tracking-[0.15em] mb-4">
+            <p className={`${ABOUT_EYEBROW} mb-4!`}>
               {data.kicker}
             </p>
 
-            <h2 className="text-3xl md:text-4xl lg:text-[36px] font-extrabold text-[#0A1020] leading-[1.2] tracking-tight mb-4">
+            <h2 className={`${ABOUT_H2} mb-4!`}>
               {data.title.split('Impact.').map((part, i, arr) => 
                 i < arr.length - 1 ? (
                   <React.Fragment key={i}>
                     {part}
-                    <span className="text-[#0050D8]">Impact.</span>
+                    <span className={ABOUT_BLUE}>Impact.</span>
                   </React.Fragment>
                 ) : part
               )}
             </h2>
 
             {/* Subtitle */}
-            <p className="text-[#0A1020] text-[14px] lg:text-[15px] leading-relaxed mb-8 font-medium">
+            <p className={`${ABOUT_BODY} mb-8`}>
               {data.description}
             </p>
 
             {data.cta && (
               <Link
                 href={data.cta.href}
-                className="team-cta-btn inline-flex items-center gap-2 font-bold text-[13px] lg:text-[14px] px-6 py-2.5 rounded-[10px] transition-colors"
+                className={ABOUT_CTA_OUTLINE}
               >
-                {data.cta.label}
+                <span>{data.cta.label}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
               </Link>
             )}
@@ -70,16 +77,6 @@ export function TeamSection({ data }: { data: TeamData }) {
               .team-swiper .swiper-pagination {
                 position: relative;
                 margin-top: 16px;
-              }
-              .team-cta-btn {
-                border: 1.5px solid #DCE6F7;
-                color: #0050D8;
-                background-color: white;
-              }
-              .team-cta-btn:hover {
-                background-color: #0050D8;
-                color: white;
-                border-color: #0050D8;
               }
             `}</style>
 
@@ -113,10 +110,10 @@ export function TeamSection({ data }: { data: TeamData }) {
                       
                       {/* Content */}
                       <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end">
-                        <h3 className="text-[14px] lg:text-[15px] font-bold text-white mb-0.5">
+                        <h3 className="text-[length:clamp(14px,1.2vw,15px)] font-bold text-white! mb-0.5 leading-snug">
                           {member.name}
                         </h3>
-                        <p className="text-[#CBD5E1] text-[12px] lg:text-[13px] font-medium mb-3">
+                        <p className="text-[#CBD5E1]! text-[length:clamp(12px,1vw,13px)] font-medium mb-3 leading-relaxed">
                           {member.role}
                         </p>
                         
