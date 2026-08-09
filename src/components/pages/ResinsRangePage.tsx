@@ -59,7 +59,7 @@ export default function ResinsRangePage() {
                 <img
                   key={line.id}
                   className="rs-hero-product"
-                  src={`${line.img}?v=12`}
+                  src={`${line.img}?v=14`}
                   alt={line.imgAlt}
                   width={800}
                   height={1400}
@@ -84,7 +84,7 @@ export default function ResinsRangePage() {
               <article key={line.id} className={`rs-line rs-line--${line.id}`}>
                 <div className="rs-line-media">
                   <img
-                    src={`${line.img}?v=12`}
+                    src={`${line.img}?v=14`}
                     alt={line.imgAlt}
                     loading="lazy"
                     width={800}

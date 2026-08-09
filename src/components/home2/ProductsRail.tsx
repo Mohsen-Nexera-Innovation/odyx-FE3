@@ -27,9 +27,10 @@ const CARDS = [
     alt: "The ODYX S1 intraoral scanner wand",
     width: "w-[17.771%] me-[2.024%]",
     // The scanner wand is much wider than tall and a white packshot —
-    // centre it (instead of bottom-pinning) and drop the multiply blend
-    // that would otherwise wash it into the card tint.
-    media: "items-center [--art-bottom:26px]",
+    // force vertical centering (items-end from PR_MEDIA_BASE must lose —
+    // Tailwind source order, not class-list order, decides the winner) and
+    // drop the multiply blend that would otherwise wash it into the card tint.
+    media: "items-center! [--art-bottom:26px]",
     mediaImg: "[mix-blend-mode:normal]! [filter:drop-shadow(0_8px_14px_rgba(10,40,90,.12))]",
   },
   {
@@ -60,8 +61,8 @@ const CARDS = [
     alt: "ODYX dental resin lines — Model, Ceramic Crown, Crown & Bridge, Surgical Guide, and Temporary",
     width: "w-[18.366%] me-[1.803%]",
     // Lift the bottles off the bottom edge so they sit mid-card; white
-    // packshot, so drop the multiply blend too.
-    media: "items-center [--art-bottom:18px]",
+    // packshot, so drop the multiply blend too. Important wins over items-end.
+    media: "items-center! [--art-bottom:18px]",
     mediaImg: "[mix-blend-mode:normal]! [filter:drop-shadow(0_8px_14px_rgba(10,40,90,.14))]",
   },
   {

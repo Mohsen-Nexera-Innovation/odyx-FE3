@@ -52,7 +52,9 @@ const IC = {
 const ECO_NODES = [
   { key: "scanner", label: "Scanner", icon: "scanOrbit", patch: "left-[28.27%] top-[-11.75%] w-[16.35%] z-[2]", node: "left-[36.44%] top-[15.26%]" },
   { key: "resin", label: "Resin", icon: "drop", patch: "left-[2.79%] top-[6.80%] w-[16.83%] z-[2]", node: "left-[11.15%] top-[43.09%]" },
-  { key: "printer", label: "Printer", icon: "cube", patch: "left-[59.23%] top-[7.22%] w-[17.88%] z-[2]", node: "left-[68.37%] top-[43.09%]" },
+  // P1-26 cutout is portrait (product-page packshot) — narrower than the
+  // old square wash/cure stand-in so height stays in the orbit band.
+  { key: "printer", label: "Printer", icon: "cube", patch: "left-[62.6%] top-[7.22%] w-[11.14%] z-[2]", node: "left-[68.37%] top-[43.09%]" },
   { key: "software", label: "Software", icon: "monitor", patch: "left-[7.31%] top-[52.16%] w-[19.42%] z-[2]", node: "left-[17.50%] top-[86.39%]" },
   { key: "cure", label: "Cure", icon: "sun", patch: "left-[47.69%] top-[51.75%] w-[19.23%] z-[2]", node: "left-[57.50%] top-[86.39%]" },
 ] as const;

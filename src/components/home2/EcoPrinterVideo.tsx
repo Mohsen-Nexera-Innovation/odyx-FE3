@@ -52,7 +52,7 @@ export default function EcoPrinterVideo() {
       {/* Invisible hover surface over the printer patch + its icon/label
           node (the baked patches themselves are pointer-events-none). */}
       <div
-        className="absolute z-[5] left-[58.5%] top-[5%] w-[20.5%] h-[47%] cursor-pointer"
+        className="absolute z-[5] left-[60.5%] top-[5%] w-[15.5%] h-[48%] cursor-pointer"
         onPointerEnter={enter}
         onPointerLeave={leave}
         aria-hidden
