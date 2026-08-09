@@ -13,7 +13,7 @@ import {
   type MotionValue,
   type AnimationPlaybackControls,
 } from "motion/react";
-import { HV2_DOT, HV2_DOTS, HV2_NAV } from "@/components/home2/hv2Chrome";
+import { HV2_BTN, HV2_BTN_SIZE, HV2_DOT, HV2_DOTS, HV2_NAV } from "@/components/home2/hv2Chrome";
 
 // Coverflow path picker matching the design reference: a wide, front-facing
 // active card, a narrower 3D-turned card on each side whose bottom sits on the
@@ -191,13 +191,19 @@ const PCARD_PARA_MAXW: Record<Path["key"], string> = {
   guest: "max-w-[calc(124*var(--pc-u))]",
 };
 
-// Resting min-width for the CTA — the active state's own min-width (below)
-// always takes over regardless of variant.
+// Optional min-width so longer CTA labels don't wrap on the active card.
 const PCARD_BTN_MINW: Record<Path["key"], string> = {
-  lab: "min-w-[calc(200*var(--pc-u))]",
-  dentist: "",
-  guest: "min-w-[calc(226*var(--pc-u))]",
+  lab: "min-w-[calc(168*var(--pc-u))]!",
+  dentist: "min-w-[calc(168*var(--pc-u))]!",
+  guest: "min-w-[calc(188*var(--pc-u))]!",
 };
+
+const PCARD_CTA =
+  `${HV2_BTN} ${HV2_BTN_SIZE} mt-auto! w-auto! whitespace-nowrap` +
+  " inline-flex! items-center! justify-center! leading-none!" +
+  " [&>span]:leading-none! [&>span]:mt-px" +
+  " [&>svg]:block! [&>svg]:shrink-0! [&>svg]:transition-transform [&>svg]:duration-[.25s] [&>svg]:ease-out" +
+  " hover:[&>svg]:translate-x-[3px] rtl:[&>svg]:scale-x-[-1] rtl:hover:[&>svg]:translate-x-[-3px]";
 
 // Nav discs: outside the previews, hard against the viewport edges, a touch
 // above the deck's midpoint. `!` overrides the shared HV2_NAV base (42px,
@@ -347,7 +353,7 @@ function PathCard({
         <span className="w-[calc(50*var(--pc-u))] h-[calc(50*var(--pc-u))] text-[#EAF0FF] flex-none [&>svg]:w-full [&>svg]:h-full [&>svg]:block">
           {path.icon}
         </span>
-        <h3 className="text-white text-[length:calc(36*var(--pc-u))] leading-[1.1] mt-[calc(40*var(--pc-u))] mb-[calc(12*var(--pc-u))] transition-[font-size] duration-[.6s] [transition-timing-function:cubic-bezier(.22,1,.36,1)] [.is-active_&]:text-[length:calc(42*var(--pc-u))]">
+        <h3 className="text-white! text-[length:calc(36*var(--pc-u))] leading-[1.1] mt-[calc(40*var(--pc-u))] mb-[calc(12*var(--pc-u))] transition-[font-size] duration-[.6s] [transition-timing-function:cubic-bezier(.22,1,.36,1)] [.is-active_&]:text-[length:calc(42*var(--pc-u))]">
           {path.title}
         </h3>
         <p
@@ -356,11 +362,7 @@ function PathCard({
           {path.desc}
         </p>
         <Link
-          className={`inline-flex items-center justify-center gap-[calc(16*var(--pc-u))] mt-auto min-h-[calc(62*var(--pc-u))] whitespace-nowrap text-white! font-bold text-[length:calc(18*var(--pc-u))] bg-[rgba(9,20,64,.28)] border-[length:calc(1.8*var(--pc-u))] border-[rgba(255,255,255,.72)] rounded-[calc(11*var(--pc-u))] px-[calc(24*var(--pc-u))]
-            [transition:background-color_.35s_ease,color_.35s_ease,border-color_.35s_ease,min-width_.6s_cubic-bezier(.22,1,.36,1),min-height_.6s_cubic-bezier(.22,1,.36,1),font-size_.6s_cubic-bezier(.22,1,.36,1)]
-            [&>svg]:w-[calc(22*var(--pc-u))] [&>svg]:h-[calc(22*var(--pc-u))] [&>svg]:flex-none [&>svg]:transition-transform [&>svg]:duration-[.25s] [&>svg]:ease-out hover:[&>svg]:translate-x-[3px]
-            [.is-active_&]:min-w-[calc(213*var(--pc-u))] [.is-active_&]:min-h-[calc(66*var(--pc-u))] [.is-active_&]:text-[length:calc(19*var(--pc-u))] [.is-active_&]:bg-white [.is-active_&]:border-white [.is-active_&]:text-[var(--pc-btn)]! [.is-active_&]:hover:bg-[#EEF2FF]
-            ${PCARD_BTN_MINW[path.key]}`}
+          className={`${PCARD_CTA} ${PCARD_BTN_MINW[path.key]}`}
           href={path.href}
           tabIndex={d === 0 ? 0 : -1}
           draggable={false}
@@ -368,8 +370,8 @@ function PathCard({
             if (suppressClick.current) e.preventDefault();
           }}
         >
-          {path.cta}
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <span>{path.cta}</span>
+          <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
         </Link>

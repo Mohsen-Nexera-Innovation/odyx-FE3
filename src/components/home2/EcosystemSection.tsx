@@ -1,22 +1,13 @@
-import EcoPrinterVideo from "@/components/home2/EcoPrinterVideo";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { HV2_BLUE, HV2_BODY, HV2_EYEBROW, HV2_H2 } from "@/components/home2/hv2Chrome";
 
-// Ecosystem — radial board rebuild of the client mock's ecosystem panel.
-// Geometry is measured from the client reference at a 1434px viewport: panel
-// 1358x485, art stage x356-1396 (1040x485). Node art ships as soft-feathered
-// patches (halo + glow baked, cut from the mock at 2x) in /img/hv2-eco/;
-// icons, labels and orbit sweeps are DOM. All type/controls scale in cqw so
-// proportions hold at any panel width. DOM icons sit exactly over the baked
-// ones (#2350E4 is sampled from the mock art, NOT the action-blue token, so
-// edges can't fringe).
-//
-// Every patch/node/hotspot position below is a physical left/top percentage
-// of the stage — the composition is a fixed photo layout, not mirrored in
-// RTL (unlike the copy column, which uses logical `start`).
+// Ecosystem orbit — content band inside the shared Eco+Products section.
+// Separate cutouts on the parent gradient. One Link per product.
+// Stage geometry is physical left/top % (dir=ltr); not mirrored in RTL.
 
-const IC = {
-  scanOrbit: (
-    // Mock's scanner badge: centre aperture ring + orbiting capture dots.
+const ICON = {
+  scan: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <circle cx="12" cy="12" r="3.4" />
       <path d="M5.2 9.4a7.3 7.3 0 0 1 3-3.4M18.8 14.6a7.3 7.3 0 0 1-3 3.4" />
@@ -29,7 +20,7 @@ const IC = {
       <path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z" />
     </svg>
   ),
-  cube: (
+  layers: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M21 8.2 12 3 3 8.2v7.6L12 21l9-5.2V8.2Z" />
       <path d="M3.3 8.4 12 13.4l8.7-5M12 21v-7.6" />
@@ -49,95 +40,216 @@ const IC = {
   ),
 } as const;
 
-const ECO_NODES = [
-  { key: "scanner", label: "Scanner", icon: "scanOrbit", patch: "left-[28.27%] top-[-11.75%] w-[16.35%] z-[2]", node: "left-[36.44%] top-[15.26%]" },
-  { key: "resin", label: "Resin", icon: "drop", patch: "left-[2.79%] top-[6.80%] w-[16.83%] z-[2]", node: "left-[11.15%] top-[43.09%]" },
-  // P1-26 cutout is portrait (product-page packshot) — narrower than the
-  // old square wash/cure stand-in so height stays in the orbit band.
-  { key: "printer", label: "Printer", icon: "cube", patch: "left-[62.6%] top-[7.22%] w-[11.14%] z-[2]", node: "left-[68.37%] top-[43.09%]" },
-  { key: "software", label: "Software", icon: "monitor", patch: "left-[7.31%] top-[52.16%] w-[19.42%] z-[2]", node: "left-[17.50%] top-[86.39%]" },
-  { key: "cure", label: "Cure", icon: "sun", patch: "left-[47.69%] top-[51.75%] w-[19.23%] z-[2]", node: "left-[57.50%] top-[86.39%]" },
-] as const;
+type EcoNode = {
+  key: string;
+  label: string;
+  aria: string;
+  href: string;
+  src: string;
+  icon: ReactNode;
+  box: string;
+  imgW: string;
+};
 
-const ECO_PATCH_BASE = "absolute block h-auto pointer-events-none select-none";
-const ECO_NODE_BASE = "absolute z-[3] [translate:-50%_0] flex flex-col items-center gap-[clamp(3px,.5cqw,8px)]";
+const NODES: EcoNode[] = [
+  {
+    key: "resin",
+    label: "Resin",
+    aria: "ODYX Resins",
+    href: "/products/resins",
+    src: "/img/hv2-cut/resins-product.webp",
+    icon: ICON.drop,
+    box: "left-[1%] top-[6%] w-[24%] z-[2]",
+    imgW: "w-[92%]",
+  },
+  {
+    key: "scanner",
+    label: "Scanner",
+    aria: "ODYX S1 Intraoral Scanner",
+    href: "/products/odyx-s1-intraoral-scanner",
+    src: "/img/hv2-cut/scanner-product.webp",
+    icon: ICON.scan,
+    box: "left-[33%] top-[0%] w-[30%] z-[2]",
+    imgW: "w-full",
+  },
+  {
+    key: "printer",
+    label: "Printer",
+    aria: "ODYX P1-26 3D Printer",
+    href: "/products/odyx-p1-26",
+    src: "/img/hv2-cut/printer-product.webp",
+    icon: ICON.layers,
+    box: "left-[69%] top-[2%] w-[18%] z-[2]",
+    imgW: "w-[78%]",
+  },
+  {
+    key: "software",
+    label: "Software",
+    aria: "ODYX Design Software",
+    href: "/case-submission",
+    src: "/img/hv2-eco/eco-software.webp",
+    icon: ICON.monitor,
+    box: "left-[7%] top-[50%] w-[22%] z-[2]",
+    imgW: "w-[90%]",
+  },
+  {
+    key: "cure",
+    label: "Cure",
+    aria: "ODYX Cure UV-02",
+    href: "/products/curing-machines",
+    src: "/img/hv2-cut/cure-product.webp",
+    icon: ICON.sun,
+    box: "left-[55%] top-[50%] w-[20%] z-[2]",
+    imgW: "w-[88%]",
+  },
+];
+
+const NODE_LINK =
+  "absolute flex flex-col items-center gap-[clamp(4px,.7cqw,12px)] cursor-pointer" +
+  " touch-manipulation" +
+  " focus-visible:outline-2 focus-visible:outline-[var(--hv2-blue)] focus-visible:outline-offset-4" +
+  " [&_img]:transition-[filter,transform] [&_img]:duration-300 [&_img]:ease-out" +
+  " hover:[&_img]:[filter:drop-shadow(0_16px_30px_rgba(10,16,32,.18))_brightness(1.03)]" +
+  " hover:[&_img]:-translate-y-px" +
+  " motion-reduce:hover:[&_img]:translate-y-0!";
+
+const NODE_IMG =
+  "block h-auto max-w-full pointer-events-none select-none" +
+  " [filter:drop-shadow(0_12px_26px_rgba(10,16,32,.12))]";
+
+const BADGE =
+  "w-[clamp(20px,2.15cqw,32px)] aspect-square shrink-0 rounded-full bg-[#2350E4] text-white" +
+  " [box-shadow:0_0_0_2px_rgba(255,255,255,.9),0_4px_14px_rgba(35,80,228,.28)]" +
+  " grid place-items-center [&>svg]:w-[58%] [&>svg]:h-[58%]";
+
+function OrbitRings() {
+  return (
+    <svg
+      className="absolute inset-0 z-0 w-full h-full pointer-events-none"
+      viewBox="0 0 1024 576"
+      fill="none"
+      aria-hidden
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <defs>
+        <filter id="eco-orbit-soft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.2" result="b" />
+          <feMerge>
+            <feMergeNode in="b" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g stroke="#FFFFFF" strokeLinecap="round" filter="url(#eco-orbit-soft)">
+        <ellipse cx="518" cy="292" rx="318" ry="222" strokeWidth="9" opacity=".14" />
+        <ellipse cx="518" cy="292" rx="318" ry="222" strokeWidth="2" opacity=".7" />
+        <ellipse cx="518" cy="292" rx="368" ry="255" strokeWidth="1.5" opacity=".38" />
+        <ellipse cx="518" cy="292" rx="248" ry="172" strokeWidth="1.35" opacity=".32" />
+      </g>
+      <g fill="#FFFFFF">
+        <circle cx="268" cy="198" r="3" opacity=".5" />
+        <circle cx="768" cy="205" r="3" opacity=".5" />
+        <circle cx="292" cy="418" r="2.5" opacity=".42" />
+        <circle cx="735" cy="428" r="2.5" opacity=".42" />
+        <circle cx="518" cy="88" r="2.7" opacity=".48" />
+        <circle cx="518" cy="498" r="2.4" opacity=".35" />
+      </g>
+    </svg>
+  );
+}
 
 export default function EcosystemSection() {
   return (
-    <section className="relative block w-full max-[560px]:pb-[26px] rv" id="ecosystem">
-      {/* Card wash stays edge-to-edge; content uses the page gutter. */}
+    <div className="relative w-full overflow-x-clip rv" id="ecosystem">
+      {/* dir=ltr: copy left / orbit right on every locale. Stacks below ~1080. */}
       <div
-        className="absolute inset-0 overflow-hidden rounded-t-[16px] [background:radial-gradient(46%_62%_at_52%_42%,rgba(255,255,255,.92),rgba(255,255,255,0)_72%),linear-gradient(115deg,#F7F8FE_0%,#F2F5FC_48%,#F6F8FE_100%)]"
-        aria-hidden
+        dir="ltr"
+        className={
+          "relative w-full grid items-start [container-type:inline-size]" +
+          " [grid-template-columns:minmax(0,0.36fr)_minmax(0,0.64fr)]" +
+          " gap-x-[clamp(20px,2.8vw,56px)]" +
+          " max-[1080px]:grid-cols-1!" +
+          " max-[1080px]:gap-y-[clamp(24px,5vw,40px)]!"
+        }
       >
-        <svg className="absolute inset-0 w-full h-full block" viewBox="0 0 1358 485" preserveAspectRatio="none" aria-hidden>
-          <g fill="none" stroke="#fff" strokeLinecap="round">
-            <ellipse cx="732" cy="200" rx="380" ry="255" strokeWidth="7" opacity=".16" />
-            <ellipse cx="732" cy="200" rx="380" ry="255" strokeWidth="2" opacity=".65" />
-            <ellipse cx="775" cy="212" rx="432" ry="292" strokeWidth="1.6" opacity=".38" />
-          </g>
-        </svg>
-        <img
-          className="absolute left-[79.68%] top-[2.06%] w-[20.32%] h-[97.94%] object-fill pointer-events-none"
-          src="/img/hv2-eco/eco-swoosh.webp"
-          alt=""
-          loading="lazy"
-        />
-      </div>
+        <div className="relative z-[3] min-w-0 w-full max-w-[26em] justify-self-start pt-0 max-[1080px]:max-w-none!">
+          <p className={`${HV2_EYEBROW} text-[length:clamp(12px,1.2cqw,15px)]! tracking-[.12em]! mb-[clamp(12px,1.5cqw,22px)]! max-[1080px]:text-[12.5px]!`}>
+            Ecosystem
+          </p>
+          <h2
+            className={
+              `${HV2_H2} text-[length:clamp(30px,4.2cqw,52px)]! font-bold! leading-[1.1]!` +
+              " tracking-[-.02em]! text-[var(--hv2-ink)]! mb-[clamp(12px,1.4cqw,22px)]!" +
+              " max-[1080px]:text-[length:clamp(30px,7.2vw,40px)]!"
+            }
+          >
+            Everything
+            <br />
+            works better
+            <br />
+            <span className={HV2_BLUE}>together.</span>
+          </h2>
+          <p
+            className={
+              `${HV2_BODY} text-[length:clamp(15px,1.45cqw,19px)]! leading-[1.75]!` +
+              " text-[var(--hv2-body)]! max-w-[22em]! mb-0!" +
+              " max-[1080px]:text-[15.5px]! max-[1080px]:leading-[1.65]! max-[1080px]:max-w-[36em]!"
+            }
+          >
+            A seamless ecosystem where every product is designed to work in
+            perfect harmony.
+          </p>
+        </div>
 
-      {/* Outer pad + inner relative box: absolute kids must sit in the
-          content box or they ignore padding (CSS padding-edge CB). */}
-      <div className="w-full px-[clamp(20px,2.5vw,44px)]">
-        <div className="relative w-full [container-type:inline-size]">
-          <div className="absolute z-[3] start-0 top-[10.3%] w-[24%] max-[980px]:relative! max-[980px]:start-0! max-[980px]:top-0! max-[980px]:w-auto! max-[980px]:max-w-[440px]! max-[980px]:pt-6!">
-            <p className={`${HV2_EYEBROW} text-[length:clamp(10px,.89cqw,13px)]! [letter-spacing:.1em]! mb-[clamp(10px,1.32cqw,20px)]!`}>
-              Ecosystem
-            </p>
-            <h2 className={`${HV2_H2} text-[length:clamp(26px,2.95cqw,42px)]! leading-[1.13]! [letter-spacing:-.005em]! mb-[clamp(8px,1.1cqw,17px)]!`}>
-              Everything
-              <br />
-              works better
-              <br />
-              <span className={HV2_BLUE}>together.</span>
-            </h2>
-            <p className={`${HV2_BODY} text-[length:clamp(11.5px,1.06cqw,15.5px)]! leading-[1.95]! max-w-[12.9em]!`}>
-              A seamless ecosystem where every product is designed to work in
-              perfect harmony.
-            </p>
-          </div>
+        {/* Stage: air on top for scanner; clip x so side nodes never scroll the page */}
+        <div
+          className={
+            "relative min-w-0 w-full aspect-[1024/576] justify-self-stretch" +
+            " overflow-x-clip overflow-y-visible" +
+            " max-[1080px]:max-w-[720px] max-[1080px]:mx-auto" +
+            " max-[560px]:aspect-[1024/620]"
+          }
+        >
+          <div
+            className="absolute z-0 left-[36%] top-[30%] w-[40%] h-[48%] rounded-full pointer-events-none [background:radial-gradient(closest-side,rgba(255,255,255,.85),rgba(210,225,255,.22)_55%,transparent_78%)]"
+            aria-hidden
+          />
 
-          <div className="relative ms-[23.42%] w-[76.58%] aspect-[1040/485] mb-[-1.09cqw] max-[980px]:w-full! max-[980px]:ms-0! max-[980px]:mt-[clamp(28px,7vw,48px)]!">
-            <img
-              className={`${ECO_PATCH_BASE} left-[11.73%] top-[14.64%] w-[54.23%] z-[1]`}
-              src="/img/hv2-eco/eco-mouth.webp"
-              alt="Intraoral scanner capturing a patient's teeth with blue structured light"
-            />
-            {ECO_NODES.map((n) => (
+          <OrbitRings />
+
+          <img
+            className={`${NODE_IMG} absolute left-[31%] top-[18%] w-[34%] z-[1] max-[560px]:top-[16%] max-[560px]:w-[36%]`}
+            src="/img/hv2-eco/eco-center-teeth.webp"
+            alt="Digital dental model at the centre of the ODYX ecosystem"
+            width={1024}
+            height={724}
+            loading="lazy"
+            decoding="async"
+          />
+
+          {NODES.map((n) => (
+            <Link
+              key={n.key}
+              className={`${NODE_LINK} ${n.box}`}
+              href={n.href}
+              aria-label={n.aria}
+            >
               <img
-                className={`${ECO_PATCH_BASE} ${n.patch}`}
-                src={`/img/hv2-eco/eco-${n.key}.webp`}
+                className={`${NODE_IMG} ${n.imgW}`}
+                src={n.src}
                 alt=""
                 loading="lazy"
-                key={n.key}
+                decoding="async"
+                draggable={false}
               />
-            ))}
-            {ECO_NODES.map((n) => (
-              <div className={`${ECO_NODE_BASE} ${n.node}`} key={n.key}>
-                <span
-                  className="w-[clamp(20px,2.07cqw,30px)] aspect-square rounded-full bg-[#2350E4] text-white [box-shadow:0_0_0_2px_rgba(255,255,255,.85),0_4px_12px_rgba(35,80,228,.30)] grid place-items-center [&>svg]:w-[58%] [&>svg]:h-[58%]"
-                  aria-hidden
-                >
-                  {IC[n.icon]}
-                </span>
-                <span className="text-[length:clamp(10px,1.26cqw,18px)] font-bold [letter-spacing:0] text-[#262B3C] whitespace-nowrap [text-shadow:0_1px_6px_rgba(255,255,255,.9),0_0_2px_rgba(255,255,255,.65)]">
-                  {n.label}
-                </span>
-              </div>
-            ))}
-            <EcoPrinterVideo />
-          </div>
+              <span className={BADGE}>{n.icon}</span>
+              <span className="text-[length:clamp(10px,1.3cqw,18px)] max-[560px]:text-[11px]! font-bold leading-none text-[#262B3C] whitespace-nowrap [text-shadow:0_1px_8px_rgba(255,255,255,.95)]">
+                {n.label}
+              </span>
+            </Link>
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

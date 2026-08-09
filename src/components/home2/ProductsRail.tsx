@@ -208,7 +208,7 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
   const canScroll = stopCount > 1;
 
   return (
-    <div className="relative [padding:29px_var(--pr-panel-pad-i)_8px]">
+    <div className="relative [padding:var(--pr-band-y,clamp(20px,2.5vw,32px))_var(--pr-panel-pad-i)_0]">
       <div className="grid [grid-template-columns:clamp(240px,19vw,280px)_minmax(0,1fr)] gap-[clamp(24px,3.958vw,70px)] items-start max-[980px]:grid-cols-1! max-[980px]:gap-[clamp(20px,3.4vw,34px)]!">
         {children}
 
