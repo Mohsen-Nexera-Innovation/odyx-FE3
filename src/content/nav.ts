@@ -132,7 +132,6 @@ export const HEADER_MENUS: NavGroup[] = [
     columns: [
       {
         title: "Intraoral Scanner",
-        href: "/products/odyx-s1-intraoral-scanner",
         items: [
           {
             label: "ODYX-S1",
@@ -144,7 +143,6 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         title: "3D Printing",
-        href: "/products/3d-printers",
         groups: [
           {
             label: "Printers",
@@ -183,7 +181,6 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         title: "Design Services",
-        href: "/case-submission",
         items: [
           {
             label: "Design Services",
@@ -378,6 +375,8 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Learning",
     href: "/learning",
+    /** Hidden from the navbar until ready (kept in data for later) */
+    dimmed: true,
     items: [
       {
         label: "Learning Center",

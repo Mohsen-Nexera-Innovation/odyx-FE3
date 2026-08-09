@@ -8,7 +8,8 @@ export interface AboutHeroData {
   kicker: string;
   title: string;
   subtitle: string;
-  primaryCta: { label: string; href: string };
+  /** Omitted until the CTA destination is ready */
+  primaryCta?: { label: string; href: string };
   features: AboutHeroFeature[];
 }
 
@@ -56,7 +57,8 @@ export interface TeamData {
   kicker: string;
   title: string;
   description: string;
-  cta: { label: string; href: string };
+  /** Omitted until the CTA destination is ready */
+  cta?: { label: string; href: string };
   members: TeamMember[];
 }
 
@@ -73,7 +75,8 @@ export interface NewsData {
   kicker: string;
   title: string;
   description: string;
-  cta: { label: string; href: string };
+  /** Omitted until the CTA destination is ready */
+  cta?: { label: string; href: string };
   news: NewsItem[];
 }
 

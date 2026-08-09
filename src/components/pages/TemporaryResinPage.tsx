@@ -33,7 +33,7 @@ export default function TemporaryResinPage() {
           'var(--font-tajawal), Tajawal, system-ui, sans-serif',
       }}
     >
-      <div className="mx-auto! w-full max-w-[1240px] px-4! sm:px-8! pb-16! pt-4! lg:pb-20! lg:pt-2!">
+      <div className="mx-auto! w-full max-w-[1240px] px-[clamp(20px,4vw,56px)]! pb-16! pt-4! lg:pb-20! lg:pt-2!">
         <section className="grid items-center gap-7 lg:min-h-[307px] lg:grid-cols-[44%_56%] lg:gap-0">
           <div className="relative z-10 lg:-translate-y-[10px]">
             <p

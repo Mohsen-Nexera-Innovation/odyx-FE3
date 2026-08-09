@@ -1,13 +1,15 @@
 /**
- * Clinical case photo URLs on Cloudflare R2 (`case-library/static/…`).
- * Requires NEXT_PUBLIC_MEDIA_BASE_URL (R2 public base, no trailing slash).
+ * Clinical case photo URLs.
+ *
+ * Prefer Cloudflare R2 when `NEXT_PUBLIC_MEDIA_BASE_URL` is set
+ * (`{base}/case-library/static/{file}`).
+ * Otherwise fall back to public assets at `/img/clinical-cases/{file}`
+ * (same paths used on the deployed site).
  */
 export function clinicalCaseMedia(filename: string): string {
   const base = process.env.NEXT_PUBLIC_MEDIA_BASE_URL?.replace(/\/+$/, '');
-  if (!base) {
-    throw new Error(
-      'NEXT_PUBLIC_MEDIA_BASE_URL is required for clinical case photos (Cloudflare R2).',
-    );
+  if (base) {
+    return `${base}/case-library/static/${filename}`;
   }
-  return `${base}/case-library/static/${filename}`;
+  return `/img/clinical-cases/${filename}`;
 }

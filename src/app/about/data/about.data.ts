@@ -5,7 +5,7 @@ export const aboutData: AboutPageData = {
     kicker: 'ABOUT ODYX',
     title: 'Built to Transform Digital Dentistry.',
     subtitle: 'At ODYX, we combine advanced technology, deep expertise, and a passion for innovation to create an ecosystem that empowers clinicians and elevates patient care.',
-    primaryCta: { label: 'Our Story', href: '#why' },
+    // primaryCta: { label: 'Our Story', href: '#why' },
     features: [
       {
         icon: 'shield-check',
@@ -103,7 +103,7 @@ export const aboutData: AboutPageData = {
     kicker: 'OUR TEAM',
     title: 'Built by Experts. Inspired by Impact.',
     description: 'Our diverse team of clinicians, engineers, designers, and researchers are united by one mission: advancing dental care through technology.',
-    cta: { label: 'Meet the Team', href: '#team' },
+    // cta: { label: 'Meet the Team', href: '#team' },
     members: [
       {
         name: 'Team Member 1',
@@ -141,7 +141,7 @@ export const aboutData: AboutPageData = {
     kicker: 'NEWS & INSIGHTS',
     title: 'Stay Inspired. Stay Ahead.',
     description: 'The latest news, product launches, research, and insights from ODYX.',
-    cta: { label: 'View All News', href: '#news' },
+    // cta: { label: 'View All News', href: '#news' },
     news: [
       {
         date: 'May 20, 2025',

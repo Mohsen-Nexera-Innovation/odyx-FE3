@@ -115,7 +115,7 @@ export default function P126Page() {
         style={{ ['--p126-hero-bg' as string]: `url('${hero.bg}?v=12')` }}
       >
         <div className="p126-hero-bg" aria-hidden />
-        <div className="p126-wrap p126-hero-grid">
+        <div className="p126-wrap p126-wrap--hero p126-hero-grid">
           <div className="p126-hero-left">
             <div className="p126-hero-copy">
               <p className="p126-eyebrow">{hero.eyebrow}</p>
@@ -186,7 +186,7 @@ export default function P126Page() {
         </div>
       </section>
 
-      <div className="p126-wrap p126-stack">
+      <div className="p126-wrap p126-wrap--body p126-stack">
         {/* Why + Video */}
         <div className="p126-row p126-row--why">
           <div className="p126-card p126-why-card reveal">
@@ -318,7 +318,10 @@ export default function P126Page() {
           </ul>
         </div>
 
-        {/* Cases + Reviews */}
+      </div>
+
+      {/* Cases + Reviews — full-width rail (matches hero), 20% wider than mid body */}
+      <div className="p126-wrap p126-wrap--last">
         <div className="p126-row p126-row--proof">
           <P126Cases />
           <div className="p126-card p126-reviews-card reveal">

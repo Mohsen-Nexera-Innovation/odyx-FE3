@@ -65,7 +65,10 @@ export default function SupportHubPage() {
 
   return (
     <div className="min-h-dvh bg-white pb-4">
-      <div className="w-full bg-[url('/img/hv2-section-bg.jpg')] bg-no-repeat bg-[center_top] bg-cover pt-[100px] lg:pt-[140px] pb-20 lg:pb-28">
+      <div
+        className="w-full bg-[url('/img/hv2-section-bg.jpg')] bg-no-repeat bg-[center_top] bg-cover pt-[100px] lg:pt-[140px] pb-20 lg:pb-28"
+        data-hero-light
+      >
         <SupportContainer className="flex flex-col items-center gap-6">
           <SupportPageHero />
           <SupportSearchBar

@@ -40,13 +40,15 @@ export function TeamSection({ data }: { data: TeamData }) {
               {data.description}
             </p>
 
-            <Link
-              href={data.cta.href}
-              className="team-cta-btn inline-flex items-center gap-2 font-bold text-[13px] lg:text-[14px] px-6 py-2.5 rounded-[10px] transition-colors"
-            >
-              {data.cta.label}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
-            </Link>
+            {data.cta && (
+              <Link
+                href={data.cta.href}
+                className="team-cta-btn inline-flex items-center gap-2 font-bold text-[13px] lg:text-[14px] px-6 py-2.5 rounded-[10px] transition-colors"
+              >
+                {data.cta.label}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
+              </Link>
+            )}
           </div>
 
           {/* Right Column (Slider) */}

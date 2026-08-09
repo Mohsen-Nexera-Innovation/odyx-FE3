@@ -33,7 +33,7 @@ export default function ResinsRangePage() {
       <section className="rs-hero" data-hero-dark>
         <div className="rs-hero-glow" aria-hidden />
         <div className="rs-hero-glow rs-hero-glow--streak" aria-hidden />
-        <div className="rs-wrap rs-hero-grid">
+        <div className="rs-wrap rs-wrap--hero rs-hero-grid">
           <div className="rs-hero-copy">
             <p className="rs-eyebrow">{HERO.title}</p>
             <h1 className="rs-display">{HERO.tagline}</h1>
@@ -73,7 +73,7 @@ export default function ResinsRangePage() {
       </section>
 
       <section className="rs-sec rs-lines-sec" id="lines">
-        <div className="rs-wrap">
+        <div className="rs-wrap rs-wrap--body">
           <div className="rs-sec-head">
             <p className="rs-sec-eyebrow">{LINES_SECTION.eyebrow}</p>
             <h2 className="rs-sec-title">{LINES_SECTION.title}</h2>
@@ -108,7 +108,7 @@ export default function ResinsRangePage() {
       </section>
 
       <section className="rs-sec rs-why-sec" id="why">
-        <div className="rs-wrap">
+        <div className="rs-wrap rs-wrap--last">
           <div className="rs-why">
             <div className="rs-why-main">
               <p className="rs-why-eyebrow">{WHY.eyebrow}</p>

@@ -12,7 +12,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 export function AboutHero({ data }: { data: AboutHeroData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)] pt-[65px] lg:pt-[85px]">
+    <section className="w-full px-[clamp(20px,4vw,56px)] pt-[65px] lg:pt-[85px]" data-hero-light>
       <div 
         className="w-full bg-[#F4F8FD] rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] border border-gray-100/50 relative"
       >
@@ -39,16 +39,18 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
               {data.subtitle}
             </p>
 
-            {/* CTA Button */}
-            <div>
-              <Link
-                href={data.primaryCta.href}
-                className="inline-flex items-center gap-2 bg-[#0050D8] hover:bg-[#0040B0] text-white text-[14px] lg:text-[15px] font-semibold px-7 py-3 rounded-[10px] transition-colors shadow-[0_4px_14px_rgba(0,80,216,0.35)]"
-              >
-                {data.primaryCta.label}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
-              </Link>
-            </div>
+            {/* CTA Button — omitted when primaryCta is not set */}
+            {data.primaryCta && (
+              <div>
+                <Link
+                  href={data.primaryCta.href}
+                  className="inline-flex items-center gap-2 bg-[#0050D8] hover:bg-[#0040B0] text-white text-[14px] lg:text-[15px] font-semibold px-7 py-3 rounded-[10px] transition-colors shadow-[0_4px_14px_rgba(0,80,216,0.35)]"
+                >
+                  {data.primaryCta.label}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* ── Right Column: 4 Features ────────────────────────── */}

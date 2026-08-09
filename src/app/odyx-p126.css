@@ -26,7 +26,11 @@
   --p126-panel:transparent;     /* no gray tray */
   --p126-radius:18px;
   --p126-radius-sm:10px;
-  --p126-max:1360px;                 /* design: ~6% side margins on ~1920 viewport */
+  /* About-aligned: full viewport between fluid gutters (no mid-rail narrowing) */
+  --p126-max:none;
+  --p126-max-hero:none;
+  --p126-max-body:none;
+  --p126-max-last:none;
   /* Shared 2-col rail — Why widened again (~+10%); chips align to Why */
   --p126-cols:minmax(0, 1.1fr) minmax(0, 1fr);
   /* Flow | ROI — Workflow +15%, ROI −15% vs main rail */
@@ -50,10 +54,14 @@
   width:100%;
   max-width:var(--p126-max);
   margin:0 auto;
-  padding:0 32px;
+  /* About / Home / Support-aligned fluid page gutter */
+  padding-inline:clamp(20px, 4vw, 56px);
 }
-@media(max-width:620px) {
-  .p126-wrap { padding:0 16px; }
+.p126-wrap--hero{max-width:var(--p126-max-hero)}
+.p126-wrap--body{max-width:var(--p126-max-body)}
+.p126-wrap--last{
+  max-width:var(--p126-max-last);
+  margin-top:14px; /* preserve gap after mid stack when last is split out */
 }
 .p126-stack{
   display:flex;

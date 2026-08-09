@@ -9,7 +9,11 @@
   --rs-rule:rgba(26,50,90,.10);
   --rs-shadow:0 8px 24px rgba(20,40,80,.07);
   --rs-shadow-lift:0 16px 40px rgba(20,40,80,.14);
-  --rs-max:1360px;
+  /* About-aligned: full viewport between fluid gutters (no mid-rail narrowing) */
+  --rs-max:none;
+  --rs-max-hero:none;
+  --rs-max-body:none;
+  --rs-max-last:none;
   background:#fff; color:var(--rs-body);
   font-family:var(--font-sora),'Sora',ui-sans-serif,system-ui,sans-serif;
   font-size:16px; line-height:1.55;
@@ -21,13 +25,15 @@
 }
 .rs :focus-visible{outline:2px solid var(--rsa); outline-offset:2px; border-radius:4px}
 .rs-wrap{
+  width:100%;
   max-width:var(--rs-max);
   margin-inline:auto;
-  padding-inline:32px;
+  /* About / Home / Support-aligned fluid page gutter */
+  padding-inline:clamp(20px, 4vw, 56px);
 }
-@media(max-width:620px) {
-  .rs-wrap { padding-inline:16px; }
-}
+.rs-wrap--hero{max-width:var(--rs-max-hero)}
+.rs-wrap--body{max-width:var(--rs-max-body)}
+.rs-wrap--last{max-width:var(--rs-max-last)}
 .rs [id]{scroll-margin-top:96px}
 .rs-sec{padding-block:clamp(48px,5.5vw,72px)}
 .rs-visually-hidden{

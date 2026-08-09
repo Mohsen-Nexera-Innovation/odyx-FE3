@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { HEADER_MENUS, type MegaColumn, type NavGroup, type NavLink } from '@/content/nav';
-import { LOCALE_LABEL, useGlobalTools, type Locale } from './GlobalTools';
+import { useGlobalTools } from './GlobalTools';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { isAuthShellPath } from '@/content/auth';
 import { logout, type AccountSession } from '@/lib/auth';
@@ -413,7 +413,7 @@ function UserMenu({ session, onSignOut }: { session: AccountSession; onSignOut: 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const { openSearch, locale, setLocale } = useGlobalTools();
+  const { openSearch } = useGlobalTools();
   const { session } = useAuthSession();
   const [inboxUnread, setInboxUnread] = useState(0);
   const [scrolled, setScrolled] = useState(false);
@@ -422,10 +422,8 @@ export default function Header() {
   const [pastHero, setPastHero] = useState(false);
   const [open, setOpen] = useState(false);
   const [expandedNav, setExpandedNav] = useState<string | null>(null);
-  const [langOpen, setLangOpen] = useState(false);
   const [forceClose, setForceClose] = useState(false);
   const [hash, setHash] = useState('');
-  const langRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
 
   const isMenuActive = (menu: NavGroup) =>
@@ -513,14 +511,6 @@ export default function Header() {
     };
   }, [open]);
 
-  useEffect(() => {
-    const close = (e: MouseEvent) => {
-      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
-    };
-    document.addEventListener('click', close);
-    return () => document.removeEventListener('click', close);
-  }, []);
-
   // Keep mega closed after a link click until the pointer leaves the nav —
   // otherwise same-page hash links (About sections) reopen the panel while
   // the cursor is still hovering the parent item.
@@ -539,11 +529,6 @@ export default function Header() {
   const signOut = async () => {
     await logout();
     router.push('/login');
-  };
-
-  const pickLocale = (l: Locale) => {
-    setLocale(l);
-    setLangOpen(false);
   };
 
   const closeMenu = () => {
@@ -615,18 +600,6 @@ export default function Header() {
           <button type="button" className="tool-btn search-btn" onClick={openSearch} title="Search (Cmd+K)" aria-label="Open search">
             <SearchIcon />
           </button>
-          <div className="lang-wrap" ref={langRef}>
-            <button type="button" className={`tool-btn lang${langOpen ? ' on' : ''}`} title="Language" aria-haspopup="menu" aria-expanded={langOpen} onClick={() => setLangOpen((o) => !o)}>
-              {LOCALE_LABEL[locale]} <Caret />
-            </button>
-            {langOpen && (
-              <div className="lang-drop" role="menu">
-                {(['en', 'ar', 'fr'] as Locale[]).map((l) => (
-                  <button key={l} type="button" role="menuitem" className={locale === l ? 'active' : ''} onClick={() => pickLocale(l)}>{LOCALE_LABEL[l]}</button>
-                ))}
-              </div>
-            )}
-          </div>
           {session ? (
             <>
               {session.accountType === 'STAFF' ? (
