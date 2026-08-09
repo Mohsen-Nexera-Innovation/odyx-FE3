@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+import { HV2_BTN, HV2_BTN_SIZE, HV2_GUTTER, HV2_SECTION_Y } from "@/components/home2/hv2Chrome";
 
 // Ecosystem hub — the client mock's grid of connected panels below the
 // clinical cases deck: Learning / Support on the first row, Store /
@@ -8,9 +10,8 @@
 // Geometry is measured off the client references — 2850x1116 for row 1 and
 // 2846x962 for row 2 (knowledge_base/screens/041-… and 042-…) — where the
 // container is 2836 wide, row-1 cards are 1411x886 and row-2 cards 1411x875.
-// .hv2-hub-in is the query container, so every reference pixel is
-// value / 28.36 cqw and the whole composition holds its proportions at any
-// width. See "8 · Ecosystem hub" in home-v2.css.
+// The query container holds every reference pixel as value / 28.36 cqw so the
+// composition holds its proportions at any width.
 //
 // The product art is a soft-feathered patch of the mock (public/img/hv2-hub/,
 // same technique as the ecosystem patches): the mock's own copy tails are
@@ -83,9 +84,6 @@ const SUPPORT_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
   { label: "Downloads", icon: "download", l: 76.68, t: 64.67, w: 18.57 },
 ];
 
-// Row 2 carries no chip rail — copy, rule, CTA and one product patch — so the
-// two cards are one component. Only the art's own left/width differs, and that
-// lives on the `art.cls` modifier in home-v2.css.
 type ActionCard = {
   id: string;
   label: string;
@@ -93,8 +91,142 @@ type ActionCard = {
   desc: [string, string];
   cta: string;
   href: string;
-  art: { cls: string; src: string; alt: string; w: number; h: number };
+  artClass: string;
+  art: { src: string; alt: string; w: number; h: number };
 };
+
+const HUB_SECTION =
+  `relative w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+  " [background:radial-gradient(ellipse_40%_60%_at_24%_6%,rgba(40,120,255,.08),rgba(40,120,255,0)_68%),linear-gradient(180deg,#F7F9FE_0%,#F4F6FD_100%)]";
+
+const HUB_IN =
+  "relative w-[min(100%,1828px)] mx-auto [container-type:inline-size]" +
+  " border border-[rgba(255,255,255,.85)] rounded-[18px] overflow-hidden bg-white" +
+  " [box-shadow:0_18px_46px_rgba(10,40,90,.07)]" +
+  " [--hub-ch:31.24cqw] [--hub-ch2:30.85cqw] [--hub-gap:.494cqw] [--hub-pad:2.397cqw]" +
+  " [--hub-blue:#2B63DE] [--hub-ic:#2E6FE0]" +
+  " max-[1360px]:w-[min(100%,1360px)]! max-[1360px]:rounded-[16px]! max-[1360px]:[--hub-col:min(60%,34em)]" +
+  " max-[1180px]:w-[min(100%,760px)]! max-[1180px]:[--hub-col:min(62%,34em)]!" +
+  " max-[760px]:[--hub-col:min(100%,34em)]!";
+
+const HUB_GRID =
+  // `[gap:…]!` must beat the unlayered global `.grid { gap: 20px }` in odyx.css
+  // (same pattern as resin detail / ceramic crown grids).
+  "grid grid-cols-2 [gap:var(--hub-gap)]! [grid-template-rows:var(--hub-ch)_var(--hub-ch2)]" +
+  " max-[1360px]:[grid-template-rows:auto]! max-[1360px]:[gap:8px]!" +
+  " max-[1180px]:grid-cols-1!";
+
+const HUB_CARD =
+  "relative overflow-hidden" +
+  " [background:linear-gradient(180deg,rgba(255,255,255,.75)_0%,rgba(255,255,255,0)_3.2%),#F4F6FC]" +
+  " max-[1360px]:min-h-[560px]! max-[1360px]:flex! max-[1360px]:flex-col! max-[1360px]:items-start!" +
+  " max-[1360px]:[padding:clamp(26px,4.4vw,36px)_clamp(24px,4vw,34px)_clamp(22px,3.4vw,30px)]!" +
+  " max-[760px]:min-h-0! max-[760px]:pb-0!";
+
+const HUB_COPY =
+  // --hub-copy-top lets row-2 cards retune without fighting a second top-* utility.
+  "absolute z-[3] start-[var(--hub-pad)] top-[var(--hub-copy-top,4.15cqw)] w-[25cqw]" +
+  " max-[1360px]:static! max-[1360px]:w-auto! max-[1360px]:max-w-[var(--hub-col)]!";
+
+const HUB_COPY_ACT = " [--hub-copy-top:3.62cqw] max-[1360px]:top-auto!";
+
+const HUB_EYEBROW =
+  "text-[var(--hub-blue)]! text-[1.19cqw]! font-bold! uppercase! [letter-spacing:.02em]! leading-[1.2]! m-0!" +
+  " rtl:[letter-spacing:0]! rtl:normal-case!" +
+  " max-[1360px]:text-[12.5px]! max-[1360px]:[letter-spacing:.06em]! max-[1360px]:rtl:[letter-spacing:0]!";
+
+const HUB_H =
+  // ! needed: .hv2 h3 sets ink / tracking.
+  "text-[#0D1B31]! text-[2.08cqw]! font-bold! leading-[1.187]! [letter-spacing:-.025em]! [margin:1.32cqw_0_0]!" +
+  " rtl:[letter-spacing:0]!" +
+  " max-[1360px]:text-[length:clamp(22px,2.3vw,32px)]! max-[1360px]:leading-[1.16]! max-[1360px]:mt-[14px]!" +
+  " max-[1180px]:text-[length:clamp(26px,4.2vw,36px)]!";
+
+const HUB_RULE =
+  "block w-[2.12cqw] h-[.141cqw] [margin:1.19cqw_0_0_.14cqw] rounded-[1px] bg-[var(--hub-blue)]" +
+  " max-[1360px]:w-[52px]! max-[1360px]:h-1! max-[1360px]:m-[16px_0_0]!";
+
+const HUB_D =
+  "text-[#24354F] text-[1.26cqw] font-medium leading-[1.485] [letter-spacing:-.012em] mt-[1.71cqw]" +
+  " max-[1360px]:text-[length:clamp(15px,1.9vw,17.5px)]! max-[1360px]:leading-[1.6]! max-[1360px]:mt-4! max-[1360px]:[letter-spacing:0]!";
+
+// Absolutely placed so CTAs share the same y regardless of copy height.
+// Size is fixed (HV2_BTN_SIZE) so hub buttons match Apps / Cases / Products.
+const HUB_CTA =
+  `${HV2_BTN} ${HV2_BTN_SIZE} absolute! z-[4]! start-[var(--hub-pad)]! top-[var(--hub-cta-top,24.19cqw)]!` +
+  " justify-between! border-0!" +
+  " [background:linear-gradient(180deg,#1A3FDB_0%,#1134BE_100%)]!" +
+  " [box-shadow:0_14px_30px_rgba(21,60,225,.26),0_4px_10px_rgba(14,40,160,.16)]!" +
+  " transition-[transform,box-shadow]! duration-[.22s]! ease!" +
+  // Arbitrary transform beats HV2_BTN hover translateY(-1px) reliably.
+  " hover:[transform:translateY(-2px)]! hover:[box-shadow:0_18px_36px_rgba(21,60,225,.32),0_5px_12px_rgba(14,40,160,.20)]!" +
+  " [&>span]:mt-px rtl:[&>svg]:scale-x-[-1] motion-reduce:transition-none!" +
+  " max-[1360px]:static! max-[1360px]:mt-[clamp(20px,3vw,26px)]! max-[1360px]:top-auto!";
+
+const HUB_CTA_ACT = " [--hub-cta-top:22.74cqw]";
+
+const HUB_ART =
+  "absolute z-[1] top-0 h-full block object-fill pointer-events-none" +
+  " max-[1360px]:top-auto! max-[1360px]:bottom-0! max-[1360px]:h-auto!" +
+  " max-[1360px]:start-auto! max-[1360px]:end-[-2%]! max-[1360px]:w-[54%]! max-[1360px]:max-w-[360px]!" +
+  " max-[1180px]:w-[58%]! max-[1180px]:max-w-[420px]!" +
+  " max-[760px]:relative! max-[760px]:inset-auto! max-[760px]:self-end!" +
+  " max-[760px]:w-[min(100%,380px)]! max-[760px]:max-w-none!" +
+  " max-[760px]:mt-[clamp(14px,3vw,24px)]! max-[760px]:me-[-4%]!";
+
+// In Arabic the whole composition mirrors. Only the laptop flips with it —
+// the chip rail is pinned to its screen edge. Headset / carton / device keep
+// their mark orientation.
+const HUB_ART_LEARN =
+  " start-[27.50%] w-[61.16%] rtl:scale-x-[-1]" +
+  " max-[1360px]:start-auto! max-[1360px]:w-[54%]!" +
+  " max-[1180px]:w-[58%]!" +
+  " max-[760px]:w-[min(100%,380px)]!";
+
+const HUB_ART_SUPPORT =
+  " start-[28.21%] w-[48.05%]" +
+  " max-[1360px]:start-auto! max-[1360px]:w-[54%]!" +
+  " max-[1180px]:w-[58%]!" +
+  " max-[760px]:w-[min(100%,380px)]!";
+
+const HUB_ART_STORE =
+  " start-[26.72%] w-[73.28%]" +
+  " max-[1360px]:start-auto! max-[1360px]:w-[62%]! max-[1360px]:max-w-[430px]!" +
+  " max-[1180px]:w-[66%]! max-[1180px]:max-w-[500px]!" +
+  " max-[760px]:w-[min(104%,470px)]!";
+
+const HUB_ART_REG =
+  " start-[29.12%] w-[71.08%]" +
+  " max-[1360px]:start-auto! max-[1360px]:w-[62%]! max-[1360px]:max-w-[430px]!" +
+  " max-[1180px]:w-[66%]! max-[1180px]:max-w-[500px]!" +
+  " max-[760px]:w-[min(104%,470px)]!";
+
+const HUB_CHIPS =
+  "list-none m-0 p-0" +
+  " max-[1360px]:flex! max-[1360px]:flex-wrap! max-[1360px]:gap-2.5!" +
+  " max-[1360px]:mt-[clamp(18px,2.6vw,26px)]! max-[1360px]:w-full! max-[1360px]:max-w-[var(--hub-col)]!";
+
+const HUB_CHIP =
+  "absolute z-[2] start-[var(--l)] top-[var(--t)] w-[var(--w)] h-[var(--h,9.93%)]" +
+  " flex items-center gap-[.49cqw] px-[.78cqw] rounded-[.63cqw]" +
+  " bg-[rgba(255,255,255,.87)] backdrop-blur-[2px]" +
+  " [box-shadow:0_0_.95cqw_.3cqw_rgba(255,255,255,.5),0_.28cqw_.8cqw_rgba(39,76,145,.07),inset_0_0_0_1px_rgba(222,232,248,.5)]" +
+  " max-[1360px]:static! max-[1360px]:w-auto! max-[1360px]:h-auto! max-[1360px]:min-h-[52px]!" +
+  " max-[1360px]:px-[15px]! max-[1360px]:gap-[11px]! max-[1360px]:rounded-[12px]!" +
+  " max-[760px]:min-h-[48px]! max-[760px]:px-[13px]! max-[760px]:gap-[9px]!";
+
+const HUB_CHIP_SUPPORT =
+  " [--h:10.50%] px-[1.10cqw]! gap-[.62cqw]! max-[1360px]:px-[15px]! max-[1360px]:gap-[11px]!";
+
+const HUB_CHIP_IC =
+  "grid place-items-center text-[var(--hub-ic)] flex-none" +
+  " [&>svg]:w-[1.85cqw] [&>svg]:h-[1.85cqw] [&>svg]:block" +
+  " max-[1360px]:[&>svg]:w-[22px]! max-[1360px]:[&>svg]:h-[22px]!";
+
+const HUB_CHIP_L =
+  "text-[#1B3050] text-[1.05cqw] font-medium leading-[1.2] whitespace-nowrap mt-[.35cqw]" +
+  " max-[1360px]:text-[14.5px]! max-[1360px]:mt-px!" +
+  " max-[760px]:text-[13.5px]!";
 
 const ACTION_CARDS: ActionCard[] = [
   {
@@ -104,8 +236,8 @@ const ACTION_CARDS: ActionCard[] = [
     desc: ["Resins, accessories and more –", "delivered to your door."],
     cta: "Go to Store",
     href: "/shop",
+    artClass: HUB_ART_STORE,
     art: {
-      cls: "hv2-hub-art-store",
       src: "/img/hv2-hub/store-shelf.webp",
       alt: "ODYX resin bottles and a carton on a lit display pedestal with a tooth disc and a clear aligner",
       w: 1034,
@@ -121,8 +253,8 @@ const ACTION_CARDS: ActionCard[] = [
     // Same target the global header's "Register device" uses — /register is
     // the account sign-up route, not device registration.
     href: "/support#register",
+    artClass: HUB_ART_REG,
     art: {
-      cls: "hv2-hub-art-reg",
       src: "/img/hv2-hub/registration-device.webp",
       alt: "An ODYX device on its base behind a glowing shield with a checkmark",
       w: 1003,
@@ -133,27 +265,27 @@ const ACTION_CARDS: ActionCard[] = [
 
 function HubActionCard({ card, rv }: { card: ActionCard; rv: number }) {
   return (
-    <article className={`hv2-hub-card hv2-hub-act hv2-hub-${card.id} rv`} data-rv={rv}>
-      <div className="hv2-hub-copy">
-        <p className="hv2-hub-eyebrow">{card.label}</p>
-        <h3 className="hv2-hub-h">
+    <article className={`${HUB_CARD} rv`} data-rv={rv}>
+      <div className={`${HUB_COPY}${HUB_COPY_ACT}`}>
+        <p className={HUB_EYEBROW}>{card.label}</p>
+        <h3 className={HUB_H}>
           {card.title[0]}
           <br />
           {card.title[1]}
         </h3>
-        <span className="hv2-hub-rule" aria-hidden />
-        <p className="hv2-hub-d">
+        <span className={HUB_RULE} aria-hidden />
+        <p className={HUB_D}>
           {card.desc[0]}
           <br />
           {card.desc[1]}
         </p>
       </div>
-      <a className="hv2-btn hv2-hub-cta" href={card.href}>
+      <a className={`${HUB_CTA}${HUB_CTA_ACT}`} href={card.href}>
         <span>{card.cta}</span>
         <CtaArrow />
       </a>
       <img
-        className={`hv2-hub-art ${card.art.cls}`}
+        className={`${HUB_ART}${card.artClass}`}
         src={card.art.src}
         alt={card.art.alt}
         width={card.art.w}
@@ -167,43 +299,43 @@ function HubActionCard({ card, rv }: { card: ActionCard; rv: number }) {
 
 export default function HubCardsSection() {
   return (
-    <section className="hv2-hub" id="hub" aria-label="Learning, support, store and device registration">
-      <div className="hv2-hub-in">
-        <div className="hv2-hub-grid">
+    <section className={HUB_SECTION} id="hub" aria-label="Learning, support, store and device registration">
+      <div className={HUB_IN}>
+        <div className={HUB_GRID}>
           {/* ---- Learning ---- */}
-          <article className="hv2-hub-card hv2-hub-learn rv" data-rv="1">
-            <div className="hv2-hub-copy">
-              <p className="hv2-hub-eyebrow">Learning</p>
-              <h3 className="hv2-hub-h">
+          <article className={`${HUB_CARD} rv`} data-rv="1">
+            <div className={HUB_COPY}>
+              <p className={HUB_EYEBROW}>Learning</p>
+              <h3 className={HUB_H}>
                 Grow Your Skills.
                 <br />
                 Master Digital Dentistry.
               </h3>
-              <span className="hv2-hub-rule" aria-hidden />
-              <p className="hv2-hub-d">
+              <span className={HUB_RULE} aria-hidden />
+              <p className={HUB_D}>
                 Access courses, webinars
                 <br />
                 and step-by-step guides.
               </p>
             </div>
-            <ul className="hv2-hub-chips" aria-label="What the learning centre covers">
+            <ul className={HUB_CHIPS} aria-label="What the learning centre covers">
               {LEARN_CHIPS.map((c) => (
                 <li
-                  className="hv2-hub-chip"
+                  className={HUB_CHIP}
                   key={c.label}
-                  style={{ "--l": `${c.l}%`, "--t": `${c.t}%`, "--w": `${c.w}%` } as React.CSSProperties}
+                  style={{ "--l": `${c.l}%`, "--t": `${c.t}%`, "--w": `${c.w}%` } as CSSProperties}
                 >
-                  <span className="hv2-hub-chip-ic" aria-hidden>{HubIcon[c.icon]}</span>
-                  <span className="hv2-hub-chip-l">{c.label}</span>
+                  <span className={HUB_CHIP_IC} aria-hidden>{HubIcon[c.icon]}</span>
+                  <span className={HUB_CHIP_L}>{c.label}</span>
                 </li>
               ))}
             </ul>
-            <a className="hv2-btn hv2-hub-cta" href="/learning">
+            <a className={HUB_CTA} href="/learning">
               <span>Start Learning</span>
               <CtaArrow />
             </a>
             <img
-              className="hv2-hub-art hv2-hub-art-learn"
+              className={`${HUB_ART}${HUB_ART_LEARN}`}
               src="/img/hv2-hub/learning-laptop.webp"
               alt="A laptop showing the ODYX learning centre with a course video ready to play"
               width={863}
@@ -214,39 +346,39 @@ export default function HubCardsSection() {
           </article>
 
           {/* ---- Support ---- */}
-          <article className="hv2-hub-card hv2-hub-support rv" data-rv="2">
-            <div className="hv2-hub-copy">
-              <p className="hv2-hub-eyebrow">Support</p>
-              <h3 className="hv2-hub-h">
+          <article className={`${HUB_CARD} rv`} data-rv="2">
+            <div className={HUB_COPY}>
+              <p className={HUB_EYEBROW}>Support</p>
+              <h3 className={HUB_H}>
                 We&rsquo;re Here
                 <br />
                 When You Need Us.
               </h3>
-              <span className="hv2-hub-rule" aria-hidden />
-              <p className="hv2-hub-d">
+              <span className={HUB_RULE} aria-hidden />
+              <p className={HUB_D}>
                 Get technical support,
                 <br />
                 resources and live help.
               </p>
             </div>
-            <ul className="hv2-hub-chips" aria-label="Ways to get support">
+            <ul className={HUB_CHIPS} aria-label="Ways to get support">
               {SUPPORT_CHIPS.map((c) => (
                 <li
-                  className="hv2-hub-chip"
+                  className={`${HUB_CHIP}${HUB_CHIP_SUPPORT}`}
                   key={c.label}
-                  style={{ "--l": `${c.l}%`, "--t": `${c.t}%`, "--w": `${c.w}%` } as React.CSSProperties}
+                  style={{ "--l": `${c.l}%`, "--t": `${c.t}%`, "--w": `${c.w}%` } as CSSProperties}
                 >
-                  <span className="hv2-hub-chip-ic" aria-hidden>{HubIcon[c.icon]}</span>
-                  <span className="hv2-hub-chip-l">{c.label}</span>
+                  <span className={HUB_CHIP_IC} aria-hidden>{HubIcon[c.icon]}</span>
+                  <span className={HUB_CHIP_L}>{c.label}</span>
                 </li>
               ))}
             </ul>
-            <a className="hv2-btn hv2-hub-cta" href="/support">
+            <a className={HUB_CTA} href="/support">
               <span>Get Support</span>
               <CtaArrow />
             </a>
             <img
-              className="hv2-hub-art hv2-hub-art-support"
+              className={`${HUB_ART}${HUB_ART_SUPPORT}`}
               src="/img/hv2-hub/support-headset.webp"
               alt="An ODYX support headset with a boom microphone on a lit display pedestal"
               width={678}

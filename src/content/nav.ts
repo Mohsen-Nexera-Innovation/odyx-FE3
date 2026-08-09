@@ -49,72 +49,49 @@ export interface NavGroup {
   navOnly?: boolean;
 }
 
+/** About mega — only sections that exist on `/about` (app/about). */
+const ABOUT_NAV_ITEMS: NavLink[] = [
+  {
+    label: "Why ODYX",
+    href: "/about#why",
+    desc: "More than technology — a partner you can rely on",
+  },
+  {
+    label: "Our Values",
+    href: "/about#values",
+    desc: "What drives the ODYX team",
+  },
+  {
+    label: "Our Team",
+    href: "/about#team",
+    desc: "The people building ODYX",
+  },
+  {
+    label: "News & Insights",
+    href: "/about#news",
+    desc: "Latest announcements and stories",
+  },
+];
+
 export const HEADER_MENUS: NavGroup[] = [
   {
     label: "About ODYX",
     href: "/about",
-    items: [
-      {
-        label: "Who We Are",
-        href: "/about#who-we-are",
-        desc: "Our story and what drives us",
-      },
-      {
-        label: "Vision & Mission",
-        href: "/about#vision-mission",
-        desc: "Where we are headed",
-      },
-      {
-        label: "Values & Beliefs",
-        href: "/about#values",
-        desc: "The principles behind ODYX",
-      },
-      {
-        label: "Our Team",
-        href: "/about#team",
-        desc: "The people building ODYX",
-      },
-      {
-        label: "News",
-        href: "/about#news",
-        desc: "Latest announcements and press",
-      },
-    ],
+    items: ABOUT_NAV_ITEMS,
     columns: [
       {
         title: "Company",
         href: "/about",
         items: [
-          {
-            label: "Who We Are",
-            href: "/about#who-we-are",
-            desc: "Our story and what drives us",
-          },
-          {
-            label: "Vision & Mission",
-            href: "/about#vision-mission",
-            desc: "Where we are headed",
-          },
-          {
-            label: "Values & Beliefs",
-            href: "/about#values",
-            desc: "The principles behind ODYX",
-          },
+          ABOUT_NAV_ITEMS[0],
+          ABOUT_NAV_ITEMS[1],
         ],
       },
       {
         title: "People & News",
         items: [
-          {
-            label: "Our Team",
-            href: "/about#team",
-            desc: "The people building ODYX",
-          },
-          {
-            label: "News",
-            href: "/about#news",
-            desc: "Latest announcements and press",
-          },
+          ABOUT_NAV_ITEMS[2],
+          ABOUT_NAV_ITEMS[3],
         ],
       },
     ],

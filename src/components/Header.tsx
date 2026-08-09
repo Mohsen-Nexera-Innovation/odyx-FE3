@@ -521,19 +521,19 @@ export default function Header() {
     return () => document.removeEventListener('click', close);
   }, []);
 
+  // Keep mega closed after a link click until the pointer leaves the nav —
+  // otherwise same-page hash links (About sections) reopen the panel while
+  // the cursor is still hovering the parent item.
   useEffect(() => {
-    if (forceClose) {
-      const reset = () => setForceClose(false);
-      const timer = setTimeout(() => {
-        window.addEventListener('mousemove', reset, { once: true });
-        window.addEventListener('scroll', reset, { once: true });
-      }, 50);
-      return () => {
-        clearTimeout(timer);
-        window.removeEventListener('mousemove', reset);
-        window.removeEventListener('scroll', reset);
-      };
-    }
+    if (!forceClose) return;
+    const nav = headerRef.current?.querySelector('.nav-menu');
+    const reset = () => setForceClose(false);
+    nav?.addEventListener('pointerleave', reset);
+    window.addEventListener('scroll', reset, { once: true, passive: true });
+    return () => {
+      nav?.removeEventListener('pointerleave', reset);
+      window.removeEventListener('scroll', reset);
+    };
   }, [forceClose]);
 
   const signOut = async () => {

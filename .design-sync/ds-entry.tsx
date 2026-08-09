@@ -14,7 +14,10 @@
 // Header renders its home-screen state: the navigation shim pins the pathname
 // to "/", which is the action-blue treatment approved for the design system.
 export { default as Header } from '@/components/Header';
-export { default as Hv2Footer } from '@/components/home2/Hv2Footer';
+// Site-wide Footer (Home V2 navy band). Kept as `Hv2Footer` for design-sync
+// preview name stability after the home2 component was consolidated.
+export { default as Hv2Footer } from '@/components/Footer';
+export { default as Footer } from '@/components/Footer';
 
 // ── Home screen sections ─────────────────────────────────────────────────
 export { default as PathCarousel } from '@/components/home2/PathCarousel';
@@ -36,7 +39,7 @@ export { default as HomeV2Page } from '@/components/pages/HomeV2Page';
 export { default as P126Page } from '@/components/pages/P126Page';
 
 // ── Runtime requirements (bundled, no preview card of their own) ──────────
-// GlobalToolsProvider carries locale/theme context that Header and Hv2Footer
+// GlobalToolsProvider carries locale/theme context that Header and Footer
 // read; without it they throw. Hv2Motion is the reveal-on-scroll driver for
 // `.hv2 .rv` elements — see the README conventions header.
 export { GlobalToolsProvider } from '@/components/GlobalTools';

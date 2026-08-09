@@ -18,7 +18,7 @@ const COLOR_MAP: Record<string, { text: string; glow: string }> = {
 
 export function ValuesSection({ data }: { data: ValuesData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)]">
+    <section id="values" className="w-full px-[clamp(20px,4vw,56px)] scroll-mt-[96px]">
       <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
         
         {/* Header */}

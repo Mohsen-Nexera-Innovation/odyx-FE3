@@ -11,7 +11,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 export function WhyOdyxSection({ data }: { data: WhyOdyxData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)]">
+    <section id="why" className="w-full px-[clamp(20px,4vw,56px)] scroll-mt-[96px]">
       <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           

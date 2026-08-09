@@ -1,13 +1,17 @@
 // Why ODYX — the client's orbit infographic (new-why-odyx reference).
 //
-// The whole diagram is laid out in the reference's own coordinate system:
-// a 1041 x 434 stage, with every position, size and font measured off the
-// mock in those units and converted with `--u` (one reference pixel, in
-// container-query units). The stage keeps the 1041/434 aspect ratio, so the
-// composition scales proportionally and stays pixel-faithful at any width.
+// Laid out in the mock's 1041×434 coordinates via `--u` (1 ref-px, width-
+// based cqw). A mild vertical stretch (`STAGE_H`) opens the orbit without
+// letting Why dominate the Hero. Circles stay equal in `--u`.
 //
 // Positions are logical (inset-inline-start), so Arabic mirrors the whole
 // orbit instead of colliding with it.
+
+import { HV2_SECTION_Y_TIGHT } from "@/components/home2/hv2Chrome";
+
+const STAGE_W = 1041;
+const STAGE_H_REF = 434;
+const STAGE_H = 450; // slight open vs mock 434 — keeps Why from towering over Hero
 
 type Item = {
   key: string;
@@ -124,25 +128,61 @@ const TICKS: { x: number; y: number; r: number; d?: boolean }[] = [
   { x: 473, y: 385, r: 0, d: true },
 ];
 
+// Card motion: the five benefit cards stay put at their mock coordinates
+// (the layout that measures zero overlap with the central orb — the icon is
+// absolutely placed off the text block via --icx/--icy, so text never rides
+// over the sphere) and get a small "alive" wobble in place, only above
+// 1001px and only when the visitor allows motion — see wo-wobble in
+// globals.css. Freezes while the visitor is reading (group-hover).
+const WOBBLE =
+  "min-[1001px]:motion-safe:[animation:wo-wobble_7s_ease-in-out_infinite] min-[1001px]:motion-safe:[animation-delay:calc(var(--ph)*-7s)] min-[1001px]:motion-safe:group-hover:[animation-play-state:paused]" +
+  // Below tablet the card becomes a two-column grid (icon left, copy right).
+  " max-[1000px]:grid max-[1000px]:grid-cols-[auto_1fr] max-[1000px]:items-center max-[1000px]:gap-x-[14px] max-[1000px]:gap-y-[2px]";
+
+// Same min-width + motion-safe gate as WOBBLE, plus a `supports-[...]:` guard
+// for the two water droplets' offset-path orbit (see the map() below).
+const BEAD_VARIANT =
+  "min-[1001px]:motion-safe:supports-[offset-path:ellipse(1px_1px_at_0px_0px)]:";
+
 export default function WhyOdyxOrbit() {
   return (
-    <section className="wo" id="why" aria-labelledby="wo-h">
-      {/* Background: the client's supplied field — corner micro-dots and
-          silk waves are baked into the image. */}
-      <div className="wo-bg" aria-hidden />
+    <section
+      // Transparent to the parent Hero wash — no second gradient restart.
+      className={`relative isolate w-full ${HV2_SECTION_Y_TIGHT} bg-transparent`}
+      id="why"
+      aria-labelledby="wo-h"
+    >
+      {/* Client field (micro-dots + silk waves). Soft top fade into the shared wash. */}
+      <div
+        className="absolute inset-0 z-0 overflow-hidden pointer-events-none [background:url('/img/hv2-why-bg.png')_center_center/cover_no-repeat] [mask-image:linear-gradient(180deg,transparent_0%,rgba(0,0,0,.08)_12%,rgba(0,0,0,.45)_36%,#000_64%,#000_100%)] [-webkit-mask-image:linear-gradient(180deg,transparent_0%,rgba(0,0,0,.08)_12%,rgba(0,0,0,.45)_36%,#000_64%,#000_100%)] [mask-size:100%_100%] [-webkit-mask-size:100%_100%] [mask-repeat:no-repeat] [-webkit-mask-repeat:no-repeat]"
+        aria-hidden
+      />
 
-      <div className="wo-stage rv">
+      <div className="rv relative z-[1] mx-auto w-[min(100%,1480px)] aspect-[1041/450] [container-type:inline-size] [--u:0.09606cqw] [--uy:calc(var(--u)*450/434)] [--wo-navy:#0B1640] max-[1000px]:aspect-auto max-[1000px]:[container-type:normal] max-[1000px]:[padding:clamp(26px,6vw,44px)_24px_clamp(12px,3vw,20px)] max-[1000px]:flex max-[1000px]:flex-col max-[1000px]:items-center">
         {/* Plain div, not <header>: the global `header{position:fixed}` rule
-            in odyx.css matches the bare element and would rip it out of flow. */}
-        <div className="wo-head">
-          <h2 className="wo-h" id="wo-h">
-            Why <span className="wo-blue">ODYX?</span>
+            in odyx.css matches the bare element and would rip it out of flow.
+            Heading sits near the stage top so section pt/pb stay the visual air. */}
+        <div className="absolute start-[calc(520.5*var(--u))] top-0 -translate-x-1/2 rtl:translate-x-1/2 text-center w-max max-[1000px]:static max-[1000px]:[translate:none]! max-[1000px]:w-auto max-[1000px]:max-w-[34em]">
+          <h2
+            className="text-[length:calc(26.4*var(--u))] leading-[1.1]! font-bold [letter-spacing:.04em]! m-0 text-[var(--hv2-ink)] max-[1000px]:text-[length:clamp(24px,4.6vw,31px)]!"
+            id="wo-h"
+          >
+            Why <span className="text-[var(--hv2-blue)]">ODYX?</span>
           </h2>
-          <p className="wo-sub">Everything works better together.</p>
+          <p className="text-[length:calc(11.4*var(--u))] leading-[1.35] font-medium text-[#3F4757] [margin:calc(2*var(--uy))_0_0] max-[1000px]:text-[length:clamp(14px,1.9vw,16px)]! max-[1000px]:mt-2!">
+            Everything works better together.
+          </p>
         </div>
 
-        {/* Orbit path, water droplets and tick marks. */}
-        <svg className="wo-orbit" viewBox="0 0 1041 434" aria-hidden>
+        {/* Orbit path, water droplets and tick marks. Hidden below tablet:
+            there is no orbit for the stacked list to sit on.
+            preserveAspectRatio=none lets the path open with the taller stage. */}
+        <svg
+          className="absolute inset-0 w-full h-full rtl:[transform:scaleX(-1)] max-[1000px]:hidden"
+          viewBox={`0 0 ${STAGE_W} ${STAGE_H_REF}`}
+          preserveAspectRatio="none"
+          aria-hidden
+        >
           <defs>
             {/* Droplet body: transparent middle, pale-blue meniscus at the
                 rim — the central bubble's language at a smaller scale. */}
@@ -206,12 +246,31 @@ export default function WhyOdyxOrbit() {
           {/* Droplets are drawn around a local origin and placed by the
               transform attribute, so the motion CSS can lift them onto
               their own offset ellipses (transform:none + offset-path)
-              while this stays the reduced-motion position. */}
+              while this stays the reduced-motion position. Guarded by
+              `supports-[offset-path:...]:` — without it, `transform:none`
+              would strand them at the svg origin instead of their mock
+              positions. */}
           {[
-            { x: 334, y: 136, r: 10.5, cls: "wo-bead-a" },
-            { x: 698, y: 131, r: 11, cls: "wo-bead-b" },
-          ].map((d) => (
-            <g key={d.cls} className={`wo-bead ${d.cls}`} transform={`translate(${d.x} ${d.y})`}>
+            {
+              x: 334,
+              y: 136,
+              r: 10.5,
+              extra:
+                "[offset-path:ellipse(256px_133px_at_501px_254px)] [animation-duration:36.8s] [animation-delay:-23.552s]",
+            },
+            {
+              x: 698,
+              y: 131,
+              r: 11,
+              extra:
+                "[offset-path:ellipse(294px_164px_at_501px_254px)] [animation-duration:55.2s] [animation-delay:-47.472s]",
+            },
+          ].map((d, i) => (
+            <g
+              key={i}
+              className={`${BEAD_VARIANT}[transform:none] ${BEAD_VARIANT}[offset-rotate:0deg] ${BEAD_VARIANT}[animation:wo-bead_46s_linear_infinite] ${BEAD_VARIANT}${d.extra.split(" ").join(` ${BEAD_VARIANT}`)}`}
+              transform={`translate(${d.x} ${d.y})`}
+            >
               <ellipse cy={d.r * 1.25} rx={d.r * 0.85} ry={d.r * 0.3} fill="url(#wo-drop-sh)" />
               <circle r={d.r} fill="url(#wo-drop)" />
               <circle r={d.r} fill="url(#wo-drop-lo)" />
@@ -220,15 +279,33 @@ export default function WhyOdyxOrbit() {
           ))}
         </svg>
 
-        {/* Glass sphere with the wordmark. */}
-        <div className="wo-orb">
-          <span className="wo-orb-mark">ODYX</span>
+        {/* Glass sphere with the wordmark. Halo + contact shadow (::before)
+            and the top light bloom (::after) sit behind/above it. */}
+        <div
+          className="absolute start-[calc(437.5*var(--u))] top-[calc(184*var(--uy))] w-[calc(166*var(--u))] h-[calc(166*var(--u))] rounded-full grid place-items-center
+            [background:radial-gradient(90%_58%_at_50%_10%,rgba(255,255,255,.96)_0%,rgba(255,255,255,.5)_44%,rgba(255,255,255,0)_70%),radial-gradient(circle_closest-side_at_50%_50%,rgba(255,255,255,.92)_0%,rgba(255,255,255,.88)_70%,rgba(242,249,255,.82)_83%,rgba(206,230,250,.68)_92%,rgba(150,200,242,.55)_97%,rgba(150,200,242,.14)_100%)]
+            [box-shadow:inset_0_0_0_calc(1*var(--u))_rgba(186,220,247,.55),inset_0_0_calc(3.5*var(--u))_calc(2*var(--u))_rgba(255,255,255,.7),inset_calc(15*var(--u))_calc(-7*var(--u))_calc(26*var(--u))_rgba(110,176,233,.38),inset_calc(-12*var(--u))_calc(-4*var(--u))_calc(24*var(--u))_rgba(132,190,238,.3),inset_0_calc(-9*var(--u))_calc(14*var(--u))_rgba(255,255,255,.55),0_calc(12*var(--u))_calc(32*var(--u))_rgba(96,150,215,.16),0_0_calc(26*var(--u))_rgba(150,200,242,.18)]
+            [backdrop-filter:blur(2px)_saturate(1.04)]
+            before:content-[''] before:absolute before:inset-[calc(-34*var(--u))] before:rounded-full before:z-[-1]
+            before:[background:radial-gradient(42%_10%_at_50%_88%,rgba(84,128,190,.14)_0%,rgba(84,128,190,0)_100%),radial-gradient(circle,rgba(173,212,247,.18)_0%,rgba(196,224,249,.08)_48%,transparent_72%)]
+            after:content-[''] after:absolute after:rounded-full after:start-[14%] after:top-[4%] after:w-[72%] after:h-[30%] after:pointer-events-none after:blur-[calc(4*var(--u))]
+            after:[background:radial-gradient(closest-side,rgba(255,255,255,.85),rgba(255,255,255,0))]
+            max-[1000px]:static max-[1000px]:w-[clamp(150px,30vw,190px)] max-[1000px]:h-[clamp(150px,30vw,190px)] max-[1000px]:[margin-block:clamp(22px,4.4vw,34px)]
+            max-[1000px]:[box-shadow:inset_0_0_0_1px_rgba(168,212,246,.55),inset_0_0_4px_3px_rgba(255,255,255,.7),inset_9px_-13px_24px_rgba(118,188,240,.32),inset_11px_14px_26px_rgba(255,255,255,.5),0_10px_30px_rgba(96,150,215,.14),0_0_28px_rgba(140,195,240,.2)]!
+            max-[1000px]:before:inset-[-34px]! max-[1000px]:after:blur-[4px]!"
+        >
+          <span
+            className="relative z-[1] [font-family:var(--font-sora),'Sora',sans-serif] text-[length:calc(29*var(--u))] leading-none font-normal [letter-spacing:calc(6.2*var(--u))] [text-indent:calc(6.2*var(--u))] text-[var(--wo-navy)] [translate:0_calc(1*var(--u))]
+            max-[1000px]:text-[length:clamp(24px,4.8vw,30px)]! max-[1000px]:[letter-spacing:.28em]! max-[1000px]:[text-indent:.28em]!"
+          >
+            ODYX
+          </span>
         </div>
 
-        <ul className="wo-list">
+        <ul className="group list-none m-0 p-0 max-[1000px]:grid max-[1000px]:grid-cols-2 max-[1000px]:[gap:clamp(20px,3.4vw,30px)_clamp(18px,3vw,34px)] max-[1000px]:w-full max-[1000px]:max-w-[660px] max-[620px]:grid-cols-1 max-[620px]:max-w-[400px] max-[620px]:gap-5">
           {ITEMS.map((it) => (
             <li
-              className="wo-item"
+              className="absolute start-[calc(var(--tx)*var(--u))] top-[calc((var(--ty)_-_0.4)*var(--uy))] w-[calc(140*var(--u))] max-[1000px]:static max-[1000px]:w-auto"
               key={it.key}
               style={
                 {
@@ -243,10 +320,27 @@ export default function WhyOdyxOrbit() {
               {/* The card is a separate layer from the li: the li rides the
                   orbit (offset-path), the card carries the depth scale — a
                   scale on the li itself would scale the path translation. */}
-              <div className="wo-card">
-                <span className="wo-ic" aria-hidden>{WO_IC[it.icon]}</span>
-                <h3 className="wo-t">{it.title}</h3>
-                <p className="wo-d">{it.desc}</p>
+              <div className={WOBBLE}>
+                <span
+                  className="absolute start-[calc((var(--icx)_-_var(--tx)_-_26)*var(--u))] top-[calc((var(--icy)_-_var(--ty)_+_0.4_-_26)*var(--uy))] w-[calc(52*var(--u))] h-[calc(52*var(--u))] rounded-full grid place-items-center text-[var(--hv2-blue)]
+                    [background:radial-gradient(circle_at_50%_50%,rgba(72,128,232,.30)_0%,rgba(72,128,232,.14)_36%,rgba(72,128,232,0)_60%),radial-gradient(circle_closest-side_at_50%_50%,rgba(255,255,255,.98)_0%,rgba(255,255,255,.96)_68%,rgba(240,247,254,.97)_86%,rgba(255,255,255,1)_100%)]
+                    [box-shadow:inset_0_0_calc(7*var(--u))_rgba(255,255,255,.9),0_0_0_calc(1.5*var(--u))_rgba(255,255,255,.95),0_0_calc(9*var(--u))_calc(2*var(--u))_rgba(255,255,255,.9),0_0_calc(26*var(--u))_calc(6*var(--u))_rgba(120,170,235,.32),0_calc(9*var(--u))_calc(24*var(--u))_rgba(64,101,161,.12)]
+                    [backdrop-filter:blur(6px)]
+                    [&>svg]:w-[calc(27*var(--u))] [&>svg]:h-[calc(27*var(--u))] [&>svg]:fill-[rgba(0,80,216,.1)]
+                    [&>svg]:[filter:drop-shadow(0_0_calc(2*var(--u))_rgba(47,107,228,.42))_drop-shadow(0_0_calc(6*var(--u))_rgba(47,107,228,.28))]
+                    max-[1000px]:static max-[1000px]:[grid-row:1_/_span_2] max-[1000px]:self-start max-[1000px]:w-[52px] max-[1000px]:h-[52px]
+                    max-[1000px]:[box-shadow:inset_0_0_7px_rgba(255,255,255,.9),0_0_0_1.5px_rgba(255,255,255,.95),0_0_9px_2px_rgba(255,255,255,.9),0_0_26px_6px_rgba(120,170,235,.32),0_9px_24px_rgba(64,101,161,.12)]!
+                    max-[1000px]:[&>svg]:w-6! max-[1000px]:[&>svg]:h-6! max-[1000px]:[&>svg]:[filter:drop-shadow(0_0_2px_rgba(47,107,228,.42))_drop-shadow(0_0_6px_rgba(47,107,228,.28))]!"
+                  aria-hidden
+                >
+                  {WO_IC[it.icon]}
+                </span>
+                <h3 className="text-[length:calc(13*var(--u))] leading-[1.25]! text-[var(--hv2-ink)] m-0 max-[1000px]:text-[15.5px]!">
+                  {it.title}
+                </h3>
+                <p className="text-[length:calc(10.4*var(--u))] leading-[1.55] font-normal text-[#4B5364] [margin:calc(3.5*var(--u))_0_0] whitespace-pre-line max-[1000px]:text-[13px]! max-[1000px]:leading-[1.6]! max-[1000px]:mt-1! max-[1000px]:whitespace-normal!">
+                  {it.desc}
+                </p>
               </div>
             </li>
           ))}
