@@ -159,52 +159,50 @@ export default function HomeV2Page() {
         id="path"
       >
         <div className="max-w-[1400px] mx-auto text-center rv">
-          <p className={`${HV2_EYEBROW} text-[length:calc(19*var(--pc-u))]! [letter-spacing:.12em]! mb-[calc(11*var(--pc-u))]!`}>
+          <p className={`${HV2_EYEBROW} text-[length:clamp(12px,1.2vw,14px)]! [letter-spacing:.12em]! mb-[clamp(10px,1.2vw,14px)]!`}>
             Choose Your Path
           </p>
-          <h2 className={`${HV2_H2} text-[length:calc(48*var(--pc-u))]! leading-[1.1]! [letter-spacing:-.015em]! mb-0!`}>
+          <h2 className={`${HV2_H2} text-[length:clamp(28px,3.6vw,42px)]! leading-[1.15]! [letter-spacing:-.015em]! mb-0!`}>
             Your Journey. <span className={HV2_BLUE}>Your Solution.</span>
           </h2>
         </div>
         <PathCarousel />
       </section>
 
-      {/* ===== 4 + 5 · Ecosystem and Products ==========================
-           One shared panel in the mock: a single border, radius and
-           background wrap both bands, so neither section carries a card
-           surface of its own and they meet on a straight edge. */}
-      <div className={`w-full ${HV2_GUTTER} ${HV2_SECTION_Y} bg-[var(--hv2-surface)]`}>
-        <div className="relative w-full mx-auto border border-[rgba(255,255,255,.85)] rounded-[16px] [background:radial-gradient(120%_60%_at_22%_100%,rgba(255,255,255,.45),rgba(255,255,255,0)_62%),radial-gradient(70%_50%_at_88%_100%,rgba(0,80,216,.05),rgba(0,80,216,0)_70%),rgba(255,255,255,.44)] [box-shadow:0_1px_0_rgba(255,255,255,.6)_inset]">
-          <EcosystemSection />
+      {/* ===== 4 · Ecosystem + Products — one section, no card ===== */}
+      <section
+        className={
+          `w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+          " [background:radial-gradient(58%_70%_at_62%_32%,rgba(255,255,255,.9),rgba(255,255,255,0)_62%),linear-gradient(180deg,#F7F8FC_0%,var(--hv2-surface)_50%,#F0F2F8_100%)]" +
+          " [--pr-card-h:261px] [--pr-radius:10px] [--pr-pad:20px] [--pr-pad-t:17.8px] [--pr-go:36px] [--pr-go-inset:15.5px] [--pr-go-bottom:24.6px] [--pr-title:16.2px] [--pr-title-lh:22.0px] [--pr-nav:37px] [--pr-panel-pad-i:0px] [--pr-band-y:clamp(2px,0.5vw,8px)]"
+        }
+      >
+        <EcosystemSection />
 
-          <section
-            className="w-full [--pr-card-h:261px] [--pr-radius:10px] [--pr-pad:20px] [--pr-pad-t:17.8px] [--pr-go:36px] [--pr-go-inset:15.5px] [--pr-go-bottom:24.6px] [--pr-title:16.2px] [--pr-title-lh:22.0px] [--pr-nav:37px] [--pr-panel-pad-i:clamp(20px,2.5vw,44px)] block m-0 p-0 border-0 bg-transparent shadow-none rounded-none"
-            id="products"
-          >
-            <ProductsRail>
-              <div className="pt-[9px] rv">
-                <p className={`${HV2_EYEBROW} text-[14.7px]! font-medium! [letter-spacing:.028em]! mb-0! leading-[1.2]!`}>
-                  Products
-                </p>
-                <h2 className={`${HV2_H2} text-[length:clamp(24px,2.35vw,34px)]! font-normal! leading-[1.15]! [letter-spacing:-.014em]! [margin:19px_0_0]!`}>
-                  Built for precision.
-                  <br />
-                  Designed for <span className={HV2_BLUE}>you.</span>
-                </h2>
-                <p className={`${HV2_BODY} text-[16px]! leading-[28.2px]! text-[#4E5766]! max-w-[13.5em]! mt-[12px]! max-[980px]:max-w-[34em]!`}>
-                  Explore our complete range of digital dentistry solutions.
-                </p>
-                <Link className={PRODUCTS_CTA} href="/products">
-                  <span>Explore All Products</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                    <path d="M4 12h15M13 6l6 6-6 6" />
-                  </svg>
-                </Link>
-              </div>
-            </ProductsRail>
-          </section>
+        <div className="mt-0" id="products">
+          <ProductsRail>
+            <div className="pt-0 rv">
+              <p className={`${HV2_EYEBROW} text-[14.7px]! font-medium! [letter-spacing:.028em]! mb-0! leading-[1.2]!`}>
+                Products
+              </p>
+              <h2 className={`${HV2_H2} text-[length:clamp(24px,2.35vw,34px)]! font-normal! leading-[1.15]! [letter-spacing:-.014em]! [margin:19px_0_0]!`}>
+                Built for precision.
+                <br />
+                Designed for <span className={HV2_BLUE}>you.</span>
+              </h2>
+              <p className={`${HV2_BODY} text-[16px]! leading-[28.2px]! text-[#4E5766]! max-w-[13.5em]! mt-[12px]! max-[980px]:max-w-[34em]!`}>
+                Explore our complete range of digital dentistry solutions.
+              </p>
+              <Link className={PRODUCTS_CTA} href="/products">
+                <span>Explore All Products</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M4 12h15M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+            </div>
+          </ProductsRail>
         </div>
-      </div>
+      </section>
 
       {/* ===== 6 · Clinical applications ===== */}
       <ClinicalApplicationsSection />
