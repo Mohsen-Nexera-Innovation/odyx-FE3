@@ -38,7 +38,7 @@ export type BrowseSectionData = {
   id: string;
   kicker: string;
   title: string;
-  viewAll: CasesCta;
+  viewAll?: CasesCta;
   items: BrowseCard[];
   productStyle?: boolean;
 };
@@ -69,7 +69,7 @@ export type FeaturedCase = {
 export type FeaturedSectionData = {
   kicker: string;
   title: string;
-  viewAll: CasesCta;
+  viewAll?: CasesCta;
   items: FeaturedCase[];
 };
 

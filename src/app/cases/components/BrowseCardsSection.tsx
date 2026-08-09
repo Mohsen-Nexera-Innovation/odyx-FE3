@@ -19,10 +19,12 @@ export function BrowseCardsSection({ data }: { data: BrowseSectionData }) {
               {data.title}
             </h2>
           </div>
-          <Link href={data.viewAll.href} className={CASES_TEXT_LINK}>
-            {data.viewAll.label}
-            <ArrowIcon className="w-3.5 h-3.5" />
-          </Link>
+          {data.viewAll ? (
+            <Link href={data.viewAll.href} className={CASES_TEXT_LINK}>
+              {data.viewAll.label}
+              <ArrowIcon className="w-3.5 h-3.5" />
+            </Link>
+          ) : null}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4!">

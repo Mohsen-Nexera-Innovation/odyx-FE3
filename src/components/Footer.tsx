@@ -36,7 +36,6 @@ const COLUMNS: FooterColumn[] = [
       { label: "3D Printers", href: "/products/odyx-p1-26" },
       { label: "UV Curing Units", href: "/products/curing-machines" },
       { label: "Premium Resins", href: "/products/resins" },
-      { label: "Accessories", href: "/shop" },
     ],
   },
   {

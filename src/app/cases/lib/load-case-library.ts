@@ -64,7 +64,6 @@ export function buildFeaturedFromLibrary(
       : casesData.featured.items;
   return {
     ...casesData.featured,
-    viewAll: { label: 'View All Cases', href: '/cases#featured-cases' },
     items,
   };
 }
@@ -146,7 +145,6 @@ export function buildProductsFromLibrary(
   return {
     ...casesData.products,
     productStyle: true,
-    viewAll: { label: 'View All Products', href: '/cases#featured-cases' },
     items: baseItems.map((item) => ({
       ...item,
       href: productCaseHref(item.id),
