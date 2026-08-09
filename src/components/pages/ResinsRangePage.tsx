@@ -56,16 +56,22 @@ export default function ResinsRangePage() {
           <figure className="rs-hero-media" aria-label={HERO.imgAlt}>
             <div className="rs-hero-products">
               {LINES.map((line, i) => (
-                <img
+                <a
                   key={line.id}
-                  className="rs-hero-product"
-                  src={`${line.img}?v=14`}
-                  alt={line.imgAlt}
-                  width={800}
-                  height={1400}
-                  fetchPriority={i === 0 ? 'high' : undefined}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                />
+                  className="rs-hero-product-link"
+                  href={line.href ?? '#lines'}
+                  aria-label={`${line.name} — view product`}
+                >
+                  <img
+                    className="rs-hero-product"
+                    src={`${line.img}?v=15`}
+                    alt={line.imgAlt}
+                    width={800}
+                    height={1400}
+                    fetchPriority={i === 0 ? 'high' : undefined}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                  />
+                </a>
               ))}
             </div>
           </figure>
@@ -84,7 +90,7 @@ export default function ResinsRangePage() {
               <article key={line.id} className={`rs-line rs-line--${line.id}`}>
                 <div className="rs-line-media">
                   <img
-                    src={`${line.img}?v=14`}
+                    src={`${line.img}?v=15`}
                     alt={line.imgAlt}
                     loading="lazy"
                     width={800}

@@ -47,13 +47,13 @@ export type DemoFormState = {
   country: string;
   city: string;
   language: string;
-  role: DemoRoleId;
+  role: DemoRoleId | '';
   clinicName: string;
   chairs: string;
   specialty: string;
   products: DemoProductId[];
   applications: DemoApplicationId[];
-  demoType: DemoTypeId;
+  demoType: DemoTypeId | '';
   date: string;
   time: string;
   timezone: string;
@@ -97,8 +97,10 @@ function CheckMark({ on }: { on: boolean }) {
   return (
     <span
       className={cn(
-        'absolute start-2 top-2 inline-flex h-[1.05rem] w-[1.05rem] items-center justify-center rounded border-[1.5px] border-[#D1D5DB] bg-white text-white',
-        on && 'border-[#0050D8] bg-[#0050D8]',
+        'absolute start-2 top-2 z-[1] inline-flex h-[1.05rem] w-[1.05rem] items-center justify-center rounded border-[1.5px]',
+        on
+          ? 'border-[#0050D8] bg-[#0050D8] text-white'
+          : 'border-[#D1D5DB] bg-white text-transparent',
       )}
       aria-hidden
     >
@@ -257,6 +259,9 @@ export function RequestDemoForm({
               value={form.language}
               onChange={(e) => update('language', e.target.value)}
             >
+              <option value="" disabled>
+                {copy.sections.contact.fields.language.placeholder}
+              </option>
               {DEMO_LANGUAGES.map((l) => (
                 <option key={l.id} value={l.id}>
                   {l.label}
@@ -468,8 +473,10 @@ export function RequestDemoForm({
                   />
                   <span
                     className={cn(
-                      'static inline-flex h-[1.05rem] w-[1.05rem] shrink-0 items-center justify-center rounded border-[1.5px] border-[#D1D5DB] bg-white text-white',
-                      selected && 'border-[#0050D8] bg-[#0050D8]',
+                      'static inline-flex h-[1.05rem] w-[1.05rem] shrink-0 items-center justify-center rounded border-[1.5px]',
+                      selected
+                        ? 'border-[#0050D8] bg-[#0050D8] text-white'
+                        : 'border-[#D1D5DB] bg-white text-transparent',
                     )}
                     aria-hidden
                   >
@@ -595,6 +602,9 @@ export function RequestDemoForm({
               value={form.timezone}
               onChange={(e) => update('timezone', e.target.value)}
             >
+              <option value="" disabled>
+                {copy.sections.schedule.timezone.placeholder}
+              </option>
               {DEMO_TIMEZONES.map((t) => (
                 <option key={t.id} value={t.id}>
                   {t.label}
