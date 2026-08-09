@@ -559,7 +559,8 @@ export default function Header() {
     <header id="hdr" ref={headerRef} className={headerClass} onMouseMove={onSpotlightMove}>
       <div className="wrap nav">
         <Link href="/" className="logo" aria-label="ODYX home">
-          <img className="logo-img" src="/brand/odyx-company.png" alt="ODYX" />
+          <img className="logo-img logo-img-on-dark" src="/brand/odyx-egypt-white.png" alt="ODYX Egypt" />
+          <img className="logo-img logo-img-on-light" src="/brand/odyx-egypt.png" alt="ODYX Egypt" />
         </Link>
         <nav className={`nav-menu${open ? ' open' : ''}${forceClose ? ' force-close' : ''}`} aria-label="Main">
           {VISIBLE_MENUS.map((m) => (

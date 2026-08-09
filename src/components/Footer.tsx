@@ -12,9 +12,7 @@ import { isAuthShellPath } from "@/content/auth";
 // 943 / 1200 / 1433 / 1657). Geometry is carried in --fu (one reference
 // pixel) off the query container.
 //
-// The wordmark is set in type rather than /brand/odyx-company.png: the official
-// asset is a dark wordmark over a blue swoosh, and the reference shows a plain
-// white ODYX with no swoosh.
+// Footer brand mark: /brand/odyx-egypt-white.png (black fill → white for navy band).
 
 type FooterColumn = { title: string; links: { label: string; href: string }[] };
 
@@ -163,9 +161,9 @@ const FT_BRAND =
   " max-[860px]:col-auto max-[860px]:row-auto";
 
 const FT_LOGO =
-  "block w-max text-white! text-[length:calc(50*var(--fu))]! font-extrabold! leading-none!" +
-  " [letter-spacing:.03em]! no-underline!" +
-  " max-[1499px]:text-[26px]!";
+  "block w-max no-underline! leading-none!" +
+  " [&_img]:block [&_img]:h-[calc(72*var(--fu))] [&_img]:w-auto" +
+  " max-[1499px]:[&_img]:h-[48px]!";
 
 const FT_TAG =
   "m-[calc(16*var(--fu))_0_0]! max-w-[calc(245*var(--fu))] text-[var(--ft-muted)]" +
@@ -352,7 +350,7 @@ export default function Footer() {
           <div className={FT_GRID}>
             <div className={FT_BRAND}>
               <Link href="/" className={FT_LOGO} aria-label="ODYX home">
-                ODYX
+                <img src="/brand/odyx-egypt-white.png" alt="ODYX Egypt" />
               </Link>
               <p className={FT_TAG}>
                 A complete digital dentistry ecosystem, designed to work in
