@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { HV2_BLUE, HV2_BTN, HV2_BTN_SIZE, HV2_EYEBROW, HV2_GUTTER, HV2_H2, HV2_NAV, HV2_SECTION_Y } from "@/components/home2/hv2Chrome";
+import { CLINICAL_INDICATIONS } from "@/content/clinical-indications";
 
 // Clinical Cases — the client reference's mirrored deck: a four-card stack that
 // fans backward to the LEFT with the active card closest to the viewer, and the
@@ -24,41 +25,41 @@ type ClinicalCase = {
   icon: "implant" | "crown" | "arch" | "aligner";
 };
 
+// Card art = hero cutouts from matching Clinical Applications type detail pages.
 const CASES: ClinicalCase[] = [
   {
     id: "implant",
     title: "Implant Cases",
     description: "See real cases of implant planning and placement with precision.",
-    image: "/img/hv2-cases/implant.webp",
-    alt: "Four-unit ceramic posterior bridge on a white studio background",
+    image: CLINICAL_INDICATIONS["implant-model"].hero.img,
+    alt: CLINICAL_INDICATIONS["implant-model"].hero.imgAlt,
     icon: "implant",
   },
   {
     id: "restorative",
     title: "Restorative Cases",
     description: "Crowns, bridges and veneers finished to a natural, lasting result.",
-    image: "/img/hv2-cases/restorative.webp",
-    alt: "Seven-unit ceramic bridge on a white studio background",
+    image: CLINICAL_INDICATIONS["same-day-crown"].hero.img,
+    alt: CLINICAL_INDICATIONS["same-day-crown"].hero.imgAlt,
     icon: "crown",
   },
   {
     id: "surgical",
     title: "Full-Arch Cases",
     description: "Guided full-arch restorations planned and delivered end to end.",
-    image: "/img/hv2-cases/surgical.webp",
-    alt: "Clear full-arch implant surgical guide on a white studio background",
+    image: CLINICAL_INDICATIONS.dentures.hero.img,
+    alt: CLINICAL_INDICATIONS.dentures.hero.imgAlt,
     icon: "arch",
   },
   {
     id: "orthodontic",
     title: "Aligner Cases",
     description: "Clear aligner treatments tracked from first scan to final retainer.",
-    image: "/img/hv2-cases/orthodontic.webp",
-    alt: "Clear orthodontic aligner tray isolated on a white background",
+    image: CLINICAL_INDICATIONS.aligners.hero.img,
+    alt: CLINICAL_INDICATIONS.aligners.hero.imgAlt,
     icon: "aligner",
   },
 ];
-
 const N = CASES.length;
 const mod = (v: number) => ((v % N) + N) % N;
 
