@@ -14,7 +14,7 @@ import { NewsData } from '../types';
 
 export function NewsSection({ data }: { data: NewsData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)]">
+    <section id="news" className="w-full px-[clamp(20px,4vw,56px)] scroll-mt-[96px]">
       <div className="w-full bg-[#F8F9FA]/50 rounded-[16px] overflow-hidden pt-6 lg:pt-8 pb-2 lg:pb-2 px-4 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start">
           

@@ -204,23 +204,7 @@ main:has(.support-page){
 .sec .pgx-info p{color:var(--ink-muted)}
 
 /* Story spine — light-theme tokens handled via data-theme on component */
-/* ---------- Footer: light ---------- */
-footer{background:var(--paper-2);border-top:1px solid var(--paper-line)}
-.foot-grid a{color:var(--ink-muted)}
-.foot-grid a:hover{color:var(--sky-deep)}
-.site-footer__nav a{color:var(--ink-muted)}
-.site-footer__nav a:hover{color:var(--sky-deep)}
-.site-footer__col-title{color:var(--ink)}
-.site-footer__col a{color:var(--ink-muted)}
-.site-footer__col a:hover{color:var(--sky-deep)}
-.site-footer__tag{color:var(--ink-faint)}
-.site-footer__social-link{color:var(--ink-muted);border-color:var(--paper-line)}
-.site-footer__social-link:hover{color:var(--sky-deep);border-color:var(--sky-deep)}
-.foot-bottom{color:var(--ink-faint)}
-.foot-bottom a{color:var(--ink-faint)}
-.foot-bottom a:hover{color:var(--sky-deep)}
-footer .logo-img{height:40px;filter:none}
-.site-footer .logo-img{height:36px}
+/* Footer chrome: src/components/Footer.tsx (navy band is theme-independent). */
 
 /* ---------- Sub-brand line logos (right context placement) ---------- */
 .pgx-brand{height:30px;width:auto;align-self:flex-start;margin-bottom:14px}

@@ -1,4 +1,59 @@
 @import "tailwindcss";
+
+/* Logical RTL variant — mirrors `[dir="rtl"] .foo` selectors used across the
+   site so screens can flip transforms/positioning with `rtl:` utilities
+   instead of hand-written per-screen overrides. */
+@custom-variant rtl (&:where([dir="rtl"], [dir="rtl"] *));
+
+/* Home hero collage — idle float/breathe loops shared by the product
+   cutouts and their floor shadows (durations/delays set per element via
+   --ofd/--ofo custom properties on the utility classes that use them). */
+@keyframes hv2-o-float{
+  0%,100%{translate:0 0}
+  50%{translate:0 calc(-8 * var(--u))}
+}
+@keyframes hv2-sh-float{
+  0%,100%{opacity:1; scale:1}
+  50%{opacity:.78; scale:.95}
+}
+
+/* Why-ODYX orbit — droplet orbit drift and the five benefit cards' tiny
+   synchronized "alive" wobble (per-card phase set via --ph on the utility
+   classes that use them). */
+@keyframes wo-bead{
+  from{offset-distance:0%}
+  to{offset-distance:100%}
+}
+@keyframes wo-wobble{
+  0%,100%{translate:0 0}
+  50%{translate:0 calc(-4 * var(--u))}
+}
+
+/* Choose-your-path dots — the incoming dot's landing pulse. */
+@keyframes hv2DotOn{
+  0%{transform:scale(.55)}
+  55%{transform:scale(1.22)}
+  100%{transform:scale(1)}
+}
+
+/* Latest Updates carousel — travel-pass pairs (A/B) so rapid navigations
+   restart cleanly by swapping the animation name. Bodies are identical. */
+@keyframes hv2LuDipA{50%{scale:var(--dip)}}
+@keyframes hv2LuDipB{50%{scale:var(--dip)}}
+@keyframes hv2LuSheenA{
+  0%{translate:-135% 0; opacity:0}
+  30%,70%{opacity:var(--sheen,0)}
+  100%{translate:135% 0; opacity:0}
+}
+@keyframes hv2LuSheenB{
+  0%{translate:-135% 0; opacity:0}
+  30%,70%{opacity:var(--sheen,0)}
+  100%{translate:135% 0; opacity:0}
+}
+@keyframes hv2LuRiseA{0%{translate:0 calc(.55 * var(--u)); opacity:.7}}
+@keyframes hv2LuRiseB{0%{translate:0 calc(.55 * var(--u)); opacity:.7}}
+@keyframes hv2LuArtA{0%{scale:1.04; opacity:.78}}
+@keyframes hv2LuArtB{0%{scale:1.04; opacity:.78}}
 @import "./odyx.css";
 @import "./light.css";
 @import "./product-print.css";
@@ -65,7 +120,41 @@
   --color-accent-master: var(--color-accent-master);
   --color-accent-gold: var(--color-accent-gold);
 
-  --font-sans: var(--font-tajawal, 'Tajawal'), sans-serif;
+  --font-sans: var(--font-body), sans-serif;
+  --font-display: var(--font-display), sans-serif;
+
+  --text-heading-1: clamp(2.5rem, 5vw, 4rem);
+  --text-heading-1--font-weight: 800;
+  --text-heading-1--line-height: 1.05;
+  --text-heading-1--letter-spacing: -0.03em;
+
+  --text-heading-2: clamp(2.1rem, 4.4vw, 3.5rem);
+  --text-heading-2--font-weight: 800;
+  --text-heading-2--line-height: 1.05;
+  --text-heading-2--letter-spacing: -0.03em;
+
+  --text-heading-3: clamp(1.5rem, 3vw, 2.2rem);
+  --text-heading-3--font-weight: 700;
+  --text-heading-3--line-height: 1.1;
+  --text-heading-3--letter-spacing: -0.02em;
+
+  --text-subheading: 0.92rem;
+  --text-subheading--font-weight: 800;
+  --text-subheading--line-height: 1.2;
+  --text-subheading--letter-spacing: 0.04em;
+
+  --text-body-default: clamp(1rem, 1.35vw, 1.1rem);
+  --text-body-default--font-weight: 300;
+  --text-body-default--line-height: 1.65;
+
+  --text-body-small: 0.92rem;
+  --text-body-small--font-weight: 400;
+  --text-body-small--line-height: 1.5;
+  --text-body-small--letter-spacing: 0.01em;
+
+  --text-ui: 0.88rem;
+  --text-ui--font-weight: 600;
+  --text-ui--letter-spacing: 0.005em;
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -79,8 +168,8 @@
 
 /* next/font variables drive the brand font tokens */
 :root{
-  --font-display: var(--font-tajawal), 'Tajawal', sans-serif;
-  --font-body: var(--font-tajawal), 'Tajawal', sans-serif;
+  --font-display: var(--font-sora), 'Sora', sans-serif;
+  --font-body: var(--font-space), 'Space Grotesk', sans-serif;
 }
 [dir="rtl"]{
   --font-display: var(--font-tajawal), 'Tajawal', sans-serif;

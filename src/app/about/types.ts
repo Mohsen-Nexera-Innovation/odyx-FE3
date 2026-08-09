@@ -32,21 +32,6 @@ export interface WhyOdyxData {
   cards: WhyCard[];
 }
 
-export interface JourneyMilestone {
-  year: string;
-  title: string;
-  description: string;
-  image: string;
-}
-
-export interface JourneyData {
-  kicker: string;
-  title: string;
-  description: string;
-  cta: { label: string; href: string };
-  milestones: JourneyMilestone[];
-}
-
 export interface ValueItem {
   icon: 'shield' | 'bulb' | 'cap' | 'handshake';
   title: string;
@@ -101,7 +86,6 @@ export interface StatsData {
 export interface AboutPageData {
   hero: AboutHeroData;
   why: WhyOdyxData;
-  journey: JourneyData;
   values: ValuesData;
   team: TeamData;
   news: NewsData;

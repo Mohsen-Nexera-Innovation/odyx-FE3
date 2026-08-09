@@ -52,7 +52,7 @@ export default function Hv2Motion() {
   }, []);
 
   // Hero collage 3D parallax: writes --hx/--hy (-.5...5) on the hero band
-  // as the mouse crosses it; the product cutouts in home-v2.css turn the
+  // as the mouse crosses it; the product cutouts' Tailwind transforms turn the
   // pair into perspective tilt + depth-scaled translation. Mouse only, and
   // skipped entirely under reduced motion (CSS also guards).
   useEffect(() => {

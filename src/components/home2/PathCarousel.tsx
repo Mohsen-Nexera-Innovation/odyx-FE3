@@ -13,6 +13,7 @@ import {
   type MotionValue,
   type AnimationPlaybackControls,
 } from "motion/react";
+import { HV2_DOT, HV2_DOTS, HV2_NAV } from "@/components/home2/hv2Chrome";
 
 // Coverflow path picker matching the design reference: a wide, front-facing
 // active card, a narrower 3D-turned card on each side whose bottom sits on the
@@ -130,6 +131,115 @@ function cardTransform(t: number, dir: number) {
 
 type Path = (typeof PATHS)[number];
 
+// --- Tailwind style tables ------------------------------------------------
+// Transform / width / margin-left / z-index are all driven per-frame by the
+// motion values below and set via the `style` prop, so they always win over
+// any CSS class regardless of slot — the is-active/is-left/is-right rules
+// that existed for those properties in the old stylesheet were already
+// inert. Only opacity/filter/box-shadow/cursor/pointer-events (which carry
+// their own CSS transitions) and typography still need slot-state classes.
+const PCARD_BASE =
+  "[--pc1:#16309F] [--pc2:#0D1C6B] [--pc-btn:#1C39CC] [--w:var(--pc-w)] absolute top-0 left-0 h-[calc(var(--pc-h)*var(--pc-u))] w-[calc(var(--w)*var(--pc-u))] ml-[calc(var(--w)*var(--pc-u)/-2)] rounded-[calc(var(--pc-r)*var(--pc-u))] overflow-hidden [background:linear-gradient(175deg,var(--pc1)_0%,var(--pc2)_100%)] [box-shadow:0_calc(20*var(--pc-u))_calc(34*var(--pc-u))_calc(-16*var(--pc-u))_rgba(9,22,72,.55)] [transform-origin:50%_100%] transition-[opacity,filter,box-shadow] duration-[.8s] [transition-timing-function:cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none! [will-change:transform] isolate" +
+  // Per-slot cursor/opacity/filter/shadow — the only genuinely effective
+  // slot-state styling (see note above).
+  " [&.is-side]:cursor-pointer [&.is-side]:[box-shadow:0_calc(18*var(--pc-u))_calc(30*var(--pc-u))_calc(-15*var(--pc-u))_rgba(9,22,72,.5)]" +
+  " [&.is-ghost]:cursor-default [&.is-ghost]:opacity-[.72] [&.is-ghost]:pointer-events-none [&.is-ghost]:[filter:brightness(.78)_saturate(.62)_blur(calc(9*var(--pc-u)))] [&.is-ghost]:[box-shadow:0_calc(14*var(--pc-u))_calc(24*var(--pc-u))_calc(-14*var(--pc-u))_rgba(9,22,72,.4)]" +
+  " [&.is-far]:opacity-0 [&.is-far]:pointer-events-none" +
+  // Below 760px a visible side-card strip is mid-text — arrows/dots alone
+  // carry the deck; faded (not unmounted) so cards keep travelling through
+  // the slot without popping, and #path already clips sideways.
+  " max-[760px]:[&.is-side]:opacity-0! max-[760px]:[&.is-side]:pointer-events-none!";
+
+// Per-card tint (the reference varies it): lab navy, dentist navy→royal
+// (own full gradient), guest desaturated blue-grey.
+const PCARD_VARIANT: Record<Path["key"], string> = {
+  lab: "[--pc1:#16317F] [--pc2:#060C34] [--pc-btn:#16268C]",
+  dentist:
+    "[--pc-btn:#173BC4] [background:linear-gradient(99deg,#070F44_0%,#0B1A66_38%,#1739B4_76%,#2350E2_100%)]",
+  guest: "[--pc1:#7A8598] [--pc2:#39424F] [--pc-btn:#41506B]",
+};
+
+// One crop per card (a zoom about a per-card focal point) plus, for lab and
+// guest, a lighter duotone filter than the shared default.
+const PCARD_IMG_VARIANT: Record<Path["key"], string> = {
+  lab: "[transform:scale(1.7)] [transform-origin:16%_42%] [filter:grayscale(1)_brightness(.72)_contrast(1.12)]",
+  dentist: "[transform:scale(1.5)] [transform-origin:81%_36%]",
+  guest:
+    "[transform:scale(1.5)] [transform-origin:73%_55%] [filter:grayscale(1)_brightness(.92)_contrast(1.04)_blur(calc(2.2*var(--pc-u)))]",
+};
+
+// Legibility wash over the text half, LTR then RTL (mirrored angle/stops —
+// this one genuinely differs by direction, unlike the transform rules
+// above).
+const PCARD_WASH_VARIANT: Record<Path["key"], string> = {
+  lab:
+    "[background:linear-gradient(97deg,rgba(4,10,44,.88)_0%,rgba(4,10,44,.62)_28%,rgba(4,10,44,.20)_54%,rgba(4,10,44,0)_74%)]" +
+    " rtl:[background:linear-gradient(-97deg,rgba(4,10,44,.90)_0%,rgba(4,10,44,.74)_30%,rgba(4,10,44,.32)_58%,rgba(4,10,44,0)_80%)]",
+  dentist:
+    "[background:linear-gradient(99deg,rgba(5,12,52,.90)_0%,rgba(6,16,66,.72)_34%,rgba(14,40,150,.26)_68%,rgba(24,70,222,.16)_100%)]" +
+    " rtl:[background:linear-gradient(-99deg,rgba(5,12,52,.90)_0%,rgba(6,16,66,.72)_34%,rgba(14,40,150,.26)_68%,rgba(24,70,222,.16)_100%)]",
+  guest:
+    "[background:linear-gradient(97deg,rgba(24,32,50,.82)_0%,rgba(33,43,62,.62)_32%,rgba(44,55,76,.26)_62%,rgba(44,55,76,.06)_84%)]" +
+    " rtl:[background:linear-gradient(-97deg,rgba(24,32,50,.82)_0%,rgba(33,43,62,.62)_32%,rgba(44,55,76,.26)_62%,rgba(44,55,76,.06)_84%)]",
+};
+
+// Explicit measure per card so the browser cannot pick another break point
+// (Tajawal, measured): lab 156–196, dentist 220–242, guest 108–129.
+const PCARD_PARA_MAXW: Record<Path["key"], string> = {
+  lab: "max-w-[calc(175*var(--pc-u))]",
+  dentist: "max-w-[calc(230*var(--pc-u))]",
+  guest: "max-w-[calc(124*var(--pc-u))]",
+};
+
+// Resting min-width for the CTA — the active state's own min-width (below)
+// always takes over regardless of variant.
+const PCARD_BTN_MINW: Record<Path["key"], string> = {
+  lab: "min-w-[calc(200*var(--pc-u))]",
+  dentist: "",
+  guest: "min-w-[calc(226*var(--pc-u))]",
+};
+
+// Nav discs: outside the previews, hard against the viewport edges, a touch
+// above the deck's midpoint. `!` overrides the shared HV2_NAV base (42px,
+// generic hover/scale) reused by the other carousels on this page.
+const PATH_NAV_BASE =
+  `${HV2_NAV} absolute! z-[6]! text-[var(--hv2-blue)]! top-[calc(50%_-_30*var(--pc-u))]! [translate:0_-50%]! w-[calc(66*var(--pc-u))]! h-[calc(66*var(--pc-u))]! border-0! [box-shadow:0_calc(10*var(--pc-u))_calc(26*var(--pc-u))_rgba(10,40,90,.16)]!` +
+  " [transition:transform_.25s_cubic-bezier(.22,1,.36,1),box-shadow_.25s_ease,color_.2s_ease]! motion-reduce:transition-none!" +
+  " hover:scale-[1.05]! hover:[box-shadow:0_calc(13*var(--pc-u))_calc(32*var(--pc-u))_rgba(10,40,90,.24)]!" +
+  " active:scale-[.95]! active:[box-shadow:0_calc(8*var(--pc-u))_calc(20*var(--pc-u))_rgba(10,40,90,.18)]!" +
+  " [&>svg]:w-[calc(26*var(--pc-u))]! [&>svg]:h-[calc(26*var(--pc-u))]! [&>svg]:transition-transform [&>svg]:duration-[.22s] [&>svg]:ease-linear motion-reduce:[&>svg]:transition-none!";
+
+// Direction-specific edge position + chevron lean (prev leans out on hover,
+// further on press; next mirrors it).
+const PATH_NAV_PREV =
+  "start-[calc(47*var(--pc-u))]! max-[760px]:start-[4px]!" +
+  " hover:[&>svg]:-translate-x-[2.5px] active:[&>svg]:-translate-x-[5px]";
+const PATH_NAV_NEXT =
+  "end-[calc(47*var(--pc-u))]! max-[760px]:end-[4px]!" +
+  " hover:[&>svg]:translate-x-[2.5px] active:[&>svg]:translate-x-[5px]";
+
+// Outer deck: card geometry lives here as CSS custom properties (mirrors the
+// old .hv2-path rule) so `.hv2-pcard`'s own arbitrary values can reach them,
+// plus the deck's soft pale-blue backdrop pool.
+const PATH_ROOT =
+  "[--pc-w:616] [--pc-h:401] [--pc-sw:400] [--pc-r:20]" +
+  " [--pc-side-x:519.5] [--pc-side-p:740] [--pc-side-ry:13deg] [--pc-side-rz:1.2deg] [--pc-side-s:1]" +
+  " [--pc-prev-x:806] [--pc-prev-p:2600] [--pc-prev-ry:72deg] [--pc-prev-s:1]" +
+  " mt-[calc(31*var(--pc-u))] [background:radial-gradient(60cqw_78%_at_50%_46%,rgba(0,80,216,.055),transparent_70%)]";
+
+// No perspective on the ring itself — each slot carries its own perspective()
+// in `cardTransform()` above; a shared scene camera cannot render the
+// outermost near-profile cards without smearing their rotated depth.
+const PATH_STAGE =
+  "relative w-full h-[calc(var(--pc-h)*var(--pc-u))] overflow-visible [touch-action:pan-y] select-none";
+const PATH_RING = "absolute top-0 bottom-0 left-1/2 w-0";
+
+const PATH_DOTS = `${HV2_DOTS} mt-[calc(28*var(--pc-u))]! gap-[calc(26*var(--pc-u))]!`;
+const PATH_DOT =
+  `${HV2_DOT} w-[calc(12*var(--pc-u))]! h-[calc(12*var(--pc-u))]! bg-[rgba(10,30,70,.16)]! transition-[background-color]! duration-[.35s]! ease-[ease]! motion-reduce:transition-none!`;
+const PATH_DOT_ON =
+  " bg-[var(--hv2-blue)]! [animation:hv2DotOn_.5s_cubic-bezier(.22,1,.36,1)] motion-reduce:[animation:none]!";
+
 function PathCard({
   j, d, v, dir, artX, path, sweep, reduce, onPick, suppressClick,
 }: {
@@ -208,7 +318,7 @@ function PathCard({
 
   return (
     <motion.article
-      className={`hv2-pcard hv2-pcard-${path.key} ${pos}`}
+      className={`${PCARD_BASE} ${PCARD_VARIANT[path.key]} ${pos}`}
       style={{ transform, width, marginLeft, zIndex }}
       onClick={() => {
         if (suppressClick.current) return;
@@ -219,18 +329,38 @@ function PathCard({
       aria-label={path.title}
       aria-hidden={d !== 0 ? true : undefined}
     >
-      <div className="hv2-pcard-art" aria-hidden>
-        <motion.div className="hv2-pcard-par" style={{ x: artX }}>
-          <img src={path.img} alt="" draggable={false} />
+      <div className="absolute inset-0 mix-blend-luminosity pointer-events-none" aria-hidden>
+        <motion.div className="absolute inset-0 [will-change:transform]" style={{ x: artX }}>
+          <img
+            className={`absolute inset-0 w-full h-full object-cover block [-webkit-user-drag:none] [filter:grayscale(1)_brightness(.56)_contrast(1.2)] ${PCARD_IMG_VARIANT[path.key]}`}
+            src={path.img}
+            alt=""
+            draggable={false}
+          />
         </motion.div>
       </div>
-      <div className="hv2-pcard-wash" aria-hidden />
-      <div className="hv2-pcard-body" ref={bodyRef}>
-        <span className="hv2-pcard-ic">{path.icon}</span>
-        <h3>{path.title}</h3>
-        <p>{path.desc}</p>
+      <div className={`absolute inset-0 pointer-events-none ${PCARD_WASH_VARIANT[path.key]}`} aria-hidden />
+      <div
+        className="relative z-[1] h-full flex flex-col items-start pt-[calc(33*var(--pc-u))] pr-[calc(30*var(--pc-u))] pb-[calc(43*var(--pc-u))] pl-[calc(41*var(--pc-u))]"
+        ref={bodyRef}
+      >
+        <span className="w-[calc(50*var(--pc-u))] h-[calc(50*var(--pc-u))] text-[#EAF0FF] flex-none [&>svg]:w-full [&>svg]:h-full [&>svg]:block">
+          {path.icon}
+        </span>
+        <h3 className="text-white text-[length:calc(36*var(--pc-u))] leading-[1.1] mt-[calc(40*var(--pc-u))] mb-[calc(12*var(--pc-u))] transition-[font-size] duration-[.6s] [transition-timing-function:cubic-bezier(.22,1,.36,1)] [.is-active_&]:text-[length:calc(42*var(--pc-u))]">
+          {path.title}
+        </h3>
+        <p
+          className={`text-white/94 text-[length:calc(19*var(--pc-u))] leading-[1.5] m-0 transition-[font-size] duration-[.6s] [transition-timing-function:cubic-bezier(.22,1,.36,1)] [.is-active_&]:text-[length:calc(20*var(--pc-u))] ${PCARD_PARA_MAXW[path.key]}`}
+        >
+          {path.desc}
+        </p>
         <Link
-          className="hv2-pcard-btn"
+          className={`inline-flex items-center justify-center gap-[calc(16*var(--pc-u))] mt-auto min-h-[calc(62*var(--pc-u))] whitespace-nowrap text-white! font-bold text-[length:calc(18*var(--pc-u))] bg-[rgba(9,20,64,.28)] border-[length:calc(1.8*var(--pc-u))] border-[rgba(255,255,255,.72)] rounded-[calc(11*var(--pc-u))] px-[calc(24*var(--pc-u))]
+            [transition:background-color_.35s_ease,color_.35s_ease,border-color_.35s_ease,min-width_.6s_cubic-bezier(.22,1,.36,1),min-height_.6s_cubic-bezier(.22,1,.36,1),font-size_.6s_cubic-bezier(.22,1,.36,1)]
+            [&>svg]:w-[calc(22*var(--pc-u))] [&>svg]:h-[calc(22*var(--pc-u))] [&>svg]:flex-none [&>svg]:transition-transform [&>svg]:duration-[.25s] [&>svg]:ease-out hover:[&>svg]:translate-x-[3px]
+            [.is-active_&]:min-w-[calc(213*var(--pc-u))] [.is-active_&]:min-h-[calc(66*var(--pc-u))] [.is-active_&]:text-[length:calc(19*var(--pc-u))] [.is-active_&]:bg-white [.is-active_&]:border-white [.is-active_&]:text-[var(--pc-btn)]! [.is-active_&]:hover:bg-[#EEF2FF]
+            ${PCARD_BTN_MINW[path.key]}`}
           href={path.href}
           tabIndex={d === 0 ? 0 : -1}
           draggable={false}
@@ -244,7 +374,11 @@ function PathCard({
           </svg>
         </Link>
       </div>
-      <div className="hv2-pcard-sheen" ref={sheenRef} aria-hidden />
+      <div
+        className="absolute top-0 bottom-0 left-0 w-[60%] z-[2] opacity-0 pointer-events-none [background:linear-gradient(100deg,transparent_18%,rgba(255,255,255,.4)_50%,transparent_82%)]"
+        ref={sheenRef}
+        aria-hidden
+      />
     </motion.article>
   );
 }
@@ -379,9 +513,9 @@ export default function PathCarousel() {
   for (let j = target - 3; j <= target + 3; j++) cards.push(j);
 
   return (
-    <div className="hv2-path rv" data-rv="1">
+    <div className={`${PATH_ROOT} rv`} data-rv="1">
       <div
-        className="hv2-path-stage"
+        className={PATH_STAGE}
         ref={stageRef}
         role="group"
         aria-roledescription="carousel"
@@ -397,7 +531,7 @@ export default function PathCarousel() {
       >
         <button
           type="button"
-          className="hv2-nav hv2-nav-prev"
+          className={`${PATH_NAV_BASE} ${PATH_NAV_PREV}`}
           aria-label="Previous path"
           aria-controls="hv2-path-ring"
           onClick={() => go(-1)}
@@ -407,7 +541,7 @@ export default function PathCarousel() {
           </svg>
         </button>
 
-        <div className="hv2-path-ring" id="hv2-path-ring">
+        <div className={PATH_RING} id="hv2-path-ring">
           {cards.map((j) => (
             <PathCard
               key={j}
@@ -427,7 +561,7 @@ export default function PathCarousel() {
 
         <button
           type="button"
-          className="hv2-nav hv2-nav-next"
+          className={`${PATH_NAV_BASE} ${PATH_NAV_NEXT}`}
           aria-label="Next path"
           aria-controls="hv2-path-ring"
           onClick={() => go(1)}
@@ -438,11 +572,11 @@ export default function PathCarousel() {
         </button>
       </div>
 
-      <p className="hv2-vh" aria-live="polite">
+      <p className="sr-only" aria-live="polite">
         {`${PATHS[mod(target)].title}, ${mod(target) + 1} of ${N}`}
       </p>
 
-      <div className="hv2-dots" role="tablist" aria-label="Paths">
+      <div className={PATH_DOTS} role="tablist" aria-label="Paths">
         {PATHS.map((p, k) => (
           <button
             key={p.key}
@@ -450,7 +584,7 @@ export default function PathCarousel() {
             role="tab"
             aria-selected={k === mod(target)}
             aria-label={p.title}
-            className={`hv2-dot${k === mod(target) ? " is-on" : ""}`}
+            className={`${PATH_DOT}${k === mod(target) ? PATH_DOT_ON : ""}`}
             onClick={() => goToPath(k)}
           />
         ))}
