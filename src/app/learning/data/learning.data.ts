@@ -12,7 +12,7 @@ const WEB = {
   resins: '/img/hv2-cut/resins-product.webp',
   crown: '/img/hv2-clinical/restorative.webp',
   implant: '/img/hv2-clinical/implant-dentistry.webp',
-  ortho: '/img/hv2-clinical/clear-aligners.webp',
+  ortho: '/img/clinical/aligners/hero-cutout.png',
   denture: '/img/hv2-clinical/prosthetics.webp',
   learning: '/img/hv2-hub/learning-laptop.webp',
   newsWorkflow: '/img/hv2-news/workflow.webp',
