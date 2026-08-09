@@ -5,12 +5,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { type FormEvent, useCallback, useEffect, useState } from 'react';
 import { sessionDestination } from '@/content/auth';
 import GoogleSignInButton from '@/components/auth/GoogleSignInButton';
-import SocialSignInButton from '@/components/auth/SocialSignInButton';
 import {
   login,
   loginWithGoogle,
   resendVerification,
-  startLinkedInSignIn,
 } from '@/lib/auth';
 import { isGoogleSignInEnabled } from '@/lib/config';
 
@@ -179,13 +177,6 @@ export default function LoginForm() {
     [goAfterAuth, router],
   );
 
-  const onLinkedIn = () => {
-    startLinkedInSignIn();
-    setBusy(true);
-    setMsg('Redirecting to LinkedIn…');
-    setError(false);
-  };
-
   return (
     <>
       <form className="auth-form" onSubmit={submit}>
@@ -253,35 +244,22 @@ export default function LoginForm() {
         </button>
       </form>
 
-      <div className="auth-social">
-        <div className="auth-divider" role="separator">
-          <span>or continue with</span>
-        </div>
-        {googleEnabled ? (
-          <>
-            <GoogleSignInButton
-              text="continue_with"
-              disabled={busy}
-              onCredential={onGoogleCredential}
-              onError={(message) => {
-                setMsg(message);
-                setError(true);
-              }}
-            />
-            <SocialSignInButton
-              provider="linkedin"
-              disabled={busy}
-              onClick={onLinkedIn}
-            />
-          </>
-        ) : (
-          <SocialSignInButton
-            provider="linkedin"
+      {googleEnabled ? (
+        <div className="auth-social">
+          <div className="auth-divider" role="separator">
+            <span>or continue with</span>
+          </div>
+          <GoogleSignInButton
+            text="continue_with"
             disabled={busy}
-            onClick={onLinkedIn}
+            onCredential={onGoogleCredential}
+            onError={(message) => {
+              setMsg(message);
+              setError(true);
+            }}
           />
-        )}
-      </div>
+        </div>
+      ) : null}
 
       {msg && (
         <p className={`auth-toast${error ? ' err' : ' ok'}`} role="status">
