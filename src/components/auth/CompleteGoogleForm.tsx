@@ -7,7 +7,7 @@ import AuthRoleRail from '@/components/auth/AuthRoleRail';
 import {
   AUTH_ROLES,
   registerRoleToClientType,
-  sessionDestination,
+  postRegisterDestination,
   type RegisterRole,
 } from '@/content/auth';
 import { loginWithGoogle } from '@/lib/auth';
@@ -111,7 +111,7 @@ export default function CompleteGoogleForm() {
 
     clearGoogleIdToken();
     setMsg(`Welcome, ${result.session.name}.`);
-    setTimeout(() => router.push(sessionDestination(result.session)), 700);
+    setTimeout(() => router.push(postRegisterDestination(result.session)), 700);
   };
 
   if (!idToken) {

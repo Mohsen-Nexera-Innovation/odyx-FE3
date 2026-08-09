@@ -25,7 +25,6 @@ const CARDS = [
   { out: "prosthetics.webp", src: "denture.jpg", left: 289 },
   { out: "implant-dentistry.webp", src: "implant.jpg", left: 289 },
   { out: "dental-models.webp", src: "temp.jpg", left: 289 },
-  { out: "clear-aligners.webp", src: "ortho.jpg", left: 200 },
 ];
 
 (async () => {
