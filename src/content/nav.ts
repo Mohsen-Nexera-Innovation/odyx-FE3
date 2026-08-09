@@ -142,6 +142,17 @@ export const HEADER_MENUS: NavGroup[] = [
         ],
       },
       {
+        title: "Digital Products",
+        items: [
+          {
+            label: "Design Services",
+            href: "/case-submission",
+            desc: "On-demand dental CAD design",
+            img: "/img/cutouts/feat-design-cutout.png",
+          },
+        ],
+      },
+      {
         title: "3D Printing",
         groups: [
           {
@@ -176,17 +187,6 @@ export const HEADER_MENUS: NavGroup[] = [
             img: "/img/resins/all-resins-cutout.png",
           },
             ],
-          },
-        ],
-      },
-      {
-        title: "Design Services",
-        items: [
-          {
-            label: "Design Services",
-            href: "/case-submission",
-            desc: "On-demand dental CAD design",
-            img: "/img/cutouts/feat-design-cutout.png",
           },
         ],
       },
