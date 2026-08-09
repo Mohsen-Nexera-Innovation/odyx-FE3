@@ -375,8 +375,6 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Learning",
     href: "/learning",
-    /** Hidden from the navbar until ready (kept in data for later) */
-    dimmed: true,
     items: [
       {
         label: "Learning Center",
