@@ -29,7 +29,7 @@ export const P1_26_HERO = {
   primaryCta: { label: 'Request Demo', href: '/request-demo' },
   secondaryCta: {
     label: 'Download Brochure',
-    href: '/products/3d-printers#downloads',
+    href: '/docs/resins/3d-printer-flyer.pdf',
   },
 };
 

@@ -11,7 +11,7 @@ export const S1_LANDING_HERO = {
   img: '/img/scanner/s1-hero-cutout.png',
   imgAlt: 'ODYX-S1 intraoral scanner on its charging base with soft signal waves',
   primaryCta: { label: 'Request Demo', href: '/request-demo' },
-  secondaryCta: { label: 'Download Brochure', href: '/support' },
+  secondaryCta: { label: 'Download Brochure', href: '/docs/resins/scanner-flyer.pdf' },
 };
 
 export const S1_WHY = [

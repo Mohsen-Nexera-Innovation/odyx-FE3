@@ -93,7 +93,7 @@ export const HERO = {
   sub:
     'The ODYX P1-26 prints the definitive work that goes in the mouth — crowns, bridges, guides and models — on an open-material 405 nm LCD system.',
   primaryCta: { label: 'Request a demo', href: '/request-demo' },
-  secondaryCta: { label: 'Download the datasheet', href: '#downloads' },
+  secondaryCta: { label: 'Download the datasheet', href: '/docs/resins/3d-printer-flyer.pdf' },
   chipsLabel: 'Built into the P1-26',
   chips: [
     '405 nm LCD light engine',

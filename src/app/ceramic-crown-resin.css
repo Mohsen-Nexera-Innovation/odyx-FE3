@@ -20,7 +20,7 @@ body:has(.ccr-page) nextjs-portal {
   /* Fixed header is min-height 68px + 17px padding; clear it so content isn't covered. */
   padding-top: 88px;
   /* Keep the last section from sitting against the site footer. */
-  padding-bottom: 72px;
+  padding-bottom: 28px;
 }
 
 .ccr-page h1,
@@ -28,23 +28,31 @@ body:has(.ccr-page) nextjs-portal {
   font-family: inherit;
 }
 
-/* Hero CTAs — matched to mock (Request a Demo ≈ 162×38, soft #0050D8). */
+/* Hero CTAs — size matched to Home V2 (HV2_BTN: 46px / 14.5px / radius 9). */
 .ccr-page .ccr-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-  height: 38px !important;
-  min-height: 38px !important;
-  padding: 0 22px !important;
-  border-radius: 6px !important;
-  font-size: 13px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  padding: 0 18px !important;
+  border-radius: 9px !important;
+  font-size: 14.5px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
   letter-spacing: 0 !important;
   text-decoration: none !important;
   white-space: nowrap !important;
-  transition: filter 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  gap: 8px !important;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.ccr-page .ccr-btn svg {
+  width: 19px !important;
+  height: 19px !important;
+  flex: none !important;
+  display: block !important;
 }
 
 .ccr-page .ccr-btn:focus-visible {
@@ -53,19 +61,20 @@ body:has(.ccr-page) nextjs-portal {
 }
 
 .ccr-page .ccr-btn-primary {
-  min-width: 162px !important;
   border: none !important;
   background: #0050d8 !important;
   color: #fff !important;
+  box-shadow: 0 4px 14px rgba(0, 80, 216, 0.35);
 }
 
 .ccr-page .ccr-btn-primary:hover {
-  filter: brightness(1.06);
+  background: #0041af !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 80, 216, 0.4);
 }
 
 .ccr-page .ccr-btn-secondary {
-  gap: 10px !important;
-  min-width: 178px !important;
+  gap: 8px !important;
   border: 1px solid #6c6c6c !important;
   background: #fff !important;
   color: #1a1a1a !important;
@@ -73,6 +82,17 @@ body:has(.ccr-page) nextjs-portal {
 
 .ccr-page .ccr-btn-secondary:hover {
   border-color: #404040 !important;
+}
+
+.ccr-page .ccr-btn-cases {
+  color: #0050d8 !important;
+  min-width: 220px !important;
+  padding-inline: 28px !important;
+}
+
+.ccr-page .ccr-btn-cases:hover {
+  border-color: #0050d8 !important;
+  background: rgba(0, 80, 216, 0.04) !important;
 }
 
 /* Applications cards — tight gutters matching mock (~8px).
@@ -127,4 +147,28 @@ body:has(.ccr-page) nextjs-portal {
   gap: 0 !important;
   column-gap: 0 !important;
   row-gap: 0 !important;
+}
+
+/* Detail page responsive (ccr) */
+@media (max-width: 1023px) {
+  .ccr-page {
+    padding-top: 80px;
+  }
+  .ccr-page h1 {
+    font-size: clamp(1.75rem, 6.5vw, 2.45rem) !important;
+    white-space: normal !important;
+    letter-spacing: -0.03em !important;
+  }
+  .ccr-page .ccr-btn-cases {
+    min-width: 0 !important;
+    width: 100%;
+    max-width: 260px;
+    padding-inline: 18px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .ccr-page .ccr-btn {
+    max-width: 100%;
+  }
 }
