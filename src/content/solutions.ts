@@ -37,7 +37,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         name: "ODYX-S1",
         href: "/products/odyx-s1-intraoral-scanner",
         why: "Start digital with chairside scans",
-        img: "/img/feat-scanner.jpg",
+        img: "/img/scanner/s1-hero.png",
       },
       {
         name: "Design Services",
@@ -55,13 +55,13 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         name: "ODYX Cure",
         href: "/products/curing-machines",
         why: "Validated cure for safe delivery",
-        img: "/img/feat-curing.jpg",
+        img: "/img/cure-uv02/hero/machine-cutout.png",
       },
       {
         name: "Clinical Resin",
         href: "/products/resins",
         why: "Materials matched to each indication",
-        img: "/img/feat-resin.jpg",
+        img: "/img/resins/all-resins-cutout.png",
       },
     ],
     workflowEmphasis: [
@@ -114,13 +114,13 @@ export const SOLUTION_PATHS: SolutionPath[] = [
         name: "ODYX Cure",
         href: "/products/curing-machines",
         why: "QA-friendly cure profiles",
-        img: "/img/feat-curing.jpg",
+        img: "/img/cure-uv02/hero/machine-cutout.png",
       },
       {
         name: "Resin & Materials",
         href: "/products/resins",
         why: "Full indication coverage",
-        img: "/img/feat-resin.jpg",
+        img: "/img/resins/all-resins-cutout.png",
       },
     ],
     workflowEmphasis: [

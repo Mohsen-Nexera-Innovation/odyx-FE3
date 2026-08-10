@@ -68,11 +68,11 @@ const CHIP_ICONS: Record<string, ReactNode> = {
 
 /** Exact icons cropped from printer-odyx-p1-26.jpeg — do not replace with SVGs */
 const FLOW_ICONS: Record<string, string> = {
-  scan: '/img/printers/p126/flow/scan.png',
-  design: '/img/printers/p126/flow/design.png',
-  print: '/img/printers/p126/flow/print.png',
-  cure: '/img/printers/p126/flow/cure.png',
-  deliver: '/img/printers/p126/flow/deliver.png',
+  scan: '/img/workflow/flow/scan.png',
+  design: '/img/workflow/flow/design.png',
+  print: '/img/workflow/flow/print.png',
+  cure: '/img/workflow/flow/cure.png',
+  deliver: '/img/workflow/flow/deliver.png',
 };
 
 const FLOW_CHEVRON = (
@@ -115,7 +115,7 @@ export default function P126Page() {
         style={{ ['--p126-hero-bg' as string]: `url('${hero.bg}?v=12')` }}
       >
         <div className="p126-hero-bg" aria-hidden />
-        <div className="p126-wrap p126-hero-grid">
+        <div className="p126-wrap p126-wrap--hero p126-hero-grid">
           <div className="p126-hero-left">
             <div className="p126-hero-copy">
               <p className="p126-eyebrow">{hero.eyebrow}</p>
@@ -186,7 +186,7 @@ export default function P126Page() {
         </div>
       </section>
 
-      <div className="p126-wrap p126-stack">
+      <div className="p126-wrap p126-wrap--body p126-stack">
         {/* Why + Video */}
         <div className="p126-row p126-row--why">
           <div className="p126-card p126-why-card reveal">
@@ -318,7 +318,10 @@ export default function P126Page() {
           </ul>
         </div>
 
-        {/* Cases + Reviews */}
+      </div>
+
+      {/* Cases + Reviews — full-width rail (matches hero), 20% wider than mid body */}
+      <div className="p126-wrap p126-wrap--last">
         <div className="p126-row p126-row--proof">
           <P126Cases />
           <div className="p126-card p126-reviews-card reveal">

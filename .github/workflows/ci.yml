@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_API_URL: http://srv1841640.hstgr.cloud:4000
+      # Public R2 base for clinical case photos (inlined at build time)
+      NEXT_PUBLIC_MEDIA_BASE_URL: https://pub-db35b93ad4f34a89afa6d99f4bc4aba9.r2.dev
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

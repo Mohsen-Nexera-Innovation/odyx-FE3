@@ -23,7 +23,7 @@ export const ABOUT_HERO = {
   secondaryCta: { label: 'Our story', href: '/about#who-we-are' },
   float: [
     {
-      src: '/img/cure-stitch/wf-scanner.png',
+      src: '/img/scanner/s1-hero-cutout.png',
       alt: 'ODYX intraoral scanner',
       className: 'about-hero__float--scanner',
     },
@@ -33,8 +33,8 @@ export const ABOUT_HERO = {
       className: 'about-hero__float--printer',
     },
     {
-      src: '/img/cure-stitch/odyx-cure-chamber-glow-cutout.png',
-      alt: 'ODYX Cure with glowing chamber',
+      src: '/img/cure-uv02/hero/machine-cutout.png',
+      alt: 'ODYX Cure UV-02 curing station',
       className: 'about-hero__float--cure',
     },
   ],
@@ -56,7 +56,7 @@ export const ABOUT_STORY = {
   ],
   mosaic: [
     {
-      src: '/img/scanner/s1-chairside.jpg',
+      src: '/img/scanner/s1-hero.png',
       alt: 'ODYX S1 intraoral scanner in a clinical chairside setting',
       caption: 'Scan',
     },
@@ -86,7 +86,7 @@ export const ABOUT_SPINE = [
     blurb: 'Chairside digital impression — instant 3D data, no molds.',
     href: DIGITAL_WORKFLOW_LINKS.scan,
     dimmed: isDigitalWorkflowDimmed('scan'),
-    img: '/img/scanner/step-scan.jpg',
+    img: '/img/scanner/s1-hero.png',
     alt: 'Digital intraoral scan',
   },
   {
@@ -188,7 +188,7 @@ export const ABOUT_FAMILIES = [
   {
     name: 'ODYX Scanners',
     desc: 'Chairside capture that starts the digital path.',
-    img: '/img/cutouts/feat-scanner-cutout.png',
+    img: '/img/scanner/s1-hero-cutout.png',
     brand: '/brand/odyx-scanners.png',
     href: '/products/odyx-s1-intraoral-scanner',
     accent: 'teal' as const,

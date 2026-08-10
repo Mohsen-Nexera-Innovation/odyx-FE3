@@ -4,7 +4,7 @@ export interface NavLink {
   desc?: string;
   /** Background-free cutout shown in the mega menu's featured card while this link is hovered */
   img?: string;
-  /** Visible but non-navigable (preview / not ready) */
+  /** Hidden from the navbar until ready (kept in data for later) */
   dimmed?: boolean;
 }
 
@@ -20,7 +20,7 @@ export interface MegaColumn {
   href?: string;
   groups?: MegaGroup[];
   items?: NavLink[];
-  /** Dim column title link (and treat as not ready) */
+  /** Hidden column until ready */
   dimmed?: boolean;
 }
 
@@ -43,78 +43,55 @@ export interface NavGroup {
   /** Full-width multi-column mega (SprintRay-inspired) */
   columns?: MegaColumn[];
   featured?: MegaFeatured;
-  /** Top-level visible but non-navigable; mega still opens on hover */
+  /** Hidden top-level item until ready */
   dimmed?: boolean;
   /** Opens mega / mobile accordion only — never navigates to href */
   navOnly?: boolean;
 }
 
+/** About mega — only sections that exist on `/about` (app/about). */
+const ABOUT_NAV_ITEMS: NavLink[] = [
+  {
+    label: "Why ODYX",
+    href: "/about#why",
+    desc: "More than technology — a partner you can rely on",
+  },
+  {
+    label: "Our Values",
+    href: "/about#values",
+    desc: "What drives the ODYX team",
+  },
+  {
+    label: "Our Team",
+    href: "/about#team",
+    desc: "The people building ODYX",
+  },
+  {
+    label: "News & Insights",
+    href: "/about#news",
+    desc: "Latest announcements and stories",
+  },
+];
+
 export const HEADER_MENUS: NavGroup[] = [
   {
     label: "About ODYX",
     href: "/about",
-    items: [
-      {
-        label: "Who We Are",
-        href: "/about#who-we-are",
-        desc: "Our story and what drives us",
-      },
-      {
-        label: "Vision & Mission",
-        href: "/about#vision-mission",
-        desc: "Where we are headed",
-      },
-      {
-        label: "Values & Beliefs",
-        href: "/about#values",
-        desc: "The principles behind ODYX",
-      },
-      {
-        label: "Our Team",
-        href: "/about#team",
-        desc: "The people building ODYX",
-      },
-      {
-        label: "News",
-        href: "/about#news",
-        desc: "Latest announcements and press",
-      },
-    ],
+    items: ABOUT_NAV_ITEMS,
     columns: [
       {
         title: "Company",
         href: "/about",
         items: [
-          {
-            label: "Who We Are",
-            href: "/about#who-we-are",
-            desc: "Our story and what drives us",
-          },
-          {
-            label: "Vision & Mission",
-            href: "/about#vision-mission",
-            desc: "Where we are headed",
-          },
-          {
-            label: "Values & Beliefs",
-            href: "/about#values",
-            desc: "The principles behind ODYX",
-          },
+          ABOUT_NAV_ITEMS[0],
+          ABOUT_NAV_ITEMS[1],
         ],
       },
       {
         title: "People & News",
         items: [
-          {
-            label: "Our Team",
-            href: "/about#team",
-            desc: "The people building ODYX",
-          },
-          {
-            label: "News",
-            href: "/about#news",
-            desc: "Latest announcements and press",
-          },
+          ABOUT_NAV_ITEMS[2],
+          ABOUT_NAV_ITEMS[3],
         ],
       },
     ],
@@ -132,9 +109,8 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "Design Services",
-        href: "/design-services",
-        desc: "Design services",
-        dimmed: true,
+        href: "/case-submission",
+        desc: "On-demand dental CAD design",
       },
       {
         label: "3D Printers",
@@ -145,7 +121,7 @@ export const HEADER_MENUS: NavGroup[] = [
         label: "ODYX Cure",
         href: "/products/curing-machines",
         desc: "Powerful curing. Perfect results.",
-        img: "/img/cutouts/feat-curing-cutout.png",
+        img: "/img/cure-uv02/hero/machine-cutout.png",
       },
       {
         label: "Resins",
@@ -156,19 +132,28 @@ export const HEADER_MENUS: NavGroup[] = [
     columns: [
       {
         title: "Intraoral Scanner",
-        href: "/products/odyx-s1-intraoral-scanner",
         items: [
           {
             label: "ODYX-S1",
             href: "/products/odyx-s1-intraoral-scanner",
             desc: "Chairside 3D impressions in seconds",
-            img: "/img/cutouts/feat-scanner-cutout.png",
+            img: "/img/scanner/s1-hero-cutout.png",
+          },
+        ],
+      },
+      {
+        title: "Digital Products",
+        items: [
+          {
+            label: "Design Services",
+            href: "/case-submission",
+            desc: "On-demand dental CAD design",
+            img: "/img/cutouts/feat-design-cutout.png",
           },
         ],
       },
       {
         title: "3D Printing",
-        href: "/products/3d-printers",
         groups: [
           {
             label: "Printers",
@@ -188,7 +173,7 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "ODYX Cure",
                 href: "/products/curing-machines",
                 desc: "Powerful curing. Perfect results.",
-                img: "/img/cutouts/feat-curing-cutout.png",
+                img: "/img/cure-uv02/hero/machine-cutout.png",
               },
             ],
           },
@@ -202,20 +187,6 @@ export const HEADER_MENUS: NavGroup[] = [
             img: "/img/resins/all-resins-cutout.png",
           },
             ],
-          },
-        ],
-      },
-      {
-        title: "Design Services",
-        href: "/design-services",
-        dimmed: true,
-        items: [
-          {
-            label: "Design Services",
-            href: "/design-services",
-            desc: "On-demand dental CAD design",
-            img: "/img/cutouts/feat-design-cutout.png",
-            dimmed: true,
           },
         ],
       },
@@ -251,6 +222,21 @@ export const HEADER_MENUS: NavGroup[] = [
         href: "/solutions/clinical-applications",
         desc: "Crowns, aligners, guides and more",
       },
+      {
+        label: "Real Cases",
+        href: "/cases",
+        desc: "Browse real clinical cases",
+      },
+      {
+        label: "By Application",
+        href: "/cases#by-application",
+        desc: "Restorative, implant, ortho, denture",
+      },
+      {
+        label: "By Product",
+        href: "/cases#by-product",
+        desc: "Scanner, printer, cure, resin",
+      },
     ],
     columns: [
       {
@@ -272,11 +258,35 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         title: "Applications",
-        items: [
+        groups: [
           {
-            label: "Clinical Applications",
-            href: "/solutions/clinical-applications",
-            desc: "Crowns, aligners, guides and more",
+            items: [
+              {
+                label: "Clinical Applications",
+                href: "/solutions/clinical-applications",
+                desc: "Crowns, aligners, guides and more",
+              },
+            ],
+          },
+          {
+            label: "Real Cases",
+            items: [
+              {
+                label: "Case Library",
+                href: "/cases",
+                desc: "Browse real clinical cases",
+              },
+              {
+                label: "By Application",
+                href: "/cases#by-application",
+                desc: "Restorative, implant, ortho, denture",
+              },
+              {
+                label: "By Product",
+                href: "/cases#by-product",
+                desc: "Scanner, printer, cure, resin",
+              },
+            ],
           },
         ],
       },
@@ -365,7 +375,6 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Learning",
     href: "/learning",
-    dimmed: true,
     items: [
       {
         label: "Learning Center",

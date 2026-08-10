@@ -22,7 +22,8 @@
 .s1l-wrap{
   width:100%;
   margin:0 auto;
-  padding:0 clamp(20px, 4vw, 40px);
+  /* About / Home / Support-aligned fluid page gutter */
+  padding-inline:clamp(20px, 4vw, 56px);
 }
 .s1l-stack{
   display:flex;
@@ -598,11 +599,14 @@
   --s1l-divider:#d5dceb;
   --s1l-radius:16px;
   --s1l-radius-sm:14px;
-  /* Mock: hero wider than body sections */
-  --s1l-max-hero:1360px;
-  --s1l-max-body:1080px;
-  /* Clinical Cases & Reviews — 20% wider than body rail */
-  --s1l-max-cases:1296px;
+  /*
+   * Width hierarchy (same ratio as the old 1360 / 1080 / 1296 rails):
+   * hero + last (cases) = full viewport between About gutters
+   * mid sections (body) = 20% narrower than hero/cases
+   */
+  --s1l-max-hero:none;
+  --s1l-max-body:80%;
+  --s1l-max-cases:none;
   --s1l-cols:minmax(0, 1fr) minmax(0, 1fr);
   --s1l-col-gap:14px;
   --s1l-pair-min-h:240px;
@@ -637,7 +641,8 @@ body:has(.s1l-page) main{
 .s1l-wrap{
   width:100%;
   margin:0 auto;
-  padding:0 clamp(28px, 5vw, 64px);
+  /* About / Home / Support-aligned fluid page gutter */
+  padding-inline:clamp(20px, 4vw, 56px);
 }
 .s1l-wrap--hero{max-width:var(--s1l-max-hero)}
 .s1l-wrap--body{max-width:var(--s1l-max-body)}
@@ -1165,11 +1170,6 @@ body:has(.s1l-page) main{
 .s1l-stars{display:flex;gap:3px;color:#f5b400}
 
 @media(max-width:1100px){
-  .s1l-page{
-    --s1l-max-hero:1200px;
-    --s1l-max-body:960px;
-    --s1l-max-cases:1152px;
-  }
   .s1l-why-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
   .s1l-why-icon{width:56px;height:56px}
   .s1l-why-label{font-size:.8rem}
@@ -1198,9 +1198,8 @@ body:has(.s1l-page) main{
   }
   .s1l-why-icon{width:54px;height:54px}
   .s1l-card--apps,.s1l-card--video{min-height:0}
-  .s1l-wrap--hero,
-  .s1l-wrap--body,
-  .s1l-wrap--cases{max-width:100%}
+  /* Avoid a cramped mid-rail on small screens */
+  .s1l-wrap--body{max-width:none}
 }
 @media(max-width:640px){
   .s1l-apps{grid-template-columns:1fr}

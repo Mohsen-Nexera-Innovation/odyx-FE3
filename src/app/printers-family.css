@@ -32,7 +32,8 @@
 }
 .pf :focus-visible{outline:2px solid var(--pfa); outline-offset:2px; border-radius:4px}
 
-.pf-wrap{max-width:1180px; margin-inline:auto; padding-inline:24px}
+/* About / Home / Support-aligned fluid page gutter */
+.pf-wrap{max-width:1180px; margin-inline:auto; padding-inline:clamp(20px, 4vw, 56px)}
 .pf [id]{scroll-margin-top:130px} /* fixed header + sticky sub-nav */
 .pf-sec{padding-block:clamp(32px,4vw,48px)}
 .pf-sec--tint{background:var(--pf-tint)}
@@ -87,7 +88,7 @@
 }
 .pf-subnav ul{
   display:flex; gap:4px; list-style:none; margin:0; overflow-x:auto;
-  max-width:1180px; margin-inline:auto; padding:0 16px;
+  max-width:1180px; margin-inline:auto; padding-inline:clamp(20px, 4vw, 56px);
 }
 .pf-subnav a{
   display:block; padding:12px 14px; font-weight:500; font-size:15px;

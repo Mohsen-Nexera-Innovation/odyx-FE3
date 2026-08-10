@@ -222,7 +222,7 @@ const FEAT = [
     i: "scan",
     t: "ODYX-S1",
     d: "Real-time 3D digital impressions, chairside.",
-    img: "/img/feat-scanner.jpg",
+    img: "/img/scanner/s1-hero.png",
   },
   {
     i: "print",
@@ -234,13 +234,13 @@ const FEAT = [
     i: "cure",
     t: "ODYX Cure",
     d: "Controlled UV for final strength.",
-    img: "/img/feat-curing.jpg",
+    img: "/img/cure-uv02/hero/machine-cutout.png",
   },
   {
     i: "resin",
     t: "Resin",
     d: "Five clinical resin lines.",
-    img: "/img/feat-resin.jpg",
+    img: "/img/resins/all-resins-cutout.png",
   },
 ] as const;
 export default function Home() {
@@ -333,7 +333,7 @@ export default function Home() {
                 <div className="pcard-art">
                   <img
                     className="pimg parallax"
-                    src="/img/paths/guest.jpg"
+                    src="/img/paths/distributor.jpg"
                     alt="ODYX partnership and distribution"
                   />
                   <span className="scrim2" />

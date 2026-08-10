@@ -80,11 +80,11 @@ const CHIP_ICONS: Record<string, ReactNode> = {
 
 /** Digital Workflow icons — 5 steps (no wash) */
 const FLOW_ICONS: Record<string, string> = {
-  scan: '/img/cure-uv02/flow/scan.png',
-  design: '/img/cure-uv02/flow/design.png',
-  print: '/img/cure-uv02/flow/print.png',
+  scan: '/img/workflow/flow/scan.png',
+  design: '/img/workflow/flow/design.png',
+  print: '/img/workflow/flow/print.png',
   cure: '/img/cure-uv02/flow/cure.png',
-  deliver: '/img/cure-uv02/flow/deliver.png',
+  deliver: '/img/workflow/flow/deliver.png',
 };
 
 const FLOW_CHEVRON = (
@@ -122,7 +122,7 @@ export default function CuringPage() {
     <main className="p126-page cure-page" id="top">
       <section className="p126-hero" data-hero-light aria-label="ODYX Cure UV-02">
         <div className="p126-hero-bg" aria-hidden />
-        <div className="p126-wrap p126-hero-grid">
+        <div className="p126-wrap p126-wrap--hero p126-hero-grid">
           <div className="p126-hero-left">
             <div className="p126-hero-copy">
               <p className="p126-eyebrow">{hero.eyebrow}</p>
@@ -191,7 +191,7 @@ export default function CuringPage() {
         </div>
       </section>
 
-      <div className="p126-wrap p126-stack">
+      <div className="p126-wrap p126-wrap--body p126-stack">
         <div className="p126-row p126-row--why">
           <div className="p126-card p126-why-card reveal">
             <h2 className="p126-card-title">{CURE_UV02_WHY.title}</h2>
@@ -323,6 +323,10 @@ export default function CuringPage() {
           </ul>
         </div>
 
+      </div>
+
+      {/* Cases + Reviews — full-width rail (matches hero), 20% wider than mid body */}
+      <div className="p126-wrap p126-wrap--last">
         <div className="p126-row p126-row--proof">
           <CureCases />
           <div className="p126-card p126-reviews-card reveal">

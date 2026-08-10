@@ -26,12 +26,39 @@ npm start
 
 ## Environments
 
-| Environment | Where | API |
-| --- | --- | --- |
-| **Staging** | Vercel | `https://staging-api.odyx.com` (Hostinger VPS) |
-| **Production** | Hostinger VPS Docker | `https://api.odyx.com` |
+| Environment | Where | Git branch | Ports (shared VPS) |
+| --- | --- | --- | --- |
+| **Staging** | Hostinger VPS Docker (also optional Vercel FE) | `main` | web `:3000`, API `:4000` |
+| **Production** | Hostinger VPS Docker | `production` | web `:3001`, API `:4001` |
 
-### Vercel staging
+Full ops guide lives in the API repo: **`odyx-api/deploy/README.md`**.
+
+### Deploy production
+
+1. Merge/cherry-pick the release onto this repo’s `production` branch and push.
+2. Ensure the API `production` branch is updated the same way.
+3. On the VPS:
+
+```bash
+ssh -i ~/.ssh/odyx_github_actions -p 2222 root@<VPS_HOST>
+cd /opt/odyx/api
+ODYX_ENV=production ./deploy/vps-deploy.sh all
+# or web only:
+ODYX_ENV=production ./deploy/vps-deploy.sh web
+```
+
+```text
+/opt/odyx/api  → odyx-api
+/opt/odyx/web  → this repo
+```
+
+Verify: `http://<VPS_HOST>:3001` (web) and `http://<VPS_HOST>:4001/health` (API).
+
+GitHub Actions deploys **staging** only (`ODYX_ENV=staging`). Production is manual.
+
+`NEXT_PUBLIC_USE_API` and `NEXT_PUBLIC_API_URL` are Docker build args (from `.env.production` on the VPS).
+
+### Vercel staging (optional)
 
 Set in the Vercel project:
 
@@ -39,16 +66,3 @@ Set in the Vercel project:
 NEXT_PUBLIC_USE_API=true
 NEXT_PUBLIC_API_URL=https://staging-api.odyx.com
 ```
-
-### Production (Hostinger VPS)
-
-Deployed with the API via Docker Compose. On the VPS:
-
-```text
-/opt/odyx/api  → odyx-api
-/opt/odyx/web  → this repo
-```
-
-See `odyx-api` README → **Hostinger VPS + Vercel staging** for the full steps.
-
-`NEXT_PUBLIC_USE_API` and `NEXT_PUBLIC_API_URL` are Docker build args (defaults: `true` / `https://api.odyx.com`).

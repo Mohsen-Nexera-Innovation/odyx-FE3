@@ -17,13 +17,13 @@ export const TEMPORARY_RESIN_HERO = {
   titleLight: 'Resin',
   tagline: 'Fast. Strong. Esthetic.',
   body: 'Ideal for temporary crowns, bridges and provisional restorations.',
-  img: '/images/hero-resin-bottle-and-teeth.png',
+  img: '/images/resin-hero-temporary-restoration-v2.png',
   imgAlt:
     'ODYX Temporary Restoration Resin bottle with 3D-printed temporary dental restorations',
-  primaryCta: { label: 'Request a Demo', href: '/support' },
+  primaryCta: { label: 'Request a Demo', href: '/request-demo' },
   secondaryCta: {
     label: 'Download Datasheet',
-    href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Temporary%20Restoration%20Resin',
+    href: '/docs/resins/resin-flyer.pdf',
   },
 };
 
@@ -91,14 +91,14 @@ export const TEMPORARY_RESIN_COMPATIBLE = [
   {
     id: 'uv-02',
     label: 'ODYX UV-02 Curing Unit',
-    img: '/images/compat-uv-02.png',
+    img: '/img/cure-uv02/hero/machine-cutout.png',
     imgAlt: 'ODYX UV-02 curing unit',
     href: '/products/curing-machines',
   },
   {
     id: 's1',
     label: 'ODYX S1 Intraoral Scanner',
-    img: '/images/compat-s1.png',
+    img: '/img/scanner/s1-hero-cutout.png',
     imgAlt: 'ODYX S1 intraoral scanner',
     href: '/products/odyx-s1-intraoral-scanner',
   },
@@ -133,5 +133,5 @@ export const TEMPORARY_RESIN_CASES = [
 
 export const TEMPORARY_RESIN_CASES_CTA = {
   label: 'View More Cases',
-  href: '/solutions/clinical-applications',
+  href: '/cases?product=resin#featured-cases',
 };

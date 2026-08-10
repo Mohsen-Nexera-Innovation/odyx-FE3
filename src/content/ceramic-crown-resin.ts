@@ -18,13 +18,13 @@ export const CERAMIC_CROWN_RESIN_HERO = {
   titleLight: 'Resin',
   tagline: 'Permanent strength. Natural esthetics.',
   body: 'Indicated for permanent single units (crowns, inlays, onlays, veneers) and bridges, and denture teeth.',
-  img: '/images/hero-ceramic-crown-resin.png',
+  img: '/images/resin-hero-ceramic-crown-v2.png',
   imgAlt:
     'ODYX Ceramic Crown Resin bottle with a 3D-printed ceramic crown',
-  primaryCta: { label: 'Request a Demo', href: '/support' },
+  primaryCta: { label: 'Request a Demo', href: '/request-demo' },
   secondaryCta: {
     label: 'Download Datasheet',
-    href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Ceramic%20Crown%20Resin',
+    href: '/docs/resins/resin-flyer.pdf',
   },
 };
 
@@ -113,14 +113,14 @@ export const CERAMIC_CROWN_RESIN_COMPATIBLE = [
   {
     id: 'uv-02',
     label: 'ODYX UV-02 Curing Unit',
-    img: '/images/compat-uv-02.png',
+    img: '/img/cure-uv02/hero/machine-cutout.png',
     imgAlt: 'ODYX UV-02 curing unit',
     href: '/products/curing-machines',
   },
   {
     id: 's1',
     label: 'ODYX S1 Intraoral Scanner',
-    img: '/images/compat-s1.png',
+    img: '/img/scanner/s1-hero-cutout.png',
     imgAlt: 'ODYX S1 intraoral scanner',
     href: '/products/odyx-s1-intraoral-scanner',
   },
@@ -155,5 +155,5 @@ export const CERAMIC_CROWN_RESIN_CASES = [
 
 export const CERAMIC_CROWN_RESIN_CASES_CTA = {
   label: 'View More Cases',
-  href: '/solutions/clinical-applications',
+  href: '/cases?product=resin#featured-cases',
 };

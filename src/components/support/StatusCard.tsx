@@ -23,7 +23,7 @@ export function StatusCard({ status }: { status: StatusCardData }) {
         <span className="text-[14px] font-bold text-[#0A1020] leading-tight mb-1">{status.label}</span>
         <span className="text-[13px] font-medium text-[#6B7280]">{status.value}</span>
         {status.linkLabel && (
-          <Link href={status.href} className="mt-1.5 flex items-center gap-1.5 text-[12.5px] font-bold text-[#0050D8] transition-colors hover:text-[#0040B0] group">
+          <Link href={status.href} className="mt-1.5 flex items-center gap-1.5 text-[12.5px] font-bold !text-[#0050D8] transition-colors hover:text-[#0040B0] group">
             {status.linkLabel}
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" aria-hidden />
           </Link>

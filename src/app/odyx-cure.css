@@ -4,12 +4,11 @@
 .cure-page.p126-page{
   background-image:none;
   background-color:var(--p126-page);
-  /* Expand content width ~20% vs printer page (1360 → 1632) */
-  --p126-max:1632px;
+  /* Inherit printer width hierarchy (hero/last full, body 80%) */
 }
 .cure-page .p126-wrap{
-  max-width:var(--p126-max);
-  padding:0 clamp(28px, 4.5vw, 72px);
+  /* Keep About / Home fluid gutter; max-width comes from p126-wrap--* modifiers */
+  padding-inline:clamp(20px, 4vw, 56px);
 }
 
 /* Hero left — nudge copy + chips slightly down */

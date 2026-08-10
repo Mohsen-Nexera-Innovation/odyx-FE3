@@ -79,7 +79,7 @@ export function ManualsPage() {
   ];
 
   return (
-    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4 font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4">
       <SupportContainer className="flex flex-col gap-8">
 
         <div className="flex flex-col gap-4">
@@ -125,15 +125,15 @@ export function ManualsPage() {
 
           <div className="flex flex-col gap-4 min-w-0">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-[16px] font-bold text-[#0A1020]">
+              <h2 className="text-lg font-bold text-[#0A1020]">
                 All Manuals ({filtered.length})
               </h2>
-              <div ref={sortRef} className="relative flex items-center gap-2 text-[12px] font-semibold text-[#6B7280] rounded-[10px] border border-gray-100/60 bg-[#F9FAFB] px-3 py-1.5 shadow-[0_4px_40px_rgba(0,0,0,0.02)]">
+              <div ref={sortRef} className="relative flex items-center gap-2 text-sm font-medium text-[#6B7280] rounded-[10px] border border-gray-100/60 bg-[#F9FAFB] px-3 py-1.5 shadow-[0_4px_40px_rgba(0,0,0,0.02)]">
                 Sort by:
                 <button
                   type="button"
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="flex items-center gap-1.5 rounded-[6px] border-none bg-transparent px-1.5 py-1 text-[12px] font-bold text-[#0A1020] outline-none transition-colors hover:bg-black/5"
+                  className="flex items-center gap-1.5 rounded-[6px] border-none bg-transparent px-1.5 py-1 text-sm font-bold text-[#0A1020] outline-none transition-colors hover:bg-black/5"
                 >
                   {SORT_OPTIONS.find(o => o.id === sort)?.label}
                   <ChevronDown size={14} strokeWidth={2.5} className={`transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`} />
@@ -149,7 +149,7 @@ export function ManualsPage() {
                               setSort(opt.id);
                               setIsSortOpen(false);
                             }}
-                            className={`w-full text-start px-3 py-2 text-[12px] font-semibold rounded-[6px] transition-colors ${sort === opt.id ? 'bg-[#0050D8] text-white' : 'text-[#4B5563] hover:bg-[#F4F8FD] hover:text-[#0050D8]'}`}
+                            className={`w-full text-start px-3 py-2 text-sm font-medium rounded-[6px] transition-colors ${sort === opt.id ? 'bg-[#0050D8] text-white' : 'text-[#4B5563] hover:bg-[#F4F8FD] hover:text-[#0050D8]'}`}
                           >
                             {opt.label}
                           </button>
@@ -166,7 +166,7 @@ export function ManualsPage() {
                 <ManualListItem key={manual.id} manual={manual} />
               ))}
               {pageItems.length === 0 && (
-                <p className="px-4 py-10 text-center text-[13px] font-medium text-[#6B7280]">
+                <p className="px-4 py-10 text-center text-sm font-medium text-[#6B7280]">
                   No manuals match your filters.
                 </p>
               )}
@@ -195,8 +195,8 @@ function ManualListItem({ manual }: { manual: ManualEntry }) {
       </span>
       <div className="min-w-0 flex-1">
         <h3 className="text-[14.5px] font-bold text-[#0A1020]">{manual.title}</h3>
-        <p className="mt-0.5 text-[13px] font-medium text-[#6B7280]">{manual.description}</p>
-        <div className="mt-2 flex items-center gap-2 text-[12px] font-semibold text-[#9CA3AF]">
+        <p className="mt-0.5 text-sm font-medium text-[#6B7280]">{manual.description}</p>
+        <div className="mt-2 flex items-center gap-2 text-sm font-medium text-[#9CA3AF]">
           <span>{manual.fileType}</span>
           <span>&middot;</span>
           <span>{manual.size}</span>

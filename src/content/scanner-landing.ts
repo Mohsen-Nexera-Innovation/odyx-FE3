@@ -8,10 +8,10 @@ export const S1_LANDING_HERO = {
   subtitle: 'Intraoral Scanner',
   tagline: 'AI-Powered. Accurate. Effortless.',
   body: 'The ODYX S1 delivers high-precision scans with AI-driven features for a seamless digital workflow.',
-  img: '/img/scanner/s1-hero-waves.png',
+  img: '/img/scanner/s1-hero-cutout.png',
   imgAlt: 'ODYX-S1 intraoral scanner on its charging base with soft signal waves',
-  primaryCta: { label: 'Request Demo', href: '/support' },
-  secondaryCta: { label: 'Download Brochure', href: '/support' },
+  primaryCta: { label: 'Request Demo', href: '/request-demo' },
+  secondaryCta: { label: 'Download Brochure', href: '/docs/resins/scanner-flyer.pdf' },
 };
 
 export const S1_WHY = [
@@ -92,13 +92,13 @@ export const S1_CASES = [
     title: 'Crown Prep Case',
     body: 'AI margin detection kept the prep line clear for the lab.',
     author: 'Dr. Sara M.',
-    img: '/img/scanner/s1-scanlight.jpg',
+    img: '/img/scanner/s1-hero.png',
   },
   {
     title: 'Implant Scan Body',
     body: 'Deep margins and scan bodies captured in a single pass.',
     author: 'Dr. Youssef R.',
-    img: '/img/scanner/s1-chairside.jpg',
+    img: '/img/scanner/s1-hero.png',
   },
 ] as const;
 

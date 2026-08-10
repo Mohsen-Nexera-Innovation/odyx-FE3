@@ -26,10 +26,10 @@ export const P1_26_HERO = {
   outputBridgeImg: '/img/printers/p126/hero/output-bridge.png',
   outputArchImg: '/img/printers/p126/hero/output-arch.png',
   imgAlt: 'ODYX P1-26 dental 3D printer with printed dental models',
-  primaryCta: { label: 'Request Demo', href: '/support' },
+  primaryCta: { label: 'Request Demo', href: '/request-demo' },
   secondaryCta: {
     label: 'Download Brochure',
-    href: '/products/3d-printers#downloads',
+    href: '/docs/resins/3d-printer-flyer.pdf',
   },
 };
 
@@ -80,7 +80,7 @@ export const P1_26_PRINT_APPS = [
   {
     label: 'Surgical Guides',
     img: '/img/printers/p126/app-guide.png',
-    alt: '3D-printed surgical guide',
+    alt: 'Clear surgical guide with metal and colored sleeves',
   },
   {
     label: 'Dentures',
@@ -100,7 +100,7 @@ export const P1_26_PRINT_APPS = [
   {
     label: 'Temporary Restorations',
     img: '/img/printers/p126/app-temporary.png',
-    alt: '3D-printed temporary restorations',
+    alt: 'Tan temporary arch restoration',
   },
 ] as const;
 
@@ -131,7 +131,7 @@ export const P1_26_ECOSYSTEM = {
       name: 'ODYX S1',
       subtitle: 'Intra-oral Scanner',
       href: '/products/odyx-s1-intraoral-scanner',
-      img: '/img/printers/p126/eco/scanner.png',
+      img: '/img/scanner/s1-hero-cutout.png',
     },
     {
       name: 'P1-26',
@@ -169,7 +169,7 @@ export const P1_26_CASE_TABS = [
     label: 'Surgical Guide',
     steps: [
       { label: 'Before', img: '/img/printers/p126/case-before.png', alt: 'Pre-op clinical view' },
-      { label: 'Printed with P1-26', img: '/img/printers/p126/app-guide.png', alt: 'Printed surgical guide' },
+      { label: 'Printed with P1-26', img: '/img/printers/p126/app-guide.png', alt: 'Clear surgical guide with metal and colored sleeves' },
       { label: 'Final Restoration', img: '/img/printers/p126/case-guide-strip.png', alt: 'Guide case outcome' },
     ],
   },

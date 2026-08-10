@@ -31,11 +31,11 @@ export const HERO = {
   sub: 'Intraoral Scanner — AI-powered. Accurate. Effortless.',
   body:
     'Full-arch digital impressions in 40 seconds, accurate to 20 microns — and open to whatever workflow you already run. The ODYX-S1 is where the digital chain starts.',
-  ctaPrimary: { label: 'Request a Demo', href: '/support' },
-  ctaSecondary: { label: 'Download Brochure', href: '#downloads' },
+  ctaPrimary: { label: 'Request a Demo', href: '/request-demo' },
+  ctaSecondary: { label: 'Download Brochure', href: '/docs/resins/scanner-flyer.pdf' },
   // "Buy online" (tertiary) is held back: price unconfirmed — screen-details §13.1
   ctaMicrocopy: 'Demos available chairside or online, in Arabic, English or French.',
-  img: '/img/scanner/s1-hero.jpg',
+  img: '/img/scanner/s1-hero-cutout.png',
   imgAlt: 'ODYX-S1 intraoral scanner wand docked in its cradle, white with teal control panel',
 };
 
@@ -55,7 +55,7 @@ export const CHAIRSIDE = {
   body:
     "The S1's remote control lets you complete an entire scan without reaching for the display — fewer touchpoints with gloved hands, and a cleaner protocol between patients. At 270 g with a rounded 20 × 17 mm tip, it stays comfortable for you and tolerable for the patient, even on long procedures.",
   caption: 'Fast and clean: the full scan sequence, hands on the wand only.',
-  img: '/img/scanner/s1-chairside.jpg',
+  img: '/img/scanner/s1-hero.png',
   imgAlt: 'ODYX-S1 scanner resting on a counter in a bright dental operatory',
 };
 
@@ -113,13 +113,13 @@ export const SOFTWARE = {
     {
       title: 'AI soft-tissue filtering',
       body: 'Tongue and lip capture is filtered out automatically while you scan — less cleanup, fewer rescans.',
-      img: '/img/scanner/s1-scanlight.jpg',
+      img: '/img/scanner/s1-hero.png',
       imgAlt: 'The S1 tip projecting its scanning light across a row of teeth on a demonstration model',
     },
     {
       title: 'Remote control',
       body: 'Start, pause and complete a scan from the wand. The screen is for looking, not touching.',
-      img: '/img/scanner/s1-remote.jpg',
+      img: '/img/scanner/s1-hero.png',
       imgAlt: 'Close-up of the S1 control button and status light on the teal panel',
     },
   ],
@@ -157,7 +157,7 @@ export const OPEN_SYSTEM = {
   body:
     'The S1 exports open STL and OBJ files that any lab and any CAD can read. No subscription gate, no ecosystem restriction — the ODYX workflow earns its place at every step, it never forces it.',
   microcopy: 'Prefer the full chain? The same file slices in ODYX Box, print-ready for the P1-26.',
-  img: '/img/scanner/s1-open-scene.jpg',
+  img: '/img/scanner/s1-hero.png',
   imgAlt: 'S1 on its stand beside a laptop exporting a scan to STL, with printed models, ODYX printer and cure unit behind',
   next: {
     eyebrow: 'DESIGN · STEP 2 OF 5',
@@ -233,7 +233,7 @@ export const DOWNLOADS = {
   closing: {
     headline: 'Put the S1 in your hand',
     sub: 'Book a chairside demo and scan a full arch yourself — in your clinic, on your cases.',
-    cta: { label: 'Request a Demo', href: '/support' },
+    cta: { label: 'Request a Demo', href: '/request-demo' },
     ctaMicrocopy: 'Demos available chairside or online, in Arabic, English or French.',
     secondary: { label: 'Talk to a Representative', href: '/support' },
     secondaryMicrocopy: 'For labs and distributors — coverage across Egypt and MENA.',

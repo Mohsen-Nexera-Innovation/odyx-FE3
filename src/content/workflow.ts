@@ -31,7 +31,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     accent: "teal",
     productSlug: "odyx-s1-intraoral-scanner",
     productName: "ODYX-S1",
-    img: "/img/feat-scanner.jpg",
+    img: "/img/scanner/s1-hero.png",
     lead: "Digital impressions in seconds - no molds, no mess, instant 3D data.",
     whatHappens:
       "A chairside ODYX-S1 scan captures the patient's anatomy in full color 3D. The file exports in open formats and flows directly into design - no manual steps, no compatibility guesswork.",
@@ -108,7 +108,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     accent: "orange",
     productSlug: "curing-machines",
     productName: "ODYX Cure",
-    img: "/img/feat-curing.jpg",
+    img: "/img/cure-uv02/hero/machine-cutout.png",
     lead: "Controlled UV polymerization for full strength and biocompatibility.",
     whatHappens:
       "Printed parts move to ODYX Cure for a validated light dose and time profile. This completes polymerization so mechanical properties and biocompatibility meet clinical requirements.",

@@ -18,12 +18,25 @@ export const CONTACT_SALES_HERO = {
   subtitle: 'Talk to our sales team',
   description:
     'Get pricing, product recommendations, bundle offers and\nfinancing options tailored to your needs.',
-  image: {
-    src: '/images/contact-sales/_preview-hero.png',
-    alt: 'ODYX ecosystem products — intraoral scanner, 3D printer, cure unit, and resin',
-    width: 1696,
-    height: 1083,
-  },
+  // Same product cutouts as the home hero orbit (scanner / printer / cure / resins).
+  images: [
+    {
+      src: '/img/hv2-cut/scanner-product.webp',
+      alt: 'ODYX S1 Intraoral Scanner',
+    },
+    {
+      src: '/img/hv2-cut/printer-product.webp',
+      alt: 'ODYX P1-26 3D Printer',
+    },
+    {
+      src: '/img/hv2-cut/cure-product.webp',
+      alt: 'ODYX Cure UV-02',
+    },
+    {
+      src: '/img/hv2-cut/resins-product.webp',
+      alt: 'ODYX Resins',
+    },
+  ],
 } as const;
 
 export type ContactChannelId = 'whatsapp' | 'call' | 'email';

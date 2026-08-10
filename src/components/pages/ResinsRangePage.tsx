@@ -33,7 +33,7 @@ export default function ResinsRangePage() {
       <section className="rs-hero" data-hero-dark>
         <div className="rs-hero-glow" aria-hidden />
         <div className="rs-hero-glow rs-hero-glow--streak" aria-hidden />
-        <div className="rs-wrap rs-hero-grid">
+        <div className="rs-wrap rs-wrap--hero rs-hero-grid">
           <div className="rs-hero-copy">
             <p className="rs-eyebrow">{HERO.title}</p>
             <h1 className="rs-display">{HERO.tagline}</h1>
@@ -56,16 +56,22 @@ export default function ResinsRangePage() {
           <figure className="rs-hero-media" aria-label={HERO.imgAlt}>
             <div className="rs-hero-products">
               {LINES.map((line, i) => (
-                <img
+                <a
                   key={line.id}
-                  className="rs-hero-product"
-                  src={`${line.img}?v=12`}
-                  alt={line.imgAlt}
-                  width={800}
-                  height={1400}
-                  fetchPriority={i === 0 ? 'high' : undefined}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                />
+                  className="rs-hero-product-link"
+                  href={line.href ?? '#lines'}
+                  aria-label={`${line.name} — view product`}
+                >
+                  <img
+                    className="rs-hero-product"
+                    src={`${line.img}?v=18`}
+                    alt={line.imgAlt}
+                    width={720}
+                    height={1400}
+                    fetchPriority={i === 0 ? 'high' : undefined}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                  />
+                </a>
               ))}
             </div>
           </figure>
@@ -73,7 +79,7 @@ export default function ResinsRangePage() {
       </section>
 
       <section className="rs-sec rs-lines-sec" id="lines">
-        <div className="rs-wrap">
+        <div className="rs-wrap rs-wrap--body">
           <div className="rs-sec-head">
             <p className="rs-sec-eyebrow">{LINES_SECTION.eyebrow}</p>
             <h2 className="rs-sec-title">{LINES_SECTION.title}</h2>
@@ -84,10 +90,10 @@ export default function ResinsRangePage() {
               <article key={line.id} className={`rs-line rs-line--${line.id}`}>
                 <div className="rs-line-media">
                   <img
-                    src={`${line.img}?v=12`}
+                    src={`${line.img}?v=18`}
                     alt={line.imgAlt}
                     loading="lazy"
-                    width={800}
+                    width={720}
                     height={1400}
                   />
                 </div>
@@ -108,7 +114,7 @@ export default function ResinsRangePage() {
       </section>
 
       <section className="rs-sec rs-why-sec" id="why">
-        <div className="rs-wrap">
+        <div className="rs-wrap rs-wrap--last">
           <div className="rs-why">
             <div className="rs-why-main">
               <p className="rs-why-eyebrow">{WHY.eyebrow}</p>

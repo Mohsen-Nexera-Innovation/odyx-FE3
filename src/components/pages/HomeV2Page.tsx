@@ -1,10 +1,20 @@
 import Link from "next/link";
 import ClinicalApplicationsSection from "@/components/home2/ClinicalApplicationsSection";
-import EcoPrinterVideo from "@/components/home2/EcoPrinterVideo";
 import ClinicalCasesShowcase from "@/components/home2/ClinicalCasesShowcase";
+import EcosystemSection from "@/components/home2/EcosystemSection";
 import HubCardsSection from "@/components/home2/HubCardsSection";
-import Hv2Footer from "@/components/home2/Hv2Footer";
 import Hv2Motion from "@/components/home2/Hv2Motion";
+import {
+  HV2_BLUE,
+  HV2_BODY,
+  HV2_BTN,
+  HV2_BTN_GHOST,
+  HV2_BTN_SIZE,
+  HV2_EYEBROW,
+  HV2_GUTTER,
+  HV2_H2,
+  HV2_SECTION_Y,
+} from "@/components/home2/hv2Chrome";
 import LatestUpdatesSection from "@/components/home2/LatestUpdatesSection";
 import PathCarousel from "@/components/home2/PathCarousel";
 import ProductsRail from "@/components/home2/ProductsRail";
@@ -15,147 +25,128 @@ import WhyOdyxOrbit from "@/components/home2/WhyOdyxOrbit";
 // carousel, radial ecosystem, products rail). Copy is claim-free marketing;
 // no catalog numbers appear on this screen.
 
-const Arrow = ({ s = 16 }: { s?: number }) => (
-  <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const Arrow = ({ s = 16, className }: { s?: number; className?: string }) => (
+  <svg width={s} height={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
 
-const IC = {
-  tooth: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M7.5 3.2C5.4 3.2 3.8 4.9 3.8 7c0 1.4.4 2.5.9 4 .5 1.4.7 2.8.9 4.6.2 1.5.4 3 1.3 3 .9 0 1.1-1.4 1.4-2.7.2-1.2.5-2.3 1.2-2.3s1 1.1 1.2 2.3c.3 1.3.5 2.7 1.4 2.7.9 0 1.1-1.5 1.3-3 .2-1.8.4-3.2.9-4.6.5-1.5.9-2.6.9-4 0-2.1-1.6-3.8-3.7-3.8-1.2 0-2 .6-2.6.6s-1.4-.6-2.6-.6Z" />
-    </svg>
-  ),
-  cube: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M21 8.2 12 3 3 8.2v7.6L12 21l9-5.2V8.2Z" />
-      <path d="M3.3 8.4 12 13.4l8.7-5M12 21v-7.6" />
-    </svg>
-  ),
-  target: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="9" />
-      <circle cx="12" cy="12" r="4.5" />
-      <circle cx="12" cy="12" r="1" fill="currentColor" />
-    </svg>
-  ),
-  diamond: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M6 4h12l4 5-10 12L2 9l4-5Z" />
-      <path d="M2 9h20M9.5 4 8 9l4 12M14.5 4 16 9l-4 12" />
-    </svg>
-  ),
-  shield: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M12 2.6 20 7.2v9.6l-8 4.6-8-4.6V7.2l8-4.6Z" />
-      <path d="M12 8.4l3.1 1.8v3.6L12 15.6l-3.1-1.8v-3.6L12 8.4Z" />
-    </svg>
-  ),
-  scan: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
-  ),
-  scanOrbit: (
-    // Mock's scanner badge: centre aperture ring + orbiting capture dots.
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="3.4" />
-      <path d="M5.2 9.4a7.3 7.3 0 0 1 3-3.4M18.8 14.6a7.3 7.3 0 0 1-3 3.4" />
-      <circle cx="17.6" cy="6.8" r="1.15" fill="currentColor" stroke="none" />
-      <circle cx="6.4" cy="17.2" r="1.15" fill="currentColor" stroke="none" />
-    </svg>
-  ),
-  drop: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z" />
-    </svg>
-  ),
-  printer: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="6" y="9" width="12" height="8" rx="1" />
-      <path d="M6 17v3h12v-3M8 9V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4" />
-    </svg>
-  ),
-  sun: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" />
-    </svg>
-  ),
-  monitor: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="3" y="4" width="18" height="12" rx="2" />
-      <path d="M8 20h8M12 16v4" />
-    </svg>
-  ),
-} as const;
+// Hero product cutouts + floor shadows (positions differ per element).
+// Each cutout carries a resting perspective tilt, pointer-parallax via
+// --hx/--hy from Hv2Motion, and an idle float on `translate`.
+const ORBIT_IMG_BASE =
+  "absolute block h-auto pointer-events-auto cursor-pointer" +
+  " [filter:drop-shadow(0_calc(14*var(--u))_calc(22*var(--u))_rgba(10,16,32,.14))]" +
+  " [transform:perspective(calc(1400*var(--u)))_translate3d(calc(var(--hx,0)*var(--op,1)*-22*var(--u)),calc(var(--hy,0)*var(--op,1)*-12*var(--u)),0)_rotateX(calc(2deg+var(--hy,0)*-4deg))_rotateY(calc(var(--oty,-4deg)*var(--odir,1)+var(--hx,0)*6deg))]" +
+  " transition-[transform,filter] duration-[.8s] [transition-timing-function:cubic-bezier(.22,1,.36,1)]" +
+  " [animation:hv2-o-float_var(--ofd,7s)_ease-in-out_var(--ofo,0s)_infinite]" +
+  " hover:[filter:drop-shadow(0_calc(18*var(--u))_calc(28*var(--u))_rgba(10,16,32,.22))_brightness(1.04)]" +
+  " focus-visible:outline-2 focus-visible:outline-[var(--hv2-blue)] focus-visible:outline-offset-4" +
+  " motion-reduce:[animation:none]! motion-reduce:[transform:none]! motion-reduce:transition-none!";
+const ORBIT_SHADOW_BASE =
+  "absolute z-[1] rounded-full pointer-events-none [background:radial-gradient(closest-side,rgba(30,58,118,.30),rgba(30,58,118,0))] [filter:blur(calc(9*var(--u)))] [animation:hv2-sh-float_var(--ofd,7s)_ease-in-out_var(--ofo,0s)_infinite] motion-reduce:[animation:none]!";
 
-// Ecosystem art: soft-feathered patches cut from the client mock
-// (public/img/hv2-eco/, 2x). Each node patch bakes the product, its
-// white halo ring and glow; icons + labels are DOM on top.
-const ECO_NODES = [
-  { key: "scanner", label: "Scanner", icon: "scanOrbit" },
-  { key: "resin", label: "Resin", icon: "drop" },
-  { key: "printer", label: "Printer", icon: "cube" },
-  { key: "software", label: "Software", icon: "monitor" },
-  { key: "cure", label: "Cure", icon: "sun" },
+const ORBIT_PRODUCTS = [
+  {
+    href: "/products/odyx-s1-intraoral-scanner",
+    src: "/img/hv2-cut/scanner-product.webp",
+    label: "ODYX S1 Intraoral Scanner",
+    pos: " start-[calc(700*var(--u))] top-[calc(288*var(--u))] w-[calc(300*var(--u))] z-[3] [--oty:-8deg] [--op:1.05] [--ofd:7.2s] [rotate:-12deg]",
+  },
+  {
+    href: "/products/odyx-p1-26",
+    src: "/img/hv2-cut/printer-product.webp",
+    label: "ODYX P1-26 3D Printer",
+    pos: " start-[calc(1020*var(--u))] top-[calc(88*var(--u))] w-[calc(215*var(--u))] z-[4] [--oty:-6deg] [--op:.8] [--ofd:6.6s] [--ofo:-1.4s]",
+  },
+  {
+    href: "/products/curing-machines",
+    src: "/img/hv2-cut/cure-product.webp",
+    label: "ODYX Cure UV-02",
+    pos: " start-[calc(1280*var(--u))] top-[calc(210*var(--u))] w-[calc(255*var(--u))] z-[3] [--oty:-3deg] [--op:.9] [--ofd:8.4s] [--ofo:-2.8s]",
+  },
+  {
+    href: "/products/resins",
+    src: "/img/hv2-cut/resins-product.webp",
+    label: "ODYX Resins",
+    pos: " start-[calc(1565*var(--u))] top-[calc(300*var(--u))] w-[calc(340*var(--u))] z-[4] [--oty:-4deg] [--op:1.15] [--ofd:7.8s] [--ofo:-4s]",
+  },
 ] as const;
+
+// Kept out of JSX attrs so `[&>span]` / `[&>svg]` don't trip the TSX parser
+// into treating the following <span> as a comparison (`Cannot find name 'span'`).
+const PRODUCTS_CTA =
+  `${HV2_BTN_GHOST} ${HV2_BTN_SIZE} mt-[16px]! w-[197px]! border! border-[rgba(24,68,160,.42)]!` +
+  " justify-between! [&>span]:mt-px rtl:[&>svg]:scale-x-[-1]";
 
 export default function HomeV2Page() {
   return (
     <div className="hv2" id="top">
       {/* ===== 1 · Hero — headline + orbit product collage ===== */}
-      <section className="hv2-hero" data-hero-light id="hero">
-        {/* The hero band is the client's 2048x628 desktop composition;
-            copy and collage are placed in those reference pixels (--u)
-            so the whole band scales as one piece. */}
-        <div className="hv2-hero-band">
-          <div className="hv2-hero-copy">
-            <p className="hv2-eyebrow rv">Digital Dentistry Reimagined</p>
-            <h1 className="hv2-h1 rv" data-rv="1">
+      <section
+        // One shared atmosphere for Hero + Why (Why mounts inside this
+        // section). Sky wash is full-bleed; content keeps the About gutter.
+        className="relative w-full pt-[100px] pb-0 max-[980px]:pt-[84px] bg-[var(--hv2-surface)] [background-image:linear-gradient(180deg,rgba(232,240,252,.15)_0%,rgba(232,240,252,.4)_22%,rgba(232,240,252,.28)_38%,rgba(238,242,249,.55)_58%,rgba(243,245,253,.88)_78%,var(--hv2-surface)_100%),url('/img/hv2-section-bg.jpg')] [background-position:center_top,center_top] [background-size:cover,cover] [background-repeat:no-repeat]"
+        data-hero-light
+        id="hero"
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 [background:radial-gradient(58%_52%_at_68%_28%,rgba(122,156,235,.14),transparent_70%),radial-gradient(36%_42%_at_92%_18%,rgba(150,170,240,.11),transparent_68%),radial-gradient(80%_40%_at_50%_100%,rgba(243,245,253,.65),transparent_70%)]"
+        />
+
+        {/* Page gutter matches About: content only — atmosphere stays edge-to-edge. */}
+        <div className={`relative z-[1] w-full ${HV2_GUTTER} pb-0`}>
+        {/* Hero band — mock 2048×628; slight extra height for collage air. */}
+        <div className="hv2-hero-band relative mx-auto w-full max-w-[2200px] aspect-[2048/660] [container-type:inline-size] [--u:0.048828cqw] border-t-0 max-[980px]:aspect-auto max-[980px]:overflow-clip">
+          <div className="absolute z-[2] start-0 top-[calc(122*var(--u))] max-w-[calc(700*var(--u))] max-[980px]:static max-[980px]:max-w-[560px]">
+            <p className={`${HV2_EYEBROW} rv text-[length:calc(16*var(--u))]! leading-[1.4] [letter-spacing:.14em]! mb-[calc(33*var(--u))]! max-[980px]:text-[12.5px]! max-[980px]:mb-3!`}>
+              Digital Dentistry Reimagined
+            </p>
+            <h1
+              className="rv text-[length:calc(60*var(--u))] leading-[1.1]! mb-[calc(46*var(--u))] max-[980px]:text-[length:clamp(34px,7vw,44px)]! max-[980px]:mb-[14px]"
+              data-rv="1"
+            >
               One Ecosystem.
               <br />
-              Endless <span className="hv2-blue">Possibilities.</span>
+              Endless <span className={HV2_BLUE}>Possibilities.</span>
             </h1>
-            <p className="hv2-lead rv" data-rv="2">
+            <p
+              className="rv text-[length:calc(20*var(--u))] leading-[1.8] max-w-[calc(345*var(--u))] mb-[calc(44*var(--u))] max-[980px]:text-[15.5px] max-[980px]:leading-[1.65] max-[980px]:max-w-[26em] max-[980px]:mb-[22px]"
+              data-rv="2"
+            >
               Everything you need for digital dentistry in one seamless
               ecosystem.
             </p>
             <div className="rv" data-rv="3">
-              <Link className="hv2-btn hv2-hero-cta" href="/support">
+              <Link className={`${HV2_BTN} ${HV2_BTN_SIZE} px-7!`} href="/request-demo">
                 <span>Request a Demo</span>
-                <Arrow s={23} />
+                <Arrow s={19} className="block shrink-0" />
               </Link>
             </div>
           </div>
 
-          {/* Real product cutouts (same photography as the product
-              screens, prepared in /img/hv2-cut/) over glowing orbit
-              sweeps, with soft floor shadows and DOM icon bubbles. */}
-          <div className="hv2-orbit rv" data-rv="2" aria-hidden>
-            <svg className="hv2-o-orbits" viewBox="0 0 2048 628" fill="none" aria-hidden>
-              <g transform="rotate(-8 1340 320)" stroke="#fff" strokeLinecap="round">
-                <ellipse cx="1340" cy="315" rx="655" ry="252" strokeWidth="9" opacity=".22" />
-                <ellipse cx="1340" cy="315" rx="655" ry="252" strokeWidth="2.2" opacity=".85" />
-                <ellipse cx="1310" cy="348" rx="520" ry="196" strokeWidth="1.8" opacity=".5" />
-              </g>
-              <ellipse cx="1430" cy="295" rx="735" ry="296" transform="rotate(-8 1430 295)" stroke="#7FA8F2" strokeWidth="2.4" opacity=".55" strokeLinecap="round" />
-            </svg>
-            <i className="hv2-o-sh hv2-sh-scanner" />
-            <i className="hv2-o-sh hv2-sh-cure" />
-            <i className="hv2-o-sh hv2-sh-printers" />
-            <i className="hv2-o-sh hv2-sh-resins" />
-            <img className="hv2-o-img hv2-o-scanner" src="/img/hv2-cut/scanner-product.webp" alt="" />
-            <img className="hv2-o-img hv2-o-cure" src="/img/hv2-cut/cure-product.webp" alt="" />
-            <img className="hv2-o-img hv2-o-printers" src="/img/hv2-cut/printer-product.webp" alt="" />
-            <img className="hv2-o-img hv2-o-resins" src="/img/hv2-cut/resins-product.webp" alt="" />
-            <span className="hv2-chip hv2-chip-tooth">{IC.tooth}</span>
-            <span className="hv2-chip hv2-chip-cube">{IC.cube}</span>
-            <span className="hv2-chip hv2-chip-target">{IC.shield}</span>
-            <span className="hv2-chip hv2-chip-diamond">{IC.diamond}</span>
+          {/* Product cutouts — each links to its product page. */}
+          <div
+            className="rv absolute inset-0 z-[1] pointer-events-none [container-type:inline-size] rtl:[--odir:-1] max-[980px]:relative max-[980px]:inset-auto max-[980px]:w-[162%] max-[980px]:ms-[-57%] max-[980px]:aspect-[2048/628] max-[980px]:mt-[10px]"
+            data-rv="2"
+          >
+            <i className={ORBIT_SHADOW_BASE + " start-[calc(740*var(--u))] top-[calc(400*var(--u))] w-[calc(220*var(--u))] h-[calc(34*var(--u))] [--ofd:7.2s]"} aria-hidden />
+            <i className={ORBIT_SHADOW_BASE + " start-[calc(1010*var(--u))] top-[calc(470*var(--u))] w-[calc(235*var(--u))] h-[calc(42*var(--u))] [--ofd:6.6s] [--ofo:-1.4s]"} aria-hidden />
+            <i className={ORBIT_SHADOW_BASE + " start-[calc(1280*var(--u))] top-[calc(468*var(--u))] w-[calc(270*var(--u))] h-[calc(44*var(--u))] [--ofd:8.4s] [--ofo:-2.8s]"} aria-hidden />
+            <i className={ORBIT_SHADOW_BASE + " start-[calc(1585*var(--u))] top-[calc(525*var(--u))] w-[calc(320*var(--u))] h-[calc(42*var(--u))] [--ofd:7.8s] [--ofo:-4s]"} aria-hidden />
+            {ORBIT_PRODUCTS.map((p) => (
+              <Link
+                key={p.href}
+                className={ORBIT_IMG_BASE + p.pos}
+                href={p.href}
+                aria-label={p.label}
+              >
+                <img className="w-full h-auto block" src={p.src} alt="" draggable={false} />
+              </Link>
+            ))}
           </div>
+        </div>
         </div>
 
         {/* ===== 2 · Why ODYX — orbit infographic on the hero backdrop ===== */}
@@ -163,102 +154,55 @@ export default function HomeV2Page() {
       </section>
 
       {/* ===== 3 · Choose your path ===== */}
-      <section className="hv2-sec" id="path">
-        <div className="hv2-wrap hv2-center rv">
-          <p className="hv2-eyebrow">Choose Your Path</p>
-          <h2 className="hv2-h2">
-            Your Journey. <span className="hv2-blue">Your Solution.</span>
+      <section
+        className={`w-full ${HV2_GUTTER} ${HV2_SECTION_Y} [container-type:inline-size] [--pc-u:clamp(.52px,0.0488281cqw,1px)] overflow-x-clip [background:linear-gradient(180deg,var(--hv2-surface)_0%,#FAFCFF_40%,#F6F8FE_100%)]`}
+        id="path"
+      >
+        <div className="max-w-[1400px] mx-auto text-center rv">
+          <p className={`${HV2_EYEBROW} text-[length:clamp(12px,1.2vw,14px)]! [letter-spacing:.12em]! mb-[clamp(10px,1.2vw,14px)]!`}>
+            Choose Your Path
+          </p>
+          <h2 className={`${HV2_H2} text-[length:clamp(28px,3.6vw,42px)]! leading-[1.15]! [letter-spacing:-.015em]! mb-0!`}>
+            Your Journey. <span className={HV2_BLUE}>Your Solution.</span>
           </h2>
         </div>
         <PathCarousel />
       </section>
 
-      {/* ===== 4 + 5 · Ecosystem and Products ==========================
-           One shared panel in the mock: a single border, radius and
-           background wrap both bands, so neither section carries a card
-           surface of its own and they meet on a straight edge. */}
-      <div className="hv2-stack">
-        <div className="hv2-stack-in">
-          <section className="hv2-eco rv" id="ecosystem">
-            <div className="hv2-eco-bg" aria-hidden>
-              {/* Orbit sweeps behind the composition; clipped to the panel. */}
-              <svg className="hv2-eco-orbits" viewBox="0 0 1358 485" preserveAspectRatio="none" aria-hidden>
-                <g fill="none" stroke="#fff" strokeLinecap="round">
-                  <ellipse cx="732" cy="200" rx="380" ry="255" strokeWidth="7" opacity=".16" />
-                  <ellipse cx="732" cy="200" rx="380" ry="255" strokeWidth="2" opacity=".65" />
-                  <ellipse cx="775" cy="212" rx="432" ry="292" strokeWidth="1.6" opacity=".38" />
-                </g>
-              </svg>
-              {/* Silk light ribbon on the right, cut from the mock art. */}
-              <img className="hv2-eco-silk" src="/img/hv2-eco/eco-swoosh.webp" alt="" loading="lazy" />
-            </div>
-            <div className="hv2-eco-copy">
-              <p className="hv2-eyebrow">Ecosystem</p>
-              <h2 className="hv2-h2">
-                Everything
-                <br />
-                works better
-                <br />
-                <span className="hv2-blue">together.</span>
-              </h2>
-              <p className="hv2-body">
-                A seamless ecosystem where every product is designed to work in
-                perfect harmony.
-              </p>
-            </div>
-            <div className="hv2-eco-stage">
-              <img
-                className="hv2-eco-patch hv2-eco-p-mouth"
-                src="/img/hv2-eco/eco-mouth.webp"
-                alt="Intraoral scanner capturing a patient's teeth with blue structured light"
-              />
-              {ECO_NODES.map((n) => (
-                <img
-                  className={`hv2-eco-patch hv2-eco-p-${n.key}`}
-                  src={`/img/hv2-eco/eco-${n.key}.webp`}
-                  alt=""
-                  loading="lazy"
-                  key={n.key}
-                />
-              ))}
-              {ECO_NODES.map((n) => (
-                <div className={`hv2-eco-node hv2-eco-n-${n.key}`} key={n.key}>
-                  <span className="hv2-eco-ic" aria-hidden>{IC[n.icon]}</span>
-                  <span className="hv2-eco-lbl">{n.label}</span>
-                </div>
-              ))}
-              <EcoPrinterVideo />
-              <a className="hv2-eco-more" href="#products" aria-label="Continue to products">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </a>
-            </div>
-          </section>
+      {/* ===== 4 · Ecosystem + Products — one section, no card ===== */}
+      <section
+        className={
+          `w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+          " [background:radial-gradient(58%_70%_at_62%_32%,rgba(255,255,255,.9),rgba(255,255,255,0)_62%),linear-gradient(180deg,#F7F8FC_0%,var(--hv2-surface)_50%,#F0F2F8_100%)]" +
+          " [--pr-card-h:261px] [--pr-radius:10px] [--pr-pad:20px] [--pr-pad-t:17.8px] [--pr-go:36px] [--pr-go-inset:15.5px] [--pr-go-bottom:24.6px] [--pr-title:16.2px] [--pr-title-lh:22.0px] [--pr-nav:37px] [--pr-panel-pad-i:0px] [--pr-band-y:clamp(2px,0.5vw,8px)]"
+        }
+      >
+        <EcosystemSection />
 
-          <section className="hv2-prod" id="products">
-            <ProductsRail>
-              <div className="hv2-prod-intro rv">
-                <p className="hv2-eyebrow">Products</p>
-                <h2 className="hv2-h2">
-                  Built for precision.
-                  <br />
-                  Designed for <span className="hv2-blue">you.</span>
-                </h2>
-                <p className="hv2-body">
-                  Explore our complete range of digital dentistry solutions.
-                </p>
-                <Link className="hv2-btn hv2-btn-ghost hv2-prod-cta" href="/products">
-                  <span>Explore All Products</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                    <path d="M4 12h15M13 6l6 6-6 6" />
-                  </svg>
-                </Link>
-              </div>
-            </ProductsRail>
-          </section>
+        <div className="mt-0" id="products">
+          <ProductsRail>
+            <div className="pt-0 rv">
+              <p className={`${HV2_EYEBROW} text-[14.7px]! font-medium! [letter-spacing:.028em]! mb-0! leading-[1.2]!`}>
+                Products
+              </p>
+              <h2 className={`${HV2_H2} text-[length:clamp(24px,2.35vw,34px)]! font-normal! leading-[1.15]! [letter-spacing:-.014em]! [margin:19px_0_0]!`}>
+                Built for precision.
+                <br />
+                Designed for <span className={HV2_BLUE}>you.</span>
+              </h2>
+              <p className={`${HV2_BODY} text-[16px]! leading-[28.2px]! text-[#4E5766]! max-w-[13.5em]! mt-[12px]! max-[980px]:max-w-[34em]!`}>
+                Explore our complete range of digital dentistry solutions.
+              </p>
+              <Link className={PRODUCTS_CTA} href="/products">
+                <span>Explore All Products</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M4 12h15M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+            </div>
+          </ProductsRail>
         </div>
-      </div>
+      </section>
 
       {/* ===== 6 · Clinical applications ===== */}
       <ClinicalApplicationsSection />
@@ -272,8 +216,7 @@ export default function HomeV2Page() {
       {/* ===== 9 · Latest updates — five-up update carousel ===== */}
       <LatestUpdatesSection />
 
-      {/* ===== 10 · Footer — the mock's navy band (replaces the global one) ===== */}
-      <Hv2Footer />
+      {/* Footer: site-wide shared Footer from root layout */}
 
       <Hv2Motion />
     </div>

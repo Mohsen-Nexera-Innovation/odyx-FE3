@@ -10,14 +10,14 @@ export const RESIN_DETAIL_COMPATIBLE = [
   {
     id: 'uv-02',
     label: 'ODYX UV-02 Curing Unit',
-    img: '/images/compat-uv-02.png',
+    img: '/img/cure-uv02/hero/machine-cutout.png',
     imgAlt: 'ODYX UV-02 curing unit',
     href: '/products/curing-machines',
   },
   {
     id: 's1',
     label: 'ODYX S1 Intraoral Scanner',
-    img: '/images/compat-s1.png',
+    img: '/img/scanner/s1-hero-cutout.png',
     imgAlt: 'ODYX S1 intraoral scanner',
     href: '/products/odyx-s1-intraoral-scanner',
   },
@@ -25,5 +25,5 @@ export const RESIN_DETAIL_COMPATIBLE = [
 
 export const RESIN_DETAIL_CASES_CTA = {
   label: 'View More Cases',
-  href: '/solutions/clinical-applications',
+  href: '/cases?product=resin#featured-cases',
 };

@@ -56,8 +56,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Chairside 3D impressions in seconds.",
     overview:
       "The ODYX-S1 intraoral scanner captures full-arch color scans with real-time mesh preview. Open export formats connect directly to design and lab workflows without proprietary lock-in.",
-    img: "/img/feat-scanner.jpg",
-    heroImg: "/img/cutouts/feat-scanner-cutout.png",
+    img: "/img/scanner/s1-hero.png",
+    heroImg: "/img/scanner/s1-hero-cutout.png",
     accent: "teal",
     workflowStep: "scan",
     applications: [
@@ -354,8 +354,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Five clinical lines validated for the ODYX workflow.",
     overview:
       "Ceramic Resin 51%, Crown & Bridge, Temporary Restoration, Model 2.0 and Surgical Guide Pro — each with datasheets, cure profiles and safety documentation. The materials layer that makes the ecosystem clinically complete.",
-    img: "/img/feat-resin.jpg",
-    heroImg: "/img/cutouts/feat-resin-cutout.png",
+    img: "/img/resins/all-resins-cutout.png",
+    heroImg: "/img/resins/all-resins-cutout.png",
     accent: "orange",
     workflowStep: "print",
     applications: [
@@ -423,8 +423,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Fast. Strong. Esthetic. Provisionals for crowns, bridges and long-span restorations.",
     overview:
       "ODYX Temporary Restoration Resin for temporary crowns, bridges and provisional restorations — strength, comfort and esthetics for chairside and lab workflows.",
-    img: "/images/hero-resin-bottle-and-teeth.png",
-    heroImg: "/images/hero-resin-bottle-and-teeth.png",
+    img: "/images/resin-hero-temporary-restoration-v2.png",
+    heroImg: "/images/resin-hero-temporary-restoration-v2.png",
     accent: "orange",
     workflowStep: "print",
     applications: [
@@ -447,7 +447,7 @@ export const PRODUCTS: ProductContent[] = [
       {
         name: "Product datasheet",
         type: "PDF",
-        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Temporary%20Restoration%20Resin",
+        href: "/docs/resins/resin-flyer.pdf",
       },
     ],
     benefits: [
@@ -465,8 +465,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Permanent strength. Natural esthetics. Crowns, inlays, onlays, veneers, bridges and denture teeth.",
     overview:
       "ODYX Ceramic Crown Resin for permanent single units and bridges — high hardness, low shrinkage, and natural tooth shades.",
-    img: "/images/hero-ceramic-crown-resin.png",
-    heroImg: "/images/hero-ceramic-crown-resin.png",
+    img: "/images/resin-hero-ceramic-crown-v2.png",
+    heroImg: "/images/resin-hero-ceramic-crown-v2.png",
     accent: "teal",
     workflowStep: "print",
     applications: [
@@ -492,7 +492,7 @@ export const PRODUCTS: ProductContent[] = [
       {
         name: "Product datasheet",
         type: "PDF",
-        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Ceramic%20Crown%20Resin",
+        href: "/docs/resins/resin-flyer.pdf",
       },
     ],
     benefits: [
@@ -510,8 +510,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Strong. Precise. Reliable. Crowns, bridges, veneers, inlays and onlays.",
     overview:
       "ODYX Crown & Bridge Resin for long-term restorations — high hardness, impact resistance, and excellent marginal accuracy.",
-    img: "/images/hero-crown-bridge-resin.png",
-    heroImg: "/images/hero-crown-bridge-resin.png",
+    img: "/images/resin-hero-crown-bridge-v2.png",
+    heroImg: "/images/resin-hero-crown-bridge-v2.png",
     accent: "teal",
     workflowStep: "print",
     applications: ["Crowns", "Bridges", "Veneers", "Inlays", "Onlays"],
@@ -530,7 +530,7 @@ export const PRODUCTS: ProductContent[] = [
       {
         name: "Product datasheet",
         type: "PDF",
-        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Crown%20%26%20Bridge%20Resin",
+        href: "/docs/resins/resin-flyer.pdf",
       },
     ],
     benefits: [
@@ -548,8 +548,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "High Accuracy. Exceptional Detail. Diagnostic, working, prosthetic and thermoforming models.",
     overview:
       "ODYX Model Resin for high-accuracy dental models — smooth matte surface, low shrinkage, and fast printing.",
-    img: "/images/hero-model-resin.png",
-    heroImg: "/images/hero-model-resin.png",
+    img: "/images/resin-hero-model-v2.png",
+    heroImg: "/images/resin-hero-model-v2.png",
     accent: "orange",
     workflowStep: "print",
     applications: [
@@ -575,7 +575,7 @@ export const PRODUCTS: ProductContent[] = [
       {
         name: "Product datasheet",
         type: "PDF",
-        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Model%20Resin",
+        href: "/docs/resins/resin-flyer.pdf",
       },
     ],
     benefits: [
@@ -593,8 +593,8 @@ export const PRODUCTS: ProductContent[] = [
     tagline: "Confidence in every implant surgery. Highly transparent biocompatible resin for accurate surgical guides.",
     overview:
       "ODYX Surgical Guide Resin Pro — transparent, sterilizable, and biocompatible for implant surgical guides.",
-    img: "/images/hero-surgical-guide-resin.png",
-    heroImg: "/images/hero-surgical-guide-resin.png",
+    img: "/images/resin-hero-surgical-guide-pro-v2.png",
+    heroImg: "/images/resin-hero-surgical-guide-pro-v2.png",
     accent: "teal",
     workflowStep: "print",
     applications: ["Implant guides", "Surgical templates", "Orthopedic guides"],
@@ -613,7 +613,7 @@ export const PRODUCTS: ProductContent[] = [
       {
         name: "Product datasheet",
         type: "PDF",
-        href: "mailto:info@odyx.dental?subject=Document%20request%3A%20Surgical%20Guide%20Resin%20Pro",
+        href: "/docs/resins/resin-flyer.pdf",
       },
     ],
     benefits: [
