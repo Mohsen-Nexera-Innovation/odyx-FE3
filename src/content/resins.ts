@@ -61,9 +61,6 @@ export const LINES_SECTION = {
 };
 
 /** Card order / copy matches the client resins-line reference (L → R). */
-const docsMail = (line: string) =>
-  `mailto:info@odyx.dental?subject=${encodeURIComponent(`Document request: ${line}`)}`;
-
 export const LINES: ResinLine[] = [
   {
     id: 'ceramic-crown',
@@ -71,7 +68,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'High-strength, highly esthetic resin for long-lasting crowns with natural translucency.',
     img: '/img/resins/card-ceramic.png',
-    imgAlt: 'ODYX Ceramic Crown Resin 1kg bottle, shade A1',
+    imgAlt: 'ODYX Ceramic Crown Resin bottle',
     href: '/products/ceramic-crown-resin',
   },
   {
@@ -80,7 +77,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'Reliable and easy-to-finish resin for temporary crowns and provisional restorations.',
     img: '/img/resins/card-temporary.png',
-    imgAlt: 'ODYX Temporary Restoration Resin bottle, shade A2, 1 kg',
+    imgAlt: 'ODYX Temporary Restoration Resin bottle',
     href: '/products/temporary-restoration-resin',
   },
   {
@@ -89,7 +86,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'Biocompatible and precise resin for accurate surgical guides and drilling templates.',
     img: '/img/resins/card-surgical.png',
-    imgAlt: 'ODYX Surgical Resin bottle with printed surgical guide',
+    imgAlt: 'ODYX Surgical Guide Pro Resin bottle',
     href: '/products/surgical-guide-resin-pro',
   },
   {
@@ -98,7 +95,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'High-precision resin for detailed study models with sharp features and accuracy.',
     img: '/img/resins/card-model.png',
-    imgAlt: 'ODYX Model Resin Toughness 1kg bottle, shade A2',
+    imgAlt: 'ODYX Model Resin bottle',
     href: '/products/model-resin',
   },
   {
@@ -107,7 +104,7 @@ export const LINES: ResinLine[] = [
     highlight:
       'Durable and strong resin for long-span bridges and high-load restorations.',
     img: '/img/resins/card-crown-bridge.png',
-    imgAlt: 'ODYX Crown & Bridge Resin 1kg bottle, shade A2',
+    imgAlt: 'ODYX Crown & Bridge Resin bottle',
     href: '/products/crown-bridge-resin',
   },
 ];
@@ -148,7 +145,7 @@ export const WHY = {
     body: 'Download detailed information about all ODYX resins.',
     cta: {
       label: 'View Downloads',
-      href: 'mailto:info@odyx.dental?subject=ODYX%20Resins%20Technical%20Data%20%26%20Safety%20Sheets',
+      href: '/docs/resins/resin-flyer.pdf',
     },
   },
 };

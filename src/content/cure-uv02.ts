@@ -27,7 +27,7 @@ export const CURE_UV02_HERO = {
   imgAlt: 'ODYX Cure UV-02 dental UV curing station with cured models',
   imgVersion: '18',
   primaryCta: { label: 'Request Demo', href: '/request-demo' },
-  secondaryCta: { label: 'Download Brochure', href: '/support' },
+  secondaryCta: { label: 'Download Brochure', href: '/docs/resins/curing-flyer.pdf' },
 };
 
 export const CURE_UV02_CHIPS = [

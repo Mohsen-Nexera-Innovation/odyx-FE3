@@ -32,7 +32,7 @@ export const HERO = {
   body:
     'Full-arch digital impressions in 40 seconds, accurate to 20 microns — and open to whatever workflow you already run. The ODYX-S1 is where the digital chain starts.',
   ctaPrimary: { label: 'Request a Demo', href: '/request-demo' },
-  ctaSecondary: { label: 'Download Brochure', href: '#downloads' },
+  ctaSecondary: { label: 'Download Brochure', href: '/docs/resins/scanner-flyer.pdf' },
   // "Buy online" (tertiary) is held back: price unconfirmed — screen-details §13.1
   ctaMicrocopy: 'Demos available chairside or online, in Arabic, English or French.',
   img: '/img/scanner/s1-hero-cutout.png',

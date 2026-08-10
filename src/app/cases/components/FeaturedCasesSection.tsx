@@ -93,7 +93,7 @@ export function FeaturedCasesSection({
           <Swiper
             modules={[Navigation]}
             spaceBetween={16}
-            slidesPerView={1.15}
+            slidesPerView={1.12}
             slidesPerGroup={1}
             breakpoints={{
               640: { slidesPerView: 2, spaceBetween: 16 },
@@ -174,14 +174,14 @@ export function FeaturedCasesSection({
 
           <button
             type="button"
-            className="cases-featured-prev hidden lg:flex absolute -left-2 top-[42%] -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white shadow-[0_4px_14px_rgba(0,0,0,0.1)] items-center justify-center text-[#0050D8] hover:scale-105 transition-transform disabled:opacity-35"
+            className="cases-featured-prev hidden sm:flex absolute left-1 lg:-left-2 top-[42%] -translate-y-1/2 z-10 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-white shadow-[0_4px_14px_rgba(0,0,0,0.1)] items-center justify-center text-[#0050D8] hover:scale-105 transition-transform disabled:opacity-35"
             aria-label="Previous cases"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             type="button"
-            className="cases-featured-next hidden lg:flex absolute -right-2 top-[42%] -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white shadow-[0_4px_14px_rgba(0,0,0,0.1)] items-center justify-center text-[#0050D8] hover:scale-105 transition-transform disabled:opacity-35"
+            className="cases-featured-next hidden sm:flex absolute right-1 lg:-right-2 top-[42%] -translate-y-1/2 z-10 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-white shadow-[0_4px_14px_rgba(0,0,0,0.1)] items-center justify-center text-[#0050D8] hover:scale-105 transition-transform disabled:opacity-35"
             aria-label="Next cases"
           >
             <ChevronRight className="w-5 h-5 ml-0.5" />

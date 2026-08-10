@@ -26,14 +26,14 @@ export const CROWN_BRIDGE_RESIN_CONTENT: ResinDetailContent = {
     titleLines: ['Crown & Bridge', 'Resin'],
     tagline: 'Strong. Precise. Reliable.',
     body: 'Designed for crowns, bridges, veneers, inlays and onlays with exceptional mechanical performance.',
-    img: '/images/hero-crown-bridge-resin.png',
+    img: '/images/resin-hero-crown-bridge-v2.png',
     imgAlt: 'ODYX Crown & Bridge Resin bottle with printed dental restorations',
-    imgWidth: 2080,
-    imgHeight: 1420,
+    imgWidth: 1024,
+    imgHeight: 576,
     primaryCta: { label: 'Request a Demo', href: '/request-demo' },
     secondaryCta: {
       label: 'Download Datasheet',
-      href: 'mailto:info@odyx.dental?subject=Document%20request%3A%20Crown%20%26%20Bridge%20Resin',
+      href: '/docs/resins/resin-flyer.pdf',
     },
   },
   applications: [

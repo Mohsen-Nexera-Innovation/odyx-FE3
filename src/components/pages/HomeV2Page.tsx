@@ -119,7 +119,7 @@ export default function HomeV2Page() {
               ecosystem.
             </p>
             <div className="rv" data-rv="3">
-              <Link className={`${HV2_BTN} ${HV2_BTN_SIZE} px-7!`} href="/support">
+              <Link className={`${HV2_BTN} ${HV2_BTN_SIZE} px-7!`} href="/request-demo">
                 <span>Request a Demo</span>
                 <Arrow s={19} className="block shrink-0" />
               </Link>
