@@ -3,9 +3,9 @@
 import { useMemo, useState } from 'react';
 import { CURE_UV02_ROI } from '@/content/cure-uv02';
 
-function formatUsd(n: number) {
-  if (!Number.isFinite(n) || n <= 0) return '$0';
-  return `$${Math.round(n).toLocaleString('en-US')}`;
+function formatLe(n: number) {
+  if (!Number.isFinite(n) || n <= 0) return 'L.E 0';
+  return `L.E ${Math.round(n).toLocaleString('en-US')}`;
 }
 
 function formatHours(mins: number) {
@@ -83,7 +83,7 @@ export default function CureRoiMini() {
             <span className="cure-roi-metric-label">{CURE_UV02_ROI.costResultLabel}</span>
             <div className="cure-roi-metric-line">
               <strong className="cure-roi-metric-value" key={`c-${cost}`}>
-                {formatUsd(cost)}
+                {formatLe(cost)}
               </strong>
               <span className="cure-roi-metric-unit">{CURE_UV02_ROI.costResultUnit}</span>
             </div>

@@ -8,7 +8,6 @@ import {
   HV2_BLUE,
   HV2_BODY,
   HV2_BTN,
-  HV2_BTN_GHOST,
   HV2_BTN_SIZE,
   HV2_EYEBROW,
   HV2_GUTTER,
@@ -75,9 +74,9 @@ const ORBIT_PRODUCTS = [
 
 // Kept out of JSX attrs so `[&>span]` / `[&>svg]` don't trip the TSX parser
 // into treating the following <span> as a comparison (`Cannot find name 'span'`).
-const PRODUCTS_CTA =
-  `${HV2_BTN_GHOST} ${HV2_BTN_SIZE} mt-[16px]! w-[197px]! border! border-[rgba(24,68,160,.42)]!` +
-  " justify-between! [&>span]:mt-px rtl:[&>svg]:scale-x-[-1]";
+// const PRODUCTS_CTA =
+//   `${HV2_BTN_GHOST} ${HV2_BTN_SIZE} mt-[16px]! w-[197px]! border! border-[rgba(24,68,160,.42)]!` +
+//   " justify-between! [&>span]:mt-px rtl:[&>svg]:scale-x-[-1]";
 
 export default function HomeV2Page() {
   return (
@@ -193,12 +192,14 @@ export default function HomeV2Page() {
               <p className={`${HV2_BODY} text-[16px]! leading-[28.2px]! text-[#4E5766]! max-w-[13.5em]! mt-[12px]! max-[980px]:max-w-[34em]!`}>
                 Explore our complete range of digital dentistry solutions.
               </p>
+              {/* Hidden until products overview is ready
               <Link className={PRODUCTS_CTA} href="/products">
                 <span>Explore All Products</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M4 12h15M13 6l6 6-6 6" />
                 </svg>
               </Link>
+              */}
             </div>
           </ProductsRail>
         </div>

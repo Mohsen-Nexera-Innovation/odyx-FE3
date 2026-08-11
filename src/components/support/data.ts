@@ -64,8 +64,9 @@ export interface StatusCardData {
 
 export const STATUS_CARDS: StatusCardData[] = [
   { id: 'system-status', label: 'System Status', value: 'All Systems Operational', href: '/support', linkLabel: '', tone: 'ok' },
-  { id: 'latest-software', label: 'Latest Software', value: 'ODYX Base 1.2.3', href: '/support/downloads', linkLabel: 'View details', tone: 'neutral' },
-  { id: 'latest-firmware', label: 'Latest Firmware', value: 'P1-26 v3.10', href: '/support/downloads', linkLabel: "What's new", tone: 'neutral' },
+  // Download CTAs hidden until software distribution is ready
+  { id: 'latest-software', label: 'Latest Software', value: 'ODYX Base 1.2.3', href: '/support/downloads', linkLabel: '', tone: 'neutral' },
+  { id: 'latest-firmware', label: 'Latest Firmware', value: 'P1-26 v3.10', href: '/support/downloads', linkLabel: '', tone: 'neutral' },
   { id: 'last-update', label: 'Last Update', value: 'May 12, 2026', href: '/support/downloads', linkLabel: '', tone: 'neutral' },
 ];
 

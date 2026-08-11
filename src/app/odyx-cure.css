@@ -344,6 +344,23 @@ body:has(.cure-page) main{
   white-space:nowrap;
 }
 
+@media (max-width:1100px){
+  .cure-page .p126-row--why{
+    grid-template-columns:1fr;
+  }
+  .cure-page .p126-why-grid{
+    grid-template-columns:minmax(0, 1fr) minmax(160px, .9fr);
+    gap:clamp(20px, 3vw, 36px);
+  }
+  .cure-page .p126-why-list li{
+    white-space:normal;
+  }
+  .cure-page .p126-why-media img,
+  .cure-page .p126-why-card:hover .p126-why-media img{
+    transform:none;
+  }
+}
+
 @media (max-width:800px){
   .cure-hero-media{min-height:300px}
   .cure-layer--machine{
@@ -379,6 +396,35 @@ body:has(.cure-page) main{
   .cure-roi-metric{flex:1}
   .cure-page .p126-flow-icon,
   .cure-page .p126-flow-icon img{width:48px; height:48px}
+
+  /* Why card internals + video stack cleanly on phones */
+  .cure-page .p126-why-grid{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .cure-page .p126-why-list{
+    padding-right:0;
+    max-width:none;
+  }
+  .cure-page .p126-why-list li{
+    font-size:.82rem;
+    line-height:1.35;
+  }
+  .cure-page .p126-why-media{
+    overflow:hidden;
+    max-width:280px;
+    margin-inline:auto;
+    aspect-ratio:16 / 11;
+    max-height:none;
+  }
+  .cure-page .p126-why-media img{
+    max-height:200px;
+  }
+  .cure-page .p126-video-card .p126-video{
+    max-height:none;
+    min-height:180px;
+    width:100%;
+  }
 }
 
 @media (prefers-reduced-motion:reduce){

@@ -521,8 +521,12 @@
   .p126-why-list li{white-space:normal}
 }
 @media (max-width:800px){
-  .p126-why-media{aspect-ratio:16 / 11; max-width:320px; margin-inline:auto; max-height:none}
-  .p126-why-media img{max-height:200px}
+  .p126-why-media{aspect-ratio:16 / 11; max-width:320px; margin-inline:auto; max-height:none; overflow:hidden}
+  .p126-why-media img,
+  .p126-why-card:hover .p126-why-media img{
+    max-height:200px;
+    transform:none;
+  }
   .p126-video-card .p126-video{max-height:none; min-height:200px}
 }
 
@@ -542,24 +546,26 @@
 .p126-play{
   position:absolute;inset:0;
   border:0;background:rgba(10,20,40,.18);
-  cursor:pointer;
   display:grid;place-items:center;
-  transition:background .25s ease;
+  pointer-events:none;
 }
-.p126-play:hover{background:rgba(10,20,40,.28)}
 .p126-play-circle{
   width:72px;height:72px;border-radius:50%;
   background:rgba(255,255,255,.92);
   color:var(--p126-blue);
-  display:grid;place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   box-shadow:0 10px 30px rgba(0,0,0,.2);
-  transition:transform .25s ease, background .25s ease;
 }
-.p126-play:hover .p126-play-circle{
-  transform:scale(1.06);
-  background:#fff;
+.p126-play-circle svg{
+  display:block;
+  /* optical center — triangle mass sits left of geometric center */
+  transform:translateX(2px);
 }
-.p126-play-circle svg{margin-left:3px}
+[dir="rtl"] .p126-play-circle svg{
+  transform:translateX(-2px) scaleX(-1);
+}
 
 /* Specs — key/value rows sized to match Apps card height */
 .p126-specs-card{
