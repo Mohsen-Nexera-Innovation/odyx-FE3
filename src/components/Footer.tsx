@@ -23,7 +23,7 @@ const COLUMNS: FooterColumn[] = [
       { label: "About ODYX", href: "/about" },
       { label: "Why ODYX", href: "/about#why" },
       { label: "Our Values", href: "/about#values" },
-      { label: "Our Team", href: "/about#team" },
+      // { label: "Our Team", href: "/about#team" },
       { label: "News & Insights", href: "/about#news" },
     ],
   },
@@ -32,35 +32,14 @@ const COLUMNS: FooterColumn[] = [
     links: [
       { label: "Intraoral Scanners", href: "/products/odyx-s1-intraoral-scanner" },
       { label: "3D Printers", href: "/products/odyx-p1-26" },
-      { label: "UV Curing Units", href: "/products/curing-machines" },
+      { label: "Curing Units", href: "/products/curing-machines" },
       { label: "Premium Resins", href: "/products/resins" },
-    ],
-  },
-  {
-    // Home-section anchors use /#… so they resolve from any route.
-    title: "Workflows",
-    links: [
-      { label: "Restorative", href: "/#applications" },
-      { label: "Implant", href: "/#applications" },
-      { label: "Orthodontics", href: "/#applications" },
-      { label: "Prosthetics", href: "/#applications" },
-      { label: "All Workflows", href: "/workflows" },
-    ],
-  },
-  {
-    title: "Learning",
-    links: [
-      { label: "Courses", href: "/learning#courses" },
-      { label: "Webinars", href: "/learning#videos" },
-      { label: "Guides", href: "/learning#articles" },
-      { label: "Clinical Cases", href: "/#cases" },
     ],
   },
   {
     title: "Support",
     links: [
       { label: "Help Center", href: "/support" },
-      { label: "Live Chat", href: "/support#chat" },
       { label: "Downloads", href: "/support#manuals" },
       { label: "Warranty", href: "/support#warranty" },
       { label: "Contact Us", href: "/support#contact" },
@@ -147,10 +126,10 @@ const FT_GRID =
   " max-[860px]:[grid-template-columns:1fr]! max-[860px]:[row-gap:34px]! max-[860px]:[padding-block:38px_32px]!";
 
 const FT_NAV =
-  "[display:grid]! [grid-template-columns:calc(241*var(--fu))_calc(260*var(--fu))_calc(257*var(--fu))_calc(233*var(--fu))_calc(224*var(--fu))]!" +
+  "[display:grid]! [grid-template-columns:calc(366*var(--fu))_calc(400*var(--fu))_calc(366*var(--fu))]!" +
   " [gap:0]!" +
-  " max-[1499px]:[grid-template-columns:repeat(5,minmax(0,1fr))]! max-[1499px]:[column-gap:clamp(14px,1.4vw,24px)]!" +
-  " max-[1180px]:col-span-full! max-[1180px]:row-start-2! max-[1180px]:[column-gap:clamp(12px,2vw,26px)]!" +
+  " max-[1499px]:[grid-template-columns:repeat(3,minmax(0,1fr))]! max-[1499px]:[column-gap:clamp(18px,2vw,36px)]!" +
+  " max-[1180px]:col-span-full! max-[1180px]:row-start-2! max-[1180px]:[column-gap:clamp(16px,2.4vw,32px)]!" +
   " max-[860px]:[grid-template-columns:repeat(2,minmax(0,1fr))]! max-[860px]:[gap:26px_18px]! max-[860px]:row-auto!" +
   " max-[420px]:[grid-template-columns:1fr]! max-[420px]:[gap:22px]!";
 

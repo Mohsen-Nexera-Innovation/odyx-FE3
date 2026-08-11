@@ -85,7 +85,7 @@ export default function CaseSuccess({
           {/* Action buttons */}
           <div className="w-full max-w-[400px] flex gap-3">
             <Link
-              href="https://wa.me/"
+              href="https://wa.me/201042077646"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-[6px] bg-[#16A34A] text-white text-[13px] font-bold no-underline transition-colors hover:bg-[#15803d]"

@@ -3,9 +3,9 @@
 import { useMemo, useState } from 'react';
 import { P1_26_ROI } from '@/content/p1-26';
 
-function formatUsd(n: number) {
-  if (!Number.isFinite(n) || n <= 0) return '$0';
-  return `$${Math.round(n).toLocaleString('en-US')}`;
+function formatEgp(n: number) {
+  if (!Number.isFinite(n) || n <= 0) return 'EGP 0';
+  return `EGP ${Math.round(n).toLocaleString('en-US')}`;
 }
 
 export default function P126RoiMini() {
@@ -48,7 +48,7 @@ export default function P126RoiMini() {
         <div className="p126-roi-result" aria-live="polite">
           <span className="p126-roi-result-label">{P1_26_ROI.resultLabel}</span>
           <strong className="p126-roi-result-value" key={savings}>
-            {formatUsd(savings)}
+            {formatEgp(savings)}
           </strong>
           <span className="p126-roi-result-unit">{P1_26_ROI.resultUnit}</span>
         </div>

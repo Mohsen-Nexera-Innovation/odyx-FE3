@@ -824,6 +824,11 @@ footer{margin:0;padding:0;border:0;background:transparent}
   .nav-tools::-webkit-scrollbar{display:none}
   .nav-tools .tool-btn.search-btn{display:none}
   .nav-tools .btn-sm{padding:0 8px;height:28px;font-size:.64rem}
+  /* CTAs live in the slide-down menu on tablet/phone — keep header tools to burger only */
+  .nav-tools .nav-login,
+  .nav-tools .nav-sales,
+  .nav-tools .nav-demo{display:none}
+  .nav-tools{max-width:none;overflow:visible}
   .logo-img{height:32px}
   header.on-light .nav-menu{
     background:rgba(245,250,253,.98);
@@ -838,7 +843,7 @@ footer{margin:0;padding:0;border:0;background:transparent}
 @media(max-width:520px){
   .lang-wrap{display:none}
   .nav-user-caret{display:none}
-  .nav-tools{gap:3px;max-width:min(70vw,300px)}
+  .nav-tools{gap:3px;max-width:none}
   .nav-tools .btn-sm{padding:0 6px;height:26px;font-size:.58rem}
 }
 @media(max-width:620px){.wrap{padding:0 16px}.sec{padding:64px 0}}
@@ -5133,7 +5138,8 @@ header.on-light .nav-cart:hover{color:var(--sky-deep);background:rgba(var(--sky-
   max-height:min(560px,68vh);
   height:auto;
   object-fit:contain;
-  filter:drop-shadow(0 28px 40px rgba(8,80,130,.16));
+  /* No CSS filter/drop-shadow — smears transparent PNGs into ghost trails */
+  filter:none;
 }
 .prod-ov-spot:hover .prod-ov-spot__photo,
 .prod-ov-spot:hover .prod-ov-spot__cutout{transform:translateY(-6px)}

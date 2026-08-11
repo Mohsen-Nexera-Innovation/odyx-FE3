@@ -278,7 +278,7 @@ export default function RequestDemoPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-[#F5F7FB] pb-12 text-[#0A1020] font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="flex min-h-screen w-full min-w-0 flex-col overflow-x-hidden bg-[#F5F7FB] pb-12 text-[#0A1020] font-[var(--font-tajawal),Tajawal,sans-serif]">
       <RequestDemoHero />
 
       <RequestDemoProgress

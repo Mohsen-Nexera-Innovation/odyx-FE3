@@ -49,18 +49,21 @@ export const REQUEST_DEMO_STEPS = [
     id: 'contact',
     number: 1,
     title: 'Contact Information',
+    shortTitle: 'Contact',
     subtitle: 'Your basic details',
   },
   {
     id: 'practice',
     number: 2,
     title: 'Practice & Interests',
+    shortTitle: 'Practice',
     subtitle: 'Tell us about your needs',
   },
   {
     id: 'schedule',
     number: 3,
     title: 'Schedule & Notes',
+    shortTitle: 'Schedule',
     subtitle: 'Choose time and add notes',
   },
 ] as const;
@@ -364,8 +367,8 @@ export const REQUEST_DEMO_FORM = {
   help: {
     title: 'Questions?',
     body: 'Our team is here to help.',
-    email: 'sales@odyx.com',
-    mailto: 'mailto:sales@odyx.com',
+    email: 'sales@odyxegypt.net',
+    mailto: 'mailto:sales@odyxegypt.net',
   },
   success:
     'Thanks — your demo request is in. Our team will confirm your preferred time shortly.',

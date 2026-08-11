@@ -401,11 +401,6 @@ export const HEADER_MENUS: NavGroup[] = [
         href: "/learning#videos",
         desc: "Watch and follow along",
       },
-      {
-        label: "ROI Calculator",
-        href: "/roi",
-        desc: "Full ecosystem — scanner, printer & cure",
-      },
     ],
     columns: [
       {
@@ -436,11 +431,6 @@ export const HEADER_MENUS: NavGroup[] = [
             label: "Videos & Tutorials",
             href: "/learning#videos",
             desc: "Watch and follow along",
-          },
-          {
-            label: "ROI Calculator",
-            href: "/roi",
-            desc: "Full ecosystem — scanner, printer & cure",
           },
         ],
       },
