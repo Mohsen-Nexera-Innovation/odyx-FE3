@@ -34,7 +34,7 @@ export const ABOUT_HERO = {
     },
     {
       src: '/img/cure-uv02/hero/machine-cutout.png',
-      alt: 'ODYX Cure UV-02 curing station',
+      alt: 'ODYX Cure curing station',
       className: 'about-hero__float--cure',
     },
   ],
@@ -72,7 +72,7 @@ export const ABOUT_STORY = {
     },
     {
       src: '/img/cure-uv02/device-angle.jpg',
-      alt: 'ODYX Cure UV-02 post-curing unit',
+      alt: 'ODYX Cure post-curing unit',
       caption: 'Cure',
     },
   ],
@@ -110,11 +110,11 @@ export const ABOUT_SPINE = [
   {
     no: '04',
     label: 'Cure',
-    blurb: 'Controlled UV finishing for strength and biocompatibility.',
+    blurb: 'Controlled finishing for strength and biocompatibility.',
     href: DIGITAL_WORKFLOW_LINKS.cure,
     dimmed: isDigitalWorkflowDimmed('cure'),
     img: '/img/scanner/step-cure.jpg',
-    alt: 'UV cure step',
+    alt: 'Cure step',
   },
 ] as const;
 

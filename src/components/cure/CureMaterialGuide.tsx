@@ -13,7 +13,7 @@ const MATERIALS = [
     wave: "385 + 405 nm",
     note: "Full polymerization for permanent strength and marginal accuracy.",
     image: `${IMG}/case-crown-curing.png`,
-    alt: "ODYX Cure UV-02 curing a dental crown inside the amber UV chamber",
+    alt: "ODYX Cure curing a dental crown inside the amber chamber",
   },
   {
     id: "guide",
@@ -23,7 +23,7 @@ const MATERIALS = [
     wave: "385 + 405 nm",
     note: "Clears residual monomer while preserving dimensional fit.",
     image: `${IMG}/case-guide-curing.png`,
-    alt: "ODYX Cure UV-02 chamber curing a surgical guide under dual-wave light",
+    alt: "ODYX Cure chamber curing a surgical guide under dual-wave light",
   },
   {
     id: "denture",
@@ -33,7 +33,7 @@ const MATERIALS = [
     wave: "385 + 405 nm",
     note: "Longer cycle for thicker geometries and biocompatible finish.",
     image: `${IMG}/case-denture-curing.png`,
-    alt: "ODYX Cure UV-02 curing a denture base on the rotating platform",
+    alt: "ODYX Cure curing a denture base on the rotating platform",
   },
   {
     id: "model",
@@ -43,7 +43,7 @@ const MATERIALS = [
     wave: "405 nm",
     note: "Fast surface harden for diagnostic and working models.",
     image: `${IMG}/case-model-curing.png`,
-    alt: "ODYX Cure UV-02 curing a dental model in the UV chamber",
+    alt: "ODYX Cure curing a dental model in the curing chamber",
   },
   {
     id: "guard",
@@ -53,7 +53,7 @@ const MATERIALS = [
     wave: "385 + 405 nm",
     note: "Balances toughness with clarity for occlusal appliances.",
     image: `${IMG}/case-splint-curing.png`,
-    alt: "ODYX Cure UV-02 curing a splint inside the amber-lit chamber",
+    alt: "ODYX Cure curing a splint inside the amber-lit chamber",
   },
   {
     id: "temp",
@@ -63,7 +63,7 @@ const MATERIALS = [
     wave: "385 + 405 nm",
     note: "Chairside-ready temporaries with stable shade and edge.",
     image: `${IMG}/case-temp-curing.png`,
-    alt: "ODYX Cure UV-02 curing a provisional restoration with the chamber open",
+    alt: "ODYX Cure curing a provisional restoration with the chamber open",
   },
 ] as const;
 
@@ -100,7 +100,7 @@ export default function CureMaterialGuide() {
             height={640}
           />
           <span className={cx("guide__machine")} aria-hidden>
-            Cure UV-02
+            ODYX Cure
           </span>
         </div>
         <div className={cx("guide__data")}>

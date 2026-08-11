@@ -9,7 +9,7 @@ const CASES = [
     id: "crown",
     label: "Crown",
     title: "Full-contour crown",
-    note: "Printed green → validated UV cycle → seat-ready finish.",
+    note: "Printed green → validated curing cycle → seat-ready finish.",
     before: `${IMG}/case-crown-before.png`,
     curing: `${IMG}/case-crown-curing.png`,
     finished: `${IMG}/case-crown-finished.png`,
@@ -59,7 +59,7 @@ const CASES = [
 
 const STAGES = [
   { key: "before", label: "Before curing" },
-  { key: "curing", label: "Curing with UV-02" },
+  { key: "curing", label: "Curing" },
   { key: "finished", label: "Finished restoration" },
 ] as const;
 

@@ -137,7 +137,7 @@ export default function CureHeroCopy() {
       <p className="cure-hero__brand" style={hidden}>
         ODYX
       </p>
-      <h1 style={hidden}>Cure UV-02</h1>
+      <h1 style={hidden}>ODYX Cure</h1>
       <p className="cure-hero__lead" style={hidden}>
         The last clinical step — controlled light, heat, and time in one chamber.
       </p>
