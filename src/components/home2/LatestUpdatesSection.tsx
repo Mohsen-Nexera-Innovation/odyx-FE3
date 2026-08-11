@@ -70,8 +70,8 @@ const UPDATES: Update[] = [
     iso: "2025-05-05",
     href: "/products/resins",
     art: {
-      src: "/img/hv2-news/resin-line.webp",
-      alt: "A dark ODYX resin bottle on a stone pedestal in a bright studio",
+      src: "/img/hv2-hub/store-resins-cutout.png",
+      alt: "ODYX resin collection — Ortho Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Crown",
       w: 704,
       h: 728,
     },
@@ -184,7 +184,7 @@ const CardArrow = () => (
 );
 
 const LU_SECTION =
-  `relative w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+  `relative w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y}` +
   " [background:radial-gradient(46%_32%_at_50%_-3%,rgba(226,236,255,.85)_0%,rgba(245,247,253,0)_74%),radial-gradient(34%_30%_at_4%_86%,rgba(98,157,255,.09)_0%,rgba(245,247,253,0)_72%),#F5F7FD]";
 
 const LU_IN =

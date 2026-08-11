@@ -102,7 +102,7 @@ const Badge = ({ icon }: { icon: ClinicalCase["icon"] }) => (
 );
 
 const CC_SECTION =
-  `relative w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+  `relative w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y}` +
   " [background:radial-gradient(ellipse_34%_46%_at_30%_96%,rgba(22,108,255,.30)_0%,rgba(55,130,255,.13)_30%,rgba(55,130,255,0)_64%),radial-gradient(ellipse_30%_40%_at_44%_2%,rgba(40,120,255,.13)_0%,rgba(40,120,255,0)_68%),radial-gradient(ellipse_34%_62%_at_92%_50%,rgba(255,255,255,.85)_0%,rgba(255,255,255,0)_70%),linear-gradient(96deg,#F2F5FE_0%,#F4F6FD_46%,#F7F9FE_100%)]" +
   // Glows are keyed to where the deck sits, so they mirror with it.
   " rtl:[background:radial-gradient(ellipse_34%_46%_at_70%_96%,rgba(22,108,255,.30)_0%,rgba(55,130,255,.13)_30%,rgba(55,130,255,0)_64%),radial-gradient(ellipse_30%_40%_at_56%_2%,rgba(40,120,255,.13)_0%,rgba(40,120,255,0)_68%),radial-gradient(ellipse_34%_62%_at_8%_50%,rgba(255,255,255,.85)_0%,rgba(255,255,255,0)_70%),linear-gradient(264deg,#F2F5FE_0%,#F4F6FD_46%,#F7F9FE_100%)]";

@@ -258,7 +258,7 @@ export default function ClinicalApplicationsSection() {
 
   return (
     <section
-      className={`relative w-full ${HV2_GUTTER} ${HV2_SECTION_Y} [background:radial-gradient(ellipse_36%_50%_at_68%_90%,rgba(25,112,255,.28)_0%,rgba(55,130,255,.13)_26%,rgba(55,130,255,0)_62%),radial-gradient(ellipse_26%_52%_at_89%_47%,rgba(104,121,255,.10)_0%,rgba(104,121,255,0)_62%),linear-gradient(90deg,#FAFBFF_0%,#F7F9FF_42%,#F5F7FD_100%)]`}
+      className={`relative w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y} [background:radial-gradient(ellipse_36%_50%_at_68%_90%,rgba(25,112,255,.28)_0%,rgba(55,130,255,.13)_26%,rgba(55,130,255,0)_62%),radial-gradient(ellipse_26%_52%_at_89%_47%,rgba(104,121,255,.10)_0%,rgba(104,121,255,0)_62%),linear-gradient(90deg,#FAFBFF_0%,#F7F9FF_42%,#F5F7FD_100%)]`}
       id="applications"
       aria-labelledby="hv2-ca-h"
     >
