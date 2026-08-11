@@ -78,6 +78,8 @@ const PATHS = [
 ] as const;
 
 const N = PATHS.length;
+const AUTO_MS = 4500;
+const RESUME_MS = 8000;
 const mod = (v: number) => ((v % N) + N) % N;
 const clamp = (x: number, a: number, b: number) => Math.min(b, Math.max(a, x));
 const lerp = (a: number, b: number, p: number) => a + (b - a) * p;
@@ -345,6 +347,10 @@ export default function PathCarousel() {
   const stageRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<DragState | null>(null);
   const suppressClick = useRef(false);
+  const pausedRef = useRef(false);
+  const inViewRef = useRef(true);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Shared motion derivatives: a smoothed velocity steers the travel arc and
   // the counter-directional image parallax inside each card.
@@ -378,9 +384,54 @@ export default function PathCarousel() {
 
   const go = (delta: number) => goTo(targetRef.current + delta);
 
+  const pauseAuto = () => {
+    pausedRef.current = true;
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => {
+      pausedRef.current = false;
+    }, RESUME_MS);
+  };
+
+  // Auto-advance when in view; pause on interaction / reduced motion / hidden tab.
+  useEffect(() => {
+    if (reduce) return;
+
+    const stage = stageRef.current;
+    const io = stage
+      ? new IntersectionObserver(
+          ([entry]) => {
+            inViewRef.current = entry.isIntersecting && entry.intersectionRatio > 0.35;
+          },
+          { threshold: [0, 0.35, 0.7] },
+        )
+      : null;
+    if (stage && io) io.observe(stage);
+
+    const onVis = () => {
+      if (document.hidden) pausedRef.current = true;
+    };
+    document.addEventListener("visibilitychange", onVis);
+
+    autoTimer.current = setInterval(() => {
+      if (pausedRef.current || document.hidden || !inViewRef.current) return;
+      if (dragRef.current?.mode === "drag") return;
+      goTo(targetRef.current + 1);
+    }, AUTO_MS);
+
+    return () => {
+      io?.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      if (autoTimer.current) clearInterval(autoTimer.current);
+      if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    };
+    // goTo is stable enough via refs; intentionally run once on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduce]);
+
   // --- drag / swipe -------------------------------------------------------
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
+    pauseAuto();
     const stage = stageRef.current;
     if (!stage) return;
     const u = stage.offsetHeight / 401; // stage height is 401 reference px
@@ -456,13 +507,22 @@ export default function PathCarousel() {
         aria-roledescription="carousel"
         aria-label="Choose your path"
         onKeyDown={(e) => {
-          if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-          if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+          if (e.key === "ArrowLeft") { e.preventDefault(); pauseAuto(); go(-1); }
+          if (e.key === "ArrowRight") { e.preventDefault(); pauseAuto(); go(1); }
         }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={settleDrag}
         onPointerCancel={settleDrag}
+        onPointerEnter={() => { pausedRef.current = true; }}
+        onPointerLeave={() => {
+          if (!dragRef.current) {
+            if (resumeTimer.current) clearTimeout(resumeTimer.current);
+            resumeTimer.current = setTimeout(() => {
+              pausedRef.current = false;
+            }, RESUME_MS);
+          }
+        }}
       >
         <div className={PATH_RING} id="hv2-path-ring">
           {cards.map((j) => (
@@ -476,7 +536,7 @@ export default function PathCarousel() {
               path={PATHS[mod(j)]}
               sweep={sweep}
               reduce={reduce}
-              onPick={(picked) => goTo(picked)}
+              onPick={(picked) => { pauseAuto(); goTo(picked); }}
               suppressClick={suppressClick}
             />
           ))}

@@ -177,11 +177,11 @@ export default function PrintersFamilyPage() {
               <ModelGallery model={P1_26} />
               <figure className="pf-video reveal" aria-label={P1_26_VIDEO.posterAlt}>
                 <img src={P1_26_VIDEO.poster} alt={P1_26_VIDEO.posterAlt} loading="lazy" />
-                <button type="button" className="pf-video-play" aria-label="Play video">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                    <path d="M8.5 5.8v12.4c0 .8.9 1.3 1.6.9l10-6.2c.7-.4.7-1.4 0-1.8l-10-6.2c-.7-.4-1.6.1-1.6.9z" />
+                <span className="pf-video-play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5.5v13l11-6.5-11-6.5z" />
                   </svg>
-                </button>
+                </span>
                 <figcaption className="pf-video-tag">{P1_26_VIDEO.caption}</figcaption>
               </figure>
               <hr className="pf-divider" aria-hidden />

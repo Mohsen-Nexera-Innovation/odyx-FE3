@@ -106,7 +106,8 @@ export const DEMO_PRODUCTS = [
     id: 'design' as const,
     title: 'Design Software',
     subtitle: 'ODYX Design',
-    image: '/img/cutouts/feat-design-cutout.png',
+    // Same selected design software art as the home ecosystem orbit
+    image: '/img/hv2-eco/eco-software.webp',
   },
   {
     id: 'printer' as const,
@@ -130,7 +131,7 @@ export const DEMO_PRODUCTS = [
     id: 'workflow' as const,
     title: 'Complete Workflow',
     subtitle: 'All ODYX Solutions',
-    image: '/images/contact-sales/hero-products.png',
+    image: '/img/request-demo/complete-workflow.png',
   },
 ];
 

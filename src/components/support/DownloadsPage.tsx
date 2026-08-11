@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Download, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { SupportContainer } from './SupportContainer';
 import { SupportBreadcrumb } from './SupportBreadcrumb';
 import { SupportPageHeader } from './SupportPageHeader';
@@ -48,14 +48,19 @@ export function DownloadsPage() {
           <table className="w-full min-w-[800px] border-collapse text-left">
             <thead className="bg-[#F9FAFB]">
               <tr className="border-b border-gray-100/80">
-                {['Name', 'Category', 'Version', 'Release Date', 'Size', 'Action'].map((head, idx) => (
+                {['Name', 'Category', 'Version', 'Release Date', 'Size'].map((head, idx) => (
                   <th
                     key={head}
-                    className={`py-4 text-sm font-medium text-[#6B7280] whitespace-nowrap ${idx === 0 ? 'pl-4 sm:pl-6 pr-4' : 'px-4 sm:px-6'} ${idx === 5 ? 'text-right' : ''}`}
+                    className={`py-4 text-sm font-medium text-[#6B7280] whitespace-nowrap ${idx === 0 ? 'pl-4 sm:pl-6 pr-4' : 'px-4 sm:px-6'}`}
                   >
                     {head}
                   </th>
                 ))}
+                {/* Download action column hidden until files are ready
+                <th className="px-4 sm:px-6 py-4 text-sm font-medium text-[#6B7280] whitespace-nowrap text-right">
+                  Action
+                </th>
+                */}
               </tr>
             </thead>
             <tbody className="bg-white">
@@ -80,6 +85,7 @@ export function DownloadsPage() {
                     <td className="px-6 py-4 text-sm font-medium text-[#374151] whitespace-nowrap">{item.version}</td>
                     <td className="px-6 py-4 text-sm font-medium text-[#374151] whitespace-nowrap">{item.date}</td>
                     <td className="px-6 py-4 text-sm font-medium text-[#374151] whitespace-nowrap">{item.size}</td>
+                    {/* Download button hidden until distribution is ready
                     <td className="px-6 py-4 text-right">
                       <a
                         href={item.downloadHref}
@@ -89,12 +95,13 @@ export function DownloadsPage() {
                         <Download size={16} strokeWidth={2} aria-hidden />
                       </a>
                     </td>
+                    */}
                   </tr>
                 );
               })}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-sm font-medium text-[#6B7280]">
+                  <td colSpan={5} className="px-6 py-10 text-center text-sm font-medium text-[#6B7280]">
                     No downloads match your filters.
                   </td>
                 </tr>

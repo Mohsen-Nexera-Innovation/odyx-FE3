@@ -71,12 +71,13 @@ type Chip = { label: string; icon: keyof typeof HubIcon };
 // Chip boxes are staggered in the mock — each one steps a little further left
 // as it follows the laptop's perspective — so every chip carries its own
 // left/top (card %) rather than sitting in a plain stack.
-const LEARN_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
-  { label: "Courses", icon: "book", l: 79.87, t: 29.12, w: 15.80 },
-  { label: "Webinars", icon: "webinar", l: 79.80, t: 42.66, w: 15.80 },
-  { label: "Guides", icon: "guide", l: 78.81, t: 56.21, w: 15.52 },
-  { label: "Quizzes", icon: "quiz", l: 77.60, t: 69.75, w: 15.80 },
-];
+// Learning chips hidden until learning hub is ready
+// const LEARN_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
+//   { label: "Courses", icon: "book", l: 79.87, t: 29.12, w: 15.80 },
+//   { label: "Webinars", icon: "webinar", l: 79.80, t: 42.66, w: 15.80 },
+//   { label: "Guides", icon: "guide", l: 78.81, t: 56.21, w: 15.52 },
+//   { label: "Quizzes", icon: "quiz", l: 77.60, t: 69.75, w: 15.80 },
+// ];
 
 const SUPPORT_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
   { label: "Help Center", icon: "book", l: 76.68, t: 35.21, w: 18.57 },
@@ -234,14 +235,13 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Store",
     title: ["Everything You Need.", "In One Place."],
     desc: ["Resins, accessories and more –", "delivered to your door."],
-    cta: "Go to Store",
-    href: "/shop",
-    artClass: HUB_ART_STORE,
+    // CTA hidden until shop is ready
+    artClass: `${HUB_ART_STORE} object-contain!`,
     art: {
-      src: "/img/hv2-hub/store-shelf.webp",
-      alt: "ODYX resin bottles and a carton on a lit display pedestal with a tooth disc and a clear aligner",
-      w: 1034,
-      h: 875,
+      src: "/img/resins/all-resins-cutout.png",
+      alt: "ODYX dental resin bottles — Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Restoration",
+      w: 858,
+      h: 606,
     },
   },
   {
@@ -249,9 +249,9 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Registration",
     title: ["Register Your Device.", "Stay Protected."],
     desc: ["Activate warranty and get", "the full ODYX experience."],
-    cta: "Register Device",
-    // Same target GlobalTools / support content use — /register is account sign-up.
-    href: "/support#register",
+    // CTA hidden until registration flow is ready
+    // cta: "Register Device",
+    // href: "/support#register",
     artClass: HUB_ART_REG,
     art: {
       src: "/img/hv2-hub/registration-device.webp",
@@ -319,6 +319,7 @@ export default function HubCardsSection() {
                 and step-by-step guides.
               </p>
             </div>
+            {/* Learning category chips hidden until learning hub is ready
             <ul className={HUB_CHIPS} aria-label="What the learning centre covers">
               {LEARN_CHIPS.map((c) => (
                 <li
@@ -331,6 +332,7 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
+            */}
             <a className={HUB_CTA} href="/learning">
               <span>Start Learning</span>
               <CtaArrow />

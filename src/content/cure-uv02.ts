@@ -92,7 +92,7 @@ export const CURE_UV02_ROI = {
   lead: 'Estimate Your Savings',
   monthlyLabel: 'Monthly Cases',
   timeLabel: 'Average Time Saved per Case',
-  hourlyLabel: 'Value of Clinic Time ($/hr)',
+  hourlyLabel: 'Value of Clinic Time (L.E/hr)',
   timeResultLabel: 'Potential Time Savings',
   timeResultUnit: '/ Month',
   costResultLabel: 'Potential Cost Savings',
