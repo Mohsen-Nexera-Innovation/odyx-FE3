@@ -7,7 +7,7 @@
 // Positions are logical (inset-inline-start), so Arabic mirrors the whole
 // orbit instead of colliding with it.
 
-import { HV2_SECTION_Y_TIGHT } from "@/components/home2/hv2Chrome";
+import { HV2_GUTTER, HV2_SECTION_Y_TIGHT } from "@/components/home2/hv2Chrome";
 
 const STAGE_W = 1041;
 const STAGE_H_REF = 434;
@@ -148,7 +148,7 @@ export default function WhyOdyxOrbit() {
   return (
     <section
       // Transparent to the parent Hero wash — no second gradient restart.
-      className={`relative isolate w-full ${HV2_SECTION_Y_TIGHT} bg-transparent`}
+      className={`relative isolate w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y_TIGHT} bg-transparent`}
       id="why"
       aria-labelledby="wo-h"
     >
@@ -158,7 +158,7 @@ export default function WhyOdyxOrbit() {
         aria-hidden
       />
 
-      <div className="rv relative z-[1] mx-auto w-[min(100%,1480px)] aspect-[1041/450] [container-type:inline-size] [--u:0.09606cqw] [--uy:calc(var(--u)*450/434)] [--wo-navy:#0B1640] max-[1000px]:aspect-auto max-[1000px]:[container-type:normal] max-[1000px]:[padding:clamp(26px,6vw,44px)_24px_clamp(12px,3vw,20px)] max-[1000px]:flex max-[1000px]:flex-col max-[1000px]:items-center">
+      <div className="rv relative z-[1] mx-auto w-[min(100%,1480px)] aspect-[1041/450] [container-type:inline-size] [--u:0.09606cqw] [--uy:calc(var(--u)*450/434)] [--wo-navy:#0B1640] max-[1000px]:aspect-auto max-[1000px]:[container-type:normal] max-[1000px]:[padding:clamp(26px,6vw,44px)_0_clamp(12px,3vw,20px)] max-[1000px]:flex max-[1000px]:flex-col max-[1000px]:items-center">
         {/* Plain div, not <header>: the global `header{position:fixed}` rule
             in odyx.css matches the bare element and would rip it out of flow.
             Heading sits near the stage top so section pt/pb stay the visual air. */}

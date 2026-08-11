@@ -66,7 +66,7 @@ const ORBIT_PRODUCTS = [
   },
   {
     href: "/products/resins",
-    src: "/img/hv2-cut/resins-product.webp",
+    src: "/img/hv2-hub/store-resins-cutout.png",
     label: "ODYX Resins",
     pos: " start-[calc(1565*var(--u))] top-[calc(300*var(--u))] w-[calc(340*var(--u))] z-[4] [--oty:-4deg] [--op:1.15] [--ofd:7.8s] [--ofo:-4s]",
   },
@@ -154,7 +154,7 @@ export default function HomeV2Page() {
 
       {/* ===== 3 · Choose your path ===== */}
       <section
-        className={`w-full ${HV2_GUTTER} ${HV2_SECTION_Y} [container-type:inline-size] [--pc-u:clamp(.52px,0.0488281cqw,1px)] overflow-x-clip [background:linear-gradient(180deg,var(--hv2-surface)_0%,#FAFCFF_40%,#F6F8FE_100%)]`}
+        className={`w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y} [container-type:inline-size] [--pc-u:clamp(.52px,0.0488281cqw,1px)] overflow-x-clip [background:linear-gradient(180deg,var(--hv2-surface)_0%,#FAFCFF_40%,#F6F8FE_100%)]`}
         id="path"
       >
         <div className="max-w-[1400px] mx-auto text-center rv">
@@ -171,7 +171,7 @@ export default function HomeV2Page() {
       {/* ===== 4 · Ecosystem + Products — one section, no card ===== */}
       <section
         className={
-          `w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+          `w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y}` +
           " [background:radial-gradient(58%_70%_at_62%_32%,rgba(255,255,255,.9),rgba(255,255,255,0)_62%),linear-gradient(180deg,#F7F8FC_0%,var(--hv2-surface)_50%,#F0F2F8_100%)]" +
           " [--pr-card-h:261px] [--pr-radius:10px] [--pr-pad:20px] [--pr-pad-t:17.8px] [--pr-go:36px] [--pr-go-inset:15.5px] [--pr-go-bottom:24.6px] [--pr-title:16.2px] [--pr-title-lh:22.0px] [--pr-nav:37px] [--pr-panel-pad-i:0px] [--pr-band-y:clamp(2px,0.5vw,8px)]"
         }

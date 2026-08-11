@@ -57,8 +57,8 @@ const CARDS = [
     key: "resin",
     title: ["ODYX", "Resins"],
     href: "/products/resins",
-    img: "/img/hv2-cut/resins-product.webp",
-    alt: "ODYX dental resin lines — Model, Ceramic Crown, Crown & Bridge, Surgical Guide, and Temporary",
+    img: "/img/hv2-hub/store-resins-cutout.png",
+    alt: "ODYX resin collection — Ortho Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Crown",
     width: "w-[18.366%] me-[1.803%]",
     // Lift the bottles off the bottom edge so they sit mid-card; white
     // packshot, so drop the multiply blend too. Important wins over items-end.
