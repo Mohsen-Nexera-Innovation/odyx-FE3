@@ -207,24 +207,25 @@
 .s1l-play{
   position:absolute;inset:0;
   border:0;background:rgba(10,20,40,.18);
-  cursor:pointer;
   display:grid;place-items:center;
-  transition:background .25s ease;
+  pointer-events:none;
 }
-.s1l-play:hover{background:rgba(10,20,40,.28)}
 .s1l-play-circle{
   width:72px;height:72px;border-radius:50%;
   background:rgba(255,255,255,.92);
   color:var(--s1l-blue);
-  display:grid;place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   box-shadow:0 10px 30px rgba(0,0,0,.2);
-  transition:transform .25s ease, background .25s ease;
 }
-.s1l-play:hover .s1l-play-circle{
-  transform:scale(1.06);
-  background:#fff;
+.s1l-play-circle svg{
+  display:block;
+  transform:translateX(2px);
 }
-.s1l-play-circle svg{margin-left:3px}
+[dir="rtl"] .s1l-play-circle svg{
+  transform:translateX(-2px) scaleX(-1);
+}
 
 /* Specs */
 .s1l-spec-table{
@@ -756,8 +757,8 @@ body:has(.s1l-page) main{
   background:transparent !important;
   object-fit:contain;
   object-position:center right;
-  /* soft depth without baking a white plate behind the PNG */
-  filter:drop-shadow(0 16px 26px rgba(0,80,216,.14));
+  /* No drop-shadow — smears transparent PNG cutouts into ghost trails */
+  filter:none;
   transform-origin:center center;
   animation:s1l-float 6.5s ease-in-out infinite;
 }
@@ -964,7 +965,6 @@ body:has(.s1l-page) main{
   color:var(--s1l-blue);
   box-shadow:0 10px 28px rgba(0,0,0,.18);
 }
-.s1l-play:hover .s1l-play-circle{background:#fff;color:var(--s1l-blue-deep)}
 
 /* Features — one full-width shell (aligned to Why rails), vertical divider */
 .s1l-feat-shell{

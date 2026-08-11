@@ -148,10 +148,8 @@ body:has(.cure-page) main{
   width:56%;
   height:96%;
   z-index:5 !important;
-  /* Light ground contact only — cutout is fully transparent */
-  filter:
-    drop-shadow(0 14px 18px rgba(30,50,80,.14))
-    drop-shadow(0 3px 5px rgba(30,50,80,.08));
+  /* No drop-shadow — smears transparent PNG cutouts into ghost trails */
+  filter:none;
   animation:p126-float 5.5s ease-in-out infinite;
 }
 .cure-layer--arch{
@@ -161,9 +159,7 @@ body:has(.cure-page) main{
   height:46%;
   z-index:3 !important;
   transform:rotate(-4deg);
-  filter:
-    drop-shadow(0 14px 18px rgba(30,50,80,.22))
-    drop-shadow(0 3px 6px rgba(30,50,80,.12));
+  filter:none;
   animation:cure-float-arch 6.2s ease-in-out .2s infinite;
 }
 .cure-layer--aligner{
@@ -173,11 +169,7 @@ body:has(.cure-page) main{
   height:28%;
   z-index:4 !important;
   transform:rotate(6deg);
-  /* rembg strips soft floor shadows on clear plastic — rebuild with CSS */
-  filter:
-    drop-shadow(0 16px 10px rgba(20,35,60,.28))
-    drop-shadow(0 6px 4px rgba(20,35,60,.16))
-    drop-shadow(0 2px 2px rgba(20,35,60,.12));
+  filter:none;
   animation:cure-float-aligner 6.6s ease-in-out .4s infinite;
 }
 
@@ -187,7 +179,8 @@ body:has(.cure-page) main{
   box-shadow:none !important;
 }
 .cure-page .p126-app-media img{
-  filter:drop-shadow(0 8px 12px rgba(30,50,80,.14));
+  /* No drop-shadow — smears transparent PNG cutouts into ghost trails */
+  filter:none;
 }
 @keyframes cure-float-arch{
   0%,100%{transform:rotate(-6deg) translateY(0)}
@@ -351,6 +344,23 @@ body:has(.cure-page) main{
   white-space:nowrap;
 }
 
+@media (max-width:1100px){
+  .cure-page .p126-row--why{
+    grid-template-columns:1fr;
+  }
+  .cure-page .p126-why-grid{
+    grid-template-columns:minmax(0, 1fr) minmax(160px, .9fr);
+    gap:clamp(20px, 3vw, 36px);
+  }
+  .cure-page .p126-why-list li{
+    white-space:normal;
+  }
+  .cure-page .p126-why-media img,
+  .cure-page .p126-why-card:hover .p126-why-media img{
+    transform:none;
+  }
+}
+
 @media (max-width:800px){
   .cure-hero-media{min-height:300px}
   .cure-layer--machine{
@@ -386,6 +396,35 @@ body:has(.cure-page) main{
   .cure-roi-metric{flex:1}
   .cure-page .p126-flow-icon,
   .cure-page .p126-flow-icon img{width:48px; height:48px}
+
+  /* Why card internals + video stack cleanly on phones */
+  .cure-page .p126-why-grid{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .cure-page .p126-why-list{
+    padding-right:0;
+    max-width:none;
+  }
+  .cure-page .p126-why-list li{
+    font-size:.82rem;
+    line-height:1.35;
+  }
+  .cure-page .p126-why-media{
+    overflow:hidden;
+    max-width:280px;
+    margin-inline:auto;
+    aspect-ratio:16 / 11;
+    max-height:none;
+  }
+  .cure-page .p126-why-media img{
+    max-height:200px;
+  }
+  .cure-page .p126-video-card .p126-video{
+    max-height:none;
+    min-height:180px;
+    width:100%;
+  }
 }
 
 @media (prefers-reduced-motion:reduce){

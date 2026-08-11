@@ -11,7 +11,7 @@ const STEPS: JStep[] = [
   { no: '01', label: 'Scan', accent: 'teal', icon: 'scan', cap: 'A chairside intraoral scan captures the mouth in seconds - no molds.' },
   { no: '02', label: 'Design', accent: 'teal', icon: 'design', cap: 'Scan data flows into CAD, where the restoration is designed precisely.' },
   { no: '03', label: 'Print', accent: 'orange', icon: 'print', cap: 'Built layer-by-layer on the ODYX printer using ODYX resin.' },
-  { no: '04', label: 'Cure', accent: 'orange', icon: 'cure', cap: 'Controlled UV completes polymerization for full strength.' },
+  { no: '04', label: 'Cure', accent: 'orange', icon: 'cure', cap: 'Controlled curing completes polymerization for full strength.' },
   { no: '05', label: 'Finish', accent: 'orange', icon: 'finish', cap: 'Final polish and characterization bring lifelike color and natural gloss.' },
   { no: '06', label: 'Smile', accent: 'orange', icon: 'smile', cap: 'A finished restoration, delivered - often same-day. One connected workflow.' },
 ];

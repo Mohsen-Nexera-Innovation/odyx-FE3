@@ -138,15 +138,12 @@
   width:46%; height:32%; inset-inline-start:2%; top:6%;
   background:radial-gradient(closest-side, rgba(0,80,216,.3), transparent 70%);
 }
-/* Duo scene — background-free cutout of both printers, floating on the
-   tilting stage. drop-shadow follows the printers' silhouette (a box-shadow
-   would reintroduce a visible rectangle). */
+/* Duo scene — background-free cutout of both printers, floating on the tilting stage.
+   No drop-shadow — smears transparent PNG cutouts into ghost trails. */
 .ph-scene{
   position:absolute; top:50%; left:50%; width:100%; max-width:none; height:auto;
   transform:translate(-50%,-50%) translateZ(46px);
-  filter:
-    drop-shadow(0 34px 44px rgba(0,0,0,.55))
-    drop-shadow(0 0 60px rgba(0,80,216,.12));
+  filter:none;
 }
 .ph-tile{
   position:absolute; margin:0; border-radius:14px; overflow:hidden;
@@ -277,13 +274,18 @@
 }
 .pf-video-play{
   position:absolute; inset:0; margin:auto; width:60px; height:60px; z-index:1;
-  display:grid; place-items:center; padding:0; border:0; border-radius:50%; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; padding:0; border:0; border-radius:50%;
+  pointer-events:none;
   background:rgba(255,255,255,.94); color:var(--pfa-h);
-  box-shadow:0 8px 28px rgba(10,16,32,.4); transition:transform .2s ease, background .2s ease;
+  box-shadow:0 8px 28px rgba(10,16,32,.4);
 }
-.pf-video-play svg{width:26px; height:26px; margin-inline-start:3px}
-[dir="rtl"] .pf-video-play svg{transform:scaleX(-1); margin-inline-start:0; margin-inline-end:3px}
-.pf-video:hover .pf-video-play{transform:scale(1.08); background:#fff}
+.pf-video-play svg{
+  display:block; width:26px; height:26px;
+  transform:translateX(2px);
+}
+[dir="rtl"] .pf-video-play svg{
+  transform:translateX(-2px) scaleX(-1);
+}
 .pf-video-tag{
   position:absolute; bottom:12px; inset-inline-start:14px; z-index:1;
   color:#fff; font-size:13.5px; font-weight:500;

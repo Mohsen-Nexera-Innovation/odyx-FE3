@@ -60,7 +60,8 @@ const AI_ANSWERS: Record<string, string> = {
 
 const LOCALE_LABEL: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
 
-const WA_URL = "https://wa.me/9718000ODYX?text=Hello%20ODYX%20support";
+const WA_URL = "https://wa.me/201042077646?text=Hello%20ODYX%20support";
+const AI_CHAT_ENABLED = false;
 
 function matchAiAnswer(q: string) {
   const key = Object.keys(AI_ANSWERS).find(
@@ -108,8 +109,14 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
     setSearchOpen(false);
     setQuery("");
   }, []);
-  const toggleAi = useCallback(() => setAiOpen((o) => !o), []);
-  const openAi = useCallback(() => setAiOpen(true), []);
+  const toggleAi = useCallback(() => {
+    if (!AI_CHAT_ENABLED) return;
+    setAiOpen((o) => !o);
+  }, []);
+  const openAi = useCallback(() => {
+    if (!AI_CHAT_ENABLED) return;
+    setAiOpen(true);
+  }, []);
 
   const setLocale = useCallback((l: Locale) => {
     setLocaleState(l);
@@ -235,6 +242,7 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
         className={`ai-panel${aiOpen ? " open" : ""}`}
         role="dialog"
         aria-label="ODYX AI Agent"
+        hidden={!AI_CHAT_ENABLED}
       >
         <div className="ai-head">
           <AiChatbotIcon
@@ -297,21 +305,23 @@ export function GlobalToolsProvider({ children }: { children: ReactNode }) {
             <path d="M12 2C6.486 2 2 6.486 2 12c0 1.768.46 3.433 1.267 4.882L2 22l5.233-1.237A9.956 9.956 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.2a8.18 8.18 0 0 1-4.178-1.146l-.3-.178-3.1.737.737-3.023-.195-.312A8.2 8.2 0 0 1 3.8 12c0-4.535 3.665-8.2 8.2-8.2s8.2 3.665 8.2 8.2-3.665 8.2-8.2 8.2z" />
           </svg>
         </button>
-        <button
-          type="button"
-          className="fab ai"
-          title="ODYX AI Agent — products, workflow, support"
-          aria-label="Open ODYX AI Agent"
-          aria-expanded={aiOpen}
-          onClick={toggleAi}
-        >
-          <AiChatbotIcon
-            size={30}
-            animate={aiIconAnimating}
-            variant="fab"
-            className="fab-ai-icon"
-          />
-        </button>
+        {AI_CHAT_ENABLED ? (
+          <button
+            type="button"
+            className="fab ai"
+            title="ODYX AI Agent — products, workflow, support"
+            aria-label="Open ODYX AI Agent"
+            aria-expanded={aiOpen}
+            onClick={toggleAi}
+          >
+            <AiChatbotIcon
+              size={30}
+              animate={aiIconAnimating}
+              variant="fab"
+              className="fab-ai-icon"
+            />
+          </button>
+        ) : null}
       </div>
     </GlobalToolsContext.Provider>
   );

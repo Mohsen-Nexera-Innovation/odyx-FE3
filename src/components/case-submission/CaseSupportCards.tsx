@@ -9,7 +9,7 @@ export function NeedHelp() {
     >
       <h2 className="text-[14px] font-bold text-[#0A1020] m-0">Need Help?</h2>
       <Link
-        href="https://wa.me/"
+        href="https://wa.me/201042077646"
         target="_blank"
         rel="noopener noreferrer"
         className="min-h-[50px] flex items-center justify-center gap-2 border-[1.5px] border-[#16A34A] rounded-[6px] bg-white !text-[#16A34A] text-[13px] font-bold no-underline transition-colors hover:bg-[#F0FDF4]"

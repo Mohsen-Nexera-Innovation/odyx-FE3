@@ -291,12 +291,12 @@ export const PRODUCTS: ProductContent[] = [
   },
   {
     slug: "curing-machines",
-    name: "ODYX Cure UV-02",
+    name: "ODYX Cure",
     category: "Curing Machines",
     layout: "cinematic",
     tagline: "Powerful Curing. Perfect Results.",
     overview:
-      "The ODYX Cure UV-02 delivers uniform, reliable, and efficient curing for all your dental 3D printed applications.",
+      "The ODYX Cure delivers uniform, reliable, and efficient curing for all your dental 3D printed applications.",
     img: "/img/cure-uv02/hero/machine-cutout.png?v=18",
     heroImg: "/img/cure-uv02/hero/machine-cutout.png?v=18",
     accent: "teal",
@@ -308,10 +308,10 @@ export const PRODUCTS: ProductContent[] = [
       "Model 2.0 Resin",
     ],
     models: [
-      { name: "ODYX Cure UV-02", tagline: "Clinic and lab curing station", shopProductId: "curing-odyx-cure" },
+      { name: "ODYX Cure", tagline: "Clinic and lab curing station", shopProductId: "curing-odyx-cure" },
     ],
     specs: [
-      { label: "Light source", value: "Multi-angle UV LED array" },
+      { label: "Light source", value: "Multi-angle LED array" },
       { label: "Wavelength", value: "385 nm + 405 nm" },
       { label: "Chamber heat", value: "Regulated ≤ 45°C" },
       { label: "Curing modes", value: "Material-validated presets" },

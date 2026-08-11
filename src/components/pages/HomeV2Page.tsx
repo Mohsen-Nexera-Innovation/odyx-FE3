@@ -8,7 +8,6 @@ import {
   HV2_BLUE,
   HV2_BODY,
   HV2_BTN,
-  HV2_BTN_GHOST,
   HV2_BTN_SIZE,
   HV2_EYEBROW,
   HV2_GUTTER,
@@ -62,12 +61,12 @@ const ORBIT_PRODUCTS = [
   {
     href: "/products/curing-machines",
     src: "/img/hv2-cut/cure-product.webp",
-    label: "ODYX Cure UV-02",
+    label: "ODYX Cure",
     pos: " start-[calc(1280*var(--u))] top-[calc(210*var(--u))] w-[calc(255*var(--u))] z-[3] [--oty:-3deg] [--op:.9] [--ofd:8.4s] [--ofo:-2.8s]",
   },
   {
     href: "/products/resins",
-    src: "/img/hv2-cut/resins-product.webp",
+    src: "/img/hv2-hub/store-resins-cutout.png",
     label: "ODYX Resins",
     pos: " start-[calc(1565*var(--u))] top-[calc(300*var(--u))] w-[calc(340*var(--u))] z-[4] [--oty:-4deg] [--op:1.15] [--ofd:7.8s] [--ofo:-4s]",
   },
@@ -75,9 +74,9 @@ const ORBIT_PRODUCTS = [
 
 // Kept out of JSX attrs so `[&>span]` / `[&>svg]` don't trip the TSX parser
 // into treating the following <span> as a comparison (`Cannot find name 'span'`).
-const PRODUCTS_CTA =
-  `${HV2_BTN_GHOST} ${HV2_BTN_SIZE} mt-[16px]! w-[197px]! border! border-[rgba(24,68,160,.42)]!` +
-  " justify-between! [&>span]:mt-px rtl:[&>svg]:scale-x-[-1]";
+// const PRODUCTS_CTA =
+//   `${HV2_BTN_GHOST} ${HV2_BTN_SIZE} mt-[16px]! w-[197px]! border! border-[rgba(24,68,160,.42)]!` +
+//   " justify-between! [&>span]:mt-px rtl:[&>svg]:scale-x-[-1]";
 
 export default function HomeV2Page() {
   return (
@@ -155,7 +154,7 @@ export default function HomeV2Page() {
 
       {/* ===== 3 · Choose your path ===== */}
       <section
-        className={`w-full ${HV2_GUTTER} ${HV2_SECTION_Y} [container-type:inline-size] [--pc-u:clamp(.52px,0.0488281cqw,1px)] overflow-x-clip [background:linear-gradient(180deg,var(--hv2-surface)_0%,#FAFCFF_40%,#F6F8FE_100%)]`}
+        className={`w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y} [container-type:inline-size] [--pc-u:clamp(.52px,0.0488281cqw,1px)] overflow-x-clip [background:linear-gradient(180deg,var(--hv2-surface)_0%,#FAFCFF_40%,#F6F8FE_100%)]`}
         id="path"
       >
         <div className="max-w-[1400px] mx-auto text-center rv">
@@ -172,7 +171,7 @@ export default function HomeV2Page() {
       {/* ===== 4 · Ecosystem + Products — one section, no card ===== */}
       <section
         className={
-          `w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+          `w-full box-border ${HV2_GUTTER} ${HV2_SECTION_Y}` +
           " [background:radial-gradient(58%_70%_at_62%_32%,rgba(255,255,255,.9),rgba(255,255,255,0)_62%),linear-gradient(180deg,#F7F8FC_0%,var(--hv2-surface)_50%,#F0F2F8_100%)]" +
           " [--pr-card-h:261px] [--pr-radius:10px] [--pr-pad:20px] [--pr-pad-t:17.8px] [--pr-go:36px] [--pr-go-inset:15.5px] [--pr-go-bottom:24.6px] [--pr-title:16.2px] [--pr-title-lh:22.0px] [--pr-nav:37px] [--pr-panel-pad-i:0px] [--pr-band-y:clamp(2px,0.5vw,8px)]"
         }
@@ -193,12 +192,14 @@ export default function HomeV2Page() {
               <p className={`${HV2_BODY} text-[16px]! leading-[28.2px]! text-[#4E5766]! max-w-[13.5em]! mt-[12px]! max-[980px]:max-w-[34em]!`}>
                 Explore our complete range of digital dentistry solutions.
               </p>
+              {/* Hidden until products overview is ready
               <Link className={PRODUCTS_CTA} href="/products">
                 <span>Explore All Products</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M4 12h15M13 6l6 6-6 6" />
                 </svg>
               </Link>
+              */}
             </div>
           </ProductsRail>
         </div>

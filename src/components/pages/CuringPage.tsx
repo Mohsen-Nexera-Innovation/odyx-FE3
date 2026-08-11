@@ -120,7 +120,7 @@ export default function CuringPage() {
 
   return (
     <main className="p126-page cure-page" id="top">
-      <section className="p126-hero" data-hero-light aria-label="ODYX Cure UV-02">
+      <section className="p126-hero" data-hero-light aria-label="ODYX Cure">
         <div className="p126-hero-bg" aria-hidden />
         <div className="p126-wrap p126-wrap--hero p126-hero-grid">
           <div className="p126-hero-left">

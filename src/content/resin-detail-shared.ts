@@ -1,17 +1,17 @@
 /** Shared compatible devices for resin detail pages. */
 export const RESIN_DETAIL_COMPATIBLE = [
   {
-    id: 'p1-36',
-    label: 'ODYX P1-36 3D Printer',
-    img: '/images/compat-p1-36.png',
-    imgAlt: 'ODYX P1-36 3D printer',
+    id: 'p1-26',
+    label: 'ODYX P1-26 3D Printer',
+    img: '/img/hv2-cut/printer-product.webp',
+    imgAlt: 'ODYX P1-26 3D printer',
     href: '/products/odyx-p1-26',
   },
   {
     id: 'uv-02',
-    label: 'ODYX UV-02 Curing Unit',
-    img: '/img/cure-uv02/hero/machine-cutout.png',
-    imgAlt: 'ODYX UV-02 curing unit',
+    label: 'ODYX Cure',
+    img: '/img/hv2-cut/cure-product.webp',
+    imgAlt: 'ODYX Cure',
     href: '/products/curing-machines',
   },
   {

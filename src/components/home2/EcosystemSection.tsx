@@ -57,7 +57,7 @@ const NODES: EcoNode[] = [
     label: "Resin",
     aria: "ODYX Resins",
     href: "/products/resins",
-    src: "/img/hv2-cut/resins-product.webp",
+    src: "/img/hv2-hub/store-resins-cutout.png",
     icon: ICON.drop,
     box: "left-[1%] top-[6%] w-[24%] z-[2]",
     imgW: "w-[92%]",
@@ -95,7 +95,7 @@ const NODES: EcoNode[] = [
   {
     key: "cure",
     label: "Cure",
-    aria: "ODYX Cure UV-02",
+    aria: "ODYX Cure",
     href: "/products/curing-machines",
     src: "/img/hv2-cut/cure-product.webp",
     icon: ICON.sun,

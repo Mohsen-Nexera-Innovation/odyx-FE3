@@ -115,7 +115,7 @@ export const P1_26_ROI = {
   title: 'ROI Calculator',
   lead: 'Estimate Your Savings.',
   monthlyLabel: 'Monthly Cases',
-  costLabel: 'Average Cost per Case ($)',
+  costLabel: 'Average Cost per Case (EGP)',
   resultLabel: 'Potential Savings',
   resultUnit: '/ Month',
   defaultMonthly: 30,
@@ -146,8 +146,8 @@ export const P1_26_ECOSYSTEM = {
       img: '/img/printers/p126/eco/resins.png',
     },
     {
-      name: 'ODYX Cure UV-02',
-      subtitle: 'UV Curing Station',
+      name: 'ODYX Cure',
+      subtitle: 'Curing Station',
       href: '/products/curing-machines',
       img: '/img/printers/p126/eco/cure.png',
     },
@@ -161,7 +161,7 @@ export const P1_26_CASE_TABS = [
     steps: [
       { label: 'Before', img: '/img/printers/p126/case-before.png', alt: 'Teeth before restoration' },
       { label: 'Printed with P1-26', img: '/img/printers/p126/case-printed.png', alt: 'Crowns printed on P1-26' },
-      { label: 'Final Restoration', img: '/img/printers/p126/case-final.png', alt: 'Final seated crowns' },
+      { label: 'Final Restoration', img: '/img/printers/p126/packshot-cover-off.png', alt: 'ODYX P1-26 with red cover open showing build platform' },
     ],
   },
   {

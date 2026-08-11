@@ -16,7 +16,7 @@ export function FilterPills({
   onSelect: (id: string) => void;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-2" role="tablist">
+    <div className="flex flex-nowrap items-center gap-2 w-max max-w-none sm:flex-wrap sm:w-auto" role="tablist">
       {items.map((item) => {
         const active = item.id === activeId;
         return (

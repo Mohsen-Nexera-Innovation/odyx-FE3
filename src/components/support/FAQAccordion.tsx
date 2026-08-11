@@ -19,7 +19,7 @@ export function FAQAccordion({ faqs }: { faqs: FaqEntry[] }) {
               aria-expanded={open}
               className="flex w-full cursor-pointer items-center justify-between gap-3 px-5 py-4 text-left transition-colors hover:bg-[#F9FAFB]"
             >
-              <span className="text-[14px] font-bold text-[#0A1020]">{faq.question}</span>
+              <span className="min-w-0 text-[14px] font-bold text-[#0A1020] break-words">{faq.question}</span>
               <ChevronDown
                 size={18}
                 className={`shrink-0 text-[#6B7280] transition-transform ${open ? 'rotate-180' : ''}`}

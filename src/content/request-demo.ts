@@ -49,18 +49,21 @@ export const REQUEST_DEMO_STEPS = [
     id: 'contact',
     number: 1,
     title: 'Contact Information',
+    shortTitle: 'Contact',
     subtitle: 'Your basic details',
   },
   {
     id: 'practice',
     number: 2,
     title: 'Practice & Interests',
+    shortTitle: 'Practice',
     subtitle: 'Tell us about your needs',
   },
   {
     id: 'schedule',
     number: 3,
     title: 'Schedule & Notes',
+    shortTitle: 'Schedule',
     subtitle: 'Choose time and add notes',
   },
 ] as const;
@@ -103,7 +106,8 @@ export const DEMO_PRODUCTS = [
     id: 'design' as const,
     title: 'Design Software',
     subtitle: 'ODYX Design',
-    image: '/img/cutouts/feat-design-cutout.png',
+    // Same selected design software art as the home ecosystem orbit
+    image: '/img/hv2-eco/eco-software.webp',
   },
   {
     id: 'printer' as const,
@@ -127,7 +131,7 @@ export const DEMO_PRODUCTS = [
     id: 'workflow' as const,
     title: 'Complete Workflow',
     subtitle: 'All ODYX Solutions',
-    image: '/images/contact-sales/hero-products.png',
+    image: '/img/request-demo/complete-workflow.png',
   },
 ];
 
@@ -364,8 +368,8 @@ export const REQUEST_DEMO_FORM = {
   help: {
     title: 'Questions?',
     body: 'Our team is here to help.',
-    email: 'sales@odyx.com',
-    mailto: 'mailto:sales@odyx.com',
+    email: 'sales@odyxegypt.net',
+    mailto: 'mailto:sales@odyxegypt.net',
   },
   success:
     'Thanks — your demo request is in. Our team will confirm your preferred time shortly.',

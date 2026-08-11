@@ -43,10 +43,10 @@ const CARDS = [
   },
   {
     key: "cure",
-    title: ["ODYX Cure", "UV-02"],
+    title: ["ODYX Cure", "Curing Station"],
     href: "/products/curing-machines",
     img: "/img/hv2-cut/cure-product.webp",
-    alt: "The ODYX Cure UV-02 dental UV curing station",
+    alt: "The ODYX Cure dental curing station",
     width: "w-[21.418%] me-[1.742%]",
     // White packshot — same multiply-blend fix as the scanner.
     mediaImg: "[mix-blend-mode:normal]! [filter:drop-shadow(0_10px_18px_rgba(10,40,90,.14))]",
@@ -57,8 +57,8 @@ const CARDS = [
     key: "resin",
     title: ["ODYX", "Resins"],
     href: "/products/resins",
-    img: "/img/hv2-cut/resins-product.webp",
-    alt: "ODYX dental resin lines — Model, Ceramic Crown, Crown & Bridge, Surgical Guide, and Temporary",
+    img: "/img/hv2-hub/store-resins-cutout.png",
+    alt: "ODYX resin collection — Ortho Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Crown",
     width: "w-[18.366%] me-[1.803%]",
     // Lift the bottles off the bottom edge so they sit mid-card; white
     // packshot, so drop the multiply blend too. Important wins over items-end.

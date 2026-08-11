@@ -73,10 +73,9 @@ export const SUPPORT_SECTIONS: SupportSection[] = [
   {
     id: "chat",
     title: "Live Support",
-    desc: "AI assistant first, human specialist when you need one.",
+    desc: "Reach our team on WhatsApp for instant help.",
     items: [
-      { label: "Open ODYX AI Agent", href: "#", meta: "Instant" },
-      { label: "WhatsApp customer care", href: "#", meta: "24/7" },
+      { label: "WhatsApp customer care", href: "https://wa.me/201042077646", meta: "24/7" },
       {
         label: "Technical support form",
         href: "/support#contact",

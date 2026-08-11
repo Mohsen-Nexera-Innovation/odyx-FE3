@@ -109,7 +109,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     productSlug: "curing-machines",
     productName: "ODYX Cure",
     img: "/img/cure-uv02/hero/machine-cutout.png",
-    lead: "Controlled UV polymerization for full strength and biocompatibility.",
+    lead: "Controlled polymerization for full strength and biocompatibility.",
     whatHappens:
       "Printed parts move to ODYX Cure for a validated light dose and time profile. This completes polymerization so mechanical properties and biocompatibility meet clinical requirements.",
     benefits: [

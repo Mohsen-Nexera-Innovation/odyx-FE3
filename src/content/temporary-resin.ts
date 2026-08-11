@@ -82,17 +82,17 @@ export const TEMPORARY_RESIN_SPECS = [
 
 export const TEMPORARY_RESIN_COMPATIBLE = [
   {
-    id: 'p1-36',
-    label: 'ODYX P1-36 3D Printer',
-    img: '/images/compat-p1-36.png',
-    imgAlt: 'ODYX P1-36 3D printer',
+    id: 'p1-26',
+    label: 'ODYX P1-26 3D Printer',
+    img: '/img/hv2-cut/printer-product.webp',
+    imgAlt: 'ODYX P1-26 3D printer',
     href: '/products/odyx-p1-26',
   },
   {
     id: 'uv-02',
-    label: 'ODYX UV-02 Curing Unit',
-    img: '/img/cure-uv02/hero/machine-cutout.png',
-    imgAlt: 'ODYX UV-02 curing unit',
+    label: 'ODYX Cure',
+    img: '/img/hv2-cut/cure-product.webp',
+    imgAlt: 'ODYX Cure',
     href: '/products/curing-machines',
   },
   {
@@ -107,26 +107,26 @@ export const TEMPORARY_RESIN_COMPATIBLE = [
 export const TEMPORARY_RESIN_CASES = [
   {
     id: 'case-1',
+    img: '/img/printers/p126/app-temporary.png',
+    imgAlt: 'Clinical case — printed temporary restorations',
+    href: '/solutions/clinical-applications',
+  },
+  {
+    id: 'case-2',
     img: '/images/case-1.jpg',
     imgAlt: 'Clinical case — temporary restoration result',
     href: '/solutions/clinical-applications',
   },
   {
-    id: 'case-2',
+    id: 'case-3',
     img: '/images/case-2.jpg',
     imgAlt: 'Clinical case — provisional smile',
     href: '/solutions/clinical-applications',
   },
   {
-    id: 'case-3',
-    img: '/images/case-3.jpg',
-    imgAlt: 'Clinical case — seated temporary',
-    href: '/solutions/clinical-applications',
-  },
-  {
     id: 'case-4',
-    img: '/images/case-4.jpg',
-    imgAlt: 'Clinical case — anterior provisionals',
+    img: '/img/printers/p126/case-final.png',
+    imgAlt: 'Clinical case — seated temporary restorations',
     href: '/solutions/clinical-applications',
   },
 ] as const;

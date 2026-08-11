@@ -104,17 +104,17 @@ export const CERAMIC_CROWN_RESIN_SPECS = [
 
 export const CERAMIC_CROWN_RESIN_COMPATIBLE = [
   {
-    id: 'p1-36',
-    label: 'ODYX P1-36 3D Printer',
-    img: '/images/compat-p1-36.png',
-    imgAlt: 'ODYX P1-36 3D printer',
+    id: 'p1-26',
+    label: 'ODYX P1-26 3D Printer',
+    img: '/img/hv2-cut/printer-product.webp',
+    imgAlt: 'ODYX P1-26 3D printer',
     href: '/products/odyx-p1-26',
   },
   {
     id: 'uv-02',
-    label: 'ODYX UV-02 Curing Unit',
-    img: '/img/cure-uv02/hero/machine-cutout.png',
-    imgAlt: 'ODYX UV-02 curing unit',
+    label: 'ODYX Cure',
+    img: '/img/hv2-cut/cure-product.webp',
+    imgAlt: 'ODYX Cure',
     href: '/products/curing-machines',
   },
   {
@@ -129,26 +129,26 @@ export const CERAMIC_CROWN_RESIN_COMPATIBLE = [
 export const CERAMIC_CROWN_RESIN_CASES = [
   {
     id: 'case-1',
-    img: '/images/case-ceramic-1.jpg',
-    imgAlt: 'Clinical case — ceramic crown result',
+    img: '/img/hv2-clinical/restorative.webp',
+    imgAlt: 'Clinical case — ceramic crown restorative result',
     href: '/solutions/clinical-applications',
   },
   {
     id: 'case-2',
-    img: '/images/case-ceramic-2.jpg',
-    imgAlt: 'Clinical case — anterior ceramic restorations',
+    img: '/img/printers/p126/case-printed.png',
+    imgAlt: 'Clinical case — printed ceramic crown units',
     href: '/solutions/clinical-applications',
   },
   {
     id: 'case-3',
-    img: '/images/case-ceramic-3.jpg',
-    imgAlt: 'Clinical case — seated ceramic units',
+    img: '/img/printers/p126/case-final.png',
+    imgAlt: 'Clinical case — seated ceramic restorations',
     href: '/solutions/clinical-applications',
   },
   {
     id: 'case-4',
-    img: '/images/case-ceramic-4.jpg',
-    imgAlt: 'Clinical case — ceramic smile result',
+    img: '/img/printers/p126/case-crown-strip.png',
+    imgAlt: 'Clinical case — finished ceramic smile',
     href: '/solutions/clinical-applications',
   },
 ] as const;

@@ -1,7 +1,7 @@
 'use client';
 // 037 §5.3 — "Washed. Then cured." two-act pinned sequence.
 // Scroll scrubs a crossfade from the wash act (violet — the bench step
-// before) to the cure act (orange — the UV-02's chamber). The progress
+// before) to the cure act (orange — ODYX Cure's chamber). The progress
 // value lands in the --p custom property; the crossfade itself is CSS.
 // Mobile and reduced-motion get two static stacked frames (CSS media
 // queries) — the listeners below simply never fire a visible change.
@@ -22,7 +22,7 @@ const ACTS = [
     kicker: 'Act II — Cured',
     title: 'Light reaches every surface.',
     body:
-      'Inside the UV-02, 360° coverage and wavelengths matched to the resin complete polymerization — until the part is fully hardened.',
+      'Inside ODYX Cure, 360° coverage and wavelengths matched to the resin complete polymerization — until the part is fully hardened.',
     img: '/img/cure-uv02/act-cure.png',
     alt: 'Cured crowns glowing orange on the curing plate inside the chamber',
   },

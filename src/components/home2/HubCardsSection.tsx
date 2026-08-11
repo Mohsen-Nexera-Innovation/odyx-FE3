@@ -71,16 +71,17 @@ type Chip = { label: string; icon: keyof typeof HubIcon };
 // Chip boxes are staggered in the mock — each one steps a little further left
 // as it follows the laptop's perspective — so every chip carries its own
 // left/top (card %) rather than sitting in a plain stack.
-const LEARN_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
-  { label: "Courses", icon: "book", l: 79.87, t: 29.12, w: 15.80 },
-  { label: "Webinars", icon: "webinar", l: 79.80, t: 42.66, w: 15.80 },
-  { label: "Guides", icon: "guide", l: 78.81, t: 56.21, w: 15.52 },
-  { label: "Quizzes", icon: "quiz", l: 77.60, t: 69.75, w: 15.80 },
-];
+// Learning chips hidden until learning hub is ready
+// const LEARN_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
+//   { label: "Courses", icon: "book", l: 79.87, t: 29.12, w: 15.80 },
+//   { label: "Webinars", icon: "webinar", l: 79.80, t: 42.66, w: 15.80 },
+//   { label: "Guides", icon: "guide", l: 78.81, t: 56.21, w: 15.52 },
+//   { label: "Quizzes", icon: "quiz", l: 77.60, t: 69.75, w: 15.80 },
+// ];
 
 const SUPPORT_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
   { label: "Help Center", icon: "book", l: 76.68, t: 35.21, w: 18.57 },
-  { label: "Live Chat", icon: "chat", l: 76.68, t: 50.11, w: 18.57 },
+  { label: "WhatsApp", icon: "chat", l: 76.68, t: 50.11, w: 18.57 },
   { label: "Downloads", icon: "download", l: 76.68, t: 64.67, w: 18.57 },
 ];
 
@@ -96,136 +97,131 @@ type ActionCard = {
 };
 
 const HUB_SECTION =
-  `relative w-full ${HV2_GUTTER} ${HV2_SECTION_Y}` +
+  `relative w-full overflow-x-clip box-border ${HV2_GUTTER} ${HV2_SECTION_Y}` +
   " [background:radial-gradient(ellipse_40%_60%_at_24%_6%,rgba(40,120,255,.08),rgba(40,120,255,0)_68%),linear-gradient(180deg,#F7F9FE_0%,#F4F6FD_100%)]";
 
 const HUB_IN =
-  "relative w-[min(100%,1828px)] mx-auto [container-type:inline-size]" +
+  "relative w-[min(100%,1828px)] mx-auto [container-type:inline-size] max-w-full box-border" +
   " border border-[rgba(255,255,255,.85)] rounded-[18px] overflow-hidden bg-white" +
   " [box-shadow:0_18px_46px_rgba(10,40,90,.07)]" +
-  " [--hub-ch:31.24cqw] [--hub-ch2:30.85cqw] [--hub-gap:.494cqw] [--hub-pad:2.397cqw]" +
+  " [--hub-ch:31.24cqw] [--hub-ch2:30.85cqw] [--hub-gap:.7cqw] [--hub-pad:2.397cqw]" +
   " [--hub-blue:#2B63DE] [--hub-ic:#2E6FE0]" +
-  " max-[1360px]:w-[min(100%,1360px)]! max-[1360px]:rounded-[16px]! max-[1360px]:[--hub-col:min(60%,34em)]" +
-  " max-[1180px]:w-[min(100%,760px)]! max-[1180px]:[--hub-col:min(62%,34em)]!" +
-  " max-[760px]:[--hub-col:min(100%,34em)]!";
+  " max-[1100px]:[--hub-gap:10px] max-[1100px]:rounded-[16px]!" +
+  " max-[760px]:rounded-[14px]!";
 
 const HUB_GRID =
   // `[gap:…]!` must beat the unlayered global `.grid { gap: 20px }` in odyx.css
   // (same pattern as resin detail / ceramic crown grids).
   "grid grid-cols-2 [gap:var(--hub-gap)]! [grid-template-rows:var(--hub-ch)_var(--hub-ch2)]" +
-  " max-[1360px]:[grid-template-rows:auto]! max-[1360px]:[gap:8px]!" +
-  " max-[1180px]:grid-cols-1!";
+  " max-[1100px]:grid-cols-1! max-[1100px]:[grid-template-rows:auto]!";
 
 const HUB_CARD =
-  "relative overflow-hidden" +
+  "relative overflow-hidden min-w-0" +
   " [background:linear-gradient(180deg,rgba(255,255,255,.75)_0%,rgba(255,255,255,0)_3.2%),#F4F6FC]" +
-  " max-[1360px]:min-h-[560px]! max-[1360px]:flex! max-[1360px]:flex-col! max-[1360px]:items-start!" +
-  " max-[1360px]:[padding:clamp(26px,4.4vw,36px)_clamp(24px,4vw,34px)_clamp(22px,3.4vw,30px)]!" +
-  " max-[760px]:min-h-0! max-[760px]:pb-0!";
+  // Phone / small tablet: stacked flow — copy / chips / CTA / art
+  // Horizontal padding matches HV2_GUTTER rhythm (not flush to card edges).
+  " max-[1100px]:flex! max-[1100px]:flex-col! max-[1100px]:items-stretch!" +
+  " max-[1100px]:[padding:clamp(26px,4.4vw,36px)_clamp(24px,4vw,34px)_clamp(22px,3.4vw,30px)]!";
 
 const HUB_COPY =
   // --hub-copy-top lets row-2 cards retune without fighting a second top-* utility.
-  "absolute z-[3] start-[var(--hub-pad)] top-[var(--hub-copy-top,4.15cqw)] w-[25cqw]" +
-  " max-[1360px]:static! max-[1360px]:w-auto! max-[1360px]:max-w-[var(--hub-col)]!";
+  "absolute z-[3] start-[var(--hub-pad)] top-[var(--hub-copy-top,4.15cqw)] w-[min(25cqw,42%)]" +
+  " max-[1100px]:static! max-[1100px]:w-full! max-[1100px]:max-w-[min(100%,34em)]!";
 
-const HUB_COPY_ACT = " [--hub-copy-top:3.62cqw] max-[1360px]:top-auto!";
+const HUB_COPY_ACT =
+  // Store / Registration — keep copy clear of product art
+  " [--hub-copy-top:3.62cqw] w-[min(28cqw,46%)]! max-[1100px]:w-full! max-[1100px]:top-auto!";
 
 const HUB_EYEBROW =
   "text-[var(--hub-blue)]! text-[1.19cqw]! font-bold! uppercase! [letter-spacing:.02em]! leading-[1.2]! m-0!" +
   " rtl:[letter-spacing:0]! rtl:normal-case!" +
-  " max-[1360px]:text-[12.5px]! max-[1360px]:[letter-spacing:.06em]! max-[1360px]:rtl:[letter-spacing:0]!";
+  " max-[1100px]:text-[12.5px]! max-[1100px]:[letter-spacing:.06em]! max-[1100px]:rtl:[letter-spacing:0]!";
 
 const HUB_H =
   // ! needed: .hv2 h3 sets ink / tracking.
   "text-[#0D1B31]! text-[2.08cqw]! font-bold! leading-[1.187]! [letter-spacing:-.025em]! [margin:1.32cqw_0_0]!" +
   " rtl:[letter-spacing:0]!" +
-  " max-[1360px]:text-[length:clamp(22px,2.3vw,32px)]! max-[1360px]:leading-[1.16]! max-[1360px]:mt-[14px]!" +
-  " max-[1180px]:text-[length:clamp(26px,4.2vw,36px)]!";
+  " max-[1100px]:text-[length:clamp(22px,5vw,32px)]! max-[1100px]:leading-[1.16]! max-[1100px]:mt-[14px]!";
 
 const HUB_RULE =
   "block w-[2.12cqw] h-[.141cqw] [margin:1.19cqw_0_0_.14cqw] rounded-[1px] bg-[var(--hub-blue)]" +
-  " max-[1360px]:w-[52px]! max-[1360px]:h-1! max-[1360px]:m-[16px_0_0]!";
+  " max-[1100px]:w-[52px]! max-[1100px]:h-1! max-[1100px]:m-[16px_0_0]!";
 
 const HUB_D =
   "text-[#24354F] text-[1.26cqw] font-medium leading-[1.485] [letter-spacing:-.012em] mt-[1.71cqw]" +
-  " max-[1360px]:text-[length:clamp(15px,1.9vw,17.5px)]! max-[1360px]:leading-[1.6]! max-[1360px]:mt-4! max-[1360px]:[letter-spacing:0]!";
+  " max-[1100px]:text-[length:clamp(15px,3.6vw,17.5px)]! max-[1100px]:leading-[1.6]! max-[1100px]:mt-4! max-[1100px]:[letter-spacing:0]!";
 
 // Absolutely placed so CTAs share the same y regardless of copy height.
 // Size is fixed (HV2_BTN_SIZE) so hub buttons match Apps / Cases / Products.
 const HUB_CTA =
   `${HV2_BTN} ${HV2_BTN_SIZE} absolute! z-[4]! start-[var(--hub-pad)]! top-[var(--hub-cta-top,24.19cqw)]!` +
-  " justify-between! border-0!" +
+  " justify-between! border-0! max-w-[calc(100%-2rem)]!" +
   " [background:linear-gradient(180deg,#1A3FDB_0%,#1134BE_100%)]!" +
   " [box-shadow:0_14px_30px_rgba(21,60,225,.26),0_4px_10px_rgba(14,40,160,.16)]!" +
   " transition-[transform,box-shadow]! duration-[.22s]! ease!" +
   // Arbitrary transform beats HV2_BTN hover translateY(-1px) reliably.
   " hover:[transform:translateY(-2px)]! hover:[box-shadow:0_18px_36px_rgba(21,60,225,.32),0_5px_12px_rgba(14,40,160,.20)]!" +
   " [&>span]:mt-px rtl:[&>svg]:scale-x-[-1] motion-reduce:transition-none!" +
-  " max-[1360px]:static! max-[1360px]:mt-[clamp(20px,3vw,26px)]! max-[1360px]:top-auto!";
+  " max-[1100px]:static! max-[1100px]:relative! max-[1100px]:mt-[clamp(18px,3vw,24px)]! max-[1100px]:top-auto! max-[1100px]:start-auto! max-[1100px]:self-start!";
 
 const HUB_CTA_ACT = " [--hub-cta-top:22.74cqw]";
 
 const HUB_ART =
-  "absolute z-[1] top-0 h-full block object-fill pointer-events-none" +
-  " max-[1360px]:top-auto! max-[1360px]:bottom-0! max-[1360px]:h-auto!" +
-  " max-[1360px]:start-auto! max-[1360px]:end-[-2%]! max-[1360px]:w-[54%]! max-[1360px]:max-w-[360px]!" +
-  " max-[1180px]:w-[58%]! max-[1180px]:max-w-[420px]!" +
-  " max-[760px]:relative! max-[760px]:inset-auto! max-[760px]:self-end!" +
-  " max-[760px]:w-[min(100%,380px)]! max-[760px]:max-w-none!" +
-  " max-[760px]:mt-[clamp(14px,3vw,24px)]! max-[760px]:me-[-4%]!";
+  "absolute z-[1] top-0 h-full block object-contain object-right object-bottom pointer-events-none" +
+  // ≤1100: flow with the card instead of floating over copy/CTA
+  " max-[1100px]:relative! max-[1100px]:inset-auto! max-[1100px]:self-end!" +
+  " max-[1100px]:w-[min(100%,420px)]! max-[1100px]:max-w-none! max-[1100px]:h-auto!" +
+  " max-[1100px]:mt-[clamp(12px,2.4vw,20px)]! max-[1100px]:mx-auto!" +
+  " max-[760px]:w-[min(100%,380px)]!";
 
 // In Arabic the whole composition mirrors. Only the laptop flips with it —
 // the chip rail is pinned to its screen edge. Headset / carton / device keep
 // their mark orientation.
 const HUB_ART_LEARN =
-  " start-[27.50%] w-[61.16%] rtl:scale-x-[-1]" +
-  " max-[1360px]:start-auto! max-[1360px]:w-[54%]!" +
-  " max-[1180px]:w-[58%]!" +
-  " max-[760px]:w-[min(100%,380px)]!";
+  " start-[27.50%] w-[61.16%] object-fill! rtl:scale-x-[-1]" +
+  " max-[1100px]:start-auto! max-[1100px]:w-[min(92%,400px)]! max-[1100px]:object-contain!" +
+  " max-[760px]:w-[min(100%,360px)]!";
 
 const HUB_ART_SUPPORT =
-  " start-[28.21%] w-[48.05%]" +
-  " max-[1360px]:start-auto! max-[1360px]:w-[54%]!" +
-  " max-[1180px]:w-[58%]!" +
-  " max-[760px]:w-[min(100%,380px)]!";
+  " start-[24%] w-[52%] object-contain! object-left!" +
+  " max-[1100px]:start-auto! max-[1100px]:w-[min(78%,360px)]!" +
+  " max-[760px]:w-[min(100%,340px)]!";
 
 const HUB_ART_STORE =
-  " start-[26.72%] w-[73.28%]" +
-  " max-[1360px]:start-auto! max-[1360px]:w-[62%]! max-[1360px]:max-w-[430px]!" +
-  " max-[1180px]:w-[66%]! max-[1180px]:max-w-[500px]!" +
-  " max-[760px]:w-[min(104%,470px)]!";
+  // Sit clear of the Store copy column (was overlapping “In One Place.”)
+  " start-[48%] w-[54%] object-contain! object-center!" +
+  " max-[1100px]:start-auto! max-[1100px]:w-[min(96%,460px)]! max-[1100px]:max-h-[280px]!" +
+  " max-[760px]:w-[min(100%,420px)]! max-[760px]:max-h-[240px]!";
 
 const HUB_ART_REG =
-  " start-[29.12%] w-[71.08%]" +
-  " max-[1360px]:start-auto! max-[1360px]:w-[62%]! max-[1360px]:max-w-[430px]!" +
-  " max-[1180px]:w-[66%]! max-[1180px]:max-w-[500px]!" +
-  " max-[760px]:w-[min(104%,470px)]!";
+  " start-[40%] w-[62%] object-contain! object-center!" +
+  " max-[1100px]:start-auto! max-[1100px]:w-[min(92%,440px)]!" +
+  " max-[760px]:w-[min(100%,400px)]!";
 
 const HUB_CHIPS =
   "list-none m-0 p-0" +
-  " max-[1360px]:flex! max-[1360px]:flex-wrap! max-[1360px]:gap-2.5!" +
-  " max-[1360px]:mt-[clamp(18px,2.6vw,26px)]! max-[1360px]:w-full! max-[1360px]:max-w-[var(--hub-col)]!";
+  " max-[1100px]:relative! max-[1100px]:z-[2]! max-[1100px]:flex! max-[1100px]:flex-wrap! max-[1100px]:gap-2.5!" +
+  " max-[1100px]:mt-[clamp(16px,2.4vw,22px)]! max-[1100px]:w-full! max-[1100px]:max-w-[min(100%,34em)]!";
 
 const HUB_CHIP =
   "absolute z-[2] start-[var(--l)] top-[var(--t)] w-[var(--w)] h-[var(--h,9.93%)]" +
   " flex items-center gap-[.49cqw] px-[.78cqw] rounded-[.63cqw]" +
   " bg-[rgba(255,255,255,.87)] backdrop-blur-[2px]" +
   " [box-shadow:0_0_.95cqw_.3cqw_rgba(255,255,255,.5),0_.28cqw_.8cqw_rgba(39,76,145,.07),inset_0_0_0_1px_rgba(222,232,248,.5)]" +
-  " max-[1360px]:static! max-[1360px]:w-auto! max-[1360px]:h-auto! max-[1360px]:min-h-[52px]!" +
-  " max-[1360px]:px-[15px]! max-[1360px]:gap-[11px]! max-[1360px]:rounded-[12px]!" +
-  " max-[760px]:min-h-[48px]! max-[760px]:px-[13px]! max-[760px]:gap-[9px]!";
+  " max-[1100px]:static! max-[1100px]:w-auto! max-[1100px]:h-auto! max-[1100px]:min-h-[48px]!" +
+  " max-[1100px]:px-[14px]! max-[1100px]:gap-[10px]! max-[1100px]:rounded-[12px]!";
 
 const HUB_CHIP_SUPPORT =
-  " [--h:10.50%] px-[1.10cqw]! gap-[.62cqw]! max-[1360px]:px-[15px]! max-[1360px]:gap-[11px]!";
+  " [--h:10.50%] px-[1.10cqw]! gap-[.62cqw]! max-[1100px]:px-[14px]! max-[1100px]:gap-[10px]!";
 
 const HUB_CHIP_IC =
   "grid place-items-center text-[var(--hub-ic)] flex-none" +
   " [&>svg]:w-[1.85cqw] [&>svg]:h-[1.85cqw] [&>svg]:block" +
-  " max-[1360px]:[&>svg]:w-[22px]! max-[1360px]:[&>svg]:h-[22px]!";
+  " max-[1100px]:[&>svg]:w-[20px]! max-[1100px]:[&>svg]:h-[20px]!";
 
 const HUB_CHIP_L =
   "text-[#1B3050] text-[1.05cqw] font-medium leading-[1.2] whitespace-nowrap mt-[.35cqw]" +
-  " max-[1360px]:text-[14.5px]! max-[1360px]:mt-px!" +
+  " max-[1100px]:text-[14px]! max-[1100px]:mt-px!" +
   " max-[760px]:text-[13.5px]!";
 
 const ACTION_CARDS: ActionCard[] = [
@@ -234,14 +230,13 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Store",
     title: ["Everything You Need.", "In One Place."],
     desc: ["Resins, accessories and more –", "delivered to your door."],
-    cta: "Go to Store",
-    href: "/shop",
+    // CTA hidden until shop is ready
     artClass: HUB_ART_STORE,
     art: {
-      src: "/img/hv2-hub/store-shelf.webp",
-      alt: "ODYX resin bottles and a carton on a lit display pedestal with a tooth disc and a clear aligner",
-      w: 1034,
-      h: 875,
+      src: "/img/hv2-hub/store-resins-cutout.png",
+      alt: "ODYX resin collection — Ortho Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Crown",
+      w: 788,
+      h: 537,
     },
   },
   {
@@ -249,9 +244,9 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Registration",
     title: ["Register Your Device.", "Stay Protected."],
     desc: ["Activate warranty and get", "the full ODYX experience."],
-    cta: "Register Device",
-    // Same target GlobalTools / support content use — /register is account sign-up.
-    href: "/support#register",
+    // CTA hidden until registration flow is ready
+    // cta: "Register Device",
+    // href: "/support#register",
     artClass: HUB_ART_REG,
     art: {
       src: "/img/hv2-hub/registration-device.webp",
@@ -319,6 +314,7 @@ export default function HubCardsSection() {
                 and step-by-step guides.
               </p>
             </div>
+            {/* Learning category chips hidden until learning hub is ready
             <ul className={HUB_CHIPS} aria-label="What the learning centre covers">
               {LEARN_CHIPS.map((c) => (
                 <li
@@ -331,6 +327,7 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
+            */}
             <a className={HUB_CTA} href="/learning">
               <span>Start Learning</span>
               <CtaArrow />

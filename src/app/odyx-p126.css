@@ -257,13 +257,11 @@
   width:64%;
   height:100%;
   z-index:5 !important;
-  /* Soft ambient lift + contact depth — keeps current packshot */
-  filter:
-    drop-shadow(0 18px 22px rgba(30,50,80,.18))
-    drop-shadow(0 4px 8px rgba(30,50,80,.12));
+  /* No drop-shadow — smears transparent PNG cutouts into ghost trails */
+  filter:none;
   animation:p126-float 5.5s ease-in-out infinite;
 }
-/* Print outputs — short-stand models beside printer; soft ground shadows */
+/* Print outputs — short-stand models beside printer; ground shadow via .p126-hero-ground-shadow */
 .p126-layer--output-bridge{
   left:58%;
   bottom:18%;
@@ -271,9 +269,7 @@
   height:32%;
   z-index:2 !important;
   transform:rotate(-8deg);
-  filter:
-    drop-shadow(0 12px 16px rgba(30,50,80,.2))
-    drop-shadow(0 3px 6px rgba(30,50,80,.12));
+  filter:none;
   animation:p126-float-bridge 6s ease-in-out .25s infinite;
 }
 .p126-layer--output-arch{
@@ -283,9 +279,7 @@
   height:30%;
   z-index:3 !important;
   transform:rotate(6deg);
-  filter:
-    drop-shadow(0 14px 18px rgba(30,50,80,.22))
-    drop-shadow(0 3px 6px rgba(30,50,80,.12));
+  filter:none;
   animation:p126-float-arch 6.4s ease-in-out .45s infinite;
 }
 @keyframes p126-float{
@@ -527,8 +521,12 @@
   .p126-why-list li{white-space:normal}
 }
 @media (max-width:800px){
-  .p126-why-media{aspect-ratio:16 / 11; max-width:320px; margin-inline:auto; max-height:none}
-  .p126-why-media img{max-height:200px}
+  .p126-why-media{aspect-ratio:16 / 11; max-width:320px; margin-inline:auto; max-height:none; overflow:hidden}
+  .p126-why-media img,
+  .p126-why-card:hover .p126-why-media img{
+    max-height:200px;
+    transform:none;
+  }
   .p126-video-card .p126-video{max-height:none; min-height:200px}
 }
 
@@ -548,24 +546,26 @@
 .p126-play{
   position:absolute;inset:0;
   border:0;background:rgba(10,20,40,.18);
-  cursor:pointer;
   display:grid;place-items:center;
-  transition:background .25s ease;
+  pointer-events:none;
 }
-.p126-play:hover{background:rgba(10,20,40,.28)}
 .p126-play-circle{
   width:72px;height:72px;border-radius:50%;
   background:rgba(255,255,255,.92);
   color:var(--p126-blue);
-  display:grid;place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   box-shadow:0 10px 30px rgba(0,0,0,.2);
-  transition:transform .25s ease, background .25s ease;
 }
-.p126-play:hover .p126-play-circle{
-  transform:scale(1.06);
-  background:#fff;
+.p126-play-circle svg{
+  display:block;
+  /* optical center — triangle mass sits left of geometric center */
+  transform:translateX(2px);
 }
-.p126-play-circle svg{margin-left:3px}
+[dir="rtl"] .p126-play-circle svg{
+  transform:translateX(-2px) scaleX(-1);
+}
 
 /* Specs — key/value rows sized to match Apps card height */
 .p126-specs-card{

@@ -1,5 +1,5 @@
 /**
- * Single Cure UV-02 landing — fidelity to product-design-refrences/cure.jpeg
+ * Single Cure landing — fidelity to product-design-refrences/cure.jpeg
  * Uses the same layout system as P1-26 (odyx-p126.css).
  */
 
@@ -11,20 +11,20 @@ import {
 export const CURE_UV02_SLUG = 'curing-machines';
 
 export const CURE_UV02_META = {
-  title: 'ODYX Cure UV-02 — Dental UV Curing Machine',
+  title: 'ODYX Cure — Dental Curing Machine',
   description:
-    'Triple-wavelength UV curing (365/385/405 nm) with 360° coverage, smart heating, and validated presets for consistent dental results.',
+    'Triple-wavelength curing (365/385/405 nm) with 360° coverage, smart heating, and validated presets for consistent dental results.',
 };
 
 export const CURE_UV02_HERO = {
-  eyebrow: 'ODYX CURE UV-02',
+  eyebrow: 'ODYX CURE',
   title: 'Powerful Curing. Perfect Results.',
-  body: 'The ODYX Cure UV-02 delivers uniform, reliable, and efficient curing for all your dental 3D printed applications.',
+  body: 'The ODYX Cure delivers uniform, reliable, and efficient curing for all your dental 3D printed applications.',
   /** Multi-layer hero — real product photo + cured outputs (P1-26 pattern) */
   machineImg: '/img/cure-uv02/hero/machine-cutout.png',
   outputArchImg: '/img/cure-uv02/hero/output-arch-cutout.png',
   outputAlignerImg: '/img/cure-uv02/hero/output-aligner-cutout.png',
-  imgAlt: 'ODYX Cure UV-02 dental UV curing station with cured models',
+  imgAlt: 'ODYX Cure dental curing station with cured models',
   imgVersion: '18',
   primaryCta: { label: 'Request Demo', href: '/request-demo' },
   secondaryCta: { label: 'Download Brochure', href: '/docs/resins/curing-flyer.pdf' },
@@ -32,19 +32,19 @@ export const CURE_UV02_HERO = {
 
 export const CURE_UV02_CHIPS = [
   { id: 'orbit', label: '360° Uniform Curing', lines: ['360°', 'Uniform Curing'] },
-  { id: 'waves', label: 'Powerful UV Light', lines: ['Powerful', 'UV Light'] },
+  { id: 'waves', label: 'Powerful Light', lines: ['Powerful', 'Light'] },
   { id: 'heat', label: 'Smart Heating', lines: ['Smart', 'Heating'] },
   { id: 'compat', label: 'Wide Compatibility', lines: ['Wide', 'Compatibility'] },
   { id: 'safe', label: 'Safe & User Friendly', lines: ['Safe &', 'User Friendly'] },
 ] as const;
 
 export const CURE_UV02_WHY = {
-  title: 'Why ODYX Cure UV-02?',
+  title: 'Why ODYX Cure?',
   img: '/img/cure-uv02/why-open.png',
-  imgAlt: 'ODYX Cure UV-02 with chamber open and UV active',
+  imgAlt: 'ODYX Cure with chamber open and curing active',
   imgVersion: '6',
   points: [
-    '360° all-round UV coverage for uniform polymerization',
+    '360° all-round light coverage for uniform polymerization',
     'Triple wavelength: 365 / 385 / 405 nm',
     'Typical cure times of 1–5 minutes',
     'Adjustable intensity 5%–100% and timer 1 s–30 min',
@@ -54,14 +54,14 @@ export const CURE_UV02_WHY = {
 };
 
 export const CURE_UV02_VIDEO = {
-  title: 'Watch UV-02 in Action',
+  title: 'Watch ODYX Cure in Action',
   poster: '/img/cure-uv02/device-front.jpg',
-  posterAlt: 'ODYX Cure UV-02 curing cycle',
+  posterAlt: 'ODYX Cure curing cycle',
   src: '/video/cure-uv02-hero.mp4',
 };
 
 export const CURE_UV02_SPECS = [
-  { label: 'Light Source', value: 'Triple-wavelength UV LED' },
+  { label: 'Light Source', value: 'Triple-wavelength LED' },
   { label: 'Wavelength', value: '365 / 385 / 405 nm' },
   { label: 'Coverage', value: '360° all-round' },
   { label: 'Light Intensity', value: '5% – 100%' },
@@ -92,7 +92,7 @@ export const CURE_UV02_ROI = {
   lead: 'Estimate Your Savings',
   monthlyLabel: 'Monthly Cases',
   timeLabel: 'Average Time Saved per Case',
-  hourlyLabel: 'Value of Clinic Time ($/hr)',
+  hourlyLabel: 'Value of Clinic Time (L.E/hr)',
   timeResultLabel: 'Potential Time Savings',
   timeResultUnit: '/ Month',
   costResultLabel: 'Potential Cost Savings',
@@ -124,8 +124,8 @@ export const CURE_UV02_ECOSYSTEM = {
       img: '/img/printers/p126/eco/resins.png',
     },
     {
-      name: 'ODYX Cure UV-02',
-      subtitle: 'UV Curing Station',
+      name: 'ODYX Cure',
+      subtitle: 'Curing Station',
       href: '#top',
       img: '/img/printers/p126/eco/cure.png',
     },
@@ -138,7 +138,7 @@ export const CURE_UV02_CASE_TABS = [
     label: 'Crown',
     steps: [
       { label: 'Before Curing', img: '/img/cure-uv02/app-temps.jpg', alt: 'Tan temporary arch before cure' },
-      { label: 'Curing with UV-02', img: '/img/cure-uv02/act-cure.png', alt: 'Curing cycle in UV-02' },
+      { label: 'Curing', img: '/img/cure-uv02/act-cure.png', alt: 'Curing cycle in ODYX Cure' },
       { label: 'Finished Restoration', img: '/img/cure-uv02/app-crowns.jpg', alt: 'Finished cured crown' },
     ],
   },
@@ -147,7 +147,7 @@ export const CURE_UV02_CASE_TABS = [
     label: 'Surgical Guide',
     steps: [
       { label: 'Before Curing', img: '/img/cure-uv02/app-guides.jpg', alt: 'Clear surgical guide before cure' },
-      { label: 'Curing with UV-02', img: '/img/cure-uv02/act-cure.png', alt: 'Guide in chamber' },
+      { label: 'Curing', img: '/img/cure-uv02/act-cure.png', alt: 'Guide in chamber' },
       { label: 'Finished Restoration', img: '/img/cure-uv02/app-guides.jpg', alt: 'Cured clear surgical guide' },
     ],
   },
@@ -156,7 +156,7 @@ export const CURE_UV02_CASE_TABS = [
     label: 'Denture',
     steps: [
       { label: 'Before Curing', img: '/img/cure-uv02/app-dentures.jpg', alt: 'Denture before cure' },
-      { label: 'Curing with UV-02', img: '/img/cure-uv02/act-cure.png', alt: 'Denture curing' },
+      { label: 'Curing', img: '/img/cure-uv02/act-cure.png', alt: 'Denture curing' },
       { label: 'Finished Restoration', img: '/img/cure-uv02/app-dentures.jpg', alt: 'Finished denture base' },
     ],
   },
@@ -165,7 +165,7 @@ export const CURE_UV02_CASE_TABS = [
     label: 'Splint',
     steps: [
       { label: 'Before Curing', img: '/img/cure-uv02/app-splints.jpg', alt: 'Splint before cure' },
-      { label: 'Curing with UV-02', img: '/img/cure-uv02/act-cure.png', alt: 'Splint curing' },
+      { label: 'Curing', img: '/img/cure-uv02/act-cure.png', alt: 'Splint curing' },
       { label: 'Finished Restoration', img: '/img/cure-uv02/app-splints.jpg', alt: 'Finished splint' },
     ],
   },
@@ -174,7 +174,7 @@ export const CURE_UV02_CASE_TABS = [
     label: 'Model',
     steps: [
       { label: 'Before Curing', img: '/img/cure-uv02/app-models.jpg', alt: 'Model before cure' },
-      { label: 'Curing with UV-02', img: '/img/cure-uv02/act-cure.png', alt: 'Model curing' },
+      { label: 'Curing', img: '/img/cure-uv02/act-cure.png', alt: 'Model curing' },
       { label: 'Finished Restoration', img: '/img/cure-uv02/app-models.jpg', alt: 'Finished model' },
     ],
   },
