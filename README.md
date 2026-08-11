@@ -37,7 +37,9 @@ Full ops guide lives in the API repo: **`odyx-api/deploy/README.md`**.
 
 1. Merge/cherry-pick the release onto this repo’s `production` branch and push.
 2. Ensure the API `production` branch is updated the same way.
-3. On the VPS:
+3. GitHub Actions runs **CI** on `production`, then **Deploy Production VPS** (`ODYX_ENV=production ./deploy/vps-deploy.sh web`). You can also trigger that workflow manually from the Actions tab.
+
+Manual fallback on the VPS:
 
 ```bash
 ssh -i ~/.ssh/odyx_github_actions -p 2222 root@<VPS_HOST>
@@ -52,9 +54,9 @@ ODYX_ENV=production ./deploy/vps-deploy.sh web
 /opt/odyx/web  → this repo
 ```
 
-Verify: `http://<VPS_HOST>:3001` (web) and `http://<VPS_HOST>:4001/health` (API).
+Verify: `https://odyxegypt.net` (web) and `https://api.odyxegypt.net/health` (API).
 
-GitHub Actions deploys **staging** only (`ODYX_ENV=staging`). Production is manual.
+GitHub Actions deploys **staging** (`main`) and **production** (`production`). Same secrets as staging: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`, `VPS_SSH_PORT`, `VPS_DEPLOY_PATH=/opt/odyx/api`.
 
 `NEXT_PUBLIC_USE_API` and `NEXT_PUBLIC_API_URL` are Docker build args (from `.env.production` on the VPS).
 
