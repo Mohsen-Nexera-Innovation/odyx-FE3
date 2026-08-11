@@ -121,7 +121,7 @@ export const CURE_UV02_ECOSYSTEM = {
       name: 'ODYX Dental Resins',
       subtitle: 'High-Performance Resins',
       href: '/products/resins',
-      img: '/img/printers/p126/eco/resins.png',
+      img: '/img/hv2-hub/store-resins-cutout.png',
     },
     {
       name: 'ODYX Cure',

@@ -2,7 +2,11 @@
 
 import { useCallback, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { HV2_GUTTER, HV2_NAV, HV2_SECTION_Y } from "@/components/home2/hv2Chrome";
+import {
+  HV2_GUTTER,
+  HV2_NAV,
+  HV2_SECTION_Y,
+} from "@/components/home2/hv2Chrome";
 
 // Latest Updates — the client mock's five-up update carousel, the last band on
 // the home screen (after the ecosystem hub's Store / Registration row).
@@ -171,14 +175,30 @@ const DOTS = Math.ceil(N / PER_DOT);
 const mod = (v: number, n: number) => ((v % n) + n) % n;
 
 const CalendarIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.15" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.15"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
     <rect x="1.1" y="4.2" width="21.8" height="18.7" rx="4.6" />
     <path d="M6.9 1.6v4.4M17.1 1.6v4.4M1.5 10.6h21" />
   </svg>
 );
 
 const CardArrow = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
     <path d="M4.6 12h14.2M12.6 5.6 19 12l-6.4 6.4" />
   </svg>
 );
@@ -465,8 +485,13 @@ export default function LatestUpdatesSection() {
   }, []);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
-    else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      step(1);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      step(-1);
+    }
   };
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "mouse") return;
@@ -485,12 +510,20 @@ export default function LatestUpdatesSection() {
       <div className={LU_IN}>
         <div className={`${LU_HEAD} rv`}>
           <p className={LU_EYEBROW}>
-            <span className={LU_PIP} aria-hidden>&bull;</span>
+            <span className={LU_PIP} aria-hidden>
+              &bull;
+            </span>
             Stay Informed
-            <span className={LU_PIP} aria-hidden>&bull;</span>
+            <span className={LU_PIP} aria-hidden>
+              &bull;
+            </span>
           </p>
-          <h2 className={LU_H} id="hv2-lu-h">Latest Updates</h2>
-          <p className={LU_SUB}>News, events, product updates and more from ODYX.</p>
+          <h2 className={LU_H} id="hv2-lu-h">
+            Latest Updates
+          </h2>
+          <p className={LU_SUB}>
+            News, events, product updates and more from ODYX.
+          </p>
         </div>
 
         <div className={`${LU_STAGE} rv`} data-rv="1">
@@ -506,7 +539,9 @@ export default function LatestUpdatesSection() {
               onKeyDown={onKeyDown}
               onPointerDown={onPointerDown}
               onPointerUp={onPointerUp}
-              onPointerCancel={() => { drag.current = null; }}
+              onPointerCancel={() => {
+                drag.current = null;
+              }}
             >
               {UPDATES.map((u, i) => (
                 <article
@@ -518,7 +553,9 @@ export default function LatestUpdatesSection() {
                   data-cat={u.cat}
                   data-id={u.id}
                   data-fade={u.fade ? "" : undefined}
-                  style={{ "--band": `${u.art.w} / ${u.art.h}` } as CSSProperties}
+                  style={
+                    { "--band": `${u.art.w} / ${u.art.h}` } as CSSProperties
+                  }
                 >
                   <span className={LU_MEDIA} data-lu="media">
                     <img
@@ -532,24 +569,34 @@ export default function LatestUpdatesSection() {
                       decoding="async"
                     />
                   </span>
-                  <p className={LU_CAT} data-lu="cat">{u.cat}</p>
+                  <p className={LU_CAT} data-lu="cat">
+                    {u.cat}
+                  </p>
                   <div className={LU_COPY}>
                     {/* One focusable target per card: the title link stretches
                         over the whole card, so the arrow disc stays decorative. */}
                     <h3 className={LU_T} data-lu="t">
-                      <Link className={LU_LINK} href={u.href}>{u.title}</Link>
+                      <Link className={LU_LINK} href={u.href}>
+                        {u.title}
+                      </Link>
                     </h3>
                     <p className={LU_D} data-lu="d">
                       {u.desc.map((line) => (
-                        <span className={LU_DLINE} key={line}>{line}</span>
+                        <span className={LU_DLINE} key={line}>
+                          {line}
+                        </span>
                       ))}
                     </p>
                     <div className={LU_FOOT} data-lu="foot">
                       <p className={LU_DATE}>
-                        <span className={LU_CAL} aria-hidden><CalendarIcon /></span>
+                        <span className={LU_CAL} aria-hidden>
+                          <CalendarIcon />
+                        </span>
                         <time dateTime={u.iso}>{u.date}</time>
                       </p>
-                      <span className={LU_GO} data-lu="go" aria-hidden><CardArrow /></span>
+                      <span className={LU_GO} data-lu="go" aria-hidden>
+                        <CardArrow />
+                      </span>
                     </div>
                   </div>
                 </article>
@@ -565,7 +612,15 @@ export default function LatestUpdatesSection() {
             aria-label="Previous updates"
             onClick={() => step(-1)}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
               <path d="m15 5-7 7 7 7" />
             </svg>
           </button>
@@ -575,7 +630,15 @@ export default function LatestUpdatesSection() {
             aria-label="Next updates"
             onClick={() => step(1)}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
               <path d="m9 5 7 7-7 7" />
             </svg>
           </button>
@@ -590,7 +653,11 @@ export default function LatestUpdatesSection() {
                   type="button"
                   className={LU_DOT}
                   key={k}
-                  aria-label={from === to ? `Update ${from}` : `Updates ${from}\u2013${to}`}
+                  aria-label={
+                    from === to
+                      ? `Update ${from}`
+                      : `Updates ${from}\u2013${to}`
+                  }
                   aria-current={on || undefined}
                   data-on={on ? "" : undefined}
                   onClick={() => {
