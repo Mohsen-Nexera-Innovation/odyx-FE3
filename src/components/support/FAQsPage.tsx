@@ -38,29 +38,29 @@ export function FAQsPage() {
   }));
 
   return (
-    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4">
-      <SupportContainer className="flex flex-col gap-6">
+    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4 overflow-x-hidden">
+      <SupportContainer className="flex flex-col gap-6 min-w-0 max-w-full">
 
         <div className="flex flex-col gap-4">
           <SupportBreadcrumb crumbs={[{ label: 'Support', href: '/support' }, { label: 'FAQs' }]} />
           <SupportPageHeader title="FAQs" description="Find answers to the most common questions." />
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="w-full sm:w-[320px] shrink-0">
+        <div className="flex flex-col gap-3 min-w-0">
+          <div className="w-full max-w-[420px]">
             <SupportSearchBar value={query} onChange={setQuery} placeholder="Search FAQs..." />
           </div>
-          <div className="flex-none">
+          <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <FilterPills items={filterPills} activeId={category} onSelect={setCategory} />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-4 lg:gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-4 lg:gap-6 items-start min-w-0">
           <div className="hidden lg:block lg:sticky lg:top-[100px]">
             <CategorySidebar title="Categories" items={sidebarItems} activeId={category} onSelect={setCategory} />
           </div>
 
-          <div className="min-w-0">
+          <div className="min-w-0 max-w-full">
             <FAQAccordion faqs={filtered} />
           </div>
         </div>

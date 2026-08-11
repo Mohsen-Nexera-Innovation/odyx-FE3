@@ -95,7 +95,7 @@ const NODES: EcoNode[] = [
   {
     key: "cure",
     label: "Cure",
-    aria: "ODYX Cure UV-02",
+    aria: "ODYX Cure",
     href: "/products/curing-machines",
     src: "/img/hv2-cut/cure-product.webp",
     icon: ICON.sun,

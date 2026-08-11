@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type ChannelId = "whats" | "chat" | "doc" | "shield";
+type ChannelId = "whats" | "doc" | "shield";
 
 interface SupportChannel {
   id: ChannelId;
@@ -25,18 +25,7 @@ const CHANNELS: SupportChannel[] = [
     detail: "Message us for setup help, troubleshooting and order questions.",
     hours: "Available around the clock",
     action: "Open WhatsApp",
-    href: "/support",
-  },
-  {
-    id: "chat",
-    t: "ODYX AI Agent & live chat",
-    d: "Guided answers across the whole ODYX ecosystem.",
-    meta: "Online",
-    detail:
-      "AI-guided support with escalation to a live specialist when needed.",
-    hours: "Mon–Sat, 8am–8pm",
-    action: "Start live chat",
-    href: "/support",
+    href: "https://wa.me/201042077646",
   },
   {
     id: "doc",
@@ -75,21 +64,6 @@ const ICONS: Record<ChannelId, React.ReactNode> = {
     >
       <path d="M3 21l1.6-4.5A8 8 0 1 1 8 19.4z" />
       <path d="M9 9c0 3 3 6 6 6l1.5-1.5-2-1.5-1 1c-1-.5-2-1.5-2.5-2.5l1-1L10.5 8z" />
-    </svg>
-  ),
-  chat: (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 4h16v12H8l-4 4z" />
-      <path d="M8 9h8M8 12h5" />
     </svg>
   ),
   doc: (
@@ -160,17 +134,12 @@ export default function SupportHub() {
         <span className="sh-live-badge">Live help</span>
         <h3>Need answers now?</h3>
         <p>
-          Reach our team instantly through WhatsApp or start a guided chat with
-          ODYX AI Agent.
+          Reach our team instantly through WhatsApp.
         </p>
         <div className="sh-live-actions">
-          <Link className="btn sh-live-btn" href="/support">
+          <Link className="btn sh-live-btn" href="https://wa.me/201042077646" target="_blank" rel="noopener noreferrer">
             {ICONS.whats}
             WhatsApp care
-          </Link>
-          <Link className="btn btn-ghost sh-live-btn" href="/support">
-            {ICONS.chat}
-            ODYX AI Agent
           </Link>
         </div>
       </div>

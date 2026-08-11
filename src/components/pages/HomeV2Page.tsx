@@ -62,7 +62,7 @@ const ORBIT_PRODUCTS = [
   {
     href: "/products/curing-machines",
     src: "/img/hv2-cut/cure-product.webp",
-    label: "ODYX Cure UV-02",
+    label: "ODYX Cure",
     pos: " start-[calc(1280*var(--u))] top-[calc(210*var(--u))] w-[calc(255*var(--u))] z-[3] [--oty:-3deg] [--op:.9] [--ofd:8.4s] [--ofo:-2.8s]",
   },
   {

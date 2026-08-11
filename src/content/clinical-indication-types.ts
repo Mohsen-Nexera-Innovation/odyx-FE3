@@ -130,8 +130,8 @@ export const ECOSYSTEM_PRODUCTS = {
   },
   cure: {
     id: 'cure',
-    name: 'ODYX UV-02',
-    sub: 'UV Curing Unit',
+    name: 'ODYX Cure',
+    sub: 'Curing Unit',
     img: '/img/cure-uv02/hero/machine-cutout.png',
     href: '/products/curing-machines',
     layout: 'stack' as const,

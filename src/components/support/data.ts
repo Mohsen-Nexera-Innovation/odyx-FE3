@@ -17,7 +17,7 @@ export interface SupportProduct {
 export const SUPPORT_PRODUCTS: SupportProduct[] = [
   { id: 's1-scanner', name: 'ODYX S1 Scanner', image: '/img/scanner/s1-hero-cutout.png' },
   { id: 'p1-26-printer', name: 'ODYX P1-26 3D Printer', image: '/img/cutouts/feat-printer-cutout.png' },
-  { id: 'cure-unit', name: 'ODYX Cure UV Curing Unit', image: '/img/cure-uv02/hero/machine-cutout.png' },
+  { id: 'cure-unit', name: 'ODYX Cure Curing Unit', image: '/img/cure-uv02/hero/machine-cutout.png' },
   { id: 'resin-materials', name: 'ODYX Resin Materials', image: '/img/resins/all-resins-cutout.png' },
 ];
 
@@ -114,9 +114,9 @@ export const MANUALS: ManualEntry[] = [
   { id: 'm-5', title: 'ODYX S1 Calibration Guide', description: 'How to calibrate your scanner for maximum accuracy.', category: 'calibration-guides', product: 's1-scanner', fileType: 'PDF', size: '1.4MB', date: 'May 4, 2026', previewHref: '#', downloadHref: '#' },
   { id: 'm-6', title: 'P1-26 Printer User Manual', description: 'Complete user guide for the ODYX P1-26 3D printer.', category: 'user-manuals', product: 'p1-26-printer', fileType: 'PDF', size: '5.1MB', date: 'May 9, 2026', previewHref: '#', downloadHref: '#' },
   { id: 'm-7', title: 'P1-26 Installation Guide', description: 'Unboxing, setup and initial installation and instructions.', category: 'installation-guides', product: 'p1-26-printer', fileType: 'PDF', size: '3.0MB', date: 'May 7, 2026', previewHref: '#', downloadHref: '#' },
-  { id: 'm-8', title: 'ODYX Cure User Manual', description: 'Complete user guide for the ODYX Cure UV curing unit.', category: 'user-manuals', product: 'cure-unit', fileType: 'PDF', size: '3.1MB', date: 'May 7, 2026', previewHref: '#', downloadHref: '#' },
+  { id: 'm-8', title: 'ODYX Cure User Manual', description: 'Complete user guide for the ODYX Cure curing unit.', category: 'user-manuals', product: 'cure-unit', fileType: 'PDF', size: '3.1MB', date: 'May 7, 2026', previewHref: '#', downloadHref: '#' },
   { id: 'm-9', title: 'ODYX Cure Quick Start Guide', description: 'Get your curing unit running in under five minutes.', category: 'quick-start-guides', product: 'cure-unit', fileType: 'PDF', size: '1.2MB', date: 'May 5, 2026', previewHref: '#', downloadHref: '#' },
-  { id: 'm-10', title: 'ODYX Cure Safety Guide', description: 'Important safety information for UV curing operation.', category: 'safety-guides', product: 'cure-unit', fileType: 'PDF', size: '0.9MB', date: 'May 3, 2026', previewHref: '#', downloadHref: '#' },
+  { id: 'm-10', title: 'ODYX Cure Safety Guide', description: 'Important safety information for curing operation.', category: 'safety-guides', product: 'cure-unit', fileType: 'PDF', size: '0.9MB', date: 'May 3, 2026', previewHref: '#', downloadHref: '#' },
   { id: 'm-11', title: 'Resin Materials Data Sheet', description: 'Technical data sheets for all ODYX resin lines.', category: 'other-documents', product: 'resin-materials', fileType: 'PDF', size: '2.7MB', date: 'May 2, 2026', previewHref: '#', downloadHref: '#' },
   { id: 'm-12', title: 'Resin Materials Safety (SDS)', description: 'Safety data sheets for handling and storage.', category: 'safety-guides', product: 'resin-materials', fileType: 'PDF', size: '1.6MB', date: 'Apr 30, 2026', previewHref: '#', downloadHref: '#' },
 ];
@@ -183,12 +183,12 @@ export interface FaqEntry {
 }
 
 export const FAQS: FaqEntry[] = [
-  { id: 'f-1', question: 'How do I calibrate my scanner?', answer: 'Open ODYX Box, go to Settings › Calibration, and follow the on-screen guide with the supplied calibration target. Recalibrate every 3 months or after a firmware update.', category: 'scanner' },
+  { id: 'f-1', question: 'How do I calibrate my scanner?', answer: 'Open the ODYX S1 software, go to Settings › Calibration, and follow the on-screen guide with the supplied calibration target. Recalibrate every 3 months or after a firmware update.', category: 'scanner' },
   { id: 'f-2', question: 'What file formats are supported?', answer: 'The ODYX S1 exports STL and PLY files. ODYX Design imports STL, PLY, and OBJ, and exports print-ready STL files for the P1-26.', category: 'software' },
   { id: 'f-3', question: 'How often should I update the software?', answer: 'We recommend installing updates as soon as they are available. Check Settings › Updates, or subscribe to release notes from the Downloads page.', category: 'software' },
   { id: 'f-4', question: 'How can I improve scan accuracy?', answer: 'Ensure the tip is clean and dry, keep a steady scanning distance of 0–5mm, and recalibrate the scanner if accuracy drifts over time.', category: 'scanner' },
-  { id: 'f-5', question: 'Why is my scanner not detected?', answer: 'Reconnect the USB-C cable, try a different port, reinstall the USB driver from the Downloads page, and confirm ODYX Box has camera and USB permissions.', category: 'scanner' },
-  { id: 'f-6', question: 'How do I clean the printing tip?', answer: 'Use isopropyl alcohol (IPA) with a lint-free wipe after every case. Never use abrasive materials, and let the tip dry fully before the next scan.', category: 'scanner' },
+  { id: 'f-5', question: 'Why is my scanner not detected?', answer: 'Reconnect the USB-C cable, try a different port, reinstall the USB driver from the Downloads page, and confirm the ODYX S1 software has camera and USB permissions.', category: 'scanner' },
+  { id: 'f-6', question: 'How do I clean the scanning tip?', answer: 'Use isopropyl alcohol (IPA) with a lint-free wipe after every case. Never use abrasive materials, and let the tip dry fully before the next scan.', category: 'scanner' },
   { id: 'f-7', question: 'What resin is best for crowns and bridges?', answer: 'Use the ODYX Crown & Bridge resin line — it is validated for the P1-26 profile and certified for permanent restorations.', category: 'resin' },
   { id: 'f-8', question: 'How long does a curing cycle take?', answer: 'Standard cycles run 8–12 minutes depending on the resin line and part geometry. ODYX Cure automatically selects the validated profile.', category: 'cure' },
   { id: 'f-9', question: 'My print failed halfway through — what should I check?', answer: 'Check the resin vat level, confirm the build plate is level and clean, and verify the print profile matches the resin line loaded.', category: 'printer' },
@@ -223,7 +223,7 @@ export interface WarrantyPeriodEntry {
 export const WARRANTY_PERIODS: WarrantyPeriodEntry[] = [
   { product: 'ODYX S1 Scanner', period: '18 Months' },
   { product: 'ODYX P1-26 3D Printer', period: '12 Months' },
-  { product: 'ODYX Cure UV Curing Unit', period: '12 Months' },
+  { product: 'ODYX Cure Curing Unit', period: '12 Months' },
   { product: 'ODYX Resin Materials', period: '6 Months' },
 ];
 

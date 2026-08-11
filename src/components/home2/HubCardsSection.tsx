@@ -80,7 +80,7 @@ const LEARN_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
 
 const SUPPORT_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
   { label: "Help Center", icon: "book", l: 76.68, t: 35.21, w: 18.57 },
-  { label: "Live Chat", icon: "chat", l: 76.68, t: 50.11, w: 18.57 },
+  { label: "WhatsApp", icon: "chat", l: 76.68, t: 50.11, w: 18.57 },
   { label: "Downloads", icon: "download", l: 76.68, t: 64.67, w: 18.57 },
 ];
 

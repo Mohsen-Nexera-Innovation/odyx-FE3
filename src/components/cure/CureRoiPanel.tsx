@@ -93,7 +93,7 @@ export default function CureRoiPanel() {
       </div>
 
       <p className={cx("roi__note")}>
-        Estimate based on faster validated cure cycles vs. babysitting open-ended UV exposure.
+        Estimate based on faster validated cure cycles vs. babysitting open-ended exposure.
         Adjust the numbers to match your clinic.
       </p>
 

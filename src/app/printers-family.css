@@ -138,15 +138,12 @@
   width:46%; height:32%; inset-inline-start:2%; top:6%;
   background:radial-gradient(closest-side, rgba(0,80,216,.3), transparent 70%);
 }
-/* Duo scene — background-free cutout of both printers, floating on the
-   tilting stage. drop-shadow follows the printers' silhouette (a box-shadow
-   would reintroduce a visible rectangle). */
+/* Duo scene — background-free cutout of both printers, floating on the tilting stage.
+   No drop-shadow — smears transparent PNG cutouts into ghost trails. */
 .ph-scene{
   position:absolute; top:50%; left:50%; width:100%; max-width:none; height:auto;
   transform:translate(-50%,-50%) translateZ(46px);
-  filter:
-    drop-shadow(0 34px 44px rgba(0,0,0,.55))
-    drop-shadow(0 0 60px rgba(0,80,216,.12));
+  filter:none;
 }
 .ph-tile{
   position:absolute; margin:0; border-radius:14px; overflow:hidden;

@@ -233,7 +233,7 @@ const FEAT = [
   {
     i: "cure",
     t: "ODYX Cure",
-    d: "Controlled UV for final strength.",
+    d: "Controlled curing for final strength.",
     img: "/img/cure-uv02/hero/machine-cutout.png",
   },
   {

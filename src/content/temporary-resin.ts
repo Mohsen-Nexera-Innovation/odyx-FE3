@@ -90,9 +90,9 @@ export const TEMPORARY_RESIN_COMPATIBLE = [
   },
   {
     id: 'uv-02',
-    label: 'ODYX UV-02 Curing Unit',
+    label: 'ODYX Cure',
     img: '/img/cure-uv02/hero/machine-cutout.png',
-    imgAlt: 'ODYX UV-02 curing unit',
+    imgAlt: 'ODYX Cure',
     href: '/products/curing-machines',
   },
   {

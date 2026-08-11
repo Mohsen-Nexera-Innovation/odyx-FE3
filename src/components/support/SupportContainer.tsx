@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 export function SupportContainer({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`w-full px-[clamp(20px,4vw,56px)] ${className}`}
+      className={`w-full max-w-full min-w-0 px-[clamp(16px,4vw,56px)] box-border ${className}`}
     >
       {children}
     </div>

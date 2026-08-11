@@ -84,7 +84,7 @@ const sameDayCrown: ClinicalIndicationContent = {
       { n: 1, title: 'Scan', body: 'Full arch or quadrant scan with ODYX S1.', time: '~30 sec', icon: SHARED_TL.scan },
       { n: 2, title: 'Design', body: 'Design the crown with your preferred CAD software.', time: '~3 min', icon: '/img/clinical-sdc/tl/tl-design.png' },
       { n: 3, title: 'Print', body: 'Print the crown with ODYX P1-26 using Ceramic Crown Resin.', time: '~18 min', icon: SHARED_TL.print },
-      { n: 4, title: 'Cure', body: 'Cure with ODYX UV-02 for optimal strength and esthetics.', time: '~5 min', icon: SHARED_TL.cure },
+      { n: 4, title: 'Cure', body: 'Cure with ODYX Cure for optimal strength and esthetics.', time: '~5 min', icon: SHARED_TL.cure },
       { n: 5, title: 'Finish & Cement', body: 'Simple finishing and polishing. Ready to cement.', time: '~5 min', icon: '/img/clinical-sdc/tl/tl-finish.png' },
     ],
   },
@@ -410,7 +410,7 @@ const implantModel: ClinicalIndicationContent = {
       'Orient models to protect critical soft-tissue areas.',
       'Verify analog torque seating before wax-up or CAD.',
       'Label arches clearly for multi-unit cases.',
-      'Store cured models away from direct UV light.',
+      'Store cured models away from direct light.',
     ],
   },
   realCase: {

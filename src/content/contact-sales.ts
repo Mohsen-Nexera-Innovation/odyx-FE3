@@ -30,7 +30,7 @@ export const CONTACT_SALES_HERO = {
     },
     {
       src: '/img/hv2-cut/cure-product.webp',
-      alt: 'ODYX Cure UV-02',
+      alt: 'ODYX Cure',
     },
     {
       src: '/img/hv2-cut/resins-product.webp',
@@ -58,7 +58,7 @@ export const CONTACT_SALES_DIRECT = {
       description: 'Chat instantly with our sales team\non WhatsApp.',
       cta: {
         label: 'Start Chat',
-        href: 'https://wa.me/201001234567',
+        href: 'https://wa.me/201042077646',
       },
     },
     {
@@ -67,7 +67,7 @@ export const CONTACT_SALES_DIRECT = {
       description: 'Speak directly with one of\nour sales representatives.',
       cta: {
         label: 'Call Now',
-        href: 'tel:+201001234567',
+        href: 'tel:+201042077646',
       },
     },
     {
@@ -199,8 +199,8 @@ export const CONTACT_SALES_BAR = {
   },
   whatsapp: {
     title: 'WhatsApp Sales',
-    phoneDisplay: '+20 100 123 4567',
-    href: 'https://wa.me/201001234567',
+    phoneDisplay: '+20 104 207 7646',
+    href: 'https://wa.me/201042077646',
     note: 'Quick response on WhatsApp',
   },
   email: {

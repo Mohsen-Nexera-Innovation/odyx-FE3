@@ -126,7 +126,7 @@ export default async function Page({ params }: Props) {
       </>
     );
   }
-  // Cure UV-02 — same layout system as P1-26; content from cure.jpeg
+  // ODYX Cure — same layout system as P1-26; content from cure.jpeg
   if (raw === CURE_UV02_SLUG) {
     return (
       <>

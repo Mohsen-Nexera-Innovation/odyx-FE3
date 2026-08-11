@@ -16,9 +16,9 @@ export function RequestDemoProgress({
   onStepClick: (id: DemoStepId) => void;
 }) {
   return (
-    <nav aria-label="Demo request progress" className="bg-[#F5F7FB] pt-5">
-      <div className={shellClass}>
-        <ol className="m-0 flex list-none items-center gap-0 rounded-2xl border border-[#E5E7EB] bg-white px-4 py-4 sm:px-6 sm:py-5">
+    <nav aria-label="Demo request progress" className="bg-[#F5F7FB] pt-4 sm:pt-5">
+      <div className={cn(shellClass, 'min-w-0')}>
+        <ol className="m-0 grid list-none grid-cols-3 items-start gap-0 rounded-2xl border border-[#E5E7EB] bg-white px-3 py-4 sm:flex sm:items-center sm:px-6 sm:py-5">
           {REQUEST_DEMO_STEPS.map((step, index) => {
             const active = activeStep === step.id;
             const complete = stepState[step.id] && !active;
@@ -28,13 +28,13 @@ export function RequestDemoProgress({
               <li
                 key={step.id}
                 className={cn(
-                  'flex min-w-0 items-center',
-                  isLast ? 'shrink-0' : 'flex-1',
+                  'relative flex min-w-0 flex-col items-center sm:flex-row sm:items-center',
+                  isLast ? 'sm:shrink-0' : 'sm:flex-1',
                 )}
               >
                 <button
                   type="button"
-                  className="inline-flex shrink-0 cursor-pointer items-center gap-3 rounded-lg border-0 bg-transparent p-1 text-start outline-none focus-visible:ring-2 focus-visible:ring-[#0050D8]/35 focus-visible:ring-offset-2"
+                  className="relative z-[1] flex w-full max-w-full cursor-pointer flex-col items-center gap-2 rounded-lg border-0 bg-transparent p-1 text-center outline-none focus-visible:ring-2 focus-visible:ring-[#0050D8]/35 focus-visible:ring-offset-2 sm:inline-flex sm:w-auto sm:flex-row sm:items-center sm:gap-3 sm:text-start"
                   aria-current={active ? 'step' : undefined}
                   onClick={() => onStepClick(step.id)}
                 >
@@ -55,7 +55,10 @@ export function RequestDemoProgress({
                   </span>
 
                   <span className="flex min-w-0 flex-col gap-0.5">
-                    <span className="truncate text-[13px] font-bold leading-tight text-[#0A1020] sm:text-sm">
+                    <span className="text-[12px] font-bold leading-tight text-[#0A1020] sm:hidden">
+                      {step.shortTitle}
+                    </span>
+                    <span className="hidden truncate text-[13px] font-bold leading-tight text-[#0A1020] sm:block sm:text-sm">
                       {step.title}
                     </span>
                     <span className="hidden truncate text-[11px] font-medium leading-tight text-[#6B7280] sm:block sm:text-xs">
@@ -65,13 +68,24 @@ export function RequestDemoProgress({
                 </button>
 
                 {!isLast ? (
-                  <span
-                    aria-hidden
-                    className={cn(
-                      'mx-3 h-px min-w-4 flex-1 sm:mx-4',
-                      stepState[step.id] ? 'bg-[#0050D8]' : 'bg-[#DBEAFE]',
-                    )}
-                  />
+                  <>
+                    {/* Mobile connector between circles */}
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'pointer-events-none absolute start-[calc(50%+18px)] top-5 z-0 h-px w-[calc(100%-36px)] sm:hidden',
+                        stepState[step.id] ? 'bg-[#0050D8]' : 'bg-[#DBEAFE]',
+                      )}
+                    />
+                    {/* Desktop connector */}
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'mx-3 hidden h-px min-w-4 flex-1 sm:mx-4 sm:block',
+                        stepState[step.id] ? 'bg-[#0050D8]' : 'bg-[#DBEAFE]',
+                      )}
+                    />
+                  </>
                 ) : null}
               </li>
             );
