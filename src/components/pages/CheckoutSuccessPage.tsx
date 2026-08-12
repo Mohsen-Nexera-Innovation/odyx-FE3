@@ -9,6 +9,7 @@ import { formatMoney } from '@/content/shop';
 import { designInboxHandoffHref, finalizeDesignCaseAfterPayment } from '@/lib/design-case-draft';
 import { getOrderFacade, type StoredOrder } from '@/lib/orders';
 import { readSession } from '@/lib/auth';
+import { trackMetaPurchaseOnce } from '@/lib/meta-pixel';
 
 const CheckIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -35,7 +36,10 @@ function SuccessBody() {
       setOrder(null);
       return;
     }
-    void getOrderFacade(orderId).then((o) => setOrder(o ?? null));
+    void getOrderFacade(orderId).then((o) => {
+      setOrder(o ?? null);
+      if (o) trackMetaPurchaseOnce(o.id, o.total);
+    });
   }, [orderId]);
 
   const isDigital = Boolean(order && isDigitalOrder(order));

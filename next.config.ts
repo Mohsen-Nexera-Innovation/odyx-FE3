@@ -19,6 +19,16 @@ const nextConfig: NextConfig = {
         destination: "/cases",
         permanent: true,
       },
+      {
+        source: "/support",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/support/:path*",
+        destination: "/",
+        permanent: false,
+      },
     ];
   },
 };

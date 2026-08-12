@@ -39,8 +39,6 @@ const SEARCH_ITEMS = [
   { label: "ODYX P1-26", href: "/products/odyx-p1-26" },
   { label: "ODYX Cure", href: "/products/curing-machines" },
   { label: "Resin & Materials", href: "/products/resins" },
-  { label: "Support Hub", href: "/support" },
-  { label: "Register your device", href: "/support#register" },
   { label: "Learning Center", href: "/learning" },
   { label: "Request a Demo", href: "/request-demo" },
 ];

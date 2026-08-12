@@ -5,9 +5,8 @@ import { usePathname } from "next/navigation";
 import { isAuthShellPath } from "@/content/auth";
 import { HV2_GUTTER } from "@/components/home2/hv2Chrome";
 
-// Site footer — navy band. Three equal columns (brand / company / support)
-// on desktop; brand full-width then two equal link columns on tablet;
-// stacked on small phones. No corner radius — the band is flush to the page.
+// Site footer — navy band. Brand + company links. No corner radius —
+// the band is flush to the page.
 
 type FooterColumn = { title: string; links: { label: string; href: string }[] };
 
@@ -20,15 +19,6 @@ const COLUMNS: FooterColumn[] = [
       { label: "Our Values", href: "/about#values" },
       // { label: "Our Team", href: "/about#team" },
       { label: "News & Insights", href: "/about#news" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { label: "Help Center", href: "/support" },
-      { label: "Downloads", href: "/support#manuals" },
-      { label: "Warranty", href: "/support#warranty" },
-      { label: "Contact Us", href: "/support#contact" },
     ],
   },
 ];

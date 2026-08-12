@@ -195,7 +195,6 @@ export const CONTACT_SALES_BAR = {
   support: {
     title: 'Need help?',
     description: 'Our team is ready to assist you\nMonday – Thursday, 9AM – 5PM',
-    cta: { label: 'Contact Support', href: '/support' },
   },
   whatsapp: {
     title: 'WhatsApp Sales',

@@ -1,10 +1,10 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { HV2_BLUE, HV2_BODY, HV2_EYEBROW, HV2_H2 } from "@/components/home2/hv2Chrome";
 
 // Ecosystem orbit — content band inside the shared Eco+Products section.
-// Separate cutouts on the parent gradient. One Link per product.
-// Stage geometry is physical left/top % (dir=ltr); not mirrored in RTL.
+// Separate cutouts on the parent gradient. Product nodes download the
+// same flyers as the product pages. Stage geometry is physical left/top %
+// (dir=ltr); not mirrored in RTL.
 
 const ICON = {
   scan: (
@@ -43,50 +43,48 @@ const ICON = {
 type EcoNode = {
   key: string;
   label: string;
-  aria: string;
-  href: string;
   src: string;
   icon: ReactNode;
   box: string;
   imgW: string;
+  brochure?: string;
+  brochureName?: string;
 };
 
 const NODES: EcoNode[] = [
   {
     key: "resin",
-    label: "Resin",
-    aria: "ODYX Resins",
-    href: "/products/resins",
+    label: "Resin Lines",
     src: "/img/hv2-hub/store-resins-cutout.png",
     icon: ICON.drop,
     box: "left-[1%] top-[6%] w-[24%] z-[2]",
     imgW: "w-[92%]",
+    brochure: "/docs/resins/resin-flyer.pdf",
+    brochureName: "ODYX-Resin-Brochure.pdf",
   },
   {
     key: "scanner",
     label: "Scanner",
-    aria: "ODYX S1 Intraoral Scanner",
-    href: "/products/odyx-s1-intraoral-scanner",
     src: "/img/hv2-cut/scanner-product.webp",
     icon: ICON.scan,
     box: "left-[33%] top-[0%] w-[30%] z-[2]",
     imgW: "w-full",
+    brochure: "/docs/resins/scanner-flyer.pdf",
+    brochureName: "ODYX-S1-Brochure.pdf",
   },
   {
     key: "printer",
     label: "Printer",
-    aria: "ODYX P1-26 3D Printer",
-    href: "/products/odyx-p1-26",
     src: "/img/hv2-cut/printer-product.webp",
     icon: ICON.layers,
-    box: "left-[69%] top-[2%] w-[18%] z-[2]",
+    box: "left-[74%] top-[2%] w-[18%] z-[2]",
     imgW: "w-[78%]",
+    brochure: "/docs/resins/3d-printer-flyer.pdf",
+    brochureName: "ODYX-P1-26-Brochure.pdf",
   },
   {
     key: "software",
     label: "Software",
-    aria: "ODYX Design Software",
-    href: "/case-submission",
     src: "/img/hv2-eco/eco-software.webp",
     icon: ICON.monitor,
     box: "left-[7%] top-[50%] w-[22%] z-[2]",
@@ -95,18 +93,20 @@ const NODES: EcoNode[] = [
   {
     key: "cure",
     label: "Cure",
-    aria: "ODYX Cure",
-    href: "/products/curing-machines",
     src: "/img/hv2-cut/cure-product.webp",
     icon: ICON.sun,
-    box: "left-[55%] top-[50%] w-[20%] z-[2]",
+    box: "left-[64%] top-[62%] w-[18%] z-[2]",
     imgW: "w-[88%]",
+    brochure: "/docs/resins/curing-flyer.pdf",
+    brochureName: "ODYX-Cure-Brochure.pdf",
   },
 ];
 
+const NODE_BOX =
+  "absolute flex flex-col items-center gap-[clamp(4px,.7cqw,12px)] no-underline!";
+
 const NODE_LINK =
-  "absolute flex flex-col items-center gap-[clamp(4px,.7cqw,12px)] cursor-pointer" +
-  " touch-manipulation" +
+  " cursor-pointer touch-manipulation" +
   " focus-visible:outline-2 focus-visible:outline-[var(--hv2-blue)] focus-visible:outline-offset-4" +
   " [&_img]:transition-[filter,transform] [&_img]:duration-300 [&_img]:ease-out" +
   " hover:[&_img]:[filter:drop-shadow(0_16px_30px_rgba(10,16,32,.18))_brightness(1.03)]" +
@@ -198,6 +198,8 @@ export default function EcosystemSection() {
           >
             A seamless ecosystem where every product is designed to work in
             perfect harmony.
+            <br />
+            Click on a product to download the brochures.
           </p>
         </div>
 
@@ -240,27 +242,43 @@ export default function EcosystemSection() {
             </span>
           </div>
 
-          {NODES.map((n) => (
-            <Link
-              key={n.key}
-              className={`${NODE_LINK} ${n.box}`}
-              href={n.href}
-              aria-label={n.aria}
-            >
-              <img
-                className={`${NODE_IMG} ${n.imgW}`}
-                src={n.src}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                draggable={false}
-              />
-              <span className={BADGE}>{n.icon}</span>
-              <span className="text-[length:clamp(10px,1.3cqw,18px)] max-[560px]:text-[11px]! font-bold leading-none text-[#262B3C] whitespace-nowrap [text-shadow:0_1px_8px_rgba(255,255,255,.95)]">
-                {n.label}
-              </span>
-            </Link>
-          ))}
+          {NODES.map((n) => {
+            const nodeClass = `${NODE_BOX} ${n.box}${n.brochure ? NODE_LINK : " pointer-events-none"}`;
+            const body = (
+              <>
+                <img
+                  className={`${NODE_IMG} ${n.imgW}`}
+                  src={n.src}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  draggable={false}
+                />
+                <span className={BADGE}>{n.icon}</span>
+                <span className="text-[length:clamp(10px,1.3cqw,18px)] max-[560px]:text-[11px]! font-bold leading-none text-[#262B3C] whitespace-nowrap [text-shadow:0_1px_8px_rgba(255,255,255,.95)]">
+                  {n.label}
+                </span>
+              </>
+            );
+            if (n.brochure) {
+              return (
+                <a
+                  key={n.key}
+                  className={nodeClass}
+                  href={n.brochure}
+                  download={n.brochureName}
+                  aria-label={`Download ${n.label} brochure`}
+                >
+                  {body}
+                </a>
+              );
+            }
+            return (
+              <div key={n.key} className={nodeClass}>
+                {body}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

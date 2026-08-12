@@ -8,6 +8,7 @@ import {
 } from '@/content/contact-sales';
 import { ApiError } from '@/lib/api/client';
 import { createQuoteRequestApi } from '@/lib/api/leads';
+import { trackMetaLead } from '@/lib/meta-pixel';
 import { ArrowIcon, ProductInterestIcon } from './SalesIcons';
 
 const QuoteFormSchema = z.object({
@@ -87,6 +88,7 @@ export function QuoteForm() {
       });
       setForm(INITIAL);
       setStatus('sent');
+      trackMetaLead();
     } catch (err) {
       const message =
         err instanceof ApiError

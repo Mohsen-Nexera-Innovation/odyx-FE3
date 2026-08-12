@@ -1,7 +1,5 @@
-import Link from 'next/link';
 import { CONTACT_SALES_BAR } from '@/content/contact-sales';
 import {
-  ArrowIcon,
   HeadsetClockIcon,
   MailIcon,
   WhatsAppIcon,
@@ -29,15 +27,9 @@ export function SalesContactBar() {
               <h3 className="text-[15px] font-bold text-[var(--cs-ink)] mb-1">
                 {support.title}
               </h3>
-              <p className="text-[13px] leading-snug text-[#6B7280] font-medium mb-3 whitespace-pre-line">
+              <p className="text-[13px] leading-snug text-[#6B7280] font-medium whitespace-pre-line">
                 {support.description}
               </p>
-              <Link 
-                href={support.cta.href} 
-                className="inline-flex items-center justify-center border-[1.5px] border-[#DCE6F7] !text-[#0050D8] bg-transparent font-bold text-[12px] px-4 py-2 rounded-[8px] transition-colors hover:bg-[#0050D8] hover:!text-white max-w-max mt-1"
-              >
-                {support.cta.label}
-              </Link>
             </div>
           </div>
 
