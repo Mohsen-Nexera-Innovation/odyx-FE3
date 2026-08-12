@@ -18,7 +18,7 @@ body:has(.ccr-page) nextjs-portal {
 .ccr-page {
   background: #fff !important;
   /* Fixed header is min-height 68px + 17px padding; clear it so content isn't covered. */
-  padding-top: 88px;
+  padding-top: calc(var(--hdr-h) + 20px);
   /* Keep the last section from sitting against the site footer. */
   padding-bottom: 28px;
 }
@@ -152,7 +152,7 @@ body:has(.ccr-page) nextjs-portal {
 /* Detail page responsive (ccr) */
 @media (max-width: 1023px) {
   .ccr-page {
-    padding-top: 80px;
+    padding-top: calc(var(--hdr-h) + 12px);
   }
   .ccr-page h1 {
     font-size: clamp(1.75rem, 6.5vw, 2.45rem) !important;

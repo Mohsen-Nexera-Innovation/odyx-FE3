@@ -25,7 +25,7 @@ export function CasesHero({ data }: { data: CasesHeroData }) {
 
   return (
     <section
-      className="w-full px-[clamp(20px,4vw,56px)] pt-[65px] lg:pt-[85px]"
+      className="w-full px-[clamp(20px,4vw,56px)] pt-[var(--hdr-h)] lg:pt-[calc(var(--hdr-h)+17px)]"
       data-hero-light
       aria-labelledby="cases-hero-title"
     >

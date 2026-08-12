@@ -199,7 +199,7 @@ export default function EcosystemSection() {
             A seamless ecosystem where every product is designed to work in
             perfect harmony.
             <br />
-            Click on a product to download the brochures.
+            <span className={`${HV2_BLUE}!`}>Click on a product to download the brochures.</span>
           </p>
         </div>
 

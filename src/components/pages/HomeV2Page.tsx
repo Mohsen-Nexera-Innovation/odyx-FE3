@@ -68,7 +68,7 @@ export default function HomeV2Page() {
       <section
         // One shared atmosphere for Hero + Why (Why mounts inside this
         // section). Sky wash is full-bleed; content keeps the About gutter.
-        className="relative w-full pt-[100px] pb-0 max-[980px]:pt-[84px] bg-[var(--hv2-surface)] [background-image:linear-gradient(180deg,rgba(232,240,252,.15)_0%,rgba(232,240,252,.4)_22%,rgba(232,240,252,.28)_38%,rgba(238,242,249,.55)_58%,rgba(243,245,253,.88)_78%,var(--hv2-surface)_100%),url('/img/hv2-section-bg.jpg')] [background-position:center_top,center_top] [background-size:cover,cover] [background-repeat:no-repeat]"
+        className="relative w-full pt-[calc(var(--hdr-h)+32px)] pb-0 max-[980px]:pt-[calc(var(--hdr-h)+16px)] bg-[var(--hv2-surface)] [background-image:linear-gradient(180deg,rgba(232,240,252,.15)_0%,rgba(232,240,252,.4)_22%,rgba(232,240,252,.28)_38%,rgba(238,242,249,.55)_58%,rgba(243,245,253,.88)_78%,var(--hv2-surface)_100%),url('/img/hv2-section-bg.jpg')] [background-position:center_top,center_top] [background-size:cover,cover] [background-repeat:no-repeat]"
         data-hero-light
         id="hero"
       >

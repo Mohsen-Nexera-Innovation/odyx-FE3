@@ -35,7 +35,7 @@
 /* Hero */
 .s1l-hero{
   /* Clear fixed site header (~68–74px) on all viewports */
-  padding:clamp(96px, 12vh, 120px) 0 clamp(14px, 2vh, 22px);
+  padding:calc(var(--hdr-h) + clamp(28px, 4vh, 52px)) 0 clamp(14px, 2vh, 22px);
 }
 .s1l-hero-grid{
   display:grid;
