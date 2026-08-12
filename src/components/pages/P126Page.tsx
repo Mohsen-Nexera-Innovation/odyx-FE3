@@ -33,11 +33,11 @@ const CHIP_ICONS: Record<string, ReactNode> = {
       <rect x="27" y="27" width="15" height="15" rx="2.2" {...chipStroke} />
     </svg>
   ),
-  volume: (
+  tank: (
     <svg viewBox="0 0 48 48" aria-hidden>
-      <path d="M8 30V15l16-9 16 9v15l-16 9-16-9z" {...chipStroke} />
-      <path d="M8 15l16 9 16-9M24 24v15" {...chipStroke} />
-      <path d="M30 19.5l5 2.8M30 25l5 2.8" {...chipStroke} strokeWidth={2.3} />
+      <path d="M14 12h20v4H14z" {...chipStroke} />
+      <path d="M16 16h16l-1.5 22a3 3 0 0 1-3 2.5h-7a3 3 0 0 1-3-2.5L16 16z" {...chipStroke} />
+      <path d="M19 24h10M20 30h8" {...chipStroke} strokeWidth={2.2} />
     </svg>
   ),
   speed: (

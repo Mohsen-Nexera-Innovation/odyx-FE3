@@ -119,6 +119,7 @@ export function RequestDemoForm({
   update,
   toggleProduct,
   toggleApplication,
+  scrollMarginTop = 160,
 }: {
   formId: string;
   form: DemoFormState;
@@ -129,19 +130,21 @@ export function RequestDemoForm({
   update: <K extends keyof DemoFormState>(key: K, value: DemoFormState[K]) => void;
   toggleProduct: (id: DemoProductId) => void;
   toggleApplication: (id: DemoApplicationId) => void;
+  scrollMarginTop?: number;
 }) {
   const copy = REQUEST_DEMO_FORM;
+  const scrollMt = { scrollMarginTop };
 
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col gap-7 rounded-2xl border border-[#E5E7EB] bg-white px-[1.15rem] py-[1.35rem] md:gap-8 md:px-[1.6rem] md:py-6 md:pb-7"
+      className="flex flex-col gap-7 md:gap-8"
       noValidate
     >
       {/* Contact */}
       <section
         id="rd-section-contact"
-        className="scroll-mt-28"
+        style={scrollMt}
         aria-labelledby={`${formId}-contact-title`}
       >
         <SectionHead
@@ -275,7 +278,8 @@ export function RequestDemoForm({
       {/* Practice */}
       <section
         id="rd-section-practice"
-        className="scroll-mt-28 border-t border-[#EEF1F5] pt-6"
+        style={scrollMt}
+        className="border-t border-[#EEF1F5] pt-6"
         aria-labelledby={`${formId}-practice-title`}
       >
         <SectionHead
@@ -293,7 +297,7 @@ export function RequestDemoForm({
             </span>
           </legend>
           <div
-            className="grid grid-cols-2 gap-[0.65rem] sm:grid-cols-3 min-[900px]:grid-cols-6"
+            className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-[0.65rem] xl:grid-cols-6"
             role="radiogroup"
             aria-label={copy.sections.practice.aboutYou.label}
           >
@@ -332,7 +336,7 @@ export function RequestDemoForm({
           </div>
         </fieldset>
 
-        <div className="mb-6 grid grid-cols-1 gap-4 gap-x-[0.9rem] md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="mb-6 grid grid-cols-1 gap-4 gap-x-[0.9rem] sm:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr]">
           <Field
             id={`${formId}-clinic`}
             label={copy.sections.practice.clinicName.label}
@@ -403,7 +407,7 @@ export function RequestDemoForm({
           <p className="-mt-[0.35rem] mb-3 text-xs font-medium text-[#9CA3AF]">
             {copy.sections.practice.products.hint}
           </p>
-          <div className="grid grid-cols-2 gap-[0.7rem] min-[700px]:grid-cols-3 min-[1100px]:grid-cols-6">
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-[0.7rem] xl:grid-cols-3 2xl:grid-cols-6">
             {DEMO_PRODUCTS.map((product) => {
               const selected = form.products.includes(product.id);
               return (
@@ -413,13 +417,13 @@ export function RequestDemoForm({
                   aria-pressed={selected}
                   className={cn(
                     choiceCardClass,
-                    'min-h-36 items-start px-[0.65rem] py-[0.7rem] text-start',
+                    'min-h-[8.5rem] items-start px-2 py-2.5 text-start sm:min-h-36 sm:px-[0.65rem] sm:py-[0.7rem]',
                     selected && choiceCardSelectedClass,
                   )}
                   onClick={() => toggleProduct(product.id)}
                 >
                   <CheckMark on={selected} />
-                  <span className="my-[0.35rem] mb-[0.15rem] flex h-[4.5rem] w-full items-center justify-center overflow-hidden rounded-md">
+                  <span className="my-1 mb-0.5 flex h-14 w-full items-center justify-center overflow-hidden rounded-md sm:my-[0.35rem] sm:mb-[0.15rem] sm:h-[4.5rem]">
                     <Image
                       src={product.image}
                       alt=""
@@ -428,10 +432,10 @@ export function RequestDemoForm({
                       className="h-full w-full object-contain"
                     />
                   </span>
-                  <span className="text-[12.5px] font-bold leading-tight text-[#0A1020]">
+                  <span className="text-[11.5px] font-bold leading-tight text-[#0A1020] sm:text-[12.5px]">
                     {product.title}
                   </span>
-                  <span className="text-[11px] font-medium leading-tight text-[#6B7280]">
+                  <span className="text-[10.5px] font-medium leading-tight text-[#6B7280] sm:text-[11px]">
                     {product.subtitle}
                   </span>
                 </button>
@@ -452,7 +456,7 @@ export function RequestDemoForm({
           <p className="-mt-[0.35rem] mb-3 text-xs font-medium text-[#9CA3AF]">
             {copy.sections.practice.applications.hint}
           </p>
-          <div className="grid grid-cols-1 gap-[0.55rem] min-[560px]:grid-cols-2 min-[900px]:grid-cols-4">
+          <div className="grid grid-cols-1 gap-[0.55rem] sm:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4">
             {DEMO_APPLICATIONS.map((app) => {
               const Icon = APPLICATION_ICONS[app.icon];
               const selected = form.applications.includes(app.id);
@@ -496,7 +500,8 @@ export function RequestDemoForm({
       {/* Schedule */}
       <section
         id="rd-section-schedule"
-        className="scroll-mt-28 border-t border-[#EEF1F5] pt-6"
+        style={scrollMt}
+        className="border-t border-[#EEF1F5] pt-6"
         aria-labelledby={`${formId}-schedule-title`}
       >
         <SectionHead
@@ -555,7 +560,7 @@ export function RequestDemoForm({
           </div>
         </fieldset>
 
-        <div className="mb-6 grid grid-cols-1 gap-4 gap-x-[0.9rem] md:grid-cols-[1fr_1fr_1.35fr]">
+        <div className="mb-6 grid grid-cols-1 gap-4 gap-x-[0.9rem] sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1.35fr]">
           <Field
             id={`${formId}-date`}
             label={copy.sections.schedule.date.label}
@@ -675,10 +680,10 @@ export function RequestDemoForm({
           </label>
         </div>
 
-        <div className="flex flex-col items-stretch gap-3 min-[720px]:flex-row min-[720px]:items-center">
+        <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
           <button
             type="submit"
-            className="inline-flex min-h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-0 bg-[#0050D8] px-[1.4rem] py-3 text-[0.95rem] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors duration-150 hover:bg-[#0040B0] disabled:cursor-not-allowed disabled:opacity-60 min-[720px]:flex-none min-[720px]:min-w-60"
+            className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] border-0 bg-[#0050D8] px-[1.4rem] py-3 text-[0.95rem] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors duration-150 hover:bg-[#0040B0] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-60"
             disabled={status === 'submitting'}
           >
             {status === 'submitting'
@@ -686,8 +691,8 @@ export function RequestDemoForm({
               : copy.sections.schedule.submitLabel}
             <ArrowIcon className="h-4 w-4 rtl:rotate-180" />
           </button>
-          <p className="m-0 inline-flex items-center gap-1.5 text-xs font-medium text-[#6B7280]">
-            <LockIcon className="h-3.5 w-3.5" />
+          <p className="m-0 inline-flex items-center justify-center gap-1.5 text-center text-xs font-medium text-[#6B7280] sm:justify-start sm:text-start">
+            <LockIcon className="h-3.5 w-3.5 shrink-0" />
             {copy.sections.schedule.secureNote}
           </p>
         </div>
