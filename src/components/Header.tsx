@@ -1,30 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { HEADER_MENUS, type MegaColumn, type NavGroup, type NavLink } from '@/content/nav';
-import { useGlobalTools } from './GlobalTools';
-import { useAuthSession } from '@/hooks/useAuthSession';
 import { isAuthShellPath } from '@/content/auth';
-import { logout, type AccountSession } from '@/lib/auth';
-import { unreadTotalApi } from '@/lib/inbox-api';
-import { subscribeChatSocket } from '@/lib/chat-socket';
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
-
-const SearchIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
-  </svg>
-);
-
-function initialsFrom(session: AccountSession): string {
-  if (session.role === 'guest') return 'G';
-  const parts = session.name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return 'U';
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-}
 
 /** Dimmed entries stay in nav data for later, but are not shown. */
 function visibleLinks(items: NavLink[]): NavLink[] {
@@ -160,6 +141,26 @@ function collectMenuHrefs(menu: NavGroup): string[] {
 
 function isMenuRouteActive(menu: NavGroup, pathname: string, hash = ''): boolean {
   return collectMenuHrefs(menu).some((href) => isNavHrefActive(pathname, href, hash));
+}
+
+function ComingSoonNavItem({ label }: { label: string }) {
+  const tipId = `nav-soon-${label.replace(/\s+/g, '-').toLowerCase()}`;
+  return (
+    <div className="nav-item is-coming-soon">
+      <span
+        className="nav-soon"
+        tabIndex={0}
+        aria-disabled="true"
+        aria-label={`${label}, coming soon`}
+        aria-describedby={tipId}
+      >
+        <span className="nav-link-label">{label}</span>
+      </span>
+      <span id={tipId} className="nav-soon-tip" role="tooltip">
+        Coming soon
+      </span>
+    </div>
+  );
 }
 
 function MegaLink({
@@ -344,67 +345,8 @@ function MegaPanel({
   );
 }
 
-function UserMenu({ session, onSignOut }: { session: AccountSession; onSignOut: () => void }) {
-  const [open, setOpen] = useState(false);
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const displayName = session.role === 'guest' ? 'Guest' : session.name.split(' ')[0];
-
-  useEffect(() => {
-    if (!open) return;
-    const onClickOutside = (e: MouseEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setOpen(false);
-        triggerRef.current?.focus();
-      }
-    };
-    document.addEventListener('click', onClickOutside);
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('click', onClickOutside);
-      document.removeEventListener('keydown', onKey);
-    };
-  }, [open]);
-
-  return (
-    <div className="nav-user-wrap" ref={wrapRef}>
-      <button
-        type="button"
-        ref={triggerRef}
-        className={`nav-user${open ? ' on' : ''}`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-controls="nav-user-menu"
-        aria-label={`Account menu for ${displayName}`}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span className="nav-avatar" aria-hidden>{initialsFrom(session)}</span>
-        <span className="nav-user-caret" aria-hidden><Caret /></span>
-      </button>
-      <div className="nav-user-drop" id="nav-user-menu" role="menu" aria-label="Account" data-open={open ? 'true' : 'false'}>
-        {session.role !== 'guest' && (
-          <p className="nav-user-meta">
-            {session.name}
-            <span>{session.email}</span>
-          </p>
-        )}
-        <button type="button" role="menuitem" className="nav-user-signout" tabIndex={open ? 0 : -1} onClick={onSignOut}>
-          Sign out
-        </button>
-      </div>
-    </div>
-  );
-}
-
 export default function Header() {
-  const router = useRouter();
   const pathname = usePathname();
-  const { openSearch } = useGlobalTools();
-  const { session } = useAuthSession();
-  const [inboxUnread, setInboxUnread] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const [hasHero, setHasHero] = useState(false);
   const [heroLight, setHeroLight] = useState(false);
@@ -424,35 +366,6 @@ export default function Header() {
     window.addEventListener('hashchange', syncHash);
     return () => window.removeEventListener('hashchange', syncHash);
   }, [pathname]);
-
-  const refreshUnread = () => {
-    if (!session || session.accountType !== 'CLIENT') {
-      setInboxUnread(0);
-      return;
-    }
-    void unreadTotalApi(session)
-      .then(setInboxUnread)
-      .catch(() => setInboxUnread(0));
-  };
-
-  useEffect(() => {
-    refreshUnread();
-  }, [session]);
-
-  useEffect(() => {
-    const onInboxChange = () => refreshUnread();
-    window.addEventListener('odyx-inbox-change', onInboxChange);
-    return () => window.removeEventListener('odyx-inbox-change', onInboxChange);
-  }, [session]);
-
-  useEffect(() => {
-    if (!session || session.accountType !== 'CLIENT') return;
-    return subscribeChatSocket({
-      onConversationCreated: () => refreshUnread(),
-      onConversationMessage: () => refreshUnread(),
-      onConversationUpdated: () => refreshUnread(),
-    });
-  }, [session]);
 
   // Hero-aware scroll: transparent over hero, dark while still in hero, light once past hero.
   useEffect(() => {
@@ -515,11 +428,6 @@ export default function Header() {
     };
   }, [forceClose]);
 
-  const signOut = async () => {
-    await logout();
-    router.push('/login');
-  };
-
   const closeMenu = () => {
     setOpen(false);
     setExpandedNav(null);
@@ -563,63 +471,27 @@ export default function Header() {
           <img className="logo-img logo-img-on-light" src="/brand/odyx-egypt.png" alt="ODYX Egypt" />
         </Link>
         <nav className={`nav-menu${open ? ' open' : ''}${forceClose ? ' force-close' : ''}`} aria-label="Main">
-          {VISIBLE_MENUS.map((m) => (
-            <div
-              className={`nav-item${m.columns ? ' nav-item--mega' : ''}${expandedNav === m.label ? ' exp' : ''}`}
-              key={m.label}
-            >
-              <NavAnchor
-                href={m.href}
-                navOnly={m.navOnly}
-                onClick={(e) => toggleMobileSection(m.label, e)}
+          {VISIBLE_MENUS.map((m) =>
+            m.comingSoon ? (
+              <ComingSoonNavItem key={m.label} label={m.label} />
+            ) : (
+              <div
+                className={`nav-item${m.columns ? ' nav-item--mega' : ''}${expandedNav === m.label ? ' exp' : ''}`}
+                key={m.label}
               >
-                <span className={isMenuActive(m) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
-              </NavAnchor>
-              <MegaPanel menu={m} onClick={closeMenu} pathname={pathname || '/'} hash={hash} />
-            </div>
-          ))}
-          <div className="nav-mobile-auth" aria-label="Account">
-            {session ? null : (
-              <Link className="btn-ghost btn btn-sm" href="/login" onClick={closeMenu}>Sign in</Link>
-            )}
-            <Link className="btn-ghost btn btn-sm" href="/sales" onClick={closeMenu}>Contact Sales</Link>
-            <Link className="btn btn-sm nav-demo" href="/request-demo" onClick={closeMenu}>Request a Demo</Link>
-          </div>
+                <NavAnchor
+                  href={m.href}
+                  navOnly={m.navOnly}
+                  onClick={(e) => toggleMobileSection(m.label, e)}
+                >
+                  <span className={isMenuActive(m) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
+                </NavAnchor>
+                <MegaPanel menu={m} onClick={closeMenu} pathname={pathname || '/'} hash={hash} />
+              </div>
+            ),
+          )}
         </nav>
         <div className="nav-tools">
-          <button type="button" className="tool-btn search-btn" onClick={openSearch} title="Search (Cmd+K)" aria-label="Open search">
-            <SearchIcon />
-          </button>
-          {session ? (
-            <>
-              {session.accountType === 'STAFF' ? (
-                <Link className="btn-ghost btn btn-sm nav-inbox" href="/admin">
-                  Admin
-                </Link>
-              ) : (
-                <Link className="btn-ghost btn btn-sm nav-inbox" href="/inbox" aria-label={inboxUnread > 0 ? `Inbox, ${inboxUnread} unread` : 'Inbox'}>
-                  Inbox
-                  {inboxUnread > 0 ? <span className="nav-inbox-badge">{inboxUnread}</span> : null}
-                </Link>
-              )}
-              {session.accountType === 'STAFF' && (
-                <Link className="btn-ghost btn btn-sm nav-inbox" href="/admin/chat">
-                  Chat
-                </Link>
-              )}
-              <UserMenu session={session} onSignOut={signOut} />
-            </>
-          ) : (
-            <Link className="btn-ghost btn btn-sm nav-login" href="/login">Sign in</Link>
-          )}
-          <Link className="btn-ghost btn btn-sm nav-sales" href="/sales">
-            <span className="nav-label-long">Contact Sales</span>
-            <span className="nav-label-short">Sales</span>
-          </Link>
-          <Link className="btn btn-sm nav-demo" href="/request-demo">
-            <span className="nav-label-long">Request a Demo</span>
-            <span className="nav-label-short">Demo</span>
-          </Link>
           <button
             type="button"
             className="burger"

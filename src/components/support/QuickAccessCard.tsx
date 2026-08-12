@@ -8,6 +8,7 @@ export interface QuickAccessCardProps {
   linkLabel: string;
   href: string;
   theme?: 'blue' | 'purple' | 'green' | 'orange' | 'indigo';
+  disabled?: boolean;
 }
 
 const THEMES = {
@@ -18,21 +19,44 @@ const THEMES = {
   indigo: 'bg-indigo-50 text-indigo-600',
 };
 
-export function QuickAccessCard({ icon: Icon, title, description, linkLabel, href, theme = 'blue' }: QuickAccessCardProps) {
-  return (
-    <Link
-      href={href}
-      className="group flex flex-col rounded-[12px] border border-gray-100/60 bg-white p-6 shadow-[0_4px_40px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-1 hover:border-[#0050D8]/30 hover:shadow-[0_12px_40px_rgba(0,80,216,0.08)]"
-    >
+export function QuickAccessCard({ icon: Icon, title, description, linkLabel, href, theme = 'blue', disabled }: QuickAccessCardProps) {
+  const body = (
+    <>
       <span className={`inline-flex h-14 w-14 items-center justify-center rounded-full ${THEMES[theme]}`}>
         <Icon size={26} strokeWidth={2} aria-hidden />
       </span>
       <h3 className="mt-5 text-[17px] font-bold text-[#0A1020]">{title}</h3>
       <p className="mt-2 text-[14px] leading-relaxed text-[#6B7280] font-medium flex-1">{description}</p>
-      <span className="mt-5 inline-flex items-center gap-1.5 text-[14px] font-bold text-[#0050D8] transition-transform group-hover:translate-x-1">
+      <span
+        className={
+          disabled
+            ? 'mt-5 inline-flex items-center gap-1.5 text-[14px] font-bold text-[#0050D8]/40 cursor-not-allowed'
+            : 'mt-5 inline-flex items-center gap-1.5 text-[14px] font-bold text-[#0050D8] transition-transform group-hover:translate-x-1'
+        }
+      >
         {linkLabel}
         <ArrowRight size={15} aria-hidden />
       </span>
+    </>
+  );
+
+  if (disabled) {
+    return (
+      <div
+        className="flex flex-col rounded-[12px] border border-gray-100/60 bg-white p-6 shadow-[0_4px_40px_rgba(0,0,0,0.03)] opacity-70 cursor-not-allowed"
+        aria-disabled="true"
+      >
+        {body}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      className="group flex flex-col rounded-[12px] border border-gray-100/60 bg-white p-6 shadow-[0_4px_40px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-1 hover:border-[#0050D8]/30 hover:shadow-[0_12px_40px_rgba(0,80,216,0.08)]"
+    >
+      {body}
     </Link>
   );
 }
