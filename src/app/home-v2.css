@@ -41,7 +41,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
   color:var(--hv2-ink); font-weight:700; line-height:1.15; letter-spacing:-.01em;
 }
 .hv2 :focus-visible{outline:2px solid var(--hv2-blue); outline-offset:2px; border-radius:4px}
-.hv2 [id]{scroll-margin-top:84px}
+.hv2 [id]{scroll-margin-top:calc(var(--hdr-h) + 16px)}
 
 /* About page — same Tajawal / type tokens as Home V2 (no Home atmosphere). */
 .about{
@@ -63,7 +63,7 @@ body:has(.hv2) header#hdr.on-light.at-top{
   font-family:var(--font-tajawal),'Tajawal',sans-serif;
 }
 .about :focus-visible{outline:2px solid var(--hv2-blue); outline-offset:2px; border-radius:4px}
-.about [id]{scroll-margin-top:84px}
+.about [id]{scroll-margin-top:calc(var(--hdr-h) + 16px)}
 
 /* Reveal-on-scroll (Hv2Motion toggles .rv-in; data-rv staggers delay) */
 .hv2 .rv{opacity:0; transform:translateY(20px);

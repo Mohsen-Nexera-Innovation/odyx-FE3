@@ -6,7 +6,7 @@ export function SalesHero() {
 
   return (
     <section
-      className="w-full px-[clamp(20px,4vw,56px)] pt-[80px] lg:pt-[85px]"
+      className="w-full px-[clamp(20px,4vw,56px)] pt-[calc(var(--hdr-h)+12px)] lg:pt-[calc(var(--hdr-h)+17px)]"
       data-hero-light
       aria-labelledby="contact-sales-title"
     >
