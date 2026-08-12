@@ -5,7 +5,7 @@ export function AboutCtaSection({ data }: { data: StatsData }) {
   return (
     <section className="w-full px-[clamp(20px,4vw,56px)] flex justify-center">
       <div className="w-full">
-        <div className="bg-[#070F22] rounded-[8px] py-5 lg:py-6 px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+        <div className="bg-[#070F22] rounded-[8px] py-5 lg:py-6 px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-6 shadow-2xl relative overflow-hidden">
           
           {/* Subtle Background Glows */}
           <div className="absolute top-0 left-0 w-[150px] h-full bg-[#0050D8]/30 blur-[60px] pointer-events-none" />
@@ -30,7 +30,8 @@ export function AboutCtaSection({ data }: { data: StatsData }) {
             </h2>
           </div>
 
-          {/* Right Area: Stats */}
+          {/* Right Area: Stats — omitted until catalog-backed figures exist */}
+          {data.stats.length > 0 && (
           <div className="flex items-center justify-center gap-6 lg:gap-8 relative z-10 w-full lg:w-auto mt-4 lg:mt-0">
             {data.stats.map((stat, i) => (
               <React.Fragment key={i}>
@@ -49,7 +50,7 @@ export function AboutCtaSection({ data }: { data: StatsData }) {
               </React.Fragment>
             ))}
           </div>
-
+          )}
         </div>
       </div>
     </section>

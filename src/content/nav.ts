@@ -79,7 +79,7 @@ const ABOUT_NAV_ITEMS: NavLink[] = [
 
 export const HEADER_MENUS: NavGroup[] = [
   {
-    label: "About ODYX",
+    label: "About ODYX Egypt",
     href: "/about",
     items: ABOUT_NAV_ITEMS,
     columns: [

@@ -2,9 +2,9 @@ import { AboutPageData } from '../types';
 
 export const aboutData: AboutPageData = {
   hero: {
-    kicker: 'ABOUT ODYX',
+    kicker: 'ABOUT ODYX EGYPT',
     title: 'Built to Transform Digital Dentistry.',
-    subtitle: 'At ODYX, we combine advanced technology, deep expertise, and a passion for innovation to create an ecosystem that empowers clinicians and elevates patient care.',
+    subtitle: 'At ODYX Egypt, we combine advanced technology, deep expertise, and a passion for innovation to create an ecosystem that empowers clinicians and elevates patient care.',
     // primaryCta: { label: 'Our Story', href: '#why' },
     features: [
       {
@@ -21,11 +21,6 @@ export const aboutData: AboutPageData = {
         icon: 'lightbulb',
         title: 'Our Innovation',
         description: 'Pioneering technology that shapes the future of dentistry.',
-      },
-      {
-        icon: 'globe',
-        title: 'Our Impact',
-        description: 'Trusted by clinicians in 60+ countries worldwide.',
       },
     ],
   },
@@ -169,10 +164,6 @@ export const aboutData: AboutPageData = {
   },
   stats: {
     title: 'Together, we\'re shaping the future of dentistry.',
-    stats: [
-      { value: '10K+', label: 'Clinicians' },
-      { value: '1M+', label: 'Smiles Enhanced' },
-      { value: '60+', label: 'Countries Served' },
-    ],
+    stats: [],
   },
 };
