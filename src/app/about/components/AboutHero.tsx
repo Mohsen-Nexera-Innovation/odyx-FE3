@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Users, Lightbulb, Globe } from 'lucide-react';
+import { ShieldCheck, Users, Lightbulb } from 'lucide-react';
 import { AboutHeroData } from '../types';
 import {
   ABOUT_BLUE,
@@ -17,7 +17,6 @@ const ICON_MAP: Record<string, React.ElementType> = {
   'shield-check': ShieldCheck,
   'users': Users,
   'lightbulb': Lightbulb,
-  'globe': Globe,
 };
 
 export function AboutHero({ data }: { data: AboutHeroData }) {
@@ -63,9 +62,9 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
             )}
           </div>
 
-          {/* ── Right Column: 4 Features ────────────────────────── */}
+          {/* ── Right Column: Mission / Focus / Innovation ────────────────────────── */}
           <div className="w-full xl:w-[65%]">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-y-8 md:gap-y-0">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-y-8 md:gap-y-0">
               {data.features.map((feature, i) => {
                 const Icon = ICON_MAP[feature.icon] || ShieldCheck;
                 return (

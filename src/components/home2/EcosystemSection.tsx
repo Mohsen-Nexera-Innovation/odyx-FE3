@@ -95,8 +95,8 @@ const NODES: EcoNode[] = [
     label: "Cure",
     src: "/img/hv2-cut/cure-product.webp",
     icon: ICON.sun,
-    box: "left-[64%] top-[62%] w-[18%] z-[2]",
-    imgW: "w-[88%]",
+    box: "left-[64%] top-[52%] w-[18%] z-[2]",
+    imgW: "w-[72%]",
     brochure: "/docs/resins/curing-flyer.pdf",
     brochureName: "ODYX-Cure-Brochure.pdf",
   },
@@ -203,11 +203,11 @@ export default function EcosystemSection() {
           </p>
         </div>
 
-        {/* Stage: air on top for scanner; clip x so side nodes never scroll the page */}
+        {/* Stage: clip so node labels (Cure) never leak into Products */}
         <div
           className={
             "relative min-w-0 w-full aspect-[1024/576] justify-self-stretch" +
-            " overflow-x-clip overflow-y-visible" +
+            " overflow-x-clip overflow-y-clip" +
             " max-[1080px]:max-w-[720px] max-[1080px]:mx-auto" +
             " max-[560px]:aspect-[1024/620]"
           }
