@@ -1,5 +1,5 @@
-import { ClipboardList, MessageCircle, Pencil, UserRound } from 'lucide-react';
-import type { CaseSubmissionData } from './types';
+import { ClipboardList, CreditCard, MessageCircle, UserRound } from 'lucide-react';
+import { PAYMENT_METHOD_LABELS, type CaseSubmissionData } from './types';
 
 type ReviewSubmitStepProps = {
   data: CaseSubmissionData;
@@ -43,6 +43,9 @@ function ReviewSection({
 export default function ReviewSubmitStep({ data, onEdit, onConfirmedChange }: ReviewSubmitStepProps) {
   const doctor = data.doctor;
   const details = data.caseDetails;
+  const paymentLabel = data.paymentMethod
+    ? PAYMENT_METHOD_LABELS[data.paymentMethod]
+    : '—';
 
   return (
     <div className="border border-[#E5E7EB] rounded-[8px] bg-white shadow-[0_0_12px_rgba(0,0,0,0.06)] overflow-hidden divide-y divide-[#E5E7EB]">
@@ -63,7 +66,7 @@ export default function ReviewSubmitStep({ data, onEdit, onConfirmedChange }: Re
           {[
             ['Design Type',        details.designType],
             ['Tooth Number(s)',    details.toothNumbers || '—'],
-            ['Material',          details.otherMaterial || details.material],
+            ['Material',          details.material],
             ['Shade',             details.shade],
             ['Color Notes',       details.colorNotes || '—'],
             ['Special Instructions', details.instructions || '—'],
@@ -80,6 +83,10 @@ export default function ReviewSubmitStep({ data, onEdit, onConfirmedChange }: Re
         <p className="text-[12.5px] font-semibold text-[#0A1020] m-0">
           {data.sendMethod === 'whatsapp' ? 'WhatsApp' : 'Email'}
         </p>
+      </ReviewSection>
+
+      <ReviewSection icon={<CreditCard size={16} strokeWidth={2} />} title="Payment Method" step={4} onEdit={onEdit}>
+        <p className="text-[12.5px] font-semibold text-[#0A1020] m-0">{paymentLabel}</p>
       </ReviewSection>
 
       {/* Confirmation checkbox */}

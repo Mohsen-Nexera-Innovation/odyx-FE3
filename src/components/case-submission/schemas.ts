@@ -15,7 +15,6 @@ export const caseDetailsSchema = z.object({
   designType: z.string().min(1, 'Design Type is required'),
   toothNumbers: z.string().min(1, 'Tooth Number(s) is required').regex(/^[0-9,\s]+$/, 'Only numbers, commas, and spaces are allowed'),
   material: z.string().min(1, 'Material is required'),
-  otherMaterial: z.string().optional(),
   shade: z.string().min(1, 'Shade is required'),
   colorNotes: z.string().optional(),
   instructions: z.string().optional(),
@@ -23,4 +22,10 @@ export const caseDetailsSchema = z.object({
 
 export const sendMethodSchema = z.object({
   sendMethod: z.enum(['whatsapp', 'email'] as const, { message: 'Please select a send method' }),
+});
+
+export const paymentMethodSchema = z.object({
+  paymentMethod: z.enum(['bank_transfer'] as const, {
+    message: 'Please select a payment method',
+  }),
 });

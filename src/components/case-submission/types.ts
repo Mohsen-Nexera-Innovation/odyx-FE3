@@ -1,5 +1,7 @@
 export type SendMethod = 'whatsapp' | 'email' | '';
 
+export type PaymentMethod = 'online' | 'cash' | 'bank_transfer' | '';
+
 export type DoctorInformation = {
   fullName: string;
   email: string;
@@ -15,7 +17,6 @@ export type CaseDetails = {
   designType: string;
   toothNumbers: string;
   material: string;
-  otherMaterial: string;
   shade: string;
   colorNotes: string;
   instructions: string;
@@ -25,7 +26,14 @@ export type CaseSubmissionData = {
   doctor: DoctorInformation;
   caseDetails: CaseDetails;
   sendMethod: SendMethod;
+  paymentMethod: PaymentMethod;
   confirmed: boolean;
+};
+
+export const PAYMENT_METHOD_LABELS: Record<Exclude<PaymentMethod, ''>, string> = {
+  online: 'Online Payment',
+  cash: 'Cash on Delivery',
+  bank_transfer: 'Bank Transfer',
 };
 
 export const INITIAL_CASE_DATA: CaseSubmissionData = {
@@ -43,11 +51,11 @@ export const INITIAL_CASE_DATA: CaseSubmissionData = {
     designType: 'Crown',
     toothNumbers: '',
     material: 'Crown & Bridge Resin',
-    otherMaterial: '',
     shade: 'A2',
     colorNotes: '',
     instructions: '',
   },
   sendMethod: '',
+  paymentMethod: 'bank_transfer',
   confirmed: false,
 };

@@ -1,68 +1,65 @@
+import {
+  ABOUT_BLUE,
+  ABOUT_BODY,
+  ABOUT_CARD_DESC,
+  ABOUT_CARD_TITLE,
+  ABOUT_EYEBROW,
+  ABOUT_H1,
+} from '@/app/about/aboutChrome';
 import { REQUEST_DEMO_HERO } from '@/content/request-demo';
 import { VALUE_PROP_ICONS } from './DemoIcons';
-import { shellClass } from './formStyles';
 
 export function RequestDemoHero() {
+  const { eyebrow, titleBefore, titleAccent, titleAfter, description, valueProps } =
+    REQUEST_DEMO_HERO;
+
   return (
     <section
-      className="w-full bg-white pt-[88px]"
+      className="w-full min-w-0 px-[clamp(16px,4vw,56px)] pt-[72px] sm:pt-[80px] lg:pt-[85px]"
       data-hero-light
       aria-labelledby="rd-title"
     >
-      <div className={shellClass}>
-        <div className="relative overflow-hidden rounded-2xl bg-[linear-gradient(115deg,#f8faff_0%,#eef4ff_48%,#f7faff_100%)] px-6 py-8 md:px-9 md:pb-8 md:pt-10">
-          <div
-            className="pointer-events-none absolute end-[-6%] top-[-30%] h-[160%] w-[min(560px,58%)] opacity-90 [background:radial-gradient(circle_at_28%_38%,rgba(0,80,216,0.09)_0%,transparent_42%),radial-gradient(circle_at_72%_58%,rgba(6,165,222,0.1)_0%,transparent_46%),repeating-linear-gradient(-32deg,transparent_0_16px,rgba(0,80,216,0.04)_16px_17px)] [mask-image:linear-gradient(90deg,transparent_0%,#000_28%)]"
-            aria-hidden
-          />
+      <div className="relative w-full min-w-0 overflow-hidden rounded-[12px] bg-[#F4F8FD]">
+        <div className="relative z-10 flex flex-col gap-6 px-4 py-5 sm:gap-8 sm:px-6 sm:py-6 lg:flex-row lg:items-center lg:gap-8 lg:px-8 lg:py-8">
+          <div className="flex w-full min-w-0 flex-col justify-center lg:w-[40%]">
+            <p className={`${ABOUT_EYEBROW} mb-2! sm:mb-3!`}>{eyebrow}</p>
 
-          <p className="relative mb-3 text-xs font-bold tracking-[0.08em] text-[#0050D8] rtl:tracking-normal">
-            {REQUEST_DEMO_HERO.eyebrow}
-          </p>
-          <h1
-            id="rd-title"
-            className="relative mb-3 max-w-[22ch] text-[clamp(1.75rem,3.2vw,2.75rem)] font-extrabold leading-[1.12] tracking-[-0.02em] text-[#0A1020]"
-          >
-            {REQUEST_DEMO_HERO.titleBefore}{' '}
-            <span className="text-[#0050D8]">{REQUEST_DEMO_HERO.titleAccent}</span>{' '}
-            {REQUEST_DEMO_HERO.titleAfter}
-          </h1>
-          <p className="relative mb-7 max-w-xl text-[15px] font-medium leading-[1.55] text-[#6B7280]">
-            {REQUEST_DEMO_HERO.description}
-          </p>
+            <h1
+              id="rd-title"
+              className={`${ABOUT_H1} text-[length:clamp(28px,7vw,42px)]! mb-3! sm:mb-5!`}
+            >
+              {titleBefore}{' '}
+              <span className={ABOUT_BLUE}>{titleAccent}</span>
+              <br />
+              {titleAfter}
+            </h1>
 
-          <ul className="relative m-0 grid list-none grid-cols-1 gap-[1.1rem] p-0 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-5 lg:grid-cols-4 lg:gap-0">
-            {REQUEST_DEMO_HERO.valueProps.map((item, i) => {
-              const Icon = VALUE_PROP_ICONS[item.icon];
-              return (
-                <li
-                  key={item.id}
-                  className="relative flex items-start gap-3 p-0 lg:px-4 lg:first:ps-0 lg:last:pe-0"
-                >
-                  {i > 0 ? (
-                    <span
-                      className="absolute start-0 top-[0.35rem] bottom-[0.35rem] hidden w-px bg-[rgba(0,80,216,0.12)] lg:block"
-                      aria-hidden
-                    />
-                  ) : null}
-                  <span
-                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-[rgba(0,80,216,0.35)] bg-white text-[#0050D8]"
-                    aria-hidden
+            <p className={`${ABOUT_BODY} mb-0 max-w-[36em] text-[14px] sm:text-[14.5px]`}>
+              {description}
+            </p>
+          </div>
+
+          <div className="w-full min-w-0 lg:w-[60%]">
+            <ul className="m-0 grid list-none grid-cols-2 gap-x-3 gap-y-6 p-0 sm:gap-x-4 sm:gap-y-7 lg:grid-cols-4 lg:gap-y-0">
+              {valueProps.map((item, i) => {
+                const Icon = VALUE_PROP_ICONS[item.icon];
+                return (
+                  <li
+                    key={item.id}
+                    className={`flex min-w-0 flex-col items-center px-1 text-center sm:px-2 lg:px-3 ${
+                      i !== 0 ? 'lg:border-l lg:border-gray-200/60' : ''
+                    }`}
                   >
-                    <Icon className="h-[22px] w-[22px]" />
-                  </span>
-                  <div>
-                    <p className="mb-0.5 text-sm font-bold leading-tight text-[#0A1020]">
-                      {item.title}
-                    </p>
-                    <p className="m-0 text-[12.5px] font-medium leading-snug text-[#6B7280]">
-                      {item.body}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                    <div className="mb-2.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/60 bg-gradient-to-b from-white to-[#F1F5F9] text-[#0050D8] shadow-[0_8px_16px_rgba(0,80,216,0.06)] sm:mb-3.5 sm:h-14 sm:w-14">
+                      <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                    </div>
+                    <h3 className={`${ABOUT_CARD_TITLE} mb-1`}>{item.title}</h3>
+                    <p className={`${ABOUT_CARD_DESC} px-0.5`}>{item.body}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

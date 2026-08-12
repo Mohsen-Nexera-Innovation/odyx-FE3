@@ -59,7 +59,6 @@ const DESIGN_TYPES = [
 ] as const;
 
 const RESTORATIVE_MATERIALS = ['Ceramic Resin', 'Crown & Bridge Resin', 'Temporary Crown Resin'];
-const OTHER_MATERIALS = ['Zirconia', 'Lithium Disilicate (E.max)', 'Composite', 'Other'];
 
 const inputCls =
   'w-full min-h-[42px] border border-[#E5E7EB] rounded-[6px] bg-white text-[#0A1020] px-3 py-2 text-[14px] font-medium outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-[#9CA3AF] placeholder:font-normal hover:border-[#C5CDD8] focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]';
@@ -264,71 +263,26 @@ export default function CaseDetailsStep({ value, onChange, errors = {}, onClearE
         <legend className="text-[13px] font-bold text-[#0A1020] mb-4">
           Restorative Material <span className="text-[#EF4444]">*</span>
         </legend>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
-          
-          {/* Restorative (Recommended) */}
-          <div>
-            <span className="block text-[12px] text-[#0050D8] font-semibold mb-3">ODYX 3D Printing Materials (Recommended)</span>
-            <div className="bg-white rounded-[8px] shadow-[0_2px_14px_rgba(0,0,0,0.05)] border border-gray-100 p-5 flex flex-col gap-4">
-              {RESTORATIVE_MATERIALS.map((mat) => {
-                const selected = value.material === mat && !value.otherMaterial;
-                return (
-                  <label key={mat} className="flex items-center gap-3 text-[13px] font-medium text-[#0A1020] cursor-pointer select-none">
-                    <div className={`w-[18px] h-[18px] rounded-full border-[1.5px] flex items-center justify-center transition-colors ${selected ? 'border-[#0050D8] bg-[#0050D8]' : 'border-[#D1D5DB] bg-white'}`}>
-                      {selected && <Check size={11} strokeWidth={4} color="white" />}
-                    </div>
-                    <input
-                      type="radio"
-                      name="material"
-                      className="sr-only"
-                      checked={selected}
-                      onChange={() => {
-                        onChange({ ...value, material: mat, otherMaterial: '' });
-                        onClearError?.('material');
-                      }}
-                    />
-                    {mat}
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Other */}
-          <div>
-            <span className="block text-[13px] font-bold text-[#0A1020] mb-3">Other Materials</span>
-            <div className="flex flex-col gap-4">
-              {OTHER_MATERIALS.map((mat) => {
-                const selected = mat === 'Other' ? value.otherMaterial.startsWith('Other') : value.otherMaterial === mat;
-                return (
-                  <label key={mat} className="flex items-center gap-3 text-[13px] font-medium text-[#0A1020] cursor-pointer select-none">
-                    <div className={`w-[18px] h-[18px] rounded-full border-[1.5px] flex items-center justify-center transition-colors ${selected ? 'border-[#0050D8] bg-[#0050D8]' : 'border-[#D1D5DB] bg-white'}`}>
-                      {selected && <Check size={11} strokeWidth={4} color="white" />}
-                    </div>
-                    <input
-                      type="radio"
-                      name="material"
-                      className="sr-only"
-                      checked={selected}
-                      onChange={() => update('otherMaterial', mat)}
-                    />
-                    {mat}
-                  </label>
-                );
-              })}
-              {value.otherMaterial.startsWith('Other') && (
+        <span className="block text-[12px] text-[#0050D8] font-semibold mb-3">ODYX 3D Printing Materials</span>
+        <div className="bg-white rounded-[8px] shadow-[0_2px_14px_rgba(0,0,0,0.05)] border border-gray-100 p-5 flex flex-col gap-4 max-w-md">
+          {RESTORATIVE_MATERIALS.map((mat) => {
+            const selected = value.material === mat;
+            return (
+              <label key={mat} className="flex items-center gap-3 text-[13px] font-medium text-[#0A1020] cursor-pointer select-none">
+                <div className={`w-[18px] h-[18px] rounded-full border-[1.5px] flex items-center justify-center transition-colors ${selected ? 'border-[#0050D8] bg-[#0050D8]' : 'border-[#D1D5DB] bg-white'}`}>
+                  {selected && <Check size={11} strokeWidth={4} color="white" />}
+                </div>
                 <input
-                  aria-label="Other material name"
-                  placeholder="Please specify material"
-                  value={value.otherMaterial.startsWith('Other: ') ? value.otherMaterial.slice(7) : ''}
-                  onChange={(e) => update('otherMaterial', e.target.value ? `Other: ${e.target.value}` : 'Other')}
-                  required
-                  className={inputCls + ' mt-1'}
+                  type="radio"
+                  name="material"
+                  className="sr-only"
+                  checked={selected}
+                  onChange={() => update('material', mat)}
                 />
-              )}
-            </div>
-          </div>
+                {mat}
+              </label>
+            );
+          })}
         </div>
       </fieldset>
 
