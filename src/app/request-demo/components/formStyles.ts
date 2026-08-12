@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn';
 export const labelClass = 'text-[13px] font-bold text-[#0A1020]';
 
 export const inputClass =
-  'w-full h-11 rounded-lg border border-[#E5E7EB] bg-white px-[0.9rem] text-sm font-medium text-[#0A1020] placeholder:text-[#9CA3AF] placeholder:font-normal outline-none transition-[border-color,box-shadow] duration-150 hover:border-[#C5CDD8] focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]';
+  'w-full h-11 rounded-[8px] border border-[#E5E7EB] bg-white px-[0.9rem] text-sm font-medium text-[#0A1020] placeholder:text-[#9CA3AF] placeholder:font-normal outline-none transition-[border-color,box-shadow] duration-150 hover:border-[#C5CDD8] focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]';
 
 export const selectClass = cn(
   inputClass,
@@ -21,11 +21,14 @@ export function inputErrorClass(hasError?: boolean) {
   return hasError ? 'border-[#EF4444]' : '';
 }
 
-export const shellClass =
-  'w-full max-w-[1180px] mx-auto px-[clamp(20px,4vw,56px)]';
+export const shellClass = 'w-full min-w-0 px-[clamp(16px,4vw,56px)]';
+
+/** Shared card surface — matches Contact Sales / Support */
+export const cardClass =
+  'rounded-[12px] border border-[#E5E7EB]/80 bg-white shadow-[0_0_12px_rgba(0,0,0,0.06)]';
 
 export const choiceCardClass =
-  'relative flex w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-[1.5px] border-[#E5E7EB] bg-white px-[0.55rem] py-[0.85rem] text-center transition-[border-color,background-color,box-shadow] duration-150 hover:border-[#C5CDD8]';
+  'relative flex w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[8px] border-[1.5px] border-[#E5E7EB] bg-white px-[0.55rem] py-[0.85rem] text-center transition-[border-color,background-color,box-shadow] duration-150 hover:border-[#C5CDD8] hover:bg-[#F7F9FB]';
 
 /** Apply instead of stacking on choiceCardClass — avoids conflicting Tailwind utilities. */
 export const choiceCardSelectedClass =

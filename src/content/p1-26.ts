@@ -35,7 +35,7 @@ export const P1_26_HERO = {
 
 export const P1_26_FEATURE_CHIPS = [
   { id: 'lcd', label: 'LCD Technology', lines: ['LCD', 'Technology'] },
-  { id: 'volume', label: 'Large Build Volume', lines: ['Large', 'Build Volume'] },
+  { id: 'tank', label: 'Optional Small Tank', lines: ['Optional', 'Small Tank'] },
   { id: 'speed', label: 'High Print Speed', lines: ['High', 'Print Speed'] },
   { id: 'open', label: 'Open System', lines: ['Open', 'System'] },
   { id: 'acf', label: 'ACF Release Film', lines: ['ACF', 'Release', 'Film'] },
@@ -47,7 +47,7 @@ export const P1_26_WHY = {
   imgAlt: 'ODYX P1-26 with red cover open showing build platform',
   points: [
     'Ultra-High Precision for Accurate Results',
-    'Large Build Volume for More in One Print',
+    'Optional small tank designed to fit your workflow and applications',
     'High-Speed Printing to Save Time',
     'ACF Release Film for Easy Peeling',
     'Open Material Compatibility for Flexibility',

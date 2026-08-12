@@ -12,6 +12,7 @@ import {
   ClipboardIcon,
   HeadsetIcon,
 } from './DemoIcons';
+import { RD_HEADER_OFFSET_PX, RD_STICKY_STACK_GAP_PX } from './RequestDemoProgress';
 
 function SummaryBlock({
   title,
@@ -50,9 +51,11 @@ function SummaryBlock({
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-3 text-xs">
+    <div className="flex items-start justify-between gap-3 text-xs">
       <span className="shrink-0 font-medium text-[#9CA3AF]">{label}</span>
-      <span className="text-end font-semibold text-[#0A1020]">{value}</span>
+      <span className="min-w-0 break-words text-end font-semibold text-[#0A1020]">
+        {value}
+      </span>
     </div>
   );
 }
@@ -99,6 +102,7 @@ export function RequestDemoSummary({
   dateLabel,
   time,
   timezoneLabel,
+  stickyTopPx,
   onEditContact,
   onEditPractice,
   onEditSchedule,
@@ -114,6 +118,8 @@ export function RequestDemoSummary({
   dateLabel: string;
   time: string;
   timezoneLabel: string;
+  /** Distance from viewport top where the card's top border should pin */
+  stickyTopPx?: number;
   onEditContact: () => void;
   onEditPractice: () => void;
   onEditSchedule: () => void;
@@ -126,12 +132,23 @@ export function RequestDemoSummary({
     applicationIds.includes(a.id),
   ).map((a) => ({ id: a.id, label: a.label }));
 
+  const top = stickyTopPx ?? RD_HEADER_OFFSET_PX + 92 + RD_STICKY_STACK_GAP_PX;
+
   return (
-    <aside className="flex flex-col gap-[0.85rem] max-lg:order-first lg:sticky lg:top-[5.5rem]">
-      <div className="rounded-[14px] border border-[#E5E7EB] bg-white p-4 shadow-[0_8px_24px_rgba(10,16,32,0.04)]">
-        <header className="mb-4 flex items-center gap-2">
-          <ClipboardIcon className="h-5 w-5 text-[#0050D8]" />
-          <h2 className="m-0 text-base font-bold text-[#0A1020]">
+    <aside
+      className="flex min-w-0 flex-col gap-4 max-lg:static lg:sticky lg:z-30 lg:self-start lg:overflow-y-auto lg:overscroll-contain"
+      style={{
+        top,
+        maxHeight: `calc(100dvh - ${top}px - 1rem)`,
+      }}
+    >
+      {/* Pins as soon as this card's top border hits `top` */}
+      <div className="min-w-0 rounded-[12px] border border-[#E5E7EB]/80 bg-white p-4 shadow-[0_0_12px_rgba(0,0,0,0.06)] sm:p-6">
+        <header className="mb-4 flex items-center gap-2.5 sm:mb-5">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-[#F4F8FD] text-[#0050D8]">
+            <ClipboardIcon className="h-5 w-5" />
+          </span>
+          <h2 className="m-0 text-[15px] font-bold text-[#0A1020] sm:text-[16px]">
             {copy.summary.title}
           </h2>
         </header>
@@ -142,8 +159,6 @@ export function RequestDemoSummary({
           editLabel={copy.summary.editLabel}
         >
           <SummaryRow label={copy.summary.fields.name} value={name} />
-          <SummaryRow label={copy.summary.fields.role} value={roleLabel} />
-          <SummaryRow label={copy.summary.fields.clinic} value={clinicName} />
           <SummaryRow
             label={copy.summary.fields.location}
             value={locationLabel}
@@ -152,6 +167,8 @@ export function RequestDemoSummary({
             label={copy.summary.fields.language}
             value={languageLabel}
           />
+          <SummaryRow label={copy.summary.fields.role} value={roleLabel} />
+          <SummaryRow label={copy.summary.fields.clinic} value={clinicName} />
         </SummaryBlock>
 
         <SummaryBlock
@@ -192,23 +209,23 @@ export function RequestDemoSummary({
         </SummaryBlock>
       </div>
 
-      <div className="flex items-start gap-[0.8rem] rounded-[14px] border border-[#DBE4F5] bg-[#F5F8FF] p-4">
+      <div className="flex min-w-0 items-start gap-3 rounded-[12px] border border-[#E5E7EB]/80 bg-[#F4F8FD] p-4 sm:p-5">
         <span
-          className="inline-flex h-[2.35rem] w-[2.35rem] shrink-0 items-center justify-center rounded-[10px] bg-[rgba(0,80,216,0.1)] text-[#0050D8]"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-white text-[#0050D8] shadow-[0_2px_8px_rgba(0,80,216,0.08)]"
           aria-hidden
         >
           <HeadsetIcon className="h-5 w-5" />
         </span>
-        <div>
+        <div className="min-w-0">
           <p className="m-0 text-sm font-bold text-[#0A1020]">
             {copy.help.title}
           </p>
-          <p className="mb-[0.35rem] mt-[0.15rem] text-xs font-medium text-[#6B7280]">
+          <p className="mb-1 mt-1 text-[13px] font-medium leading-relaxed text-[#6B7280]">
             {copy.help.body}
           </p>
           <a
             href={copy.help.mailto}
-            className="text-[13px] font-bold text-[#0050D8] no-underline hover:underline"
+            className="break-all text-[13px] font-bold text-[#0050D8] no-underline hover:underline"
           >
             {copy.help.email}
           </a>

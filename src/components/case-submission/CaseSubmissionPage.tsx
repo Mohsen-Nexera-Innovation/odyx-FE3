@@ -3,22 +3,30 @@
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { z } from 'zod';
 import CaseDetailsStep from './CaseDetailsStep';
 import CaseStepper from './CaseStepper';
 import CaseSuccess from './CaseSuccess';
 import { NeedHelp, SecureConfidential } from './CaseSupportCards';
 import DoctorInformationStep from './DoctorInformationStep';
 import OrderSummary from './OrderSummary';
+import PaymentMethodStep from './PaymentMethodStep';
 import ReviewSubmitStep from './ReviewSubmitStep';
 import SendMethodStep from './SendMethodStep';
-import { caseDetailsSchema, doctorInfoSchema, sendMethodSchema } from './schemas';
+import {
+  caseDetailsSchema,
+  doctorInfoSchema,
+  paymentMethodSchema,
+  sendMethodSchema,
+} from './schemas';
 import { INITIAL_CASE_DATA, type CaseSubmissionData } from './types';
+
+const TOTAL_STEPS = 5;
 
 const STEP_COPY = [
   { title: 'Doctor Information',               description: <>Tell us about you and your clinic.</> },
   { title: 'Case Details',                     description: <>Provide the details of your case and design requirements.</> },
   { title: 'How would you like to send your case?', description: <>We will not collect your files on our website.<br className="hidden sm:block" /><span className="block sm:inline sm:mt-0 mt-1">After submitting, please send your scan files using your selected method.</span></> },
+  { title: 'Payment Method',                   description: <>Choose how you prefer to pay. Final amount is confirmed after our team reviews your case.</> },
   { title: 'Review & Submit',                  description: <>Please review your case details before submitting.</> },
 ] as const;
 
@@ -32,7 +40,7 @@ export default function CaseSubmissionPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const moveToStep = (step: number) => {
-    setCurrentStep(Math.max(1, Math.min(4, step)));
+    setCurrentStep(Math.max(1, Math.min(TOTAL_STEPS, step)));
     setErrors({});
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -49,16 +57,15 @@ export default function CaseSubmissionPage() {
     if (currentStep === 1) result = doctorInfoSchema.safeParse(data.doctor);
     else if (currentStep === 2) result = caseDetailsSchema.safeParse(data.caseDetails);
     else if (currentStep === 3) result = sendMethodSchema.safeParse({ sendMethod: data.sendMethod });
-    
+    else if (currentStep === 4) result = paymentMethodSchema.safeParse({ paymentMethod: data.paymentMethod });
+
     if (result && !result.success) {
-      console.log("Zod validation failed", result.error.issues);
       const newErrors: Record<string, string> = {};
-      result.error.issues.forEach((err: any) => {
+      result.error.issues.forEach((err) => {
         if (err.path[0]) {
           newErrors[err.path[0].toString()] = err.message;
         }
       });
-      console.log("Setting new errors:", newErrors);
       setErrors(newErrors);
       return;
     }
@@ -91,8 +98,6 @@ export default function CaseSubmissionPage() {
     <div className="min-h-dvh bg-white pt-[90px] pb-14" data-hero-light>
       <div className="w-[min(1240px,calc(100%-24px))] sm:w-[min(1240px,calc(100%-clamp(40px,8vw,112px)))] mx-auto flex flex-col gap-5">
 
-        
-
         {/* ── Stepper ──────────────────────────────────── */}
         <div className="py-3 lg:py-5">
           <CaseStepper currentStep={currentStep} onStepSelect={moveToStep} />
@@ -106,7 +111,7 @@ export default function CaseSubmissionPage() {
             {/* Step heading */}
             <div className="mb-6">
               <span className="block text-[#0050D8] text-xs font-bold mb-2.5">
-                Step {currentStep} of 4
+                Step {currentStep} of {TOTAL_STEPS}
               </span>
               <h2 className="text-[clamp(22px,2.2vw,28px)] font-extrabold text-[#0A1020] tracking-tight leading-snug m-0">
                 {copy.title}
@@ -144,6 +149,16 @@ export default function CaseSubmissionPage() {
                 />
               )}
               {currentStep === 4 && (
+                <PaymentMethodStep
+                  value={data.paymentMethod}
+                  onChange={(paymentMethod) => {
+                    setData((c) => ({ ...c, paymentMethod }));
+                    clearError('paymentMethod');
+                  }}
+                  errors={errors}
+                />
+              )}
+              {currentStep === 5 && (
                 <ReviewSubmitStep
                   data={data}
                   onEdit={moveToStep}
@@ -171,7 +186,7 @@ export default function CaseSubmissionPage() {
                   </button>
                 )}
 
-                {currentStep < 4 ? (
+                {currentStep < TOTAL_STEPS ? (
                   <button
                     type="button"
                     onClick={continueToNextStep}
@@ -192,7 +207,7 @@ export default function CaseSubmissionPage() {
                 )}
               </div>
 
-              {currentStep === 4 && (
+              {currentStep === TOTAL_STEPS && (
                 <p className="text-center text-[#6B7280] text-xs mt-3">
                   By submitting, you agree to our{' '}
                   <Link href="/about#terms" className="text-[#0050D8] font-semibold hover:underline">Terms of Service</Link>

@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  useCallback,
   useEffect,
   useId,
   useMemo,
@@ -31,7 +32,11 @@ import {
   type DemoFormState,
 } from './RequestDemoForm';
 import { RequestDemoHero } from './RequestDemoHero';
-import { RequestDemoProgress } from './RequestDemoProgress';
+import {
+  RD_HEADER_OFFSET_PX,
+  RD_STICKY_STACK_GAP_PX,
+  RequestDemoProgress,
+} from './RequestDemoProgress';
 import { RequestDemoSummary } from './RequestDemoSummary';
 import { RequestDemoTrust } from './RequestDemoTrust';
 import { shellClass } from './formStyles';
@@ -109,9 +114,18 @@ export default function RequestDemoPage() {
     'idle',
   );
   const [submitError, setSubmitError] = useState('');
+  const [progressHeight, setProgressHeight] = useState(92);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const copy = REQUEST_DEMO_FORM;
+
+  const onProgressHeightChange = useCallback((height: number) => {
+    setProgressHeight(height);
+  }, []);
+
+  const summaryStickyTop =
+    RD_HEADER_OFFSET_PX + progressHeight + RD_STICKY_STACK_GAP_PX;
+  const sectionScrollMargin = summaryStickyTop;
 
   useEffect(() => {
     const sections = REQUEST_DEMO_STEPS.map((s) =>
@@ -128,7 +142,8 @@ export default function RequestDemoPage() {
         const id = visible.target.id.replace('rd-section-', '') as DemoStepId;
         setActiveStep(id);
       },
-      { rootMargin: '-30% 0px -50% 0px', threshold: [0.15, 0.4, 0.6] },
+      // Offset for fixed header + sticky progress so the active step tracks what you actually see
+      { rootMargin: '-28% 0px -45% 0px', threshold: [0.12, 0.35, 0.55] },
     );
 
     sections.forEach((el) => observerRef.current?.observe(el));
@@ -278,29 +293,33 @@ export default function RequestDemoPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full min-w-0 flex-col overflow-x-hidden bg-[#F5F7FB] pb-12 text-[#0A1020] font-[var(--font-tajawal),Tajawal,sans-serif]">
+    <div className="flex min-h-screen w-full min-w-0 flex-col bg-white pb-4 text-[#0A1020] font-[var(--font-tajawal),Tajawal,sans-serif]">
       <RequestDemoHero />
 
-      <RequestDemoProgress
-        activeStep={activeStep}
-        stepState={stepState}
-        onStepClick={scrollToSection}
-      />
+      <div className="mt-3 flex flex-col gap-3 sm:mt-3.5 sm:gap-3.5 lg:mt-4 lg:gap-4">
+        <RequestDemoProgress
+          activeStep={activeStep}
+          stepState={stepState}
+          onStepClick={scrollToSection}
+          onHeightChange={onProgressHeightChange}
+        />
 
-      <div className="pt-7">
         <div className={shellClass}>
-          <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-7 xl:grid-cols-[minmax(0,1fr)_340px]">
-            <RequestDemoForm
-              formId={formId}
-              form={form}
-              errors={errors}
-              status={status}
-              submitError={submitError}
-              onSubmit={onSubmit}
-              update={update}
-              toggleProduct={toggleProduct}
-              toggleApplication={toggleApplication}
-            />
+          <div className="grid grid-cols-1 items-start gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.8fr)_minmax(280px,1fr)] lg:gap-6 xl:grid-cols-[minmax(0,1.8fr)_minmax(320px,1fr)] xl:gap-8">
+            <div className="min-w-0 rounded-[12px] border border-[#E5E7EB]/80 bg-white p-4 shadow-[0_0_12px_rgba(0,0,0,0.06)] sm:p-6 md:p-8">
+              <RequestDemoForm
+                formId={formId}
+                form={form}
+                errors={errors}
+                status={status}
+                submitError={submitError}
+                onSubmit={onSubmit}
+                update={update}
+                toggleProduct={toggleProduct}
+                toggleApplication={toggleApplication}
+                scrollMarginTop={sectionScrollMargin}
+              />
+            </div>
 
             <RequestDemoSummary
               name={
@@ -317,6 +336,7 @@ export default function RequestDemoPage() {
               dateLabel={formatDisplayDate(form.date) || copy.summary.empty}
               time={form.time || copy.summary.empty}
               timezoneLabel={timezoneLabel}
+              stickyTopPx={summaryStickyTop}
               onEditContact={() => scrollToSection('contact')}
               onEditPractice={() => scrollToSection('practice')}
               onEditSchedule={() => scrollToSection('schedule')}
@@ -325,7 +345,9 @@ export default function RequestDemoPage() {
         </div>
       </div>
 
-      <RequestDemoTrust />
+      <div className="mt-4 md:mt-5">
+        <RequestDemoTrust />
+      </div>
     </div>
   );
 }

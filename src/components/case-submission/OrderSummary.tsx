@@ -1,14 +1,18 @@
-
-import type { CaseSubmissionData } from './types';
+import { PAYMENT_METHOD_LABELS, type CaseSubmissionData } from './types';
 
 export default function OrderSummary({ data }: { data: CaseSubmissionData }) {
+  const paymentLabel = data.paymentMethod
+    ? PAYMENT_METHOD_LABELS[data.paymentMethod]
+    : '—';
+
   const rows = [
     ['Design Type',    data.caseDetails.designType],
     ['Tooth Number(s)', data.caseDetails.toothNumbers || '—'],
-    ['Material',       data.caseDetails.otherMaterial || data.caseDetails.material],
+    ['Material',       data.caseDetails.material],
     ['Shade',          data.caseDetails.shade],
     ['Files',          '—'],
     ['Send Method',    data.sendMethod === 'whatsapp' ? 'WhatsApp' : data.sendMethod === 'email' ? 'Email' : '—'],
+    ['Payment',        paymentLabel],
   ];
 
   return (
