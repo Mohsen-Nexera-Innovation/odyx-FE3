@@ -1,8 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import { StatsData } from '../types';
-import { ABOUT_BTN, ABOUT_BTN_SIZE } from '../aboutChrome';
 
 export function AboutCtaSection({ data }: { data: StatsData }) {
   return (
@@ -33,37 +30,24 @@ export function AboutCtaSection({ data }: { data: StatsData }) {
             </h2>
           </div>
 
-          {/* Right Area: Stats & CTA Button */}
-          <div className="flex flex-col xl:flex-row items-center gap-6 lg:gap-10 relative z-10 w-full lg:w-auto mt-4 lg:mt-0">
-            {/* Stats */}
-            <div className="flex items-center justify-center gap-6 lg:gap-8">
-              {data.stats.map((stat, i) => (
-                <React.Fragment key={i}>
-                  <div className="flex flex-col items-start min-w-[80px]">
-                    <span className="text-white text-[length:clamp(22px,2.4vw,30px)] font-bold tracking-[-.01em] leading-none mb-1.5">
-                      {stat.value}
-                    </span>
-                    <span className="text-white/80 text-[length:clamp(12px,1.1vw,14.5px)] font-medium tracking-normal whitespace-nowrap">
-                      {stat.label}
-                    </span>
-                  </div>
-                  
-                  {/* Vertical Divider */}
-                  {i < data.stats.length - 1 && (
-                    <div className="w-px h-12 bg-white/10" />
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <Link
-              href={data.cta.href}
-              className={`${ABOUT_BTN} ${ABOUT_BTN_SIZE} shrink-0`}
-            >
-              <span>{data.cta.label}</span>
-              <ArrowRight className="w-[19px] h-[19px]" />
-            </Link>
+          {/* Right Area: Stats */}
+          <div className="flex items-center justify-center gap-6 lg:gap-8 relative z-10 w-full lg:w-auto mt-4 lg:mt-0">
+            {data.stats.map((stat, i) => (
+              <React.Fragment key={i}>
+                <div className="flex flex-col items-start min-w-[80px]">
+                  <span className="text-white text-[length:clamp(22px,2.4vw,30px)] font-bold tracking-[-.01em] leading-none mb-1.5">
+                    {stat.value}
+                  </span>
+                  <span className="text-white/80 text-[length:clamp(12px,1.1vw,14.5px)] font-medium tracking-normal whitespace-nowrap">
+                    {stat.label}
+                  </span>
+                </div>
+                
+                {i < data.stats.length - 1 && (
+                  <div className="w-px h-12 bg-white/10" />
+                )}
+              </React.Fragment>
+            ))}
           </div>
 
         </div>
