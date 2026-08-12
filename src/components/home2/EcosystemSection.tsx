@@ -211,21 +211,34 @@ export default function EcosystemSection() {
           }
         >
           <div
-            className="absolute z-0 left-[36%] top-[30%] w-[40%] h-[48%] rounded-full pointer-events-none [background:radial-gradient(closest-side,rgba(255,255,255,.85),rgba(210,225,255,.22)_55%,transparent_78%)]"
+            className="absolute z-0 left-[50.6%] top-[50.7%] w-[42%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none [background:radial-gradient(closest-side,rgba(255,255,255,.9),rgba(165,196,245,.28)_48%,transparent_74%)]"
             aria-hidden
           />
 
           <OrbitRings />
 
-          <img
-            className={`${NODE_IMG} absolute left-[31%] top-[18%] w-[34%] z-[1] max-[560px]:top-[16%] max-[560px]:w-[36%]`}
-            src="/img/hv2-eco/eco-center-teeth.webp"
-            alt="Digital dental model at the centre of the ODYX ecosystem"
-            width={1024}
-            height={724}
-            loading="lazy"
-            decoding="async"
-          />
+          <div
+            className="absolute z-[1] left-[50.6%] top-[50.7%] w-[min(22%,160px)] aspect-square -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            role="img"
+            aria-label="ODYX"
+          >
+            <span
+              className="absolute inset-[-36%] rounded-full [background:radial-gradient(closest-side,rgba(91,147,245,.4),rgba(0,80,216,.1)_50%,transparent_74%)]"
+              aria-hidden
+            />
+            <span
+              className={
+                "relative grid h-full w-full place-items-center rounded-full select-none" +
+                " [background:radial-gradient(circle_at_36%_30%,#FFFFFF_0%,#EAF1FC_44%,#C9DBF6_76%,#A8C4F0_100%)]" +
+                " [box-shadow:0_10px_32px_rgba(0,80,216,.16),inset_0_-10px_22px_rgba(0,80,216,.08),inset_0_8px_16px_rgba(255,255,255,.72)]"
+              }
+              aria-hidden
+            >
+              <span className="font-bold leading-none text-[length:clamp(13px,2.55cqw,26px)] text-[var(--hv2-blue)]">
+                ODYX
+              </span>
+            </span>
+          </div>
 
           {NODES.map((n) => (
             <Link

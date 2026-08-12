@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, type PointerEvent } from "react";
-import Link from "next/link";
-import { HV2_BLUE, HV2_BTN, HV2_BTN_SIZE, HV2_EYEBROW, HV2_GUTTER, HV2_H2, HV2_NAV, HV2_SECTION_Y } from "@/components/home2/hv2Chrome";
+import { HV2_BLUE, HV2_EYEBROW, HV2_GUTTER, HV2_H2, HV2_NAV, HV2_SECTION_Y } from "@/components/home2/hv2Chrome";
 
 // Clinical Applications — the mock's layered card deck: left copy column and
 // a five-card stack that recedes to the left behind a large active card.
@@ -111,15 +110,6 @@ const CA_RULE =
 const CA_LEAD =
   "text-[#26334C] text-[1.395cqw] font-normal leading-[1.6] mt-[1.92cqw]" +
   " max-[1080px]:text-[length:clamp(15px,1.9vw,17px)]! max-[1080px]:mt-[16px]!";
-
-const CA_CTA =
-  `${HV2_BTN} ${HV2_BTN_SIZE} mt-[2.08cqw]! justify-between! border-0!` +
-  " [background:linear-gradient(90deg,#0868E8_0%,#0876F4_100%)]!" +
-  " [box-shadow:0_12px_25px_rgba(21,104,236,.18),0_3px_8px_rgba(20,92,220,.12)]!" +
-  " transition-[transform,box-shadow]! duration-[.22s]! ease-out!" +
-  " hover:-translate-y-[2px]! hover:[box-shadow:0_16px_30px_rgba(21,104,236,.24),0_4px_10px_rgba(20,92,220,.16)]!" +
-  " [&>span]:mt-px rtl:[&>svg]:scale-x-[-1] motion-reduce:transition-none!" +
-  " max-[1080px]:mt-[22px]! max-[700px]:w-full!";
 
 const CA_STAGE =
   // Outer air lives on the section (HV2_SECTION_Y); keep a light internal gap.
@@ -276,12 +266,6 @@ export default function ClinicalApplicationsSection() {
             <br />
             every clinical indication.
           </p>
-          <Link className={CA_CTA} href="/solutions/clinical-applications">
-            <span>Explore All Applications</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M4 12h15M13 6l6 6-6 6" />
-            </svg>
-          </Link>
         </div>
 
         <div className={`${CA_STAGE} rv`} data-rv="2">

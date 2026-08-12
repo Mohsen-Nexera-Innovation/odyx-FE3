@@ -83,7 +83,6 @@ export interface NewsData {
 export interface StatsData {
   title: string;
   stats: { value: string; label: string }[];
-  cta: { label: string; href: string };
 }
 
 export interface AboutPageData {

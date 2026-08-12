@@ -1,8 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import Link from "next/link";
-import { HV2_BLUE, HV2_BTN, HV2_BTN_SIZE, HV2_EYEBROW, HV2_GUTTER, HV2_H2, HV2_NAV, HV2_SECTION_Y } from "@/components/home2/hv2Chrome";
+import { HV2_BLUE, HV2_EYEBROW, HV2_GUTTER, HV2_H2, HV2_NAV, HV2_SECTION_Y } from "@/components/home2/hv2Chrome";
 import { CLINICAL_INDICATIONS } from "@/content/clinical-indications";
 
 // Clinical Cases — the client reference's mirrored deck: a four-card stack that
@@ -244,15 +243,6 @@ const CC_LEAD =
   "text-[#394158] text-[1.18cqw] font-medium leading-[1.8] mt-[1.67cqw]" +
   " max-[1120px]:text-[length:clamp(15px,1.9vw,17px)]! max-[1120px]:mt-[16px]! max-[1120px]:[&_br]:hidden";
 
-const CC_CTA =
-  `${HV2_BTN} ${HV2_BTN_SIZE} mt-[2.27cqw]! justify-between! border-0!` +
-  " [background:linear-gradient(90deg,#0038D9_0%,#005BFF_100%)]!" +
-  " [box-shadow:0_13px_26px_rgba(0,77,255,.24),0_4px_9px_rgba(0,50,190,.18)]!" +
-  " transition-[transform,box-shadow]! duration-[.22s]! ease-out!" +
-  " hover:-translate-y-[2px]! hover:[box-shadow:0_17px_32px_rgba(0,77,255,.30),0_5px_11px_rgba(0,50,190,.22)]!" +
-  " [&>span]:mt-px rtl:[&>svg]:scale-x-[-1] motion-reduce:transition-none!" +
-  " max-[1120px]:mt-[22px]! max-[700px]:w-full!";
-
 export default function ClinicalCasesShowcase() {
   const [active, setActive] = useState(0);
   // Pointer swipe: one gesture = one step, threshold in px so a tap never fires.
@@ -365,12 +355,6 @@ export default function ClinicalCasesShowcase() {
             <br />
             achieve more with ODYX.
           </p>
-          <Link className={CC_CTA} href="/cases#featured-cases">
-            <span>View Clinical Cases</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M4 12h15M13 6l6 6-6 6" />
-            </svg>
-          </Link>
         </div>
       </div>
     </section>

@@ -112,8 +112,6 @@ export function DownloadsPage() {
 
         <SupportCTA
           title="Need help installing or using these downloads?"
-          ctaLabel="Contact Support"
-          ctaHref="/sales"
         />
       </SupportContainer>
     </div>

@@ -174,6 +174,5 @@ export const aboutData: AboutPageData = {
       { value: '1M+', label: 'Smiles Enhanced' },
       { value: '60+', label: 'Countries Served' },
     ],
-    cta: { label: 'Request a Demo', href: '/request-demo' },
   },
 };
