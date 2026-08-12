@@ -1,4 +1,3 @@
-import Link from "next/link";
 import ClinicalApplicationsSection from "@/components/home2/ClinicalApplicationsSection";
 import ClinicalCasesShowcase from "@/components/home2/ClinicalCasesShowcase";
 import EcosystemSection from "@/components/home2/EcosystemSection";
@@ -25,38 +24,31 @@ import WhyOdyxOrbit from "@/components/home2/WhyOdyxOrbit";
 // Each cutout carries a resting perspective tilt, pointer-parallax via
 // --hx/--hy from Hv2Motion, and an idle float on `translate`.
 const ORBIT_IMG_BASE =
-  "absolute block h-auto pointer-events-auto cursor-pointer" +
+  "absolute block h-auto pointer-events-none" +
   " [filter:drop-shadow(0_calc(14*var(--u))_calc(22*var(--u))_rgba(10,16,32,.14))]" +
   " [transform:perspective(calc(1400*var(--u)))_translate3d(calc(var(--hx,0)*var(--op,1)*-22*var(--u)),calc(var(--hy,0)*var(--op,1)*-12*var(--u)),0)_rotateX(calc(2deg+var(--hy,0)*-4deg))_rotateY(calc(var(--oty,-4deg)*var(--odir,1)+var(--hx,0)*6deg))]" +
-  " transition-[transform,filter] duration-[.8s] [transition-timing-function:cubic-bezier(.22,1,.36,1)]" +
   " [animation:hv2-o-float_var(--ofd,7s)_ease-in-out_var(--ofo,0s)_infinite]" +
-  " hover:[filter:drop-shadow(0_calc(18*var(--u))_calc(28*var(--u))_rgba(10,16,32,.22))_brightness(1.04)]" +
-  " focus-visible:outline-2 focus-visible:outline-[var(--hv2-blue)] focus-visible:outline-offset-4" +
-  " motion-reduce:[animation:none]! motion-reduce:[transform:none]! motion-reduce:transition-none!";
+  " motion-reduce:[animation:none]! motion-reduce:[transform:none]!";
 const ORBIT_SHADOW_BASE =
   "absolute z-[1] rounded-full pointer-events-none [background:radial-gradient(closest-side,rgba(30,58,118,.30),rgba(30,58,118,0))] [filter:blur(calc(9*var(--u)))] [animation:hv2-sh-float_var(--ofd,7s)_ease-in-out_var(--ofo,0s)_infinite] motion-reduce:[animation:none]!";
 
 const ORBIT_PRODUCTS = [
   {
-    href: "/products/odyx-s1-intraoral-scanner",
     src: "/img/hv2-cut/scanner-product.webp",
     label: "ODYX S1 Intraoral Scanner",
     pos: " start-[calc(700*var(--u))] top-[calc(288*var(--u))] w-[calc(300*var(--u))] z-[3] [--oty:-8deg] [--op:1.05] [--ofd:7.2s] [rotate:-12deg]",
   },
   {
-    href: "/products/odyx-p1-26",
     src: "/img/hv2-cut/printer-product.webp",
     label: "ODYX P1-26 3D Printer",
     pos: " start-[calc(1020*var(--u))] top-[calc(88*var(--u))] w-[calc(215*var(--u))] z-[4] [--oty:-6deg] [--op:.8] [--ofd:6.6s] [--ofo:-1.4s]",
   },
   {
-    href: "/products/curing-machines",
     src: "/img/hv2-cut/cure-product.webp",
     label: "ODYX Cure",
     pos: " start-[calc(1280*var(--u))] top-[calc(210*var(--u))] w-[calc(255*var(--u))] z-[3] [--oty:-3deg] [--op:.9] [--ofd:8.4s] [--ofo:-2.8s]",
   },
   {
-    href: "/products/resins",
     src: "/img/hv2-hub/store-resins-cutout.png",
     label: "ODYX Resins",
     pos: " start-[calc(1565*var(--u))] top-[calc(300*var(--u))] w-[calc(340*var(--u))] z-[4] [--oty:-4deg] [--op:1.15] [--ofd:7.8s] [--ofo:-4s]",
@@ -110,7 +102,7 @@ export default function HomeV2Page() {
             </p>
           </div>
 
-          {/* Product cutouts — each links to its product page. */}
+          {/* Product cutouts — decorative, not links. */}
           <div
             className="rv absolute inset-0 z-[1] pointer-events-none [container-type:inline-size] rtl:[--odir:-1] max-[980px]:relative max-[980px]:inset-auto max-[980px]:w-[162%] max-[980px]:ms-[-57%] max-[980px]:aspect-[2048/628] max-[980px]:mt-[10px]"
             data-rv="2"
@@ -120,14 +112,13 @@ export default function HomeV2Page() {
             <i className={ORBIT_SHADOW_BASE + " start-[calc(1280*var(--u))] top-[calc(468*var(--u))] w-[calc(270*var(--u))] h-[calc(44*var(--u))] [--ofd:8.4s] [--ofo:-2.8s]"} aria-hidden />
             <i className={ORBIT_SHADOW_BASE + " start-[calc(1585*var(--u))] top-[calc(525*var(--u))] w-[calc(320*var(--u))] h-[calc(42*var(--u))] [--ofd:7.8s] [--ofo:-4s]"} aria-hidden />
             {ORBIT_PRODUCTS.map((p) => (
-              <Link
-                key={p.href}
-                className={ORBIT_IMG_BASE + p.pos}
-                href={p.href}
-                aria-label={p.label}
-              >
-                <img className="w-full h-auto block" src={p.src} alt="" draggable={false} />
-              </Link>
+              <img
+                key={p.src}
+                className={`${ORBIT_IMG_BASE} ${p.pos}`}
+                src={p.src}
+                alt={p.label}
+                draggable={false}
+              />
             ))}
           </div>
         </div>

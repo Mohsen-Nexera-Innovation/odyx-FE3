@@ -444,6 +444,7 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Support",
     href: "/support",
+    dimmed: true,
     items: [
       { label: "Support / Help Center", href: "/support", desc: "Get help fast" },
       {

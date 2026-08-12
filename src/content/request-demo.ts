@@ -330,10 +330,10 @@ export const REQUEST_DEMO_FORM = {
       privacy: {
         labelBefore: "I agree to ODYX's",
         privacyLabel: 'Privacy Policy',
-        privacyHref: '/support',
+        privacyHref: '/about',
         and: 'and',
         termsLabel: 'Terms of Use',
-        termsHref: '/support',
+        termsHref: '/about',
         required: true,
       },
       marketing: {
