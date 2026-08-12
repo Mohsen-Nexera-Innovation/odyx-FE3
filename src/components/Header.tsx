@@ -7,9 +7,9 @@ import { isAuthShellPath } from '@/content/auth';
 import { useGlobalTools, type Locale } from '@/components/GlobalTools';
 
 const SITE_NOTICE: Record<Locale, string> = {
-  en: "We're putting the finishing touches on the ODYX Egypt website. Feel free to look around — a few pages aren't quite ready yet.",
-  ar: 'نضع اللمسات الأخيرة على موقع أوديكس مصر. تفضّلوا بالتصفح — بعض الصفحات لم تكتمل بعد.',
-  fr: 'Nous apportons les dernières touches au site ODYX Egypt. Promenez-vous — quelques pages ne sont pas encore prêtes.',
+  en: 'The Website is under construction - بث تجريبي',
+  ar: 'The Website is under construction - بث تجريبي',
+  fr: 'The Website is under construction - بث تجريبي',
 };
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);

@@ -33,14 +33,14 @@ const CARDS = [
   },
   {
     key: "printer",
-    title: ["ODYX P1-26", "3D Printer"],
+    title: ["ODYX P1-26", "Dental Professional 3D Printer"],
     img: "/img/hv2-cut/printer-product.webp",
     alt: "The ODYX P1-26 resin 3D printer with red cover and touchscreen",
     width: "w-[17.690%] me-[1.954%]",
   },
   {
     key: "cure",
-    title: ["ODYX Cure", "Curing Station"],
+    title: ["ODYX Cure"],
     img: "/img/hv2-cut/cure-product.webp",
     alt: "The ODYX Cure dental curing station",
     width: "w-[21.418%] me-[1.742%]",
@@ -199,12 +199,12 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
                     loading="lazy"
                   />
                 </span>
-                <h3 className="relative z-[2] text-[length:var(--pr-title)] [line-height:var(--pr-title-lh)] font-medium [letter-spacing:-.004em]">
-                  <span className="text-[length:var(--pr-title)]">{c.title[0]}</span>
+                <h3 className="relative z-[2] text-[length:var(--pr-title)] [line-height:var(--pr-title-lh)] [letter-spacing:-.004em]">
+                  <span className="font-bold">{c.title[0]}</span>
                   {c.title[1] ? (
                     <>
                       <br />
-                      {c.title[1]}
+                      <span className="font-medium">{c.title[1]}</span>
                     </>
                   ) : null}
                 </h3>

@@ -183,7 +183,8 @@ const HUB_ART_LEARN =
   " max-[760px]:w-[min(100%,360px)]!";
 
 const HUB_ART_SUPPORT =
-  " start-[24%] w-[52%] object-contain! object-left!" +
+  // Sit clear of “When You Need Us.” (headset was overlapping the heading)
+  " start-[46%] w-[54%] object-contain! object-right!" +
   " max-[1100px]:start-auto! max-[1100px]:w-[min(78%,360px)]!" +
   " max-[760px]:w-[min(100%,340px)]!";
 
@@ -243,7 +244,10 @@ const ACTION_CARDS: ActionCard[] = [
     id: "reg",
     label: "Registration",
     title: ["Register Your Device.", "Stay Protected."],
-    desc: ["Activate warranty and get", "the full ODYX experience."],
+    desc: [
+      "Activate warranty to download your product software",
+      "and get the full ODYX Ecosystem Experience.",
+    ],
     // CTA hidden until registration flow is ready
     // cta: "Register Device",
     // href: "/support#register",

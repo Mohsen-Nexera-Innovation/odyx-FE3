@@ -10,7 +10,7 @@ import {
 } from '@/content/digital-workflow-links';
 
 export const ABOUT_META = {
-  title: 'About ODYX',
+  title: 'About ODYX Egypt',
   description:
     'Who we are, vision, values and the team behind one connected digital dentistry ecosystem — from scan to delivered restoration.',
 };

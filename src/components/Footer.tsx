@@ -22,7 +22,7 @@ const COLUMNS: FooterColumn[] = [
   {
     title: "Company",
     links: [
-      { label: "About ODYX", href: "/about" },
+      { label: "About ODYX Egypt", href: "/about" },
       { label: "Why ODYX", href: "/about#why" },
       { label: "Our Values", href: "/about#values" },
       { label: "Our Team", href: "/about#team", dimmed: true },
