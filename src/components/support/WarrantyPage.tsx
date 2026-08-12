@@ -1,7 +1,6 @@
 import { SupportContainer } from './SupportContainer';
 import { SupportBreadcrumb } from './SupportBreadcrumb';
 import { SupportPageHeader } from './SupportPageHeader';
-import { SupportCTA } from './SupportCTA';
 import { WarrantyCoverageCard, WarrantyPeriodCard } from './WarrantyCard';
 import { WarrantyClaimForm } from './WarrantyClaimForm';
 import { WARRANTY_PERIODS } from './data';
@@ -64,14 +63,6 @@ export function WarrantyPage() {
               <p className="mt-2 text-sm leading-relaxed font-medium text-[#6B7280]">
                 Contact our support team for<br />assistance with your warranty claim.
               </p>
-              <div className="mt-5">
-                <a
-                  href="/sales"
-                  className="inline-flex h-[38px] items-center justify-center rounded-[8px] border border-[#0050D8]/20 bg-white px-6 text-sm font-bold !text-[#0050D8] transition-colors hover:bg-[#F3F7FF] hover:border-[#0050D8]/40"
-                >
-                  Contact Support
-                </a>
-              </div>
             </div>
           </div>
 

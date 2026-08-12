@@ -1,12 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import Link from "next/link";
 import { HV2_DOT, HV2_DOTS, HV2_NAV } from "@/components/home2/hv2Chrome";
 
 // Products panel from the client mock: a contained, rounded panel that holds
 // the intro column (passed in as `children`) plus a horizontal snap rail of
-// product-category cards, edge-mounted carousel arrows and page dots.
+// product-category cards. Cards are display-only — no per-card links.
 //
 // The mock composes each card individually — different widths and different
 // packshot framing per product — so every card carries its own `pr-*` class
@@ -22,7 +21,6 @@ const CARDS = [
   {
     key: "scanner",
     title: ["ODYX S1", "Intraoral Scanner"],
-    href: "/products/odyx-s1-intraoral-scanner",
     img: "/img/hv2-cut/scanner-product.webp",
     alt: "The ODYX S1 intraoral scanner wand",
     width: "w-[17.771%] me-[2.024%]",
@@ -36,7 +34,6 @@ const CARDS = [
   {
     key: "printer",
     title: ["ODYX P1-26", "3D Printer"],
-    href: "/products/odyx-p1-26",
     img: "/img/hv2-cut/printer-product.webp",
     alt: "The ODYX P1-26 resin 3D printer with red cover and touchscreen",
     width: "w-[17.690%] me-[1.954%]",
@@ -44,19 +41,15 @@ const CARDS = [
   {
     key: "cure",
     title: ["ODYX Cure", "Curing Station"],
-    href: "/products/curing-machines",
     img: "/img/hv2-cut/cure-product.webp",
     alt: "The ODYX Cure dental curing station",
     width: "w-[21.418%] me-[1.742%]",
     // White packshot — same multiply-blend fix as the scanner.
     mediaImg: "[mix-blend-mode:normal]! [filter:drop-shadow(0_10px_18px_rgba(10,40,90,.14))]",
-    // Wider card in the mock; its device leans right, so the arrow sits left.
-    arrowStart: true,
   },
   {
     key: "resin",
     title: ["ODYX", "Resins"],
-    href: "/products/resins",
     img: "/img/hv2-hub/store-resins-cutout.png",
     alt: "ODYX resin collection — Ortho Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Crown",
     width: "w-[18.366%] me-[1.803%]",
@@ -68,12 +61,9 @@ const CARDS = [
   {
     key: "accessories",
     title: ["Accessories"],
-    href: "/shop",
     img: "/img/shop-accessories.jpg",
     alt: "Finishing and characterization accessories",
     width: "w-[17.104%]",
-    // Category not live yet — shown dimmed and non-navigable.
-    disabled: true,
   },
 ] as const;
 
@@ -82,23 +72,12 @@ const PAGES = 4;
 
 // --- Tailwind style tables -------------------------------------------------
 const PR_CARD_BASE =
-  "group relative isolate overflow-hidden flex-none min-w-[148px] h-[var(--pr-card-h)] [scroll-snap-align:start] rounded-[var(--pr-radius)] border border-[rgba(10,40,90,.055)] [background:linear-gradient(180deg,#EFF1FB_0%,#EAEDF7_100%)] [box-shadow:0_14px_26px_-10px_rgba(10,40,90,.16)] [padding:var(--pr-pad-t)_var(--pr-pad)_0] transition-[transform,box-shadow] duration-[.25s] ease-out hover:-translate-y-[4px] hover:[box-shadow:0_22px_38px_-12px_rgba(10,40,90,.22)]" +
+  "relative isolate overflow-hidden flex-none min-w-[148px] h-[var(--pr-card-h)] [scroll-snap-align:start] rounded-[var(--pr-radius)] border border-[rgba(10,40,90,.055)] [background:linear-gradient(180deg,#EFF1FB_0%,#EAEDF7_100%)] [box-shadow:0_14px_26px_-10px_rgba(10,40,90,.16)] [padding:var(--pr-pad-t)_var(--pr-pad)_0] cursor-default" +
   " max-[980px]:w-auto! max-[980px]:me-0! max-[980px]:flex-[0_0_clamp(168px,23vw,210px)]!";
-const PR_CARD_DISABLED =
-  " opacity-[.45] [filter:saturate(.35)] cursor-default pointer-events-none hover:translate-y-0! hover:[box-shadow:0_14px_26px_-10px_rgba(10,40,90,.16)]!";
 
 const PR_MEDIA_BASE =
   "absolute [inset:var(--art-top,68px)_var(--art-pad,10px)_var(--art-bottom,10px)] flex items-end justify-center";
 const PR_MEDIA_IMG_BASE = "block w-auto h-auto max-w-full max-h-full [mix-blend-mode:multiply]";
-
-const PR_GO_BASE =
-  "absolute z-[2] bottom-[var(--pr-go-bottom)] end-[var(--pr-go-inset)] w-[var(--pr-go)] h-[var(--pr-go)] rounded-full text-[var(--hv2-blue)] border border-[rgba(26,58,132,.30)] bg-[rgba(255,255,255,.55)] [box-shadow:0_0_16px_7px_rgba(255,255,255,.5)] grid place-items-center transition-[background-color,color,border-color] duration-200" +
-  " [&>svg]:w-[18px] [&>svg]:h-[18px] rtl:[&>svg]:scale-x-[-1]" +
-  " group-hover:bg-[var(--hv2-blue)] group-hover:text-white group-hover:border-[var(--hv2-blue)]";
-const PR_GO_START = " start-[var(--pr-go-inset)]! end-auto!";
-const PR_GO_ON_DARK =
-  " text-white! border-[rgba(255,255,255,.8)]! bg-transparent! [box-shadow:0_0_18px_4px_rgba(255,255,255,.4)]!" +
-  " group-hover:bg-white! group-hover:text-[var(--hv2-blue)]! group-hover:border-white!";
 
 const PROD_NAV_BASE =
   `${HV2_NAV} absolute! bottom-[calc(42px+var(--pr-card-h)/2+2.2px)]! z-[6]! w-[var(--pr-nav)]! h-[var(--pr-nav)]! text-[var(--hv2-blue)]! border! border-[rgba(10,40,90,.07)]! [box-shadow:0_6px_18px_rgba(10,40,90,.13)]! [&>svg]:w-[24px]! [&>svg]:h-[24px]!`;
@@ -109,14 +88,6 @@ const PROD_DOTS = `${HV2_DOTS} gap-[23.5px]! mt-[5px]!`;
 const PROD_DOT =
   `${HV2_DOT} w-[11px]! h-[11px]! rounded-full! bg-[rgba(10,30,70,.19)]! transition-[background-color]! duration-[.25s]!`;
 const PROD_DOT_ON = " bg-[var(--hv2-blue)]!";
-
-function ArrowRight() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M4 12h15M13 6l6 6-6 6" />
-    </svg>
-  );
-}
 
 export default function ProductsRail({ children }: { children?: ReactNode }) {
   const railRef = useRef<HTMLDivElement>(null);
@@ -218,48 +189,27 @@ export default function ProductsRail({ children }: { children?: ReactNode }) {
             ref={railRef}
             onScroll={measure}
           >
-            {CARDS.map((c) => {
-              const disabled = "disabled" in c && c.disabled;
-              const onDark = "onDark" in c && c.onDark;
-              const arrowStart = "arrowStart" in c && c.arrowStart;
-              const inner = (
-                <>
-                  <span className={`${PR_MEDIA_BASE} ${"media" in c ? c.media : ""}`}>
-                    <img
-                      className={`${PR_MEDIA_IMG_BASE} ${"mediaImg" in c ? c.mediaImg : ""}`}
-                      src={c.img}
-                      alt={c.alt}
-                      loading="lazy"
-                    />
-                  </span>
-                  <h3 className="relative z-[2] text-[length:var(--pr-title)] [line-height:var(--pr-title-lh)] font-medium [letter-spacing:-.004em]">
-                    <span className="text-[length:var(--pr-title)]">{c.title[0]}</span>
-                    {c.title[1] ? (
-                      <>
-                        <br />
-                        {c.title[1]}
-                      </>
-                    ) : null}
-                  </h3>
-                  <span
-                    className={`${PR_GO_BASE}${arrowStart ? PR_GO_START : ""}${onDark ? PR_GO_ON_DARK : ""}`}
-                    aria-hidden
-                  >
-                    <ArrowRight />
-                  </span>
-                </>
-              );
-              const cls = `hv2-pr-card ${PR_CARD_BASE} ${c.width}${disabled ? PR_CARD_DISABLED : ""}`;
-              return disabled ? (
-                <div className={cls} key={c.href} aria-disabled>
-                  {inner}
-                </div>
-              ) : (
-                <Link className={cls} href={c.href} key={c.href}>
-                  {inner}
-                </Link>
-              );
-            })}
+            {CARDS.map((c) => (
+              <div className={`hv2-pr-card ${PR_CARD_BASE} ${c.width}`} key={c.key}>
+                <span className={`${PR_MEDIA_BASE} ${"media" in c ? c.media : ""}`}>
+                  <img
+                    className={`${PR_MEDIA_IMG_BASE} ${"mediaImg" in c ? c.mediaImg : ""}`}
+                    src={c.img}
+                    alt={c.alt}
+                    loading="lazy"
+                  />
+                </span>
+                <h3 className="relative z-[2] text-[length:var(--pr-title)] [line-height:var(--pr-title-lh)] font-medium [letter-spacing:-.004em]">
+                  <span className="text-[length:var(--pr-title)]">{c.title[0]}</span>
+                  {c.title[1] ? (
+                    <>
+                      <br />
+                      {c.title[1]}
+                    </>
+                  ) : null}
+                </h3>
+              </div>
+            ))}
           </div>
         </div>
       </div>

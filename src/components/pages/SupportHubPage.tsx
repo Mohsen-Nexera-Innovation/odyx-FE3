@@ -1,12 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Book, Download, Headphones, HelpCircle, ShieldCheck } from 'lucide-react';
 import { SupportContainer } from '@/components/support/SupportContainer';
-import { SupportBreadcrumb } from '@/components/support/SupportBreadcrumb';
-import { SupportSearchBar } from '@/components/support/SupportSearchBar';
 import { QuickAccessCard } from '@/components/support/QuickAccessCard';
 import { ProductSupportCard } from '@/components/support/ProductSupportCard';
 import { StatusCard } from '@/components/support/StatusCard';
@@ -52,17 +48,11 @@ const QUICK_ACCESS = [
     linkLabel: 'Contact Support',
     href: '/sales',
     theme: 'indigo' as const,
+    disabled: true,
   },
 ];
 
 export default function SupportHubPage() {
-  const router = useRouter();
-  const [query, setQuery] = useState('');
-
-  const search = () => {
-    router.push(query ? `/support/manuals?q=${encodeURIComponent(query)}` : '/support/manuals');
-  };
-
   return (
     <div className="min-h-dvh bg-white pb-4">
       <div
@@ -71,14 +61,6 @@ export default function SupportHubPage() {
       >
         <SupportContainer className="flex flex-col items-center gap-6">
           <SupportPageHero />
-          <SupportSearchBar
-            value={query}
-            onChange={setQuery}
-            onSubmit={search}
-            size="lg"
-            placeholder="Search manuals, FAQs, downloads, or support articles..."
-            className="max-w-[640px] w-full"
-          />
         </SupportContainer>
       </div>
 
@@ -108,13 +90,6 @@ export default function SupportHubPage() {
             <h2 id="support-by-product-heading" className="text-2xl font-bold text-[#0A1020]">
               Support by Product
             </h2>
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-1 text-sm font-bold !text-[#0050D8] hover:underline"
-            >
-              View all products
-              <ArrowRight size={14} aria-hidden />
-            </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {SUPPORT_PRODUCTS.map((product) => (

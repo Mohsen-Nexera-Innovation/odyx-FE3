@@ -47,6 +47,8 @@ export interface NavGroup {
   dimmed?: boolean;
   /** Opens mega / mobile accordion only — never navigates to href */
   navOnly?: boolean;
+  /** Visible in the bar but not clickable — hover/focus shows a coming-soon tooltip */
+  comingSoon?: boolean;
 }
 
 /** About mega — only sections that exist on `/about` (app/about). */
@@ -100,6 +102,7 @@ export const HEADER_MENUS: NavGroup[] = [
     label: "Products",
     href: "/products",
     navOnly: true,
+    comingSoon: true,
     items: [
       { label: "All Products", href: "/products", desc: "Full ODYX lineup", dimmed: true },
       {
@@ -204,6 +207,7 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Solutions",
     href: "/solutions/clinical-applications",
+    comingSoon: true,
     items: [
       {
         label: "For Dentists",

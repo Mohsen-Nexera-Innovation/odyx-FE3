@@ -68,8 +68,6 @@ export function FAQsPage() {
         <SupportCTA
           title="Can't find your answer?"
           description="Our support team is here to help."
-          ctaLabel="Contact Support"
-          ctaHref="/sales"
         />
       </SupportContainer>
     </div>

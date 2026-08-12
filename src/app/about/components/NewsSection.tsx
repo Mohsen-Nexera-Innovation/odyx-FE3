@@ -3,12 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
-import { ChevronRight } from 'lucide-react';
+import { Pagination } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 
 import { NewsData } from '../types';
 import {
@@ -87,9 +85,9 @@ export function NewsSection({ data }: { data: NewsData }) {
             }
           `}</style>
 
-          <div className="relative lg:pr-16">
+          <div className="relative">
             <Swiper
-              modules={[Pagination, Navigation]}
+              modules={[Pagination]}
               spaceBetween={20}
               slidesPerView={1.2}
               slidesPerGroup={1}
@@ -99,19 +97,18 @@ export function NewsSection({ data }: { data: NewsData }) {
                 1024: { slidesPerView: 3 },
               }}
               pagination={{ clickable: true }}
-              navigation={{ nextEl: '.news-next-btn' }}
               className="news-swiper"
             >
               {data.news.map((item, i) => (
                 <SwiperSlide key={i} className="!h-auto flex">
-                  <Link href={item.href} className="group flex flex-col w-full bg-white rounded-2xl overflow-hidden border border-[rgba(10,40,90,.08)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300">
+                  <article className="flex flex-col w-full bg-white rounded-2xl overflow-hidden border border-[rgba(10,40,90,.08)] cursor-default">
                     
                     {/* Image Container */}
                     <div className="relative h-[130px] sm:h-[150px] w-full overflow-hidden bg-[var(--hv2-surface,#F3F5FD)]">
                       <img 
                         src={item.image} 
                         alt={item.title} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        className="w-full h-full object-cover" 
                       />
                       {item.category && (
                         <div className="absolute top-3 left-3 z-10 bg-[var(--hv2-blue)] text-white text-[12px] font-bold uppercase tracking-[.08em] rtl:tracking-normal rtl:normal-case py-1 px-2.5 rounded-full shadow-sm">
@@ -126,33 +123,19 @@ export function NewsSection({ data }: { data: NewsData }) {
                         {item.date}
                       </div>
                       
-                      <h3 className={`${ABOUT_CARD_TITLE} mb-2 group-hover:text-[var(--hv2-blue)] transition-colors line-clamp-2`}>
+                      <h3 className={`${ABOUT_CARD_TITLE} mb-2 line-clamp-2`}>
                         {item.title}
                       </h3>
                       
-                      <p className="text-[length:clamp(12px,1vw,14.5px)] text-[var(--hv2-body)] font-normal leading-relaxed line-clamp-2 mb-4">
+                      <p className="text-[length:clamp(12px,1vw,14.5px)] text-[var(--hv2-body)] font-normal leading-relaxed line-clamp-2 mb-0">
                         {item.description}
                       </p>
-                      
-                      {/* Read More Link */}
-                      <div className="mt-auto inline-flex items-center gap-1.5 text-[var(--hv2-blue)] text-[12px] font-bold group-hover:gap-2 transition-all">
-                        Read More
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </div>
                     </div>
 
-                  </Link>
+                  </article>
                 </SwiperSlide>
               ))}
             </Swiper>
-
-            {/* Custom Navigation Button (floating right) */}
-            <button 
-              className="news-next-btn hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-[0_4px_14px_rgba(0,0,0,0.1)] items-center justify-center text-[#0050D8] hover:scale-105 transition-transform"
-              aria-label="Next news"
-            >
-              <ChevronRight className="w-6 h-6 ml-0.5" />
-            </button>
           </div>
         </div>
 

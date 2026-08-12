@@ -7,14 +7,11 @@ import Hv2Motion from "@/components/home2/Hv2Motion";
 import {
   HV2_BLUE,
   HV2_BODY,
-  HV2_BTN,
-  HV2_BTN_SIZE,
   HV2_EYEBROW,
   HV2_GUTTER,
   HV2_H2,
   HV2_SECTION_Y,
 } from "@/components/home2/hv2Chrome";
-import LatestUpdatesSection from "@/components/home2/LatestUpdatesSection";
 import PathCarousel from "@/components/home2/PathCarousel";
 import ProductsRail from "@/components/home2/ProductsRail";
 import WhyOdyxOrbit from "@/components/home2/WhyOdyxOrbit";
@@ -23,12 +20,6 @@ import WhyOdyxOrbit from "@/components/home2/WhyOdyxOrbit";
 // (light surfaces, action blue #0050D8, orbit hero, why-pillars, path
 // carousel, radial ecosystem, products rail). Copy is claim-free marketing;
 // no catalog numbers appear on this screen.
-
-const Arrow = ({ s = 16, className }: { s?: number; className?: string }) => (
-  <svg width={s} height={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <path d="M5 12h14M13 6l6 6-6 6" />
-  </svg>
-);
 
 // Hero product cutouts + floor shadows (positions differ per element).
 // Each cutout carries a resting perspective tilt, pointer-parallax via
@@ -117,12 +108,6 @@ export default function HomeV2Page() {
               Everything you need for digital dentistry in one seamless
               ecosystem.
             </p>
-            <div className="rv" data-rv="3">
-              <Link className={`${HV2_BTN} ${HV2_BTN_SIZE} px-7!`} href="/request-demo">
-                <span>Request a Demo</span>
-                <Arrow s={19} className="block shrink-0" />
-              </Link>
-            </div>
           </div>
 
           {/* Product cutouts — each links to its product page. */}
@@ -213,9 +198,6 @@ export default function HomeV2Page() {
 
       {/* ===== 8 · Ecosystem hub — Learning / Support / Store / Registration ===== */}
       <HubCardsSection />
-
-      {/* ===== 9 · Latest updates — five-up update carousel ===== */}
-      <LatestUpdatesSection />
 
       {/* Footer: site-wide shared Footer from root layout */}
 
