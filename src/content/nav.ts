@@ -67,11 +67,13 @@ const ABOUT_NAV_ITEMS: NavLink[] = [
     label: "Our Team",
     href: "/about#team",
     desc: "The people building ODYX",
+    dimmed: true,
   },
   {
     label: "News & Insights",
     href: "/about#news",
     desc: "Latest announcements and stories",
+    dimmed: true,
   },
 ];
 
