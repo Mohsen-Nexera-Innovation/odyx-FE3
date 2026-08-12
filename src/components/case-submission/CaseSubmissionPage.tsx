@@ -86,7 +86,7 @@ export default function CaseSubmissionPage() {
 
   if (submissionResult) {
     return (
-      <div className="min-h-dvh bg-[#F4F8FD] flex items-center justify-center pt-[80px] pb-14" data-hero-light>
+      <div className="min-h-dvh bg-[#F4F8FD] flex items-center justify-center pt-[calc(var(--hdr-h)+12px)] pb-14" data-hero-light>
         <CaseSuccess sendMethod={data.sendMethod} caseId={submissionResult.caseId} />
       </div>
     );
@@ -95,7 +95,7 @@ export default function CaseSubmissionPage() {
   const copy = STEP_COPY[currentStep - 1];
 
   return (
-    <div className="min-h-dvh bg-white pt-[90px] pb-14" data-hero-light>
+    <div className="min-h-dvh bg-white pt-[calc(var(--hdr-h)+22px)] pb-14" data-hero-light>
       <div className="w-[min(1240px,calc(100%-24px))] sm:w-[min(1240px,calc(100%-clamp(40px,8vw,112px)))] mx-auto flex flex-col gap-5">
 
         {/* ── Stepper ──────────────────────────────────── */}

@@ -17,7 +17,7 @@ body:has(.rd-page) nextjs-portal {
 
 .rd-page {
   background: #fff !important;
-  padding-top: 88px;
+  padding-top: calc(var(--hdr-h) + 20px);
   padding-bottom: 28px;
   --rd-app-cols: 6;
 }
@@ -147,7 +147,7 @@ body:has(.rd-page) nextjs-portal {
 /* Detail page responsive (rd) */
 @media (max-width: 1023px) {
   .rd-page {
-    padding-top: 80px;
+    padding-top: calc(var(--hdr-h) + 12px);
   }
   .rd-page h1 {
     font-size: clamp(1.75rem, 6.5vw, 2.45rem) !important;

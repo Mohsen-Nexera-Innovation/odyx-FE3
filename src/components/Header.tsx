@@ -4,6 +4,13 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { HEADER_MENUS, type MegaColumn, type NavGroup, type NavLink } from '@/content/nav';
 import { isAuthShellPath } from '@/content/auth';
+import { useGlobalTools, type Locale } from '@/components/GlobalTools';
+
+const SITE_NOTICE: Record<Locale, string> = {
+  en: "We're putting the finishing touches on the ODYX Egypt website. Feel free to look around — a few pages aren't quite ready yet.",
+  ar: 'نضع اللمسات الأخيرة على موقع أوديكس مصر. تفضّلوا بالتصفح — بعض الصفحات لم تكتمل بعد.',
+  fr: 'Nous apportons les dernières touches au site ODYX Egypt. Promenez-vous — quelques pages ne sont pas encore prêtes.',
+};
 
 const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
 
@@ -347,6 +354,7 @@ function MegaPanel({
 
 export default function Header() {
   const pathname = usePathname();
+  const { locale } = useGlobalTools();
   const [scrolled, setScrolled] = useState(false);
   const [hasHero, setHasHero] = useState(false);
   const [heroLight, setHeroLight] = useState(false);
@@ -380,7 +388,8 @@ export default function Header() {
       const y = window.scrollY;
       setScrolled(y > 40);
       if (heroEl) {
-        setPastHero(heroEl.getBoundingClientRect().bottom <= 68);
+        const hdr = headerRef.current?.offsetHeight ?? 68;
+        setPastHero(heroEl.getBoundingClientRect().bottom <= hdr);
       } else {
         setPastHero(false);
       }
@@ -392,6 +401,24 @@ export default function Header() {
     return () => {
       window.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) {
+      document.documentElement.style.setProperty('--hdr-h', '0px');
+      return;
+    }
+    const sync = () => {
+      document.documentElement.style.setProperty('--hdr-h', `${el.offsetHeight}px`);
+    };
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      document.documentElement.style.removeProperty('--hdr-h');
     };
   }, [pathname]);
 
@@ -465,6 +492,9 @@ export default function Header() {
 
   return (
     <header id="hdr" ref={headerRef} className={headerClass} onMouseMove={onSpotlightMove}>
+      <p className="site-notice" role="status">
+        {SITE_NOTICE[locale]}
+      </p>
       <div className="wrap nav">
         <Link href="/" className="logo" aria-label="ODYX home">
           <img className="logo-img logo-img-on-dark" src="/brand/odyx-egypt-white.png" alt="ODYX Egypt" />

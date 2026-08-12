@@ -7,7 +7,7 @@ import { WARRANTY_PERIODS } from './data';
 
 export function WarrantyPage() {
   return (
-    <div className="support-page bg-white pt-[80px] lg:pt-[85px] pb-4">
+    <div className="support-page bg-white pt-[calc(var(--hdr-h)+12px)] lg:pt-[calc(var(--hdr-h)+17px)] pb-4">
       <SupportContainer className="flex flex-col gap-4">
 
 

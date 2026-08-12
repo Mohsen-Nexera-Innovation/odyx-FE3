@@ -73,7 +73,7 @@
 /* Hero — transparent so unified page background shows through */
 .p126-hero{
   position:relative;
-  padding:clamp(92px, 11vh, 112px) 0 clamp(18px, 2.4vh, 28px);
+  padding:calc(var(--hdr-h) + clamp(24px, 3vh, 44px)) 0 clamp(18px, 2.4vh, 28px);
   overflow:visible;
   background:transparent;
 }
@@ -299,7 +299,7 @@
 }
 @media (max-width:800px){
   .p126-hero{
-    padding:clamp(88px, 12vh, 104px) 0 clamp(14px, 2vh, 22px);
+    padding:calc(var(--hdr-h) + clamp(20px, 3vh, 36px)) 0 clamp(14px, 2vh, 22px);
   }
   .p126-hero-grid{
     grid-template-columns:1fr;

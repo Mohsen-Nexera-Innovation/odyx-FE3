@@ -15,7 +15,7 @@ export function RequestDemoHero() {
 
   return (
     <section
-      className="w-full min-w-0 px-[clamp(16px,4vw,56px)] pt-[72px] sm:pt-[80px] lg:pt-[85px]"
+      className="w-full min-w-0 px-[clamp(16px,4vw,56px)] pt-[calc(var(--hdr-h)+4px)] sm:pt-[calc(var(--hdr-h)+12px)] lg:pt-[calc(var(--hdr-h)+17px)]"
       data-hero-light
       aria-labelledby="rd-title"
     >
