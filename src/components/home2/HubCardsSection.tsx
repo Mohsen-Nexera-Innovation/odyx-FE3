@@ -367,10 +367,6 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
-            <a className={HUB_CTA} href="/support">
-              <span>Get Support</span>
-              <CtaArrow />
-            </a>
             <img
               className={`${HUB_ART}${HUB_ART_SUPPORT}`}
               src="/img/hv2-hub/support-headset.webp"

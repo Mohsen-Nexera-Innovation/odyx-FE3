@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { GlobalToolsProvider } from "@/components/GlobalTools";
 import SiteBackground from "@/components/SiteBackground";
 import DevPreviewTools from "@/components/DevPreviewTools";
+import MetaPixel from "@/components/MetaPixel";
 
 export const metadata: Metadata = {
   title: "ODYX — One connected digital dentistry workflow",
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en" dir="ltr" className={fontVars} suppressHydrationWarning data-scroll-behavior="smooth">
       <body className="grain" suppressHydrationWarning>
         <SiteBackground />
+        <MetaPixel />
         <GlobalToolsProvider>
           <Header />
           <main>{children}</main>

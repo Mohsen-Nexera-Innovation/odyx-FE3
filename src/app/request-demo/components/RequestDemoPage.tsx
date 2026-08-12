@@ -27,6 +27,7 @@ import {
   type DemoRequestApplication,
   type DemoRequestProduct,
 } from '@/lib/api/leads';
+import { trackMetaLead } from '@/lib/meta-pixel';
 import {
   RequestDemoForm,
   type DemoFormState,
@@ -280,6 +281,7 @@ export default function RequestDemoPage() {
       });
       setForm(INITIAL);
       setStatus('sent');
+      trackMetaLead();
     } catch (err) {
       const message =
         err instanceof ApiError
