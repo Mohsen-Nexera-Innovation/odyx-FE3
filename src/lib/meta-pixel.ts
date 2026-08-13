@@ -1,10 +1,7 @@
 /**
- * Meta Pixel helpers. ID is inlined at module scope so Turbopack always
- * embeds it in client chunks (same pattern as `src/lib/config.ts`).
+ * Meta Pixel helpers. Pixel ID is the live Events Manager pixel.
  */
-const PIXEL_ID = (
-  process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '2177177202826511'
-).trim();
+const PIXEL_ID = '2177177202826511';
 
 export function getMetaPixelId(): string {
   return PIXEL_ID;
