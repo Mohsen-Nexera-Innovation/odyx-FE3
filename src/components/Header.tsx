@@ -410,14 +410,28 @@ export default function Header() {
       document.documentElement.style.setProperty('--hdr-h', '0px');
       return;
     }
-    const sync = () => {
+    const syncH = () => {
       document.documentElement.style.setProperty('--hdr-h', `${el.offsetHeight}px`);
     };
-    sync();
-    const ro = new ResizeObserver(sync);
+    syncH();
+    const ro = new ResizeObserver(syncH);
     ro.observe(el);
+
+    // iOS Safari moves the visual viewport when the URL bar shows/hides.
+    // Fixed chrome stays on the layout viewport, leaving a gap above the bar
+    // where page content (e.g. Why ODYX) shows through. Pin to the visual top.
+    const vv = window.visualViewport;
+    const pin = () => {
+      el.style.top = `${vv?.offsetTop ?? 0}px`;
+    };
+    pin();
+    vv?.addEventListener('resize', pin);
+    vv?.addEventListener('scroll', pin);
+
     return () => {
       ro.disconnect();
+      vv?.removeEventListener('resize', pin);
+      vv?.removeEventListener('scroll', pin);
       document.documentElement.style.removeProperty('--hdr-h');
     };
   }, [pathname]);
