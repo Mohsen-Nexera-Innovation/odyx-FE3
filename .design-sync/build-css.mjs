@@ -22,12 +22,10 @@ const OUT = join(REPO, '.design-sync', '.cache', 'ds-styles.css');
 
 // Cascade order. globals.css pulls its own siblings in via @import; we inline
 // that chain rather than re-listing it, so the order can never drift from the
-// app's. odyx-p126.css is imported by the P126 components themselves (that
-// import is shimmed out for the bundle), so it is appended explicitly.
+// app's. P1-26 is Tailwind on the page (no dedicated product stylesheet).
 const ROOTS = [
   join(APP, 'tokens.css'),
   join(APP, 'globals.css'),
-  join(APP, 'odyx-p126.css'),
 ];
 
 // Bare-specifier imports we deliberately drop. Tailwind contributes only
@@ -41,9 +39,7 @@ const DROP_IMPORTS = new Set(['tailwindcss']);
 // stylesheet describing the two approved screens instead of the whole site.
 // background-picker.css is dev tooling (DevPreviewTools), never product UI.
 const DROP_SHEETS = new Set([
-  'product-print.css', 'product-cure.css', 'product-cure-v6.css',
-  'printers-family.css', 'scanner-s1.css', 'resins.css', 'about.css',
-  'background-picker.css',
+  'product-print.css', 'about.css', 'background-picker.css',
 ]);
 
 const INLINE_MAX = 1_200_000; // bytes; larger assets stay as absolute URLs

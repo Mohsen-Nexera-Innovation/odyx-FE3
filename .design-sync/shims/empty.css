@@ -1,8 +1,7 @@
 /* design-sync: intentionally empty.
  *
- * Components import their page stylesheet directly (e.g. P126Page imports
- * app/odyx-p126.css). Those sheets are shipped through cfg.cssEntry instead —
- * flattened, with their absolute url() asset references resolved — so the
- * in-component import is neutralised here to keep esbuild from trying to
- * resolve "/img/..." paths that only exist on the host app's public origin.
+ * Page stylesheets are shipped through cfg.cssEntry (flattened, with
+ * host-absolute url() assets resolved). If a component still imports a sheet
+ * that esbuild cannot resolve, map that specifier here so the in-component
+ * import is a no-op.
  */

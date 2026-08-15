@@ -3,8 +3,8 @@
  * Matched to client mock (model-resign / user reference).
  */
 
-import type { ResinDetailContent } from '@/components/pages/ResinDetailPage';
-import { MODEL_RESIN_FEATURE_ICONS } from '@/components/model-resin/FeatureIcons';
+import type { ResinDetailContent } from '@/components/products/resins/ResinDetailPage';
+import { MODEL_RESIN_FEATURE_ICONS } from '@/components/products/resins/model/FeatureIcons';
 import {
   RESIN_DETAIL_CASES_CTA,
   RESIN_DETAIL_COMPATIBLE,

@@ -1,12 +1,6 @@
-import type { Metadata } from 'next';
-import CaseSubmissionPage from '@/components/case-submission/CaseSubmissionPage';
+import { permanentRedirect } from 'next/navigation';
 
-
-export const metadata: Metadata = {
-  title: 'Submit a Case | ODYX',
-  description: 'Submit a new digital dentistry case to the ODYX clinical team.',
-};
-
+/** Legacy Case Submission URL → Products Design Services */
 export default function Page() {
-  return <CaseSubmissionPage />;
+  permanentRedirect('/products/design-services');
 }

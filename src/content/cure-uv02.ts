@@ -1,6 +1,6 @@
 /**
  * Single Cure landing — fidelity to product-design-refrences/cure.jpeg
- * Uses the same layout system as P1-26 (odyx-p126.css).
+ * Uses the same layout system as P1-26.
  */
 
 import {
@@ -108,7 +108,7 @@ export const CURE_UV02_ECOSYSTEM = {
     {
       name: 'ODYX S1',
       subtitle: 'Intra-oral Scanner',
-      href: '/products/odyx-s1-intraoral-scanner',
+      href: '/products/odyx-s1',
       img: '/img/scanner/s1-hero-cutout.png',
     },
     {

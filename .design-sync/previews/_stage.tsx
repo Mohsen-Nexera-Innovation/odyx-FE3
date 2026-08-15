@@ -5,8 +5,8 @@
 // Three things the app provides that a bare preview root does not:
 //
 //  1. Root class. 69 rules in home-v2.css are written `.hv2 <descendant>`
-//     (including all heading typography), and odyx-p126.css scopes the same
-//     way under `.p126-page`. Rendered without the wrapper, sections come out
+//     (including all heading typography), and the P1-26 preview root uses
+//     `.p126-page`. Rendered without the wrapper, sections come out
 //     with unstyled headings — which is exactly what the unauthored cards did.
 //  2. Settled reveal state. `.hv2 .rv{opacity:0}` keeps reveal-on-scroll
 //     elements invisible until Hv2Motion adds `.rv-in` on intersection. A

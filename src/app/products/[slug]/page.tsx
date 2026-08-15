@@ -1,28 +1,27 @@
 import type { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
-import CuringPage from '@/components/pages/CuringPage';
-import PrintersFamilyPage from '@/components/pages/PrintersFamilyPage';
-import P126Page from '@/components/pages/P126Page';
-import ResinsRangePage from '@/components/pages/ResinsRangePage';
-import ScannerS1Page from '@/components/pages/ScannerS1Page';
-import TemporaryResinPage from '@/components/pages/TemporaryResinPage';
-import CeramicCrownResinPage from '@/components/pages/CeramicCrownResinPage';
-import CrownBridgeResinPage from '@/components/pages/CrownBridgeResinPage';
-import ModelResinPage from '@/components/pages/ModelResinPage';
-import SurgicalGuideResinPage from '@/components/pages/SurgicalGuideResinPage';
+import CuringPage from '@/components/products/cure/CuringPage';
+import P126Page from '@/components/products/p1-26/P126Page';
+import ResinsRangePage from '@/components/products/resins/ResinsRangePage';
+import ResinDetailPage from '@/components/products/resins/ResinDetailPage';
+import CrownBridgeResinPage from '@/components/products/resins/CrownBridgeResinPage';
+import ModelResinPage from '@/components/products/resins/ModelResinPage';
+import SurgicalGuideResinPage from '@/components/products/resins/SurgicalGuideResinPage';
+import ScannerS1Page from '@/components/products/s1/ScannerS1Page';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { PRODUCTS } from '@/content/products';
-import { PRINTERS_META } from '@/content/printers-3d';
 import { CURE_UV02_META, CURE_UV02_SLUG } from '@/content/cure-uv02';
 import { P1_26_META, P1_26_SLUG } from '@/content/p1-26';
 import { RESINS_META, RESINS_SLUG } from '@/content/resins';
 import { SCANNER_META, SCANNER_SLUG } from '@/content/scanner-s1';
 import {
+  TEMPORARY_RESIN_CONTENT,
   TEMPORARY_RESIN_META,
   TEMPORARY_RESIN_SLUG,
 } from '@/content/temporary-resin';
 import {
+  CERAMIC_CROWN_RESIN_CONTENT,
   CERAMIC_CROWN_RESIN_META,
   CERAMIC_CROWN_RESIN_SLUG,
 } from '@/content/ceramic-crown-resin';
@@ -43,25 +42,26 @@ const SLUG_ALIASES: Record<string, string> = {
   Resin: RESINS_SLUG,
   Resins: RESINS_SLUG,
   'intraoral-scanner': SCANNER_SLUG,
+  'odyx-s1-intraoral-scanner': SCANNER_SLUG,
   'cure-cutout': CURE_UV02_SLUG,
   'cure-editorial': CURE_UV02_SLUG,
   'cure-float': CURE_UV02_SLUG,
   'cure-v4': CURE_UV02_SLUG,
   'cure-v5': CURE_UV02_SLUG,
   'cure-v6': CURE_UV02_SLUG,
-  'odyx-halot-x1': '3d-printers',
+  '3d-printers': P1_26_SLUG,
+  'odyx-halot-x1': P1_26_SLUG,
 };
 
 export function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ slug: p.slug }));
+  const catalog = PRODUCTS.map((p) => ({ slug: p.slug }));
+  const aliases = Object.keys(SLUG_ALIASES).map((slug) => ({ slug }));
+  return [...catalog, ...aliases];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug: raw } = await params;
   const slug = SLUG_ALIASES[raw] ?? raw;
-  if (slug === '3d-printers') {
-    return { title: PRINTERS_META.title, description: PRINTERS_META.description };
-  }
   if (slug === SCANNER_SLUG) {
     return { title: SCANNER_META.title, description: SCANNER_META.description };
   }
@@ -145,17 +145,7 @@ export default async function Page({ params }: Props) {
       </>
     );
   }
-  // 036 · 3D Printers is a product-family (forked) page with its own layout —
-  // spec in knowledge_base/screens/036-3d-printers/
-  if (raw === '3d-printers') {
-    return (
-      <>
-        <PrintersFamilyPage />
-        <InnerPageMotion />
-      </>
-    );
-  }
-  // Dedicated P1-26 landing — attached product UI
+  // Dedicated P1-26 landing — canonical printer product page
   if (raw === P1_26_SLUG) {
     return (
       <>
@@ -168,7 +158,7 @@ export default async function Page({ params }: Props) {
   if (raw === TEMPORARY_RESIN_SLUG) {
     return (
       <>
-        <TemporaryResinPage />
+        <ResinDetailPage content={TEMPORARY_RESIN_CONTENT} />
         <InnerPageMotion />
       </>
     );
@@ -177,7 +167,7 @@ export default async function Page({ params }: Props) {
   if (raw === CERAMIC_CROWN_RESIN_SLUG) {
     return (
       <>
-        <CeramicCrownResinPage />
+        <ResinDetailPage content={CERAMIC_CROWN_RESIN_CONTENT} />
         <InnerPageMotion />
       </>
     );

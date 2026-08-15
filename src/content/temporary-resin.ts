@@ -3,6 +3,13 @@
  * Matched to client mock (temp-restro-resign / user reference).
  */
 
+import type { ResinDetailContent } from '@/components/products/resins/ResinDetailPage';
+import { FEATURE_ICON_COMPONENTS } from '@/components/products/resins/temporary/FeatureIcons';
+import {
+  RESIN_DETAIL_CASES_CTA,
+  RESIN_DETAIL_COMPATIBLE,
+} from '@/content/resin-detail-shared';
+
 export const TEMPORARY_RESIN_SLUG = 'temporary-restoration-resin';
 
 export const TEMPORARY_RESIN_META = {
@@ -80,29 +87,7 @@ export const TEMPORARY_RESIN_SPECS = [
   { property: 'Applicable Light Source', value: '385–405 nm' },
 ] as const;
 
-export const TEMPORARY_RESIN_COMPATIBLE = [
-  {
-    id: 'p1-26',
-    label: 'ODYX P1-26 3D Printer',
-    img: '/img/hv2-cut/printer-product.webp',
-    imgAlt: 'ODYX P1-26 3D printer',
-    href: '/products/odyx-p1-26',
-  },
-  {
-    id: 'uv-02',
-    label: 'ODYX Cure',
-    img: '/img/hv2-cut/cure-product.webp',
-    imgAlt: 'ODYX Cure',
-    href: '/products/curing-machines',
-  },
-  {
-    id: 's1',
-    label: 'ODYX S1 Intraoral Scanner',
-    img: '/img/scanner/s1-hero-cutout.png',
-    imgAlt: 'ODYX S1 intraoral scanner',
-    href: '/products/odyx-s1-intraoral-scanner',
-  },
-] as const;
+export const TEMPORARY_RESIN_COMPATIBLE = RESIN_DETAIL_COMPATIBLE;
 
 export const TEMPORARY_RESIN_CASES = [
   {
@@ -131,7 +116,28 @@ export const TEMPORARY_RESIN_CASES = [
   },
 ] as const;
 
-export const TEMPORARY_RESIN_CASES_CTA = {
-  label: 'View More Cases',
-  href: '/cases?product=resin#featured-cases',
+export const TEMPORARY_RESIN_CASES_CTA = RESIN_DETAIL_CASES_CTA;
+
+export const TEMPORARY_RESIN_CONTENT: ResinDetailContent = {
+  featuresAriaLabel: 'Temporary Restoration Resin features',
+  appColumns: 3,
+  hero: {
+    kicker: TEMPORARY_RESIN_HERO.kicker,
+    titleLines: [TEMPORARY_RESIN_HERO.titleBold, TEMPORARY_RESIN_HERO.titleLight],
+    tagline: TEMPORARY_RESIN_HERO.tagline,
+    body: TEMPORARY_RESIN_HERO.body,
+    img: TEMPORARY_RESIN_HERO.img,
+    imgAlt: TEMPORARY_RESIN_HERO.imgAlt,
+    imgWidth: 1024,
+    imgHeight: 568,
+    primaryCta: TEMPORARY_RESIN_HERO.primaryCta,
+    secondaryCta: TEMPORARY_RESIN_HERO.secondaryCta,
+  },
+  applications: TEMPORARY_RESIN_APPLICATIONS,
+  features: TEMPORARY_RESIN_FEATURES,
+  featureIcons: FEATURE_ICON_COMPONENTS,
+  specs: TEMPORARY_RESIN_SPECS,
+  compatible: [...RESIN_DETAIL_COMPATIBLE],
+  cases: TEMPORARY_RESIN_CASES,
+  casesCta: RESIN_DETAIL_CASES_CTA,
 };
