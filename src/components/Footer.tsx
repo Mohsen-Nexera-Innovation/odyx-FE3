@@ -33,7 +33,7 @@ const COLUMNS: FooterColumn[] = [
     title: "Products",
     dimmed: true,
     links: [
-      { label: "Intraoral Scanners", href: "/products/odyx-s1-intraoral-scanner" },
+      { label: "Intraoral Scanners", href: "/products/odyx-s1" },
       { label: "3D Printers", href: "/products/odyx-p1-26" },
       { label: "UV Curing Units", href: "/products/curing-machines" },
       { label: "Premium Resins", href: "/products/resins" },

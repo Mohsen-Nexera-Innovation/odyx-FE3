@@ -50,8 +50,8 @@ never sees them.
   module reads `process.env.NEXT_PUBLIC_*` at module scope; with no `process`
   in the browser IIFE it threw a `ReferenceError` that took down all 13
   exports at once (symptom: `[BUNDLE_EXPORT] 13/13 not a component`).
-- `@/app/odyx-p126.css` -> empty sheet. P126Page imports its stylesheet
-  directly; the real CSS ships through `cssEntry` instead (see below).
+- P1-26 no longer imports a dedicated stylesheet (Tailwind on the page).
+  Product CSS that used to be mapped to `shims/empty.css` has been removed.
 
 **Gotcha:** the converter strips `//` and `/* */` from a tsconfig before
 `JSON.parse`. A `"//"` comment key silently corrupts the file, `tsconfigPaths`
@@ -71,10 +71,9 @@ inlined backgrounds; `why-odyx-board-t.png` alone is 995KB).
 
 Deliberate exclusions from the flatten: `tailwindcss` (the scoped components
 use **zero** Tailwind utility classes — verified — and globals.css ships its
-own reset), and the out-of-scope sheets `product-*`, `printers-family`,
-`scanner-s1`, `resins`, `about`, `background-picker` (dev tooling). Every ODYX
-sheet namespaces its own selectors, so dropping them cannot change how Home or
-P1-26 cascade.
+own reset), and the out-of-scope sheets `product-print.css`, `about.css`,
+and `background-picker.css` (dev tooling). Every ODYX sheet namespaces its
+own selectors, so dropping them cannot change how Home or P1-26 cascade.
 
 **Gotcha:** never write the literal at-import keyword into a generated CSS
 comment. The validator scans raw CSS text, so a commented-out reference is
@@ -139,8 +138,8 @@ by `copy-foundations.mjs`:
   appears in the pane.
 
 Values are transcribed from the two screens' own custom properties, so a change
-in `home-v2.css` / `odyx-p126.css` will NOT propagate automatically. When those
-sheets change, re-check `tokens/colors.css` against the `--hv2-*` / `--p126-*`
+in `home-v2.css` will NOT propagate automatically. When that
+sheet changes, re-check `tokens/colors.css` against the `--hv2-*`
 blocks in `.design-sync/.cache/ds-styles.css`.
 
 **Anchor caveat:** `_ds_sync.json` is written by `package-build.mjs`, before
@@ -156,7 +155,7 @@ build logs a harmless `stale preview: _stage` line for it). Three things it
 supplies that a bare preview root does not:
 
 1. **Root class.** 69 rules in home-v2.css are written `.hv2 <descendant>`
-   (including all heading typography); odyx-p126.css scopes under
+   (including all heading typography); P1-26 previews wrap with
    `.p126-page`. Without the wrapper, sections render with unstyled headings.
 2. **Settled reveal state.** Home hides content with `.hv2 .rv{opacity:0}`
    until Hv2Motion adds `.rv-in`; P1-26 does the same with `.p126-page

@@ -35,7 +35,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
     recommendedProducts: [
       {
         name: "ODYX-S1",
-        href: "/products/odyx-s1-intraoral-scanner",
+        href: "/products/odyx-s1",
         why: "Start digital with chairside scans",
         img: "/img/scanner/s1-hero.png",
       },
@@ -47,7 +47,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
       },
       {
         name: "ODYX P1-26",
-        href: "/products/3d-printers",
+        href: "/products/odyx-p1-26",
         why: "Print provisionals and finals same-day",
         img: "/img/feat-printer.jpg",
       },
@@ -106,7 +106,7 @@ export const SOLUTION_PATHS: SolutionPath[] = [
       },
       {
         name: "ODYX P1-26",
-        href: "/products/3d-printers",
+        href: "/products/odyx-p1-26",
         why: "High-volume print capacity",
         img: "/img/feat-printer.jpg",
       },

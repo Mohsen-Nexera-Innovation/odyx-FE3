@@ -103,23 +103,23 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Products",
     href: "/products",
-    navOnly: true,
-    comingSoon: true,
+    // navOnly: true,
+    // comingSoon: true,
     items: [
       { label: "All Products", href: "/products", desc: "Full ODYX lineup", dimmed: true },
       {
         label: "Intraoral Scanner",
-        href: "/products/odyx-s1-intraoral-scanner",
+        href: "/products/odyx-s1",
         desc: "ODYX-S1",
       },
       {
         label: "Design Services",
-        href: "/case-submission",
+        href: "/products/design-services",
         desc: "On-demand dental CAD design",
       },
       {
         label: "3D Printers",
-        href: "/products/3d-printers",
+        href: "/products/odyx-p1-26",
         desc: "ODYX P1-26",
       },
       {
@@ -140,18 +140,18 @@ export const HEADER_MENUS: NavGroup[] = [
         items: [
           {
             label: "ODYX-S1",
-            href: "/products/odyx-s1-intraoral-scanner",
+            href: "/products/odyx-s1",
             desc: "Chairside 3D impressions in seconds",
             img: "/img/scanner/s1-hero-cutout.png",
           },
         ],
       },
       {
-        title: "Digital Products",
+        title: "Design Services",
         items: [
           {
             label: "Design Services",
-            href: "/case-submission",
+            href: "/products/design-services",
             desc: "On-demand dental CAD design",
             img: "/img/cutouts/feat-design-cutout.png",
           },
@@ -200,7 +200,7 @@ export const HEADER_MENUS: NavGroup[] = [
       eyebrow: "Flagship",
       title: "ODYX P1-26",
       desc: "The dental production workhorse — validated profiles for crowns, guides, models and more.",
-      href: "/products/3d-printers",
+      href: "/products/odyx-p1-26",
       cta: "Explore P1-26",
       img: "/img/cutouts/feat-printer-cutout.png",
       imgAlt: "ODYX P1-26 dental 3D printer",

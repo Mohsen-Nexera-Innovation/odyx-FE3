@@ -190,7 +190,7 @@ export const ABOUT_FAMILIES = [
     desc: 'Chairside capture that starts the digital path.',
     img: '/img/scanner/s1-hero-cutout.png',
     brand: '/brand/odyx-scanners.png',
-    href: '/products/odyx-s1-intraoral-scanner',
+    href: '/products/odyx-s1',
     accent: 'teal' as const,
   },
   {
@@ -198,7 +198,7 @@ export const ABOUT_FAMILIES = [
     desc: 'Print, cure, and clinical resins as one production line.',
     img: '/img/cutouts/feat-printer-cutout.png',
     brand: '/brand/odyx-digital-printing.png',
-    href: '/products/3d-printers',
+    href: '/products/odyx-p1-26',
     accent: 'print' as const,
   },
 ] as const;
