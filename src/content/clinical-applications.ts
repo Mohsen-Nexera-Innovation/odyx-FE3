@@ -1,40 +1,16 @@
 /** Clinical Applications — hub (design refs in knowledge_base). */
 
+import { solutionsCasesPath } from '@/content/clinical-case-listings';
 import { clinicalPath } from '@/content/clinical-indication-types';
-import {
-  CLINICAL_INDICATION_META,
-  CLINICAL_INDICATIONS,
-} from '@/content/clinical-indications';
 import { clinicalCaseMedia } from '@/lib/clinical-media-url';
 
 export const CLINICAL_APPS_SLUG = 'clinical-applications';
-export const SAME_DAY_CROWN_PATH = clinicalPath('same-day-crown');
 
 export const CLINICAL_APPS_META = {
   title: 'Clinical Applications | ODYX Solutions',
   description:
     'Explore ODYX digital workflows by indication — restorative, implant, orthodontics, prosthetics, and clinical cases.',
 };
-
-/** @deprecated Use CLINICAL_INDICATION_META['same-day-crown'] */
-export const SAME_DAY_CROWN_META = CLINICAL_INDICATION_META['same-day-crown'];
-
-/** @deprecated Use CLINICAL_INDICATIONS['same-day-crown'] */
-export const SAME_DAY_CROWN = CLINICAL_INDICATIONS['same-day-crown'];
-
-export {
-  CLINICAL_INDICATIONS,
-  CLINICAL_INDICATION_META,
-  CLINICAL_INDICATION_SLUGS,
-  getClinicalIndication,
-} from '@/content/clinical-indications';
-
-export {
-  clinicalPath,
-  CLINICAL_BADGE_ACCENTS,
-  type ClinicalIndicationContent,
-  type ClinicalCategoryId,
-} from '@/content/clinical-indication-types';
 
 /* ---------- Hub (clinical-application-all-types.jpeg) ---------- */
 
@@ -162,34 +138,34 @@ export const CLINICAL_CATEGORIES: ClinicalCategory[] = [
     accent: '#D65765',
     footerImg: '',
     footerAlt: '',
-    exploreAll: { label: 'Explore all cases →', href: '/cases#featured-cases' },
+    exploreAll: { label: 'Explore all cases →', href: '/solutions/cases#featured-cases' },
     items: [
       {
         id: 'restorative-cases',
         title: 'Restorative Cases',
         body: 'Crowns, veneers — real patient photos',
-        href: clinicalPath('restorative-cases'),
+        href: solutionsCasesPath('restorative-cases'),
         thumb: clinicalCaseMedia('_DSC0255_1.JPG'),
       },
       {
         id: 'implant-cases',
         title: 'Implant Cases',
         body: 'Surgical guides & planning models',
-        href: clinicalPath('implant-cases'),
+        href: solutionsCasesPath('implant-cases'),
         thumb: '/img/clinical/surgical-guide/hero-cutout.png',
       },
       {
         id: 'ortho-cases',
         title: 'Orthodontic Cases',
         body: 'Aligners & retainers',
-        href: clinicalPath('ortho-cases'),
+        href: solutionsCasesPath('ortho-cases'),
         thumb: '/img/clinical/aligners/hero-cutout.png',
       },
       {
         id: 'prosthetic-cases',
         title: 'Prosthetic Cases',
         body: 'Dentures & try-ins — real photos',
-        href: clinicalPath('prosthetic-cases'),
+        href: solutionsCasesPath('prosthetic-cases'),
         thumb: clinicalCaseMedia('_DSC0197_4.JPG'),
       },
     ],
@@ -200,7 +176,7 @@ export const CLINICAL_HUB_BANNER = {
   titleLine1: 'Real Cases.',
   titleLine2: 'Real Results.',
   body: 'Discover how ODYX workflows deliver exceptional outcomes every day.',
-  cta: { label: 'View All Clinical Cases →', href: '/cases#featured-cases' },
+  cta: { label: 'View All Clinical Cases →', href: '/solutions/cases#featured-cases' },
   thumbs: [
     clinicalCaseMedia('_DSC0255_1.JPG'),
     clinicalCaseMedia('_DSC0108_1.JPG'),

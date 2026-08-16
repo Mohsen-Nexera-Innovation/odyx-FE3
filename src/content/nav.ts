@@ -208,21 +208,9 @@ export const HEADER_MENUS: NavGroup[] = [
   },
   {
     label: "Solutions",
-    href: "/solutions/clinical-applications",
-    comingSoon: true,
+    href: "/solutions",
+    // comingSoon: true,
     items: [
-      {
-        label: "For Dentists",
-        href: "/solutions/dentists",
-        desc: "Same-day chairside dentistry",
-        dimmed: true,
-      },
-      {
-        label: "For Dental Labs",
-        href: "/solutions/labs",
-        desc: "Scale production with confidence",
-        dimmed: true,
-      },
       {
         label: "Clinical Applications",
         href: "/solutions/clinical-applications",
@@ -230,38 +218,21 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "Real Cases",
-        href: "/cases",
+        href: "/solutions/cases",
         desc: "Browse real clinical cases",
       },
       {
         label: "By Application",
-        href: "/cases#by-application",
+        href: "/solutions/cases#by-application",
         desc: "Restorative, implant, ortho, denture",
       },
       {
         label: "By Product",
-        href: "/cases#by-product",
+        href: "/solutions/cases#by-product",
         desc: "Scanner, printer, cure, resin",
       },
     ],
     columns: [
-      {
-        title: "By Role",
-        items: [
-          {
-            label: "For Dentists",
-            href: "/solutions/dentists",
-            desc: "Same-day chairside dentistry",
-            dimmed: true,
-          },
-          {
-            label: "For Dental Labs",
-            href: "/solutions/labs",
-            desc: "Scale production with confidence",
-            dimmed: true,
-          },
-        ],
-      },
       {
         title: "Applications",
         groups: [
@@ -279,17 +250,17 @@ export const HEADER_MENUS: NavGroup[] = [
             items: [
               {
                 label: "Case Library",
-                href: "/cases",
+                href: "/solutions/cases",
                 desc: "Browse real clinical cases",
               },
               {
                 label: "By Application",
-                href: "/cases#by-application",
+                href: "/solutions/cases#by-application",
                 desc: "Restorative, implant, ortho, denture",
               },
               {
                 label: "By Product",
-                href: "/cases#by-product",
+                href: "/solutions/cases#by-product",
                 desc: "Scanner, printer, cure, resin",
               },
             ],

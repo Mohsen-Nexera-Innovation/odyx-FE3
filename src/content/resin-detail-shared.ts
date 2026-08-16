@@ -25,5 +25,5 @@ export const RESIN_DETAIL_COMPATIBLE = [
 
 export const RESIN_DETAIL_CASES_CTA = {
   label: 'View More Cases',
-  href: '/cases?product=resin#featured-cases',
+  href: '/solutions/cases?product=resin#featured-cases',
 };

@@ -318,7 +318,7 @@ export const learningData: LearningPageData = {
           id: 'a1',
           title: '5 Tips for Successful Digital Impressions',
           readTime: 'Clinical • 5 min read',
-          href: '/solutions/dentists',
+          href: '/solutions',
           img: WEB.newsScan,
           imgAlt: 'Digital impressions article',
           category: 'Clinical',

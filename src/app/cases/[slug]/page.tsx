@@ -45,7 +45,7 @@ export default async function CaseDetailPage({ params }: Props) {
     <div className="bg-white min-h-screen" data-hero-light>
       <div className="w-full px-[clamp(20px,4vw,56px)] py-8 lg:py-12 max-w-[1100px] mx-auto">
         <Link
-          href="/cases#featured-cases"
+          href="/solutions/cases#featured-cases"
           className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#0050D8] hover:underline mb-6"
         >
           ← Back to Case Library

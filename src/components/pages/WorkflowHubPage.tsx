@@ -65,7 +65,7 @@ export default function WorkflowHubPage() {
         <div className="wrap">
           <SecHead eyebrow="By role" />
           <div className="pgrid build-group">
-            <Link href="/solutions/dentists" className="pcard teal reveal build">
+            <Link href="/solutions" className="pcard teal reveal build">
               <div className="pcard-art">
                 <img className="pimg" src="/img/paths/dentist.jpg" alt="Dentist chairside workflow" loading="lazy" />
                 <span className="scrim2" />
@@ -79,7 +79,7 @@ export default function WorkflowHubPage() {
                 <span className="more">Clinic journey <Arrow /></span>
               </div>
             </Link>
-            <Link href="/solutions/labs" className="pcard reveal build">
+            <Link href="/solutions" className="pcard reveal build">
               <div className="pcard-art">
                 <img className="pimg" src="/img/paths/lab.jpg" alt="Dental lab production workflow" loading="lazy" />
                 <span className="scrim2" />

@@ -147,7 +147,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     labNote: "Full characterization workflows for premium restorative cases.",
     learning: [
       { label: "Finishing techniques", href: "/learning" },
-      { label: "Case: anterior crown", href: "/cases" },
+      { label: "Case: anterior crown", href: "/solutions/cases" },
     ],
   },
   {
@@ -171,7 +171,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     labNote:
       "Ship finished units with confidence - digital chain reduces remakes.",
     learning: [
-      { label: "Case library", href: "/cases" },
+      { label: "Case library", href: "/solutions/cases" },
       { label: "Request a demo", href: "/support" },
     ],
   },
