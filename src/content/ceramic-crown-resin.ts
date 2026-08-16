@@ -4,6 +4,13 @@
  * Specs: Hardness & Flexural Strength also on product-photos/resin collage.
  */
 
+import type { ResinDetailContent } from '@/components/products/resins/ResinDetailPage';
+import { FEATURE_ICON_COMPONENTS } from '@/components/products/resins/ceramic-crown/FeatureIcons';
+import {
+  RESIN_DETAIL_CASES_CTA,
+  RESIN_DETAIL_COMPATIBLE,
+} from '@/content/resin-detail-shared';
+
 export const CERAMIC_CROWN_RESIN_SLUG = 'ceramic-crown-resin';
 
 export const CERAMIC_CROWN_RESIN_META = {
@@ -102,29 +109,7 @@ export const CERAMIC_CROWN_RESIN_SPECS = [
   { property: 'Applicable Light Source', value: '385–405 nm' },
 ] as const;
 
-export const CERAMIC_CROWN_RESIN_COMPATIBLE = [
-  {
-    id: 'p1-26',
-    label: 'ODYX P1-26 3D Printer',
-    img: '/img/hv2-cut/printer-product.webp',
-    imgAlt: 'ODYX P1-26 3D printer',
-    href: '/products/odyx-p1-26',
-  },
-  {
-    id: 'uv-02',
-    label: 'ODYX Cure',
-    img: '/img/hv2-cut/cure-product.webp',
-    imgAlt: 'ODYX Cure',
-    href: '/products/curing-machines',
-  },
-  {
-    id: 's1',
-    label: 'ODYX S1 Intraoral Scanner',
-    img: '/img/scanner/s1-hero-cutout.png',
-    imgAlt: 'ODYX S1 intraoral scanner',
-    href: '/products/odyx-s1-intraoral-scanner',
-  },
-] as const;
+export const CERAMIC_CROWN_RESIN_COMPATIBLE = RESIN_DETAIL_COMPATIBLE;
 
 export const CERAMIC_CROWN_RESIN_CASES = [
   {
@@ -153,7 +138,31 @@ export const CERAMIC_CROWN_RESIN_CASES = [
   },
 ] as const;
 
-export const CERAMIC_CROWN_RESIN_CASES_CTA = {
-  label: 'View More Cases',
-  href: '/cases?product=resin#featured-cases',
+export const CERAMIC_CROWN_RESIN_CASES_CTA = RESIN_DETAIL_CASES_CTA;
+
+export const CERAMIC_CROWN_RESIN_CONTENT: ResinDetailContent = {
+  featuresAriaLabel: 'Ceramic Crown Resin features',
+  appColumns: 6,
+  hero: {
+    kicker: CERAMIC_CROWN_RESIN_HERO.kicker,
+    titleLines: [
+      CERAMIC_CROWN_RESIN_HERO.titleBold,
+      CERAMIC_CROWN_RESIN_HERO.titleLight,
+    ],
+    tagline: CERAMIC_CROWN_RESIN_HERO.tagline,
+    body: CERAMIC_CROWN_RESIN_HERO.body,
+    img: CERAMIC_CROWN_RESIN_HERO.img,
+    imgAlt: CERAMIC_CROWN_RESIN_HERO.imgAlt,
+    imgWidth: 1024,
+    imgHeight: 568,
+    primaryCta: CERAMIC_CROWN_RESIN_HERO.primaryCta,
+    secondaryCta: CERAMIC_CROWN_RESIN_HERO.secondaryCta,
+  },
+  applications: CERAMIC_CROWN_RESIN_APPLICATIONS,
+  features: CERAMIC_CROWN_RESIN_FEATURES,
+  featureIcons: FEATURE_ICON_COMPONENTS,
+  specs: CERAMIC_CROWN_RESIN_SPECS,
+  compatible: [...RESIN_DETAIL_COMPATIBLE],
+  cases: CERAMIC_CROWN_RESIN_CASES,
+  casesCta: RESIN_DETAIL_CASES_CTA,
 };

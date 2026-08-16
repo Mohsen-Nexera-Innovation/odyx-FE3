@@ -14,7 +14,7 @@ export const SCANNER_META = {
     'The ODYX-S1 intraoral scanner captures full-arch digital impressions in 40 seconds at ≤20 µm — AI margin detection, 270 g, open STL/OBJ export to any lab.',
 };
 
-export const SCANNER_SLUG = 'odyx-s1-intraoral-scanner';
+export const SCANNER_SLUG = 'odyx-s1';
 
 export const SUBNAV = [
   { label: 'Overview', href: '#overview' },

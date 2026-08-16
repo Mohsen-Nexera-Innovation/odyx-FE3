@@ -1,6 +1,6 @@
 ---
 description: Clinical indication detail pages — Same-Day Crown fidelity locked
-globs: src/content/clinical-*.ts,src/content/clinical-indications/**/*,src/components/pages/ClinicalIndicationPage.tsx,src/components/pages/SameDayCrownPage.tsx,src/app/solutions/clinical-applications/**/*,src/app/odyx-clinical.css,public/img/clinical/**/*
+globs: src/content/clinical-*.ts,src/content/clinical-indications/**/*,src/components/solutions/clinical-applications/**/*,src/app/solutions/clinical-applications/**/*,public/img/clinical/**/*
 alwaysApply: false
 ---
 
@@ -10,8 +10,8 @@ Every clinical application subtype page must reuse the Same-Day Crown chrome. **
 
 ## Shell (required)
 
-- Root: `cl cl--sdc` via `ClinicalIndicationPage`
-- CSS: `@/app/odyx-clinical.css` — do not fork per-indication stylesheets
+- Root: `ClinicalIndicationPage` (Tailwind)
+- Canvas: `ClinicalCanvas` — do not add `odyx-clinical.css` or per-indication stylesheets
 - Font: Inter only (`var(--font-inter)`) — never Sora/Tajawal on detail pages
 - Type scale: only `--sdc-*` tokens — no per-page font-size inventing
 - Accent CTAs / timeline / tips / why icons: `#0050D8` (`--cl-blue`)

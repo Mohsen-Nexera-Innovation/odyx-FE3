@@ -17,7 +17,7 @@ export function CasesHero({ data }: { data: CasesHeroData }) {
     e.preventDefault();
     document.getElementById('featured-cases')?.scrollIntoView({ behavior: 'smooth' });
     if (query.trim()) {
-      router.replace(`/cases?q=${encodeURIComponent(query.trim())}#featured-cases`, {
+      router.replace(`/solutions/cases?q=${encodeURIComponent(query.trim())}#featured-cases`, {
         scroll: false,
       });
     }

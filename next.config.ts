@@ -15,8 +15,43 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/solutions/dentists",
+        destination: "/solutions/clinical-applications",
+        permanent: true,
+      },
+      {
+        source: "/solutions/labs",
+        destination: "/solutions/clinical-applications",
+        permanent: true,
+      },
+      {
+        source: "/cases",
+        destination: "/solutions/cases",
+        permanent: true,
+      },
+      {
         source: "/solutions/clinical-applications/all-cases",
-        destination: "/cases",
+        destination: "/solutions/cases",
+        permanent: true,
+      },
+      {
+        source: "/solutions/clinical-applications/restorative-cases",
+        destination: "/solutions/cases/restorative-cases",
+        permanent: true,
+      },
+      {
+        source: "/solutions/clinical-applications/implant-cases",
+        destination: "/solutions/cases/implant-cases",
+        permanent: true,
+      },
+      {
+        source: "/solutions/clinical-applications/ortho-cases",
+        destination: "/solutions/cases/ortho-cases",
+        permanent: true,
+      },
+      {
+        source: "/solutions/clinical-applications/prosthetic-cases",
+        destination: "/solutions/cases/prosthetic-cases",
         permanent: true,
       },
       {

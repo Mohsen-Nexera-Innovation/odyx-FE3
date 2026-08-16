@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import ClinicalApplicationsPage from '@/components/pages/ClinicalApplicationsPage';
+import ClinicalApplicationsPage from '@/components/solutions/clinical-applications/ClinicalApplicationsPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import { CLINICAL_APPS_META } from '@/content/clinical-applications';
 

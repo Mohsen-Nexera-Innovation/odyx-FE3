@@ -6,7 +6,6 @@
       "next/link": ["./.design-sync/shims/next-link.tsx"],
       "next/navigation": ["./.design-sync/shims/next-navigation.tsx"],
       "next/script": ["./.design-sync/shims/next-script.tsx"],
-      "@/app/odyx-p126.css": ["./.design-sync/shims/empty.css"],
       "@/lib/config": ["./.design-sync/shims/lib-config.ts"],
       "@/*": ["./src/*"]
     }

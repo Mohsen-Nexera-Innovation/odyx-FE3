@@ -49,7 +49,7 @@ export interface ProductContent {
 
 export const PRODUCTS: ProductContent[] = [
   {
-    slug: "odyx-s1-intraoral-scanner",
+    slug: "odyx-s1",
     name: "ODYX-S1",
     category: "Intraoral Scanner",
     layout: "cinematic",
@@ -168,69 +168,7 @@ export const PRODUCTS: ProductContent[] = [
     ],
   },
   {
-    // 036 · 3D Printers — family page with its own layout (PrintersFamilyPage).
-    // This entry feeds nav/overview/shop surfaces; every value below traces to
-    // knowledge_base/ODYX Products - 18.7.26.pdf via screens/036 content.md §7.
-    slug: "3d-printers",
-    name: "ODYX P1-26",
-    category: "3D Printers",
-    layout: "cinematic",
-    tagline: "The dental printer — for the work that goes in the mouth.",
-    overview:
-      "The ODYX P1-26 dental 3D printer: 18 µm X-Y accuracy on a 6.8″ 9K monochrome LCD, for definitive restorations, models and appliances. Open-material 405 nm system.",
-    img: "/img/feat-printer.jpg",
-    heroImg: "/img/cutouts/feat-printer-cutout.png",
-    accent: "orange",
-    workflowStep: "print",
-    applications: [
-      "Crowns & bridges",
-      "Veneers, inlays & onlays",
-      "Temporary restorations",
-      "Study & orthodontic models",
-      "Implant surgical guides",
-    ],
-    models: [
-      { name: "ODYX P1-26", tagline: "The dental printer — for the work that goes in the mouth", shopProductId: "printer-p1-26" },
-    ],
-    specs: [
-      { label: "Technology", value: "405 nm monochrome LCD" },
-      { label: "X-Y accuracy", value: "18 µm" },
-      { label: "Build volume", value: "153 × 77 × 160 mm" },
-      { label: "Max print speed", value: "60 mm/h" },
-      { label: "Materials", value: "Open material system" },
-      { label: "Connectivity", value: "USB / WiFi, cloud printing" },
-    ],
-    downloads: [
-      { name: "Datasheets — available on request", type: "PDF", href: "/support" },
-      { name: "Setup & calibration", type: "PDF", href: "/support#manuals" },
-      { name: "Maintenance schedule", type: "PDF", href: "/support#manuals" },
-    ],
-    benefits: [
-      "In-house production",
-      "Open material system",
-      "Published consumable schedule",
-      "Cure times per application",
-    ],
-    stats: [
-      {
-        value: "18µm",
-        label: "X-Y accuracy",
-        desc: "Precision for definitive restorations.",
-      },
-      {
-        value: "9K",
-        label: "6.8″ LCD",
-        desc: "8520 × 4320 px monochrome screen.",
-      },
-      {
-        value: "6.6 kg",
-        label: "Operatory footprint",
-        desc: "221 × 221 × 404 mm — clinic, not just lab.",
-      },
-    ],
-  },
-  {
-    // Dedicated P1-26 marketing page (P126Page) — attached UI implementation.
+    // Dedicated P1-26 marketing page (P126Page) — canonical printer product.
     slug: "odyx-p1-26",
     name: "ODYX P1-26",
     category: "3D Printers",
