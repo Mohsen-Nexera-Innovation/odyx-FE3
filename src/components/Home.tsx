@@ -261,7 +261,7 @@ export default function Home() {
           <div className="path-stage m-fan">
             {/* Dentist */}
             <PathLane>
-              <a href="/solutions" className="pcard teal">
+              <a href="/solutions/dentists" className="pcard teal">
                 <div className="pcard-art">
                   <img
                     className="pimg parallax"
@@ -301,7 +301,7 @@ export default function Home() {
 
             {/* Lab */}
             <PathLane>
-              <a href="/solutions" className="pcard">
+              <a href="/solutions/labs" className="pcard">
                 <div className="pcard-art">
                   <img
                     className="pimg parallax"
@@ -484,7 +484,7 @@ export default function Home() {
           <SecHead eyebrow="Clinical Applications" />
           <ClinicalBento />
           <div className="sec-browse">
-            <a className="btn btn-ghost btn-sm" href="/solutions">
+            <a className="btn btn-ghost btn-sm" href="/solutions/dentists">
               Browse all applications →
             </a>
           </div>

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import ProductsOverviewPage from "@/components/pages/ProductsOverviewPage";
+import InnerPageMotion from "@/components/InnerPageMotion";
 
 export const metadata: Metadata = {
   title: "Products | ODYX",
@@ -7,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <main className="min-h-screen bg-white" />;
+  return (
+    <>
+      <ProductsOverviewPage />
+      <InnerPageMotion />
+    </>
+  );
 }

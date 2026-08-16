@@ -8,6 +8,7 @@ import PrintLineStats from '@/components/PrintLineStats';
 import SecHead from '@/components/SecHead';
 import ProductBuyActions from '@/components/shop/ProductBuyActions';
 import ProductHeroBuyCta from '@/components/shop/ProductHeroBuyCta';
+import PrinterRoiSection from '@/components/roi/PrinterRoiSection';
 import {
   digitalWorkflowHref,
   isDigitalWorkflowDimmed,
@@ -180,6 +181,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
         <PrintLineStats stats={product.stats} />
         {highlightsSection}
         {sharedSections}
+        {product.slug === '3d-printers' ? <PrinterRoiSection /> : null}
       </div>
     );
   }

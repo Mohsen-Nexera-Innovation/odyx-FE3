@@ -1,6 +1,6 @@
 /**
  * Dedicated P1-26 landing — attached product UI.
- * Specs/claims aligned with knowledge_base/screens/036-3d-printers claims register.
+ * Specs/claims aligned with printers-3d.ts P1_26 (claims register).
  */
 
 import {
@@ -130,7 +130,7 @@ export const P1_26_ECOSYSTEM = {
     {
       name: 'ODYX S1',
       subtitle: 'Intra-oral Scanner',
-      href: '/products/odyx-s1',
+      href: '/products/odyx-s1-intraoral-scanner',
       img: '/img/scanner/s1-hero-cutout.png',
     },
     {
@@ -143,7 +143,7 @@ export const P1_26_ECOSYSTEM = {
       name: 'ODYX Dental Resins',
       subtitle: 'High-Performance Resins',
       href: '/products/resins',
-      img: '/img/printers/p126/eco/resins.png',
+      img: '/img/hv2-hub/store-resins-cutout.png',
     },
     {
       name: 'ODYX Cure',

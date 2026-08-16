@@ -1,6 +1,6 @@
 /**
  * Single Cure landing — fidelity to product-design-refrences/cure.jpeg
- * Uses the same layout system as P1-26.
+ * Uses the same layout system as P1-26 (odyx-p126.css).
  */
 
 import {
@@ -108,7 +108,7 @@ export const CURE_UV02_ECOSYSTEM = {
     {
       name: 'ODYX S1',
       subtitle: 'Intra-oral Scanner',
-      href: '/products/odyx-s1',
+      href: '/products/odyx-s1-intraoral-scanner',
       img: '/img/scanner/s1-hero-cutout.png',
     },
     {
@@ -121,7 +121,7 @@ export const CURE_UV02_ECOSYSTEM = {
       name: 'ODYX Dental Resins',
       subtitle: 'High-Performance Resins',
       href: '/products/resins',
-      img: '/img/printers/p126/eco/resins.png',
+      img: '/img/hv2-hub/store-resins-cutout.png',
     },
     {
       name: 'ODYX Cure',

@@ -1,0 +1,168 @@
+/* Page-level integration only; component layout is implemented with Tailwind. */
+body:has(.trr-page),
+body:has(.trr-page) main,
+body:has(.trr-page) .site-bg {
+  background: #fff !important;
+}
+
+body.grain:has(.trr-page)::before {
+  display: none !important;
+}
+
+body:has(.trr-page) .dev-preview-tools,
+body:has(.trr-page) .fabs,
+body:has(.trr-page) nextjs-portal {
+  display: none !important;
+}
+
+.trr-page {
+  background: #fff !important;
+  /* Fixed header is min-height 68px + 17px padding; clear it so content isn't covered. */
+  padding-top: calc(var(--hdr-h) + 20px);
+  /* Keep the last section from sitting against the site footer. */
+  padding-bottom: 28px;
+}
+
+.trr-page h1,
+.trr-page h2 {
+  font-family: inherit;
+}
+
+/* Hero CTAs — size matched to Home V2 (HV2_BTN: 46px / 14.5px / radius 9). */
+.trr-page .trr-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  padding: 0 18px !important;
+  border-radius: 9px !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  gap: 8px !important;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.trr-page .trr-btn svg {
+  width: 19px !important;
+  height: 19px !important;
+  flex: none !important;
+  display: block !important;
+}
+
+.trr-page .trr-btn:focus-visible {
+  outline: 2px solid #0050d8 !important;
+  outline-offset: 2px !important;
+}
+
+.trr-page .trr-btn-primary {
+  border: none !important;
+  background: #0050d8 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(0, 80, 216, 0.35);
+}
+
+.trr-page .trr-btn-primary:hover {
+  background: #0041af !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 80, 216, 0.4);
+}
+
+.trr-page .trr-btn-secondary {
+  gap: 8px !important;
+  border: 1px solid #6c6c6c !important;
+  background: #fff !important;
+  color: #1a1a1a !important;
+}
+
+.trr-page .trr-btn-secondary:hover {
+  border-color: #404040 !important;
+}
+
+.trr-page .trr-btn-cases {
+  color: #0050d8 !important;
+  min-width: 220px !important;
+  padding-inline: 28px !important;
+}
+
+.trr-page .trr-btn-cases:hover {
+  border-color: #0050d8 !important;
+  background: rgba(0, 80, 216, 0.04) !important;
+}
+
+/* Applications cards — tight gutters matching mock (~8px).
+   Must beat unlayered global `.grid { gap: 20px }` in odyx.css. */
+.trr-page ul.trr-app-grid.grid {
+  display: grid !important;
+  gap: 8px !important;
+  column-gap: 8px !important;
+  row-gap: 8px !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.trr-page ul.trr-app-grid > li {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
+}
+
+@media (max-width: 639px) {
+  .trr-page ul.trr-app-grid.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trr-page .trr-app-media {
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.trr-page .trr-app-media img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/* Feature icon bar — dividers only, no grid gap. */
+.trr-page .trr-features-grid {
+  gap: 0 !important;
+}
+
+/* Specs table — kill global `.grid { gap: 20px }` so columns share one border. */
+.trr-page .trr-specs-grid,
+.trr-page .trr-specs-row {
+  gap: 0 !important;
+  column-gap: 0 !important;
+  row-gap: 0 !important;
+}
+
+/* Detail page responsive (trr) */
+@media (max-width: 1023px) {
+  .trr-page {
+    padding-top: calc(var(--hdr-h) + 12px);
+  }
+  .trr-page h1 {
+    font-size: clamp(1.75rem, 6.5vw, 2.45rem) !important;
+    white-space: normal !important;
+    letter-spacing: -0.03em !important;
+  }
+  .trr-page .trr-btn-cases {
+    min-width: 0 !important;
+    width: 100%;
+    max-width: 260px;
+    padding-inline: 18px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .trr-page .trr-btn {
+    max-width: 100%;
+  }
+}

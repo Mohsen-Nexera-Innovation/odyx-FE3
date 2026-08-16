@@ -3,8 +3,8 @@
  * Matched to client mock (surcgical-guide-resign-pro / user reference).
  */
 
-import type { ResinDetailContent } from '@/components/products/resins/ResinDetailPage';
-import { SURGICAL_GUIDE_FEATURE_ICONS } from '@/components/products/resins/surgical-guide/FeatureIcons';
+import type { ResinDetailContent } from '@/components/pages/ResinDetailPage';
+import { SURGICAL_GUIDE_FEATURE_ICONS } from '@/components/surgical-guide-resin/FeatureIcons';
 import {
   RESIN_DETAIL_CASES_CTA,
   RESIN_DETAIL_COMPATIBLE,

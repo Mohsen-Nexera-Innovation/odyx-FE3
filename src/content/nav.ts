@@ -103,23 +103,23 @@ export const HEADER_MENUS: NavGroup[] = [
   {
     label: "Products",
     href: "/products",
-    // navOnly: true,
-    // comingSoon: true,
+    navOnly: true,
+    comingSoon: true,
     items: [
       { label: "All Products", href: "/products", desc: "Full ODYX lineup", dimmed: true },
       {
         label: "Intraoral Scanner",
-        href: "/products/odyx-s1",
+        href: "/products/odyx-s1-intraoral-scanner",
         desc: "ODYX-S1",
       },
       {
         label: "Design Services",
-        href: "/products/design-services",
+        href: "/case-submission",
         desc: "On-demand dental CAD design",
       },
       {
         label: "3D Printers",
-        href: "/products/odyx-p1-26",
+        href: "/products/3d-printers",
         desc: "ODYX P1-26",
       },
       {
@@ -140,18 +140,18 @@ export const HEADER_MENUS: NavGroup[] = [
         items: [
           {
             label: "ODYX-S1",
-            href: "/products/odyx-s1",
+            href: "/products/odyx-s1-intraoral-scanner",
             desc: "Chairside 3D impressions in seconds",
             img: "/img/scanner/s1-hero-cutout.png",
           },
         ],
       },
       {
-        title: "Design Services",
+        title: "Digital Products",
         items: [
           {
             label: "Design Services",
-            href: "/products/design-services",
+            href: "/case-submission",
             desc: "On-demand dental CAD design",
             img: "/img/cutouts/feat-design-cutout.png",
           },
@@ -200,7 +200,7 @@ export const HEADER_MENUS: NavGroup[] = [
       eyebrow: "Flagship",
       title: "ODYX P1-26",
       desc: "The dental production workhorse — validated profiles for crowns, guides, models and more.",
-      href: "/products/odyx-p1-26",
+      href: "/products/3d-printers",
       cta: "Explore P1-26",
       img: "/img/cutouts/feat-printer-cutout.png",
       imgAlt: "ODYX P1-26 dental 3D printer",
@@ -208,9 +208,21 @@ export const HEADER_MENUS: NavGroup[] = [
   },
   {
     label: "Solutions",
-    href: "/solutions",
-    // comingSoon: true,
+    href: "/solutions/clinical-applications",
+    comingSoon: true,
     items: [
+      {
+        label: "For Dentists",
+        href: "/solutions/dentists",
+        desc: "Same-day chairside dentistry",
+        dimmed: true,
+      },
+      {
+        label: "For Dental Labs",
+        href: "/solutions/labs",
+        desc: "Scale production with confidence",
+        dimmed: true,
+      },
       {
         label: "Clinical Applications",
         href: "/solutions/clinical-applications",
@@ -218,21 +230,38 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "Real Cases",
-        href: "/solutions/cases",
+        href: "/cases",
         desc: "Browse real clinical cases",
       },
       {
         label: "By Application",
-        href: "/solutions/cases#by-application",
+        href: "/cases#by-application",
         desc: "Restorative, implant, ortho, denture",
       },
       {
         label: "By Product",
-        href: "/solutions/cases#by-product",
+        href: "/cases#by-product",
         desc: "Scanner, printer, cure, resin",
       },
     ],
     columns: [
+      {
+        title: "By Role",
+        items: [
+          {
+            label: "For Dentists",
+            href: "/solutions/dentists",
+            desc: "Same-day chairside dentistry",
+            dimmed: true,
+          },
+          {
+            label: "For Dental Labs",
+            href: "/solutions/labs",
+            desc: "Scale production with confidence",
+            dimmed: true,
+          },
+        ],
+      },
       {
         title: "Applications",
         groups: [
@@ -250,17 +279,17 @@ export const HEADER_MENUS: NavGroup[] = [
             items: [
               {
                 label: "Case Library",
-                href: "/solutions/cases",
+                href: "/cases",
                 desc: "Browse real clinical cases",
               },
               {
                 label: "By Application",
-                href: "/solutions/cases#by-application",
+                href: "/cases#by-application",
                 desc: "Restorative, implant, ortho, denture",
               },
               {
                 label: "By Product",
-                href: "/solutions/cases#by-product",
+                href: "/cases#by-product",
                 desc: "Scanner, printer, cure, resin",
               },
             ],
