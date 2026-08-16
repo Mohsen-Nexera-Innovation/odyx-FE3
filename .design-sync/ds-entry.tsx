@@ -28,15 +28,15 @@ export { default as HubCardsSection } from '@/components/home2/HubCardsSection';
 export { default as LatestUpdatesSection } from '@/components/home2/LatestUpdatesSection';
 
 // ── P1-26 product screen ─────────────────────────────────────────────────
-export { default as P126Cases } from '@/components/products/p1-26/P126Cases';
-export { default as P126RoiMini } from '@/components/products/p1-26/P126RoiMini';
-export { default as P126Video } from '@/components/products/p1-26/P126Video';
+export { default as P126Cases } from '@/components/p126/P126Cases';
+export { default as P126RoiMini } from '@/components/p126/P126RoiMini';
+export { default as P126Video } from '@/components/p126/P126Video';
 
 // ── Whole-screen compositions ────────────────────────────────────────────
 // Shipped so the design agent can read how the sections are assembled at full
 // screen scale, not just how each one looks alone.
 export { default as HomeV2Page } from '@/components/pages/HomeV2Page';
-export { default as P126Page } from '@/components/products/p1-26/P126Page';
+export { default as P126Page } from '@/components/pages/P126Page';
 
 // ── Runtime requirements (bundled, no preview card of their own) ──────────
 // GlobalToolsProvider carries locale/theme context that Header and Footer

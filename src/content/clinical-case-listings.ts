@@ -8,7 +8,11 @@ import {
   realCasesForListing,
   type RealClinicalCase,
 } from '@/content/clinical-case-photos';
-import { CLINICAL_BADGE_ACCENTS, type ClinicalCategoryId } from '@/content/clinical-indication-types';
+import {
+  CLINICAL_BADGE_ACCENTS,
+  clinicalPath,
+  type ClinicalCategoryId,
+} from '@/content/clinical-indication-types';
 
 export type ClinicalCaseListing = {
   slug: string;
@@ -62,9 +66,8 @@ export const CLINICAL_CASE_LISTINGS: Record<string, ClinicalCaseListing> = Objec
 
 export const CLINICAL_CASE_LISTING_SLUGS = LISTING_DEFS.map((d) => d.slug);
 
-export function solutionsCasesPath(slug: string) {
-  return `/solutions/cases/${slug}`;
-}
+/** Legacy slug — permanently redirected to `/cases`. */
+export const ALL_CLINICAL_CASES_SLUG = 'all-cases';
 
 export const CLINICAL_CASE_LISTING_META: Record<string, { title: string; description: string }> = {
   'restorative-cases': {
@@ -104,7 +107,7 @@ export function listingHeroImages(listing: ClinicalCaseListing): string[] {
   return heroCaseImages(listing.slug);
 }
 
-/** All category sections that have real photos (shown on `/solutions/cases#all-cases`). */
+/** All category sections that have real photos (shown on `/cases#all-cases`). */
 export function getAllClinicalCaseSections(): ClinicalCaseSection[] {
   const bySlug = Object.fromEntries(LISTING_DEFS.map((d) => [d.slug, d]));
   return allRealClinicalCases()
@@ -114,7 +117,7 @@ export function getAllClinicalCaseSections(): ClinicalCaseSection[] {
       return {
         listing,
         cases,
-        categoryHref: solutionsCasesPath(listing.slug),
+        categoryHref: clinicalPath(listing.slug),
         heroImages: heroCaseImages(listing.slug),
       };
     })

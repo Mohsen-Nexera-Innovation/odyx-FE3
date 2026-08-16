@@ -58,13 +58,13 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
               <span className="card-eyebrow teal">Dentist</span>
               <h3>Chairside</h3>
               <p>{step.dentistNote}</p>
-              <Link className="more" href="/solutions">Dentist path <Arrow /></Link>
+              <Link className="more" href="/solutions/dentists">Dentist path <Arrow /></Link>
             </div>
             <div className="card reveal build">
               <span className="card-eyebrow orange">Lab</span>
               <h3>Production</h3>
               <p>{step.labNote}</p>
-              <Link className="more" href="/solutions">Lab path <Arrow /></Link>
+              <Link className="more" href="/solutions/labs">Lab path <Arrow /></Link>
             </div>
           </div>
         </div>

@@ -65,7 +65,7 @@ const PRODUCTS: Product[] = [
     chips: ["~20s capture", "Open .STL", "Powder-free"],
     img: "/img/scanner/s1-hero.png",
     accent: "teal",
-    href: "/products/odyx-s1",
+    href: "/products/odyx-s1-intraoral-scanner",
     shopProductId: "scanner-s1",
   },
   {
@@ -75,7 +75,7 @@ const PRODUCTS: Product[] = [
     chips: ["Layer-by-layer", "ODYX resin", "In-house"],
     img: "/img/feat-printer.jpg",
     accent: "orange",
-    href: "/products/odyx-p1-26",
+    href: "/products/3d-printers",
     shopProductId: "printer-p1-26",
   },
   {

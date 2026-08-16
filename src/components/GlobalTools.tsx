@@ -35,7 +35,7 @@ export function useGlobalTools() {
 }
 
 const SEARCH_ITEMS = [
-  { label: "ODYX-S1 Scanner", href: "/products/odyx-s1" },
+  { label: "ODYX-S1 Scanner", href: "/products/odyx-s1-intraoral-scanner" },
   { label: "ODYX P1-26", href: "/products/odyx-p1-26" },
   { label: "ODYX Cure", href: "/products/curing-machines" },
   { label: "Resin & Materials", href: "/products/resins" },

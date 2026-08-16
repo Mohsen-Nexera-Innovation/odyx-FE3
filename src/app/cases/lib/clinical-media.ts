@@ -1,12 +1,10 @@
-import {
-  solutionsCasesPath,
-  type ClinicalCaseSection,
-} from '@/content/clinical-case-listings';
+import type { ClinicalCaseSection } from '@/content/clinical-case-listings';
 import {
   allRealClinicalCases,
   realCasesForListing,
   type RealClinicalCase,
 } from '@/content/clinical-case-photos';
+import { clinicalPath } from '@/content/clinical-indication-types';
 import type { FeaturedCase, FeaturedProductIcon } from '../types';
 
 const LISTING_BADGE: Record<string, string> = {
@@ -72,7 +70,7 @@ function toFeaturedCase(
     badge: LISTING_BADGE[listingSlug] ?? 'Clinical',
     title: c.title,
     tags: [c.tag],
-    href: solutionsCasesPath(listingSlug),
+    href: clinicalPath(listingSlug),
     img: c.after.img,
     imgAlt: c.after.alt,
     before: { img: c.before.img, alt: c.before.alt },
@@ -84,7 +82,7 @@ function toFeaturedCase(
 }
 
 export function productCaseHref(productId: string) {
-  return `/solutions/cases?product=${encodeURIComponent(productId)}#featured-cases`;
+  return `/cases?product=${encodeURIComponent(productId)}#featured-cases`;
 }
 
 /** How many clinical cases are tagged with each product key. */

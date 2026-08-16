@@ -19,11 +19,11 @@ export const RESIN_DETAIL_COMPATIBLE = [
     label: 'ODYX S1 Intraoral Scanner',
     img: '/img/scanner/s1-hero-cutout.png',
     imgAlt: 'ODYX S1 intraoral scanner',
-    href: '/products/odyx-s1',
+    href: '/products/odyx-s1-intraoral-scanner',
   },
 ] as const;
 
 export const RESIN_DETAIL_CASES_CTA = {
   label: 'View More Cases',
-  href: '/solutions/cases?product=resin#featured-cases',
+  href: '/cases?product=resin#featured-cases',
 };

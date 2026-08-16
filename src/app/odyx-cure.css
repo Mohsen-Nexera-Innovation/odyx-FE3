@@ -1,0 +1,434 @@
+/* Cure UV-02 — thin overlay on P1-26 system (odyx-p126.css)
+   Fidelity target: product-design-refrences/cure.jpeg */
+
+.cure-page.p126-page{
+  background-image:none;
+  background-color:var(--p126-page);
+  /* Inherit printer width hierarchy (hero/last full, body 80%) */
+}
+.cure-page .p126-wrap{
+  /* Keep About / Home fluid gutter; max-width comes from p126-wrap--* modifiers */
+  padding-inline:clamp(20px, 4vw, 56px);
+}
+
+/* Hero left — nudge copy + chips slightly down */
+.cure-page .p126-hero-left{
+  gap:clamp(12px, 1.6vh, 18px);
+  padding-top:clamp(36px, 5.5vh, 64px);
+}
+.cure-page .p126-chips{
+  gap:7px;
+  align-items:stretch;
+}
+.cure-page .p126-chip{
+  aspect-ratio:auto !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:9px 6px 8px;
+  gap:4px;
+  border-radius:10px;
+  justify-content:flex-start;
+}
+.cure-page .p126-chip-icon{
+  width:34px;
+  height:34px;
+  color:var(--p126-blue, var(--sky, #0050D8));
+  flex-shrink:0;
+}
+.cure-page .p126-chip-label{
+  font-size:clamp(.52rem, .95vw, .64rem);
+  line-height:1.1;
+  color:#111827;
+  gap:0;
+}
+.cure-page .p126-chip-label span:first-child{font-weight:700}
+
+/* Why ODYX Cure — smaller copy so list clears the product image */
+.cure-page .p126-why-card .p126-card-title{
+  font-size:clamp(1.05rem, 1.5vw, 1.2rem);
+  margin-bottom:10px;
+}
+/* Why card +15% wider than the shared rail (1.1fr → 1.265fr) for more text↔image air */
+.cure-page .p126-row--why{
+  grid-template-columns:minmax(0, 1.265fr) minmax(0, 1fr);
+}
+.cure-page .p126-why-grid{
+  grid-template-columns:minmax(0, 1fr) minmax(200px, 1.05fr);
+  gap:clamp(55px, 6.3vw, 88px); /* gap also +~15% */
+  align-items:center;
+}
+.cure-page .p126-why-list{
+  gap:10px;
+  padding-right:4px;
+  max-width:none;
+}
+.cure-page .p126-why-list li{
+  font-size:clamp(.72rem, .95vw, .8rem);
+  line-height:1.25;
+  white-space:nowrap; /* one line per item — same as printer page */
+  gap:8px;
+}
+.cure-page .p126-why-list .p126-check{
+  width:18px;
+  height:18px;
+}
+.cure-page .p126-why-list .p126-check svg{
+  width:10px;
+  height:10px;
+}
+
+body:has(.cure-page),
+body:has(.cure-page) .site-bg,
+body:has(.cure-page) main{
+  background:var(--p126-page, #f1f7fe) !important;
+}
+
+/* Never leave Workflow / ROI stuck at opacity:0 if motion misses them */
+.cure-page .p126-row--flow > .reveal{
+  transition:opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
+}
+.cure-page .p126-row--flow > .reveal.in,
+.cure-page .cure-roi-card{
+  opacity:1 !important;
+  transform:none !important;
+}
+
+/* ROI card — solid visible panel (mock: clear calculator card) */
+.cure-roi-card.p126-card{
+  background:#ffffff !important;
+  background-color:#ffffff !important;
+  border:1px solid rgba(30,50,90,.08) !important;
+  box-shadow:0 10px 28px rgba(20,40,80,.06);
+  min-height:280px;
+  overflow:visible !important;
+  padding:clamp(18px, 2vw, 26px) !important;
+}
+.cure-roi-card .p126-card-title{
+  margin:0 0 2px;
+  text-align:left;
+}
+.cure-roi-card .p126-roi-lead{
+  margin:0 0 16px;
+  text-align:left;
+  font-size:.92rem;
+  font-weight:500;
+  color:var(--p126-card-body-color);
+}
+
+/* Layered hero — machine left, props right; keep inside hero band */
+.cure-page .p126-hero{
+  /* visible so machine bottom isn't clipped; x clip via page if needed */
+  overflow:visible;
+  /* padding / stack spacing: inherit p126 (same as printer page) */
+}
+.cure-page .p126-hero-grid{
+  gap:clamp(20px, 3vw, 40px); /* keep air between copy and larger media */
+}
+.cure-hero-media{
+  position:relative;
+  display:block;
+  overflow:visible; /* allow machine bottom (feet/shadow) to fully show */
+  min-height:100%;
+  isolation:isolate;
+}
+.cure-hero-media .p126-hero-ground-shadow{
+  /* Machine PNG already has a soft studio contact shadow */
+  display:none;
+}
+.cure-layer{
+  position:absolute;
+  display:block;
+  object-fit:contain;
+  object-position:center center;
+  pointer-events:none;
+}
+.cure-layer--machine{
+  left:-2%;
+  top:-6%;
+  width:56%;
+  height:96%;
+  z-index:5 !important;
+  /* No drop-shadow — smears transparent PNG cutouts into ghost trails */
+  filter:none;
+  animation:p126-float 5.5s ease-in-out infinite;
+}
+.cure-layer--arch{
+  left:64%;
+  bottom:36%;
+  width:34%;
+  height:46%;
+  z-index:3 !important;
+  transform:rotate(-4deg);
+  filter:none;
+  animation:cure-float-arch 6.2s ease-in-out .2s infinite;
+}
+.cure-layer--aligner{
+  left:68%;
+  bottom:16%;
+  width:32%;
+  height:28%;
+  z-index:4 !important;
+  transform:rotate(6deg);
+  filter:none;
+  animation:cure-float-aligner 6.6s ease-in-out .4s infinite;
+}
+
+/* What Can You Cure — transparent cutouts, no card fill behind */
+.cure-page .p126-app-media{
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.cure-page .p126-app-media img{
+  /* No drop-shadow — smears transparent PNG cutouts into ghost trails */
+  filter:none;
+}
+@keyframes cure-float-arch{
+  0%,100%{transform:rotate(-6deg) translateY(0)}
+  50%{transform:rotate(-6deg) translateY(-3px)}
+}
+@keyframes cure-float-aligner{
+  0%,100%{transform:rotate(8deg) translateY(0)}
+  50%{transform:rotate(8deg) translateY(-3px)}
+}
+
+/* Digital Workflow — 6 steps; Cure highlighted like cure.jpeg */
+.cure-page .p126-flow-card{
+  display:flex;
+  flex-direction:column;
+  overflow:visible;
+  background:#ffffff !important;
+  background-color:#ffffff !important;
+  border:1px solid rgba(30,50,90,.08) !important;
+  box-shadow:0 10px 28px rgba(20,40,80,.06);
+}
+.cure-page .p126-flow{
+  margin:auto 0;
+  flex:1;
+  align-items:center;
+}
+.cure-page .p126-flow-icon,
+.cure-page .p126-flow-icon img{
+  width:56px;
+  height:56px;
+}
+.cure-page .p126-flow-arrow{top:18px; right:-10px}
+.cure-page .p126-flow-step.is-current .p126-flow-icon{
+  outline:2px solid var(--p126-blue);
+  outline-offset:3px;
+  border-radius:50%;
+}
+.cure-page .p126-flow-label{font-size:.78rem}
+
+/* ROI — cure.jpeg: labels flush-left above inputs | divider | results */
+.cure-roi-grid{
+  display:grid;
+  grid-template-columns:minmax(0, 1.35fr) 1px minmax(0, .85fr);
+  column-gap:16px;
+  align-items:stretch;
+  flex:1;
+  min-width:0;
+  width:100%;
+}
+/* 2-col grid: label/label → input/input → span label → span input */
+.cure-roi-fields{
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows:auto 42px auto 42px;
+  column-gap:12px;
+  row-gap:6px;
+  align-items:end;
+  align-content:center;
+  min-width:0;
+}
+.cure-roi-label{
+  display:block;
+  margin:0;
+  padding:0;
+  text-align:left;
+  font-family:var(--font-sora), 'Sora', sans-serif !important;
+  font-size:.74rem;
+  font-weight:600;
+  line-height:1.25;
+  color:var(--p126-card-label-color);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  align-self:end;
+}
+.cure-roi-label--span{
+  grid-column:1 / -1;
+  margin-top:6px;
+  white-space:normal;
+}
+.cure-roi-input{
+  width:100%;
+  min-width:0;
+  height:42px;
+  margin:0;
+  border:1px solid #d5dce8;
+  border-radius:8px;
+  padding:0 12px;
+  text-align:left;
+  font-family:var(--font-sora), 'Sora', sans-serif !important;
+  font-size:.9rem;
+  font-weight:600;
+  color:var(--p126-ink);
+  background:#ffffff;
+  box-sizing:border-box;
+  transition:border-color .2s ease, box-shadow .2s ease;
+  /* Keep value left-aligned; hide ugly spinner misalignment */
+  -moz-appearance:textfield;
+  appearance:textfield;
+}
+.cure-roi-input::-webkit-outer-spin-button,
+.cure-roi-input::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+  margin:0;
+}
+.cure-roi-input:focus{
+  outline:none;
+  border-color:var(--p126-blue);
+  box-shadow:0 0 0 3px rgba(0,80,216,.14);
+}
+.cure-roi-input--span{
+  grid-column:1 / -1;
+}
+.cure-roi-divider{
+  width:1px;
+  background:#dce2ee;
+  align-self:stretch;
+  min-height:100%;
+}
+.cure-roi-results{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:18px;
+  min-width:0;
+  padding:4px 2px 4px 4px;
+  text-align:left;
+}
+.cure-roi-metric{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  min-width:0;
+}
+.cure-roi-metric-label{
+  font-family:var(--font-sora), 'Sora', sans-serif !important;
+  font-size:.74rem;
+  font-weight:600;
+  color:var(--p126-card-label-color);
+  line-height:1.25;
+}
+.cure-roi-metric-line{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:6px;
+  min-width:0;
+}
+.cure-roi-metric-value{
+  font-family:var(--font-space), 'Space Grotesk', sans-serif !important;
+  font-size:clamp(1.2rem, 1.7vw, 1.55rem);
+  font-weight:800;
+  color:var(--p126-blue);
+  line-height:1.1;
+}
+.cure-roi-metric-unit{
+  font-family:var(--font-sora), 'Sora', sans-serif !important;
+  font-size:.88rem;
+  font-weight:700;
+  color:var(--p126-blue);
+  white-space:nowrap;
+}
+
+@media (max-width:1100px){
+  .cure-page .p126-row--why{
+    grid-template-columns:1fr;
+  }
+  .cure-page .p126-why-grid{
+    grid-template-columns:minmax(0, 1fr) minmax(160px, .9fr);
+    gap:clamp(20px, 3vw, 36px);
+  }
+  .cure-page .p126-why-list li{
+    white-space:normal;
+  }
+  .cure-page .p126-why-media img,
+  .cure-page .p126-why-card:hover .p126-why-media img{
+    transform:none;
+  }
+}
+
+@media (max-width:800px){
+  .cure-hero-media{min-height:300px}
+  .cure-layer--machine{
+    position:relative;
+    left:auto; top:auto; right:auto; bottom:auto;
+    width:min(62%, 260px);
+    height:auto;
+    margin:0 auto 8px;
+    display:block;
+  }
+  .cure-layer--arch{
+    left:64%;
+    bottom:20%;
+    width:28%;
+    height:34%;
+  }
+  .cure-layer--aligner{
+    left:68%;
+    bottom:4%;
+    width:28%;
+    height:22%;
+  }
+  .cure-roi-grid{grid-template-columns:1fr; row-gap:18px}
+  .cure-roi-divider{display:none}
+  .cure-roi-fields{
+    grid-template-columns:1fr;
+    grid-template-rows:auto;
+  }
+  .cure-roi-label--span,
+  .cure-roi-input--span{grid-column:auto}
+  .cure-roi-label{white-space:normal}
+  .cure-roi-results{flex-direction:row; gap:16px}
+  .cure-roi-metric{flex:1}
+  .cure-page .p126-flow-icon,
+  .cure-page .p126-flow-icon img{width:48px; height:48px}
+
+  /* Why card internals + video stack cleanly on phones */
+  .cure-page .p126-why-grid{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .cure-page .p126-why-list{
+    padding-right:0;
+    max-width:none;
+  }
+  .cure-page .p126-why-list li{
+    font-size:.82rem;
+    line-height:1.35;
+  }
+  .cure-page .p126-why-media{
+    overflow:hidden;
+    max-width:280px;
+    margin-inline:auto;
+    aspect-ratio:16 / 11;
+    max-height:none;
+  }
+  .cure-page .p126-why-media img{
+    max-height:200px;
+  }
+  .cure-page .p126-video-card .p126-video{
+    max-height:none;
+    min-height:180px;
+    width:100%;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cure-layer--machine,
+  .cure-layer--arch,
+  .cure-layer--aligner{animation:none}
+}

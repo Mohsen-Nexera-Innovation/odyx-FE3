@@ -41,8 +41,6 @@ function caseDetailHref(c: { slug: string; href?: string | null }): string {
     !href ||
     href === '/cases' ||
     href.startsWith('/cases#') ||
-    href === '/solutions/cases' ||
-    href.startsWith('/solutions/cases#') ||
     href.includes('/all-cases')
   ) {
     return `/cases/${c.slug}`;

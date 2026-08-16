@@ -1,0 +1,536 @@
+/* ============================================================
+   034 · Intraoral Scanner (ODYX-S1) — screen-scoped styles (.sc-)
+   Light on all ten sections (sub-design-system §2 — no dark band:
+   dark is for lineups, the S1 is a single device). Family accent:
+   Scanners teal #3A9C96 (client logo color, Axis A) — graphics,
+   ≥24px bold figures, .STL badges, stepper active, the scan line.
+   Small teal text uses the darkened #2E7E78 (≥4.5:1 on white).
+   Actions stay the home-screen sky palette (MASTER.md, Khaled
+   2026-07-25). Dials: Variance 3 · Motion 6 · Density 7.
+   ============================================================ */
+
+.sc{
+  --sca:#3A9C96;                          /* family-scan accent — graphics/large text only */
+  --sca-text:#2E7E78;                     /* darkened teal for small text, 4.5:1 on white */
+  --sca-tint:rgba(58,156,150,.12);        /* gradient environments, .STL fills */
+  --scb:var(--sky,#0050D8); --scb-h:var(--sky-deep,#0041AF); --scb-soft:var(--sky-soft,#5B93F5);
+  --sc-ink:var(--ink,#211C1D); --sc-body:var(--ink-muted,#5A555C); --sc-mut:var(--ink-faint,#8A858E);
+  --sc-tint:var(--paper-2,#E9F4FB); --sc-dark:var(--navy-deep,#141216);
+  --sc-rule:var(--paper-line,rgba(10,60,100,.10));
+  --sc-shadow:0 6px 24px rgba(10,60,100,.08);
+  background:#fff; color:var(--sc-body);
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  font-size:16px; line-height:1.6;
+  overflow-x:clip;
+}
+.sc h1,.sc h2,.sc h3,.sc h4{
+  font-family:var(--font-tajawal),'Tajawal',sans-serif;
+  color:var(--sc-ink); font-weight:700; line-height:1.15; letter-spacing:-.01em;
+}
+[dir="rtl"] .sc h1,[dir="rtl"] .sc h2,[dir="rtl"] .sc h3,[dir="rtl"] .sc h4{letter-spacing:0}
+.sc :focus-visible{outline:2px solid var(--scb); outline-offset:2px; border-radius:4px}
+.sc img{max-width:100%}
+
+.sc-wrap{max-width:1180px; margin-inline:auto; padding-inline:24px}
+.sc [id]{scroll-margin-top:130px} /* fixed header + sticky sub-nav */
+.sc-sec{padding-block:clamp(32px,4vw,48px)}
+.sc-sec--tint{background:var(--sc-tint)}
+
+/* Section header — client-reference style: teal accent bar + short title */
+.sc-shead{margin-bottom:clamp(14px,2vw,22px)}
+.sc-h2{
+  font-size:clamp(23px,2.6vw,30px);
+  border-inline-start:5px solid var(--sca);
+  padding-inline-start:14px;
+}
+.sc-h3{font-size:clamp(19px,2vw,23px)}
+.sc-shead .sc-eyebrow{display:block; margin-bottom:4px; padding-inline-start:19px}
+.sc-intro{max-width:52em; font-size:16.5px; margin-bottom:clamp(14px,2vw,20px)}
+
+.sc-eyebrow{
+  color:var(--sca-text); font-weight:700; font-size:13.5px;
+  letter-spacing:.14em; text-transform:uppercase;
+}
+[dir="rtl"] .sc-eyebrow{letter-spacing:0; text-transform:none}
+
+/* Cards — the page's base unit */
+.sc-card{
+  background:#fff; border:1px solid var(--sc-rule); border-radius:16px;
+  box-shadow:var(--sc-shadow); overflow:hidden;
+}
+.sc-card--pad{padding:clamp(16px,2vw,24px)}
+
+/* Grid media cells — an image's intrinsic width must never size its track */
+.sc-hero-media,.sc-split-media,.sc-open-media,.sc-chain-node{min-width:0}
+
+/* Buttons — home-screen style: sky fill, dark ink text */
+.sc-btn{
+  display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+  background:var(--scb); color:var(--sc-dark); font-weight:700; font-size:15.5px;
+  padding:12px 24px; border-radius:10px; border:2px solid var(--scb);
+  transition:background .2s ease,border-color .2s ease,transform .2s ease;
+}
+.sc-btn:hover{background:var(--scb-soft); border-color:var(--scb-soft)}
+.sc-btn--ghost{background:transparent; color:var(--scb-h)}
+.sc-btn--ghost:hover{background:rgba(0,80,216,.08)}
+.sc-cta-micro{font-size:13px; color:var(--sc-mut); margin-top:8px}
+.sc-micro{font-size:13px; color:var(--sc-mut)}
+.sc-micro a{color:var(--sca-text); font-weight:500}
+.sc-micro a:hover{text-decoration:underline}
+
+/* 1 · Hero — light, airy-to-teal gradient environment (8–12% tint) */
+.sc-hero{
+  padding-block:clamp(104px,12vw,132px) clamp(28px,3.5vw,40px);
+  background:
+    radial-gradient(880px 460px at 76% 22%, var(--sca-tint), transparent 62%),
+    linear-gradient(180deg, #FFFFFF 0%, #F2FAF9 60%, #FFFFFF 100%);
+}
+.sc-hero .sc-wrap{display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(24px,4vw,52px); align-items:center}
+.sc-hero-eyebrow{display:flex; align-items:center; gap:12px; margin-bottom:14px}
+.sc-hero h1{font-size:clamp(38px,5vw,58px); margin-bottom:6px}
+.sc-hero-sub{font-size:clamp(17px,1.8vw,20px); font-weight:500; color:var(--sc-ink); margin-bottom:12px}
+.sc-hero-body{font-size:clamp(15.5px,1.4vw,17px); max-width:34em; margin-bottom:20px}
+.sc-hero-ctas{display:flex; flex-wrap:wrap; gap:12px}
+.sc-hero-media{margin:0}
+/* The hero render carries its own studio ground — no card frame. Multiply +
+   a radial edge fade melt the photo's gray backdrop into the hero surface. */
+.sc-hero-media img{
+  width:100%; height:auto; display:block;
+  mix-blend-mode:multiply;
+  filter:brightness(1.07);
+  -webkit-mask-image:radial-gradient(100% 100% at 50% 50%, #000 38%, transparent 76%);
+  mask-image:radial-gradient(100% 100% at 50% 50%, #000 38%, transparent 76%);
+}
+
+/* Five-dot workflow micro-spine — first dot filled: you are at step 1 */
+.sc-microspine{display:inline-flex; align-items:center; gap:6px}
+.sc-microspine-dot{
+  width:8px; height:8px; border-radius:50%;
+  border:1.5px solid var(--sca); background:transparent;
+}
+.sc-microspine-dot[data-active="true"]{background:var(--sca)}
+
+/* Sticky sub-nav — the client's four inner links */
+.sc-subnav{
+  position:sticky; top:68px; z-index:500;
+  background:rgba(255,255,255,.94); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--sc-rule);
+}
+.sc-subnav ul{
+  display:flex; gap:4px; list-style:none; margin:0; overflow-x:auto;
+  max-width:1180px; margin-inline:auto; padding:0 16px;
+}
+.sc-subnav a{
+  display:block; padding:12px 14px; font-weight:500; font-size:15px;
+  color:var(--sc-ink); white-space:nowrap;
+}
+.sc-subnav a:hover{color:var(--sca-text)}
+
+/* 2 · Why S1 — five proof chips */
+.sc-chips{display:grid; grid-template-columns:repeat(5,1fr); gap:12px; padding:0; margin:0; list-style:none}
+.sc-chip{
+  display:flex; flex-direction:column; align-items:center; text-align:center; gap:4px;
+  background:#fff; border:1px solid var(--sc-rule); border-radius:14px;
+  padding:16px 12px; box-shadow:var(--sc-shadow);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.sc-chip:hover{transform:translateY(-3px); box-shadow:0 12px 32px rgba(24,90,86,.14)}
+.sc-chip svg{width:26px; height:26px; color:var(--sca); margin-bottom:4px; flex:none}
+.sc-chip-figure{font-size:24px; font-weight:700; color:var(--sca-text); line-height:1.1; white-space:nowrap}
+.sc-chip-label{font-weight:700; font-size:13.5px; color:var(--sc-ink)}
+.sc-chip-line{font-size:12.5px; line-height:1.45}
+
+/* 3 · Clean by design — split card */
+.sc-split{display:grid; grid-template-columns:1.05fr .95fr; align-items:stretch}
+.sc-split-media{margin:0; position:relative; background:var(--sc-tint)}
+.sc-split-media img{width:100%; height:100%; min-height:300px; object-fit:cover; display:block}
+.sc-split-media figcaption{
+  position:absolute; inset-inline:0; bottom:0; padding:10px 16px;
+  font-size:12.5px; color:#fff; background:linear-gradient(180deg, transparent, rgba(10,26,25,.72));
+}
+.sc-split-copy{padding:clamp(18px,2.6vw,30px); display:flex; flex-direction:column; justify-content:center; gap:16px}
+.sc-split-copy p{font-size:15.5px; max-width:44em; margin:0}
+.sc-facts{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+.sc-facts li{
+  display:flex; align-items:baseline; gap:12px;
+  border-inline-start:3px solid var(--sca); padding-inline-start:12px;
+}
+.sc-facts b{font-size:19px; color:var(--sc-ink); white-space:nowrap}
+.sc-facts span{font-size:13.5px}
+
+/* 4 · See the S1 at work — CSS-built laptop running the scan software.
+   The signature scan moment lives inside the viewport: a teal scan line
+   loops (~7.5s) across the arch, rebuilding the photo into its mesh.
+   Chrome (lid / deck / shadow) is pure CSS — no device photo, so the
+   screen UI stays crisp, translatable and RTL-safe. */
+.sc-laptop-wrap{max-width:880px; margin-inline:auto}
+.sc-laptop{margin:0}
+.sc-laptop-lid{
+  position:relative;
+  background:linear-gradient(180deg,#262B31,#0F1216);
+  border:1px solid #3A4048; border-bottom-color:#1C2025;
+  border-radius:clamp(12px,1.8vw,18px) clamp(12px,1.8vw,18px) 0 0;
+  padding:clamp(14px,2vw,20px) clamp(9px,1.4vw,14px) clamp(10px,1.6vw,15px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09);
+}
+.sc-laptop-cam{
+  position:absolute; top:clamp(5px,.8vw,8px); left:50%; transform:translateX(-50%);
+  width:5px; height:5px; border-radius:50%;
+  background:#30353C; box-shadow:inset 0 1px 2px #000, 0 0 0 1.5px #1A1E23;
+}
+/* Aluminum deck — slightly wider than the lid, with the lift notch */
+.sc-laptop-base{
+  position:relative; height:clamp(11px,1.7vw,16px);
+  margin-inline:calc(clamp(16px,2.6vw,30px) * -1);
+  background:linear-gradient(180deg,#EDF0F3,#C7CCD4 62%,#9CA3AD);
+  border-radius:2px 2px clamp(9px,1.4vw,14px) clamp(9px,1.4vw,14px);
+  box-shadow:0 1px 0 rgba(0,0,0,.18);
+}
+.sc-laptop-base::before{
+  content:""; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:clamp(76px,13vw,124px); height:46%;
+  background:linear-gradient(180deg,#A9AFB9,#D8DCE1);
+  border-radius:0 0 10px 10px;
+}
+.sc-laptop-shadow{
+  width:84%; height:22px; margin:0 auto;
+  background:radial-gradient(50% 100% at 50% 0%, rgba(10,40,50,.30), transparent 72%);
+}
+.sc-laptop-hint{font-size:13px; color:var(--sc-mut); text-align:center; margin-top:12px}
+
+/* The software — light UI, Tajawal, teal accents; glare sits above it all.
+   Root is .sc-ui, NOT .sc-app — .sc-app is this page's applications pill chip. */
+.sc-ui{
+  position:relative; display:flex; flex-direction:column;
+  border-radius:clamp(6px,1vw,10px); overflow:hidden;
+  background:#F2F6F7; border:1px solid #05070A;
+  font-size:12px; line-height:1.35;
+}
+.sc-ui-glare{
+  position:absolute; inset:0; pointer-events:none; z-index:5;
+  background:linear-gradient(115deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,.05) 24%, transparent 42%);
+}
+.sc-ui-bar{
+  display:flex; align-items:center; gap:10px;
+  padding:6px 12px; background:#fff; border-bottom:1px solid var(--sc-rule);
+}
+.sc-ui-dots{display:inline-flex; gap:5px; flex:none}
+.sc-ui-dots i{width:8px; height:8px; border-radius:50%; background:#D8DDE3}
+.sc-ui-title{font-weight:700; font-size:12px; color:var(--sc-ink); white-space:nowrap}
+.sc-ui-case{margin-inline-start:auto; font-size:11.5px; color:var(--sc-mut); white-space:nowrap}
+.sc-ui-tools{
+  display:flex; gap:2px; padding:4px 10px;
+  background:#FBFDFD; border-bottom:1px solid var(--sc-rule);
+}
+.sc-ui-tools span{
+  width:24px; height:24px; border-radius:6px; flex:none;
+  display:flex; align-items:center; justify-content:center; color:var(--sc-mut);
+}
+.sc-ui-tools span svg{width:14px; height:14px}
+.sc-ui-tools span[data-on]{background:var(--sca-tint); color:var(--sca-text)}
+
+/* Viewport — flex-centered model, NOT transform-centered: a transform here
+   would create a stacking context and kill the imgs' multiply blend */
+.sc-ui-stage{
+  position:relative; aspect-ratio:16/8.6; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(120% 95% at 50% 6%, #FFFFFF 0%, #EEF5F5 56%, #E3EEEE 100%);
+}
+.sc-ui-model{
+  position:relative; height:106%; aspect-ratio:1290/1552; flex:none;
+}
+.sc-ui-model img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
+  mix-blend-mode:multiply;   /* melts the renders' white ground into the viewport */
+}
+.sc-ui-photo{animation:sc-scan-photo 7.5s linear infinite}
+[dir="rtl"] .sc-ui-photo{animation-name:sc-scan-photo-rtl}
+.sc-scanline-track{
+  position:absolute; inset:0; pointer-events:none; will-change:transform;
+  animation:sc-scan-line 7.5s linear infinite;
+}
+[dir="rtl"] .sc-scanline-track{animation-name:sc-scan-line-rtl}
+.sc-scanline{
+  position:absolute; top:-4%; bottom:-4%; inset-inline-start:0; width:3px;
+  background:var(--sca); box-shadow:0 0 16px rgba(58,156,150,.8), 0 0 3px rgba(58,156,150,.9);
+}
+
+/* Overlays — live chip (top start), feature chips (bottom start), export card (end) */
+.sc-ui-chip{
+  display:inline-flex; align-items:center; gap:6px; width:max-content;
+  background:rgba(255,255,255,.9); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+  border:1px solid var(--sc-rule); border-radius:999px;
+  padding:3px 10px; font-size:11px; font-weight:500; color:var(--sc-ink);
+}
+.sc-ui-chip::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--sca); flex:none}
+.sc-ui-chip--live{position:absolute; top:5%; inset-inline-start:2.5%}
+.sc-ui-chip--live::before{animation:sc-live-pulse 1.6s ease-in-out infinite}
+.sc-ui-chips{
+  position:absolute; bottom:6%; inset-inline-start:2.5%;
+  display:flex; flex-direction:column; align-items:flex-start; gap:6px;
+}
+.sc-ui-export{
+  position:absolute; top:8%; inset-inline-end:2.5%; z-index:2;
+  width:clamp(140px,23%,190px); padding:10px 12px 9px;
+  background:#fff; border:1px solid var(--sc-rule); border-radius:10px;
+  box-shadow:0 12px 28px rgba(10,60,100,.16);
+}
+.sc-ui-export b{display:block; font-size:11.5px; color:var(--sc-ink); margin-bottom:7px}
+.sc-ui-export-btn{
+  display:block; text-align:center; border-radius:7px;
+  font-weight:700; font-size:11.5px; padding:5px 8px; margin-bottom:6px;
+}
+.sc-ui-export-btn--stl{background:var(--scb); color:var(--sc-dark)}
+.sc-ui-export-btn--obj{background:#fff; border:1px solid var(--sc-rule); color:var(--sc-ink)}
+.sc-ui-export small{display:block; font-size:10.5px; line-height:1.4; color:var(--sc-mut)}
+
+/* Status bar — progress loops in sync with the sweep */
+.sc-ui-status{
+  display:flex; align-items:center; gap:12px;
+  padding:6px 12px; background:#fff; border-top:1px solid var(--sc-rule);
+  font-size:11.5px; color:var(--sc-mut);
+}
+.sc-ui-status-label{font-weight:500; color:var(--sc-ink); white-space:nowrap}
+.sc-ui-progress{
+  flex:1; max-width:220px; height:4px; border-radius:2px;
+  background:#E2EAEA; overflow:hidden;
+}
+.sc-ui-progress i{
+  display:block; height:100%; background:var(--sca);
+  transform-origin:left; animation:sc-scan-progress 7.5s linear infinite;
+}
+[dir="rtl"] .sc-ui-progress i{transform-origin:right}
+.sc-ui-status-acc{margin-inline-start:auto; font-weight:700; color:var(--sca-text); white-space:nowrap}
+
+/* One shared 7.5s clock: sweep 8→55%, mesh holds to 88%, reset while hidden */
+@keyframes sc-scan-photo{
+  0%,8%{clip-path:inset(0 0 0 0); opacity:1}
+  55%{clip-path:inset(0 0 0 100%); opacity:1}
+  56%,88%{clip-path:inset(0 0 0 100%); opacity:0}
+  89%{clip-path:inset(0 0 0 0); opacity:0}
+  100%{clip-path:inset(0 0 0 0); opacity:1}
+}
+@keyframes sc-scan-photo-rtl{
+  0%,8%{clip-path:inset(0 0 0 0); opacity:1}
+  55%{clip-path:inset(0 100% 0 0); opacity:1}
+  56%,88%{clip-path:inset(0 100% 0 0); opacity:0}
+  89%{clip-path:inset(0 0 0 0); opacity:0}
+  100%{clip-path:inset(0 0 0 0); opacity:1}
+}
+@keyframes sc-scan-line{
+  0%,8%{transform:translateX(0); opacity:0}
+  11%{opacity:1}
+  52%{opacity:1}
+  55%,100%{transform:translateX(100%); opacity:0}
+}
+@keyframes sc-scan-line-rtl{
+  0%,8%{transform:translateX(0); opacity:0}
+  11%{opacity:1}
+  52%{opacity:1}
+  55%,100%{transform:translateX(-100%); opacity:0}
+}
+@keyframes sc-scan-progress{
+  0%,8%{transform:scaleX(0); opacity:1}
+  55%{transform:scaleX(1); opacity:1}
+  90%{transform:scaleX(1); opacity:1}
+  96%,100%{transform:scaleX(1); opacity:0}
+}
+@keyframes sc-live-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(58,156,150,.55)}
+  55%{box-shadow:0 0 0 4px rgba(58,156,150,0)}
+}
+
+/* Applications — .STL badges (teal fill, Axis A; not per-category colors) */
+.sc-apps{margin-top:clamp(16px,2.4vw,24px); text-align:center}
+.sc-apps-label{
+  display:block; font-weight:700; font-size:13px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--sc-mut); margin-bottom:10px;
+}
+[dir="rtl"] .sc-apps-label{letter-spacing:0; text-transform:none}
+.sc-apps-list{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; list-style:none; margin:0 0 10px; padding:0}
+.sc-app{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#fff; border:1px solid var(--sc-rule); border-radius:999px;
+  padding:8px 14px; font-size:14.5px; font-weight:500; color:var(--sc-ink);
+  box-shadow:var(--sc-shadow);
+}
+.sc-stl{
+  font-size:11px; font-weight:700; letter-spacing:.04em;
+  background:var(--sca-tint); color:var(--sca-text);
+  border-radius:6px; padding:2px 7px;
+}
+[dir="rtl"] .sc-stl{letter-spacing:0}
+
+/* 5 · Software — three catalog-backed panels */
+.sc-panels{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+.sc-panel{display:flex; flex-direction:column; transition:transform .25s ease, box-shadow .25s ease}
+.sc-panel:hover{transform:translateY(-3px); box-shadow:0 12px 32px rgba(24,90,86,.14)}
+.sc-panel-media{background:var(--sc-tint)}
+.sc-panel-media img{width:100%; aspect-ratio:16/10; object-fit:cover; display:block}
+.sc-panel-body{padding:14px 16px 16px}
+.sc-panel-body h3{font-size:16.5px; margin-bottom:4px}
+.sc-panel-body p{font-size:13.5px; margin:0}
+
+/* 6 · Specifications — locally dense (the only place that is) */
+.sc-specs-intro{font-size:12.5px; color:var(--sc-mut); margin:0 0 12px}
+.sc-specgrid{display:grid; grid-template-columns:1fr 1fr; gap:0 clamp(20px,3vw,40px); margin:0}
+.sc-specrow{
+  display:grid; grid-template-columns:38% 1fr; gap:12px; align-items:baseline;
+  padding:8px 0; border-bottom:1px solid var(--sc-rule);
+}
+.sc-specrow dt{font-size:13.5px; color:var(--sc-mut)}
+.sc-specrow dd{margin:0; font-size:14.5px; font-weight:500; color:var(--sc-ink)}
+
+/* 7 · Open system — statement card, type-led */
+.sc-open{display:grid; grid-template-columns:1.05fr .95fr; align-items:stretch}
+.sc-open-copy{padding:clamp(20px,3vw,36px); display:flex; flex-direction:column; justify-content:center; gap:12px}
+.sc-open-h{font-size:clamp(26px,3.2vw,38px); line-height:1.1}
+.sc-open-copy p{font-size:15.5px; max-width:44em; margin:0}
+.sc-open-media{margin:0; background:var(--sc-tint); display:flex; align-items:center}
+.sc-open-media img{width:100%; height:auto; display:block}
+
+/* 7b · DESIGN hand-off band — spans the card foot; soft teal gradient
+   (8–12% ceiling per sub-design-system §5), vertical so RTL needs no flip */
+.sc-open-next{
+  grid-column:1 / -1;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px 28px; flex-wrap:wrap;
+  padding:clamp(16px,2.4vw,22px) clamp(20px,3vw,36px);
+  border-top:1px solid var(--sc-rule);
+  background:linear-gradient(to bottom, rgba(58,156,150,.09), rgba(58,156,150,.03));
+}
+.sc-open-next-copy{display:flex; flex-direction:column; gap:6px; flex:1 1 34em; min-width:0}
+.sc-open-next-eyebrow{display:flex; align-items:center; gap:10px; margin:0}
+.sc-open-next-eyebrow .sc-eyebrow{font-size:12.5px}
+.sc-open-next-copy h3{font-size:clamp(18px,2vw,21px)}
+.sc-open-next-copy p:not(.sc-open-next-eyebrow){font-size:14.5px; max-width:52em; margin:0}
+.sc-open-next-cta{flex-shrink:0}
+[dir="rtl"] .sc-open-next-cta svg{transform:scaleX(-1)}
+
+/* 8 · Workflow stepper + ecosystem strip (light-on-tint variant) */
+.sc-spine{display:flex; align-items:center; flex-wrap:wrap; gap:2px; margin-bottom:clamp(16px,2.4vw,24px)}
+.sc-spine-step{display:flex; align-items:center}
+.sc-spine-node{display:flex; flex-direction:column; align-items:center; gap:8px; min-width:86px}
+.sc-spine-ic{
+  width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:#fff; border:1px solid var(--sc-rule); color:var(--sc-mut);
+  overflow:hidden;
+}
+.sc-spine-ic svg{width:24px; height:24px}
+/* Product icon renders fill the whole chip; multiply melts their baked
+   gray studio backdrop into the white circle so the device floats clean */
+.sc-spine-ic img{
+  width:100%; height:100%; object-fit:cover; border-radius:50%;
+  mix-blend-mode:multiply; filter:brightness(1.06);
+}
+.sc-spine-name{font-weight:700; font-size:14px; color:var(--sc-mut); white-space:nowrap}
+.sc-spine-step[data-active="true"] .sc-spine-ic{background:var(--sca-tint); border-color:var(--sca); color:var(--sca-text)}
+.sc-spine-step[data-active="true"] .sc-spine-name{color:var(--sca-text)}
+.sc-spine-arrow{margin:0 clamp(6px,1.4vw,16px); color:var(--sc-mut); opacity:.6; padding-bottom:22px}
+[dir="rtl"] .sc-spine-arrow svg{transform:scaleX(-1)}
+
+.sc-chain{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.sc-chain-node{position:relative; padding:16px; text-align:center; overflow:visible}
+.sc-chain-node::after{
+  content:""; position:absolute; top:91px; inset-inline-end:-19px; width:19px;
+  border-top:2px dotted var(--sca);
+}
+.sc-chain-node:last-child::after{display:none}
+/* Product renders are dark studio shots — show them as cover thumbs, not cutouts */
+.sc-chain-node img{width:100%; height:180px; object-fit:contain; border-radius:10px; margin-bottom:10px}
+.sc-chain-node img[data-fit="cover"]{object-fit:cover}
+.sc-chain-node h3{font-size:15.5px; margin-bottom:4px}
+.sc-chain-node h3 a:hover{color:var(--sca-text)}
+.sc-chain-node p{font-size:13px; margin:0}
+.sc-linkout{margin-top:18px}
+.sc-linkout a{
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--sca-text); font-weight:700; font-size:15.5px;
+}
+.sc-linkout a:hover{text-decoration:underline}
+[dir="rtl"] .sc-linkout svg{transform:scaleX(-1)}
+
+/* 10 · FAQ + downloads + closing CTA */
+.sc-final{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(20px,3vw,36px); align-items:start}
+.sc-faq-item{
+  border:1px solid var(--sc-rule); border-radius:12px; background:#fff;
+  box-shadow:var(--sc-shadow); margin-bottom:10px;
+}
+.sc-faq-item summary{
+  cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:13px 16px; font-weight:700; font-size:15px; color:var(--sc-ink);
+}
+.sc-faq-item summary::-webkit-details-marker{display:none}
+.sc-faq-item summary::after{
+  content:"+"; font-size:20px; font-weight:500; color:var(--sca-text); line-height:1;
+  transition:transform .2s ease; flex:none;
+}
+.sc-faq-item[open] summary::after{transform:rotate(45deg)}
+.sc-faq-item p{margin:0; padding:0 16px 14px; font-size:14px}
+.sc-closing{padding:clamp(20px,3vw,32px)}
+.sc-downloads-line{font-size:14px; margin:8px 0 0}
+.sc-rule{border:none; border-top:1px solid var(--sc-rule); margin:16px 0}
+.sc-closing-h{font-size:clamp(21px,2.4vw,26px); margin-bottom:6px}
+.sc-closing>p{font-size:15px}
+.sc-closing .sc-hero-ctas{margin-top:14px}
+.sc-rep{font-size:13.5px; margin-top:14px}
+.sc-rep a{color:var(--sca-text); font-weight:700}
+.sc-rep a:hover{text-decoration:underline}
+
+/* Motion — site .reveal system + grid staggers (Motion 6/10) */
+.sc-chips>.reveal:nth-child(2){transition-delay:.05s}
+.sc-chips>.reveal:nth-child(3){transition-delay:.1s}
+.sc-chips>.reveal:nth-child(4){transition-delay:.15s}
+.sc-chips>.reveal:nth-child(5){transition-delay:.2s}
+.sc-panels>.reveal:nth-child(2){transition-delay:.08s}
+.sc-panels>.reveal:nth-child(3){transition-delay:.16s}
+.sc-chain>.reveal:nth-child(2){transition-delay:.08s}
+.sc-chain>.reveal:nth-child(3){transition-delay:.16s}
+.sc-spine>.reveal:nth-child(2){transition-delay:.07s}
+.sc-spine>.reveal:nth-child(3){transition-delay:.14s}
+.sc-spine>.reveal:nth-child(4){transition-delay:.21s}
+.sc-spine>.reveal:nth-child(5){transition-delay:.28s}
+@media (prefers-reduced-motion: reduce){
+  .sc .reveal{opacity:1 !important; transform:none !important; transition:none !important}
+  .sc-chip:hover,.sc-panel:hover{transform:none}
+  /* Laptop demo: show the finished mesh, no sweep, scan complete */
+  .sc-ui-photo,.sc-scanline-track{display:none}
+  .sc-ui-progress i{animation:none; transform:none}
+  .sc-ui-chip--live::before{animation:none}
+}
+
+/* Responsive — spec §12 */
+@media (max-width: 1024px){
+  .sc-chips{grid-template-columns:repeat(3,1fr)}       /* tablet 3+2 */
+  .sc-panels{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width: 960px){
+  .sc-hero .sc-wrap{grid-template-columns:1fr}
+  .sc-hero-media{order:-1; max-width:520px}
+  .sc-split{grid-template-columns:1fr}
+  .sc-open{grid-template-columns:1fr}
+  .sc-open-media{order:-1}
+  .sc-panels{grid-template-columns:1fr}
+  .sc-panel-media img{aspect-ratio:16/8}
+  .sc-final{grid-template-columns:1fr}
+  .sc-specgrid{grid-template-columns:1fr}
+}
+@media (max-width: 720px){
+  .sc-chips{grid-template-columns:repeat(2,1fr)}       /* mobile 2-col, 5th full-width */
+  /* Laptop demo: taller viewport, lighter chrome; export card compacts,
+     the app-bar case label and secondary feature chip yield the space */
+  .sc-ui-stage{aspect-ratio:16/11}
+  .sc-ui-case{display:none}
+  .sc-ui-tools span:nth-child(n+6){display:none}
+  .sc-ui-chips .sc-ui-chip:nth-child(2){display:none}
+  .sc-ui-export{width:132px; padding:8px 9px 7px}
+  .sc-ui-export-btn{font-size:10.5px; padding:4px 6px}
+  .sc-ui-progress{max-width:110px}
+  .sc-ui-status-acc{font-size:11px}
+  .sc-chips>li:nth-child(5){grid-column:1 / -1}
+  .sc-chain{display:flex; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:8px}
+  .sc-chain-node{flex:0 0 78%; scroll-snap-align:start}
+  .sc-chain-node::after{display:none}
+  .sc-specrow{grid-template-columns:1fr; gap:2px}
+  .sc-specrow dt{font-size:12.5px}
+}

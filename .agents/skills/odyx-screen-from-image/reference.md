@@ -43,8 +43,9 @@ Optional. Use when the mock is a similar resin detail page; **do not** treat thi
 | Role | Path |
 |------|------|
 | Content | `src/content/temporary-resin.ts` |
-| Page | `src/components/products/resins/ResinDetailPage.tsx` |
-| Feature icons | `src/components/products/resins/temporary/FeatureIcons.tsx` |
+| Page | `src/components/pages/TemporaryResinPage.tsx` |
+| CSS | `src/app/temporary-resin.css` |
+| Feature icons | `src/components/temporary-resin/FeatureIcons.tsx` |
 | Route branch | `src/app/products/[slug]/page.tsx` |
 | Registry | `src/content/products.ts` |
 | Mock | `knowledge_base/design-references/product-design-refrences/temp-restro-resign.jpeg` |

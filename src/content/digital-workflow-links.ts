@@ -6,7 +6,7 @@
  * Design is visible but dimmed / non-navigable until that page is ready.
  */
 export const DIGITAL_WORKFLOW_LINKS = {
-  scan: '/products/odyx-s1',
+  scan: '/products/odyx-s1-intraoral-scanner',
   design: '/products/design',
   print: '/products/odyx-p1-26',
   cure: '/products/curing-machines',

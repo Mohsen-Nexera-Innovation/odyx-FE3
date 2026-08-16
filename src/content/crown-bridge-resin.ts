@@ -3,8 +3,8 @@
  * Matched to client mock (crown-and-bridge-resign / user reference).
  */
 
-import type { ResinDetailContent } from '@/components/products/resins/ResinDetailPage';
-import { CROWN_BRIDGE_FEATURE_ICONS } from '@/components/products/resins/crown-bridge/FeatureIcons';
+import type { ResinDetailContent } from '@/components/pages/ResinDetailPage';
+import { CROWN_BRIDGE_FEATURE_ICONS } from '@/components/crown-bridge-resin/FeatureIcons';
 import {
   RESIN_DETAIL_CASES_CTA,
   RESIN_DETAIL_COMPATIBLE,

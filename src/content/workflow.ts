@@ -29,7 +29,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     no: "01",
     label: "Scan",
     accent: "teal",
-    productSlug: "odyx-s1",
+    productSlug: "odyx-s1-intraoral-scanner",
     productName: "ODYX-S1",
     img: "/img/scanner/s1-hero.png",
     lead: "Digital impressions in seconds - no molds, no mess, instant 3D data.",
@@ -81,7 +81,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     no: "03",
     label: "Print",
     accent: "orange",
-    productSlug: "odyx-p1-26",
+    productSlug: "3d-printers",
     productName: "ODYX P1-26",
     img: "/img/feat-printer.jpg",
     lead: "Layer-by-layer production with ODYX-validated Resin.",
@@ -147,7 +147,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     labNote: "Full characterization workflows for premium restorative cases.",
     learning: [
       { label: "Finishing techniques", href: "/learning" },
-      { label: "Case: anterior crown", href: "/solutions/cases" },
+      { label: "Case: anterior crown", href: "/cases" },
     ],
   },
   {
@@ -171,7 +171,7 @@ export const WORKFLOW_STEPS: WorkflowStepContent[] = [
     labNote:
       "Ship finished units with confidence - digital chain reduces remakes.",
     learning: [
-      { label: "Case library", href: "/solutions/cases" },
+      { label: "Case library", href: "/cases" },
       { label: "Request a demo", href: "/support" },
     ],
   },

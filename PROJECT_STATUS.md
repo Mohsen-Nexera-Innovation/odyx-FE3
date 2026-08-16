@@ -54,8 +54,7 @@ API twin of this doc: `odyx-api/PROJECT_STATUS.md`.
 | `/products/cure-v6` | **037** UV-02 (catalog-correct) | Done (gallery hidden) |
 | `/products/curing-machines` | Legacy curing page | Live but **wrong specs** — keep until redirected |
 | `/products/design` | Generic design product | Done |
-| `/solutions`, `/solutions/clinical-applications` | Clinical applications hub | Done |
-| `/solutions/cases`, `/solutions/cases/[slug]` | Case library + category listings | Done |
+| `/solutions/dentists`, `/solutions/labs` | Journey pages | Done |
 | `/workflows`, `/workflows/[slug]` | Workflow hub + steps | Done (**still 6 steps**) |
 | `/learning` | Academy hub (static cards) | Done (not CMS) |
 | `/support` | Support hub | Done |
