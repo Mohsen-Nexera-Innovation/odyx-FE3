@@ -1,7 +1,6 @@
-import { Camera, CloudUpload, FileCheck2, FileImage, FileText, Mail } from 'lucide-react';
-import type { SendMethod } from '../types';
+import { CloudUpload, FileCheck2, Mail, Upload, X } from 'lucide-react';
+import type { CaseAttachments, SendMethod } from '../types';
 
-// Custom WhatsApp Icon to match the image
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -10,26 +9,97 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-const FILE_GUIDANCE = [
-  { label1: 'STL / PLY / OBJ', label2: 'Scan File',       icon: FileCheck2 },
-  { label1: 'Intraoral Scan',  label2: 'Required',        icon: CloudUpload },
-  { label1: 'Bite Scan',       label2: 'Recommended',     icon: FileImage },
-  { label1: 'Photos',          label2: 'Recommended',     icon: Camera },
-  { label1: 'Prescription',    label2: 'Optional',        icon: FileText },
-] as const;
-
 type SendMethodStepProps = {
   value: SendMethod;
+  attachments: CaseAttachments;
   onChange: (value: SendMethod) => void;
+  onAttachmentsChange: (attachments: CaseAttachments) => void;
   errors?: Record<string, string>;
+  onClearError?: (field: string) => void;
 };
 
-export default function SendMethodStep({ value, onChange, errors = {} }: SendMethodStepProps) {
+function AttachmentField({
+  id,
+  label,
+  hint,
+  accept,
+  file,
+  error,
+  icon: Icon,
+  onFile,
+}: {
+  id: string;
+  label: string;
+  hint: string;
+  accept: string;
+  file: File | null;
+  error?: string;
+  icon: typeof FileCheck2;
+  onFile: (file: File | null) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-2.5 min-w-0">
+      <div className="flex items-center gap-2.5">
+        <span className="w-[52px] h-[52px] flex-shrink-0 rounded-[10px] bg-white border border-[#E5E7EB] flex items-center justify-center text-[#0050D8] shadow-sm">
+          <Icon size={24} aria-hidden strokeWidth={1.5} />
+        </span>
+        <div className="min-w-0">
+          <p className="text-[13px] font-semibold text-[#0A1020] leading-tight m-0">{label}</p>
+          <p className="text-[12px] font-normal text-[#6B7280] m-0 mt-0.5">{hint}</p>
+        </div>
+      </div>
+      {file ? (
+        <div className="flex items-center gap-2 min-h-[42px] border border-[#E5E7EB] rounded-[6px] bg-white px-3 py-2">
+          <span className="flex-1 min-w-0 text-[13px] font-medium text-[#0A1020] truncate">{file.name}</span>
+          <button
+            type="button"
+            onClick={() => onFile(null)}
+            aria-label={`Remove ${label}`}
+            className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-[4px] text-[#6B7280] bg-transparent border-0 cursor-pointer hover:bg-[#F3F4F6] hover:text-[#0A1020]"
+          >
+            <X size={16} aria-hidden />
+          </button>
+        </div>
+      ) : (
+        <label
+          htmlFor={id}
+          className={`inline-flex items-center justify-center gap-2 min-h-[42px] px-4 border rounded-[6px] bg-white text-[13px] font-bold cursor-pointer transition-colors ${
+            error
+              ? 'border-[#EF4444] text-[#EF4444]'
+              : 'border-[#0050D8]/25 text-[#0050D8] hover:bg-[#F3F7FF] hover:border-[#0050D8]/40'
+          }`}
+        >
+          <Upload size={16} aria-hidden />
+          Choose file
+          <input
+            id={id}
+            type="file"
+            accept={accept}
+            className="sr-only"
+            onChange={(e) => onFile(e.target.files?.[0] ?? null)}
+          />
+        </label>
+      )}
+      {error ? (
+        <span className="text-[#EF4444] text-[12.5px] font-medium">{error}</span>
+      ) : null}
+    </div>
+  );
+}
+
+export default function SendMethodStep({
+  value,
+  attachments,
+  onChange,
+  onAttachmentsChange,
+  errors = {},
+  onClearError,
+}: SendMethodStepProps) {
   return (
     <div className="flex flex-col gap-4">
 
       {/* Method cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" role="radiogroup" aria-label="Send method">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" role="radiogroup" aria-label="Receive method">
 
         {/* WhatsApp */}
         <label className={`relative min-h-[260px] p-7 border-[1.5px] rounded-[8px] flex flex-col items-center text-center cursor-pointer transition-all duration-150 bg-white shadow-[0_0_12px_rgba(0,0,0,0.06)] ${
@@ -41,7 +111,7 @@ export default function SendMethodStep({ value, onChange, errors = {} }: SendMet
           <WhatsAppIcon aria-hidden className="w-12 h-12 text-[#25D366] mb-3.5" />
           <h2 className="text-[17px] font-bold text-[#0A1020] m-0 mb-2.5">WhatsApp</h2>
           <p className="text-[13px] font-medium text-[#6B7280] leading-relaxed max-w-[240px] m-0">
-            After submitting your request,<br/>you will be redirected to WhatsApp<br/>to send your scan files.
+            Receive the completed design<br/>and case communication<br/>on WhatsApp.
           </p>
           <div className="mt-auto pt-6 w-full">
             <span className="flex items-center justify-center w-full h-[40px] rounded-[6px] bg-[#16A34A] text-white text-[13px] font-bold hover:bg-[#15803d] transition-colors">
@@ -60,9 +130,9 @@ export default function SendMethodStep({ value, onChange, errors = {} }: SendMet
           <Mail size={44} strokeWidth={1.7} aria-hidden className="text-[#0050D8] mb-3.5" />
           <h2 className="text-[17px] font-bold text-[#0A1020] m-0 mb-2.5">Email</h2>
           <p className="text-[13px] font-medium text-[#6B7280] leading-relaxed max-w-[240px] m-0">
-            After submitting your request,<br/>please send your scan files to:
+            Receive the completed design<br/>and case communication by email.
           </p>
-          <strong className={`text-[15px] font-bold mt-2.5 ${value === 'email' ? 'text-[#0050D8]' : 'text-[#0050D8]'}`}>
+          <strong className="text-[15px] font-bold mt-2.5 text-[#0050D8]">
             Support@odyxegypt.net
           </strong>
           <div className="mt-auto pt-6 w-full">
@@ -76,21 +146,35 @@ export default function SendMethodStep({ value, onChange, errors = {} }: SendMet
         <p className="text-[#EF4444] text-[13px] font-medium m-0 mt-[-4px]">{errors.sendMethod}</p>
       )}
 
-      {/* File guidance */}
       <div className="border border-[#E5E7EB] rounded-[8px] bg-white shadow-[0_0_12px_rgba(0,0,0,0.06)] p-6">
-        <h2 className="text-[14px] font-bold text-[#0A1020] m-0 mb-5">Please prepare the following files:</h2>
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
-          {FILE_GUIDANCE.map(({ label1, label2, icon: Icon }) => (
-            <div key={label1} className="flex flex-col items-center gap-2.5 text-center">
-              <span className="w-[52px] h-[52px] rounded-[10px] bg-white border border-[#E5E7EB] flex items-center justify-center text-[#0050D8] shadow-sm">
-                <Icon size={24} aria-hidden strokeWidth={1.5} />
-              </span>
-              <p className="text-[12px] font-semibold text-[#0A1020] leading-tight m-0">
-                {label1}<br/>
-                <span className="font-normal text-[#6B7280] mt-0.5 inline-block">{label2}</span>
-              </p>
-            </div>
-          ))}
+        <h2 className="text-[14px] font-bold text-[#0A1020] m-0 mb-5">Please attach the following files</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <AttachmentField
+            id="design-stl-file"
+            label="STL file"
+            hint="Optional · .stl"
+            accept=".stl,model/stl,application/sla"
+            file={attachments.stlFile}
+            error={errors.stlFile}
+            icon={FileCheck2}
+            onFile={(file) => {
+              onAttachmentsChange({ ...attachments, stlFile: file });
+              onClearError?.('stlFile');
+            }}
+          />
+          <AttachmentField
+            id="design-intraoral-file"
+            label="Intraoral Scanner file/data"
+            hint="Optional · scan export"
+            accept=".stl,.ply,.obj,.dcm,.zip,.3oxz,.3ox"
+            file={attachments.intraoralFile}
+            error={errors.intraoralFile}
+            icon={CloudUpload}
+            onFile={(file) => {
+              onAttachmentsChange({ ...attachments, intraoralFile: file });
+              onClearError?.('intraoralFile');
+            }}
+          />
         </div>
       </div>
 

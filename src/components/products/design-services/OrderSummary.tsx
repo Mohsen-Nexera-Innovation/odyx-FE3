@@ -10,8 +10,8 @@ export default function OrderSummary({ data }: { data: CaseSubmissionData }) {
     ['Tooth Number(s)', data.caseDetails.toothNumbers || '—'],
     ['Material',       data.caseDetails.material],
     ['Shade',          data.caseDetails.shade],
-    ['Files',          '—'],
-    ['Send Method',    data.sendMethod === 'whatsapp' ? 'WhatsApp' : data.sendMethod === 'email' ? 'Email' : '—'],
+    ['Files',          [data.attachments.stlFile?.name, data.attachments.intraoralFile?.name].filter(Boolean).join(', ') || '—'],
+    ['Receive Method', data.sendMethod === 'whatsapp' ? 'WhatsApp' : data.sendMethod === 'email' ? 'Email' : '—'],
     ['Payment',        paymentLabel],
   ];
 

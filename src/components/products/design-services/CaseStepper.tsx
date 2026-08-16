@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react';
 
-const STEPS = ['Doctor Info', 'Case Details', 'Send Method', 'Payment', 'Review'] as const;
+const STEPS = ['Doctor Info', 'Case Details', 'Receive Method', 'Payment', 'Review'] as const;
 
 type CaseStepperProps = {
   currentStep: number;
@@ -9,8 +9,8 @@ type CaseStepperProps = {
 
 export default function CaseStepper({ currentStep, onStepSelect }: CaseStepperProps) {
   return (
-    <nav aria-label="Case submission progress" className="w-full max-w-[1040px] mx-auto overflow-x-auto">
-      <ol className="grid grid-cols-5 list-none p-0 m-0 min-w-[280px]">
+    <nav aria-label="Case submission progress" className="w-full max-w-[1040px] mx-auto overflow-x-auto overflow-y-hidden">
+      <ol className="grid grid-cols-5 list-none m-0 min-w-[280px] px-2 pt-2 pb-1">
         {STEPS.map((label, index) => {
           const number = index + 1;
           const complete = number < currentStep;

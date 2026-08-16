@@ -1,17 +1,22 @@
 'use client';
 
-import { Check, Copy, Mail, MessageCircle, Package, Pencil } from 'lucide-react';
+import { Check, Copy, Home, Mail, MessageCircle, Package, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import type { SendMethod } from './types';
 
 export default function CaseSuccess({
   sendMethod,
   caseId,
+  doctorName,
+  onSubmitAnother,
 }: {
   sendMethod: SendMethod;
   caseId: string;
+  doctorName?: string;
+  onSubmitAnother: () => void;
 }) {
   const copyCaseId = () => void navigator.clipboard?.writeText(caseId);
+  const thanksName = doctorName?.trim() ? doctorName.trim() : null;
 
   return (
     <section
@@ -57,7 +62,7 @@ export default function CaseSuccess({
             Your Case Has Been Submitted!
           </h1>
           <p className="text-[14px] font-bold text-[#0A1020] m-0 mb-1">
-            Thank you, Dr. Ahmed Mohamed.
+            {thanksName ? `Thank you, ${thanksName}.` : 'Thank you.'}
           </p>
           <p className="text-[13px] font-medium text-[#6B7280] m-0 mb-6">
             We have received your case and our team is working on it.
@@ -83,22 +88,42 @@ export default function CaseSuccess({
           </div>
 
           {/* Action buttons */}
-          <div className="w-full max-w-[400px] flex gap-3">
-            <Link
-              href="https://wa.me/201042077646"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-[6px] bg-[#16A34A] text-white text-[13px] font-bold no-underline transition-colors hover:bg-[#15803d]"
+          <div className="w-full max-w-[400px] flex flex-col gap-3">
+            <div className="flex gap-3">
+              <Link
+                href="https://wa.me/201042077646"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-[6px] text-white text-[13px] font-bold no-underline transition-colors ${
+                  sendMethod === 'email'
+                    ? 'bg-[#16A34A]/90 hover:bg-[#15803d]'
+                    : 'bg-[#16A34A] hover:bg-[#15803d]'
+                }`}
+              >
+                <MessageCircle size={16} aria-hidden strokeWidth={2} />
+                Open WhatsApp
+              </Link>
+              <Link
+                href="mailto:support@odyxegypt.net"
+                className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border-[1.5px] border-[#0050D8] rounded-[6px] bg-white !text-[#0050D8] text-[13px] font-bold no-underline transition-colors hover:bg-[#F3F7FF]"
+              >
+                <Mail size={16} aria-hidden strokeWidth={2} />
+                Open Email
+              </Link>
+            </div>
+            <button
+              type="button"
+              onClick={onSubmitAnother}
+              className="w-full inline-flex items-center justify-center min-h-[44px] px-4 py-2.5 rounded-[6px] bg-[#0A1020] text-white text-[13px] font-bold border-0 cursor-pointer transition-colors hover:bg-[#1a2540]"
             >
-              <MessageCircle size={16} aria-hidden strokeWidth={2} />
-              Open WhatsApp
-            </Link>
+              Submit another case
+            </button>
             <Link
-              href="mailto:support@odyxegypt.net"
-              className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border-[1.5px] border-[#0050D8] rounded-[6px] bg-white !text-[#0050D8] text-[13px] font-bold no-underline transition-colors hover:bg-[#F3F7FF]"
+              href="/"
+              className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border-[1.5px] border-[#D1D5DB] rounded-[6px] bg-white !text-[#0A1020] text-[13px] font-bold no-underline transition-colors hover:bg-[#F7F9FB]"
             >
-              <Mail size={16} aria-hidden strokeWidth={2} />
-              Open Email
+              <Home size={16} aria-hidden strokeWidth={2} />
+              Back to Home
             </Link>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { RESTORATION_SHADES, RESTORATIVE_MATERIALS } from './types';
 
 export const doctorInfoSchema = z.object({
   fullName: z.string().min(1, 'Full Name is required'),
@@ -14,18 +15,23 @@ export const doctorInfoSchema = z.object({
 export const caseDetailsSchema = z.object({
   designType: z.string().min(1, 'Design Type is required'),
   toothNumbers: z.string().min(1, 'Tooth Number(s) is required').regex(/^[0-9,\s]+$/, 'Only numbers, commas, and spaces are allowed'),
-  material: z.string().min(1, 'Material is required'),
-  shade: z.string().min(1, 'Shade is required'),
+  material: z.enum(RESTORATIVE_MATERIALS, { message: 'Material is required' }),
+  shade: z.enum(RESTORATION_SHADES, { message: 'Shade is required' }),
   colorNotes: z.string().optional(),
   instructions: z.string().optional(),
 });
 
 export const sendMethodSchema = z.object({
-  sendMethod: z.enum(['whatsapp', 'email'] as const, { message: 'Please select a send method' }),
+  sendMethod: z.enum(['whatsapp', 'email'] as const, { message: 'Please select how you would like to receive the design' }),
+});
+
+export const attachmentsSchema = z.object({
+  stlFile: z.instanceof(File).nullable(),
+  intraoralFile: z.instanceof(File).nullable(),
 });
 
 export const paymentMethodSchema = z.object({
-  paymentMethod: z.enum(['bank_transfer'] as const, {
+  paymentMethod: z.enum(['instapay', 'paymob'] as const, {
     message: 'Please select a payment method',
   }),
 });

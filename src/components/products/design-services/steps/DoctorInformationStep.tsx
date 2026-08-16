@@ -1,4 +1,8 @@
-import { Building2, UserRound, ChevronDown } from 'lucide-react';
+'use client';
+
+import { Building2, ChevronDown, Search, UserRound } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { WORLD_COUNTRIES } from '../countries';
 import type { DoctorInformation } from '../types';
 
 /* ── Shared field input class ───────────────────────────────── */
@@ -21,6 +25,115 @@ function SectionTitle({ icon, title }: { icon: React.ReactNode; title: string })
     <div className="flex items-center gap-2.5 mb-4 text-[#0050D8]">
       {icon}
       <h2 className="text-[16px] font-bold text-[#0A1020] m-0">{title}</h2>
+    </div>
+  );
+}
+
+function CountrySelect({
+  value,
+  errorCls,
+  onChange,
+}: {
+  value: string;
+  errorCls: string;
+  onChange: (country: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const rootRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return WORLD_COUNTRIES;
+    return WORLD_COUNTRIES.filter((country) => country.toLowerCase().includes(q));
+  }, [query]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (open) {
+      setQuery('');
+      requestAnimationFrame(() => searchRef.current?.focus());
+    }
+  }, [open]);
+
+  return (
+    <div ref={rootRef} className="relative">
+      <div className="relative">
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          onClick={() => setOpen((prev) => !prev)}
+          className={`${errorCls} appearance-none pe-9 text-start`}
+        >
+          <span className={value ? 'text-[#0A1020]' : 'text-[#9CA3AF] font-normal'}>
+            {value || 'Select your country'}
+          </span>
+        </button>
+        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" size={16} />
+      </div>
+
+      {open ? (
+        <div className="absolute z-30 top-full mt-1 w-full rounded-[6px] border border-[#E5E7EB] bg-white shadow-[0_8px_24px_rgba(10,16,32,0.12)] overflow-hidden">
+          <div className="p-2 border-b border-[#E5E7EB]">
+            <label className="relative block">
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none" aria-hidden />
+              <input
+                ref={searchRef}
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search country"
+                aria-label="Search country"
+                className="w-full h-8 border border-[#E5E7EB] rounded-[6px] bg-white text-[#0A1020] ps-8 pe-2 text-[13px] font-medium outline-none placeholder:text-[#9CA3AF] placeholder:font-normal focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]"
+              />
+            </label>
+          </div>
+          <ul role="listbox" aria-label="Countries" className="max-h-[148px] overflow-y-auto m-0 p-1 list-none">
+            {filtered.length === 0 ? (
+              <li className="px-2.5 py-2 text-[13px] font-medium text-[#6B7280]">No countries found</li>
+            ) : (
+              filtered.map((country) => {
+                const selected = value === country;
+                return (
+                  <li key={country} role="option" aria-selected={selected}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onChange(country);
+                        setOpen(false);
+                      }}
+                      className={`w-full text-start px-2.5 py-1.5 rounded-[4px] text-[13px] font-medium border-0 cursor-pointer ${
+                        selected
+                          ? 'bg-[#F3F7FF] text-[#0050D8]'
+                          : 'bg-transparent text-[#0A1020] hover:bg-[#F7F9FB]'
+                      }`}
+                    >
+                      {country}
+                    </button>
+                  </li>
+                );
+              })
+            )}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -130,26 +243,15 @@ export default function DoctorInformationStep({ value, onChange, errors = {}, on
             <ErrorMsg field="clinicName" />
           </label>
 
-          <label className="flex flex-col gap-1.5 relative">
+          <div className="flex flex-col gap-1.5 relative">
             <span className={labelCls}>Country <span className="text-[#EF4444]">*</span></span>
-            <div className="relative">
-              <select
-                value={value.country}
-                onChange={(e) => update('country', e.target.value)}
-                required
-                className={getInputCls('country', selectCls)}
-              >
-                <option value="">Select your country</option>
-                <option>Egypt</option>
-                <option>Saudi Arabia</option>
-                <option>United Arab Emirates</option>
-                <option>Jordan</option>
-                <option>United States</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" size={16} />
-            </div>
+            <CountrySelect
+              value={value.country}
+              errorCls={getInputCls('country', selectCls)}
+              onChange={(country) => update('country', country)}
+            />
             <ErrorMsg field="country" />
-          </label>
+          </div>
 
           <label className="flex flex-col gap-1.5 relative">
             <span className={labelCls}>City</span>

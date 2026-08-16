@@ -79,10 +79,19 @@ export default function ReviewSubmitStep({ data, onEdit, onConfirmedChange }: Re
         </dl>
       </ReviewSection>
 
-      <ReviewSection icon={<MessageCircle size={16} strokeWidth={2} />} title="Send Method" step={3} onEdit={onEdit}>
-        <p className="text-[12.5px] font-semibold text-[#0A1020] m-0">
-          {data.sendMethod === 'whatsapp' ? 'WhatsApp' : 'Email'}
-        </p>
+      <ReviewSection icon={<MessageCircle size={16} strokeWidth={2} />} title="Receive Method & Files" step={3} onEdit={onEdit}>
+        <dl className="grid grid-cols-[110px_1fr] sm:grid-cols-[160px_1fr] gap-y-2 gap-x-3 m-0">
+          {[
+            ['Receive via', data.sendMethod === 'whatsapp' ? 'WhatsApp' : data.sendMethod === 'email' ? 'Email' : '—'],
+            ['STL file', data.attachments.stlFile?.name || '—'],
+            ['Intraoral scan', data.attachments.intraoralFile?.name || '—'],
+          ].map(([label, val]) => (
+            <div key={label} className="contents">
+              <dt className="text-[12.5px] font-medium text-[#6B7280]">{label}</dt>
+              <dd className="text-[12.5px] font-semibold text-[#0A1020] m-0 break-words">{val}</dd>
+            </div>
+          ))}
+        </dl>
       </ReviewSection>
 
       <ReviewSection icon={<CreditCard size={16} strokeWidth={2} />} title="Payment Method" step={4} onEdit={onEdit}>

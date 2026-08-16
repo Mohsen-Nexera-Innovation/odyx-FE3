@@ -25,7 +25,7 @@ const TOTAL_STEPS = 5;
 const STEP_COPY = [
   { title: 'Doctor Information',               description: <>Tell us about you and your clinic.</> },
   { title: 'Case Details',                     description: <>Provide the details of your case and design requirements.</> },
-  { title: 'How would you like to send your case?', description: <>We will not collect your files on our website.<br className="hidden sm:block" /><span className="block sm:inline sm:mt-0 mt-1">After submitting, please send your scan files using your selected method.</span></> },
+  { title: 'How would you like to receive the design/communication?', description: <>Choose WhatsApp or email for design delivery and case updates.</> },
   { title: 'Payment Method',                   description: <>Choose how you prefer to pay. Final amount is confirmed after our team reviews your case.</> },
   { title: 'Review & Submit',                  description: <>Please review your case details before submitting.</> },
 ] as const;
@@ -87,7 +87,18 @@ export default function CaseSubmissionPage() {
   if (submissionResult) {
     return (
       <div className="min-h-dvh bg-[#F4F8FD] flex items-center justify-center pt-[calc(var(--hdr-h)+12px)] pb-14" data-hero-light>
-        <CaseSuccess sendMethod={data.sendMethod} caseId={submissionResult.caseId} />
+        <CaseSuccess
+          sendMethod={data.sendMethod}
+          caseId={submissionResult.caseId}
+          doctorName={data.doctor.fullName}
+          onSubmitAnother={() => {
+            setSubmissionResult(null);
+            setData(INITIAL_CASE_DATA);
+            setCurrentStep(1);
+            setErrors({});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
       </div>
     );
   }
@@ -95,14 +106,11 @@ export default function CaseSubmissionPage() {
   const copy = STEP_COPY[currentStep - 1];
 
   return (
-    <div className="min-h-dvh bg-white pt-[calc(var(--hdr-h)+22px)] pb-14" data-hero-light>
+    <div className="min-h-dvh bg-white pt-[calc(var(--hdr-h)+8px)] pb-14" data-hero-light>
       <div className="w-[min(1240px,calc(100%-24px))] sm:w-[min(1240px,calc(100%-clamp(40px,8vw,112px)))] mx-auto flex flex-col gap-5">
-        <h1 className="text-[clamp(22px,2.2vw,28px)] font-extrabold text-[#0A1020] tracking-tight leading-snug m-0 pt-3 lg:pt-5">
-          Design Services
-        </h1>
+        <h1 className="sr-only">Design Services</h1>
 
-        {/* ── Stepper ──────────────────────────────────── */}
-        <div className="py-3 lg:py-5">
+        <div className="pt-1 pb-3 lg:pt-2 lg:pb-4">
           <CaseStepper currentStep={currentStep} onStepSelect={moveToStep} />
         </div>
 
@@ -144,11 +152,16 @@ export default function CaseSubmissionPage() {
               {currentStep === 3 && (
                 <SendMethodStep
                   value={data.sendMethod}
+                  attachments={data.attachments}
                   onChange={(sendMethod) => {
                     setData((c) => ({ ...c, sendMethod }));
                     clearError('sendMethod');
                   }}
+                  onAttachmentsChange={(attachments) =>
+                    setData((c) => ({ ...c, attachments }))
+                  }
                   errors={errors}
+                  onClearError={clearError}
                 />
               )}
               {currentStep === 4 && (

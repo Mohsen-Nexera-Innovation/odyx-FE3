@@ -1,6 +1,14 @@
 export type SendMethod = 'whatsapp' | 'email' | '';
 
-export type PaymentMethod = 'online' | 'cash' | 'bank_transfer' | '';
+export type PaymentMethod = 'instapay' | 'paymob' | '';
+
+export const RESTORATIVE_MATERIALS = ['Printed', 'Milled'] as const;
+
+export const RESTORATION_SHADES = ['A1', 'A2', 'A3'] as const;
+
+export type RestorativeMaterial = (typeof RESTORATIVE_MATERIALS)[number];
+
+export type RestorationShade = (typeof RESTORATION_SHADES)[number];
 
 export type DoctorInformation = {
   fullName: string;
@@ -16,24 +24,29 @@ export type DoctorInformation = {
 export type CaseDetails = {
   designType: string;
   toothNumbers: string;
-  material: string;
-  shade: string;
+  material: RestorativeMaterial | '';
+  shade: RestorationShade | '';
   colorNotes: string;
   instructions: string;
+};
+
+export type CaseAttachments = {
+  stlFile: File | null;
+  intraoralFile: File | null;
 };
 
 export type CaseSubmissionData = {
   doctor: DoctorInformation;
   caseDetails: CaseDetails;
   sendMethod: SendMethod;
+  attachments: CaseAttachments;
   paymentMethod: PaymentMethod;
   confirmed: boolean;
 };
 
 export const PAYMENT_METHOD_LABELS: Record<Exclude<PaymentMethod, ''>, string> = {
-  online: 'Online Payment',
-  cash: 'Cash on Delivery',
-  bank_transfer: 'Bank Transfer',
+  instapay: 'InstaPay',
+  paymob: 'Paymob',
 };
 
 export const INITIAL_CASE_DATA: CaseSubmissionData = {
@@ -50,12 +63,16 @@ export const INITIAL_CASE_DATA: CaseSubmissionData = {
   caseDetails: {
     designType: 'Crown',
     toothNumbers: '',
-    material: 'Crown & Bridge Resin',
+    material: 'Printed',
     shade: 'A2',
     colorNotes: '',
     instructions: '',
   },
   sendMethod: '',
-  paymentMethod: 'bank_transfer',
+  attachments: {
+    stlFile: null,
+    intraoralFile: null,
+  },
+  paymentMethod: '',
   confirmed: false,
 };

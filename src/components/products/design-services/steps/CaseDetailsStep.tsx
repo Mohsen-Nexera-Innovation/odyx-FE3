@@ -1,6 +1,6 @@
 import { Check, ChevronDown } from "lucide-react";
 
-import { CaseDetails } from '../types';
+import { RESTORATION_SHADES, RESTORATIVE_MATERIALS, type CaseDetails } from '../types';
 
 function InlayIcon({ className }: { className?: string }) {
   return (
@@ -58,7 +58,6 @@ const DESIGN_TYPES = [
   { label: 'Implant Crown', icon: ImplantCrownIcon },
 ] as const;
 
-const RESTORATIVE_MATERIALS = ['Ceramic Resin', 'Crown & Bridge Resin', 'Temporary Crown Resin'];
 
 const inputCls =
   'w-full min-h-[42px] border border-[#E5E7EB] rounded-[6px] bg-white text-[#0A1020] px-3 py-2 text-[14px] font-medium outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-[#9CA3AF] placeholder:font-normal hover:border-[#C5CDD8] focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]';
@@ -263,7 +262,6 @@ export default function CaseDetailsStep({ value, onChange, errors = {}, onClearE
         <legend className="text-[13px] font-bold text-[#0A1020] mb-4">
           Restorative Material <span className="text-[#EF4444]">*</span>
         </legend>
-        <span className="block text-[12px] text-[#0050D8] font-semibold mb-3">ODYX 3D Printing Materials</span>
         <div className="bg-white rounded-[8px] shadow-[0_2px_14px_rgba(0,0,0,0.05)] border border-gray-100 p-5 flex flex-col gap-4 max-w-md">
           {RESTORATIVE_MATERIALS.map((mat) => {
             const selected = value.material === mat;
@@ -292,8 +290,8 @@ export default function CaseDetailsStep({ value, onChange, errors = {}, onClearE
           <span className={labelCls}>Shade <span className="text-[#EF4444]">*</span></span>
           <div className="relative">
             <select value={value.shade} onChange={(e) => update('shade', e.target.value)} className={getInputCls('shade', selectCls)}>
-              {['A1', 'A2', 'A3', 'A3.5', 'B1', 'B2', 'C1', 'D2', 'BL1'].map((s) => (
-                <option key={s}>{s}</option>
+              {RESTORATION_SHADES.map((s) => (
+                <option key={s} value={s}>{s}</option>
               ))}
             </select>
             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" size={16} />
