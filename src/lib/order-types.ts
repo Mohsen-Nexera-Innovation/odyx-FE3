@@ -29,6 +29,7 @@ export type StoredOrder = {
   shippingFee: number;
   total: number;
   createdAt: string;
-  status: 'confirmed';
+  status: 'pending' | 'paid' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
   fulfillmentType?: 'PHYSICAL' | 'DIGITAL';
+  paymentMethod?: 'CASH' | 'ONLINE';
 };

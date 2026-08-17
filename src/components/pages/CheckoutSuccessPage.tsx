@@ -7,7 +7,7 @@ import PageHero, { Arrow, PageActions } from '@/components/PageHero';
 import { isDesignServiceSlug } from '@/content/design-services';
 import { formatMoney } from '@/content/shop';
 import { designInboxHandoffHref, finalizeDesignCaseAfterPayment } from '@/lib/design-case-draft';
-import { getOrderFacade, type StoredOrder } from '@/lib/orders';
+import { getOrderFacade, isSettledOnline, waitForOrderPaid, type StoredOrder } from '@/lib/orders';
 import { readSession } from '@/lib/auth';
 import { trackMetaPurchaseOnce } from '@/lib/meta-pixel';
 
@@ -29,6 +29,7 @@ function SuccessBody() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('order');
   const [order, setOrder] = useState<StoredOrder | null | undefined>(undefined);
+  const [awaitingPayment, setAwaitingPayment] = useState(false);
   const [redirectingDesign, setRedirectingDesign] = useState(false);
 
   useEffect(() => {
@@ -36,17 +37,40 @@ function SuccessBody() {
       setOrder(null);
       return;
     }
-    void getOrderFacade(orderId).then((o) => {
-      setOrder(o ?? null);
-      if (o) trackMetaPurchaseOnce(o.id, o.total);
-    });
+    let cancelled = false;
+    void (async () => {
+      const first = await getOrderFacade(orderId);
+      if (cancelled) return;
+      if (!first) {
+        setOrder(null);
+        return;
+      }
+      if (first.paymentMethod === 'ONLINE' && !isSettledOnline(first.status)) {
+        setAwaitingPayment(true);
+        setOrder(first);
+        const settled = await waitForOrderPaid(orderId);
+        if (cancelled) return;
+        setAwaitingPayment(false);
+        setOrder(settled ?? first);
+        if (settled && isSettledOnline(settled.status)) {
+          trackMetaPurchaseOnce(settled.id, settled.total);
+        }
+        return;
+      }
+      setOrder(first);
+      trackMetaPurchaseOnce(first.id, first.total);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [orderId]);
 
   const isDigital = Boolean(order && isDigitalOrder(order));
 
   // Design orders: submit pre-checkout scan, then open inbox thread.
   useEffect(() => {
-    if (!order || !isDigitalOrder(order) || redirectingDesign) return;
+    if (!order || awaitingPayment || !isDigitalOrder(order) || redirectingDesign) return;
+    if (order.paymentMethod === 'ONLINE' && !isSettledOnline(order.status)) return;
     let cancelled = false;
     setRedirectingDesign(true);
     void (async () => {
@@ -71,16 +95,18 @@ function SuccessBody() {
     return () => {
       cancelled = true;
     };
-  }, [order, router, redirectingDesign]);
+  }, [order, router, redirectingDesign, awaitingPayment]);
 
-  if (order === undefined || (order && isDigital) || redirectingDesign) {
+  if (order === undefined || awaitingPayment || (order && isDigital && isSettledOnline(order.status)) || redirectingDesign) {
     return (
       <section className="sec store-sec">
         <div className="wrap">
           <p className="checkout-loading">
-            {order && isDigital
-              ? 'Order confirmed — opening your design case in the inbox…'
-              : 'Loading confirmation…'}
+            {awaitingPayment
+              ? 'Confirming payment with Paymob…'
+              : order && isDigital
+                ? 'Order confirmed — opening your design case in the inbox…'
+                : 'Loading confirmation…'}
           </p>
         </div>
       </section>
@@ -126,7 +152,11 @@ function SuccessBody() {
               <path className="suc-check-mark" fill="none" d="M14 27l8 8 16-17" />
             </svg>
           </span>
-          <h1>Order confirmed</h1>
+          <h1>
+            {order.status === 'pending' && order.paymentMethod === 'ONLINE'
+              ? 'Payment pending'
+              : 'Order confirmed'}
+          </h1>
           <p>
             {isDigital ? (
               <>
@@ -141,7 +171,11 @@ function SuccessBody() {
             )}
           </p>
           <p className="suc-demo-note">
-            Order saved on ODYX · Paymob / Bosta when configured
+            {order.status === 'pending' && order.paymentMethod === 'ONLINE'
+              ? 'Payment is still confirming. If you were charged, this page will update shortly.'
+              : order.paymentMethod === 'CASH'
+                ? 'Cash on delivery · paid when your order arrives'
+                : 'Paid securely with Paymob'}
           </p>
         </div>
 
@@ -166,7 +200,12 @@ function SuccessBody() {
             <div>
               <em>Status</em>
               <strong className="suc-status">
-                <CheckIcon size={11} /> Confirmed
+                <CheckIcon size={11} />{' '}
+                {order.status === 'pending'
+                  ? order.paymentMethod === 'CASH'
+                    ? 'Placed'
+                    : 'Pending payment'
+                  : 'Confirmed'}
               </strong>
             </div>
           </div>

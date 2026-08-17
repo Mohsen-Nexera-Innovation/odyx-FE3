@@ -5,20 +5,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PageHero from '@/components/PageHero';
 import PaymobPixelCheckout from '@/components/checkout/PaymobPixelCheckout';
-import { FREE_SHIPPING_THRESHOLD, calcShipping, formatMoney } from '@/content/shop';
+import { FREE_SHIPPING_THRESHOLD, formatMoney } from '@/content/shop';
 import { useCart } from '@/hooks/useCart';
 import { readSession } from '@/lib/auth';
 import { isDesignCart, isMixedCart, removeItemAsync } from '@/lib/commerce';
 import { placeOrderFacade, previewShipping, type OrderShipping } from '@/lib/orders';
-import { designInboxHandoffHref, finalizeDesignCaseAfterPayment, readDesignCaseDraft } from '@/lib/design-case-draft';
-import { isDesignServiceSlug } from '@/content/design-services';
 
-type FormState = OrderShipping & {
-  cardName: string;
-  cardNumber: string;
-  expiry: string;
-  cvc: string;
-};
+type FormState = OrderShipping;
 
 const EMPTY: FormState = {
   name: '',
@@ -28,49 +21,14 @@ const EMPTY: FormState = {
   city: '',
   country: '',
   postal: '',
-  cardName: '',
-  cardNumber: '',
-  expiry: '',
-  cvc: '',
 };
 
 function digitsOnly(v: string) {
   return v.replace(/\D/g, '');
 }
 
-function formatCardNumber(v: string) {
-  const d = digitsOnly(v).slice(0, 16);
-  return d.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
-}
-
-function formatExpiry(v: string) {
-  const d = digitsOnly(v).slice(0, 4);
-  if (d.length <= 2) return d;
-  return `${d.slice(0, 2)}/${d.slice(2)}`;
-}
-
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function isValidExpiry(expiry: string) {
-  const m = /^(\d{2})\/(\d{2})$/.exec(expiry);
-  if (!m) return false;
-  const month = Number(m[1]);
-  const year = 2000 + Number(m[2]);
-  if (month < 1 || month > 12) return false;
-  const exp = new Date(year, month, 0, 23, 59, 59);
-  return exp >= new Date();
-}
-
-type CardBrand = 'visa' | 'mastercard' | 'amex' | 'generic';
-
-function cardBrand(num: string): CardBrand {
-  const d = digitsOnly(num);
-  if (/^4/.test(d)) return 'visa';
-  if (/^(5[1-5]|2[2-7])/.test(d)) return 'mastercard';
-  if (/^3[47]/.test(d)) return 'amex';
-  return 'generic';
 }
 
 const CheckIcon = () => (
@@ -118,19 +76,6 @@ function Field({
   );
 }
 
-function BrandMark({ brand }: { brand: CardBrand }) {
-  if (brand === 'visa') return <span className="pay-brand pay-brand-visa">VISA</span>;
-  if (brand === 'amex') return <span className="pay-brand pay-brand-amex">AMEX</span>;
-  if (brand === 'mastercard') {
-    return (
-      <span className="pay-brand pay-brand-mc" aria-label="Mastercard">
-        <i /><i />
-      </span>
-    );
-  }
-  return <span className="pay-brand pay-brand-generic">ODYX</span>;
-}
-
 export default function CheckoutPage() {
   const router = useRouter();
   const { lines, count, loading: cartLoading } = useCart();
@@ -139,7 +84,6 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
-  const [cvcFocus, setCvcFocus] = useState(false);
   const [payMethod, setPayMethod] = useState<'ONLINE' | 'CASH'>('ONLINE');
   const [apiShipping, setApiShipping] = useState<number | null>(null);
   const [payIframe, setPayIframe] = useState<string | null>(null);
@@ -147,7 +91,6 @@ export default function CheckoutPage() {
     clientSecret: string;
     publicKey: string;
     orderNumber: string;
-    digital: boolean;
   } | null>(null);
   const awaitingPaymob = Boolean(payIframe || payPixel);
 
@@ -166,32 +109,7 @@ export default function CheckoutPage() {
 
   const digital = isDesignCart(lines);
   const mixed = isMixedCart(lines);
-  const [designHandoff, setDesignHandoff] = useState(false);
-
-  async function goAfterDesignPaid(orderNumber: string) {
-    setDesignHandoff(true);
-    const draft = readDesignCaseDraft();
-    const fromLine = lines
-      .map((l) => l.product.slug ?? l.product.id)
-      .find((s) => isDesignServiceSlug(s));
-    const session = readSession();
-    if (session && session.role !== 'guest') {
-      try {
-        const href = await finalizeDesignCaseAfterPayment(session, orderNumber);
-        router.replace(href);
-        return;
-      } catch {
-        /* fall through */
-      }
-    }
-    router.replace(
-      designInboxHandoffHref({
-        orderNumber,
-        serviceSlug: draft?.serviceSlug ?? fromLine ?? null,
-        confirmed: true,
-      }),
-    );
-  }
+  const [leavingCheckout, setLeavingCheckout] = useState(false);
 
   useEffect(() => {
     if (!ready || cartLoading) return;
@@ -200,7 +118,7 @@ export default function CheckoutPage() {
       return;
     }
     // Don't bounce to catalog while we create the inbox thread after payment.
-    if (count === 0 && !awaitingPaymob && !designHandoff) {
+    if (count === 0 && !awaitingPaymob && !leavingCheckout) {
       // Prefer design catalog when this checkout was opened from Buy now there.
       const fromDesign =
         typeof window !== 'undefined' &&
@@ -221,7 +139,7 @@ export default function CheckoutPage() {
         /* ignore */
       }
     }
-  }, [ready, cartLoading, count, router, awaitingPaymob, digital, designHandoff]);
+  }, [ready, cartLoading, count, router, awaitingPaymob, digital, leavingCheckout]);
 
   useEffect(() => {
     if (digital) {
@@ -275,8 +193,6 @@ export default function CheckoutPage() {
     : form.line1.trim() !== '' && form.city.trim() !== '';
   const paymentDone = true;
 
-  const brand = cardBrand(form.cardNumber);
-
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
     setErrors((e) => {
@@ -311,6 +227,7 @@ export default function CheckoutPage() {
     }
     if (!validate()) return;
     setSubmitting(true);
+    setLeavingCheckout(true);
     try {
       const shipping = {
         name: form.name.trim(),
@@ -327,32 +244,27 @@ export default function CheckoutPage() {
       });
 
       if ('pixel' in result && result.pixel) {
+        setLeavingCheckout(false);
         setPayPixel({
           clientSecret: result.pixel.clientSecret,
           publicKey: result.pixel.publicKey,
           orderNumber: result.order.id,
-          digital: digital || Boolean(readDesignCaseDraft()),
         });
         setSubmitting(false);
         return;
       }
 
       if ('iframeUrl' in result && result.iframeUrl) {
+        setLeavingCheckout(false);
         setPayIframe(result.iframeUrl);
         setSubmitting(false);
         return;
       }
 
       const orderId = result.order.id;
-
-      // Design services: create inbox thread, then open conversation.
-      if (digital || readDesignCaseDraft()) {
-        await goAfterDesignPaid(orderId);
-        return;
-      }
-
       router.push(`/checkout/success?order=${encodeURIComponent(orderId)}`);
     } catch (err) {
+      setLeavingCheckout(false);
       setFormError(err instanceof Error ? err.message : 'Could not place order.');
       setSubmitting(false);
     }
@@ -374,10 +286,7 @@ export default function CheckoutPage() {
             publicKey={payPixel.publicKey}
             clientSecret={payPixel.clientSecret}
             onComplete={() => {
-              if (payPixel.digital || readDesignCaseDraft()) {
-                void goAfterDesignPaid(payPixel.orderNumber);
-                return;
-              }
+              setLeavingCheckout(true);
               router.push(
                 `/checkout/success?order=${encodeURIComponent(payPixel.orderNumber)}`,
               );
@@ -423,12 +332,12 @@ export default function CheckoutPage() {
     );
   }
 
-  if (designHandoff) {
+  if (leavingCheckout) {
     return (
       <section className="sec store-sec">
         <div className="wrap">
           <p className="checkout-loading">
-            Order confirmed — opening your design conversation…
+            Confirming your payment…
           </p>
         </div>
       </section>
@@ -685,7 +594,7 @@ export default function CheckoutPage() {
               </button>
 
               <p className="co-trust">
-                <LockIcon /> Encrypted demo checkout · No real charge
+                <LockIcon /> Paymob encrypted checkout · ODYX never stores your card
               </p>
               <Link className="co-back" href="/cart">
                 Back to cart

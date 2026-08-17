@@ -2,6 +2,7 @@
  * Orders facade — Nest checkout + Paymob.
  */
 
+import { ApiError } from '@/lib/api/client';
 import {
   checkoutApi,
   createPaymentIntentApi,
@@ -15,6 +16,23 @@ import { notifyCartChange } from '@/lib/cart-events';
 import type { OrderShipping, StoredOrder } from '@/lib/order-types';
 
 export type { OrderShipping, StoredOrder };
+
+function mapOrderStatus(status: string): StoredOrder['status'] {
+  switch (status.toUpperCase()) {
+    case 'PENDING':
+      return 'pending';
+    case 'PAID':
+      return 'paid';
+    case 'SHIPPED':
+      return 'shipped';
+    case 'DELIVERED':
+      return 'delivered';
+    case 'CANCELLED':
+      return 'cancelled';
+    default:
+      return 'confirmed';
+  }
+}
 
 export function mapApiOrder(order: ApiOrder): StoredOrder {
   return {
@@ -41,8 +59,9 @@ export function mapApiOrder(order: ApiOrder): StoredOrder {
     shippingFee: order.shipping,
     total: order.total,
     createdAt: new Date().toISOString(),
-    status: 'confirmed',
+    status: mapOrderStatus(order.status),
     fulfillmentType: order.fulfillmentType,
+    paymentMethod: order.paymentMethod,
   };
 }
 
@@ -105,13 +124,21 @@ export async function placeOrderFacade(input: {
         };
       }
       throw new Error('Paymob intent missing pixel or iframe payload');
-    } catch {
-      await simulatePaymentApi(apiOrder.id);
-      return {
-        order: mapApiOrder(apiOrder),
-        apiOrder,
-        simulated: true,
-      };
+    } catch (err) {
+      const canSimulate = err instanceof ApiError && err.status === 503;
+      if (canSimulate) {
+        try {
+          await simulatePaymentApi(apiOrder.id);
+          return {
+            order: mapApiOrder({ ...apiOrder, status: 'PAID' }),
+            apiOrder: { ...apiOrder, status: 'PAID' },
+            simulated: true,
+          };
+        } catch {
+          throw err;
+        }
+      }
+      throw err;
     }
   }
 
@@ -127,4 +154,29 @@ export async function getOrderFacade(
   } catch {
     return undefined;
   }
+}
+
+export function isSettledOnline(status: StoredOrder['status']): boolean {
+  return (
+    status === 'paid' ||
+    status === 'confirmed' ||
+    status === 'shipped' ||
+    status === 'delivered'
+  );
+}
+
+export async function waitForOrderPaid(
+  orderNumber: string,
+  options?: { timeoutMs?: number; intervalMs?: number },
+): Promise<StoredOrder | undefined> {
+  const timeoutMs = options?.timeoutMs ?? 45_000;
+  const intervalMs = options?.intervalMs ?? 1_500;
+  const started = Date.now();
+  let last: StoredOrder | undefined;
+  while (Date.now() - started < timeoutMs) {
+    last = await getOrderFacade(orderNumber);
+    if (last && isSettledOnline(last.status)) return last;
+    await new Promise((r) => setTimeout(r, intervalMs));
+  }
+  return last;
 }
