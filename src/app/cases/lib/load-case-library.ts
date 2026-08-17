@@ -1,5 +1,5 @@
 import { getApiBaseUrl } from '@/lib/config';
-import { resolveMediaUrl, type CaseLibraryPublic } from '@/lib/api/case-library';
+import { resolveMediaUrl, type CaseLibraryPublic, type ShowcaseCase } from '@/lib/api/case-library';
 import { clinicalCaseMedia } from '@/lib/clinical-media-url';
 import type { BrowseSectionData, FeaturedCase, FeaturedSectionData } from '../types';
 import { casesData } from '../data/cases.data';
@@ -151,6 +151,12 @@ export function buildProductsFromLibrary(
       ...item,
       href: productCaseHref(item.id),
       countLabel: caseCountLabel(counts[item.id] ?? 0),
+      ...(item.id === 'resin'
+        ? {
+            img: '/img/hv2-hub/store-resins-cutout.png',
+            imgAlt: 'ODYX dental resin bottles',
+          }
+        : {}),
     })),
   };
 }
@@ -166,6 +172,22 @@ export async function fetchCaseLibrary(): Promise<CaseLibraryPublic | null> {
     });
     if (!res.ok) return null;
     return (await res.json()) as CaseLibraryPublic;
+  } catch {
+    return null;
+  }
+}
+
+/** Server-side fetch of one published showcase case by slug. */
+export async function fetchShowcaseCaseBySlug(slug: string): Promise<ShowcaseCase | null> {
+  const base = getApiBaseUrl();
+  if (!base) return null;
+  try {
+    const res = await fetch(`${base}/case-library/${encodeURIComponent(slug)}`, {
+      next: { revalidate: 30 },
+      headers: { Accept: 'application/json' },
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as ShowcaseCase;
   } catch {
     return null;
   }

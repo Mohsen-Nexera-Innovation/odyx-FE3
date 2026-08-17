@@ -7,6 +7,7 @@ import {
   realCasesForListing,
   type RealClinicalCase,
 } from '@/content/clinical-case-photos';
+import { isProductFamilySlug, productCasesPath } from '@/content/product-cases';
 import type { FeaturedCase, FeaturedProductIcon } from '../types';
 
 const LISTING_BADGE: Record<string, string> = {
@@ -84,7 +85,9 @@ function toFeaturedCase(
 }
 
 export function productCaseHref(productId: string) {
-  return `/solutions/cases?product=${encodeURIComponent(productId)}#featured-cases`;
+  return isProductFamilySlug(productId)
+    ? productCasesPath(productId)
+    : productCasesPath('all');
 }
 
 /** How many clinical cases are tagged with each product key. */

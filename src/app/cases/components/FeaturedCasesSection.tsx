@@ -46,10 +46,8 @@ function CaseMedia({ item }: { item: FeaturedCase }) {
 
 export function FeaturedCasesSection({
   data,
-  productFilter,
 }: {
   data: FeaturedSectionData;
-  productFilter?: string;
 }) {
   return (
     <section
@@ -109,9 +107,7 @@ export function FeaturedCasesSection({
             {data.items.length === 0 ? (
               <SwiperSlide className="!h-auto !flex">
                 <p className="w-full rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-10 text-center text-[14px] text-[#667085]">
-                  {productFilter
-                    ? 'No clinical cases are tagged with this product yet.'
-                    : 'Clinical cases are coming soon.'}
+                  Clinical cases are coming soon.
                 </p>
               </SwiperSlide>
             ) : (
