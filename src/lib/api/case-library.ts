@@ -9,6 +9,18 @@ export type ShowcaseApplication =
   | 'PROSTHETICS'
   | 'OTHER';
 
+export type ShowcaseJourneyStep = {
+  title: string;
+  body?: string | null;
+  img?: string | null;
+};
+
+export type ShowcaseMaterial = {
+  name: string;
+  img?: string | null;
+  alt?: string | null;
+};
+
 export type ShowcaseCase = {
   id: string;
   slug: string;
@@ -21,6 +33,7 @@ export type ShowcaseCase = {
   coverImageAlt?: string | null;
   beforeImageUrl?: string | null;
   afterImageUrl?: string | null;
+  galleryImageUrls?: string[] | null;
   href?: string | null;
   productKeys: string[];
   products: { id: string; img: string; alt: string }[];
@@ -30,6 +43,18 @@ export type ShowcaseCase = {
   sortOrder: number;
   createdAt: string;
   updatedAt: string;
+  /** Optional CMS fields — rendered only when the API actually sends them. */
+  caseType?: string | null;
+  procedure?: string | null;
+  treatmentArea?: string | null;
+  tooth?: string | null;
+  patient?: string | null;
+  caseId?: string | null;
+  keyMaterials?: ShowcaseMaterial[] | null;
+  clinicalChallenge?: string | null;
+  treatmentApproach?: string | null;
+  treatmentOutcome?: string | null;
+  treatmentJourney?: ShowcaseJourneyStep[] | null;
 };
 
 export type CaseLibraryBrowseItem = {

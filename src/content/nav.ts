@@ -228,7 +228,7 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "By Product",
-        href: "/solutions/cases#by-product",
+        href: "/solutions/cases/products",
         desc: "Scanner, printer, cure, resin",
       },
     ],
@@ -260,7 +260,7 @@ export const HEADER_MENUS: NavGroup[] = [
               },
               {
                 label: "By Product",
-                href: "/solutions/cases#by-product",
+                href: "/solutions/cases/products",
                 desc: "Scanner, printer, cure, resin",
               },
             ],
@@ -350,74 +350,74 @@ export const HEADER_MENUS: NavGroup[] = [
     ],
   },
   // Learning — hidden from navbar until ready
-  // {
-  //   label: "Learning",
-  //   href: "/learning",
-  //   items: [
-  //     {
-  //       label: "Learning Center",
-  //       href: "/learning",
-  //       desc: "Everything to get started",
-  //     },
-  //     {
-  //       label: "Beginner Path",
-  //       href: "/learning#beginner",
-  //       desc: "Guided onboarding track",
-  //     },
-  //     {
-  //       label: "Clinical Courses",
-  //       href: "/learning#courses",
-  //       desc: "Deep-dive training",
-  //     },
-  //     {
-  //       label: "Articles",
-  //       href: "/learning#articles",
-  //       desc: "Tips, guides and insights",
-  //     },
-  //     {
-  //       label: "Videos & Tutorials",
-  //       href: "/learning#videos",
-  //       desc: "Watch and follow along",
-  //     },
-  //   ],
-  //   columns: [
-  //     {
-  //       title: "Paths",
-  //       href: "/learning",
-  //       items: [
-  //         {
-  //           label: "Beginner Path",
-  //           href: "/learning#beginner",
-  //           desc: "Guided onboarding track",
-  //         },
-  //         {
-  //           label: "Clinical Courses",
-  //           href: "/learning#courses",
-  //           desc: "Deep-dive training",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       title: "Resources",
-  //       items: [
-  //         {
-  //           label: "Articles",
-  //           href: "/learning#articles",
-  //           desc: "Tips, guides and insights",
-  //         },
-  //         {
-  //           label: "Videos & Tutorials",
-  //           href: "/learning#videos",
-  //           desc: "Watch and follow along",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    label: "Learning",
+    href: "/learning",
+    items: [
+      {
+        label: "Learning Center",
+        href: "/learning",
+        desc: "Everything to get started",
+      },
+      {
+        label: "Beginner Path",
+        href: "/learning#beginner",
+        desc: "Guided onboarding track",
+      },
+      {
+        label: "Clinical Courses",
+        href: "/learning#courses",
+        desc: "Deep-dive training",
+      },
+      {
+        label: "Articles",
+        href: "/learning#articles",
+        desc: "Tips, guides and insights",
+      },
+      {
+        label: "Videos & Tutorials",
+        href: "/learning#videos",
+        desc: "Watch and follow along",
+      },
+    ],
+    columns: [
+      {
+        title: "Paths",
+        href: "/learning",
+        items: [
+          {
+            label: "Beginner Path",
+            href: "/learning#beginner",
+            desc: "Guided onboarding track",
+          },
+          {
+            label: "Clinical Courses",
+            href: "/learning#courses",
+            desc: "Deep-dive training",
+          },
+        ],
+      },
+      {
+        title: "Resources",
+        items: [
+          {
+            label: "Articles",
+            href: "/learning#articles",
+            desc: "Tips, guides and insights",
+          },
+          {
+            label: "Videos & Tutorials",
+            href: "/learning#videos",
+            desc: "Watch and follow along",
+          },
+        ],
+      },
+    ],
+  },
   {
     label: "Support",
     href: "/support",
-    dimmed: true,
+    // dimmed: true,
     items: [
       { label: "Support / Help Center", href: "/support", desc: "Get help fast" },
       {
