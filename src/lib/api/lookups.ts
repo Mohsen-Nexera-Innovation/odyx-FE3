@@ -19,14 +19,27 @@ export type ApiDesignType = {
   name: string;
 };
 
-export function listCountriesApi() {
-  return apiFetch<ApiCountry[]>('/countries', { auth: true });
+function asList<T extends { id: string }>(raw: unknown): T[] {
+  if (Array.isArray(raw)) {
+    return raw.filter((row): row is T => Boolean(row && typeof row === 'object' && 'id' in row));
+  }
+  if (raw && typeof raw === 'object') {
+    const record = raw as Record<string, unknown>;
+    for (const key of ['data', 'items', 'results']) {
+      if (Array.isArray(record[key])) return asList<T>(record[key]);
+    }
+  }
+  return [];
 }
 
-export function listMaterialsApi() {
-  return apiFetch<ApiMaterial[]>('/materials', { auth: true });
+export async function listCountriesApi() {
+  return asList<ApiCountry>(await apiFetch<unknown>('/countries', { auth: true }));
 }
 
-export function listDesignTypesApi() {
-  return apiFetch<ApiDesignType[]>('/design-types', { auth: true });
+export async function listMaterialsApi() {
+  return asList<ApiMaterial>(await apiFetch<unknown>('/materials', { auth: true }));
+}
+
+export async function listDesignTypesApi() {
+  return asList<ApiDesignType>(await apiFetch<unknown>('/design-types', { auth: true }));
 }

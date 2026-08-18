@@ -159,10 +159,14 @@ export async function submitDesignCaseWizard(input: {
     (file): file is File => Boolean(file),
   );
 
-  const designTypeId = matchDesignTypeId(
-    input.data.caseDetails.designType,
-    input.lookups.designTypes,
-  );
+  const types = Array.isArray(input.lookups.designTypes) ? input.lookups.designTypes : [];
+  if (!types.length) {
+    throw new Error(
+      'GET /design-types returned no types. Seed design types on the API (single-unit, dsd-veneers, …) and retry.',
+    );
+  }
+
+  const designTypeId = matchDesignTypeId(input.data.caseDetails.designType, types);
   if (!designTypeId) {
     throw new Error('Could not match a design type. Check that GET /design-types is available.');
   }
