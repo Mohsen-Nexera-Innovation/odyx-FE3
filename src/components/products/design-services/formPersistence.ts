@@ -24,6 +24,7 @@ const INTRAORAL_KEY = 'intraoral';
 type StoredForm = {
   version: 1;
   currentStep: number;
+  caseId?: string;
   doctor: DoctorInformation;
   caseDetails: CaseDetails;
   sendMethod: SendMethod;
@@ -89,6 +90,7 @@ function parseStored(raw: string): StoredForm | null {
     return {
       version: 1,
       currentStep: Number.isFinite(step) ? Math.max(1, Math.min(5, Math.trunc(step))) : 1,
+      caseId: typeof parsed.caseId === 'string' && parsed.caseId ? parsed.caseId : undefined,
       doctor: mergeDoctor(parsed.doctor),
       caseDetails: mergeCaseDetails(parsed.caseDetails),
       sendMethod: (SEND.has(sendMethod) ? sendMethod : '') as SendMethod,
@@ -169,6 +171,7 @@ async function clearFiles(): Promise<void> {
 
 export async function readFormDraft(): Promise<{
   currentStep: number;
+  caseId?: string;
   data: CaseSubmissionData;
 } | null> {
   if (typeof window === 'undefined') return null;
@@ -183,6 +186,7 @@ export async function readFormDraft(): Promise<{
     ]);
     return {
       currentStep: stored.currentStep,
+      caseId: stored.caseId,
       data: {
         doctor: stored.doctor,
         caseDetails: stored.caseDetails,
@@ -200,11 +204,13 @@ export async function readFormDraft(): Promise<{
 export async function saveFormDraft(
   currentStep: number,
   data: CaseSubmissionData,
+  caseId?: string,
 ): Promise<void> {
   if (typeof window === 'undefined') return;
   const payload: StoredForm = {
     version: 1,
     currentStep,
+    caseId,
     doctor: data.doctor,
     caseDetails: data.caseDetails,
     sendMethod: data.sendMethod,

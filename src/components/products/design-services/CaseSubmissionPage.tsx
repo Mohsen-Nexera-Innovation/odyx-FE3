@@ -2,7 +2,16 @@
 
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { useAuthSession } from '@/hooks/useAuthSession';
+import { ApiError } from '@/lib/api/client';
+import {
+  ensureDraftCase,
+  loadCaseLookups,
+  submitDesignCaseWizard,
+} from '@/lib/cases';
+import type { ApiCountry, ApiDesignType, ApiMaterial } from '@/lib/api/lookups';
 import CaseDetailsStep from './steps/CaseDetailsStep';
 import CaseStepper from './CaseStepper';
 import CaseSuccess from './CaseSuccess';
@@ -19,7 +28,7 @@ import {
   sendMethodSchema,
 } from './schemas';
 import { clearFormDraft, readFormDraft, saveFormDraft } from './formPersistence';
-import { INITIAL_CASE_DATA, type CaseSubmissionData } from './types';
+import { INITIAL_CASE_DATA, type CaseSubmissionData, type DoctorInformation } from './types';
 
 const TOTAL_STEPS = 5;
 
@@ -31,15 +40,65 @@ const STEP_COPY = [
   { title: 'Review & Submit',                  description: <>Please review your case details before submitting.</> },
 ] as const;
 
-const MOCK_SUBMISSION_RESULT = { caseId: 'ODYX-20260503-0125' };
+const LOGIN_NEXT = '/products/design-services';
+
+function doctorFromSession(
+  session: { name: string; email: string; phone?: string; org?: string; country?: string },
+  current: DoctorInformation,
+): DoctorInformation {
+  const digits = (session.phone ?? '').replace(/\D/g, '');
+  const whatsapp =
+    current.whatsapp ||
+    (digits.startsWith('20') && digits.length > 2 ? digits.slice(2) : digits);
+  return {
+    ...current,
+    fullName: current.fullName || session.name || '',
+    email: current.email || session.email || '',
+    clinicName: current.clinicName || session.org || '',
+    country: current.country || session.country || '',
+    whatsapp,
+  };
+}
+
+function submitErrorMessage(err: unknown): string {
+  if (err instanceof ApiError) {
+    if (err.status === 403) {
+      return 'Cases can only be submitted from a client account (dentist or lab), not a staff login.';
+    }
+    if (err.status === 409) {
+      return 'This case was already submitted. Start a new case to continue.';
+    }
+    if (err.missing?.length) {
+      return `${err.message} (missing: ${err.missing.join(', ')})`;
+    }
+    return err.message;
+  }
+  if (err instanceof Error && err.message) return err.message;
+  return 'Could not submit the case. Please try again.';
+}
 
 export default function CaseSubmissionPage() {
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const { session, ready } = useAuthSession();
   const [currentStep, setCurrentStep] = useState(1);
   const [data, setData] = useState<CaseSubmissionData>(INITIAL_CASE_DATA);
+  const [caseId, setCaseId] = useState<string | undefined>();
   const [draftReady, setDraftReady] = useState(false);
   const [submissionResult, setSubmissionResult] = useState<{ caseId: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const lookupsRef = useRef<{
+    countries: ApiCountry[];
+    designTypes: ApiDesignType[];
+    materials: ApiMaterial[];
+  } | null>(null);
+
+  const loginHref = `/login?next=${encodeURIComponent(pathname || LOGIN_NEXT)}`;
+  const isStaff = session?.accountType === 'STAFF' || session?.role === 'admin';
+  const isClient = session?.accountType === 'CLIENT';
 
   useEffect(() => {
     let cancelled = false;
@@ -49,6 +108,7 @@ export default function CaseSubmissionPage() {
         if (draft) {
           setCurrentStep(draft.currentStep);
           setData(draft.data);
+          if (draft.caseId) setCaseId(draft.caseId);
         }
         setDraftReady(true);
       })
@@ -61,22 +121,87 @@ export default function CaseSubmissionPage() {
   }, []);
 
   useEffect(() => {
+    if (!ready || !draftReady || !session || isStaff) return;
+    setData((current) => ({
+      ...current,
+      doctor: doctorFromSession(session, current.doctor),
+    }));
+  }, [ready, draftReady, session, isStaff]);
+
+  useEffect(() => {
+    if (!ready) return;
+    if (!session || session.role === 'guest') {
+      router.replace(loginHref);
+    }
+  }, [ready, session, router, loginHref]);
+
+  useEffect(() => {
+    if (!ready || !isClient) return;
+    let cancelled = false;
+    void loadCaseLookups()
+      .then((lookups) => {
+        if (!cancelled) lookupsRef.current = lookups;
+      })
+      .catch(() => {
+        /* submit will retry / surface the error */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [ready, isClient]);
+
+  useEffect(() => {
     if (!draftReady || submissionResult) return;
-    void saveFormDraft(currentStep, data);
-  }, [draftReady, currentStep, data, submissionResult]);
+    void saveFormDraft(currentStep, data, caseId);
+  }, [draftReady, currentStep, data, caseId, submissionResult]);
 
   const moveToStep = (step: number) => {
     setCurrentStep(Math.max(1, Math.min(TOTAL_STEPS, step)));
     setErrors({});
+    setSubmitError('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const submitCase = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!data.confirmed) return;
-    void clearFormDraft();
-    setSubmissionResult(MOCK_SUBMISSION_RESULT);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!data.confirmed || submitting) return;
+    if (!data.attachments.stlFile && !data.attachments.intraoralFile) {
+      setSubmitError('Attach at least one scan file before submitting.');
+      return;
+    }
+
+    void (async () => {
+      setSubmitting(true);
+      setSubmitError('');
+      try {
+        const draft = await ensureDraftCase(caseId);
+        setCaseId(draft.id);
+        await saveFormDraft(currentStep, data, draft.id);
+        const lookups = lookupsRef.current ?? (await loadCaseLookups());
+        lookupsRef.current = lookups;
+        const submitted = await submitDesignCaseWizard({
+          caseId: draft.id,
+          data: {
+            doctor: data.doctor,
+            caseDetails: data.caseDetails,
+            attachments: data.attachments,
+          },
+          lookups,
+        });
+        await clearFormDraft();
+        setCaseId(undefined);
+        setSubmissionResult({ caseId: submitted.caseNumber || submitted.id });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        if (err instanceof ApiError && err.status === 401) {
+          router.replace(loginHref);
+          return;
+        }
+        setSubmitError(submitErrorMessage(err));
+      } finally {
+        setSubmitting(false);
+      }
+    })();
   };
 
   const continueToNextStep = () => {
@@ -97,6 +222,13 @@ export default function CaseSubmissionPage() {
       return;
     }
 
+    if (currentStep === 3 && !data.attachments.stlFile && !data.attachments.intraoralFile) {
+      setErrors({
+        stlFile: 'Attach at least one file (STL, PLY, OBJ, ZIP, PDF, JPEG, or PNG).',
+      });
+      return;
+    }
+
     setErrors({});
     moveToStep(currentStep + 1);
   };
@@ -111,6 +243,32 @@ export default function CaseSubmissionPage() {
     }
   };
 
+  const pageShell = 'min-h-dvh bg-white pt-[calc(var(--hdr-h)+8px)] pb-14';
+
+  if (!ready) {
+    return <div className={pageShell} data-hero-light aria-busy="true" />;
+  }
+
+  if (!session || session.role === 'guest') {
+    return <div className={pageShell} data-hero-light aria-busy="true" />;
+  }
+
+  if (isStaff) {
+    return (
+      <div className={pageShell} data-hero-light>
+        <div className="w-[min(640px,calc(100%-24px))] mx-auto py-16 text-center">
+          <h1 className="text-[22px] font-extrabold text-[#0A1020] m-0 mb-3">Client account required</h1>
+          <p className="text-[14px] text-[#6B7280] m-0 mb-6">
+            Design cases are submitted with a dentist or lab login. Staff accounts cannot create cases.
+          </p>
+          <Link href="/" className="text-[#0050D8] font-bold hover:underline">
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (submissionResult) {
     return (
       <div className="min-h-dvh bg-[#F4F8FD] flex items-center justify-center pt-[calc(var(--hdr-h)+12px)] pb-14" data-hero-light>
@@ -121,6 +279,8 @@ export default function CaseSubmissionPage() {
           onSubmitAnother={() => {
             void clearFormDraft();
             setSubmissionResult(null);
+            setCaseId(undefined);
+            setSubmitError('');
             setData(INITIAL_CASE_DATA);
             setCurrentStep(1);
             setErrors({});
@@ -242,14 +402,20 @@ export default function CaseSubmissionPage() {
                 ) : (
                   <button
                     type="submit"
-                    disabled={!data.confirmed}
+                    disabled={!data.confirmed || submitting}
                     className="inline-flex items-center justify-center gap-2.5 min-w-[154px] min-h-[42px] px-5 py-2.5 rounded-[6px] bg-[#16A34A] text-white text-sm font-bold cursor-pointer transition-all hover:bg-[#15803d] disabled:opacity-45 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-[rgba(22,163,74,.2)] focus-visible:outline-offset-2 active:translate-y-px"
                   >
-                    Submit Case
-                    <Check size={16} strokeWidth={2.5} aria-hidden />
+                    {submitting ? 'Submitting…' : 'Submit Case'}
+                    {!submitting ? <Check size={16} strokeWidth={2.5} aria-hidden /> : null}
                   </button>
                 )}
               </div>
+
+              {currentStep === TOTAL_STEPS && submitError ? (
+                <p className="text-center text-[#EF4444] text-sm font-medium mt-3" role="alert">
+                  {submitError}
+                </p>
+              ) : null}
 
               {currentStep === TOTAL_STEPS && (
                 <p className="text-center text-[#6B7280] text-xs mt-3">

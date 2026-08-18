@@ -4,11 +4,13 @@ import { clearSession } from '@/lib/auth-session';
 
 export class ApiError extends Error {
   status: number;
+  missing?: string[];
 
-  constructor(message: string, status: number) {
+  constructor(message: string, status: number, missing?: string[]) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
+    this.missing = missing;
   }
 }
 
@@ -110,7 +112,10 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
 
   const data = await parseJson(res);
   if (!res.ok) {
-    throw new ApiError(nestMessage(data, res.statusText || 'Request failed'), res.status);
+    const missingRaw =
+      data && typeof data === 'object' ? (data as { missing?: unknown }).missing : undefined;
+    const missing = Array.isArray(missingRaw) ? missingRaw.map(String) : undefined;
+    throw new ApiError(nestMessage(data, res.statusText || 'Request failed'), res.status, missing);
   }
 
   return data as T;

@@ -173,7 +173,7 @@ export default function SendMethodStep({
           <AttachmentField
             id="design-stl-file"
             label="STL file"
-            hint="Optional · .stl"
+            hint="Required · at least one scan file"
             accept=".stl,model/stl,application/sla"
             file={attachments.stlFile}
             error={errors.stlFile}
