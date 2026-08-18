@@ -1,3 +1,9 @@
+import type {
+  DemoApplicationId,
+  DemoProductId,
+  DemoRoleId,
+  DemoTypeId,
+} from '@/content/request-demo';
 import { apiFetch } from '@/lib/api/client';
 
 export type LeadClientType = 'DENTIST' | 'LAB' | 'OTHER';
@@ -29,32 +35,10 @@ export type CreateQuoteRequestInput = {
   message?: string;
 };
 
-export type DemoRequestRole =
-  | 'dentist'
-  | 'lab'
-  | 'distributor'
-  | 'university'
-  | 'student'
-  | 'other';
-
-export type DemoRequestProduct =
-  | 'scanner'
-  | 'design'
-  | 'printer'
-  | 'cure'
-  | 'resins'
-  | 'workflow';
-
-export type DemoRequestApplication =
-  | 'crown-bridge'
-  | 'implant'
-  | 'surgical-guide'
-  | 'orthodontics'
-  | 'denture'
-  | 'smile-design'
-  | 'general';
-
-export type DemoRequestType = 'online' | 'onsite' | 'distributor';
+export type DemoRequestRole = DemoRoleId;
+export type DemoRequestProduct = DemoProductId;
+export type DemoRequestApplication = DemoApplicationId;
+export type DemoRequestType = DemoTypeId;
 
 export type CreateDemoRequestInput = {
   firstName: string;

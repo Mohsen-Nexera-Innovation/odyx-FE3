@@ -9,7 +9,6 @@ import {
   useState,
   type FormEvent,
 } from 'react';
-import { z } from 'zod';
 import {
   DEMO_LANGUAGES,
   DEMO_ROLES,
@@ -28,10 +27,7 @@ import {
   type DemoRequestProduct,
 } from '@/lib/api/leads';
 import { trackMetaLead } from '@/lib/meta-pixel';
-import {
-  RequestDemoForm,
-  type DemoFormState,
-} from './RequestDemoForm';
+import { RequestDemoForm } from './RequestDemoForm';
 import { RequestDemoHero } from './RequestDemoHero';
 import {
   RD_HEADER_OFFSET_PX,
@@ -40,80 +36,25 @@ import {
 } from './RequestDemoProgress';
 import { RequestDemoSummary } from './RequestDemoSummary';
 import { RequestDemoTrust } from './RequestDemoTrust';
-import { shellClass } from './formStyles';
-
-const INITIAL: DemoFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  country: '',
-  city: '',
-  language: '',
-  role: '',
-  clinicName: '',
-  chairs: '',
-  specialty: '',
-  products: [],
-  applications: [],
-  demoType: '',
-  date: '',
-  time: '',
-  timezone: '',
-  notes: '',
-  privacy: false,
-  marketing: false,
-};
-
-const DemoFormSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(5, 'Phone number is required'),
-  country: z.string().min(1, 'Country is required'),
-  city: z.string().optional(),
-  language: z.string().optional(),
-  role: z.enum(['dentist', 'lab', 'distributor', 'university', 'student', 'other']),
-  clinicName: z.string().min(2, 'Clinic name is required'),
-  chairs: z.string().min(1, 'Number of chairs is required'),
-  specialty: z.string().optional(),
-  products: z.array(z.string()).min(1, 'Select at least one product'),
-  applications: z.array(z.string()).optional(),
-  demoType: z.enum(['online', 'onsite', 'distributor']),
-  date: z.string().min(1, 'Preferred date is required'),
-  time: z.string().min(1, 'Preferred time is required'),
-  timezone: z.string().optional(),
-  notes: z.string().optional(),
-  privacy: z.boolean().refine((v) => v === true, {
-    message: 'Please accept the privacy policy',
-  }),
-  marketing: z.boolean().optional(),
-});
-
-function formatDisplayDate(value: string) {
-  if (!value) return '';
-  const d = new Date(`${value}T12:00:00`);
-  if (Number.isNaN(d.getTime())) return value;
-  return d.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
-}
-
-function scrollToSection(id: DemoStepId) {
-  const el = document.getElementById(`rd-section-${id}`);
-  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+import {
+  DemoFormSchema,
+  INITIAL,
+  formatDisplayDate,
+  getStepState,
+  scrollToFirstErrorSection,
+  scrollToSection,
+  type DemoFormState,
+  type DemoFormStatus,
+} from './demoForm';
+import { cardClass, shellClass } from './formStyles';
+import { cn } from '@/lib/cn';
 
 export default function RequestDemoPage() {
   const formId = useId();
   const [form, setForm] = useState<DemoFormState>(INITIAL);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeStep, setActiveStep] = useState<DemoStepId>('contact');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>(
-    'idle',
-  );
+  const [status, setStatus] = useState<DemoFormStatus>('idle');
   const [submitError, setSubmitError] = useState('');
   const [progressHeight, setProgressHeight] = useState(92);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -181,30 +122,7 @@ export default function RequestDemoPage() {
     });
   }
 
-  const contactComplete =
-    Boolean(form.firstName.trim()) &&
-    Boolean(form.lastName.trim()) &&
-    Boolean(form.email.trim()) &&
-    Boolean(form.phone.trim()) &&
-    Boolean(form.country);
-
-  const practiceComplete =
-    Boolean(form.role) &&
-    Boolean(form.clinicName.trim()) &&
-    Boolean(form.chairs) &&
-    form.products.length > 0;
-
-  const scheduleComplete =
-    Boolean(form.demoType) && Boolean(form.date) && Boolean(form.time);
-
-  const stepState = useMemo(
-    () => ({
-      contact: contactComplete,
-      practice: practiceComplete,
-      schedule: scheduleComplete,
-    }),
-    [contactComplete, practiceComplete, scheduleComplete],
-  );
+  const stepState = useMemo(() => getStepState(form), [form]);
 
   const roleLabel =
     DEMO_ROLES.find((r) => r.id === form.role)?.label ?? copy.summary.empty;
@@ -236,23 +154,7 @@ export default function RequestDemoPage() {
       setErrors(formatted);
       setStatus('idle');
       const firstKey = Object.keys(formatted)[0];
-      if (
-        firstKey === 'privacy' ||
-        firstKey === 'date' ||
-        firstKey === 'time' ||
-        firstKey === 'demoType'
-      ) {
-        scrollToSection('schedule');
-      } else if (
-        firstKey === 'clinicName' ||
-        firstKey === 'chairs' ||
-        firstKey === 'products' ||
-        firstKey === 'role'
-      ) {
-        scrollToSection('practice');
-      } else {
-        scrollToSection('contact');
-      }
+      scrollToFirstErrorSection(firstKey);
       return;
     }
 
@@ -308,7 +210,7 @@ export default function RequestDemoPage() {
 
         <div className={shellClass}>
           <div className="grid grid-cols-1 items-start gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.8fr)_minmax(280px,1fr)] lg:gap-6 xl:grid-cols-[minmax(0,1.8fr)_minmax(320px,1fr)] xl:gap-8">
-            <div className="min-w-0 rounded-[12px] border border-[#E5E7EB]/80 bg-white p-4 shadow-[0_0_12px_rgba(0,0,0,0.06)] sm:p-6 md:p-8">
+            <div className={cn('min-w-0', cardClass, 'p-4 sm:p-6 md:p-8')}>
               <RequestDemoForm
                 formId={formId}
                 form={form}
