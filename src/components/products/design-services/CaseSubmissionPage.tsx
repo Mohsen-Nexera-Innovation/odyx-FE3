@@ -165,10 +165,6 @@ export default function CaseSubmissionPage() {
   const submitCase = (event: React.FormEvent) => {
     event.preventDefault();
     if (!data.confirmed || submitting) return;
-    if (!data.attachments.stlFile && !data.attachments.intraoralFile) {
-      setSubmitError('Attach at least one scan file before submitting.');
-      return;
-    }
 
     void (async () => {
       setSubmitting(true);
@@ -219,13 +215,6 @@ export default function CaseSubmissionPage() {
         }
       });
       setErrors(newErrors);
-      return;
-    }
-
-    if (currentStep === 3 && !data.attachments.stlFile && !data.attachments.intraoralFile) {
-      setErrors({
-        stlFile: 'Attach at least one file (STL, PLY, OBJ, ZIP, PDF, JPEG, or PNG).',
-      });
       return;
     }
 

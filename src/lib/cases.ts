@@ -158,9 +158,6 @@ export async function submitDesignCaseWizard(input: {
   const files = [input.data.attachments.stlFile, input.data.attachments.intraoralFile].filter(
     (file): file is File => Boolean(file),
   );
-  if (files.length < 1) {
-    throw new Error('Attach at least one scan file before submitting a digital case.');
-  }
 
   const designTypeId = matchDesignTypeId(
     input.data.caseDetails.designType,
@@ -194,7 +191,7 @@ export async function submitDesignCaseWizard(input: {
   });
 
   await updateCaseSendMethodApi(draft.id, {
-    sendMethod: 'DIGITAL',
+    sendMethod: files.length > 0 ? 'DIGITAL' : 'PHYSICAL',
     shippingAddress: input.data.doctor.address.trim() || null,
     shippingCity: input.data.doctor.city.trim() || null,
   });
