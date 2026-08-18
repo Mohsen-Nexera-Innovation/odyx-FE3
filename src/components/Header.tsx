@@ -534,8 +534,17 @@ export default function Header() {
               </div>
             ),
           )}
+          <div className="nav-mobile-auth">
+            <Link className="btn btn-sm nav-demo" href="/request-demo" onClick={closeMenu}>
+              Request a Demo
+            </Link>
+          </div>
         </nav>
         <div className="nav-tools">
+          <Link className="btn btn-sm nav-demo" href="/request-demo">
+            <span className="nav-label-long">Request a Demo</span>
+            <span className="nav-label-short">Demo</span>
+          </Link>
           <button
             type="button"
             className="burger"
