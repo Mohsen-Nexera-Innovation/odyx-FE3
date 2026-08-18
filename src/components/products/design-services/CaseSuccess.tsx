@@ -2,8 +2,9 @@
 
 import { Check, Copy, Home, Mail, MessageCircle, Package, Pencil } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import { copyText } from './copyText';
 import type { SendMethod } from './types';
-
 export default function CaseSuccess({
   sendMethod,
   caseId,
@@ -15,8 +16,15 @@ export default function CaseSuccess({
   doctorName?: string;
   onSubmitAnother: () => void;
 }) {
-  const copyCaseId = () => void navigator.clipboard?.writeText(caseId);
+  const [copied, setCopied] = useState(false);
   const thanksName = doctorName?.trim() ? doctorName.trim() : null;
+
+  const copyCaseId = async () => {
+    const ok = await copyText(caseId);
+    if (!ok) return;
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <section
@@ -75,11 +83,16 @@ export default function CaseSuccess({
               <strong className="text-[22px] font-bold text-[#16A34A] tracking-wide">{caseId}</strong>
               <button
                 type="button"
-                onClick={copyCaseId}
-                aria-label="Copy case ID"
+                onClick={() => void copyCaseId()}
+                aria-label={copied ? 'Case ID copied' : 'Copy case ID'}
+                title={copied ? 'Copied' : 'Copy case ID'}
                 className="text-[#0050D8] hover:text-[#0040B0] bg-transparent border-0 p-1 cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] rounded"
               >
-                <Copy size={18} aria-hidden strokeWidth={2} />
+                {copied ? (
+                  <Check size={18} aria-hidden strokeWidth={2.5} className="text-[#16A34A]" />
+                ) : (
+                  <Copy size={18} aria-hidden strokeWidth={2} />
+                )}
               </button>
             </div>
             <small className="text-[11.5px] text-[#6B7280] font-normal leading-snug">

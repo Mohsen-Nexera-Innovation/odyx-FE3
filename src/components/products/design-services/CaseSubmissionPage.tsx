@@ -2,7 +2,7 @@
 
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CaseDetailsStep from './steps/CaseDetailsStep';
 import CaseStepper from './CaseStepper';
 import CaseSuccess from './CaseSuccess';
@@ -18,6 +18,7 @@ import {
   paymentMethodSchema,
   sendMethodSchema,
 } from './schemas';
+import { clearFormDraft, readFormDraft, saveFormDraft } from './formPersistence';
 import { INITIAL_CASE_DATA, type CaseSubmissionData } from './types';
 
 const TOTAL_STEPS = 5;
@@ -36,8 +37,33 @@ export default function CaseSubmissionPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [data, setData] = useState<CaseSubmissionData>(INITIAL_CASE_DATA);
+  const [draftReady, setDraftReady] = useState(false);
   const [submissionResult, setSubmissionResult] = useState<{ caseId: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    void readFormDraft()
+      .then((draft) => {
+        if (cancelled) return;
+        if (draft) {
+          setCurrentStep(draft.currentStep);
+          setData(draft.data);
+        }
+        setDraftReady(true);
+      })
+      .catch(() => {
+        if (!cancelled) setDraftReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!draftReady || submissionResult) return;
+    void saveFormDraft(currentStep, data);
+  }, [draftReady, currentStep, data, submissionResult]);
 
   const moveToStep = (step: number) => {
     setCurrentStep(Math.max(1, Math.min(TOTAL_STEPS, step)));
@@ -48,6 +74,7 @@ export default function CaseSubmissionPage() {
   const submitCase = (event: React.FormEvent) => {
     event.preventDefault();
     if (!data.confirmed) return;
+    void clearFormDraft();
     setSubmissionResult(MOCK_SUBMISSION_RESULT);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -92,6 +119,7 @@ export default function CaseSubmissionPage() {
           caseId={submissionResult.caseId}
           doctorName={data.doctor.fullName}
           onSubmitAnother={() => {
+            void clearFormDraft();
             setSubmissionResult(null);
             setData(INITIAL_CASE_DATA);
             setCurrentStep(1);
