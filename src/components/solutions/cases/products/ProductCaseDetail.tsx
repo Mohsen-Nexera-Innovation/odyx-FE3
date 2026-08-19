@@ -15,6 +15,7 @@ import {
   PRODUCT_FAMILY_ICONS,
   PRODUCT_FAMILY_META,
   isProductFamilySlug,
+  productCaseGlance,
   productCaseUsedProducts,
   type ApplicationCaseSlug,
   type ProductCaseCard,
@@ -57,50 +58,6 @@ const PRODUCT_PAGES: Record<
   },
 };
 
-const DEFAULT_SUMMARY =
-  'Comprehensive restoration of a deeply carious posterior molar using an advanced restorative protocol to ensure long-term structural integrity and optimal marginal seal.';
-
-function IconWrench() {
-  return (
-    <svg className="size-3.5 shrink-0 text-[#6B7280]" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M8.2 15.8 15.8 8.2M7 11.2a3.2 3.2 0 0 1 1.2-5.3l1.6 1.6L8.2 9.1 7 11.2ZM16.8 12.8a3.2 3.2 0 0 1 5.3-1.2l-1.6-1.6-1.6 1.6 1.2 2.2ZM9.5 14.5 6 18.8c-.5.5-.5 1.2 0 1.7s1.2.5 1.7 0L13.5 16"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function IconFlask() {
-  return (
-    <svg className="size-3.5 shrink-0 text-[#6B7280]" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M9 3h6M10 3v6.2L5.8 18.2A2 2 0 0 0 7.6 21h8.8a2 2 0 0 0 1.8-2.8L14 9.2V3"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function IconDrop() {
-  return (
-    <svg className="size-3.5 shrink-0 text-[#6B7280]" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M12 3s6 7.2 6 11.2A6 6 0 1 1 6 14.2C6 10.2 12 3 12 3Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function IconAlert() {
   return (
     <svg className="size-7 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -138,106 +95,45 @@ function IconCheck() {
 
 export default function ProductCaseDetail({ productSlug, caseItem, applicationSlug }: Props) {
   const family = PRODUCT_FAMILY_META[productSlug];
-  const sparseHero = !caseItem.treatmentArea && !caseItem.tooth && !caseItem.patient;
-  const glance = [
-    { label: 'Case Type', value: caseItem.caseType || caseItem.badge },
-    {
-      label: 'Procedure',
-      value: sparseHero ? 'Composite restoration' : caseItem.procedure || 'Composite restoration',
-    },
-    { label: 'Treatment Area', value: caseItem.treatmentArea || 'Posterior molar' },
-    { label: 'Tooth', value: caseItem.tooth || '#36' },
-    { label: 'Patient', value: caseItem.patient || 'Adult · Anonymized' },
-    {
-      label: 'Case ID',
-      value: caseItem.caseId && /^[A-Z]{1,4}-\d+/i.test(caseItem.caseId) ? caseItem.caseId : 'RP-024',
-    },
-  ];
-  const used = productCaseUsedProducts(caseItem);
-  const cmsMaterials = caseItem.keyMaterials.filter((m) => m.name.trim());
-  const defaultMaterials = [
-    { name: 'Specialized Burr', img: null as string | null, icon: <IconWrench /> },
-    { name: 'Composite Resin', img: null, icon: <IconFlask /> },
-    { name: 'Etching Gel', img: null, icon: <IconDrop /> },
-  ];
-  const materials =
-    cmsMaterials.length > 0
-      ? [
-          ...cmsMaterials.map((m) => ({ name: m.name, img: m.img ?? null, icon: null as ReactNode })),
-          ...defaultMaterials.filter(
-            (d) => !cmsMaterials.some((m) => m.name.toLowerCase() === d.name.toLowerCase()),
-          ),
-        ]
-      : defaultMaterials;
-  const summary = caseItem.summary?.trim() || DEFAULT_SUMMARY;
-  const defaultJourney = [
-    {
-      title: 'Initial Assessment',
-      body: 'Evaluate the remaining tooth structure, occlusion, and isolation needs before treatment.',
-    },
-    {
-      title: 'Cavity Preparation',
-      body: 'Remove carious tissue under isolation and shape a conservative, adhesive-ready preparation.',
-    },
-    {
-      title: 'Restorative Build-up',
-      body: 'Place and contour the restoration to restore anatomy, contacts, and a sealed margin.',
-    },
-    {
-      title: 'Finish & Check',
-      body: 'Finish, polish, and verify occlusion for a stable posterior result.',
-    },
-  ];
-  const cmsJourney = caseItem.treatmentJourney.filter((s) => s.title.trim());
-  const journey = defaultJourney.map((step, i) => {
-    const cms = cmsJourney[i];
-    return {
-      title: cms?.title?.trim() || step.title,
-      body: cms?.body?.trim() || step.body,
-      img: cms?.img || null,
-    };
-  });
+  const glance = productCaseGlance(caseItem);
+  const summary = caseItem.summary?.trim() || '';
+  const materials = caseItem.keyMaterials.filter((m) => m.name.trim());
+  const journey = caseItem.treatmentJourney.filter((s) => s.title.trim());
   const narrative: { id: string; title: string; body: string; icon: ReactNode }[] = [
-    {
-      id: 'challenge',
-      title: 'Clinical Challenge',
-      body:
-        caseItem.clinicalChallenge?.trim() ||
-        'Deep posterior caries with limited remaining tooth structure, requiring isolation and a conservative protocol to protect the pulp and restore function.',
-      icon: <IconAlert />,
-    },
-    {
-      id: 'approach',
-      title: 'Treatment Approach',
-      body:
-        caseItem.treatmentApproach?.trim() ||
-        'Rubber-dam isolation, controlled caries removal, and an adhesive restorative sequence to rebuild anatomy and seal the margins.',
-      icon: <IconClipboard />,
-    },
-    {
-      id: 'outcome',
-      title: 'Treatment Outcome',
-      body:
-        caseItem.treatmentOutcome?.trim() ||
-        'A sealed restoration with preserved tooth structure, stable contacts, and a predictable posterior result.',
-      icon: <IconCheck />,
-    },
-  ];
+    caseItem.clinicalChallenge?.trim()
+      ? {
+          id: 'challenge',
+          title: 'Clinical Challenge',
+          body: caseItem.clinicalChallenge.trim(),
+          icon: <IconAlert />,
+        }
+      : null,
+    caseItem.treatmentApproach?.trim()
+      ? {
+          id: 'approach',
+          title: 'Treatment Approach',
+          body: caseItem.treatmentApproach.trim(),
+          icon: <IconClipboard />,
+        }
+      : null,
+    caseItem.treatmentOutcome?.trim()
+      ? {
+          id: 'outcome',
+          title: 'Treatment Outcome',
+          body: caseItem.treatmentOutcome.trim(),
+          icon: <IconCheck />,
+        }
+      : null,
+  ].filter((item): item is NonNullable<typeof item> => Boolean(item));
 
-  const usedCards = [
+  const used = productCaseUsedProducts(caseItem);
+  const productCards = [
     ...new Map(
       used
         .filter((p) => isProductFamilySlug(p.id))
         .map((p) => [p.id, PRODUCT_PAGES[p.id as ProductFamilySlug]] as const),
     ).values(),
   ];
-  const productCards = [...usedCards];
-  for (const id of ['scanner', 'curing', 'printer'] as const) {
-    if (productCards.length >= 3) break;
-    if (!productCards.some((p) => p.href === PRODUCT_PAGES[id].href)) {
-      productCards.push(PRODUCT_PAGES[id]);
-    }
-  }
 
   const crumbSlug = applicationSlug ?? caseItem.applicationSlug;
   const appHref = isApplicationCaseSlug(crumbSlug ?? '')
@@ -278,10 +174,13 @@ export default function ProductCaseDetail({ productSlug, caseItem, applicationSl
             <h1 className="mt-3 text-[24px] sm:text-[32px] lg:text-[34px] font-bold text-[#0F2744] leading-[1.15] tracking-tight m-0 break-words">
               {caseItem.title}
             </h1>
-            <p className="m-0 mt-3 mb-5 text-[14px] sm:text-[15px] text-[#6B7280] leading-[1.65]">
-              {summary}
-            </p>
+            {summary ? (
+              <p className="m-0 mt-3 mb-5 text-[14px] sm:text-[15px] text-[#6B7280] leading-[1.65]">
+                {summary}
+              </p>
+            ) : null}
 
+            {glance.length ? (
             <div className="rounded-[10px] border border-[#E6EAF0] bg-white px-4 py-4 sm:px-6 sm:py-5 shadow-[0_1px_3px_rgba(15,23,42,0.04)]">
               <h2 className="m-0 text-[16px] font-bold text-[#0F2744]">Case At A Glance</h2>
               <div className="mt-3 mb-4 sm:mb-5 h-px w-full bg-[#E8ECF1]" />
@@ -305,7 +204,9 @@ export default function ProductCaseDetail({ productSlug, caseItem, applicationSl
                 ))}
               </dl>
             </div>
+            ) : null}
 
+            {materials.length ? (
             <div className="mt-6">
               <p className="m-0 mb-3 text-[13px] font-semibold text-[#6B7280]">Key Materials Used</p>
               <ul className="m-0 p-0 list-none flex flex-wrap gap-2.5">
@@ -318,16 +219,16 @@ export default function ProductCaseDetail({ productSlug, caseItem, applicationSl
                     {m.img ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={resolveMediaUrl(m.img)} alt="" className="w-4 h-4 object-contain" />
-                    ) : (
-                      m.icon
-                    )}
+                    ) : null}
                   </li>
                 ))}
               </ul>
             </div>
+            ) : null}
           </div>
         </div>
 
+        {productCards.length ? (
         <section className="mt-10 md:mt-12" aria-labelledby="products-used-title">
           <h2 id="products-used-title" className="m-0 text-[20px] sm:text-[22px] md:text-[26px] font-bold text-[#0F2744] break-words">
             Products Used In This Case
@@ -363,7 +264,9 @@ export default function ProductCaseDetail({ productSlug, caseItem, applicationSl
             ))}
           </ul>
         </section>
+        ) : null}
 
+        {narrative.length ? (
         <section className="mt-5 md:mt-6">
           <ul className="m-0 p-0 list-none [display:grid] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {narrative.map((item) => (
@@ -382,7 +285,9 @@ export default function ProductCaseDetail({ productSlug, caseItem, applicationSl
             ))}
           </ul>
         </section>
+        ) : null}
 
+        {journey.length ? (
         <section className="mt-6 md:mt-7" aria-labelledby="journey-title">
           <h2 id="journey-title" className="m-0 mb-4 sm:mb-5 text-[20px] sm:text-[22px] md:text-[26px] font-bold text-[#0F2744] break-words">
             Treatment Journey
@@ -416,6 +321,7 @@ export default function ProductCaseDetail({ productSlug, caseItem, applicationSl
             ))}
           </ol>
         </section>
+        ) : null}
       </article>
     </div>
   );

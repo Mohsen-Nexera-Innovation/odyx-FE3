@@ -12,6 +12,8 @@ import { buildProductCases } from '@/content/product-cases';
 
 type Props = { params: Promise<{ applicationSlug: string }> };
 
+export const dynamic = 'force-dynamic';
+
 export function generateStaticParams() {
   return APPLICATION_CASE_SLUGS.map((applicationSlug) => ({ applicationSlug }));
 }

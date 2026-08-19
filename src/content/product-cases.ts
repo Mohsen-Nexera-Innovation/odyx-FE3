@@ -1,7 +1,6 @@
 /**
  * Case By Product — family tabs, listing cards, detail helpers.
- * Photo associations copy the existing listing-level mapping in
- * `src/app/cases/lib/clinical-media.ts` (do not invent keys).
+ * Cards come from the CMS (`GET /case-library`) only.
  */
 import {
   resolveMediaUrl,
@@ -11,10 +10,6 @@ import {
   type ShowcaseJourneyStep,
   type ShowcaseMaterial,
 } from '@/lib/api/case-library';
-import {
-  allRealClinicalCases,
-  type RealClinicalCase,
-} from '@/content/clinical-case-photos';
 
 export const PRODUCT_FAMILY_SLUGS = ['scanner', 'printer', 'curing', 'resin'] as const;
 
@@ -111,28 +106,6 @@ const APPLICATION_LABEL: Record<ShowcaseApplication, string> = {
   OTHER: 'Clinical',
 };
 
-/** Existing static-photo → family mapping (same as clinical-media LISTING_PRODUCTS). */
-const LISTING_PRODUCT_KEYS: Record<string, { keys: ProductFamilySlug[]; more: number }> = {
-  'restorative-cases': { keys: ['scanner', 'printer', 'resin'], more: 1 },
-  'implant-cases': { keys: ['scanner', 'printer'], more: 1 },
-  'ortho-cases': { keys: ['scanner', 'printer', 'resin'], more: 0 },
-  'prosthetic-cases': { keys: ['printer', 'curing', 'resin'], more: 1 },
-};
-
-const LISTING_BADGE: Record<string, string> = {
-  'restorative-cases': 'Restorative',
-  'implant-cases': 'Implant',
-  'ortho-cases': 'Orthodontic',
-  'prosthetic-cases': 'Prosthetics',
-};
-
-const LISTING_APPLICATION: Record<string, ApplicationCaseSlug> = {
-  'restorative-cases': 'restorative',
-  'implant-cases': 'implant',
-  'ortho-cases': 'orthodontic',
-  'prosthetic-cases': 'denture',
-};
-
 const CMS_APPLICATION_SLUG: Record<ShowcaseApplication, ApplicationCaseSlug | null> = {
   RESTORATIVE: 'restorative',
   IMPLANT: 'implant',
@@ -160,15 +133,6 @@ export function productCasesPath(family: ProductCaseFamily = 'all') {
 
 export function productCaseDetailPath(productSlug: ProductFamilySlug, caseSlug: string) {
   return `/solutions/cases/products/${productSlug}/${caseSlug}`;
-}
-
-export function slugifyCaseTitle(title: string) {
-  return title
-    .trim()
-    .toLowerCase()
-    .replace(/['’]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
 }
 
 function knownProductKeys(keys: readonly string[] | undefined): ProductFamilySlug[] {
@@ -271,52 +235,10 @@ export function productCaseFromShowcase(c: ShowcaseCase): ProductCaseCard {
   };
 }
 
-function fromClinicalPhoto(c: RealClinicalCase, listingSlug: string): ProductCaseCard {
-  const cfg = LISTING_PRODUCT_KEYS[listingSlug];
-  const keys = cfg?.keys ?? [];
-  const { products, moreProducts } = iconsForKeys(keys, cfg?.more ?? 0);
-  const before = { img: c.before.img, alt: c.before.alt };
-  const after = { img: c.after.img, alt: c.after.alt };
-  const badge = LISTING_BADGE[listingSlug] ?? 'Clinical';
-  return {
-    id: `photo:${listingSlug}:${c.id}`,
-    slug: slugifyCaseTitle(c.title),
-    badge,
-    applicationSlug: LISTING_APPLICATION[listingSlug] ?? null,
-    title: c.title,
-    summary: null,
-    tags: [c.tag],
-    img: c.after.img,
-    imgAlt: c.after.alt,
-    before,
-    after,
-    gallery: galleryItems({ title: c.title, before, after }),
-    productKeys: keys,
-    products,
-    moreProducts,
-    caseType: badge,
-    procedure: c.tag,
-    caseId: c.id,
-    keyMaterials: [],
-    treatmentJourney: [],
-  };
-}
-
-export function staticProductCases(): ProductCaseCard[] {
-  return allRealClinicalCases().flatMap(({ listingSlug, cases }) =>
-    cases.map((c) => fromClinicalPhoto(c, listingSlug)),
-  );
-}
-
-/** CMS cases when the API returns any; otherwise static photos with existing family mapping. */
+/** Published CMS showcase cases. Empty when the API is down or has no rows. */
 export function buildProductCases(library: CaseLibraryPublic | null): ProductCaseCard[] {
-  const cms = library?.cases?.length
-    ? library.cases
-    : library?.featured?.length
-      ? library.featured
-      : [];
-  if (cms.length) return cms.map(productCaseFromShowcase);
-  return staticProductCases();
+  const rows = library?.cases?.length ? library.cases : library?.featured ?? [];
+  return rows.map(productCaseFromShowcase);
 }
 
 export function findProductCase(cases: ProductCaseCard[], caseSlug: string): ProductCaseCard | undefined {

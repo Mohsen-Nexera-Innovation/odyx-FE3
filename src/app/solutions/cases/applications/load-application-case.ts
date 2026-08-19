@@ -2,14 +2,11 @@ import {
   fetchCaseLibrary,
   fetchShowcaseCaseBySlug,
 } from '@/app/cases/lib/load-case-library';
-import {
-  isApplicationCaseSlug,
-} from '@/content/application-cases';
+import { isApplicationCaseSlug } from '@/content/application-cases';
 import {
   buildProductCases,
   findProductCase,
   productCaseFromShowcase,
-  staticProductCases,
   type ProductCaseCard,
 } from '@/content/product-cases';
 
@@ -24,9 +21,6 @@ export async function resolveApplicationCase(
   const library = await fetchCaseLibrary();
   const fromLibrary = findProductCase(buildProductCases(library), caseSlug);
   if (fromLibrary) return belongs(fromLibrary) ? fromLibrary : null;
-
-  const fromPhotos = findProductCase(staticProductCases(), caseSlug);
-  if (fromPhotos) return belongs(fromPhotos) ? fromPhotos : null;
 
   const cms = await fetchShowcaseCaseBySlug(caseSlug);
   if (!cms) return null;

@@ -7,7 +7,6 @@ import {
   findProductCase,
   isProductFamilySlug,
   productCaseFromShowcase,
-  staticProductCases,
   type ProductCaseCard,
   type ProductFamilySlug,
 } from '@/content/product-cases';
@@ -18,14 +17,12 @@ export async function resolveProductCase(
 ): Promise<ProductCaseCard | null> {
   if (!isProductFamilySlug(productSlug)) return null;
 
-  const belongs = (card: ProductCaseCard) => card.productKeys.includes(productSlug as ProductFamilySlug);
+  const belongs = (card: ProductCaseCard) =>
+    card.productKeys.includes(productSlug as ProductFamilySlug);
 
   const library = await fetchCaseLibrary();
   const fromLibrary = findProductCase(buildProductCases(library), caseSlug);
   if (fromLibrary) return belongs(fromLibrary) ? fromLibrary : null;
-
-  const fromPhotos = findProductCase(staticProductCases(), caseSlug);
-  if (fromPhotos) return belongs(fromPhotos) ? fromPhotos : null;
 
   const cms = await fetchShowcaseCaseBySlug(caseSlug);
   if (!cms) return null;

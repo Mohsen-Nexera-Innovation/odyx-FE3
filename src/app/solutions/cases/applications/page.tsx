@@ -5,6 +5,8 @@ import { fetchCaseLibrary } from '@/app/cases/lib/load-case-library';
 import { APPLICATION_CASES_META } from '@/content/application-cases';
 import { buildProductCases } from '@/content/product-cases';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: APPLICATION_CASES_META.title,
   description: APPLICATION_CASES_META.description,

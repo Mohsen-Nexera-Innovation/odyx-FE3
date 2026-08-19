@@ -1,10 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import {
-  staticProductCases,
-  type ProductCaseCard,
-} from '@/content/product-cases';
+import { type ProductCaseCard } from '@/content/product-cases';
 
 type Props = {
   caseItem: ProductCaseCard;
@@ -78,20 +75,6 @@ function pairsForCase(caseItem: ProductCaseCard): Pair[] {
       id: extras[i].id,
       before: { img: extras[i].img, alt: extras[i].alt },
       after: { img: extras[i + 1].img, alt: extras[i + 1].alt },
-    });
-  }
-
-  const badge = (caseItem.badge || '').trim().toLowerCase();
-  const pool = staticProductCases().filter((c) => c.id !== caseItem.id && c.before?.img && c.after?.img);
-  const preferred = badge
-    ? pool.filter((c) => (c.badge || '').trim().toLowerCase() === badge)
-    : pool;
-  for (const c of [...preferred, ...pool]) {
-    if (pairs.length >= 6) break;
-    push({
-      id: c.id,
-      before: c.before as Pair['before'],
-      after: c.after as Pair['after'],
     });
   }
 

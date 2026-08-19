@@ -4,6 +4,8 @@ import InnerPageMotion from '@/components/InnerPageMotion';
 import { fetchCaseLibrary } from '@/app/cases/lib/load-case-library';
 import { PRODUCT_CASES_META, buildProductCases } from '@/content/product-cases';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: PRODUCT_CASES_META.title,
   description: PRODUCT_CASES_META.description,

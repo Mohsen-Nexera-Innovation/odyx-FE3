@@ -1,21 +1,12 @@
 /**
- * Clinical Cases hub → category listing pages.
- * Pages show real clinical photos (before/after), not application workflows.
+ * Legacy Clinical Cases listing slugs → Case By Application routes.
  */
 import { LEGACY_APPLICATION_LISTING, applicationCasesPath } from '@/content/application-cases';
-import {
-  allRealClinicalCases,
-  heroCaseImages,
-  realCasesForListing,
-  type RealClinicalCase,
-} from '@/content/clinical-case-photos';
 import { CLINICAL_BADGE_ACCENTS, type ClinicalCategoryId } from '@/content/clinical-indication-types';
 
 export type ClinicalCaseListing = {
   slug: string;
-  /** Category for badge accent (cases column uses cases red) */
   category: ClinicalCategoryId;
-  /** Source indication category being listed */
   sourceCategory: Exclude<ClinicalCategoryId, 'cases'>;
   title: string;
   subtitle: string;
@@ -88,44 +79,10 @@ export const CLINICAL_CASE_LISTING_META: Record<string, { title: string; descrip
   },
 };
 
-export type ClinicalCaseSection = {
-  listing: ClinicalCaseListing;
-  cases: RealClinicalCase[];
-  categoryHref: string;
-  heroImages: string[];
-};
-
 export function getClinicalCaseListing(slug: string): ClinicalCaseListing | undefined {
   return CLINICAL_CASE_LISTINGS[slug];
-}
-
-export function resolveRealCases(listing: ClinicalCaseListing): RealClinicalCase[] {
-  return realCasesForListing(listing.slug);
-}
-
-export function listingHeroImages(listing: ClinicalCaseListing): string[] {
-  return heroCaseImages(listing.slug);
-}
-
-/** All category sections that have real photos (shown on `/solutions/cases#all-cases`). */
-export function getAllClinicalCaseSections(): ClinicalCaseSection[] {
-  const bySlug = Object.fromEntries(LISTING_DEFS.map((d) => [d.slug, d]));
-  return allRealClinicalCases()
-    .map(({ listingSlug, cases }) => {
-      const listing = bySlug[listingSlug];
-      if (!listing) return null;
-      return {
-        listing,
-        cases,
-        categoryHref: solutionsCasesPath(listing.slug),
-        heroImages: heroCaseImages(listing.slug),
-      };
-    })
-    .filter((x): x is ClinicalCaseSection => x !== null);
 }
 
 export function caseListingBadgeAccent(listing: ClinicalCaseListing) {
   return CLINICAL_BADGE_ACCENTS[listing.sourceCategory] ?? CLINICAL_BADGE_ACCENTS[listing.category];
 }
-
-export { heroCaseImages };

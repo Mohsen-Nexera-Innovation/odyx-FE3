@@ -6,19 +6,11 @@ import { resolveProductCase } from '@/app/solutions/cases/products/load-product-
 import {
   PRODUCT_FAMILY_META,
   isProductFamilySlug,
-  staticProductCases,
 } from '@/content/product-cases';
 
 type Props = { params: Promise<{ productSlug: string; caseSlug: string }> };
 
-export function generateStaticParams() {
-  return staticProductCases().flatMap((c) =>
-    c.productKeys.map((productSlug) => ({
-      productSlug,
-      caseSlug: c.slug,
-    })),
-  );
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productSlug, caseSlug } = await params;

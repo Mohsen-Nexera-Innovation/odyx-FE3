@@ -10,17 +10,10 @@ import {
   APPLICATION_CASE_META,
   isApplicationCaseSlug,
 } from '@/content/application-cases';
-import { staticProductCases } from '@/content/product-cases';
 
 type Props = { params: Promise<{ applicationSlug: string; caseSlug: string }> };
 
-export function generateStaticParams() {
-  return staticProductCases().flatMap((c) =>
-    c.applicationSlug
-      ? [{ applicationSlug: c.applicationSlug, caseSlug: c.slug }]
-      : [],
-  );
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { applicationSlug, caseSlug } = await params;

@@ -227,7 +227,7 @@ export default function ClinicalCasesBrowseListing<Id extends string>({
           <p className="w-full rounded-2xl border border-dashed border-[#D5DCE6] bg-white px-6 py-12 text-center text-[14px] text-[#6B7280]">
             {q
               ? 'No cases match this search in the selected category.'
-              : 'No clinical cases are tagged with this category yet.'}
+              : 'No published cases in this category yet.'}
           </p>
         ) : (
           <div className="flex flex-col gap-8 md:gap-9">

@@ -12,6 +12,8 @@ import {
 
 type Props = { params: Promise<{ productSlug: string }> };
 
+export const dynamic = 'force-dynamic';
+
 export function generateStaticParams() {
   return PRODUCT_FAMILY_SLUGS.map((productSlug) => ({ productSlug }));
 }

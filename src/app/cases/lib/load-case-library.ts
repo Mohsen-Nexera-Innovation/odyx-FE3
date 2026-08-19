@@ -1,18 +1,16 @@
-import { getApiBaseUrl } from '@/lib/config';
+import { getServerApiBaseUrl } from '@/lib/config';
 import { resolveMediaUrl, type CaseLibraryPublic, type ShowcaseCase } from '@/lib/api/case-library';
-import { clinicalCaseMedia } from '@/lib/clinical-media-url';
 import type { BrowseSectionData, FeaturedCase, FeaturedSectionData } from '../types';
 import {
   applicationCasesPath,
   isApplicationCaseSlug,
 } from '@/content/application-cases';
+import { isProductFamilySlug, productCasesPath } from '@/content/product-cases';
 import { casesData } from '../data/cases.data';
-import {
-  applicationCountsFromClinical,
-  caseCountLabel,
-  productCaseHref,
-  productCountsFromClinical,
-} from './clinical-media';
+
+function caseCountLabel(count: number) {
+  return `${count} Case${count === 1 ? '' : 's'}`;
+}
 
 function toFeaturedItems(library: CaseLibraryPublic): FeaturedCase[] {
   return library.featured.map((c) => ({
@@ -54,55 +52,20 @@ function caseDetailHref(c: { slug: string; href?: string | null }): string {
   return href;
 }
 
-/**
- * Prefer CMS featured cases when the API returns them.
- * Fall back to the static clinical photo library, then mock data.
- */
 export function buildFeaturedFromLibrary(
   library: CaseLibraryPublic | null,
-  clinicalFallback: FeaturedCase[],
 ): FeaturedSectionData {
-  const fromCms = library?.featured?.length ? toFeaturedItems(library) : [];
-  const items = fromCms.length
-    ? fromCms
-    : clinicalFallback.length
-      ? clinicalFallback
-      : casesData.featured.items;
   return {
     ...casesData.featured,
-    items,
+    items: library?.featured?.length ? toFeaturedItems(library) : [],
   };
 }
 
 export function buildApplicationsFromLibrary(
   library: CaseLibraryPublic | null,
-  clinicalThumbs?: Record<string, { img: string; imgAlt: string; count: number }>,
 ): BrowseSectionData {
   const base = casesData.applications;
-  const counts = applicationCountsFromClinical();
-
-  // Fill remaining application cards that have no restorative/prosthetic gallery
-  // with existing clinical indication photography.
-  const fallbackThumbs: Record<string, { img: string; imgAlt: string }> = {
-    implant: {
-      img: '/img/clinical/surgical-guide/hero-cutout.png',
-      imgAlt: 'Surgical guide for implant planning',
-    },
-    orthodontic: {
-      img: '/img/clinical/aligners/hero-cutout.png',
-      imgAlt: 'Orthodontic aligner case photography',
-    },
-    denture: {
-      img: '/img/clinical/dentures/hero-cutout.png',
-      imgAlt: 'Printed denture case photography',
-    },
-    restorative: {
-      img: clinicalCaseMedia('_DSC0255_1.JPG'),
-      imgAlt: 'Restorative smile after veneer delivery',
-    },
-  };
-
-  const items = (library?.applications?.length
+  const fromApi = library?.applications?.length
     ? library.applications.map((a) => ({
         id: a.id,
         title: a.title,
@@ -112,33 +75,22 @@ export function buildApplicationsFromLibrary(
         imgAlt: a.imgAlt,
         icon: a.icon,
       }))
-    : base.items
-  ).map((item) => {
-    const count = counts[item.id] ?? 0;
-    const thumb = clinicalThumbs?.[item.id];
-    const fb = fallbackThumbs[item.id];
-    return {
-      ...item,
-      href: isApplicationCaseSlug(item.id) ? applicationCasesPath(item.id) : item.href,
-      // Always match the category listing page gallery length.
-      countLabel: caseCountLabel(count),
-      img: (thumb?.img || fb?.img || item.img),
-      imgAlt: (thumb?.imgAlt || fb?.imgAlt || item.imgAlt),
-    };
-  });
+    : base.items.map((item) => ({ ...item, countLabel: caseCountLabel(0) }));
 
   return {
     ...base,
-    items,
+    items: fromApi.map((item) => ({
+      ...item,
+      href: isApplicationCaseSlug(item.id) ? applicationCasesPath(item.id) : item.href,
+    })),
   };
 }
 
 export function buildProductsFromLibrary(
   library: CaseLibraryPublic | null,
-  clinicalFeatured: FeaturedCase[],
 ): BrowseSectionData {
-  const counts = productCountsFromClinical(clinicalFeatured);
-  const baseItems = library?.products?.length
+  const base = casesData.products;
+  const fromApi = library?.products?.length
     ? library.products.map((p) => ({
         id: p.id,
         title: p.title,
@@ -147,53 +99,54 @@ export function buildProductsFromLibrary(
         img: resolveMediaUrl(p.img),
         imgAlt: p.imgAlt,
       }))
-    : casesData.products.items;
+    : base.items.map((item) => ({ ...item, countLabel: caseCountLabel(0) }));
 
   return {
-    ...casesData.products,
+    ...base,
     productStyle: true,
-    items: baseItems.map((item) => ({
+    items: fromApi.map((item) => ({
       ...item,
-      href: productCaseHref(item.id),
-      countLabel: caseCountLabel(counts[item.id] ?? 0),
-      ...(item.id === 'resin'
-        ? {
-            img: '/img/hv2-hub/store-resins-cutout.png',
-            imgAlt: 'ODYX dental resin bottles',
-          }
-        : {}),
+      href: isProductFamilySlug(item.id) ? productCasesPath(item.id) : productCasesPath('all'),
     })),
   };
 }
 
+const CASE_LIBRARY_FETCH: RequestInit = {
+  cache: 'no-store',
+  headers: { Accept: 'application/json' },
+};
+
 /** Server-side fetch of the public case library (falls back to null on error). */
 export async function fetchCaseLibrary(): Promise<CaseLibraryPublic | null> {
-  const base = getApiBaseUrl();
+  const base = getServerApiBaseUrl();
   if (!base) return null;
   try {
-    const res = await fetch(`${base}/case-library`, {
-      next: { revalidate: 30 },
-      headers: { Accept: 'application/json' },
-    });
-    if (!res.ok) return null;
+    const res = await fetch(`${base}/case-library`, CASE_LIBRARY_FETCH);
+    if (!res.ok) {
+      console.error(`[case-library] GET ${base}/case-library → ${res.status}`);
+      return null;
+    }
     return (await res.json()) as CaseLibraryPublic;
-  } catch {
+  } catch (err) {
+    console.error(`[case-library] GET ${base}/case-library failed`, err);
     return null;
   }
 }
 
 /** Server-side fetch of one published showcase case by slug. */
 export async function fetchShowcaseCaseBySlug(slug: string): Promise<ShowcaseCase | null> {
-  const base = getApiBaseUrl();
+  const base = getServerApiBaseUrl();
   if (!base) return null;
+  const url = `${base}/case-library/${encodeURIComponent(slug)}`;
   try {
-    const res = await fetch(`${base}/case-library/${encodeURIComponent(slug)}`, {
-      next: { revalidate: 30 },
-      headers: { Accept: 'application/json' },
-    });
-    if (!res.ok) return null;
+    const res = await fetch(url, CASE_LIBRARY_FETCH);
+    if (!res.ok) {
+      console.error(`[case-library] GET ${url} → ${res.status}`);
+      return null;
+    }
     return (await res.json()) as ShowcaseCase;
-  } catch {
+  } catch (err) {
+    console.error(`[case-library] GET ${url} failed`, err);
     return null;
   }
 }

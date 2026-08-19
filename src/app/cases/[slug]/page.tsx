@@ -1,17 +1,20 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getApiBaseUrl } from '@/lib/config';
+import { getServerApiBaseUrl } from '@/lib/config';
 import { resolveMediaUrl, type ShowcaseCase } from '@/lib/api/case-library';
 
 type Props = { params: Promise<{ slug: string }> };
 
+export const dynamic = 'force-dynamic';
+
 async function fetchCase(slug: string): Promise<ShowcaseCase | null> {
-  const base = getApiBaseUrl();
+  const base = getServerApiBaseUrl();
   if (!base) return null;
+  const url = `${base}/case-library/${encodeURIComponent(slug)}`;
   try {
-    const res = await fetch(`${base}/case-library/${encodeURIComponent(slug)}`, {
-      next: { revalidate: 30 },
+    const res = await fetch(url, {
+      cache: 'no-store',
       headers: { Accept: 'application/json' },
     });
     if (!res.ok) return null;
