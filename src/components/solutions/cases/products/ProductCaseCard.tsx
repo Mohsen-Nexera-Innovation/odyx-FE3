@@ -1,9 +1,5 @@
 import Link from 'next/link';
-import {
-  productCaseCardHref,
-  type ProductCaseCard,
-  type ProductCaseFamily,
-} from '@/content/product-cases';
+import type { ProductCaseCard } from '@/content/product-cases';
 
 function CaseMedia({ item }: { item: ProductCaseCard }) {
   const before = item.before;
@@ -71,12 +67,11 @@ function CaseMedia({ item }: { item: ProductCaseCard }) {
 
 export default function ProductCaseCardView({
   item,
-  listingFamily,
+  href,
 }: {
   item: ProductCaseCard;
-  listingFamily: ProductCaseFamily;
+  href: string | null;
 }) {
-  const href = productCaseCardHref(item, listingFamily);
   const productTags = item.products.map((p) => p.alt).filter(Boolean);
 
   const body = (

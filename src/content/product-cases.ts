@@ -40,10 +40,13 @@ export type ProductCaseGlanceRow = {
   value: string;
 };
 
+export type ApplicationCaseSlug = 'restorative' | 'implant' | 'orthodontic' | 'denture';
+
 export type ProductCaseCard = {
   id: string;
   slug: string;
   badge: string;
+  applicationSlug: ApplicationCaseSlug | null;
   title: string;
   summary?: string | null;
   tags: string[];
@@ -121,6 +124,22 @@ const LISTING_BADGE: Record<string, string> = {
   'implant-cases': 'Implant',
   'ortho-cases': 'Orthodontic',
   'prosthetic-cases': 'Prosthetics',
+};
+
+const LISTING_APPLICATION: Record<string, ApplicationCaseSlug> = {
+  'restorative-cases': 'restorative',
+  'implant-cases': 'implant',
+  'ortho-cases': 'orthodontic',
+  'prosthetic-cases': 'denture',
+};
+
+const CMS_APPLICATION_SLUG: Record<ShowcaseApplication, ApplicationCaseSlug | null> = {
+  RESTORATIVE: 'restorative',
+  IMPLANT: 'implant',
+  ORTHODONTIC: 'orthodontic',
+  DENTURE: 'denture',
+  PROSTHETICS: 'denture',
+  OTHER: null,
 };
 
 export const PRODUCT_FAMILY_ICONS: Record<ProductFamilySlug, ProductCaseIcon> = {
@@ -220,6 +239,7 @@ export function productCaseFromShowcase(c: ShowcaseCase): ProductCaseCard {
     id: c.id,
     slug: c.slug,
     badge: c.badge,
+    applicationSlug: CMS_APPLICATION_SLUG[c.application],
     title: c.title,
     summary: nonEmpty(c.summary),
     tags: c.tags,
@@ -262,6 +282,7 @@ function fromClinicalPhoto(c: RealClinicalCase, listingSlug: string): ProductCas
     id: `photo:${listingSlug}:${c.id}`,
     slug: slugifyCaseTitle(c.title),
     badge,
+    applicationSlug: LISTING_APPLICATION[listingSlug] ?? null,
     title: c.title,
     summary: null,
     tags: [c.tag],

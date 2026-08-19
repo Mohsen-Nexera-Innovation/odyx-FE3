@@ -384,8 +384,11 @@
 /* Orange sign #3 — Request Demo buttons */
 .product-page--print-line .btn-sign{
   background:var(--line-sign)!important;
-  color:var(--navy-deep)!important;
+  color:#fff!important;
   font-weight:700;
+}
+.product-page--print-line[data-accent="orange"] .btn-sign{
+  color:var(--navy-deep)!important;
 }
 .product-page--print-line .btn-sign:hover{
   box-shadow:0 10px 28px rgba(255,132,0,.35)!important;

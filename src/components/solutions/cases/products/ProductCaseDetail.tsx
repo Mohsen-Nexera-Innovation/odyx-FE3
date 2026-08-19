@@ -7,10 +7,16 @@ import { P1_26_HERO } from '@/content/p1-26';
 import { HERO as RESIN_HERO } from '@/content/resins';
 import { HERO as SCANNER_HERO } from '@/content/scanner-s1';
 import {
+  APPLICATION_CASE_META,
+  applicationCasesPath,
+  isApplicationCaseSlug,
+} from '@/content/application-cases';
+import {
   PRODUCT_FAMILY_ICONS,
   PRODUCT_FAMILY_META,
   isProductFamilySlug,
   productCaseUsedProducts,
+  type ApplicationCaseSlug,
   type ProductCaseCard,
   type ProductFamilySlug,
 } from '@/content/product-cases';
@@ -18,6 +24,7 @@ import {
 type Props = {
   productSlug: ProductFamilySlug;
   caseItem: ProductCaseCard;
+  applicationSlug?: ApplicationCaseSlug;
 };
 
 const PRODUCT_PAGES: Record<
@@ -48,13 +55,6 @@ const PRODUCT_PAGES: Record<
     href: '/products/resins',
     img: PRODUCT_FAMILY_ICONS.resin.img,
   },
-};
-
-const APPLICATION_HREF: Record<string, string> = {
-  Restorative: '/solutions/cases/restorative-cases',
-  Implant: '/solutions/cases/implant-cases',
-  Orthodontic: '/solutions/cases/ortho-cases',
-  Prosthetics: '/solutions/cases/prosthetic-cases',
 };
 
 const DEFAULT_SUMMARY =
@@ -136,7 +136,7 @@ function IconCheck() {
   );
 }
 
-export default function ProductCaseDetail({ productSlug, caseItem }: Props) {
+export default function ProductCaseDetail({ productSlug, caseItem, applicationSlug }: Props) {
   const family = PRODUCT_FAMILY_META[productSlug];
   const sparseHero = !caseItem.treatmentArea && !caseItem.tooth && !caseItem.patient;
   const glance = [
@@ -239,7 +239,13 @@ export default function ProductCaseDetail({ productSlug, caseItem }: Props) {
     }
   }
 
-  const appHref = APPLICATION_HREF[caseItem.badge] ?? `/solutions/cases/products/${productSlug}`;
+  const crumbSlug = applicationSlug ?? caseItem.applicationSlug;
+  const appHref = isApplicationCaseSlug(crumbSlug ?? '')
+    ? applicationCasesPath(crumbSlug as ApplicationCaseSlug)
+    : `/solutions/cases/products/${productSlug}`;
+  const crumbLabel = isApplicationCaseSlug(crumbSlug ?? '')
+    ? APPLICATION_CASE_META[crumbSlug as ApplicationCaseSlug].label
+    : caseItem.badge || family.label;
 
   return (
     <div className="bg-[#F3F6FA] w-full min-h-dvh overflow-x-clip pb-12" data-hero-light>
@@ -256,7 +262,7 @@ export default function ProductCaseDetail({ productSlug, caseItem }: Props) {
           </Link>
           <span aria-hidden>›</span>
           <Link href={appHref} className="cursor-pointer hover:!text-[#0050D8] no-underline !text-[#6B7280]">
-            {caseItem.badge || family.label}
+            {crumbLabel}
           </Link>
           <span aria-hidden>›</span>
           <span className="text-[#374151] min-w-0 break-words">{caseItem.title}</span>

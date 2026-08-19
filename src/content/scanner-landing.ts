@@ -71,7 +71,7 @@ export const S1_COMPATIBLE = [
     name: 'Odyx Resin',
     category: '',
     href: '/products/resins',
-    img: '/img/scanner/compat/resins.png',
+    img: '/img/hv2-hub/store-resins-cutout.png',
   },
   {
     name: 'Odyx Cure',

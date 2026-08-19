@@ -2,6 +2,10 @@ import { getApiBaseUrl } from '@/lib/config';
 import { resolveMediaUrl, type CaseLibraryPublic, type ShowcaseCase } from '@/lib/api/case-library';
 import { clinicalCaseMedia } from '@/lib/clinical-media-url';
 import type { BrowseSectionData, FeaturedCase, FeaturedSectionData } from '../types';
+import {
+  applicationCasesPath,
+  isApplicationCaseSlug,
+} from '@/content/application-cases';
 import { casesData } from '../data/cases.data';
 import {
   applicationCountsFromClinical,
@@ -115,6 +119,7 @@ export function buildApplicationsFromLibrary(
     const fb = fallbackThumbs[item.id];
     return {
       ...item,
+      href: isApplicationCaseSlug(item.id) ? applicationCasesPath(item.id) : item.href,
       // Always match the category listing page gallery length.
       countLabel: caseCountLabel(count),
       img: (thumb?.img || fb?.img || item.img),

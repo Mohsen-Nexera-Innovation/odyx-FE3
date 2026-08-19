@@ -186,7 +186,7 @@ export const NEXT_STEP = {
       name: 'ODYX Resins',
       line: 'five lines, matched to the case',
       href: '/products/resins',
-      img: '/img/scanner/eco-resins.jpg',
+      img: '/img/hv2-hub/store-resins-cutout.png',
     },
     {
       name: 'ODYX Cure',

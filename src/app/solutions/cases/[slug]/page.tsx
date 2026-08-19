@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import ClinicalCasesListingPage from '@/components/solutions/cases/ClinicalCasesListingPage';
-import InnerPageMotion from '@/components/InnerPageMotion';
+import { notFound, permanentRedirect } from 'next/navigation';
+import { LEGACY_APPLICATION_LISTING, applicationCasesPath } from '@/content/application-cases';
 import {
   CLINICAL_CASE_LISTING_META,
   CLINICAL_CASE_LISTING_SLUGS,
-  getClinicalCaseListing,
 } from '@/content/clinical-case-listings';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -21,15 +19,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: meta.title, description: meta.description };
 }
 
+/** Legacy `/solutions/cases/{listing}` URLs → Case By Application listings. */
 export default async function ClinicalCasesRoute({ params }: Props) {
   const { slug } = await params;
-  const listing = getClinicalCaseListing(slug);
-  if (!listing) notFound();
-
-  return (
-    <>
-      <ClinicalCasesListingPage data={listing} />
-      <InnerPageMotion />
-    </>
-  );
+  const applicationSlug = LEGACY_APPLICATION_LISTING[slug];
+  if (!applicationSlug) notFound();
+  permanentRedirect(applicationCasesPath(applicationSlug));
 }

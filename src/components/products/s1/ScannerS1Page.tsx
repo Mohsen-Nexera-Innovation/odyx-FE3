@@ -19,11 +19,11 @@ const DISPLAY =
 const GUTTER = 'w-full mx-auto px-[clamp(20px,4vw,56px)]';
 const BODY_RAIL = `${GUTTER} max-w-[80%] max-[800px]:max-w-none`;
 const BTN =
-  `inline-flex items-center justify-center gap-2 px-[22px] py-[13px] rounded-[10px] text-[.92rem] font-bold no-underline transition-[background,color,border-color,transform,box-shadow] duration-[220ms] ease-[ease] max-[640px]:w-full max-[640px]:rounded-xl`;
+  `inline-flex box-border h-12 min-h-12 items-center justify-center gap-2 px-[22px] py-0 rounded-[10px] text-[.92rem] font-bold no-underline transition-[background,color,border-color,transform,box-shadow] duration-[220ms] ease-[ease] max-[640px]:w-full max-[640px]:rounded-xl`;
 const BTN_PRIMARY =
-  `${BTN} bg-[#0050D8] text-white border-0 shadow-none hover:-translate-y-px hover:text-white hover:shadow-[0_10px_28px_rgba(0,80,216,.35)] motion-reduce:hover:translate-y-0`;
+  `${BTN} bg-[#0050D8] !text-white border border-solid border-transparent shadow-none hover:-translate-y-px hover:!text-white hover:shadow-[0_10px_28px_rgba(0,80,216,.35)] motion-reduce:hover:translate-y-0`;
 const BTN_GHOST =
-  `${BTN} group bg-[rgba(255,255,255,.72)] text-[#0050D8] border-[1.5px] border-solid border-[#0050D8] hover:bg-white hover:text-[#0041AF] hover:border-[#0041AF]`;
+  `${BTN} group bg-[rgba(255,255,255,.72)] !text-[#0050D8] border-[1.5px] border-solid border-[#0050D8] hover:bg-white hover:!text-[#0041AF] hover:border-[#0041AF]`;
 const CARD_TITLE = `${DISPLAY} m-0 mb-4 text-[1.2rem] font-bold tracking-[-0.02em] text-[#0050D8]`;
 const CHECK_ROW =
   'flex items-center gap-2.5 text-[.92rem] font-medium leading-[1.35] text-[#1a2438] transition-[transform,color] duration-[220ms] ease-[ease] hover:translate-x-[3px] hover:text-[#0d1b4d] motion-reduce:hover:translate-x-0';

@@ -68,8 +68,8 @@ export type ResinDetailContent = {
 
 const BTN =
   'inline-flex box-border h-[46px] min-h-[46px] items-center justify-center gap-2 whitespace-nowrap rounded-[9px] px-[18px] py-0 text-[14.5px] font-bold leading-none tracking-normal no-underline transition-[background,box-shadow,transform,border-color] duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0050d8] max-[639px]:max-w-full';
-const BTN_SECONDARY = `${BTN} border border-solid border-[#6c6c6c] bg-white text-[#1a1a1a] hover:border-[#404040]`;
-const BTN_CASES = `${BTN_SECONDARY} min-w-[220px] px-7 text-[#0050D8] hover:border-[#0050D8] hover:bg-[rgba(0,80,216,0.04)] max-[1023px]:w-full max-[1023px]:min-w-0 max-[1023px]:max-w-[260px] max-[1023px]:px-[18px]`;
+const BTN_SECONDARY = `${BTN} border border-solid border-[#6c6c6c] bg-white !text-[#1a1a1a] hover:border-[#404040]`;
+const BTN_CASES = `${BTN_SECONDARY} min-w-[220px] px-7 !text-[#0050D8] hover:border-[#0050D8] hover:bg-[rgba(0,80,216,0.04)] max-[1023px]:w-full max-[1023px]:min-w-0 max-[1023px]:max-w-[260px] max-[1023px]:px-[18px]`;
 
 export default function ResinDetailPage({ content }: { content: ResinDetailContent }) {
   const { hero } = content;
@@ -163,14 +163,14 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                   className="block overflow-hidden rounded-xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition hover:border-blue-300 hover:shadow-[0_4px_14px_rgba(0,80,216,0.1)] focus-visible:outline-2 focus-visible:outline-offset-2"
                   style={{ outlineColor: BLUE }}
                 >
-                  <div className="flex h-[100px] items-center justify-center overflow-hidden p-0">
+                  <div className="flex h-[148px] items-center justify-center overflow-hidden bg-white p-1">
                     <Image
                       src={application.img}
                       alt={application.imgAlt}
-                      width={700}
-                      height={340}
+                      width={1517}
+                      height={1037}
                       quality={95}
-                      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 33vw, 180px"
+                      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 33vw, 280px"
                       className="h-full w-full max-w-none object-contain object-center"
                     />
                   </div>

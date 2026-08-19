@@ -21,7 +21,7 @@ export const casesData: CasesPageData = {
     actions: [
       {
         label: 'Browse by Application',
-        href: '#by-application',
+        href: '/solutions/cases/applications',
         variant: 'primary',
         icon: 'layout-grid',
       },
@@ -37,13 +37,13 @@ export const casesData: CasesPageData = {
     id: 'by-application',
     kicker: 'CASE BY APPLICATION',
     title: 'Browse cases by clinical application.',
-    viewAll: { label: 'View All Applications', href: '/solutions/clinical-applications' },
+    viewAll: { label: 'View all', href: '/solutions/cases/applications' },
     items: [
       {
         id: 'restorative',
         title: 'Restorative',
         countLabel: '128 Cases',
-        href: '/solutions/cases/restorative-cases',
+        href: '/solutions/cases/applications/restorative',
         img: clinicalCaseMedia('_DSC0255_1.JPG'),
         imgAlt: 'Restorative smile after veneer delivery',
         icon: 'restorative',
@@ -52,7 +52,7 @@ export const casesData: CasesPageData = {
         id: 'implant',
         title: 'Implant',
         countLabel: '96 Cases',
-        href: '/solutions/cases/implant-cases',
+        href: '/solutions/cases/applications/implant',
         img: '/img/clinical/surgical-guide/hero-cutout.png',
         imgAlt: 'Surgical guide for implant planning',
         icon: 'implant',
@@ -61,7 +61,7 @@ export const casesData: CasesPageData = {
         id: 'orthodontic',
         title: 'Orthodontic',
         countLabel: '64 Cases',
-        href: '/solutions/cases/ortho-cases',
+        href: '/solutions/cases/applications/orthodontic',
         img: '/img/clinical/aligners/hero-cutout.png',
         imgAlt: 'Orthodontic aligner case photography',
         icon: 'orthodontic',
@@ -70,7 +70,7 @@ export const casesData: CasesPageData = {
         id: 'denture',
         title: 'Denture',
         countLabel: '52 Cases',
-        href: '/solutions/cases/prosthetic-cases',
+        href: '/solutions/cases/applications/denture',
         img: clinicalCaseMedia('_DSC0197_4.JPG'),
         imgAlt: 'Fabricated prosthetic units ready for try-in',
         icon: 'denture',
@@ -81,7 +81,7 @@ export const casesData: CasesPageData = {
     id: 'by-product',
     kicker: 'CASE BY PRODUCT',
     title: 'Browse cases by the ODYX products.',
-    viewAll: { label: 'View All Products', href: '/solutions/cases/products' },
+    viewAll: { label: 'View all', href: '/solutions/cases/products' },
     productStyle: true,
     items: [
       {

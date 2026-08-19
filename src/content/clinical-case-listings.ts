@@ -2,6 +2,7 @@
  * Clinical Cases hub → category listing pages.
  * Pages show real clinical photos (before/after), not application workflows.
  */
+import { LEGACY_APPLICATION_LISTING, applicationCasesPath } from '@/content/application-cases';
 import {
   allRealClinicalCases,
   heroCaseImages,
@@ -63,6 +64,8 @@ export const CLINICAL_CASE_LISTINGS: Record<string, ClinicalCaseListing> = Objec
 export const CLINICAL_CASE_LISTING_SLUGS = LISTING_DEFS.map((d) => d.slug);
 
 export function solutionsCasesPath(slug: string) {
+  const applicationSlug = LEGACY_APPLICATION_LISTING[slug];
+  if (applicationSlug) return applicationCasesPath(applicationSlug);
   return `/solutions/cases/${slug}`;
 }
 

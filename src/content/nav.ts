@@ -132,6 +132,7 @@ export const HEADER_MENUS: NavGroup[] = [
         label: "Resins",
         href: "/products/resins",
         desc: "Clinical resin lines",
+        img: "/img/hv2-hub/store-resins-cutout.png",
       },
     ],
     columns: [
@@ -189,7 +190,7 @@ export const HEADER_MENUS: NavGroup[] = [
                 label: "Resin lines",
                 href: "/products/resins",
                 desc: "Five clinical lines, workflow-validated",
-            img: "/img/resins/all-resins-cutout.png",
+            img: "/img/hv2-hub/store-resins-cutout.png",
           },
             ],
           },
@@ -223,7 +224,7 @@ export const HEADER_MENUS: NavGroup[] = [
       },
       {
         label: "By Application",
-        href: "/solutions/cases#by-application",
+        href: "/solutions/cases/applications",
         desc: "Restorative, implant, ortho, denture",
       },
       {
@@ -255,7 +256,7 @@ export const HEADER_MENUS: NavGroup[] = [
               },
               {
                 label: "By Application",
-                href: "/solutions/cases#by-application",
+                href: "/solutions/cases/applications",
                 desc: "Restorative, implant, ortho, denture",
               },
               {

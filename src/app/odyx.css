@@ -22,11 +22,10 @@
   --fab-clearance:204px;
   --hdr-h:110px;
 }
-@layer base { *{margin:0;padding:0;box-sizing:border-box} }
+@layer base { *{margin:0;padding:0;box-sizing:border-box} a{color:inherit;text-decoration:none} }
 html{scroll-behavior:smooth}
 body{background:var(--navy-deep);color:var(--white);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 ::selection{background:var(--orange);color:var(--navy-deep)}
-a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
 h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:700;line-height:1.08;letter-spacing:-.02em}
@@ -440,11 +439,13 @@ header.on-light .mega-featured__cta:hover{color:var(--nav-blue-deeper)}
 .search-kbd-hint{font-size:.62rem;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.16);border-radius:5px;padding:3px 5px 1px;line-height:normal;font-family:var(--font-body)}
 .search-btn:hover .search-kbd-hint{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.8)}
 .lang{font-size:.72rem;font-weight:600;padding:0 10px;width:auto;gap:4px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:fit-content;font-family:var(--font-body);font-weight:600;font-size:.88rem;line-height:1;padding:10px 18px;border-radius:9px;border:none;cursor:pointer;transition:.3s;background:var(--orange);color:#fff;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;box-sizing:border-box;width:fit-content;min-height:42px;font-family:var(--font-body);font-weight:600;font-size:.88rem;line-height:1;padding:10px 18px;border-radius:9px;border:1px solid transparent;cursor:pointer;transition:.3s;background:var(--orange);color:#fff;white-space:nowrap}
 .btn svg{flex:none;transition:transform .3s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(var(--orange-rgb),.35)}
 .btn:hover svg{transform:translateX(3px)}
+a.btn{color:#fff}
 .btn-ghost{background:transparent;border:1px solid var(--line-2);color:#fff}
+a.btn-ghost{color:#fff}
 .btn-ghost:hover{border-color:#fff;box-shadow:none}
 header .nav-demo{background:var(--nav-blue);color:#fff}
 header .nav-demo:hover{background:var(--nav-blue-deep);box-shadow:0 10px 28px rgba(0,80,216,.35)}

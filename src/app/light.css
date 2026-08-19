@@ -118,7 +118,8 @@ main:has(.support-page){
 /* ---------- Targeted patches for hardcoded dark-theme colors ---------- */
 .sec .btn-ghost{color:var(--ink);border-color:var(--paper-line-2)}
 .sec .btn-ghost:hover{border-color:var(--ink)}
-.sec .btn{color:#fff}
+.sec .btn,.sec a.btn{color:#fff}
+.sec a.btn-ghost{color:var(--ink)}
 .sec .btn-dark{background:#211C1D;color:#fff}
 .sec .pill-list a{color:var(--ink-muted)}
 .sec .wfs-caption p{color:var(--ink-muted)}
