@@ -47,7 +47,7 @@ jobs:
             chmod +x deploy/vps-deploy.sh
 
             git fetch --prune origin production
-            git checkout -B production origin/production
+            git checkout -f -B production origin/production
             git reset --hard origin/production
 
             ODYX_ENV=production ./deploy/vps-deploy.sh web
