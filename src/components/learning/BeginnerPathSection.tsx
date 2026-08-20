@@ -2,18 +2,25 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowIcon, BTN_OUTLINE_SM, BTN_LINK } from './LearningShared';
 import { ClockIcon } from './LearningIcons';
-import type { BeginnerPathData } from '../types';
+import {
+  LEARNING_CARD,
+  LEARNING_CARD_PAD,
+  LEARNING_GUTTER,
+  LEARNING_H2,
+  LEARNING_KICKER,
+} from './learningChrome';
+import type { BeginnerPathData } from '@/content/learning';
 
 export function BeginnerPathSection({ data }: { data: BeginnerPathData }) {
   return (
-    <section id={data.id} className="w-full px-[clamp(20px,4vw,56px)]">
-      <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
+    <section id={data.id} className={LEARNING_GUTTER}>
+      <div className={`w-full ${LEARNING_CARD} ${LEARNING_CARD_PAD}`}>
         <div className="mb-8">
-          <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-3">
+          <p className={`${LEARNING_KICKER} mb-3`}>
             {data.kicker}
           </p>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <h2 className="text-3xl md:text-4xl lg:text-[36px] font-extrabold text-[#0A1020] leading-[1.2] tracking-tight m-0">
+            <h2 className={`${LEARNING_H2} m-0`}>
               {data.title}
             </h2>
             <Link

@@ -2,11 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
 import { ArrowIcon, BTN_ON_BLUE } from './LearningShared';
-import type { LearningCtaBannerData } from '../types';
+import { LEARNING_GUTTER } from './learningChrome';
+import type { LearningCtaBannerData } from '@/content/learning';
 
 export function LearningCtaSection({ data }: { data: LearningCtaBannerData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)]">
+    <section className={LEARNING_GUTTER}>
       <div className="w-full rounded-[16px] overflow-hidden bg-gradient-to-r from-[#002D9C] via-[#0050D8] to-[#002D9C] shadow-[0_8px_40px_rgba(0,80,216,0.28)] py-5 lg:py-6 px-5 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-8">
           <div className="w-[88px] h-[88px] lg:w-[104px] lg:h-[104px] shrink-0 rounded-full bg-white/10 border border-white/15 flex items-center justify-center shadow-[0_0_32px_rgba(255,255,255,0.18)]">

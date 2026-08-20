@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { Calendar } from 'lucide-react';
 import { ArrowIcon, ProgressRing, BTN_OUTLINE, BTN_PRIMARY, BTN_LINK } from './LearningShared';
 import { PathIcon, PlayIcon, RoleIcon, ClockIcon } from './LearningIcons';
-import type { FeaturedCourseData, LearningHeroData, LearningRoleId } from '../types';
+import { LEARNING_CARD, LEARNING_GUTTER, LEARNING_KICKER } from './learningChrome';
+import type { FeaturedCourseData, LearningHeroData, LearningRoleId } from '@/content/learning';
 
 type Props = {
   data: LearningHeroData;
@@ -16,11 +17,11 @@ export function LearningHero({ data, featured }: Props) {
   const [role, setRole] = useState<LearningRoleId>('dentist');
 
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)] pt-[var(--hdr-h)] lg:pt-[calc(var(--hdr-h)+17px)]" data-hero-light>
-      <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] border border-gray-100/50">
+    <section className={`${LEARNING_GUTTER} pt-[var(--hdr-h)] lg:pt-[calc(var(--hdr-h)+17px)]`} data-hero-light>
+      <div className={`w-full ${LEARNING_CARD}`}>
         <div className="flex flex-col xl:flex-row gap-8 lg:gap-10 py-7 lg:py-9 px-5 lg:px-8">
           <div className="w-full xl:w-[38%] flex flex-col justify-center">
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-4">
+            <p className={`${LEARNING_KICKER} mb-4`}>
               {data.kicker}
             </p>
 

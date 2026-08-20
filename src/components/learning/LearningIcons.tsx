@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { ImpactStat, LearningPathId, LearningRoleId } from '../types';
+import type { ImpactStat, LearningPathId, LearningRoleId } from '@/content/learning';
 
 type IconProps = { className?: string };
 type IconFn = (p: IconProps) => ReactNode;

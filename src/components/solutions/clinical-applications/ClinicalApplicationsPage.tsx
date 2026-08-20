@@ -6,10 +6,26 @@ import {
   CLINICAL_HUB_FEATURES,
 } from '@/content/clinical-applications';
 import ClinicalCanvas from '@/components/solutions/ClinicalCanvas';
-
-const SORA =
-  "[font-family:var(--font-sora),'Sora',ui-sans-serif,system-ui,sans-serif]";
-const WRAP = 'w-full max-w-none mx-auto px-[clamp(20px,4vw,56px)]';
+import {
+  SOLUTIONS_BANNER,
+  SOLUTIONS_BANNER_CTA,
+  SOLUTIONS_BANNER_TITLE,
+  SOLUTIONS_CARD,
+  SOLUTIONS_CAT_TITLE,
+  SOLUTIONS_EXPLORE,
+  SOLUTIONS_FEATURE_BODY,
+  SOLUTIONS_FEATURE_ITEM,
+  SOLUTIONS_FEATURE_LIST,
+  SOLUTIONS_FEATURE_TITLE,
+  SOLUTIONS_HERO_SECTION,
+  SOLUTIONS_HUB_GRID,
+  SOLUTIONS_ITEM_BODY,
+  SOLUTIONS_ITEM_LINK,
+  SOLUTIONS_ITEM_THUMB,
+  SOLUTIONS_ITEM_TITLE,
+  SOLUTIONS_PAGE,
+  SOLUTIONS_WRAP,
+} from './solutionsChrome';
 
 /** Category icons — extracted from design strip (circle + white glyph) */
 const CAT_ICON_SRC: Record<string, string> = {
@@ -92,17 +108,17 @@ const FEAT_ICONS: Record<string, ReactNode> = {
 /** Clinical Applications hub — fidelity: clinical-application-all-types.jpeg */
 export default function ClinicalApplicationsPage() {
   return (
-    <div className={`${SORA} min-h-dvh overflow-x-clip bg-[#fafafc] text-[#5b6475]`}>
+    <div className={SOLUTIONS_PAGE}>
       <ClinicalCanvas color="#fafafc" />
-      <section className="pt-[clamp(96px,11vh,118px)] pb-[clamp(40px,5vw,64px)]" data-hero-light>
-        <div className={WRAP}>
-          <div className="grid grid-cols-5 items-stretch gap-4 max-[1100px]:grid-cols-3 max-[800px]:grid-cols-2 max-[560px]:grid-cols-1">
+      <section className={SOLUTIONS_HERO_SECTION} data-hero-light>
+        <div className={SOLUTIONS_WRAP}>
+          <div className={SOLUTIONS_HUB_GRID}>
             {CLINICAL_CATEGORIES.map((cat) => {
               const isCases = cat.id === 'cases';
               return (
                 <article
                   key={cat.id}
-                  className="flex min-h-full min-w-0 flex-col overflow-hidden rounded-[18px] border border-solid border-[#eceef3] bg-white shadow-[0_10px_28px_rgba(24,36,64,.05)]"
+                  className={SOLUTIONS_CARD}
                 >
                   <div className="relative z-auto flex w-auto items-center gap-2.5 bg-transparent px-4 pt-[18px] pb-3.5">
                     <span
@@ -113,7 +129,7 @@ export default function ClinicalApplicationsPage() {
                       <img src={CAT_ICON_SRC[cat.id]} alt="" className="block size-full object-contain" />
                     </span>
                     <h2
-                      className={`${SORA} m-0 text-[1.05rem] font-bold leading-[1.2] tracking-[-0.015em]`}
+                      className={SOLUTIONS_CAT_TITLE}
                       style={{ color: cat.accent }}
                     >
                       {cat.title}
@@ -127,9 +143,9 @@ export default function ClinicalApplicationsPage() {
                       <li key={item.id}>
                         <Link
                           href={item.href}
-                          className="grid grid-cols-[44px_minmax(0,1fr)_14px] items-center gap-2.5 rounded-[10px] px-1.5 py-2 text-inherit no-underline transition-colors duration-[180ms] ease-in-out hover:bg-[rgba(24,36,64,.035)] max-[1280px]:grid-cols-[40px_minmax(0,1fr)_14px]"
+                          className={SOLUTIONS_ITEM_LINK}
                         >
-                          <span className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-[9px] border border-solid border-[rgba(24,36,64,.04)] bg-[#f3f4f8] max-[1280px]:size-10">
+                          <span className={SOLUTIONS_ITEM_THUMB}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={item.thumb}
@@ -144,10 +160,10 @@ export default function ClinicalApplicationsPage() {
                             />
                           </span>
                           <span className="min-w-0">
-                            <strong className="block text-[0.78rem] font-bold leading-[1.25] tracking-[-0.01em] text-[#1a1f2e] max-[1280px]:text-[0.74rem]">
+                            <strong className={SOLUTIONS_ITEM_TITLE}>
                               {item.title}
                             </strong>
-                            <span className="mt-0.5 block text-[0.68rem] font-normal leading-[1.3] text-[#7a8292] max-[1280px]:text-[0.64rem]">
+                            <span className={SOLUTIONS_ITEM_BODY}>
                               {item.body}
                             </span>
                           </span>
@@ -164,7 +180,7 @@ export default function ClinicalApplicationsPage() {
                   {cat.exploreAll ? (
                     <Link
                       href={cat.exploreAll.href}
-                      className={`inline-flex self-start p-0 text-[0.8rem] font-bold tracking-[-0.01em] no-underline hover:opacity-85 ${
+                      className={`${SOLUTIONS_EXPLORE} ${
                         isCases ? 'mt-auto mr-4 mb-[18px] ml-4' : 'mx-4 mt-2 mb-1'
                       }`}
                       style={{ color: cat.accent }}
@@ -190,7 +206,7 @@ export default function ClinicalApplicationsPage() {
             })}
           </div>
 
-          <aside className="mt-[22px] grid grid-cols-[minmax(220px,.95fr)_minmax(280px,1.35fr)_auto] items-center gap-[22px] rounded-[22px] border border-solid border-[#eceef2] bg-[#f5f5f7] px-6 py-[22px] max-[1100px]:grid-cols-1 max-[1100px]:gap-4">
+          <aside className={SOLUTIONS_BANNER}>
             <div className="grid grid-cols-[40px_1fr] items-start gap-x-3 gap-y-1.5 max-[560px]:grid-cols-1">
               <span
                 className="row-span-2 mt-0.5 grid size-10 place-items-center rounded-xl bg-[#efe6ff] text-[#8153CF] max-[560px]:row-auto"
@@ -204,7 +220,7 @@ export default function ClinicalApplicationsPage() {
                 </svg>
               </span>
               <h2
-                className={`${SORA} col-start-2 m-0 flex flex-col text-[1.35rem] font-extrabold leading-[1.12] tracking-[-0.03em] text-[#1a1f2e] max-[560px]:col-start-1`}
+                className={SOLUTIONS_BANNER_TITLE}
               >
                 <span>{CLINICAL_HUB_BANNER.titleLine1}</span>
                 <span>{CLINICAL_HUB_BANNER.titleLine2}</span>
@@ -228,26 +244,26 @@ export default function ClinicalApplicationsPage() {
 
             <Link
               href={CLINICAL_HUB_BANNER.cta.href}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-xl border-[1.5px] border-solid border-[#c9d4ef] bg-white px-4 py-3 text-[0.86rem] font-bold text-[#0050D8] no-underline shadow-[0_4px_12px_rgba(37,99,235,.08)] transition-[background,border-color,transform] duration-[180ms] ease-in-out hover:-translate-y-px hover:border-[#9db4ef] hover:bg-[#f5f8ff] max-[1100px]:justify-self-start"
+              className={SOLUTIONS_BANNER_CTA}
             >
               {CLINICAL_HUB_BANNER.cta.label}
             </Link>
           </aside>
 
-          <ul className="mt-7 mb-0 ml-0 mr-0 grid list-none grid-cols-5 overflow-visible rounded-none border-0 bg-transparent px-0 py-2 max-[1100px]:grid-cols-1">
+          <ul className={SOLUTIONS_FEATURE_LIST}>
             {CLINICAL_HUB_FEATURES.map((f) => (
               <li
                 key={f.id}
-                className="relative grid grid-cols-[28px_1fr] items-center gap-2.5 py-2.5 pr-3.5 pl-1 not-last:after:absolute not-last:after:top-2.5 not-last:after:right-0 not-last:after:bottom-2.5 not-last:after:w-px not-last:after:bg-[#e6e8ef] not-last:after:content-[''] max-[1280px]:gap-2 max-[1280px]:py-3.5 max-[1280px]:pr-2.5 max-[1280px]:pl-3 max-[1100px]:not-last:after:top-auto max-[1100px]:not-last:after:right-4 max-[1100px]:not-last:after:bottom-0 max-[1100px]:not-last:after:left-4 max-[1100px]:not-last:after:h-px max-[1100px]:not-last:after:w-auto"
+                className={SOLUTIONS_FEATURE_ITEM}
               >
                 <span className="grid size-[26px] place-items-center text-[#0050D8]">
                   <span className="block size-6 [&_svg]:block [&_svg]:size-6">{FEAT_ICONS[f.id]}</span>
                 </span>
                 <span className="flex min-w-0 flex-col gap-0.5">
-                  <strong className="text-[0.82rem] font-bold tracking-[-0.01em] text-[#1a1f2e] max-[1280px]:text-[0.76rem]">
+                  <strong className={SOLUTIONS_FEATURE_TITLE}>
                     {f.title}
                   </strong>
-                  <span className="text-[0.72rem] leading-[1.3] text-[#7a8292] max-[1280px]:text-[0.68rem]">
+                  <span className={SOLUTIONS_FEATURE_BODY}>
                     {f.body}
                   </span>
                 </span>

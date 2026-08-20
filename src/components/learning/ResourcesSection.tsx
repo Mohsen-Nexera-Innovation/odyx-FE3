@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowIcon, BTN_LINK } from './LearningShared';
 import { DownloadIcon, PlayIcon } from './LearningIcons';
-import type { ResourcesSectionData } from '../types';
+import { LEARNING_CARD, LEARNING_CARD_PAD, LEARNING_GUTTER, LEARNING_KICKER } from './learningChrome';
+import type { ResourcesSectionData } from '@/content/learning';
 
 export function ResourcesSection({ data }: { data: ResourcesSectionData }) {
   const [videoFilter, setVideoFilter] = useState('All');
@@ -21,14 +22,14 @@ export function ResourcesSection({ data }: { data: ResourcesSectionData }) {
       : data.articles.items.filter((a) => a.category === articleFilter);
 
   return (
-    <section id={data.id} className="w-full px-[clamp(20px,4vw,56px)]">
+    <section id={data.id} className={LEARNING_GUTTER}>
       <div className="w-full grid grid-cols-1 xl:grid-cols-3 gap-3 md:gap-4">
         <div
           id="videos"
-          className="bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50"
+          className={`${LEARNING_CARD} ${LEARNING_CARD_PAD}`}
         >
           <div className="flex items-center justify-between gap-3 mb-3">
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] m-0">
+            <p className={`${LEARNING_KICKER} m-0`}>
               {data.videos.kicker}
             </p>
             <Link
@@ -100,10 +101,10 @@ export function ResourcesSection({ data }: { data: ResourcesSectionData }) {
 
         <div
           id="articles"
-          className="bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50"
+          className={`${LEARNING_CARD} ${LEARNING_CARD_PAD}`}
         >
           <div className="flex items-center justify-between gap-3 mb-3">
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] m-0">
+            <p className={`${LEARNING_KICKER} m-0`}>
               {data.articles.kicker}
             </p>
             <Link
@@ -167,9 +168,9 @@ export function ResourcesSection({ data }: { data: ResourcesSectionData }) {
           </ul>
         </div>
 
-        <div className="bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
+        <div className={`${LEARNING_CARD} ${LEARNING_CARD_PAD}`}>
           <div className="flex items-center justify-between gap-3 mb-3">
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] m-0">
+            <p className={`${LEARNING_KICKER} m-0`}>
               {data.guides.kicker}
             </p>
             <Link

@@ -1,18 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
 import { PathIcon, CertificateIcon } from './LearningIcons';
-import type { JourneySectionData } from '../types';
+import {
+  LEARNING_CARD,
+  LEARNING_CARD_PAD,
+  LEARNING_GUTTER,
+  LEARNING_H2,
+  LEARNING_KICKER,
+} from './learningChrome';
+import type { JourneySectionData } from '@/content/learning';
 
 export function JourneySection({ data }: { data: JourneySectionData }) {
   return (
-    <section id="journey" className="w-full px-[clamp(20px,4vw,56px)]">
-      <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
+    <section id="journey" className={LEARNING_GUTTER}>
+      <div className={`w-full ${LEARNING_CARD} ${LEARNING_CARD_PAD}`}>
         <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-12">
           <div className="w-full lg:w-[28%] shrink-0">
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-3">
+            <p className={`${LEARNING_KICKER} mb-3`}>
               {data.kicker}
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-[36px] font-extrabold text-[#0A1020] leading-[1.2] tracking-tight">
+            <h2 className={LEARNING_H2}>
               {data.titleLead}
               <br />
               <span className="text-[#1D4ED8]">{data.titleRest}</span>

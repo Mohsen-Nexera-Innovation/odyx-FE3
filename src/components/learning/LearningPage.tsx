@@ -7,7 +7,7 @@ import { ClinicalCoursesSection } from './ClinicalCoursesSection';
 import { ResourcesSection } from './ResourcesSection';
 import { ImpactSection } from './ImpactSection';
 import { LearningCtaSection } from './LearningCtaSection';
-import { learningData } from '../data/learning.data';
+import { learningData } from '@/content/learning';
 
 export default function LearningPage() {
   return (

@@ -2,15 +2,21 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowIcon, ProgressRing, BTN_OUTLINE, BTN_LINK } from './LearningShared';
 import { PlayIcon, StatIcon } from './LearningIcons';
-import type { ImpactSectionData } from '../types';
+import {
+  LEARNING_CARD,
+  LEARNING_CARD_PAD,
+  LEARNING_GUTTER,
+  LEARNING_KICKER,
+} from './learningChrome';
+import type { ImpactSectionData } from '@/content/learning';
 
 export function ImpactSection({ data }: { data: ImpactSectionData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)]">
-      <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
+    <section className={LEARNING_GUTTER}>
+      <div className={`w-full ${LEARNING_CARD} ${LEARNING_CARD_PAD}`}>
         <div className="flex flex-col xl:flex-row gap-8 lg:gap-10">
           <div className="xl:w-[300px] shrink-0 xl:border-r xl:border-gray-100 xl:pr-8">
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-3">
+            <p className={`${LEARNING_KICKER} mb-3`}>
               {data.continue.kicker}
             </p>
             <h2 className="text-[20px] lg:text-[22px] font-extrabold text-[#0A1020] leading-snug mb-4">
@@ -50,7 +56,7 @@ export function ImpactSection({ data }: { data: ImpactSectionData }) {
 
           <div className="flex-1 min-w-0 flex flex-col">
             <div className="mb-6">
-              <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-3">
+              <p className={`${LEARNING_KICKER} mb-3`}>
                 {data.impact.kicker}
               </p>
               <h2 className="text-[20px] lg:text-[24px] font-extrabold text-[#0A1020] leading-snug max-w-lg">

@@ -54,16 +54,6 @@ const nextConfig: NextConfig = {
         destination: "/solutions/cases/prosthetic-cases",
         permanent: true,
       },
-      {
-        source: "/support",
-        destination: "/",
-        permanent: false,
-      },
-      {
-        source: "/support/:path*",
-        destination: "/",
-        permanent: false,
-      },
     ];
   },
 };

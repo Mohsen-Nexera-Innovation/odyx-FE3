@@ -3,7 +3,8 @@
 import React, { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
-import type { SearchSectionData } from '../types';
+import { LEARNING_CARD, LEARNING_GUTTER } from './learningChrome';
+import type { SearchSectionData } from '@/content/learning';
 
 export function SearchSection({ data }: { data: SearchSectionData }) {
   const [query, setQuery] = useState('');
@@ -14,8 +15,8 @@ export function SearchSection({ data }: { data: SearchSectionData }) {
   };
 
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)]">
-      <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-5 lg:py-6 px-4 lg:px-6 border border-gray-100/50">
+    <section className={LEARNING_GUTTER}>
+      <div className={`w-full ${LEARNING_CARD} py-5 lg:py-6 px-4 lg:px-6`}>
         <div className="flex flex-col xl:flex-row xl:items-center gap-4">
           <form
             className="flex items-center gap-3 flex-1 min-h-[50px] px-4 rounded-full bg-[#F7F9FC] border border-gray-200/80"

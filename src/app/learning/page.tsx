@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import LearningPage from './components/LearningPage';
+import LearningPage from '@/components/learning/LearningPage';
 import { LEARNING_META } from '@/content/learning';
 
 export const metadata: Metadata = {
