@@ -1,14 +1,15 @@
 import React from 'react';
 import { ShieldCheck, Lightbulb, GraduationCap, Handshake } from 'lucide-react';
-import { ValuesData } from '../types';
+import { ValuesData } from '@/content/about';
 import {
   ABOUT_BLUE,
   ABOUT_BODY,
   ABOUT_CARD_DESC,
   ABOUT_CARD_TITLE,
   ABOUT_EYEBROW,
+  ABOUT_GUTTER,
   ABOUT_H2,
-} from '../aboutChrome';
+} from './aboutChrome';
 
 const ICON_MAP: Record<string, React.ElementType> = {
   shield: ShieldCheck,
@@ -26,7 +27,7 @@ const COLOR_MAP: Record<string, { text: string; glow: string }> = {
 
 export function ValuesSection({ data }: { data: ValuesData }) {
   return (
-    <section id="values" className="w-full px-[clamp(20px,4vw,56px)] scroll-mt-[96px]">
+    <section id="values" className={`${ABOUT_GUTTER} scroll-mt-[96px]`}>
       <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
         
         {/* Header */}

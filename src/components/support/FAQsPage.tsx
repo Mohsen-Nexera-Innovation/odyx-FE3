@@ -10,7 +10,7 @@ import { FilterPills } from './FilterPills';
 import { CategorySidebar } from './CategorySidebar';
 import { FAQAccordion } from './FAQAccordion';
 import { SupportCTA } from './SupportCTA';
-import { FAQS, FAQ_CATEGORIES } from './data';
+import { FAQS, FAQ_CATEGORIES } from '@/content/support';
 
 export function FAQsPage() {
   const searchParams = useSearchParams();

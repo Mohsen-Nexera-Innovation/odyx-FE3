@@ -5,7 +5,7 @@ import {
   ABOUT_CARD_TITLE,
   ABOUT_EYEBROW,
   ABOUT_H1,
-} from '@/app/about/aboutChrome';
+} from '@/components/about/aboutChrome';
 import { REQUEST_DEMO_HERO } from '@/content/request-demo';
 import { VALUE_PROP_ICONS } from './DemoIcons';
 

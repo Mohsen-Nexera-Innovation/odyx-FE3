@@ -2,6 +2,7 @@ import { SalesHero } from './SalesHero';
 import { DirectContactSection } from './DirectContactSection';
 import { QuoteSection } from './QuoteSection';
 import { SalesContactBar } from './SalesContactBar';
+import './contact-sales.css';
 
 export default function ContactSalesPage() {
   return (

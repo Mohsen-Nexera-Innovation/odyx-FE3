@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { ArrowIcon } from './CasesIcons';
-import { CASES_BTN_OUTLINE, CASES_BTN_PRIMARY } from './cases-buttons';
-import type { ShareSectionData } from '../types';
+import { CASES_BTN_OUTLINE, CASES_BTN_PRIMARY, CASES_GUTTER } from './casesChrome';
+import type { ShareSectionData } from '@/content/cases';
 
 export function ShareCtaSection({ data }: { data: ShareSectionData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)]" aria-labelledby="cases-share-title">
+    <section className={CASES_GUTTER} aria-labelledby="cases-share-title">
       <div className="w-full rounded-[16px] overflow-hidden border border-[#DDE6F3] bg-gradient-to-br from-[#F3F7FD] via-[#EEF4FB] to-[#F7F9FC] shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-7 px-4 lg:px-6">
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
           <div className="w-[88px] h-[88px] lg:w-[110px] lg:h-[110px] shrink-0 flex items-center justify-center">

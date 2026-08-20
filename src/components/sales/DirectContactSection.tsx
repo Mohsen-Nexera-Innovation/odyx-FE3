@@ -1,12 +1,13 @@
 import { CONTACT_SALES_DIRECT } from '@/content/contact-sales';
 import { ContactChannelCard } from './ContactChannelCard';
+import { SALES_GUTTER } from './salesChrome';
 
 export function DirectContactSection() {
   const { title, channels } = CONTACT_SALES_DIRECT;
 
   return (
     <section
-      className="w-full px-[clamp(20px,4vw,56px)] pt-5"
+      className={`${SALES_GUTTER} pt-5`}
       aria-labelledby="direct-contact-title"
     >
       <h2

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PRODUCT_BTN_PRIMARY } from '@/components/products/productCtaChrome';
 import {
   DEMO_TIME_SLOTS,
   DEMO_TIMEZONES,
@@ -233,7 +234,7 @@ export function ScheduleSection({
       <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
         <button
           type="submit"
-          className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] border-0 bg-[#0050D8] px-[1.4rem] py-3 text-[0.95rem] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors duration-150 hover:bg-[#0040B0] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-60"
+          className={`${PRODUCT_BTN_PRIMARY} w-full cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-60`}
           disabled={status === 'submitting'}
         >
           {status === 'submitting'

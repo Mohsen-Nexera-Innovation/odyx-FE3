@@ -4,6 +4,10 @@ import CureCases from '@/components/products/cure/CureCases';
 import CureRoiMini from '@/components/products/cure/CureRoiMini';
 import CureVideo from '@/components/products/cure/CureVideo';
 import {
+  PRODUCT_BTN_GHOST as BTN_GHOST,
+  PRODUCT_BTN_PRIMARY as BTN_PRIMARY,
+} from '@/components/products/productCtaChrome';
+import {
   CURE_UV02_APPS,
   CURE_UV02_CHIPS,
   CURE_UV02_ECOSYSTEM,
@@ -24,12 +28,6 @@ const COLS =
 const CARD_TITLE = `${DISPLAY} m-0 mb-3.5 text-[1.25rem] font-bold leading-[1.2] tracking-[-0.02em] text-[#1f2738]`;
 const CARD =
   'flex h-full min-h-0 flex-col rounded-[18px] border-4 border-solid border-white bg-transparent p-[clamp(16px,1.8vw,22px)]';
-const BTN =
-  `${SANS} inline-flex box-border h-12 min-h-12 items-center justify-center gap-2 rounded-full px-[22px] py-0 text-[.9rem] font-semibold tracking-[0.01em] no-underline transition-[background,color,border-color,transform,box-shadow] duration-[220ms] ease-[ease] max-[640px]:w-full`;
-const BTN_PRIMARY =
-  `${BTN} border border-solid border-transparent bg-[#0050D8] !text-white shadow-none hover:-translate-y-px hover:!text-white hover:shadow-[0_10px_28px_rgba(0,80,216,.35)] motion-reduce:hover:translate-y-0`;
-const BTN_GHOST =
-  `${BTN} group border-[1.5px] border-solid border-[#0050D8] bg-[rgba(255,255,255,.72)] !text-[#0050D8] [backdrop-filter:blur(6px)] hover:-translate-y-px hover:border-[#0041AF] hover:bg-white hover:!text-[#0041AF] motion-reduce:hover:translate-y-0`;
 
 const chipStroke = {
   fill: 'none' as const,

@@ -1,20 +1,20 @@
 import Link from 'next/link';
 import { ApplicationIcon, ArrowIcon } from './CasesIcons';
-import { CASES_TEXT_LINK } from './cases-buttons';
-import type { BrowseSectionData } from '../types';
+import { CASES_CARD, CASES_CARD_PAD, CASES_GUTTER, CASES_KICKER, CASES_SECTION_H2, CASES_TEXT_LINK } from './casesChrome';
+import type { BrowseSectionData } from '@/content/cases';
 
 export function BrowseCardsSection({ data }: { data: BrowseSectionData }) {
   return (
-    <section id={data.id} className="w-full px-[clamp(20px,4vw,56px)]" aria-labelledby={`${data.id}-title`}>
-      <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
+    <section id={data.id} className={CASES_GUTTER} aria-labelledby={`${data.id}-title`}>
+      <div className={`w-full ${CASES_CARD} ${CASES_CARD_PAD}`}>
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3! mb-6!">
           <div>
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-3">
+            <p className={`${CASES_KICKER} mb-3`}>
               {data.kicker}
             </p>
             <h2
               id={`${data.id}-title`}
-              className="text-2xl md:text-3xl lg:text-[32px] font-extrabold text-[#0A1020] leading-[1.2] tracking-tight max-w-xl"
+              className={CASES_SECTION_H2}
             >
               {data.title}
             </h2>

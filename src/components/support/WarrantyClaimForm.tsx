@@ -7,7 +7,7 @@ import {
   createWarrantyClaimApi,
   type WarrantyClaimProduct,
 } from '@/lib/api/leads';
-import { SUPPORT_PRODUCTS } from './data';
+import { SUPPORT_PRODUCTS } from '@/content/support';
 
 const inputClass =
   'w-full h-[42px] rounded-[8px] border border-[#E5E7EB] bg-white px-3.5 text-[13px] font-medium text-[#0A1020] placeholder:text-[#9CA3AF] outline-none transition-colors focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]';

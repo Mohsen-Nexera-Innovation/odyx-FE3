@@ -1,9 +1,10 @@
 import React from 'react';
-import { StatsData } from '../types';
+import { StatsData } from '@/content/about';
+import { ABOUT_GUTTER } from './aboutChrome';
 
 export function AboutCtaSection({ data }: { data: StatsData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)] flex justify-center">
+    <section className={`${ABOUT_GUTTER} flex justify-center`}>
       <div className="w-full">
         <div className="bg-[#070F22] rounded-[8px] py-5 lg:py-6 px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-6 shadow-2xl relative overflow-hidden">
           

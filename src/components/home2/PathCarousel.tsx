@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
   motion,
   animate,
@@ -12,6 +13,7 @@ import {
   type MotionValue,
   type AnimationPlaybackControls,
 } from "motion/react";
+import { HV2_BTN, HV2_BTN_SIZE } from "@/components/home2/hv2Chrome";
 
 // Coverflow path picker matching the design reference: a wide, front-facing
 // active card, a narrower 3D-turned card on each side whose bottom sits on the
@@ -33,6 +35,8 @@ const PATHS = [
     key: "lab",
     title: "Lab Technician",
     desc: "Powerful tools for dental laboratories.",
+    cta: "I'm a Lab Tech",
+    href: "/solutions/labs",
     // Lab bench scene: printer, models, counters and a wall screen. The
     // distributor path card — keep distinct from guest explore CTA imagery.
     img: "/img/printers/lab-scene.jpg",
@@ -50,6 +54,8 @@ const PATHS = [
     key: "dentist",
     title: "Dentist",
     desc: "Digital solutions for clinics of all sizes.",
+    cta: "I'm a Dentist",
+    href: "/solutions/dentists",
     // Wide operatory: chair and delivery unit on the right half, framed
     // radiograph and cabinetry behind. Framed loosely so the room reads.
     img: "/img/printers/clinic-scene.jpg",
@@ -64,6 +70,8 @@ const PATHS = [
     key: "guest",
     title: "Guest",
     desc: "Explore ODYX as a guest.",
+    cta: "Continue as Guest",
+    href: "/workflows",
     // Scanner upright in its cradle on the right of the frame, clinic behind;
     // the card blurs it back so it reads as a soft product scene.
     img: "/img/scanner/s1-hero.png",
@@ -184,6 +192,19 @@ const PCARD_PARA_MAXW: Record<Path["key"], string> = {
   dentist: "max-w-[calc(230*var(--pc-u))]",
   guest: "max-w-[calc(124*var(--pc-u))]",
 };
+
+const PCARD_BTN_MINW: Record<Path["key"], string> = {
+  lab: "min-w-[calc(168*var(--pc-u))]!",
+  dentist: "min-w-[calc(168*var(--pc-u))]!",
+  guest: "min-w-[calc(188*var(--pc-u))]!",
+};
+
+const PCARD_CTA =
+  `${HV2_BTN} ${HV2_BTN_SIZE} mt-auto! w-auto! whitespace-nowrap` +
+  " inline-flex! items-center! justify-center! leading-none!" +
+  " [&>span]:leading-none! [&>span]:mt-px" +
+  " [&>svg]:block! [&>svg]:shrink-0! [&>svg]:transition-transform [&>svg]:duration-[.25s] [&>svg]:ease-out" +
+  " hover:[&>svg]:translate-x-[3px] rtl:[&>svg]:scale-x-[-1] rtl:hover:[&>svg]:translate-x-[-3px]";
 
 // Outer deck: card geometry lives here as CSS custom properties (mirrors the
 // old .hv2-path rule) so `.hv2-pcard`'s own arbitrary values can reach them,
@@ -316,6 +337,20 @@ function PathCard({
         >
           {path.desc}
         </p>
+        <Link
+          className={`${PCARD_CTA} ${PCARD_BTN_MINW[path.key]}`}
+          href={path.href}
+          tabIndex={d === 0 ? 0 : -1}
+          draggable={false}
+          onClick={(e) => {
+            if (suppressClick.current) e.preventDefault();
+          }}
+        >
+          <span>{path.cta}</span>
+          <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
       </div>
       <div
         className="absolute top-0 bottom-0 left-0 w-[60%] z-[2] opacity-0 pointer-events-none [background:linear-gradient(100deg,transparent_18%,rgba(255,255,255,.4)_50%,transparent_82%)]"

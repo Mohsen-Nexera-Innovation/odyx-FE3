@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ArrowIcon } from './CasesIcons';
-import { CASES_TEXT_LINK } from './cases-buttons';
-import type { FeaturedCase, FeaturedSectionData } from '../types';
+import { ArrowIcon } from '@/components/cases/CasesIcons';
+import { CASES_TEXT_LINK } from '@/components/cases/casesChrome';
+import type { FeaturedCase, FeaturedSectionData } from '@/content/cases';
 
 import 'swiper/css';
 import 'swiper/css/navigation';

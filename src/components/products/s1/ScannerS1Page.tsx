@@ -1,4 +1,8 @@
 import Link from 'next/link';
+import {
+  PRODUCT_BTN_GHOST as BTN_GHOST,
+  PRODUCT_BTN_PRIMARY as BTN_PRIMARY,
+} from '@/components/products/productCtaChrome';
 import S1Video from '@/components/products/s1/S1Video';
 import { APP_ICONS, CheckIcon, WHY_ICONS } from '@/components/products/s1/S1Icons';
 import {
@@ -18,12 +22,6 @@ const DISPLAY =
   "[font-family:var(--font-space),'Space Grotesk',var(--font-sora),sans-serif]";
 const GUTTER = 'w-full mx-auto px-[clamp(20px,4vw,56px)]';
 const BODY_RAIL = `${GUTTER} max-w-[80%] max-[800px]:max-w-none`;
-const BTN =
-  `inline-flex box-border h-12 min-h-12 items-center justify-center gap-2 px-[22px] py-0 rounded-[10px] text-[.92rem] font-bold no-underline transition-[background,color,border-color,transform,box-shadow] duration-[220ms] ease-[ease] max-[640px]:w-full max-[640px]:rounded-xl`;
-const BTN_PRIMARY =
-  `${BTN} bg-[#0050D8] !text-white border border-solid border-transparent shadow-none hover:-translate-y-px hover:!text-white hover:shadow-[0_10px_28px_rgba(0,80,216,.35)] motion-reduce:hover:translate-y-0`;
-const BTN_GHOST =
-  `${BTN} group bg-[rgba(255,255,255,.72)] !text-[#0050D8] border-[1.5px] border-solid border-[#0050D8] hover:bg-white hover:!text-[#0041AF] hover:border-[#0041AF]`;
 const CARD_TITLE = `${DISPLAY} m-0 mb-4 text-[1.2rem] font-bold tracking-[-0.02em] text-[#0050D8]`;
 const CHECK_ROW =
   'flex items-center gap-2.5 text-[.92rem] font-medium leading-[1.35] text-[#1a2438] transition-[transform,color] duration-[220ms] ease-[ease] hover:translate-x-[3px] hover:text-[#0d1b4d] motion-reduce:hover:translate-x-0';
@@ -119,29 +117,28 @@ export default function ScannerS1Page() {
             <p className="mb-[26px] max-w-[40ch] text-[.98rem] font-normal leading-[1.55] text-[#6b7385]">
               {hero.body}
             </p>
-            <div className="flex flex-wrap gap-3 max-[640px]:flex-col max-[640px]:items-stretch">
+            <div className="flex flex-wrap gap-2.5 max-[640px]:flex-col max-[640px]:items-stretch">
               <Link className={BTN_PRIMARY} href={hero.primaryCta.href}>
                 {hero.primaryCta.label}
-                <span aria-hidden>→</span>
               </Link>
               <a className={BTN_GHOST} href={hero.secondaryCta.href}>
+                {hero.secondaryCta.label}
                 <svg
-                  width="18"
-                  height="18"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden
-                  className="transition-transform duration-[220ms] ease-[ease] group-hover:translate-y-[2px]"
+                  className="transition-transform duration-[220ms] ease-[ease] group-hover:translate-y-0.5 motion-reduce:group-hover:translate-y-0"
                 >
                   <path
-                    d="M12 4v12M6 12l6 6 6-6M5 20h14"
+                    d="M12 3v12M7 11l5 5 5-5M5 20h14"
                     stroke="currentColor"
-                    strokeWidth="2.2"
+                    strokeWidth="1.8"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
-                {hero.secondaryCta.label}
               </a>
             </div>
           </div>
@@ -330,9 +327,8 @@ export default function ScannerS1Page() {
             </li>
           </ul>
           <div className="mt-[22px] flex justify-center">
-            <Link className={`${BTN_PRIMARY} min-w-[220px] px-[26px] py-3`} href="/learning">
+            <Link className={`${BTN_PRIMARY} min-w-[220px]`} href="/learning">
               View More Cases
-              <span aria-hidden>→</span>
             </Link>
           </div>
         </div>

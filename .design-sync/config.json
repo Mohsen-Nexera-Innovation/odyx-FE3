@@ -36,7 +36,7 @@
     "P126Cases": "src/components/products/p1-26/P126Cases.tsx",
     "P126RoiMini": "src/components/products/p1-26/P126RoiMini.tsx",
     "P126Video": "src/components/products/p1-26/P126Video.tsx",
-    "HomeV2Page": "src/components/pages/HomeV2Page.tsx",
+    "HomeV2Page": "src/components/home2/HomeV2Page.tsx",
     "P126Page": "src/components/products/p1-26/P126Page.tsx"
   }
 }

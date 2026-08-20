@@ -450,6 +450,7 @@ a.btn-ghost{color:#fff}
 header .nav-demo{background:var(--nav-blue);color:#fff}
 header .nav-demo:hover{background:var(--nav-blue-deep);box-shadow:0 10px 28px rgba(0,80,216,.35)}
 .btn-sm{padding:0 11px;height:32px;font-size:clamp(.76rem,1vw,.84rem);border-radius:8px}
+header .btn.nav-demo{border-radius:999px}
 /* Fixed height + flex center keeps label vertically even (was uneven pad). */
 .nav-tools .btn-sm{padding:0 11px;height:32px;font-size:clamp(.74rem,.95vw,.82rem)}
 .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent}

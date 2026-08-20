@@ -10,18 +10,19 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import { TeamData } from '../types';
+import { TeamData } from '@/content/about';
 import {
   ABOUT_BLUE,
   ABOUT_BODY,
   ABOUT_CTA_OUTLINE,
   ABOUT_EYEBROW,
+  ABOUT_GUTTER,
   ABOUT_H2,
-} from '../aboutChrome';
+} from './aboutChrome';
 
 export function TeamSection({ data }: { data: TeamData }) {
   return (
-    <section id="team" className="w-full px-[clamp(20px,4vw,56px)] scroll-mt-[96px]">
+    <section id="team" className={`${ABOUT_GUTTER} scroll-mt-[96px]`}>
       <div className="w-full bg-[#F8F9FA]/50 rounded-[16px] overflow-hidden pt-6 lg:pt-8 pb-2 lg:pb-2 px-4 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start">
           

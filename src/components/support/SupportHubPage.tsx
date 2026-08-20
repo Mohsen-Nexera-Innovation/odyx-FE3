@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { ArrowRight, Book, Download, Headphones, HelpCircle, ShieldCheck } from 'lucide-react';
-import { SupportContainer } from '@/components/support/SupportContainer';
-import { QuickAccessCard } from '@/components/support/QuickAccessCard';
-import { ProductSupportCard } from '@/components/support/ProductSupportCard';
-import { StatusCard } from '@/components/support/StatusCard';
-import { PRODUCT_QUICK_LINKS, STATUS_CARDS, SUPPORT_PRODUCTS } from '@/components/support/data';
+import { SupportContainer } from './SupportContainer';
+import { QuickAccessCard } from './QuickAccessCard';
+import { ProductSupportCard } from './ProductSupportCard';
+import { StatusCard } from './StatusCard';
+import { PRODUCT_QUICK_LINKS, STATUS_CARDS, SUPPORT_PRODUCTS } from '@/content/support';
 
 const QUICK_ACCESS = [
   {

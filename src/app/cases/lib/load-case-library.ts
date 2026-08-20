@@ -1,12 +1,12 @@
 import { getServerApiBaseUrl } from '@/lib/config';
 import { resolveMediaUrl, type CaseLibraryPublic, type ShowcaseCase } from '@/lib/api/case-library';
-import type { BrowseSectionData, FeaturedCase, FeaturedSectionData } from '../types';
+import type { BrowseSectionData, FeaturedCase, FeaturedSectionData } from '@/content/cases';
+import { casesData } from '@/content/cases';
 import {
   applicationCasesPath,
   isApplicationCaseSlug,
 } from '@/content/application-cases';
 import { isProductFamilySlug, productCasesPath } from '@/content/product-cases';
-import { casesData } from '../data/cases.data';
 
 function caseCountLabel(count: number) {
   return `${count} Case${count === 1 ? '' : 's'}`;

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import CasesPage from '@/app/cases/components/CasesPage';
-import { CASES_META } from '@/content/real-case-library';
+import CasesPage from '@/components/cases/CasesPage';
+import { CASES_META } from '@/content/cases';
 import {
   buildApplicationsFromLibrary,
   buildProductsFromLibrary,

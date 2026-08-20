@@ -9,7 +9,7 @@ import { SupportPageHeader } from './SupportPageHeader';
 import { SupportSearchBar } from './SupportSearchBar';
 import { FilterPills } from './FilterPills';
 import { SupportCTA } from './SupportCTA';
-import { DOWNLOAD_CATEGORIES, DOWNLOADS } from './data';
+import { DOWNLOAD_CATEGORIES, DOWNLOADS } from '@/content/support';
 
 const FILTERS = [{ id: 'all', label: 'All' }, ...DOWNLOAD_CATEGORIES];
 

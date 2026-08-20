@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { ProductQuickLink, SupportProduct } from './data';
+import type { ProductQuickLink, SupportProduct } from '@/content/support';
 import { FlaskConical } from 'lucide-react';
 
 export function ProductSupportCard({ product, links }: { product: SupportProduct; links: ProductQuickLink[] }) {

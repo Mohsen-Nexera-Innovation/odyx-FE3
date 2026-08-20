@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Users, Lightbulb } from 'lucide-react';
-import { AboutHeroData } from '../types';
+import { AboutHeroData } from '@/content/about';
 import {
   ABOUT_BLUE,
   ABOUT_BODY,
@@ -10,8 +10,9 @@ import {
   ABOUT_CARD_DESC,
   ABOUT_CARD_TITLE,
   ABOUT_EYEBROW,
+  ABOUT_GUTTER,
   ABOUT_H1,
-} from '../aboutChrome';
+} from './aboutChrome';
 
 const ICON_MAP: Record<string, React.ElementType> = {
   'shield-check': ShieldCheck,
@@ -21,7 +22,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 export function AboutHero({ data }: { data: AboutHeroData }) {
   return (
-    <section className="w-full px-[clamp(20px,4vw,56px)] pt-[var(--hdr-h)] lg:pt-[calc(var(--hdr-h)+17px)]" data-hero-light>
+    <section className={`${ABOUT_GUTTER} pt-[var(--hdr-h)] lg:pt-[calc(var(--hdr-h)+17px)]`} data-hero-light>
       <div 
         className="w-full bg-[#F4F8FD] rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] border border-gray-100/50 relative"
       >

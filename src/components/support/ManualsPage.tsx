@@ -10,7 +10,7 @@ import { SupportSearchBar } from './SupportSearchBar';
 import { FilterPills } from './FilterPills';
 import { CategorySidebar } from './CategorySidebar';
 import { SupportPagination } from './SupportPagination';
-import { MANUAL_CATEGORIES, MANUALS, SUPPORT_PRODUCTS, type ManualEntry } from './data';
+import { MANUAL_CATEGORIES, MANUALS, SUPPORT_PRODUCTS, type ManualEntry } from '@/content/support';
 
 const PRODUCT_FILTERS = [
   { id: 'all', label: 'All Products' },

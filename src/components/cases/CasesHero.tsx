@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { CaseCompareSlider } from './CaseCompareSlider';
 import { ArrowIcon, HeroActionIcon } from './CasesIcons';
-import { CASES_BTN_OUTLINE, CASES_BTN_PRIMARY } from './cases-buttons';
-import type { CasesHeroData } from '../types';
+import { CASES_BTN_OUTLINE, CASES_BTN_PRIMARY, CASES_GUTTER, CASES_KICKER } from './casesChrome';
+import type { CasesHeroData } from '@/content/cases';
 
 export function CasesHero({ data }: { data: CasesHeroData }) {
   const router = useRouter();
@@ -25,14 +25,14 @@ export function CasesHero({ data }: { data: CasesHeroData }) {
 
   return (
     <section
-      className="w-full px-[clamp(20px,4vw,56px)] pt-[var(--hdr-h)] lg:pt-[calc(var(--hdr-h)+17px)]"
+      className={`${CASES_GUTTER} pt-[var(--hdr-h)] lg:pt-[calc(var(--hdr-h)+17px)]`}
       data-hero-light
       aria-labelledby="cases-hero-title"
     >
       <div className="w-full bg-[#F4F8FD] rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] border border-gray-100/50">
         <div className="relative z-10 flex flex-col xl:flex-row items-center py-6 lg:py-8 px-4 lg:px-6 gap-8 lg:gap-8">
           <div className="w-full xl:w-[48%] flex flex-col justify-center">
-            <p className="text-[#0050D8] text-[11px] font-bold uppercase tracking-[0.15em] mb-4">
+            <p className={`${CASES_KICKER} mb-4`}>
               {data.kicker}
             </p>
 

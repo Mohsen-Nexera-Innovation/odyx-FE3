@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { ApplicationIconId, HeroActionIconId } from '../types';
+import type { ApplicationIconId, HeroActionIconId } from '@/content/cases';
 
 type IconProps = { className?: string };
 

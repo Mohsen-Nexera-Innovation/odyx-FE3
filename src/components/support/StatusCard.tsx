@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { CheckCircle2, Monitor, Cpu, Calendar, ArrowRight } from 'lucide-react';
-import type { StatusCardData } from './data';
+import type { StatusCardData } from '@/content/support';
 
 export function StatusCard({ status }: { status: StatusCardData }) {
   const isOk = status.tone === 'ok';

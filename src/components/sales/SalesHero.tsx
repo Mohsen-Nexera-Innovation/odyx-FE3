@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { CONTACT_SALES_HERO } from '@/content/contact-sales';
+import { SALES_GUTTER } from './salesChrome';
 
 export function SalesHero() {
   const { title, subtitle, description, images } = CONTACT_SALES_HERO;
 
   return (
     <section
-      className="w-full px-[clamp(20px,4vw,56px)] pt-[calc(var(--hdr-h)+12px)] lg:pt-[calc(var(--hdr-h)+17px)]"
+      className={`${SALES_GUTTER} pt-[calc(var(--hdr-h)+12px)] lg:pt-[calc(var(--hdr-h)+17px)]`}
       data-hero-light
       aria-labelledby="contact-sales-title"
     >

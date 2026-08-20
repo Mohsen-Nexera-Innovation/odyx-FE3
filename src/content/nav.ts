@@ -67,13 +67,11 @@ const ABOUT_NAV_ITEMS: NavLink[] = [
     label: "Our Team",
     href: "/about#team",
     desc: "The people building ODYX",
-    dimmed: true,
   },
   {
     label: "News & Insights",
     href: "/about#news",
     desc: "Latest announcements and stories",
-    dimmed: true,
   },
 ];
 
@@ -102,11 +100,11 @@ export const HEADER_MENUS: NavGroup[] = [
   },
   {
     label: "Products",
-    href: "/products",
+    href: "/products/odyx-s1",
     // navOnly: true,
     // comingSoon: true,
     items: [
-      { label: "All Products", href: "/products", desc: "Full ODYX lineup", dimmed: true },
+      { label: "All Products", href: "/products/odyx-s1", desc: "Full ODYX lineup", dimmed: true },
       {
         label: "Intraoral Scanner",
         href: "/products/odyx-s1",

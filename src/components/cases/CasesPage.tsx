@@ -1,8 +1,8 @@
 import { CasesHero } from './CasesHero';
 import { BrowseCardsSection } from './BrowseCardsSection';
 import { ShareCtaSection } from './ShareCtaSection';
-import { casesData } from '../data/cases.data';
-import type { BrowseSectionData } from '../types';
+import { casesData } from '@/content/cases';
+import type { BrowseSectionData } from '@/content/cases';
 
 type Props = {
   applications: BrowseSectionData;

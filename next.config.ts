@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/products",
+        destination: "/products/odyx-s1",
+        permanent: false,
+      },
+      {
         source: "/solutions/dentists",
         destination: "/solutions/clinical-applications",
         permanent: true,

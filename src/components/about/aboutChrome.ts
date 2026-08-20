@@ -43,3 +43,6 @@ export const ABOUT_CARD_DESC =
 export const ABOUT_CTA_OUTLINE =
   `${ABOUT_BTN_GHOST} ${HV2_BTN_SIZE}` +
   " border! border-[rgba(24,68,160,.42)]! bg-white!";
+
+/** Live About section gutter — exact string from the current page. */
+export const ABOUT_GUTTER = 'w-full px-[clamp(20px,4vw,56px)]';

@@ -3,7 +3,7 @@ import { SupportBreadcrumb } from './SupportBreadcrumb';
 import { SupportPageHeader } from './SupportPageHeader';
 import { WarrantyCoverageCard, WarrantyPeriodCard } from './WarrantyCard';
 import { WarrantyClaimForm } from './WarrantyClaimForm';
-import { WARRANTY_PERIODS } from './data';
+import { WARRANTY_PERIODS } from '@/content/support';
 
 export function WarrantyPage() {
   return (

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import HomeV2Page from "@/components/pages/HomeV2Page";
+import HomeV2Page from "@/components/home2/HomeV2Page";
+import { HOME_META } from "@/content/home";
 
 export const metadata: Metadata = {
-  title: "ODYX — One Ecosystem. Endless Possibilities.",
-  description:
-    "Everything you need for digital dentistry in one seamless ecosystem — scanner, printer, curing and resins working as one connected workflow.",
+  title: HOME_META.title,
+  description: HOME_META.description,
 };
 
 export default function Page() {

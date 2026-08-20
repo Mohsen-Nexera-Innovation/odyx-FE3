@@ -71,13 +71,12 @@ type Chip = { label: string; icon: keyof typeof HubIcon };
 // Chip boxes are staggered in the mock — each one steps a little further left
 // as it follows the laptop's perspective — so every chip carries its own
 // left/top (card %) rather than sitting in a plain stack.
-// Learning chips hidden until learning hub is ready
-// const LEARN_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
-//   { label: "Courses", icon: "book", l: 79.87, t: 29.12, w: 15.80 },
-//   { label: "Webinars", icon: "webinar", l: 79.80, t: 42.66, w: 15.80 },
-//   { label: "Guides", icon: "guide", l: 78.81, t: 56.21, w: 15.52 },
-//   { label: "Quizzes", icon: "quiz", l: 77.60, t: 69.75, w: 15.80 },
-// ];
+const LEARN_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
+  { label: "Courses", icon: "book", l: 79.87, t: 29.12, w: 15.80 },
+  { label: "Webinars", icon: "webinar", l: 79.80, t: 42.66, w: 15.80 },
+  { label: "Guides", icon: "guide", l: 78.81, t: 56.21, w: 15.52 },
+  { label: "Quizzes", icon: "quiz", l: 77.60, t: 69.75, w: 15.80 },
+];
 
 const SUPPORT_CHIPS: (Chip & { l: number; t: number; w: number })[] = [
   { label: "Help Center", icon: "book", l: 76.68, t: 35.21, w: 18.57 },
@@ -231,7 +230,8 @@ const ACTION_CARDS: ActionCard[] = [
     label: "Store",
     title: ["Everything You Need.", "In One Place."],
     desc: ["Resins, accessories and more –", "delivered to your door."],
-    // CTA hidden until shop is ready
+    cta: "Go to Store",
+    href: "/shop",
     artClass: HUB_ART_STORE,
     art: {
       src: "/img/hv2-hub/store-resins-cutout.png",
@@ -248,9 +248,8 @@ const ACTION_CARDS: ActionCard[] = [
       "Activate warranty to download your product software",
       "and get the full ODYX Ecosystem Experience.",
     ],
-    // CTA hidden until registration flow is ready
-    // cta: "Register Device",
-    // href: "/support#register",
+    cta: "Register Device",
+    href: "/support#register",
     artClass: HUB_ART_REG,
     art: {
       src: "/img/hv2-hub/registration-device.webp",
@@ -318,7 +317,6 @@ export default function HubCardsSection() {
                 and step-by-step guides.
               </p>
             </div>
-            {/* Learning category chips hidden until learning hub is ready
             <ul className={HUB_CHIPS} aria-label="What the learning centre covers">
               {LEARN_CHIPS.map((c) => (
                 <li
@@ -331,7 +329,6 @@ export default function HubCardsSection() {
                 </li>
               ))}
             </ul>
-            */}
             <img
               className={`${HUB_ART}${HUB_ART_LEARN}`}
               src="/img/hv2-hub/learning-laptop.webp"

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import SupportHubPage from '@/components/pages/SupportHubPage';
+import SupportHubPage from '@/components/support/SupportHubPage';
 import InnerPageMotion from '@/components/InnerPageMotion';
 
 export const metadata: Metadata = {

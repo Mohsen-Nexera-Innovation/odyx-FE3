@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import type { FaqEntry } from './data';
+import type { FaqEntry } from '@/content/support';
 
 export function FAQAccordion({ faqs }: { faqs: FaqEntry[] }) {
   const [openId, setOpenId] = useState<string | null>(faqs[0]?.id ?? null);
