@@ -38,7 +38,7 @@ export function FAQsPage() {
   }));
 
   return (
-    <div className="support-page bg-white pt-[calc(var(--hdr-h)+12px)] lg:pt-[calc(var(--hdr-h)+17px)] pb-4 overflow-x-hidden">
+    <div className="support-page bg-white pt-[calc(var(--hdr-h)+12px)] lg:pt-[calc(var(--hdr-h)+17px)] pb-4 overflow-x-hidden" data-hero-light>
       <SupportContainer className="flex flex-col gap-6 min-w-0 max-w-full">
 
         <div className="flex flex-col gap-4">

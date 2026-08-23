@@ -5,6 +5,56 @@ import { useEffect, useRef, useState } from 'react';
 import { HEADER_MENUS, type MegaColumn, type NavGroup, type NavLink } from '@/content/nav';
 import { isAuthShellPath } from '@/content/auth';
 import { useGlobalTools, type Locale } from '@/components/GlobalTools';
+import { cn } from '@/lib/cn';
+import {
+  BURGER_BAR,
+  burgerClass,
+  COMING_SOON_WRAP,
+  LOGO_CLASS,
+  LOGO_IMG_CLASS,
+  CARET_CLASS,
+  MEGA_COL,
+  MEGA_COLS,
+  MEGA_COLS_FEATURED,
+  MEGA_COL_TITLE,
+  MEGA_COL_TITLE_ACTIVE,
+  MEGA_COL_TITLE_LINK,
+  MEGA_FEATURED,
+  MEGA_FEATURED_CTA,
+  MEGA_FEATURED_DESC,
+  MEGA_FEATURED_EYEBROW,
+  MEGA_FEATURED_IMG,
+  MEGA_FEATURED_MEDIA,
+  MEGA_FEATURED_TITLE,
+  MEGA_GROUP,
+  MEGA_GROUP_LABEL,
+  MEGA_INNER,
+  MEGA_LINK,
+  MEGA_LINK_ACTIVE,
+  MEGA_LINK_LABEL,
+  MEGA_LINK_LABEL_ACTIVE,
+  MEGA_SIMPLE_LINK,
+  MEGA_SIMPLE_LINK_ACTIVE,
+  NAV_BAR_CLASS,
+  NAV_DEMO,
+  NAV_DEMO_MOBILE,
+  NAV_DEMO_TOOLS,
+  NAV_LABEL_LONG,
+  NAV_LABEL_SHORT,
+  NAV_MOBILE_AUTH,
+  NAV_MOBILE_AUTH_ON_LIGHT,
+  NAV_SOON,
+  NAV_SOON_TIP,
+  NAV_TOOLS,
+  NAV_TRIGGER_TW,
+  SITE_NOTICE_CLASS,
+  headerShellClass,
+  megaDropdownClass,
+  megaPanelClass,
+  navItemClass,
+  navLinkLabelClass,
+  navMenuClass,
+} from './headerChrome';
 
 const SITE_NOTICE: Record<Locale, string> = {
   en: 'The Website is under construction - بث تجريبي',
@@ -12,7 +62,11 @@ const SITE_NOTICE: Record<Locale, string> = {
   fr: 'The Website is under construction - بث تجريبي',
 };
 
-const Caret = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>);
+const Caret = () => (
+  <svg className={CARET_CLASS} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+    <path d="M6 9l6 6 6-6" />
+  </svg>
+);
 
 /** Dimmed entries stay in nav data for later, but are not shown. */
 function visibleLinks(items: NavLink[]): NavLink[] {
@@ -153,9 +207,9 @@ function isMenuRouteActive(menu: NavGroup, pathname: string, hash = ''): boolean
 function ComingSoonNavItem({ label }: { label: string }) {
   const tipId = `nav-soon-${label.replace(/\s+/g, '-').toLowerCase()}`;
   return (
-    <div className="nav-item is-coming-soon">
+    <div className={COMING_SOON_WRAP}>
       <span
-        className="nav-soon"
+        className={NAV_SOON}
         tabIndex={0}
         aria-disabled="true"
         aria-label={`${label}, coming soon`}
@@ -163,7 +217,7 @@ function ComingSoonNavItem({ label }: { label: string }) {
       >
         <span className="nav-link-label">{label}</span>
       </span>
-      <span id={tipId} className="nav-soon-tip" role="tooltip">
+      <span id={tipId} className={NAV_SOON_TIP} role="tooltip">
         Coming soon
       </span>
     </div>
@@ -187,12 +241,12 @@ function MegaLink({
   return (
     <NavAnchor
       href={item.href}
-      className={`mega-link${active ? ' active' : ''}`}
+      className={cn('group/link', MEGA_LINK, active && MEGA_LINK_ACTIVE)}
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
       {...previewProps}
     >
-      <span className="mega-link__label">{item.label}</span>
+      <span className={cn(MEGA_LINK_LABEL, active && MEGA_LINK_LABEL_ACTIVE)}>{item.label}</span>
     </NavAnchor>
   );
 }
@@ -217,22 +271,22 @@ function MegaColumnBlock({
     ? isNavHrefActive(pathname, column.href, hash)
     : false;
   return (
-    <div className="mega-col">
+    <div className={MEGA_COL}>
       {column.href ? (
         <NavAnchor
           href={column.href}
-          className={`mega-col__title${titleActive ? ' active' : ''}`}
+          className={cn(MEGA_COL_TITLE_LINK, titleActive && MEGA_COL_TITLE_ACTIVE, titleActive && 'active')}
           onClick={onClick}
           aria-current={titleActive ? 'page' : undefined}
         >
           {column.title}
         </NavAnchor>
       ) : (
-        <p className="mega-col__title">{column.title}</p>
+        <p className={MEGA_COL_TITLE}>{column.title}</p>
       )}
       {column.groups?.map((group, i) => (
-        <div className="mega-group" key={group.label ?? `g-${i}`}>
-          {group.label ? <p className="mega-group__label">{group.label}</p> : null}
+        <div className={MEGA_GROUP} key={group.label ?? `g-${i}`}>
+          {group.label ? <p className={MEGA_GROUP_LABEL}>{group.label}</p> : null}
           {group.items.map((item) => (
             <MegaLink
               key={item.label + item.href}
@@ -262,11 +316,15 @@ function MegaPanel({
   onClick,
   pathname,
   hash,
+  onLight,
+  expanded,
 }: {
   menu: NavGroup;
   onClick: () => void;
   pathname: string;
   hash: string;
+  onLight: boolean;
+  expanded: boolean;
 }) {
   // The featured card previews whichever product link is hovered/focused,
   // falling back to the menu's default flagship when nothing is.
@@ -287,10 +345,14 @@ function MegaPanel({
         : featured
       : null;
     return (
-      <div className="mega mega-panel" onMouseLeave={() => setPreview(null)}>
-        <div className="mega-panel__inner wrap">
+      <div
+        className={megaPanelClass(onLight)}
+        data-expanded={expanded ? 'true' : undefined}
+        onMouseLeave={() => setPreview(null)}
+      >
+        <div className={MEGA_INNER}>
           <div
-            className={`mega-panel__cols${menu.featured ? ' mega-panel__cols--featured' : ''}`}
+            className={cn(MEGA_COLS, menu.featured && MEGA_COLS_FEATURED)}
             style={{ ['--mega-cols' as string]: String(menu.columns.length) }}
           >
             {menu.columns.map((col) => (
@@ -305,19 +367,19 @@ function MegaPanel({
             ))}
           </div>
           {shown ? (
-            <aside className="mega-featured">
+            <aside className={MEGA_FEATURED}>
               {shown.img ? (
-                <span className="mega-featured__media">
+                <span className={MEGA_FEATURED_MEDIA}>
                   {/* keyed by src so a swap remounts and replays the fade-in */}
-                  <img key={shown.img} src={shown.img} alt={shown.imgAlt ?? ''} loading="lazy" />
+                  <img key={shown.img} className={MEGA_FEATURED_IMG} src={shown.img} alt={shown.imgAlt ?? ''} loading="lazy" />
                 </span>
               ) : null}
-              <span className="mega-featured__eyebrow">{shown.eyebrow}</span>
-              <strong className="mega-featured__title">{shown.title}</strong>
-              <p className="mega-featured__desc">{shown.desc}</p>
+              <span className={MEGA_FEATURED_EYEBROW}>{shown.eyebrow}</span>
+              <strong className={MEGA_FEATURED_TITLE}>{shown.title}</strong>
+              <p className={MEGA_FEATURED_DESC}>{shown.desc}</p>
               <NavAnchor
                 href={shown.href}
-                className="mega-featured__cta"
+                className={MEGA_FEATURED_CTA}
                 onClick={onClick}
               >
                 {shown.cta}
@@ -333,14 +395,14 @@ function MegaPanel({
   }
 
   return (
-    <div className="mega">
+    <div className={megaDropdownClass()} data-expanded={expanded ? 'true' : undefined}>
       {menu.items.map((item) => {
         const active = isNavHrefActive(pathname, item.href, hash);
         return (
           <NavAnchor
             key={item.label}
             href={item.href}
-            className={active ? 'active' : undefined}
+            className={cn(MEGA_SIMPLE_LINK, active && MEGA_SIMPLE_LINK_ACTIVE)}
             aria-current={active ? 'page' : undefined}
             onClick={onClick}
           >
@@ -352,12 +414,28 @@ function MegaPanel({
   );
 }
 
+function initialHeroFromPath(pathname: string | null) {
+  const p = pathname || '/';
+  const darkHero =
+    p === '/products/resins' ||
+    p.startsWith('/products/resins/') ||
+    /^\/solutions\/clinical-applications\/[^/]+\/?$/.test(p);
+  const clearTop = p === '/' || p === '/support';
+  return {
+    hasHero: true,
+    heroLight: !darkHero,
+    heroClear: clearTop && !darkHero,
+  };
+}
+
 export default function Header() {
   const pathname = usePathname();
   const { locale } = useGlobalTools();
   const [scrolled, setScrolled] = useState(false);
-  const [hasHero, setHasHero] = useState(false);
-  const [heroLight, setHeroLight] = useState(false);
+  const guessed = initialHeroFromPath(pathname);
+  const [hasHero, setHasHero] = useState(guessed.hasHero);
+  const [heroLight, setHeroLight] = useState(guessed.heroLight);
+  const [heroClear, setHeroClear] = useState(guessed.heroClear);
   const [pastHero, setPastHero] = useState(false);
   const [open, setOpen] = useState(false);
   const [expandedNav, setExpandedNav] = useState<string | null>(null);
@@ -383,6 +461,7 @@ export default function Header() {
     const heroEl = document.querySelector('.page-hero, [data-hero-light], [data-hero-dark]');
     setHasHero(!!heroEl);
     setHeroLight(!!heroEl?.hasAttribute('data-hero-light'));
+    setHeroClear(!!heroEl?.hasAttribute('data-hero-clear'));
 
     const update = () => {
       const y = window.scrollY;
@@ -491,68 +570,91 @@ export default function Header() {
 
   const transparent = hasHero && !heroLight && !pastHero && !scrolled;
   const onLight = hasHero && (pastHero || heroLight);
-  const headerClass = [
-    transparent ? 'transparent' : '',
-    onLight ? 'on-light' : '',
-    !transparent && !onLight ? 'solid' : '',
-    scrolled && !onLight ? 'scrolled' : '',
-    !scrolled ? 'at-top' : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const solid = !transparent && !onLight;
+  const atTop = !scrolled;
+  const clearTop = onLight && atTop && heroClear && !pastHero;
 
   // Admin and auth screens use their own shell — avoid double chrome / sticky offset bugs.
   if (pathname?.startsWith('/admin') || isAuthShellPath(pathname)) return null;
 
   return (
-    <header id="hdr" ref={headerRef} className={headerClass} onMouseMove={onSpotlightMove}>
-      <p className="site-notice" role="status">
+    <header
+      id="hdr"
+      ref={headerRef}
+      className={headerShellClass({
+        transparent,
+        onLight,
+        solid,
+        scrolled: scrolled && !onLight,
+        atTop,
+        clearTop,
+      })}
+      onMouseMove={onSpotlightMove}
+    >
+      <p className={SITE_NOTICE_CLASS} role="status">
         {SITE_NOTICE[locale]}
       </p>
-      <div className="wrap nav">
-        <Link href="/" className="logo" aria-label="ODYX home">
-          <img className="logo-img logo-img-on-dark" src="/brand/odyx-egypt-white.png" alt="ODYX Egypt" />
-          <img className="logo-img logo-img-on-light" src="/brand/odyx-egypt.png" alt="ODYX Egypt" />
+      <div className={NAV_BAR_CLASS}>
+        <Link href="/" className={LOGO_CLASS} aria-label="ODYX home">
+          <img
+            className={LOGO_IMG_CLASS}
+            src={onLight ? '/brand/odyx-egypt.png' : '/brand/odyx-egypt-white.png'}
+            alt="ODYX Egypt"
+          />
         </Link>
-        <nav className={`nav-menu${open ? ' open' : ''}${forceClose ? ' force-close' : ''}`} aria-label="Main">
+        <nav
+          className={navMenuClass(open, forceClose, onLight)}
+          data-open={open ? 'true' : undefined}
+          aria-label="Main"
+        >
           {VISIBLE_MENUS.map((m) =>
             m.comingSoon ? (
               <ComingSoonNavItem key={m.label} label={m.label} />
             ) : (
               <div
-                className={`nav-item${m.columns ? ' nav-item--mega' : ''}${expandedNav === m.label ? ' exp' : ''}`}
+                className={navItemClass(!!m.columns, expandedNav === m.label)}
                 key={m.label}
               >
                 <NavAnchor
                   href={m.href}
+                  className={NAV_TRIGGER_TW}
                   navOnly={m.navOnly}
                   onClick={(e) => toggleMobileSection(m.label, e)}
                 >
-                  <span className={isMenuActive(m) ? 'nav-link-label active' : 'nav-link-label'}>{m.label}</span> <Caret />
+                  <span className={navLinkLabelClass(isMenuActive(m))}>{m.label}</span> <Caret />
                 </NavAnchor>
-                <MegaPanel menu={m} onClick={closeMenu} pathname={pathname || '/'} hash={hash} />
+                <MegaPanel
+                  menu={m}
+                  onClick={closeMenu}
+                  pathname={pathname || '/'}
+                  hash={hash}
+                  onLight={onLight}
+                  expanded={expandedNav === m.label}
+                />
               </div>
             ),
           )}
-          <div className="nav-mobile-auth">
-            <Link className="btn btn-sm nav-demo" href="/request-demo" onClick={closeMenu}>
+          <div className={cn(NAV_MOBILE_AUTH, onLight && NAV_MOBILE_AUTH_ON_LIGHT)}>
+            <Link className={cn(NAV_DEMO, NAV_DEMO_MOBILE)} href="/request-demo" onClick={closeMenu}>
               Request a Demo
             </Link>
           </div>
         </nav>
-        <div className="nav-tools">
-          <Link className="btn btn-sm nav-demo" href="/request-demo">
-            <span className="nav-label-long">Request a Demo</span>
-            <span className="nav-label-short">Demo</span>
+        <div className={NAV_TOOLS}>
+          <Link className={cn(NAV_DEMO, NAV_DEMO_TOOLS)} href="/request-demo">
+            <span className={NAV_LABEL_LONG}>Request a Demo</span>
+            <span className={NAV_LABEL_SHORT}>Demo</span>
           </Link>
           <button
             type="button"
-            className="burger"
+            className={burgerClass()}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
           >
-            <span /><span /><span />
+            <span className={cn(BURGER_BAR, open && 'translate-y-[7px] rotate-45')} />
+            <span className={cn(BURGER_BAR, open && 'opacity-0')} />
+            <span className={cn(BURGER_BAR, open && '-translate-y-[7px] -rotate-45')} />
           </button>
         </div>
       </div>

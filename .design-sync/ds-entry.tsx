@@ -13,7 +13,7 @@
 // ── Chrome ───────────────────────────────────────────────────────────────
 // Header renders its home-screen state: the navigation shim pins the pathname
 // to "/", which is the action-blue treatment approved for the design system.
-export { default as Header } from '@/components/Header';
+export { default as Header } from '@/components/header/Header';
 // Site-wide Footer (Home V2 navy band). Kept as `Hv2Footer` for design-sync
 // preview name stability after the home2 component was consolidated.
 export { default as Hv2Footer } from '@/components/Footer';

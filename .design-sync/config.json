@@ -25,8 +25,8 @@
     "P126Page": { "cardMode": "single", "primaryStory": "FullScreen", "viewport": "1920x1080" }
   },
   "componentSrcMap": {
-    "Header": "src/components/Header.tsx",
-    "Hv2Footer": "src/components/home2/Hv2Footer.tsx",
+    "Header": "src/components/header/Header.tsx",
+    "Hv2Footer": "src/components/Footer.tsx",
     "PathCarousel": "src/components/home2/PathCarousel.tsx",
     "ProductsRail": "src/components/home2/ProductsRail.tsx",
     "ClinicalApplicationsSection": "src/components/home2/ClinicalApplicationsSection.tsx",

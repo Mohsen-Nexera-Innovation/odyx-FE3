@@ -4,6 +4,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
     "paths": {
       "next/link": ["./shims/next-link.tsx"],
       "next/navigation": ["./shims/next-navigation.tsx"],

@@ -5,6 +5,14 @@
    instead of hand-written per-screen overrides. */
 @custom-variant rtl (&:where([dir="rtl"], [dir="rtl"] *));
 
+/* Inclusive 1024px nav breakpoint — matches Header JS (`innerWidth > 1024`
+   desktop) and the previous `@media (max-width: 1024px)` accordion. Tailwind
+   v4 `max-[1024px]` is `(width < 1024px)` and leaves 1024px unstyled. */
+@custom-variant max-1024 (@media (max-width: 1024px));
+@custom-variant min-1025 (@media (min-width: 1025px));
+@custom-variant max-980 (@media (max-width: 980px));
+@custom-variant min-981 (@media (min-width: 981px));
+
 /* Home hero collage — idle float/breathe loops shared by the product
    cutouts and their floor shadows (durations/delays set per element via
    --ofd/--ofo custom properties on the utility classes that use them). */
@@ -54,6 +62,12 @@
 @keyframes hv2LuRiseB{0%{translate:0 calc(.55 * var(--u)); opacity:.7}}
 @keyframes hv2LuArtA{0%{scale:1.04; opacity:.78}}
 @keyframes hv2LuArtB{0%{scale:1.04; opacity:.78}}
+
+/* Header mega featured-image swap (img remounts on hover). */
+@keyframes megaPreviewIn{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
+}
 @import "./odyx.css";
 @import "./light.css";
 @import "./product-print.css";
