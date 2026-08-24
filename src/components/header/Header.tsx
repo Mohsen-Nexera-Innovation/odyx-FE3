@@ -55,6 +55,7 @@ import {
   navLinkLabelClass,
   navMenuClass,
 } from './headerChrome';
+import NavAuth from './NavAuth';
 
 const SITE_NOTICE: Record<Locale, string> = {
   en: 'The Website is under construction - بث تجريبي',
@@ -635,12 +636,14 @@ export default function Header() {
             ),
           )}
           <div className={cn(NAV_MOBILE_AUTH, onLight && NAV_MOBILE_AUTH_ON_LIGHT)}>
+            <NavAuth placement="mobile" onNavigate={closeMenu} />
             <Link className={cn(NAV_DEMO, NAV_DEMO_MOBILE)} href="/request-demo" onClick={closeMenu}>
               Request a Demo
             </Link>
           </div>
         </nav>
         <div className={NAV_TOOLS}>
+          <NavAuth placement="tools" />
           <Link className={cn(NAV_DEMO, NAV_DEMO_TOOLS)} href="/request-demo">
             <span className={NAV_LABEL_LONG}>Request a Demo</span>
             <span className={NAV_LABEL_SHORT}>Demo</span>

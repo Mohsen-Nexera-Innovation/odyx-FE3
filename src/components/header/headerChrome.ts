@@ -65,6 +65,9 @@ export function navItemClass(mega: boolean, expanded: boolean) {
   return cn(
     'group/item nav-item shrink-0 max-1024:w-full',
     'min-1025:flex min-1025:self-stretch min-1025:items-center',
+    // Fill the nav bar's 17px vertical padding so the pointer never leaves
+    // the hover group while moving from the label into the dropdown.
+    'min-1025:-my-[17px] min-1025:py-[17px]',
     mega ? 'nav-item--mega min-1025:static max-1024:relative' : 'relative',
     expanded && 'exp',
   );
@@ -119,11 +122,11 @@ export const NAV_SOON_TIP = cn(
 export function megaDropdownClass() {
   return cn(
     'mega absolute top-full left-0 z-40 min-w-[200px] rounded-xl border border-[rgba(255,255,255,.09)] bg-[#2A262C] p-1.5',
-    'invisible translate-y-0 opacity-0 shadow-[0_20px_48px_rgba(0,0,0,.45)] transition-[opacity,visibility] duration-200 ease-in-out',
-    'group-hover/item:visible group-hover/item:opacity-100',
+    'invisible translate-y-0 opacity-0 shadow-[0_20px_48px_rgba(0,0,0,.45)] transition-[opacity,visibility] duration-150 ease-in-out delay-150',
+    'group-hover/item:visible group-hover/item:opacity-100 group-hover/item:delay-0',
     'group-[.on-light]/hdr:border-black/8 group-[.on-light]/hdr:bg-white group-[.on-light]/hdr:shadow-[0_20px_48px_rgba(0,0,0,.10)]',
     'max-1024:static max-1024:hidden data-[expanded=true]:max-1024:block',
-    'max-1024:min-w-0 max-1024:my-1 max-1024:mb-2 max-1024:border-0 max-1024:bg-[rgba(0,0,0,.2)] max-1024:p-0 max-1024:shadow-none max-1024:visible max-1024:translate-y-0 max-1024:opacity-100',
+    'max-1024:min-w-0 max-1024:my-1 max-1024:mb-2 max-1024:border-0 max-1024:bg-[rgba(0,0,0,.2)] max-1024:p-0 max-1024:shadow-none max-1024:visible max-1024:translate-y-0 max-1024:opacity-100 max-1024:delay-0',
     'group-[.on-light]/hdr:max-1024:bg-[rgba(0,0,0,.04)]',
   );
 }
@@ -142,7 +145,7 @@ export function megaPanelClass(onLight: boolean) {
   return cn(
     megaDropdownClass(),
     'mega-panel inset-x-0 top-full w-full min-w-0 rounded-none border-x-0 border-t border-b border-[rgba(255,255,255,.09)] bg-[rgba(22,20,24,.97)] p-0 shadow-[0_28px_60px_rgba(0,0,0,.45)] backdrop-blur-[18px]',
-    "before:absolute before:top-[-12px] before:right-0 before:left-0 before:h-3 before:content-['']",
+    "before:pointer-events-auto before:absolute before:top-[-28px] before:right-0 before:left-0 before:h-7 before:content-['']",
     onLight &&
       'border-t-[rgba(0,0,0,.06)] border-b-[rgba(0,0,0,.08)] bg-[rgba(255,255,255,.98)] shadow-[0_28px_60px_rgba(0,0,0,.10)]',
     'max-1024:border-0 max-1024:bg-[rgba(0,0,0,.22)] max-1024:shadow-none max-1024:backdrop-blur-none max-1024:[-webkit-backdrop-filter:none]',
@@ -286,6 +289,26 @@ export const NAV_DEMO = cn(
 export const NAV_DEMO_TOOLS = 'max-1024:hidden min-1025:inline-flex';
 
 export const NAV_DEMO_MOBILE =
+  'max-1024:min-h-11 max-1024:min-w-[120px] max-1024:flex-[1_1_calc(50%-4px)] max-1024:justify-center';
+
+export const NAV_AUTH = cn(
+  'inline-flex h-8 shrink-0 box-border w-fit min-w-[4.75rem] items-center justify-center rounded-full px-[11px]',
+  'font-sans text-[clamp(.74rem,.95vw,.82rem)] font-semibold leading-none whitespace-nowrap no-underline',
+  'border border-solid border-[rgba(255,255,255,.28)] bg-transparent text-white/90',
+  'transition-[transform,background,color,border-color] duration-200',
+  'hover:-translate-y-0.5 hover:border-white/55 hover:bg-[rgba(255,255,255,.08)] hover:text-white',
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D7DF0]',
+  'group-[.on-light]/hdr:border-[rgba(0,80,216,.28)] group-[.on-light]/hdr:text-[#0041AF]',
+  'group-[.on-light]/hdr:hover:border-[#0050D8] group-[.on-light]/hdr:hover:bg-[rgba(0,80,216,.08)] group-[.on-light]/hdr:hover:text-[#00337F]',
+  'group-[.on-light]/hdr:focus-visible:outline-[#0050D8]',
+  'disabled:pointer-events-none disabled:opacity-60',
+  'max-[1280px]:h-7 max-[1280px]:px-2 max-[1280px]:text-[clamp(.62rem,.85vw,.72rem)]',
+  'max-980:h-7 max-980:px-[7px] max-980:text-[.62rem]',
+);
+
+export const NAV_AUTH_TOOLS = 'max-1024:hidden min-1025:inline-flex';
+
+export const NAV_AUTH_MOBILE =
   'max-1024:min-h-11 max-1024:min-w-[120px] max-1024:flex-[1_1_calc(50%-4px)] max-1024:justify-center';
 
 export const NAV_LABEL_LONG = 'max-980:hidden min-981:inline';
