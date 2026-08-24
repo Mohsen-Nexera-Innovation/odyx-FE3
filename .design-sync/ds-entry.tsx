@@ -16,8 +16,8 @@
 export { default as Header } from '@/components/header/Header';
 // Site-wide Footer (Home V2 navy band). Kept as `Hv2Footer` for design-sync
 // preview name stability after the home2 component was consolidated.
-export { default as Hv2Footer } from '@/components/Footer';
-export { default as Footer } from '@/components/Footer';
+export { default as Hv2Footer } from '@/components/footer/Footer';
+export { default as Footer } from '@/components/footer/Footer';
 
 // ── Home screen sections ─────────────────────────────────────────────────
 export { default as PathCarousel } from '@/components/home2/PathCarousel';

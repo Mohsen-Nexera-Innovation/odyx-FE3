@@ -26,7 +26,7 @@
   },
   "componentSrcMap": {
     "Header": "src/components/header/Header.tsx",
-    "Hv2Footer": "src/components/Footer.tsx",
+    "Hv2Footer": "src/components/footer/Footer.tsx",
     "PathCarousel": "src/components/home2/PathCarousel.tsx",
     "ProductsRail": "src/components/home2/ProductsRail.tsx",
     "ClinicalApplicationsSection": "src/components/home2/ClinicalApplicationsSection.tsx",

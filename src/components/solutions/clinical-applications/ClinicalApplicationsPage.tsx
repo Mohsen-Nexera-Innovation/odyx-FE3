@@ -118,7 +118,8 @@ export default function ClinicalApplicationsPage() {
               return (
                 <article
                   key={cat.id}
-                  className={SOLUTIONS_CARD}
+                  id={cat.id}
+                  className={`${SOLUTIONS_CARD} scroll-mt-[96px]`}
                 >
                   <div className="relative z-auto flex w-auto items-center gap-2.5 bg-transparent px-4 pt-[18px] pb-3.5">
                     <span

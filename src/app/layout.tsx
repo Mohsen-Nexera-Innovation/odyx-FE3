@@ -3,7 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import { fontVars } from "./fonts";
 import Header from "@/components/header/Header";
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer/Footer";
 import { GlobalToolsProvider } from "@/components/GlobalTools";
 import SiteBackground from "@/components/SiteBackground";
 import DevPreviewTools from "@/components/DevPreviewTools";

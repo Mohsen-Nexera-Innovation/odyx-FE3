@@ -12,6 +12,11 @@
 @custom-variant min-1025 (@media (min-width: 1025px));
 @custom-variant max-980 (@media (max-width: 980px));
 @custom-variant min-981 (@media (min-width: 981px));
+/* Footer chrome — Tailwind v4 `max-[Npx]` is exclusive (`width < N`). */
+@custom-variant max-1919 (@media (max-width: 1919px));
+@custom-variant max-1180 (@media (max-width: 1180px));
+@custom-variant max-860 (@media (max-width: 860px));
+@custom-variant max-420 (@media (max-width: 420px));
 
 /* Home hero collage — idle float/breathe loops shared by the product
    cutouts and their floor shadows (durations/delays set per element via
