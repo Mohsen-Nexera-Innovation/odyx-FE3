@@ -14,6 +14,7 @@
 @custom-variant min-981 (@media (min-width: 981px));
 /* Footer chrome — Tailwind v4 `max-[Npx]` is exclusive (`width < N`). */
 @custom-variant max-1919 (@media (max-width: 1919px));
+@custom-variant min-1280 (@media (min-width: 1280px));
 @custom-variant max-1180 (@media (max-width: 1180px));
 @custom-variant max-860 (@media (max-width: 860px));
 @custom-variant max-420 (@media (max-width: 420px));

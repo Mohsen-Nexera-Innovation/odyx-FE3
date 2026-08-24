@@ -15,11 +15,14 @@ export const FT_PAD =
   "px-[clamp(20px,4vw,76px)]";
 
 // One auto-fit grid: 1 col on phones, then 2 / 3 / … as the viewport grows.
+// From 1280px, lock 8 tracks so brand + 6 nav columns + newsletter sit in one row.
 // Avoid Tailwind `grid` — odyx.css `.grid { gap: 20px }` would win.
 export const FT_GRID =
   "[display:grid]! min-w-0" +
-  " [grid-template-columns:repeat(auto-fit,minmax(min(100%,12.5rem),1fr))]!" +
+  " [grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))]!" +
+  " min-1280:[grid-template-columns:repeat(8,minmax(0,1fr))]!" +
   " [gap:clamp(22px,3vw,40px)_clamp(16px,2.2vw,32px)]!" +
+  " min-1280:[column-gap:clamp(10px,1vw,20px)]!" +
   " py-[clamp(32px,4vw,48px)]";
 
 export const FT_NAV = "contents";
@@ -92,6 +95,7 @@ export const FT_FORM =
   " rounded-none bg-[var(--ft-input-bg)] border border-[var(--ft-input-line)] overflow-hidden" +
   " [box-shadow:inset_0_1px_0_rgba(255,255,255,.03),0_2px_10px_rgba(1,9,26,.25)]" +
   " focus-within:border-[rgba(126,164,235,.55)]" +
+  " min-1280:max-w-none!" +
   " max-860:max-w-none!";
 
 export const FT_INPUT =

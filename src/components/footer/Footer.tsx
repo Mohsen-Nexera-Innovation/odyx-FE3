@@ -41,7 +41,8 @@ import {
 } from "./footerChrome";
 
 // Site footer — navy band. Layout is one auto-fit CSS grid so columns
-// grow from 1 → 2 → 3 → … as the viewport widens.
+// grow from 1 → 2 → 3 → … as the viewport widens, then lock to one row
+// from 1280px (brand + 6 link groups + newsletter).
 //
 // Footer brand mark: /brand/odyx-egypt-white.png (black fill → white for navy band).
 

@@ -39,6 +39,15 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     ],
   },
   {
+    title: "Solutions",
+    links: [
+      { label: "Clinical Applications", href: "/solutions/clinical-applications" },
+      { label: "Clinical Cases", href: "/solutions/cases" },
+      { label: "By Application", href: "/solutions/cases/applications" },
+      { label: "By Product", href: "/solutions/cases/products" },
+    ],
+  },
+  {
     title: "Workflows",
     links: [
       { label: "Restorative", href: "/solutions/clinical-applications#restorative" },
@@ -51,10 +60,9 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: "Learning",
     links: [
-      { label: "Courses", href: "/learning#courses" },
+      { label: "Clinical Courses", href: "/learning" },
       { label: "Webinars", href: "/learning#videos" },
       { label: "Guides", href: "/learning#articles" },
-      { label: "Clinical Cases", href: "/solutions/cases" },
     ],
   },
   {
