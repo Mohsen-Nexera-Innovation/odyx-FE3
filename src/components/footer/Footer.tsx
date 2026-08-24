@@ -40,11 +40,8 @@ import {
   FT_UL,
 } from "./footerChrome";
 
-// Site footer — single reusable navy band for the whole website.
-// Visual source of truth: the Home V2 client footer reference (2048-CSS-px
-// viewport: 76px side padding, 364px tall, columns at x = 76 / 442 / 683 /
-// 943 / 1200 / 1433 / 1657). Geometry is carried in --fu (one reference
-// pixel) off the query container.
+// Site footer — navy band. Layout is one auto-fit CSS grid so columns
+// grow from 1 → 2 → 3 → … as the viewport widens.
 //
 // Footer brand mark: /brand/odyx-egypt-white.png (black fill → white for navy band).
 
