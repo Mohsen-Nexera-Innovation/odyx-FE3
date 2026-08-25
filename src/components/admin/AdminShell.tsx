@@ -63,6 +63,13 @@ const Icon = {
       <path d="M8 12h8M8 15h5" strokeLinecap="round" />
     </svg>
   ),
+  requests: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M4 7h16v11.5A2.5 2.5 0 0117.5 21h-11A2.5 2.5 0 014 18.5V7z" strokeLinejoin="round" />
+      <path d="M8 7V5.5A2.5 2.5 0 0110.5 3h3A2.5 2.5 0 0116 5.5V7" />
+      <path d="M12 11v5M12 16l-2.2-2.2M12 16l2.2-2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
 };
 
 type NavLink = {
@@ -81,6 +88,7 @@ const LINKS: NavLink[] = [
   { href: '/admin/clients', label: 'Clients', perm: 'clients.read', icon: Icon.clients, section: 'Commerce' },
   { href: '/admin/leads', label: 'Leads', perm: 'leads.read', icon: Icon.leads, section: 'Commerce' },
   { href: '/admin/case-library', label: 'Case Library', perm: 'case-library.manage', icon: Icon.cases, section: 'Content' },
+  { href: '/admin/design-requests', label: 'Design requests', perm: 'cases.read', icon: Icon.requests, section: 'Support' },
   { href: '/admin/chat', label: 'Chat', perm: 'chat.reply', icon: Icon.chat, section: 'Support' },
 ];
 

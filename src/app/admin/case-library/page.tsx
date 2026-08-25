@@ -263,7 +263,9 @@ export default function AdminCaseLibraryPage() {
       <div className="admin-page-head">
         <h1>Case Library CMS</h1>
         <p className="admin-sub">
-          Upload cover / before / after images for the public <a href="/solutions/cases">/solutions/cases</a> page.
+          Marketing showcase for the public cases site. Incoming Design Services work lives under{' '}
+          <a href="/admin/design-requests">Design requests</a>. Upload cover / before / after images
+          for <a href="/solutions/cases">/solutions/cases</a>.
           Files go to Cloudflare R2 when <code>MEDIA_STORAGE=r2</code> (absolute public URL), or
           local <code>/media/case-library/…</code> when <code>MEDIA_STORAGE=local</code>.
         </p>

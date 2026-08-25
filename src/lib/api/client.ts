@@ -75,15 +75,14 @@ async function tryRefreshAccessToken(): Promise<boolean> {
   return true;
 }
 
-export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
-  const base = getApiBaseUrl();
-  if (!base) {
-    throw new ApiError('API URL is not configured.', 0);
-  }
+function resolveUrl(path: string, base: string) {
+  return path.startsWith('http') ? path : `${base}${path.startsWith('/') ? '' : '/'}${path}`;
+}
 
-  const { auth, skipRefresh, headers: initHeaders, ...rest } = options;
+function buildHeaders(options: ApiFetchOptions, jsonAccept: boolean): Headers {
+  const { auth, headers: initHeaders, ...rest } = options;
   const headers = new Headers(initHeaders);
-  if (!headers.has('Accept')) headers.set('Accept', 'application/json');
+  if (jsonAccept && !headers.has('Accept')) headers.set('Accept', 'application/json');
   const isFormData = typeof FormData !== 'undefined' && rest.body instanceof FormData;
   if (rest.body && !isFormData && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
@@ -92,31 +91,83 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
     const token = getAccessToken();
     if (token) headers.set('Authorization', `Bearer ${token}`);
   }
+  return headers;
+}
 
-  const url = path.startsWith('http') ? path : `${base}${path.startsWith('/') ? '' : '/'}${path}`;
-  let res = await fetch(url, { ...rest, headers });
+async function requestWithAuth(
+  path: string,
+  options: ApiFetchOptions = {},
+  jsonAccept = true,
+): Promise<Response> {
+  const base = getApiBaseUrl();
+  if (!base) {
+    throw new ApiError('API URL is not configured.', 0);
+  }
+
+  const { skipRefresh, auth, headers: _headers, ...rest } = options;
+  const url = resolveUrl(path, base);
+  let res = await fetch(url, { ...rest, headers: buildHeaders(options, jsonAccept) });
 
   if (res.status === 401 && auth && !skipRefresh) {
     const refreshed = await tryRefreshAccessToken();
     if (refreshed) {
-      const retryHeaders = new Headers(initHeaders);
-      if (!retryHeaders.has('Accept')) retryHeaders.set('Accept', 'application/json');
-      if (rest.body && !isFormData && !retryHeaders.has('Content-Type')) {
-        retryHeaders.set('Content-Type', 'application/json');
-      }
-      const next = getAccessToken();
-      if (next) retryHeaders.set('Authorization', `Bearer ${next}`);
-      res = await fetch(url, { ...rest, headers: retryHeaders });
+      res = await fetch(url, { ...rest, headers: buildHeaders(options, jsonAccept) });
     }
   }
 
-  const data = await parseJson(res);
-  if (!res.ok) {
-    const missingRaw =
-      data && typeof data === 'object' ? (data as { missing?: unknown }).missing : undefined;
-    const missing = Array.isArray(missingRaw) ? missingRaw.map(String) : undefined;
-    throw new ApiError(nestMessage(data, res.statusText || 'Request failed'), res.status, missing);
-  }
+  return res;
+}
 
+function throwIfNotOk(res: Response, data: unknown): void {
+  if (res.ok) return;
+  const missingRaw =
+    data && typeof data === 'object' ? (data as { missing?: unknown }).missing : undefined;
+  const missing = Array.isArray(missingRaw) ? missingRaw.map(String) : undefined;
+  throw new ApiError(nestMessage(data, res.statusText || 'Request failed'), res.status, missing);
+}
+
+export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
+  const res = await requestWithAuth(path, options, true);
+  const data = await parseJson(res);
+  throwIfNotOk(res, data);
   return data as T;
+}
+
+function filenameFromDisposition(header: string | null, fallback: string): string {
+  if (!header) return fallback;
+  const star = /filename\*=UTF-8''([^;]+)/i.exec(header);
+  if (star?.[1]) {
+    try {
+      return decodeURIComponent(star[1]);
+    } catch {
+      return star[1];
+    }
+  }
+  const quoted = /filename="([^"]+)"/i.exec(header);
+  if (quoted?.[1]) {
+    try {
+      return decodeURIComponent(quoted[1]);
+    } catch {
+      return quoted[1];
+    }
+  }
+  const plain = /filename=([^;]+)/i.exec(header);
+  return plain?.[1]?.trim() || fallback;
+}
+
+export async function apiFetchBlob(
+  path: string,
+  options: ApiFetchOptions = {},
+): Promise<{ blob: Blob; filename: string }> {
+  const res = await requestWithAuth(path, options, false);
+  if (!res.ok) {
+    const data = await parseJson(res);
+    throwIfNotOk(res, data);
+  }
+  const blob = await res.blob();
+  const filename = filenameFromDisposition(
+    res.headers.get('Content-Disposition'),
+    'download',
+  );
+  return { blob, filename };
 }

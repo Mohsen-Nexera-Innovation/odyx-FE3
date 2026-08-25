@@ -1,6 +1,6 @@
 import { apiFetch } from '@/lib/api/client';
 
-export type CaseStatus = 'DRAFT' | 'SUBMITTED';
+export type CaseStatus = 'DRAFT' | 'SUBMITTED' | 'IN_DESIGN' | 'DELIVERED';
 export type CaseSendMethod = 'DIGITAL' | 'PHYSICAL';
 
 export type ApiCaseFile = {
@@ -20,9 +20,12 @@ export type ApiCase = {
   doctorPhone: string | null;
   clinicName: string | null;
   countryId: string | null;
+  country?: { id: string; code: string; name: string } | null;
   patientId: string | null;
   designTypeId: string | null;
+  designType?: { id: string; slug: string; name: string } | null;
   materialId: string | null;
+  material?: { id: string; slug: string; name: string } | null;
   toothNumbers: string[];
   shade: string | null;
   notes: string | null;
