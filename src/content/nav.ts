@@ -100,11 +100,11 @@ export const HEADER_MENUS: NavGroup[] = [
   },
   {
     label: "Products",
-    href: "/products/odyx-s1",
+    href: "/products",
     // navOnly: true,
     // comingSoon: true,
     items: [
-      { label: "All Products", href: "/products/odyx-s1", desc: "Full ODYX lineup", dimmed: true },
+      { label: "All Products", href: "/products", desc: "Full ODYX lineup" },
       {
         label: "Intraoral Scanner",
         href: "/products/odyx-s1",

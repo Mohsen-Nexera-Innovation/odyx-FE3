@@ -1,11 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
+import InnerPageMotion from '@/components/InnerPageMotion';
+import ProductsLandingPage from '@/components/products/ProductsLandingPage';
+import { PRODUCTS_LANDING_META } from '@/content/products-landing';
 
 export const metadata: Metadata = {
-  title: "Products | ODYX",
-  description:
-    "Explore the ODYX ecosystem — P1-26 printer, ODYX-S1 scanner, design software, curing and clinical resin.",
+  title: PRODUCTS_LANDING_META.title,
+  description: PRODUCTS_LANDING_META.description,
 };
 
 export default function Page() {
-  return <main className="min-h-screen bg-white" />;
+  return (
+    <>
+      <ProductsLandingPage />
+      <InnerPageMotion />
+    </>
+  );
 }
