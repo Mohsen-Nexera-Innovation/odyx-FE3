@@ -28,6 +28,7 @@ npm start
 
 | Environment | Where | Git branch | Ports (shared VPS) |
 | --- | --- | --- | --- |
+| **Development** | Hostinger VPS Docker | `develop` | web `:3002`, API `:4002` |
 | **Staging** | Hostinger VPS Docker (also optional Vercel FE) | `main` | web `:3000`, API `:4000` |
 | **Production** | Hostinger VPS Docker | `production` | web `:3001`, API `:4001` |
 
@@ -56,7 +57,7 @@ ODYX_ENV=production ./deploy/vps-deploy.sh web
 
 Verify: `https://odyxegypt.net` (web) and `https://api.odyxegypt.net/health` (API).
 
-GitHub Actions deploys **staging** (`main`) and **production** (`production`). Same secrets as staging: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`, `VPS_SSH_PORT`, `VPS_DEPLOY_PATH=/opt/odyx/api`.
+GitHub Actions deploys **development** (`develop`), **staging** (`main`), and **production** (`production`). Same secrets: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`, `VPS_SSH_PORT`, `VPS_DEPLOY_PATH=/opt/odyx/api`.
 
 `NEXT_PUBLIC_USE_API` and `NEXT_PUBLIC_API_URL` are Docker build args (from `.env.production` on the VPS).
 
