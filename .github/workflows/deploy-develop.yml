@@ -1,14 +1,14 @@
-name: Deploy Test VPS
+name: Deploy Develop VPS
 
 on:
   workflow_run:
     workflows: [CI]
     types: [completed]
-    branches: [main]
+    branches: [develop]
   workflow_dispatch:
 
 concurrency:
-  group: deploy-test-vps-web
+  group: deploy-develop-vps-web
   cancel-in-progress: true
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
       github.event.workflow_run.conclusion == 'success'
 
     steps:
-      - name: Deploy web to Hostinger test VPS
+      - name: Deploy web to Hostinger develop
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -33,7 +33,7 @@ jobs:
             set -euo pipefail
             # Deploy script lives in the API repo only (/opt/odyx/api).
             # VPS_DEPLOY_PATH must be /opt/odyx/api (same secret as odyx-api).
-            # vps-deploy.sh web syncs /opt/odyx/web (main) and rebuilds the web image.
+            # vps-deploy.sh web syncs /opt/odyx/web (develop) and rebuilds the web image.
             cd "${{ secrets.VPS_DEPLOY_PATH }}"
 
             if [[ ! -f deploy/vps-deploy.sh ]]; then
@@ -45,10 +45,10 @@ jobs:
 
             chmod +x deploy/vps-deploy.sh
 
-            git fetch --prune origin master
-            git checkout -f -B master origin/master
-            git reset --hard origin/master
+            git fetch --prune origin develop
+            git checkout -f -B develop origin/develop
+            git reset --hard origin/develop
 
-            ODYX_ENV=staging ./deploy/vps-deploy.sh web
+            ODYX_ENV=develop ./deploy/vps-deploy.sh web
 
             echo "Deployed WEB commit: $(git -C /opt/odyx/web log -1 --oneline)"
