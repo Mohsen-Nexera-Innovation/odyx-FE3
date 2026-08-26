@@ -10,7 +10,6 @@ import ClinicalCanvas from '@/components/solutions/ClinicalCanvas';
 const INTER =
   "[font-family:var(--font-inter),'Inter',ui-sans-serif,system-ui,sans-serif]";
 const WRAP = 'w-full max-w-none mx-auto px-[clamp(20px,4vw,56px)]';
-const SEC = 'py-[clamp(28px,3.6vw,40px)]';
 const SEC_TITLE =
   `${INTER} m-0 mb-4 text-left text-[clamp(1.25rem,1.6vw,1.375rem)] font-bold tracking-[-0.02em] text-[#111827]`;
 const CARD =
@@ -74,12 +73,12 @@ function TipCheck() {
 function ProductCardBody({ name, sub, img }: { name: string; sub: string; img: string }) {
   return (
     <>
-      <span className="grid aspect-square w-full place-items-center overflow-hidden rounded-xl bg-gradient-to-b from-[#f8fafc] to-[#eef2f7]">
+      <span className="relative isolate aspect-[3/4] w-full overflow-hidden rounded-xl bg-gradient-to-b from-[#f8fafc] to-[#eef2f7] max-[560px]:aspect-[4/5]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={img}
           alt=""
-          className="block size-[92%] object-contain object-center drop-shadow-[0_8px_14px_rgba(0,0,0,.12)]"
+          className="relative z-[1] block size-full min-h-0 min-w-0 object-contain object-center px-[10%] py-[12%] drop-shadow-[0_8px_14px_rgba(0,0,0,.12)]"
         />
       </span>
       <span className="flex flex-col items-center gap-0.5">
@@ -131,7 +130,7 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
             </p>
             <Link
               href={d.hero.cta.href}
-              className={`${INTER} inline-flex items-center gap-[9px] rounded-[10px] border-0 bg-[#0050D8] px-5 py-[13px] text-[0.9375rem] font-semibold tracking-[-0.01em] text-white no-underline shadow-[0_10px_24px_rgba(0,80,216,.28)] transition-[background,transform] duration-200 ease-in-out hover:-translate-y-px hover:bg-[#0041AF]`}
+              className={`${INTER} inline-flex max-w-full items-center gap-[9px] rounded-[10px] border-0 bg-[#0050D8] px-5 py-[13px] text-[0.9375rem] font-semibold tracking-[-0.01em] text-white no-underline shadow-[0_10px_24px_rgba(0,80,216,.28)] transition-[background,transform] duration-200 ease-in-out hover:-translate-y-px hover:bg-[#0041AF]`}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="size-4">
                 <path d="M12 4v10M8 10l4 4 4-4M5 18h14" strokeLinecap="round" strokeLinejoin="round" />
@@ -144,13 +143,14 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
             <img
               src={d.hero.img}
               alt={d.hero.imgAlt}
-              className="block h-auto max-h-[min(420px,52vh)] w-full object-contain object-right drop-shadow-[0_18px_28px_rgba(0,0,0,.35)]"
+              className="block h-auto max-h-[min(420px,52vh)] w-full object-contain object-right drop-shadow-[0_18px_28px_rgba(0,0,0,.35)] max-[1100px]:max-h-[min(320px,46vh)] max-[1100px]:object-center"
             />
           </figure>
         </div>
       </section>
 
-      <section className={SEC}>
+      <div className="flex flex-col gap-[clamp(28px,4vw,40px)] pt-[clamp(28px,4vw,40px)] pb-[clamp(48px,6vw,72px)]">
+      <section>
         <div className={WRAP}>
           <h2 className={SEC_TITLE}>{d.productsTitle}</h2>
           <div className="grid grid-cols-5 gap-3 max-[1100px]:grid-cols-3 max-[800px]:grid-cols-2 max-[560px]:grid-cols-1">
@@ -175,7 +175,7 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
         </div>
       </section>
 
-      <section className={SEC}>
+      <section>
         <div className={WRAP}>
           <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
             <h2 className={`${SEC_TITLE} mb-0`}>{d.timeline.title}</h2>
@@ -194,35 +194,70 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
               {d.timeline.total}
             </p>
           </div>
-          <ol className="m-0 grid list-none grid-cols-5 gap-x-[clamp(8px,1.2vw,16px)] p-0 max-[800px]:grid-cols-1 max-[800px]:gap-[18px]">
-            {d.timeline.steps.map((s) => (
-              <li
-                key={s.n}
-                className="relative flex min-w-0 flex-col items-start gap-2 p-0 text-left not-last:after:pointer-events-none not-last:after:absolute not-last:after:top-[66px] not-last:after:left-8 not-last:after:z-0 not-last:after:h-0.5 not-last:after:w-[calc(100%+clamp(8px,1.2vw,16px))] not-last:after:bg-[#0050D8] not-last:after:content-[''] not-last:before:absolute not-last:before:top-[61px] not-last:before:left-[calc(100%+clamp(8px,1.2vw,16px)-2px)] not-last:before:z-[1] not-last:before:h-0 not-last:before:w-0 not-last:before:border-y-[6px] not-last:before:border-y-transparent not-last:before:border-l-[8px] not-last:before:border-l-[#0050D8] not-last:before:content-[''] max-[800px]:not-last:after:hidden max-[800px]:not-last:before:hidden"
-              >
+          <ol className="m-0 grid w-full min-w-0 list-none grid-cols-5 gap-3 p-0 max-[1023px]:grid-cols-1 max-[1023px]:gap-0">
+            {d.timeline.steps.map((s, i) => {
+              const last = i === d.timeline.steps.length - 1;
+              const img = (
+                <span className="relative z-[1] grid size-16 shrink-0 place-items-center overflow-hidden rounded-full bg-[#f3f5f8]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={s.icon} alt="" className="block size-[86%] object-contain object-center" />
+                </span>
+              );
+              const num = (
                 <span
                   className={`${INTER} z-[1] grid size-[26px] place-items-center rounded-full bg-[#0050D8] text-[0.75rem] font-bold text-white`}
                 >
                   {s.n}
                 </span>
-                <span className="z-[1] grid size-16 place-items-center overflow-hidden rounded-full border-0 bg-[#f3f5f8] shadow-none">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={s.icon} alt="" className="block size-full object-cover" />
-                </span>
-                <strong className={`${INTER} mt-0.5 text-[0.9375rem] font-bold tracking-[-0.015em] text-[#111827]`}>
-                  {s.title}
-                </strong>
-                <p className="m-0 max-w-[20ch] text-[0.8125rem] font-normal leading-[1.4] text-[#5b6475]">{s.body}</p>
-                <span className={`${INTER} mt-0.5 inline-flex rounded-full bg-[#eef1f6] px-[11px] py-1 text-[0.75rem] font-medium text-[#111827]`}>
-                  {s.time}
-                </span>
-              </li>
-            ))}
+              );
+              const copy = (
+                <>
+                  <strong className={`${INTER} text-[0.9375rem] font-bold tracking-[-0.015em] text-[#111827]`}>
+                    {s.title}
+                  </strong>
+                  <p className="m-0 text-[0.8125rem] font-normal leading-[1.4] text-[#5b6475] min-[1024px]:max-w-[20ch]">
+                    {s.body}
+                  </p>
+                  <span className={`${INTER} inline-flex rounded-full bg-[#eef1f6] px-[11px] py-1 text-[0.75rem] font-medium text-[#111827]`}>
+                    {s.time}
+                  </span>
+                </>
+              );
+              return (
+                <li key={s.n} className="relative min-w-0 w-full p-0 text-left">
+                  <div className="flex gap-3.5 min-[1024px]:hidden">
+                    <div className="flex w-16 shrink-0 flex-col items-center self-stretch">
+                      {num}
+                      <span className="mt-2">{img}</span>
+                      {!last ? (
+                        <span className="mt-2 w-0.5 min-h-[20px] flex-1 bg-[#0050D8]" aria-hidden />
+                      ) : null}
+                    </div>
+                    <div className={`flex min-w-0 flex-1 flex-col items-start gap-1.5 pt-0.5 ${last ? 'pb-0' : 'pb-5'}`}>{copy}</div>
+                  </div>
+                  <div className="hidden min-[1024px]:flex min-[1024px]:flex-col min-[1024px]:items-start min-[1024px]:gap-2">
+                    {num}
+                    <div className="relative flex w-full min-w-0 items-center">
+                      {img}
+                      {!last ? (
+                        <span
+                          className="relative ml-2 flex h-[2px] w-[clamp(2rem,5vw,3.25rem)] shrink-0 items-center bg-[#0050D8] min-[1280px]:ml-2.5 min-[1280px]:h-0.5 min-[1280px]:w-auto min-[1280px]:min-w-3 min-[1280px]:flex-1 min-[1280px]:-mr-3"
+                          aria-hidden
+                        >
+                          <span className="absolute top-1/2 right-0 h-0 w-0 -translate-y-1/2 translate-x-[1px] border-y-[4px] border-l-[6px] border-y-transparent border-l-[#0050D8] min-[1280px]:border-y-[5px] min-[1280px]:border-l-[7px]" />
+                        </span>
+                      ) : null}
+                    </div>
+                    <div className="mt-0.5 flex flex-col items-start gap-1.5">{copy}</div>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
         </div>
       </section>
 
-      <section className={SEC}>
+      <section>
         <div className={`${WRAP} grid grid-cols-[1.2fr_.9fr] items-stretch gap-3.5 max-[1100px]:grid-cols-1`}>
           <BeforeAfterSlider title={d.beforeAfter.title} slides={d.beforeAfter.slides} />
           <div className={CARD}>
@@ -246,21 +281,21 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
         </div>
       </section>
 
-      <section className={`${SEC} pb-[clamp(48px,6vw,72px)]`}>
+      <section>
         <div className={`${WRAP} grid grid-cols-3 items-stretch gap-3.5 max-[1100px]:grid-cols-1`}>
           <div className={`${CARD} h-full`}>
             <h2 className={CARD_TITLE}>{d.params.title}</h2>
-            <table className={`${INTER} w-full border-collapse text-[0.875rem]`}>
+            <table className={`${INTER} w-full min-w-0 border-collapse text-[0.875rem]`}>
               <tbody>
                 {d.params.rows.map((row) => (
                   <tr key={row.label} className="even:bg-[#f3f5f9]">
                     <th
                       scope="row"
-                      className={`${INTER} border-0 px-3 py-2.5 text-left align-middle font-semibold text-[#111827]`}
+                      className={`${INTER} min-w-0 border-0 px-3 py-2.5 text-left align-middle font-semibold break-words text-[#111827]`}
                     >
                       {row.label}
                     </th>
-                    <td className={`${INTER} border-0 px-3 py-2.5 text-right align-middle font-normal text-[#5b6475]`}>
+                    <td className={`${INTER} min-w-0 border-0 px-3 py-2.5 text-right align-middle font-normal break-words text-[#5b6475]`}>
                       {row.value}
                     </td>
                   </tr>
@@ -280,7 +315,7 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
                   <span className="mt-0.5 grid size-[18px] shrink-0 place-items-center rounded-none bg-transparent text-[#0050D8]" aria-hidden>
                     <TipCheck />
                   </span>
-                  <span>{tip}</span>
+                  <span className="min-w-0 break-words">{tip}</span>
                 </li>
               ))}
             </ul>
@@ -320,6 +355,7 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }

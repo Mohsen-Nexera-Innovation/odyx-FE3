@@ -25,7 +25,7 @@ export default function BeforeAfterSlider({
       <h2 className={`${INTER} m-0 mb-3.5 text-left text-[1.25rem] font-bold tracking-[-0.02em] text-[#111827]`}>
         {title}
       </h2>
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-2 gap-2.5 max-[560px]:grid-cols-1">
         <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-xl bg-[#f3f5f9]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={slide.before.img} alt={slide.before.alt} className="block size-full object-cover" />
