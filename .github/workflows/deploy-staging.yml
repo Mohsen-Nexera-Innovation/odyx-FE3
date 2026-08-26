@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: [CI]
     types: [completed]
-    branches: [staging, Staging]
+    branches: [staging]
   workflow_dispatch:
 
 concurrency:
