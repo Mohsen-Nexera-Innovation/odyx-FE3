@@ -656,6 +656,27 @@ body:has(.admin-shell) .site-bg {
   box-shadow: 0 0 0 3px rgba(var(--admin-sky-rgb), 0.12);
 }
 
+.admin-form input[aria-invalid='true'] {
+  border-color: #ff9a9a;
+}
+
+.admin-form input[aria-invalid='true']:focus {
+  border-color: #ff9a9a;
+  box-shadow: 0 0 0 3px rgba(255, 154, 154, 0.18);
+}
+
+.admin-req {
+  color: #ff9a9a;
+  margin-inline-start: 0.15rem;
+}
+
+.admin-field-error {
+  color: #ff9a9a;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
 .admin-perms {
   display: grid;
   gap: 0.35rem;

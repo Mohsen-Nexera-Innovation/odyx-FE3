@@ -25,6 +25,10 @@ const APPLICATIONS: { value: ShowcaseApplication; label: string }[] = [
 
 const PRODUCT_KEYS = ['scanner', 'printer', 'curing', 'resin'] as const;
 
+const REQUIRED_MSG = 'Field is required';
+
+type RequiredTextField = 'title' | 'slug' | 'badge';
+
 const emptyForm = {
   slug: '',
   title: '',
@@ -49,6 +53,14 @@ function slugFromTitle(title: string) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+function requiredFieldErrors(form: typeof emptyForm): Partial<Record<RequiredTextField, string>> {
+  const next: Partial<Record<RequiredTextField, string>> = {};
+  if (!form.title.trim()) next.title = REQUIRED_MSG;
+  if (!form.slug.trim()) next.slug = REQUIRED_MSG;
+  if (!form.badge.trim()) next.badge = REQUIRED_MSG;
+  return next;
 }
 
 function ImageUploadField({
@@ -110,6 +122,7 @@ export default function AdminCaseLibraryPage() {
   const [ok, setOk] = useState('');
   const [busy, setBusy] = useState(false);
   const [uploadingField, setUploadingField] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<RequiredTextField, string>>>({});
 
   const load = async () => {
     try {
@@ -127,6 +140,9 @@ export default function AdminCaseLibraryPage() {
 
   const setField = <K extends keyof typeof emptyForm>(key: K, value: (typeof emptyForm)[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
+    if (key === 'title' || key === 'slug' || key === 'badge') {
+      setFieldErrors((prev) => ({ ...prev, [key]: undefined }));
+    }
   };
 
   const toggleProduct = (key: string) => {
@@ -177,26 +193,33 @@ export default function AdminCaseLibraryPage() {
     });
     setOk('');
     setError('');
+    setFieldErrors({});
   };
 
   const resetForm = () => {
     setEditingId(null);
     setForm(emptyForm);
+    setFieldErrors({});
   };
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!form.title.trim() || !form.coverImageUrl.trim()) {
-      setError('Title and cover image are required.');
+    const nextFieldErrors = requiredFieldErrors(form);
+    setFieldErrors(nextFieldErrors);
+    if (Object.keys(nextFieldErrors).length > 0) {
+      return;
+    }
+    if (!form.coverImageUrl.trim()) {
+      setError('Cover image is required.');
       return;
     }
     setBusy(true);
     setError('');
     setOk('');
     const payload = {
-      slug: form.slug.trim() || slugFromTitle(form.title),
+      slug: form.slug.trim(),
       title: form.title.trim(),
-      badge: form.badge.trim() || form.application,
+      badge: form.badge.trim(),
       application: form.application,
       tags: form.tags
         .split(',')
@@ -279,9 +302,14 @@ export default function AdminCaseLibraryPage() {
           <h2>{editingId ? 'Edit case' : 'Add case'}</h2>
           {editingId ? <span className="admin-badge admin-badge--warn">Editing</span> : null}
         </div>
-        <form className="admin-form" onSubmit={submit}>
+        <form className="admin-form" onSubmit={submit} noValidate>
           <label>
-            Title
+            <span>
+              Title
+              <span className="admin-req" aria-hidden="true">
+                *
+              </span>
+            </span>
             <input
               value={form.title}
               onChange={(e) => {
@@ -291,22 +319,62 @@ export default function AdminCaseLibraryPage() {
                   title,
                   slug: editingId ? prev.slug : slugFromTitle(title),
                 }));
+                setFieldErrors((prev) => ({
+                  ...prev,
+                  title: undefined,
+                  ...(editingId ? {} : { slug: undefined }),
+                }));
               }}
-              required
+              aria-required="true"
+              aria-invalid={fieldErrors.title ? true : undefined}
+              aria-describedby={fieldErrors.title ? 'case-title-error' : undefined}
             />
+            {fieldErrors.title ? (
+              <span id="case-title-error" className="admin-field-error" role="alert">
+                {fieldErrors.title}
+              </span>
+            ) : null}
           </label>
           <label>
-            Slug
-            <input value={form.slug} onChange={(e) => setField('slug', e.target.value)} required />
+            <span>
+              Slug
+              <span className="admin-req" aria-hidden="true">
+                *
+              </span>
+            </span>
+            <input
+              value={form.slug}
+              onChange={(e) => setField('slug', e.target.value)}
+              aria-required="true"
+              aria-invalid={fieldErrors.slug ? true : undefined}
+              aria-describedby={fieldErrors.slug ? 'case-slug-error' : undefined}
+            />
+            {fieldErrors.slug ? (
+              <span id="case-slug-error" className="admin-field-error" role="alert">
+                {fieldErrors.slug}
+              </span>
+            ) : null}
           </label>
           <label>
-            Badge
+            <span>
+              Badge
+              <span className="admin-req" aria-hidden="true">
+                *
+              </span>
+            </span>
             <input
               value={form.badge}
               onChange={(e) => setField('badge', e.target.value)}
               placeholder="Restorative"
-              required
+              aria-required="true"
+              aria-invalid={fieldErrors.badge ? true : undefined}
+              aria-describedby={fieldErrors.badge ? 'case-badge-error' : undefined}
             />
+            {fieldErrors.badge ? (
+              <span id="case-badge-error" className="admin-field-error" role="alert">
+                {fieldErrors.badge}
+              </span>
+            ) : null}
           </label>
           <label>
             Application
