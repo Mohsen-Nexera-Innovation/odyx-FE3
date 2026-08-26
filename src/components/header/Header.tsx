@@ -620,7 +620,13 @@ export default function Header() {
                   href={m.href}
                   className={NAV_TRIGGER_TW}
                   navOnly={m.navOnly}
-                  onClick={(e) => toggleMobileSection(m.label, e)}
+                  onClick={(e) => {
+                    if (window.innerWidth > 1024) {
+                      closeMenu();
+                      return;
+                    }
+                    toggleMobileSection(m.label, e);
+                  }}
                 >
                   <span className={navLinkLabelClass(isMenuActive(m))}>{m.label}</span> <Caret />
                 </NavAnchor>
