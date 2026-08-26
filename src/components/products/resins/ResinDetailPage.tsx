@@ -69,7 +69,7 @@ export type ResinDetailContent = {
 const BTN =
   'inline-flex box-border h-[46px] min-h-[46px] items-center justify-center gap-2 whitespace-nowrap rounded-[9px] px-[18px] py-0 text-[14.5px] font-bold leading-none tracking-normal no-underline transition-[background,box-shadow,transform,border-color] duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0050d8] max-[639px]:max-w-full';
 const BTN_SECONDARY = `${BTN} border border-solid border-[#6c6c6c] bg-white !text-[#1a1a1a] hover:border-[#404040]`;
-const BTN_CASES = `${BTN_SECONDARY} min-w-[220px] px-7 !text-[#0050D8] hover:border-[#0050D8] hover:bg-[rgba(0,80,216,0.04)] max-[1023px]:w-full max-[1023px]:min-w-0 max-[1023px]:max-w-[260px] max-[1023px]:px-[18px]`;
+const BTN_CASES = `${BTN_SECONDARY} min-w-[220px] px-7 text-[16px] !text-[#0050D8] hover:border-[#0050D8] hover:bg-[rgba(0,80,216,0.04)] max-[1023px]:w-full max-[1023px]:min-w-0 max-[1023px]:max-w-[260px] max-[1023px]:px-[18px]`;
 
 export default function ResinDetailPage({ content }: { content: ResinDetailContent }) {
   const { hero } = content;
@@ -103,7 +103,7 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
         }
       `}</style>
 
-      <div className="mx-auto w-full max-w-none px-[clamp(20px,4vw,56px)] pt-8 pb-8 lg:pt-8 lg:pb-10">
+      <div className="mx-auto w-full max-w-none px-[clamp(20px,4vw,56px)] pt-8">
         <section className="items-end gap-7 [display:grid] lg:gap-0 lg:[grid-template-columns:44%_56%]">
           <div className="relative z-10 max-w-[40rem] pb-1 lg:-translate-y-20">
             <p className="text-sm font-bold leading-none" style={{ color: BLUE }}>
@@ -144,17 +144,19 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
             />
           </div>
         </section>
+      </div>
 
-        <section aria-labelledby="applications-title" className="-mt-2 lg:-mt-16">
+      <div className="mx-auto flex w-full max-w-none flex-col gap-[clamp(28px,4vw,40px)] px-[clamp(20px,4vw,56px)] pt-[clamp(28px,4vw,40px)] pb-[clamp(48px,6vw,72px)]">
+        <section aria-labelledby="applications-title">
           <h2
             id="applications-title"
-            className="font-[inherit] text-base font-bold leading-5"
+            className="mb-4 font-[inherit] text-lg font-bold leading-6"
             style={{ color: BLUE }}
           >
             Applications
           </h2>
           <ul
-            className="mt-2 list-none gap-2 p-0 [display:grid] [grid-template-columns:repeat(var(--app-cols),minmax(0,1fr))] max-[1023px]:[grid-template-columns:repeat(3,minmax(0,1fr))] max-[639px]:[grid-template-columns:1fr]"
+            className="m-0 list-none gap-2 p-0 [display:grid] [grid-template-columns:repeat(var(--app-cols),minmax(0,1fr))] max-[1023px]:[grid-template-columns:repeat(3,minmax(0,1fr))] max-[639px]:[grid-template-columns:1fr]"
           >
             {content.applications.map((application) => (
               <li key={application.id} className="m-0 min-w-0 p-0">
@@ -163,18 +165,17 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                   className="block overflow-hidden rounded-xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition hover:border-blue-300 hover:shadow-[0_4px_14px_rgba(0,80,216,0.1)] focus-visible:outline-2 focus-visible:outline-offset-2"
                   style={{ outlineColor: BLUE }}
                 >
-                  <div className="flex h-[148px] items-center justify-center overflow-hidden bg-white p-1">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-white">
                     <Image
                       src={application.img}
                       alt={application.imgAlt}
-                      width={1517}
-                      height={1037}
-                      quality={95}
-                      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 33vw, 280px"
-                      className="h-full w-full max-w-none object-contain object-center"
+                      fill
+                      unoptimized
+                      sizes={`(max-width: 639px) 100vw, (max-width: 1023px) 50vw, ${Math.round(200 / content.appColumns)}vw`}
+                      className="object-contain object-center p-2"
                     />
                   </div>
-                  <p className="flex min-h-8 items-center justify-center px-1 py-1 text-center text-xs font-bold leading-tight text-gray-900">
+                  <p className="flex min-h-9 items-center justify-center px-1 py-1.5 text-center text-sm font-bold leading-tight text-gray-900">
                     {application.label}
                   </p>
                 </Link>
@@ -183,7 +184,7 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
           </ul>
         </section>
 
-        <section aria-label={content.featuresAriaLabel} className="mt-5">
+        <section aria-label={content.featuresAriaLabel}>
           <ul className="m-0 list-none gap-0 p-0 [display:grid] [grid-template-columns:repeat(2,minmax(0,1fr))] sm:[grid-template-columns:repeat(3,minmax(0,1fr))] lg:[grid-template-columns:repeat(6,minmax(0,1fr))]">
             {content.features.map((feature) => {
               const Icon = content.featureIcons[feature.id];
@@ -193,7 +194,7 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                   className="flex min-h-[104px] flex-col items-center justify-center px-2 py-3 text-center"
                 >
                   {Icon ? <Icon className="size-11" /> : null}
-                  <span className="mt-1.5 max-w-[120px] text-xs font-medium leading-[1.3] text-gray-900">
+                  <span className="mt-1.5 max-w-[148px] text-sm font-medium leading-[1.35] text-gray-900">
                     {feature.label}
                   </span>
                 </li>
@@ -202,12 +203,12 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
           </ul>
         </section>
 
-        <section className="mt-5 items-start gap-6 [display:grid] lg:gap-6 lg:[grid-template-columns:minmax(0,1.65fr)_minmax(280px,1fr)]">
+        <section className="items-start gap-6 [display:grid] lg:gap-6 lg:[grid-template-columns:minmax(0,1.65fr)_minmax(280px,1fr)]">
           <div>
-            <h2 className="font-[inherit] text-base font-bold leading-5" style={{ color: BLUE }}>
+            <h2 className="mb-4 font-[inherit] text-lg font-bold leading-6" style={{ color: BLUE }}>
               Technical Specifications
             </h2>
-            <div className="mt-[9px] overflow-hidden rounded-lg border border-gray-200 [display:grid] [gap:0] sm:[grid-template-columns:repeat(2,minmax(0,1fr))]">
+            <div className="overflow-hidden rounded-lg border border-gray-200 [display:grid] [gap:0] sm:[grid-template-columns:repeat(2,minmax(0,1fr))]">
               {specColumns.map((column, columnIndex) => (
                 <div
                   key={columnIndex === 0 ? 'primary-specs' : 'secondary-specs'}
@@ -219,7 +220,7 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                 >
                   <div
                     className={[
-                      'h-[30px] border-b border-gray-200 bg-gray-50/60 text-xs font-bold [display:grid] [gap:0]',
+                      'min-h-[38px] border-b border-gray-200 bg-gray-50/60 text-sm font-bold [display:grid] [gap:0]',
                       columnIndex === 0
                         ? '[grid-template-columns:48%_52%]'
                         : '[grid-template-columns:64%_36%]',
@@ -234,7 +235,7 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                     <div
                       key={spec.property}
                       className={[
-                        'min-h-[30px] border-b border-gray-200 text-xs last:border-b-0 [display:grid] [gap:0]',
+                        'min-h-[38px] border-b border-gray-200 text-sm last:border-b-0 [display:grid] [gap:0]',
                         columnIndex === 0
                           ? '[grid-template-columns:48%_52%]'
                           : '[grid-template-columns:64%_36%]',
@@ -254,10 +255,10 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
           </div>
 
           <div className="h-full border-gray-200 lg:border-l lg:ps-6">
-            <h2 className="font-[inherit] text-base font-bold leading-5" style={{ color: BLUE }}>
+            <h2 className="mb-4 font-[inherit] text-lg font-bold leading-6" style={{ color: BLUE }}>
               Compatible With
             </h2>
-            <ul className="mt-1 list-none gap-1 p-0 [display:grid] [grid-template-columns:repeat(3,minmax(0,1fr))]">
+            <ul className="m-0 list-none gap-1 p-0 [display:grid] [grid-template-columns:repeat(3,minmax(0,1fr))]">
               {content.compatible.map((item) => {
                 const [brand, ...description] = item.label.split(' ');
                 return (
@@ -278,7 +279,7 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                           className="h-full w-full object-contain"
                         />
                       </div>
-                      <p className="text-xs font-medium leading-[1.35] text-gray-900">
+                      <p className="text-sm font-medium leading-[1.4] text-gray-900">
                         <strong>{brand}</strong> {description.join(' ')}
                       </p>
                     </Link>
@@ -289,15 +290,15 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
           </div>
         </section>
 
-        <section aria-labelledby="cases-title" className="mt-8 mb-0">
+        <section aria-labelledby="cases-title">
           <h2
             id="cases-title"
-            className="font-[inherit] text-base font-bold leading-5"
+            className="mb-4 font-[inherit] text-lg font-bold leading-6"
             style={{ color: BLUE }}
           >
             Clinical Cases &amp; Reviews
           </h2>
-          <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <ul className="m-0 flex-1 list-none gap-4 p-0 [display:grid] [grid-template-columns:repeat(2,minmax(0,1fr))] sm:[grid-template-columns:repeat(4,minmax(0,1fr))]">
               {content.cases.map((clinicalCase) => (
                 <li key={clinicalCase.id}>

@@ -12,8 +12,21 @@ import {
 
 const { scanner, cad, printer, cure } = ECOSYSTEM_PRODUCTS;
 
-function resin(name: string, sub: string, img: string): ClinicalIndicationContent['products'][number] {
-  return { id: 'resin', name, sub, img, href: '/products/resins', layout: 'stack' };
+/** Current resin packshots (720×1400 transparent PNGs) — not the legacy square JPGs. */
+const RESIN_IMG = {
+  ceramic: '/img/resins/card-ceramic.png',
+  surgical: '/img/resins/card-surgical.png',
+  model: '/img/resins/card-model.png',
+  temporary: '/img/resins/card-temporary.png',
+} as const;
+
+function resin(
+  name: string,
+  sub: string,
+  img: string,
+  href = '/products/resins',
+): ClinicalIndicationContent['products'][number] {
+  return { id: 'resin', name, sub, img, href, layout: 'stack' };
 }
 
 function products(
@@ -76,7 +89,7 @@ const sameDayCrown: ClinicalIndicationContent = {
     imgAlt: 'Dental model with crowns being seated',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Ceramic Crown Resin', 'High strength. Natural esthetics.', '/img/resins/card-ceramic.png')),
+  products: products(resin('Ceramic Crown Resin', 'High strength. Natural esthetics.', RESIN_IMG.ceramic, '/products/ceramic-crown-resin')),
   timeline: {
     title: 'Workflow Timeline',
     total: 'Total Time: ~30–45 min',
@@ -149,7 +162,7 @@ const veneers: ClinicalIndicationContent = {
     imgAlt: 'Ceramic veneers held over a dental model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Ceramic Crown Resin', 'Thin. Esthetic. Strong.', '/img/resins/card-ceramic.png')),
+  products: products(resin('Ceramic Crown Resin', 'Thin. Esthetic. Strong.', RESIN_IMG.ceramic, '/products/ceramic-crown-resin')),
   timeline: tl(
     'veneers',
     [
@@ -216,7 +229,7 @@ const inlays: ClinicalIndicationContent = {
     imgAlt: 'Printed inlay seated on a molar model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Ceramic Crown Resin', 'Precise. Durable. Esthetic.', '/img/resins/card-ceramic.png')),
+  products: products(resin('Ceramic Crown Resin', 'Precise. Durable. Esthetic.', RESIN_IMG.ceramic, '/products/ceramic-crown-resin')),
   timeline: tl(
     'inlays',
     [
@@ -285,7 +298,7 @@ const surgicalGuide: ClinicalIndicationContent = {
     imgAlt: 'Clear implant surgical guide with metal sleeve',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Surgical Guide Resin', 'Rigid. Precise. Autoclavable class.', '/img/resins/surgical-guide-pro.jpg')),
+  products: products(resin('Surgical Guide Resin', 'Rigid. Precise. Autoclavable class.', RESIN_IMG.surgical, '/products/surgical-guide-resin-pro')),
   timeline: tl(
     'surgical-guide',
     [
@@ -362,7 +375,7 @@ const implantModel: ClinicalIndicationContent = {
     imgAlt: 'Detailed 3D-printed implant planning model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Model Resin', 'Sharp detail. Stable geometry.', '/img/resins/model-resin.jpg')),
+  products: products(resin('Model Resin', 'Sharp detail. Stable geometry.', RESIN_IMG.model, '/products/model-resin')),
   timeline: tl(
     'implant-model',
     [
@@ -441,7 +454,7 @@ const aligners: ClinicalIndicationContent = {
     imgAlt: 'Clear aligner on a printed dental model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Model Resin', 'Batch-ready. Sharp cusps.', '/img/resins/model-resin.jpg')),
+  products: products(resin('Model Resin', 'Batch-ready. Sharp cusps.', RESIN_IMG.model, '/products/model-resin')),
   timeline: tl(
     'aligners',
     [
@@ -518,7 +531,7 @@ const retainers: ClinicalIndicationContent = {
     imgAlt: 'Clear retainer on a printed model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Model Resin', 'Stable. Replacement-ready.', '/img/resins/model-resin.jpg')),
+  products: products(resin('Model Resin', 'Stable. Replacement-ready.', RESIN_IMG.model, '/products/model-resin')),
   timeline: tl(
     'retainers',
     [
@@ -587,7 +600,7 @@ const dentures: ClinicalIndicationContent = {
     imgAlt: 'Full-arch prosthetic teeth set in a pink gum base',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Denture Base Resin', 'Biocompatible. Esthetic pink.', '/img/resins/temporary-restoration.jpg')),
+  products: products(resin('Denture Base Resin', 'Biocompatible. Esthetic pink.', RESIN_IMG.temporary)),
   timeline: tl(
     'dentures',
     [
@@ -664,7 +677,7 @@ const tryIns: ClinicalIndicationContent = {
     imgAlt: 'Printed try-in prosthesis on a model',
   },
   productsTitle: 'Products Used in This Workflow',
-  products: products(resin('Temporary Resin', 'Fast try-ins. Easy adjust.', '/img/resins/temporary-restoration.jpg')),
+  products: products(resin('Temporary Resin', 'Fast try-ins. Easy adjust.', RESIN_IMG.temporary, '/products/temporary-restoration-resin')),
   timeline: tl(
     'try-ins',
     [
