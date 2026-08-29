@@ -11,10 +11,10 @@ export const buttonVariants = defineVariants({
       danger: 'bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500 border border-transparent shadow-sm',
     },
     size: {
-      sm: 'h-8 px-3 text-sm rounded-sm',
-      md: 'h-10 px-4 text-base rounded-md',
-      lg: 'h-12 px-6 text-lg rounded-lg',
-      icon: 'h-10 w-10 shrink-0 rounded-md',
+      sm: 'h-8 px-3 text-sm rounded-full',
+      md: 'h-10 px-4 text-base rounded-full',
+      lg: 'h-12 px-6 text-lg rounded-full',
+      icon: 'h-10 w-10 shrink-0 rounded-full',
     },
   },
   defaultVariants: {

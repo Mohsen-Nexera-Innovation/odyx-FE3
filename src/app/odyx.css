@@ -52,22 +52,22 @@ header.on-light .lang-drop{background:#fff;border-color:rgba(0,0,0,.10);box-shad
 header.on-light .lang-drop button{color:#48657c}
 header.on-light .lang-drop button:hover,
 header.on-light .lang-drop button.active{color:var(--sky-deep);background:rgba(var(--sky-rgb),.10)}
-.tool-btn{width:36px;height:36px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:color .18s ease,background .18s ease}
+.tool-btn{width:36px;height:36px;border-radius:9999px;border:none;background:transparent;color:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:color .18s ease,background .18s ease}
 .tool-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
 .tool-btn:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
 .search-btn{width:auto;gap:8px;padding:0 12px}
 .search-kbd-hint{font-size:.62rem;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.16);border-radius:5px;padding:3px 5px 1px;line-height:normal;font-family:var(--font-body)}
 .search-btn:hover .search-kbd-hint{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.8)}
 .lang{font-size:.72rem;font-weight:600;padding:0 10px;width:auto;gap:4px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;box-sizing:border-box;width:fit-content;min-height:42px;font-family:var(--font-body);font-weight:600;font-size:.88rem;line-height:1;padding:10px 18px;border-radius:9px;border:1px solid transparent;cursor:pointer;transition:.3s;background:var(--orange);color:#fff;white-space:nowrap}
-.btn svg{flex:none;transition:transform .3s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;box-sizing:border-box;width:fit-content;height:42px;min-height:42px;font-family:var(--font-body);font-weight:600;font-size:.88rem;line-height:1;padding:0 18px;border-radius:9999px;border:1px solid transparent;cursor:pointer;transition:.3s;background:var(--orange);color:#fff;white-space:nowrap;text-box:trim-both cap alphabetic}
+.btn svg{display:block;flex:none;transition:transform .3s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(var(--orange-rgb),.35)}
 .btn:hover svg{transform:translateX(3px)}
 a.btn{color:#fff}
 .btn-ghost{background:transparent;border:1px solid var(--line-2);color:#fff}
 a.btn-ghost{color:#fff}
 .btn-ghost:hover{border-color:#fff;box-shadow:none}
-.btn-sm{padding:0 11px;height:32px;font-size:clamp(.76rem,1vw,.84rem);border-radius:8px}
+.btn-sm{padding:0 11px;height:32px;font-size:clamp(.76rem,1vw,.84rem);border-radius:9999px;line-height:1}
 
 /* search overlay */
 .search-ov{position:fixed;inset:0;z-index:1500;background:rgba(10,10,20,.85);backdrop-filter:blur(10px);display:flex;align-items:flex-start;justify-content:center;padding-top:14vh;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
@@ -392,7 +392,7 @@ footer{margin:0;padding:0;border:0;background:transparent}
   .fab.ai::after,.ai-agent-icon--live.ai-agent-icon--fab svg{animation:none}
 }
 
-.ai-close{position:absolute;top:10px;right:12px;width:32px;height:32px;border:none;background:rgba(255,255,255,.18);border-radius:8px;font-size:1.4rem;line-height:1;color:#fff;cursor:pointer;transition:.2s}
+.ai-close{position:absolute;top:10px;right:12px;width:32px;height:32px;border:none;background:rgba(255,255,255,.18);border-radius:9999px;font-size:1.4rem;line-height:1;color:#fff;cursor:pointer;transition:.2s}
 .ai-close:hover{background:rgba(255,255,255,.28)}
 .ai-foot{display:flex;gap:8px;padding:14px 18px 18px;border-top:1px solid var(--line);flex-shrink:0}
 .ai-foot input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;color:#fff;font-family:var(--font-body);font-size:.84rem;outline:none}
@@ -2326,7 +2326,7 @@ main:has(.auth-page){min-height:100dvh}
   padding:9px 20px 9px 12px!important;font-size:.88rem!important;
   display:inline-flex!important;align-items:center;gap:11px;
   background:linear-gradient(140deg,#5B93F5 0%,var(--mail-sky,#0050D8) 45%,#00337F 100%)!important;
-  color:#fff!important;border-radius:14px!important;
+  color:#fff!important;border-radius:9999px!important;
   box-shadow:0 6px 18px rgba(var(--mail-sky-rgb,0,80,216),.38), inset 0 1px 0 rgba(255,255,255,.28);
   position:relative;overflow:hidden;
   transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
@@ -3000,7 +3000,7 @@ main:has(.auth-page){min-height:100dvh}
 .mail-action-support{
   display:inline-flex;align-items:center;gap:8px;
   padding:9px 16px 9px 11px!important;font-size:.8rem!important;font-weight:700;
-  background:#fff!important;color:#1e4f66!important;border-radius:12px!important;
+  background:#fff!important;color:#1e4f66!important;border-radius:9999px!important;
   border:1px solid rgba(var(--mail-sky-rgb),.32)!important;
   box-shadow:0 1px 3px rgba(8,80,130,.06);
   transition:background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
@@ -3960,7 +3960,7 @@ header.on-light .nav-cart:hover{color:var(--sky-deep);background:rgba(var(--sky-
 .pay-methods{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
 .pay-method{
   display:inline-flex;align-items:center;gap:8px;
-  padding:11px 18px;border-radius:14px;cursor:pointer;
+  padding:11px 18px;border-radius:9999px;cursor:pointer;
   font-family:var(--font-body);font-size:.84rem;font-weight:700;
   border:1.5px solid rgba(10,60,100,.13);background:#fff;color:var(--ink-muted,#5A555C);
   transition:.2s;
@@ -4132,7 +4132,7 @@ header.on-light .nav-cart:hover{color:var(--sky-deep);background:rgba(var(--sky-
 /* Pay button */
 .co-pay-btn{
   width:100%;display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  margin-top:20px;padding:16px 22px;border:none;border-radius:16px;cursor:pointer;
+  margin-top:20px;padding:16px 22px;border:none;border-radius:9999px;cursor:pointer;
   font-family:var(--font-body);font-size:1rem;font-weight:800;color:#fff;
   background:linear-gradient(135deg,var(--sky) 0%,var(--sky-deep) 100%);
   box-shadow:0 12px 30px rgba(var(--sky-rgb),.35),inset 0 1px 0 rgba(255,255,255,.25);

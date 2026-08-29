@@ -13,6 +13,7 @@ import {
   isDigitalWorkflowDimmed,
 } from '@/content/digital-workflow-links';
 import { getProduct, type ProductLayout } from '@/content/products';
+import { requestDemoHref } from '@/content/request-demo';
 
 const BENEFIT_ICONS: React.ReactNode[] = [
   <svg key="i0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -37,6 +38,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
   const layout: ProductLayout | 'standard' = product.layout ?? 'standard';
   const buyableModel = product.models.find((m) => m.shopProductId);
   const heroAccent = product.accent === 'orange' ? 'orange' : product.accent === 'teal' ? 'teal' : 'sky';
+  const demoHref = requestDemoHref(product.slug);
 
   // Signature keeps the standard structure but rides the print-line canvas so it
   // inherits the exact cinematic colors + fonts (only the hero is re-themed below).
@@ -86,13 +88,13 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
                     shopProductId={m.shopProductId}
                     accent={product.accent === 'orange' ? 'orange' : 'sky'}
                     extra={
-                      <Link className="btn btn-ghost btn-sm" href="/request-demo">
+                      <Link className="btn btn-ghost btn-sm" href={demoHref}>
                         Request a Demo <Arrow />
                       </Link>
                     }
                   />
                 ) : (
-                  <Link className="btn btn-ghost btn-sm" href="/request-demo">
+                  <Link className="btn btn-ghost btn-sm" href={demoHref}>
                     Request a Demo <Arrow />
                   </Link>
                 )}
@@ -162,7 +164,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             desc={product.overview}
             heroImg={product.heroImg ?? product.img}
             heroAlt={product.name}
-            primaryAction={{ label: 'Request a Demo', href: '/request-demo' }}
+            primaryAction={{ label: 'Request a Demo', href: demoHref }}
               secondaryAction={{ label: 'Contact Sales', href: '/sales' }}
             actions={
               buyableModel?.shopProductId ? (
@@ -216,7 +218,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
               />
             ) : (
               <PageActions>
-                <Link className="btn btn-sign" href="/request-demo">
+                <Link className="btn btn-sign" href={demoHref}>
                   Request a Demo <Arrow />
                 </Link>
                 {isDigitalWorkflowDimmed(product.workflowStep) ? (
@@ -286,7 +288,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             />
           ) : (
             <PageActions>
-              <Link className={layout === 'signature' ? 'btn btn-sign' : 'btn'} href="/request-demo">
+              <Link className={layout === 'signature' ? 'btn btn-sign' : 'btn'} href={demoHref}>
                 Request a Demo <Arrow />
               </Link>
               <Link

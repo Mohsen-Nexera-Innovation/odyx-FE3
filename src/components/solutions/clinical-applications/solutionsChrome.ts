@@ -46,7 +46,7 @@ export const SOLUTIONS_BANNER_TITLE =
   `${SOLUTIONS_SORA} col-start-2 m-0 flex flex-col text-[1.35rem] font-extrabold leading-[1.12] tracking-[-0.03em] text-[#1a1f2e] max-[560px]:col-start-1`;
 
 export const SOLUTIONS_BANNER_CTA =
-  'inline-flex items-center justify-center whitespace-nowrap rounded-xl border-[1.5px] border-solid border-[#c9d4ef] bg-white px-4 py-3 text-[0.86rem] font-bold text-[#0050D8] no-underline shadow-[0_4px_12px_rgba(37,99,235,.08)] transition-[background,border-color,transform] duration-[180ms] ease-in-out hover:-translate-y-px hover:border-[#9db4ef] hover:bg-[#f5f8ff] max-[1100px]:justify-self-start';
+  'inline-flex items-center justify-center whitespace-nowrap rounded-full border-[1.5px] border-solid border-[#c9d4ef] bg-white px-4 py-3 text-[0.86rem] font-bold text-[#0050D8] no-underline shadow-[0_4px_12px_rgba(37,99,235,.08)] transition-[background,border-color,transform] duration-[180ms] ease-in-out hover:-translate-y-px hover:border-[#9db4ef] hover:bg-[#f5f8ff] max-[1100px]:justify-self-start';
 
 export const SOLUTIONS_FEATURE_LIST =
   'mt-7 mb-0 ml-0 mr-0 grid list-none grid-cols-5 overflow-visible rounded-none border-0 bg-transparent px-0 py-2 max-[1100px]:grid-cols-1';

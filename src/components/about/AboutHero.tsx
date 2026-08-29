@@ -56,8 +56,10 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
                   href={data.primaryCta.href}
                   className={`${ABOUT_BTN} ${ABOUT_BTN_SIZE} px-7!`}
                 >
-                  <span>{data.primaryCta.label}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
+                  <span className="inline-flex items-center leading-none [line-height:1] [text-box:trim-both_cap_alphabetic]">
+                    {data.primaryCta.label}
+                  </span>
+                  <svg className="block shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
                 </Link>
               </div>
             )}

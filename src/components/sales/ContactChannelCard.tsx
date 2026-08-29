@@ -20,7 +20,7 @@ export function ContactChannelCard({ channel }: { channel: ContactChannel }) {
           <div className="mt-1">
             <Link
               href={channel.cta.href}
-              className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#DCE6F7] !text-[#0050D8] bg-transparent hover:bg-[#0050D8] hover:!text-white hover:border-[#0050D8] hover:shadow-[0_4px_14px_rgba(0,80,216,0.35)] font-bold text-[13px] lg:text-[14px] px-6 py-2.5 rounded-[10px] transition-all min-w-[150px] group"
+              className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#DCE6F7] !text-[#0050D8] bg-transparent hover:bg-[#0050D8] hover:!text-white hover:border-[#0050D8] hover:shadow-[0_4px_14px_rgba(0,80,216,0.35)] font-bold text-[13px] lg:text-[14px] px-6 py-2.5 rounded-full transition-all min-w-[150px] group"
               {...(channel.cta.href.startsWith('http')
                 ? { target: '_blank', rel: 'noopener noreferrer' }
                 : {})}

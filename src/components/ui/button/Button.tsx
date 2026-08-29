@@ -85,7 +85,7 @@ const ButtonInner = <C extends ElementType = 'button'>(
 
       <span
         className={cn(
-          'inline-flex items-center gap-2',
+          'inline-flex items-center gap-2 leading-none',
           loading && 'invisible'
         )}
       >

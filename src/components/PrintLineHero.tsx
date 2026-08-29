@@ -5,6 +5,7 @@ import {
   isDigitalWorkflowDimmed,
 } from '@/content/digital-workflow-links';
 import type { ProductContent } from '@/content/products';
+import { requestDemoHref } from '@/content/request-demo';
 
 const HERO_IMG_WIDTH = 964;
 const HERO_IMG_HEIGHT = 1280;
@@ -41,7 +42,7 @@ export default function PrintLineHero({ product }: { product: ProductContent }) 
             <p className="prod-print-hero__lead">{product.tagline}</p>
             <p className="prod-print-hero__desc">{product.overview}</p>
             <PageActions>
-              <Link className="btn btn-sign" href="/support">
+              <Link className="btn btn-sign" href={requestDemoHref(product.slug)}>
                 Request a Demo <Arrow />
               </Link>
               {isDigitalWorkflowDimmed(product.workflowStep) ? (

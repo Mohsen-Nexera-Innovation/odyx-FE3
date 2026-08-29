@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { REQUEST_DEMO_META } from '@/content/request-demo';
+import { parseDemoProductParam, REQUEST_DEMO_META } from '@/content/request-demo';
 import InnerPageMotion from '@/components/InnerPageMotion';
 import RequestDemoPage from '@/components/request-demo/RequestDemoPage';
 
@@ -8,10 +8,17 @@ export const metadata: Metadata = {
   description: REQUEST_DEMO_META.description,
 };
 
-export default function Page() {
+type PageProps = {
+  searchParams: Promise<{ product?: string | string[] }>;
+};
+
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const initialProducts = parseDemoProductParam(params.product);
+
   return (
     <>
-      <RequestDemoPage />
+      <RequestDemoPage initialProducts={initialProducts} />
       <InnerPageMotion />
     </>
   );

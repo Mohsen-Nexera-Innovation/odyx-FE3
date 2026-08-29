@@ -130,7 +130,7 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
             </p>
             <Link
               href={d.hero.cta.href}
-              className={`${INTER} inline-flex max-w-full items-center gap-[9px] rounded-[10px] border-0 bg-[#0050D8] px-5 py-[13px] text-[0.9375rem] font-semibold tracking-[-0.01em] text-white no-underline shadow-[0_10px_24px_rgba(0,80,216,.28)] transition-[background,transform] duration-200 ease-in-out hover:-translate-y-px hover:bg-[#0041AF]`}
+              className={`${INTER} inline-flex max-w-full items-center justify-center gap-[9px] rounded-full border-0 bg-[#0050D8] px-5 py-[13px] text-[0.9375rem] font-semibold tracking-[-0.01em] text-white no-underline shadow-[0_10px_24px_rgba(0,80,216,.28)] transition-[background,transform] duration-200 ease-in-out hover:-translate-y-px hover:bg-[#0041AF]`}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="size-4">
                 <path d="M12 4v10M8 10l4 4 4-4M5 18h14" strokeLinecap="round" strokeLinejoin="round" />

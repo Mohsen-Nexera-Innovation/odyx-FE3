@@ -4,6 +4,7 @@ import { Arrow } from '@/components/PageHero';
 import CinematicHero from '@/components/CinematicHero';
 import SecHead from '@/components/SecHead';
 import { digitalWorkflowHref } from '@/content/digital-workflow-links';
+import { requestDemoHref } from '@/content/request-demo';
 import { getAdjacentSteps, getWorkflowStep, type WorkflowId } from '@/content/workflow';
 
 function stepProductHref(step: { id: string; productSlug: string }) {
@@ -34,7 +35,7 @@ export default function WorkflowStepPage({ slug }: { slug: string }) {
         primaryAction={
           step.productSlug
             ? { label: `Explore ${step.productName}`, href: `/products/${step.productSlug}` }
-            : { label: 'Request a Demo', href: '/request-demo' }
+            : { label: 'Request a Demo', href: requestDemoHref(step.id) }
         }
         secondaryAction={{ label: 'All steps', href: '/workflows' }}
       />

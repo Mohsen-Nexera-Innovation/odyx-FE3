@@ -125,7 +125,7 @@
   min-height: 2.5rem;
   padding: 0.5rem 1.1rem;
   border: 1px solid #dce3ee;
-  border-radius: var(--cs-radius-sm);
+  border-radius: 9999px;
   background: #f3f5f8;
   color: var(--cs-action);
   font-size: 0.8125rem;
@@ -154,7 +154,7 @@
   min-height: 3rem;
   padding: 0.75rem 1.25rem;
   border: none;
-  border-radius: var(--cs-radius-sm);
+  border-radius: 9999px;
   background: var(--cs-action);
   color: #fff;
   font-size: 0.9375rem;
@@ -191,7 +191,7 @@
   min-height: 2.4rem;
   padding: 0.45rem 1rem;
   border: 1.5px solid var(--cs-action);
-  border-radius: var(--cs-radius-sm);
+  border-radius: 9999px;
   background: transparent;
   color: var(--cs-action);
   font-size: 0.8125rem;

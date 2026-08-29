@@ -67,7 +67,8 @@ export type ResinDetailContent = {
 };
 
 const BTN =
-  'inline-flex box-border h-[46px] min-h-[46px] items-center justify-center gap-2 whitespace-nowrap rounded-[9px] px-[18px] py-0 text-[14.5px] font-bold leading-none tracking-normal no-underline transition-[background,box-shadow,transform,border-color] duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0050d8] max-[639px]:max-w-full';
+  'inline-flex box-border h-[46px] min-h-[46px] items-center justify-center gap-2 whitespace-nowrap rounded-full px-[18px] py-0 text-[14.5px] font-bold leading-none [line-height:1] [text-box:trim-both_cap_alphabetic] tracking-normal no-underline transition-[background,box-shadow,transform,border-color] duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0050d8] max-[639px]:max-w-full [&_svg]:block [&_svg]:size-[1.05em] [&_svg]:shrink-0';
+const BTN_PRIMARY = `${BTN} border border-solid border-transparent bg-[#0050D8] !text-white hover:bg-[#0041AF]`;
 const BTN_SECONDARY = `${BTN} border border-solid border-[#6c6c6c] bg-white !text-[#1a1a1a] hover:border-[#404040]`;
 const BTN_CASES = `${BTN_SECONDARY} min-w-[220px] px-7 text-[16px] !text-[#0050D8] hover:border-[#0050D8] hover:bg-[rgba(0,80,216,0.04)] max-[1023px]:w-full max-[1023px]:min-w-0 max-[1023px]:max-w-[260px] max-[1023px]:px-[18px]`;
 
@@ -119,6 +120,9 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
               {hero.body}
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-[18px]">
+              <Link href={hero.primaryCta.href} className={BTN_PRIMARY}>
+                {hero.primaryCta.label}
+              </Link>
               <a
                 href={hero.secondaryCta.href}
                 className={BTN_SECONDARY}

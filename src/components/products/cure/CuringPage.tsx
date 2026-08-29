@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import CompatibleProductsGrid from '@/components/products/CompatibleProductsGrid';
 import CureCases from '@/components/products/cure/CureCases';
 import CureRoiMini from '@/components/products/cure/CureRoiMini';
 import CureVideo from '@/components/products/cure/CureVideo';
@@ -412,49 +413,7 @@ export default function CuringPage() {
 
         <div className={`${CARD} min-h-[220px] overflow-hidden p-[clamp(18px,2vw,26px)] reveal`}>
           <h2 className={`${CARD_TITLE} mb-[18px]`}>{CURE_UV02_ECOSYSTEM.title}</h2>
-          <ul className="m-0 flex list-none flex-nowrap items-start justify-between gap-0 p-[2px_0_0] max-[800px]:flex-wrap max-[800px]:justify-center max-[800px]:gap-x-3 max-[800px]:gap-y-5">
-            {CURE_UV02_ECOSYSTEM.nodes.map((node, i) => (
-              <li
-                key={node.name}
-                className="flex min-w-0 flex-[1_1_0] items-start gap-0 max-[800px]:max-w-[200px] max-[800px]:flex-[1_1_40%]"
-              >
-                <Link
-                  href={node.href}
-                  className="group flex w-full flex-col items-center gap-2.5 px-1.5 text-center text-[#1a2433] no-underline transition-[transform,color] duration-[250ms] ease-[ease] hover:-translate-y-0.5 hover:text-[#0050D8] motion-reduce:hover:translate-y-0"
-                >
-                  <span className="flex min-h-[2.6em] shrink-0 flex-col items-center justify-start gap-0.5">
-                    <span className={`${SANS} text-[.9rem] font-bold leading-[1.2] tracking-[-0.01em] text-[#1f2738] group-hover:text-[#0050D8]`}>
-                      {node.name}
-                    </span>
-                    {node.subtitle ? (
-                      <span className={`${SANS} text-[.78rem] font-medium leading-[1.25] text-[#4a5568] group-hover:text-[#0050D8]`}>
-                        {node.subtitle}
-                      </span>
-                    ) : null}
-                  </span>
-                  <span className="flex h-[150px] max-h-[150px] w-full max-w-[148px] shrink-0 items-center justify-center overflow-visible border-0 bg-transparent p-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`${node.img}?v=14`}
-                      alt=""
-                      loading="lazy"
-                      className={
-                        i === 1
-                          ? 'mx-auto block h-full max-h-full w-auto max-w-full bg-transparent object-contain object-center'
-                          : 'block size-full max-h-full max-w-full bg-transparent object-contain object-center'
-                      }
-                    />
-                  </span>
-                </Link>
-                {i < CURE_UV02_ECOSYSTEM.nodes.length - 1 ? (
-                  <span
-                    className="relative mt-[calc(2.6em+10px+75px)] h-0 w-[clamp(28px,4.5vw,56px)] shrink-0 self-start border-t-2 border-dotted border-[#0050D8] opacity-70 max-[800px]:hidden before:absolute before:-top-[5px] before:-left-[3px] before:size-2 before:rounded-full before:bg-[#0050D8] before:content-[''] after:absolute after:-top-[5px] after:-right-[3px] after:size-2 after:rounded-full after:bg-[#0050D8] after:content-['']"
-                    aria-hidden
-                  />
-                ) : null}
-              </li>
-            ))}
-          </ul>
+          <CompatibleProductsGrid products={CURE_UV02_ECOSYSTEM.nodes} />
         </div>
       </div>
 

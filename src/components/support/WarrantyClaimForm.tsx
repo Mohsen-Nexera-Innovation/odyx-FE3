@@ -198,7 +198,7 @@ export function WarrantyClaimForm() {
             <span className={labelClass}>Upload Invoice / Proof of Purchase</span>
             <p className="mt-0.5 text-[11px] font-medium text-[#6B7280]">(PDF, JPG, PNG, Max 10MB)</p>
           </div>
-          <label className="mt-2 inline-flex h-[38px] w-[130px] cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#0050D8]/20 bg-white px-3.5 text-[13px] font-bold text-[#0050D8] transition-colors hover:bg-[#F3F7FF] hover:border-[#0050D8]/40">
+          <label className="mt-2 inline-flex h-[38px] w-[130px] cursor-pointer items-center justify-center gap-2 rounded-full border border-[#0050D8]/20 bg-white px-3.5 text-[13px] font-bold text-[#0050D8] transition-colors hover:bg-[#F3F7FF] hover:border-[#0050D8]/40">
             <Upload size={14} aria-hidden />
             <span className="truncate">{invoiceName || 'Choose File'}</span>
             <input
@@ -219,7 +219,7 @@ export function WarrantyClaimForm() {
             <span className={labelClass}>Upload Images / Videos (Optional)</span>
             <p className="mt-0.5 text-[11px] font-medium text-[#6B7280]">(Show the issue clearly)</p>
           </div>
-          <label className="mt-2 inline-flex h-[38px] w-[130px] cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#0050D8]/20 bg-white px-3.5 text-[13px] font-bold text-[#0050D8] transition-colors hover:bg-[#F3F7FF] hover:border-[#0050D8]/40">
+          <label className="mt-2 inline-flex h-[38px] w-[130px] cursor-pointer items-center justify-center gap-2 rounded-full border border-[#0050D8]/20 bg-white px-3.5 text-[13px] font-bold text-[#0050D8] transition-colors hover:bg-[#F3F7FF] hover:border-[#0050D8]/40">
             <Upload size={14} aria-hidden />
             <span className="truncate">{imagesName || 'Choose File'}</span>
             <input
@@ -253,7 +253,7 @@ export function WarrantyClaimForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex h-[46px] w-[200px] items-center justify-center rounded-[8px] bg-[#0050D8] px-7 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0] disabled:opacity-60"
+            className="inline-flex h-[46px] w-[200px] items-center justify-center rounded-full bg-[#0050D8] px-7 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0] disabled:opacity-60"
           >
             {submitting ? 'Submitting…' : 'Submit Claim'}
           </button>

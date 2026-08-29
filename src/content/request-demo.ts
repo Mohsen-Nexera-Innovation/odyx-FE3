@@ -3,6 +3,8 @@
  * Product names match site catalog labels; no invented specs.
  */
 
+import { HOME_ORBIT_PRODUCTS } from '@/content/home';
+
 export const REQUEST_DEMO_META = {
   title: 'Request a Demo | ODYX',
   description:
@@ -125,7 +127,8 @@ export const DEMO_PRODUCTS = [
     id: 'resins' as const,
     title: 'Dental Resins',
     subtitle: 'ODYX Resins',
-    image: '/img/hv2-cut/resins-product.webp',
+    // Same cutout as the home hero orbit.
+    image: HOME_ORBIT_PRODUCTS[3].src,
   },
   {
     id: 'workflow' as const,
@@ -134,6 +137,84 @@ export const DEMO_PRODUCTS = [
     image: '/img/request-demo/complete-workflow.png',
   },
 ];
+
+const DEMO_PRODUCT_IDS = new Set<DemoProductId>(
+  DEMO_PRODUCTS.map((p) => p.id),
+);
+
+/** Catalog slugs and short names that map onto a demo interest card. */
+const DEMO_PRODUCT_ALIASES: Record<string, DemoProductId> = {
+  scanner: 'scanner',
+  scan: 'scanner',
+  'io-scanner': 'scanner',
+  'odyx-s1': 'scanner',
+  s1: 'scanner',
+  'scanner-s1': 'scanner',
+  'intraoral-scanner': 'scanner',
+  'odyx-s1-intraoral-scanner': 'scanner',
+  design: 'design',
+  software: 'design',
+  'odyx-design': 'design',
+  'design-services': 'design',
+  printer: 'printer',
+  print: 'printer',
+  'p1-26': 'printer',
+  'odyx-p1-26': 'printer',
+  '3d-printers': 'printer',
+  'printer-p1-26': 'printer',
+  cure: 'cure',
+  curing: 'cure',
+  'odyx-cure': 'cure',
+  'cure-uv02': 'cure',
+  'curing-machines': 'cure',
+  'curing-odyx-cure': 'cure',
+  resins: 'resins',
+  resin: 'resins',
+  'odyx-resin': 'resins',
+  'resin-odyx': 'resins',
+  'ceramic-crown-resin': 'resins',
+  'crown-bridge-resin': 'resins',
+  'model-resin': 'resins',
+  'surgical-guide-resin-pro': 'resins',
+  'temporary-restoration-resin': 'resins',
+  workflow: 'workflow',
+  ecosystem: 'workflow',
+  deliver: 'workflow',
+};
+
+export function resolveDemoProductId(value: string): DemoProductId | undefined {
+  const key = value.trim().toLowerCase();
+  if (!key) return undefined;
+  const aliased = DEMO_PRODUCT_ALIASES[key];
+  if (aliased) return aliased;
+  if (DEMO_PRODUCT_IDS.has(key as DemoProductId)) return key as DemoProductId;
+  return undefined;
+}
+
+export function parseDemoProductParam(
+  raw: string | readonly string[] | null | undefined,
+): DemoProductId[] {
+  if (raw == null || raw === '') return [];
+  const parts = (Array.isArray(raw) ? raw : [raw]).flatMap((value) =>
+    value.split(','),
+  );
+  const ids: DemoProductId[] = [];
+  for (const part of parts) {
+    const id = resolveDemoProductId(part);
+    if (id && !ids.includes(id)) ids.push(id);
+  }
+  return ids;
+}
+
+export function requestDemoHref(
+  product?: string | readonly string[],
+): string {
+  const ids = parseDemoProductParam(product);
+  if (ids.length === 0) return '/request-demo';
+  const qs = new URLSearchParams();
+  for (const id of ids) qs.append('product', id);
+  return `/request-demo?${qs.toString()}`;
+}
 
 export type DemoApplicationId =
   | 'crown-bridge'

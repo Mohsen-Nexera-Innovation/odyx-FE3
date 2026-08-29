@@ -1,6 +1,6 @@
 import { P1_26_HERO } from '@/content/p1-26';
 import { LINES, LINES_SECTION } from '@/content/resins';
-import { REQUEST_DEMO_TRUST } from '@/content/request-demo';
+import { REQUEST_DEMO_TRUST, requestDemoHref } from '@/content/request-demo';
 
 export const PRODUCTS_LANDING_META = {
   title: 'Products | ODYX',
@@ -201,7 +201,7 @@ export const PRODUCTS_LANDING_CTA = {
   titleLead: 'Build your digital dentistry ecosystem with',
   titleAccent: 'ODYX.',
   body: 'Request a demo and discover the right solution for your practice or lab.',
-  primary: { label: 'Request a Demo', href: '/request-demo' },
+  primary: { label: 'Request a Demo', href: requestDemoHref('workflow') },
   secondary: { label: 'Explore Workflows', href: '/workflows' },
   collage: [
     {

@@ -9,6 +9,7 @@ import {
   RESIN_DETAIL_CASES_CTA,
   RESIN_DETAIL_COMPATIBLE,
 } from '@/content/resin-detail-shared';
+import { requestDemoHref } from '@/content/request-demo';
 
 export const TEMPORARY_RESIN_SLUG = 'temporary-restoration-resin';
 
@@ -27,7 +28,7 @@ export const TEMPORARY_RESIN_HERO = {
   img: '/images/resin-hero-temporary-restoration-v2.png',
   imgAlt:
     'ODYX Temporary Restoration Resin bottle with 3D-printed temporary dental restorations',
-  primaryCta: { label: 'Request a Demo', href: '/request-demo' },
+  primaryCta: { label: 'Request a Demo', href: requestDemoHref('resins') },
   secondaryCta: {
     label: 'Download Datasheet',
     href: '/docs/resins/resin-flyer.pdf',

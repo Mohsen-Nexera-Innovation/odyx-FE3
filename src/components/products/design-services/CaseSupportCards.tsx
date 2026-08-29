@@ -12,14 +12,14 @@ export function NeedHelp() {
         href="https://wa.me/201042077646"
         target="_blank"
         rel="noopener noreferrer"
-        className="min-h-[50px] flex items-center justify-center gap-2 border-[1.5px] border-[#16A34A] rounded-[6px] bg-white !text-[#16A34A] text-[13px] font-bold no-underline transition-colors hover:bg-[#F0FDF4]"
+        className="min-h-[50px] flex items-center justify-center gap-2 border-[1.5px] border-[#16A34A] rounded-full bg-white !text-[#16A34A] text-[13px] font-bold no-underline transition-colors hover:bg-[#F0FDF4]"
       >
         <MessageCircle size={16} strokeWidth={2} aria-hidden />
         Chat on WhatsApp
       </Link>
       <Link
         href="mailto:support@odyxegypt.net"
-        className="min-h-[50px] flex items-center justify-center gap-2 border-[1.5px] border-[#0050D8] rounded-[6px] bg-white !text-[#0050D8] text-[13px] font-bold no-underline transition-colors hover:bg-[#F3F7FF]"
+        className="min-h-[50px] flex items-center justify-center gap-2 border-[1.5px] border-[#0050D8] rounded-full bg-white !text-[#0050D8] text-[13px] font-bold no-underline transition-colors hover:bg-[#F3F7FF]"
       >
         <Mail size={16} strokeWidth={2} aria-hidden />
         Email Us
