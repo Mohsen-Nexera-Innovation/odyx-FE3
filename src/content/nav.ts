@@ -70,7 +70,7 @@ const ABOUT_NAV_ITEMS: NavLink[] = [
   },
   {
     label: "News & Insights",
-    href: "/about#news",
+    href: "/news",
     desc: "Latest announcements and stories",
   },
 ];

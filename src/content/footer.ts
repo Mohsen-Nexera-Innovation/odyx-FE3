@@ -25,7 +25,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "Why ODYX", href: "/about#why" },
       { label: "Our Values", href: "/about#values" },
       { label: "Our Team", href: "/about#team" },
-      { label: "News & Insights", href: "/about#news" },
+      { label: "News & Insights", href: "/news" },
     ],
   },
   {

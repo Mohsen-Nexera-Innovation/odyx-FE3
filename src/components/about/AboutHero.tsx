@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { ShieldCheck, Users, Lightbulb } from 'lucide-react';
 import { AboutHeroData } from '@/content/about';
 import {
@@ -52,7 +51,7 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
             {/* CTA Button — omitted when primaryCta is not set */}
             {data.primaryCta && (
               <div>
-                <Link
+                <a
                   href={data.primaryCta.href}
                   className={`${ABOUT_BTN} ${ABOUT_BTN_SIZE} px-7!`}
                 >
@@ -60,7 +59,7 @@ export function AboutHero({ data }: { data: AboutHeroData }) {
                     {data.primaryCta.label}
                   </span>
                   <svg className="block shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m5 12 14 0"/><path d="m13 5 7 7-7 7"/></svg>
-                </Link>
+                </a>
               </div>
             )}
           </div>

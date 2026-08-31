@@ -8,16 +8,31 @@ const SANS =
 const DISPLAY =
   "[font-family:var(--font-space),'Space Grotesk',var(--font-sora),sans-serif]";
 
+function compactQty(n: number) {
+  if (!Number.isFinite(n) || n <= 0) return '0';
+  if (n < 1_000_000) return Math.round(n).toLocaleString('en-US');
+  return new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short',
+    maximumFractionDigits: 2,
+  }).format(n);
+}
+
 function formatLe(n: number) {
   if (!Number.isFinite(n) || n <= 0) return 'L.E 0';
-  return `L.E ${Math.round(n).toLocaleString('en-US')}`;
+  return `L.E ${compactQty(n)}`;
 }
 
 function formatHours(mins: number) {
   if (!Number.isFinite(mins) || mins <= 0) return '0 h';
   const h = mins / 60;
-  return h >= 10 ? `${Math.round(h)} h` : `${Math.round(h * 10) / 10} h`;
+  if (h < 10) return `${Math.round(h * 10) / 10} h`;
+  if (h < 1_000_000) return `${Math.round(h).toLocaleString('en-US')} h`;
+  return `${compactQty(h)} h`;
 }
+
+const resultValueCls =
+  `${DISPLAY} max-w-full min-w-0 text-[clamp(1rem,1.5vw,1.55rem)] font-extrabold leading-[1.2] text-[#0050D8] [overflow-wrap:anywhere] [word-break:break-word]`;
 
 const inputCls =
   `${SANS} h-[42px] min-w-0 w-full appearance-none rounded-lg border border-solid border-[#d5dce8] bg-white px-3 text-left text-[.9rem] font-semibold text-[#1a2433] transition-[border-color,box-shadow] duration-200 ease-[ease] [appearance:textfield] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,.14)] focus:outline-none`;
@@ -38,7 +53,7 @@ export default function CureRoiMini() {
 
   return (
     <div
-      className="reveal in flex min-h-[280px] min-w-0 flex-col overflow-visible rounded-[18px] border border-solid border-[rgba(30,50,90,.08)] bg-white p-[clamp(18px,2vw,26px)] shadow-[0_10px_28px_rgba(20,40,80,.06)]"
+      className="reveal in flex min-h-[280px] min-w-0 flex-col overflow-hidden rounded-[18px] border border-solid border-[rgba(30,50,90,.08)] bg-white p-[clamp(18px,2vw,26px)] shadow-[0_10px_28px_rgba(20,40,80,.06)]"
       id="roi"
     >
       <h2
@@ -89,35 +104,29 @@ export default function CureRoiMini() {
           />
         </div>
         <div className="min-h-full w-px self-stretch bg-[#dce2ee] max-[800px]:hidden" aria-hidden />
-        <div className="flex min-w-0 flex-col justify-center gap-[18px] py-1 ps-1 pe-0.5 text-left max-[800px]:flex-row max-[800px]:gap-4">
-          <div className="flex min-w-0 flex-col items-start gap-1 max-[800px]:flex-1">
+        <div className="flex min-w-0 max-w-full flex-col justify-center gap-[18px] overflow-hidden py-1 ps-1 pe-0.5 text-left max-[800px]:flex-row max-[800px]:gap-4">
+          <div className="flex min-w-0 max-w-full flex-col items-start gap-1 max-[800px]:flex-1">
             <span className={`${SANS} text-[.74rem] font-semibold leading-[1.25] text-[#2c3444]`}>
               {CURE_UV02_ROI.timeResultLabel}
             </span>
-            <div className="flex min-w-0 flex-wrap items-baseline gap-1.5">
-              <strong
-                key={`t-${timeMins}`}
-                className={`${DISPLAY} text-[clamp(1.2rem,1.7vw,1.55rem)] font-extrabold leading-[1.1] text-[#0050D8]`}
-              >
+            <div className="flex min-w-0 max-w-full flex-wrap items-baseline gap-1.5">
+              <strong key={`t-${timeMins}`} className={resultValueCls}>
                 {formatHours(timeMins)}
               </strong>
-              <span className={`${SANS} whitespace-nowrap text-[.88rem] font-bold text-[#0050D8]`}>
+              <span className={`${SANS} text-[.88rem] font-bold text-[#0050D8]`}>
                 {CURE_UV02_ROI.timeResultUnit}
               </span>
             </div>
           </div>
-          <div className="flex min-w-0 flex-col items-start gap-1 max-[800px]:flex-1">
+          <div className="flex min-w-0 max-w-full flex-col items-start gap-1 max-[800px]:flex-1">
             <span className={`${SANS} text-[.74rem] font-semibold leading-[1.25] text-[#2c3444]`}>
               {CURE_UV02_ROI.costResultLabel}
             </span>
-            <div className="flex min-w-0 flex-wrap items-baseline gap-1.5">
-              <strong
-                key={`c-${cost}`}
-                className={`${DISPLAY} text-[clamp(1.2rem,1.7vw,1.55rem)] font-extrabold leading-[1.1] text-[#0050D8]`}
-              >
+            <div className="flex min-w-0 max-w-full flex-wrap items-baseline gap-1.5">
+              <strong key={`c-${cost}`} className={resultValueCls}>
                 {formatLe(cost)}
               </strong>
-              <span className={`${SANS} whitespace-nowrap text-[.88rem] font-bold text-[#0050D8]`}>
+              <span className={`${SANS} text-[.88rem] font-bold text-[#0050D8]`}>
                 {CURE_UV02_ROI.costResultUnit}
               </span>
             </div>

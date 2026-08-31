@@ -53,6 +53,14 @@ function defaultParams(resinName: string): ClinicalIndicationContent['params'] {
   };
 }
 
+function workflowCta(slug: string, filename: string): ClinicalIndicationContent['hero']['cta'] {
+  return {
+    label: 'Download Workflow PDF',
+    href: `/docs/workflows/${slug}.pdf`,
+    download: filename,
+  };
+}
+
 function tl(
   slug: string,
   steps: Omit<ClinicalIndicationContent['timeline']['steps'][number], 'icon' | 'n'>[],
@@ -81,10 +89,7 @@ const sameDayCrown: ClinicalIndicationContent = {
     title: 'Same-Day Crown',
     subtitle: 'From scan to cementation in one visit.',
     body: 'Deliver strong, esthetic crowns in a single appointment with the ODYX digital workflow.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Same-Day%20Crown%20Workflow%20PDF',
-    },
+    cta: workflowCta('same-day-crown', 'ODYX-Same-Day-Crown-Workflow.pdf'),
     img: '/img/clinical-sdc/hero-model-cutout.png',
     imgAlt: 'Dental model with crowns being seated',
   },
@@ -154,10 +159,7 @@ const veneers: ClinicalIndicationContent = {
     title: 'Veneers',
     subtitle: 'Esthetic veneers in a single visit.',
     body: 'Print thin, highly esthetic veneers chairside with the ODYX digital workflow — precise fit, natural translucency.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Veneers%20Workflow%20PDF',
-    },
+    cta: workflowCta('veneers', 'ODYX-Veneers-Workflow.pdf'),
     img: '/img/clinical/veneers/hero-cutout.png',
     imgAlt: 'Ceramic veneers held over a dental model',
   },
@@ -221,10 +223,7 @@ const inlays: ClinicalIndicationContent = {
     title: 'Inlays & Onlays',
     subtitle: 'Precise partial restorations, chairside.',
     body: 'Restore cusps and proximal anatomy with accurately printed inlays and onlays — conservative prep, excellent margins.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Inlays%20Onlays%20Workflow%20PDF',
-    },
+    cta: workflowCta('inlays', 'ODYX-Inlays-Onlays-Workflow.pdf'),
     img: '/img/clinical/inlays/hero-cutout.png',
     imgAlt: 'Printed inlay seated on a molar model',
   },
@@ -290,10 +289,7 @@ const surgicalGuide: ClinicalIndicationContent = {
     title: 'Surgical Guide',
     subtitle: 'Accurate implant placement, digitally planned.',
     body: 'Print rigid, precise surgical guides from CBCT-driven plans — transfer the digital plan to the chair with confidence.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Surgical%20Guide%20Workflow%20PDF',
-    },
+    cta: workflowCta('surgical-guide', 'ODYX-Surgical-Guide-Workflow.pdf'),
     img: '/img/clinical/surgical-guide/hero-cutout.png',
     imgAlt: 'Clear implant surgical guide with metal sleeve',
   },
@@ -367,10 +363,7 @@ const implantModel: ClinicalIndicationContent = {
     title: 'Implant Model',
     subtitle: 'Detailed planning models for implant cases.',
     body: 'Print solid, accurate models with soft-tissue and analog options — ideal for prosthetic planning and patient communication.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Implant%20Model%20Workflow%20PDF',
-    },
+    cta: workflowCta('implant-model', 'ODYX-Implant-Model-Workflow.pdf'),
     img: '/img/clinical/implant-model/hero-cutout.png',
     imgAlt: 'Detailed 3D-printed implant planning model',
   },
@@ -446,10 +439,7 @@ const aligners: ClinicalIndicationContent = {
     title: 'Aligners',
     subtitle: 'Clear aligner workflows, end to end.',
     body: 'Print precise thermoforming models for clear aligner series — consistent staging, efficient batch production.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Aligners%20Workflow%20PDF',
-    },
+    cta: workflowCta('aligners', 'ODYX-Aligners-Workflow.pdf'),
     img: '/img/clinical/aligners/hero-cutout.png',
     imgAlt: 'Clear aligner on a printed dental model',
   },
@@ -523,10 +513,7 @@ const retainers: ClinicalIndicationContent = {
     title: 'Retainers',
     subtitle: 'Retention appliances, printed on demand.',
     body: 'Produce accurate models for clear retainers and retention appliances — fast replacements without new impressions.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Retainers%20Workflow%20PDF',
-    },
+    cta: workflowCta('retainers', 'ODYX-Retainers-Workflow.pdf'),
     img: '/img/clinical/retainers/hero-cutout.png',
     imgAlt: 'Clear retainer on a printed model',
   },
@@ -592,10 +579,7 @@ const dentures: ClinicalIndicationContent = {
     title: 'Dentures',
     subtitle: 'Complete & partial dentures, digitally.',
     body: 'Print bases and try-in components for efficient full and partial denture workflows — predictable fit, fewer appointments.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Dentures%20Workflow%20PDF',
-    },
+    cta: workflowCta('dentures', 'ODYX-Dentures-Workflow.pdf'),
     img: '/img/clinical/dentures/hero-cutout.png',
     imgAlt: 'Full-arch prosthetic teeth set in a pink gum base',
   },
@@ -669,10 +653,7 @@ const tryIns: ClinicalIndicationContent = {
     title: 'Try-ins',
     subtitle: 'Perfect try-ins for better fit & function.',
     body: 'Print inexpensive try-in appliances to validate esthetics, occlusion, and phonetics before committing to the final prosthesis.',
-    cta: {
-      label: 'Download Workflow PDF',
-      href: 'mailto:info@odyx.dental?subject=Try-ins%20Workflow%20PDF',
-    },
+    cta: workflowCta('try-ins', 'ODYX-Try-ins-Workflow.pdf'),
     img: '/img/clinical/try-ins/hero-cutout.png',
     imgAlt: 'Printed try-in prosthesis on a model',
   },

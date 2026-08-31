@@ -115,7 +115,7 @@ export const aboutData: AboutPageData = {
     kicker: 'ABOUT ODYX EGYPT',
     title: 'Built to Transform Digital Dentistry.',
     subtitle: 'At ODYX Egypt, we combine advanced technology, deep expertise, and a passion for innovation to create an ecosystem that empowers clinicians and elevates patient care.',
-    primaryCta: { label: 'Our Story', href: '#why' },
+    primaryCta: { label: 'Our Story', href: '#who-we-are' },
     features: [
       {
         icon: 'shield-check',
@@ -246,7 +246,7 @@ export const aboutData: AboutPageData = {
     kicker: 'NEWS & INSIGHTS',
     title: 'Stay Inspired. Stay Ahead.',
     description: 'The latest news, product launches, research, and insights from ODYX.',
-    cta: { label: 'View All News', href: '#news' },
+    cta: { label: 'View All News', href: '/news' },
     news: [
       {
         date: 'May 20, 2025',

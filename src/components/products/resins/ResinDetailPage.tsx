@@ -169,15 +169,23 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                   className="block overflow-hidden rounded-xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition hover:border-blue-300 hover:shadow-[0_4px_14px_rgba(0,80,216,0.1)] focus-visible:outline-2 focus-visible:outline-offset-2"
                   style={{ outlineColor: BLUE }}
                 >
-                  <div className="relative h-[160px] w-full overflow-hidden bg-white">
-                    <Image
-                      src={application.img}
-                      alt={application.imgAlt}
-                      fill
-                      unoptimized
-                      sizes={`(max-width: 639px) 100vw, (max-width: 1023px) 50vw, ${Math.round(200 / content.appColumns)}vw`}
-                      className="object-contain object-center p-3"
-                    />
+                  <div
+                    className={[
+                      'box-border w-full bg-white',
+                      content.appColumns <= 3 ? 'h-[220px] p-5' : 'h-[168px] p-4',
+                    ].join(' ')}
+                  >
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={application.img}
+                        alt={application.imgAlt}
+                        fill
+                        unoptimized
+                        sizes={`(max-width: 639px) 100vw, (max-width: 1023px) 50vw, ${Math.round(200 / content.appColumns)}vw`}
+                        className="object-contain object-center"
+                        style={{ objectFit: 'contain' }}
+                      />
+                    </div>
                   </div>
                   <p className="flex min-h-9 items-center justify-center px-1 py-1.5 text-center text-sm font-bold leading-tight text-gray-900">
                     {application.label}

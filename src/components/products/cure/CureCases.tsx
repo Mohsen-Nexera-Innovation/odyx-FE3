@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { CURE_UV02_CASE_TABS } from '@/content/cure-uv02';
+import { productCasesPath } from '@/content/product-cases';
 
 const SANS =
   "[font-family:var(--font-sora),'Sora',ui-sans-serif,system-ui,sans-serif]";
@@ -94,7 +95,7 @@ export default function CureCases() {
         ))}
       </div>
       <Link
-        href="/learning"
+        href={productCasesPath('curing')}
         className={`${SANS} ${BTN} mt-auto w-fit self-center border-0 bg-[#0050D8] !text-white shadow-none hover:-translate-y-px hover:!text-white hover:shadow-[0_10px_28px_rgba(0,80,216,.35)] motion-reduce:hover:translate-y-0`}
       >
         View More Cases
