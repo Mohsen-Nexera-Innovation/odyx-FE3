@@ -188,7 +188,6 @@ export const DEMO_COUNTRIES = WORLD_COUNTRIES;
 export const DEMO_LANGUAGES = [
   { id: 'en', label: 'English' },
   { id: 'ar', label: 'Arabic' },
-  { id: 'fr', label: 'French' },
 ] as const;
 
 export const DEMO_CHAIR_OPTIONS = [
