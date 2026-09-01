@@ -72,6 +72,13 @@ const BTN_PRIMARY = `${BTN} border border-solid border-transparent bg-[#0050D8] 
 const BTN_SECONDARY = `${BTN} border border-solid border-[#6c6c6c] bg-white !text-[#1a1a1a] hover:border-[#404040]`;
 const BTN_CASES = `${BTN_SECONDARY} min-w-[220px] px-7 text-[16px] !text-[#0050D8] hover:border-[#0050D8] hover:bg-[rgba(0,80,216,0.04)] max-[1023px]:w-full max-[1023px]:min-w-0 max-[1023px]:max-w-[260px] max-[1023px]:px-[18px]`;
 
+const SPEC_LINE = 'border-solid border-[#CBD5E1]';
+const SPEC_ROW =
+  'grid min-h-[42px] grid-cols-2 gap-0 text-sm leading-snug';
+const SPEC_HEAD = 'flex items-center px-3 py-2 text-sm font-bold leading-snug text-[#1A2438]';
+const SPEC_PROP = 'flex items-center px-3 py-2 text-sm font-medium leading-snug text-[#4A5568]';
+const SPEC_VAL = 'flex items-center px-3 py-2 text-sm font-semibold leading-snug text-[#1A2438]';
+
 export default function ResinDetailPage({ content }: { content: ResinDetailContent }) {
   const { hero } = content;
   const specColumns = [content.specs.slice(0, 3), content.specs.slice(3)];
@@ -220,45 +227,31 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
             <h2 className="mb-4 font-[inherit] text-lg font-bold leading-6" style={{ color: BLUE }}>
               Technical Specifications
             </h2>
-            <div className="overflow-hidden rounded-lg border border-gray-200 [display:grid] [gap:0] sm:[grid-template-columns:repeat(2,minmax(0,1fr))]">
+            <div
+              className={`overflow-hidden rounded-lg border ${SPEC_LINE} [display:grid] [gap:0] sm:[grid-template-columns:repeat(2,minmax(0,1fr))]`}
+            >
               {specColumns.map((column, columnIndex) => (
                 <div
                   key={columnIndex === 0 ? 'primary-specs' : 'secondary-specs'}
                   className={
                     columnIndex === 1
-                      ? 'border-t border-gray-200 sm:border-t-0 sm:border-l'
+                      ? `border-t ${SPEC_LINE} sm:border-t-0 sm:[border-inline-start-width:1px]`
                       : ''
                   }
                 >
-                  <div
-                    className={[
-                      'min-h-[38px] border-b border-gray-200 bg-gray-50/60 text-sm font-bold [display:grid] [gap:0]',
-                      columnIndex === 0
-                        ? '[grid-template-columns:48%_52%]'
-                        : '[grid-template-columns:64%_36%]',
-                    ].join(' ')}
-                  >
-                    <span className="flex items-center px-3">
-                      {columnIndex === 0 ? 'Property' : ''}
-                    </span>
-                    <span className="flex items-center px-3">Value</span>
+                  <div className={`${SPEC_ROW} border-b ${SPEC_LINE} bg-[#F7F8FA]`}>
+                    <span className={SPEC_HEAD}>Property</span>
+                    <span className={SPEC_HEAD}>Value</span>
                   </div>
-                  {column.map((spec) => (
+                  {column.map((spec, rowIndex) => (
                     <div
                       key={spec.property}
-                      className={[
-                        'min-h-[38px] border-b border-gray-200 text-sm last:border-b-0 [display:grid] [gap:0]',
-                        columnIndex === 0
-                          ? '[grid-template-columns:48%_52%]'
-                          : '[grid-template-columns:64%_36%]',
-                      ].join(' ')}
+                      className={`${SPEC_ROW} ${
+                        rowIndex < column.length - 1 ? `border-b ${SPEC_LINE}` : ''
+                      }`}
                     >
-                      <span className="flex items-center px-3 text-gray-700">
-                        {spec.property}
-                      </span>
-                      <span className="flex items-center px-3 font-semibold text-gray-900">
-                        {spec.value}
-                      </span>
+                      <span className={SPEC_PROP}>{spec.property}</span>
+                      <span className={SPEC_VAL}>{spec.value}</span>
                     </div>
                   ))}
                 </div>

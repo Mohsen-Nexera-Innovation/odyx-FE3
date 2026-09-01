@@ -294,7 +294,7 @@ export default function ScannerS1Page() {
             </li>
           </ul>
           <div className="mt-[22px] flex justify-center">
-            <Link className={`${BTN_PRIMARY} min-w-[220px]`} href="/learning">
+            <Link className={`${BTN_PRIMARY} min-w-[220px]`} href="/solutions/cases">
               View More Cases
             </Link>
           </div>

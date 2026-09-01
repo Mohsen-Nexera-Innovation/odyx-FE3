@@ -45,12 +45,12 @@ export const PRODUCTS_LANDING_HERO_ITEMS = [
     href: '/products/resins',
     bottles: [
       {
-        src: '/img/resins/card-ceramic.png',
-        alt: 'ODYX Ceramic Crown Resin',
-      },
-      {
         src: '/img/resins/card-crown-bridge.png',
         alt: 'ODYX Crown & Bridge Resin',
+      },
+      {
+        src: '/img/resins/card-ceramic.png',
+        alt: 'ODYX Ceramic Crown Resin',
       },
     ],
     media: 'bottles' as const,
@@ -120,12 +120,12 @@ export const PRODUCTS_LANDING_FAMILIES = [
     // Same packshots as the hero resins pedestal.
     bottles: [
       {
-        src: '/img/resins/card-ceramic.png',
-        alt: 'ODYX Ceramic Crown Resin',
-      },
-      {
         src: '/img/resins/card-crown-bridge.png',
         alt: 'ODYX Crown & Bridge Resin',
+      },
+      {
+        src: '/img/resins/card-ceramic.png',
+        alt: 'ODYX Ceramic Crown Resin',
       },
     ],
     imageSide: 'end' as const,
@@ -185,12 +185,12 @@ export const PRODUCTS_LANDING_WORKFLOW = {
       href: '/products/resins',
       bottles: [
         {
-          src: '/img/resins/card-ceramic.png',
-          alt: 'ODYX Ceramic Crown Resin',
-        },
-        {
           src: '/img/resins/card-crown-bridge.png',
           alt: 'ODYX Crown & Bridge Resin',
+        },
+        {
+          src: '/img/resins/card-ceramic.png',
+          alt: 'ODYX Ceramic Crown Resin',
         },
       ],
     },
@@ -223,12 +223,12 @@ export const PRODUCTS_LANDING_CTA = {
       id: 'resins',
       bottles: [
         {
-          src: '/img/resins/card-ceramic.png',
-          alt: 'ODYX Ceramic Crown Resin',
-        },
-        {
           src: '/img/resins/card-crown-bridge.png',
           alt: 'ODYX Crown & Bridge Resin',
+        },
+        {
+          src: '/img/resins/card-ceramic.png',
+          alt: 'ODYX Ceramic Crown Resin',
         },
       ],
     },

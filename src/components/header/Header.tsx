@@ -202,7 +202,14 @@ function collectMenuHrefs(menu: NavGroup): string[] {
 }
 
 function isMenuRouteActive(menu: NavGroup, pathname: string, hash = ''): boolean {
-  return collectMenuHrefs(menu).some((href) => isNavHrefActive(pathname, href, hash));
+  if (collectMenuHrefs(menu).some((href) => isNavHrefActive(pathname, href, hash))) {
+    return true;
+  }
+  // Same-page hashes that aren't listed in the mega (e.g. /about#who-we-are
+  // from the Our Story CTA) still belong to this section.
+  const menuPath = navHrefPath(menu.href);
+  if (menuPath === '/') return false;
+  return pathname === menuPath || pathname.startsWith(`${menuPath}/`);
 }
 
 function ComingSoonNavItem({ label }: { label: string }) {
