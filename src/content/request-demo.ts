@@ -3,6 +3,8 @@
  * Product names match site catalog labels; no invented specs.
  */
 
+import { WORLD_COUNTRIES } from '@/content/countries';
+
 export const REQUEST_DEMO_META = {
   title: 'Request a Demo | ODYX',
   description:
@@ -181,19 +183,7 @@ export const DEMO_TYPES = [
   },
 ];
 
-export const DEMO_COUNTRIES = [
-  'Egypt',
-  'Saudi Arabia',
-  'United Arab Emirates',
-  'Kuwait',
-  'Qatar',
-  'Bahrain',
-  'Oman',
-  'Jordan',
-  'Lebanon',
-  'Morocco',
-  'Other',
-] as const;
+export const DEMO_COUNTRIES = WORLD_COUNTRIES;
 
 export const DEMO_LANGUAGES = [
   { id: 'en', label: 'English' },
