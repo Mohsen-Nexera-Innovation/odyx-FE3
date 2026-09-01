@@ -10,6 +10,11 @@ import { useCart } from '@/hooks/useCart';
 import { readSession } from '@/lib/auth';
 import { isDesignCart, isMixedCart, removeItemAsync } from '@/lib/commerce';
 import { placeOrderFacade, previewShipping, type OrderShipping } from '@/lib/orders';
+import {
+  isValidPhoneNumber,
+  PHONE_MAX_LENGTH,
+  sanitizePhoneInput,
+} from '@/lib/phone';
 
 type FormState = OrderShipping;
 
@@ -22,10 +27,6 @@ const EMPTY: FormState = {
   country: '',
   postal: '',
 };
-
-function digitsOnly(v: string) {
-  return v.replace(/\D/g, '');
-}
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -187,7 +188,7 @@ export default function CheckoutPage() {
   const total = subtotal + shippingFee;
 
   const contactDone =
-    form.name.trim() !== '' && isValidEmail(form.email) && digitsOnly(form.phone).length >= 8;
+    form.name.trim() !== '' && isValidEmail(form.email) && isValidPhoneNumber(form.phone);
   const shippingDone = digital
     ? true
     : form.line1.trim() !== '' && form.city.trim() !== '';
@@ -207,7 +208,7 @@ export default function CheckoutPage() {
     const next: Partial<Record<keyof FormState, string>> = {};
     if (!form.name.trim()) next.name = 'Required';
     if (!form.email.trim() || !isValidEmail(form.email)) next.email = 'Valid email required';
-    if (!form.phone.trim() || digitsOnly(form.phone).length < 8) next.phone = 'Valid phone required';
+    if (!form.phone.trim() || !isValidPhoneNumber(form.phone)) next.phone = 'Valid phone required';
     if (!digital) {
       if (!form.line1.trim()) next.line1 = 'Required';
       if (!form.city.trim()) next.city = 'Governorate / city required (Bosta)';
@@ -431,10 +432,12 @@ export default function CheckoutPage() {
                     id="co-phone"
                     label="Phone"
                     type="tel"
+                    inputMode="tel"
                     autoComplete="tel"
+                    maxLength={PHONE_MAX_LENGTH}
                     full
                     value={form.phone}
-                    onChange={(v) => setField('phone', v)}
+                    onChange={(v) => setField('phone', sanitizePhoneInput(v))}
                     error={errors.phone}
                   />
                 </div>

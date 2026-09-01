@@ -13,6 +13,12 @@ import {
 import { formatMoney } from '@/content/shop';
 import { createLeadApi } from '@/lib/api/leads';
 import {
+  isValidPhoneNumber,
+  PHONE_INVALID_MESSAGE,
+  PHONE_MAX_LENGTH,
+  sanitizePhoneInput,
+} from '@/lib/phone';
+import {
   calculateRoi,
   scenarioSnapshot,
   type RoiInputs,
@@ -153,6 +159,10 @@ export default function RoiCalculator({ scope = 'printer' }: Props) {
     }
     if (!email.trim() || !email.includes('@')) {
       setError('Enter a valid email.');
+      return;
+    }
+    if (phone.trim() && !isValidPhoneNumber(phone)) {
+      setError(PHONE_INVALID_MESSAGE);
       return;
     }
 
@@ -504,9 +514,11 @@ export default function RoiCalculator({ scope = 'printer' }: Props) {
                 <input
                   id="roi-phone"
                   type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  inputMode="tel"
                   autoComplete="tel"
+                  maxLength={PHONE_MAX_LENGTH}
+                  value={phone}
+                  onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
                 />
               </div>
               <div className="field">

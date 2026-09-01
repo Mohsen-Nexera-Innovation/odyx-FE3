@@ -16,6 +16,12 @@ import {
   decodeGoogleIdToken,
   peekGoogleIdToken,
 } from '@/lib/google-identity';
+import {
+  isValidPhoneNumber,
+  PHONE_INVALID_MESSAGE,
+  PHONE_MAX_LENGTH,
+  sanitizePhoneInput,
+} from '@/lib/phone';
 
 const CLIENT_ROLES = AUTH_ROLES.filter((r) => r.id !== 'guest');
 
@@ -80,6 +86,11 @@ export default function CompleteGoogleForm() {
     }
     if (!terms) {
       setMsg('Accept the terms to continue.');
+      setError(true);
+      return;
+    }
+    if (phone.trim() && !isValidPhoneNumber(phone)) {
+      setMsg(PHONE_INVALID_MESSAGE);
       setError(true);
       return;
     }
@@ -182,10 +193,13 @@ export default function CompleteGoogleForm() {
             <label htmlFor="cg-phone">Phone</label>
             <input
               id="cg-phone"
+              type="tel"
+              inputMode="tel"
               autoComplete="tel"
+              maxLength={PHONE_MAX_LENGTH}
               placeholder="+20…"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
             />
           </div>
           <div className="auth-field">

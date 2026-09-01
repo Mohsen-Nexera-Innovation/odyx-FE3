@@ -4,6 +4,7 @@ import {
   REQUEST_DEMO_FORM,
 } from '@/content/request-demo';
 import { cn } from '@/lib/cn';
+import { PHONE_MAX_LENGTH, sanitizePhoneInput } from '@/lib/phone';
 import { Field } from '../Field';
 import type { DemoFormState, DemoFormUpdate } from '../demoForm';
 import {
@@ -97,11 +98,13 @@ export function ContactSection({
           <input
             id={`${formId}-phone`}
             type="tel"
+            inputMode="tel"
+            maxLength={PHONE_MAX_LENGTH}
             className={cn(inputClass, inputErrorClass(!!errors.phone))}
             autoComplete="tel"
             placeholder={copy.sections.contact.fields.phone.placeholder}
             value={form.phone}
-            onChange={(e) => update('phone', e.target.value)}
+            onChange={(e) => update('phone', sanitizePhoneInput(e.target.value))}
           />
         </Field>
         <Field

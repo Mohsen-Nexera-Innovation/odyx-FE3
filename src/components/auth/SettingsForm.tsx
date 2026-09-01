@@ -8,6 +8,12 @@ import {
   type AccountSession,
 } from '@/lib/auth';
 import { useAuthSession } from '@/hooks/useAuthSession';
+import {
+  isValidPhoneNumber,
+  PHONE_INVALID_MESSAGE,
+  PHONE_MAX_LENGTH,
+  sanitizePhoneInput,
+} from '@/lib/phone';
 
 function isSignedIn(session: AccountSession | null): session is AccountSession {
   return Boolean(session && session.accountType !== 'GUEST' && session.role !== 'guest');
@@ -39,7 +45,7 @@ export default function SettingsForm() {
       return;
     }
     setName(session.name);
-    setPhone(session.phone ?? '');
+    setPhone(sanitizePhoneInput(session.phone ?? ''));
     setOrg(session.org ?? '');
     setCountry(session.country ?? '');
   }, [ready, session, router]);
@@ -54,6 +60,10 @@ export default function SettingsForm() {
     setProfileMsg('');
     if (!name.trim()) {
       setProfileError('Name is required.');
+      return;
+    }
+    if (phone.trim() && !isValidPhoneNumber(phone)) {
+      setProfileError(PHONE_INVALID_MESSAGE);
       return;
     }
     setProfileBusy(true);
@@ -126,9 +136,11 @@ export default function SettingsForm() {
           <input
             id="settings-phone"
             type="tel"
+            inputMode="tel"
             autoComplete="tel"
+            maxLength={PHONE_MAX_LENGTH}
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
           />
         </div>
         <div className="auth-field">

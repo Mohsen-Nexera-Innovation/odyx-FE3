@@ -8,6 +8,12 @@ import {
   type WarrantyClaimProduct,
 } from '@/lib/api/leads';
 import { SUPPORT_PRODUCTS } from '@/content/support';
+import {
+  isValidPhoneNumber,
+  PHONE_INVALID_MESSAGE,
+  PHONE_MAX_LENGTH,
+  sanitizePhoneInput,
+} from '@/lib/phone';
 
 const inputClass =
   'w-full h-[42px] rounded-[8px] border border-[#E5E7EB] bg-white px-3.5 text-[13px] font-medium text-[#0A1020] placeholder:text-[#9CA3AF] outline-none transition-colors focus:border-[#0050D8] focus:shadow-[0_0_0_3px_rgba(0,80,216,0.12)]';
@@ -21,6 +27,7 @@ export function WarrantyClaimForm() {
   const [imagesName, setImagesName] = useState('');
   const [invoiceFile, setInvoiceFile] = useState<File | null>(null);
   const [evidenceFiles, setEvidenceFiles] = useState<File[]>([]);
+  const [phone, setPhone] = useState('');
 
   if (submitted) {
     return (
@@ -44,7 +51,6 @@ export function WarrantyClaimForm() {
     const data = new FormData(form);
     const fullName = String(data.get('fullName') ?? '').trim();
     const email = String(data.get('email') ?? '').trim();
-    const phone = String(data.get('phone') ?? '').trim();
     const clinicName = String(data.get('clinicName') ?? '').trim();
     const product = String(data.get('product') ?? '').trim() as WarrantyClaimProduct;
     const serialNumber = String(data.get('serialNumber') ?? '').trim();
@@ -52,12 +58,17 @@ export function WarrantyClaimForm() {
     const dealer = String(data.get('dealer') ?? '').trim();
     const problemDescription = String(data.get('problemDescription') ?? '').trim();
 
+    if (!isValidPhoneNumber(phone)) {
+      setError(PHONE_INVALID_MESSAGE);
+      return;
+    }
+
     setSubmitting(true);
     try {
       await createWarrantyClaimApi({
         fullName,
         email,
-        phone,
+        phone: phone.trim(),
         clinicName: clinicName || undefined,
         product,
         serialNumber,
@@ -123,8 +134,13 @@ export function WarrantyClaimForm() {
               required
               name="phone"
               type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              maxLength={PHONE_MAX_LENGTH}
               placeholder="+20 100 123 4567"
               className={inputClass}
+              value={phone}
+              onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
             />
           </label>
 

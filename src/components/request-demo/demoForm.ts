@@ -6,6 +6,7 @@ import {
   type DemoStepId,
   type DemoTypeId,
 } from '@/content/request-demo';
+import { isValidPhoneNumber, requiredPhoneSchema } from '@/lib/phone';
 
 export type DemoFormState = {
   firstName: string;
@@ -64,7 +65,7 @@ export const DemoFormSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(5, 'Phone number is required'),
+  phone: requiredPhoneSchema,
   country: z.string().min(1, 'Country is required'),
   city: z.string().optional(),
   language: z.string().optional(),
@@ -127,7 +128,7 @@ export function getStepState(form: DemoFormState): Record<DemoStepId, boolean> {
       Boolean(form.firstName.trim()) &&
       Boolean(form.lastName.trim()) &&
       Boolean(form.email.trim()) &&
-      Boolean(form.phone.trim()) &&
+      isValidPhoneNumber(form.phone) &&
       Boolean(form.country),
     practice:
       Boolean(form.role) &&

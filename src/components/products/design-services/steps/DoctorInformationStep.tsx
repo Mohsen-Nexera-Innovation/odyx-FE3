@@ -2,6 +2,7 @@
 
 import { Building2, ChevronDown, Search, UserRound } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { phoneDigits } from '@/lib/phone';
 import { WORLD_COUNTRIES } from '../countries';
 import type { DoctorInformation } from '../types';
 
@@ -212,7 +213,7 @@ export default function DoctorInformationStep({ value, onChange, errors = {}, on
                 type="tel"
                 aria-label="WhatsApp phone number"
                 value={value.whatsapp}
-                onChange={(e) => update('whatsapp', e.target.value.replace(/\D/g, ''))}
+                onChange={(e) => update('whatsapp', phoneDigits(e.target.value))}
                 placeholder="10 1234 5678"
                 autoComplete="tel"
                 required

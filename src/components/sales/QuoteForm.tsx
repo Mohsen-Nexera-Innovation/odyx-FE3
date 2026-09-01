@@ -9,12 +9,13 @@ import {
 import { ApiError } from '@/lib/api/client';
 import { createQuoteRequestApi } from '@/lib/api/leads';
 import { trackMetaLead } from '@/lib/meta-pixel';
+import { PHONE_MAX_LENGTH, requiredPhoneSchema, sanitizePhoneInput } from '@/lib/phone';
 import { ArrowIcon, ProductInterestIcon } from './SalesIcons';
 
 const QuoteFormSchema = z.object({
   fullName: z.string().min(2, 'Full Name is required'),
   clinicName: z.string().min(2, 'Clinic / Lab Name is required'),
-  phone: z.string().min(5, 'Phone number is required'),
+  phone: requiredPhoneSchema,
   email: z.string().email('Invalid email address'),
   city: z.string().min(1, 'City is required'),
   product: z.enum(['scanner', 'printer', 'cure', 'resin', 'ecosystem']),
@@ -165,10 +166,12 @@ export function QuoteForm() {
               id={`${formId}-phone`}
               name="phone"
               type="tel"
+              inputMode="tel"
               autoComplete="tel"
+              maxLength={PHONE_MAX_LENGTH}
               placeholder={fields.phone.placeholder}
               value={form.phone}
-              onChange={(e) => update('phone', e.target.value)}
+              onChange={(e) => update('phone', sanitizePhoneInput(e.target.value))}
               className={`cs-input ${errors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
             />
             {errors.phone && <span className="text-red-500 text-[12px] font-medium absolute -bottom-5 left-0">{errors.phone}</span>}
