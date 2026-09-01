@@ -20,13 +20,15 @@ jobs:
 
     steps:
       - name: Deploy web to Hostinger develop
+        id: deploy
+        continue-on-error: true
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT || 2222 }}
-          timeout: 60s
+          timeout: 180s
           command_timeout: 30m
           script_stop: true
           script: |
@@ -34,6 +36,40 @@ jobs:
             # Deploy script lives in the API repo only (/opt/odyx/api).
             # VPS_DEPLOY_PATH must be /opt/odyx/api (same secret as odyx-api).
             # vps-deploy.sh web syncs /opt/odyx/web (develop) and rebuilds the web image.
+            cd "${{ secrets.VPS_DEPLOY_PATH }}"
+
+            if [[ ! -f deploy/vps-deploy.sh ]]; then
+              echo "Missing deploy/vps-deploy.sh in ${PWD}." >&2
+              echo "Set GitHub secret VPS_DEPLOY_PATH=/opt/odyx/api (not /opt/odyx/web)." >&2
+              ls -la >&2 || true
+              exit 1
+            fi
+
+            chmod +x deploy/vps-deploy.sh
+
+            git fetch --prune origin develop
+            git checkout -f -B develop origin/develop
+            git reset --hard origin/develop
+
+            ODYX_ENV=develop ./deploy/vps-deploy.sh web
+
+            echo "Deployed WEB commit: $(git -C /opt/odyx/web log -1 --oneline)"
+
+      - name: Retry SSH deploy
+        if: steps.deploy.outcome == 'failure'
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 2222 }}
+          timeout: 180s
+          command_timeout: 30m
+          script_stop: true
+          script: |
+            set -euo pipefail
+            echo "Retrying SSH deploy after connection failure..."
+            sleep 20
             cd "${{ secrets.VPS_DEPLOY_PATH }}"
 
             if [[ ! -f deploy/vps-deploy.sh ]]; then
