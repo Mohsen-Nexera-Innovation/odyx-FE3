@@ -61,6 +61,20 @@ export const INITIAL: DemoFormState = {
   marketing: false,
 };
 
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function localIsoDate(now = new Date()): string {
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+export function isOnOrAfterToday(value: string, now = new Date()): boolean {
+  if (!ISO_DATE.test(value)) return false;
+  return value >= localIsoDate(now);
+}
+
 export const DemoFormSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
@@ -76,7 +90,12 @@ export const DemoFormSchema = z.object({
   products: z.array(z.string()).min(1, 'Select at least one product'),
   applications: z.array(z.string()).optional(),
   demoType: z.enum(['online', 'onsite', 'distributor']),
-  date: z.string().min(1, 'Preferred date is required'),
+  date: z
+    .string()
+    .min(1, 'Preferred date is required')
+    .refine(isOnOrAfterToday, {
+      message: 'Preferred date cannot be in the past',
+    }),
   time: z.string().min(1, 'Preferred time is required'),
   timezone: z.string().optional(),
   notes: z.string().optional(),
@@ -136,6 +155,6 @@ export function getStepState(form: DemoFormState): Record<DemoStepId, boolean> {
       Boolean(form.chairs) &&
       form.products.length > 0,
     schedule:
-      Boolean(form.demoType) && Boolean(form.date) && Boolean(form.time),
+      Boolean(form.demoType) && isOnOrAfterToday(form.date) && Boolean(form.time),
   };
 }

@@ -14,10 +14,12 @@ import {
   LockIcon,
 } from '../DemoIcons';
 import { Field } from '../Field';
-import type {
-  DemoFormState,
-  DemoFormStatus,
-  DemoFormUpdate,
+import {
+  isOnOrAfterToday,
+  localIsoDate,
+  type DemoFormState,
+  type DemoFormStatus,
+  type DemoFormUpdate,
 } from '../demoForm';
 import {
   choiceCardClass,
@@ -47,6 +49,7 @@ export function ScheduleSection({
   scrollMarginTop: number;
 }) {
   const copy = REQUEST_DEMO_FORM;
+  const minDate = localIsoDate();
 
   return (
     <section
@@ -121,9 +124,17 @@ export function ScheduleSection({
           <input
             id={`${formId}-date`}
             type="date"
+            min={minDate}
             className={cn(inputClass, inputErrorClass(!!errors.date))}
             value={form.date}
-            onChange={(e) => update('date', e.target.value)}
+            onChange={(e) => {
+              const next = e.target.value;
+              if (next && !isOnOrAfterToday(next)) {
+                e.target.value = form.date;
+                return;
+              }
+              update('date', next);
+            }}
           />
         </Field>
         <Field
