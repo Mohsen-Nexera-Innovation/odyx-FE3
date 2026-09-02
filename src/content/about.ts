@@ -208,7 +208,6 @@ export const aboutData: AboutPageData = {
     kicker: 'OUR TEAM',
     title: 'Built by Experts. Inspired by Impact.',
     description: 'Our diverse team of clinicians, engineers, designers, and researchers are united by one mission: advancing dental care through technology.',
-    cta: { label: 'Meet the Team', href: '#team' },
     members: [
       {
         name: 'Team Member 1',

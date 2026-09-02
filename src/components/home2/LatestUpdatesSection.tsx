@@ -57,7 +57,7 @@ const UPDATES: Update[] = [
       src: "/img/hv2-news/aeedc-event.webp",
       alt: "The ODYX exhibition booth lit in blue, with product counters under a glowing ODYX sign",
       w: 668,
-      h: 684,
+      h: 522,
     },
   },
   {
@@ -70,10 +70,10 @@ const UPDATES: Update[] = [
     iso: "2026-08-05",
     href: "/products/resins",
     art: {
-      src: "/img/hv2-hub/store-resins-cutout.png",
+      src: "/img/hv2-news/resin-line.webp",
       alt: "ODYX resin collection — Ortho Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Crown",
       w: 704,
-      h: 728,
+      h: 664,
     },
   },
   {
@@ -89,7 +89,7 @@ const UPDATES: Update[] = [
       src: "/img/hv2-news/webinar.webp",
       alt: "A tablet on a warm beige surface showing the ODYX dashboard's grid of blue app tiles",
       w: 707,
-      h: 716,
+      h: 565,
     },
   },
   {
@@ -105,7 +105,7 @@ const UPDATES: Update[] = [
       src: "/img/hv2-news/partners.webp",
       alt: "Two people in dark suits shaking hands in front of a blue-lit modern skyline",
       w: 632,
-      h: 616,
+      h: 411,
     },
   },
   {
@@ -139,7 +139,7 @@ const UPDATES: Update[] = [
       src: "/img/hv2-news/open-house.webp",
       alt: "The ODYX showroom booth with a glowing blue logo, dental chair and product displays",
       w: 764,
-      h: 720,
+      h: 573,
     },
   },
   {
@@ -348,11 +348,10 @@ const LU_CARD =
 
 const LU_MEDIA =
   "absolute top-0 inset-x-0 aspect-[var(--band)] overflow-hidden" +
-  // Fade into card field for repo placeholders only.
-  " [[data-fade]_&]:after:content-[''] [[data-fade]_&]:after:absolute [[data-fade]_&]:after:inset-x-0 [[data-fade]_&]:after:bottom-0 [[data-fade]_&]:after:h-[46%]" +
-  " [[data-fade]_&]:after:[background:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,var(--bg)_92%)]";
+  " after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-[42%] after:pointer-events-none" +
+  " after:[background:linear-gradient(to_bottom,transparent_0%,var(--bg)_90%)]";
 
-const LU_ART = "block w-full h-full object-cover object-[center_top]";
+const LU_ART = "block w-full h-full object-cover object-center";
 
 const LU_CAT =
   "absolute z-[2] m-0! top-[calc(1.341*var(--u))] start-[var(--lu-px)]" +
