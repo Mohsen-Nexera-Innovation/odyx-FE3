@@ -94,7 +94,7 @@ export default function CureCases() {
         ))}
       </div>
       <Link
-        href="/learning"
+        href="/solutions/cases"
         className={`${SANS} ${BTN} mt-auto w-fit self-center border-0 bg-[#0050D8] !text-white shadow-none hover:-translate-y-px hover:!text-white hover:shadow-[0_10px_28px_rgba(0,80,216,.35)] motion-reduce:hover:translate-y-0`}
       >
         View More Cases

@@ -67,7 +67,7 @@ function AttachmentField({
       ) : (
         <label
           htmlFor={id}
-          className={`inline-flex items-center justify-center gap-2 min-h-[42px] px-4 border rounded-[6px] bg-white text-[13px] font-bold cursor-pointer transition-colors ${
+          className={`inline-flex items-center justify-center gap-2 min-h-[42px] px-4 border rounded-full bg-white text-[13px] font-bold cursor-pointer transition-colors ${
             error
               ? 'border-[#EF4444] text-[#EF4444]'
               : 'border-[#0050D8]/25 text-[#0050D8] hover:bg-[#F3F7FF] hover:border-[#0050D8]/40'
@@ -130,7 +130,7 @@ export default function SendMethodStep({
             Receive the completed design<br/>and case communication<br/>on WhatsApp.
           </p>
           <div className="mt-auto pt-6 w-full">
-            <span className="flex items-center justify-center w-full h-[40px] rounded-[6px] bg-[#16A34A] text-white text-[13px] font-bold hover:bg-[#15803d] transition-colors">
+            <span className="flex items-center justify-center w-full h-[40px] rounded-full bg-[#16A34A] text-white text-[13px] font-bold hover:bg-[#15803d] transition-colors">
               Continue to WhatsApp
             </span>
           </div>
@@ -156,7 +156,7 @@ export default function SendMethodStep({
               type="button"
               onClick={(event) => void copySupportEmail(event)}
               aria-label={emailCopied ? 'Email address copied' : 'Copy email address'}
-              className="flex items-center justify-center w-full h-[40px] rounded-[6px] bg-[#0050D8] text-white text-[13px] font-bold hover:bg-[#003da6] transition-colors border-0 cursor-pointer"
+              className="flex items-center justify-center w-full h-[40px] rounded-full bg-[#0050D8] text-white text-[13px] font-bold hover:bg-[#003da6] transition-colors border-0 cursor-pointer"
             >
               {emailCopied ? 'Copied' : 'Copy Email Address'}
             </button>

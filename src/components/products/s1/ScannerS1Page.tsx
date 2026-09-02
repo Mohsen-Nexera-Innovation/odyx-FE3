@@ -3,6 +3,7 @@ import {
   PRODUCT_BTN_GHOST as BTN_GHOST,
   PRODUCT_BTN_PRIMARY as BTN_PRIMARY,
 } from '@/components/products/productCtaChrome';
+import CompatibleProductsGrid from '@/components/products/CompatibleProductsGrid';
 import S1Video from '@/components/products/s1/S1Video';
 import { APP_ICONS, CheckIcon, WHY_ICONS } from '@/components/products/s1/S1Icons';
 import {
@@ -32,7 +33,6 @@ const WHY_DELAY = [
   'delay-[170ms]',
   'delay-[220ms]',
 ] as const;
-const COMPAT_DELAY = ['delay-[40ms]', 'delay-[120ms]', 'delay-[200ms]'] as const;
 const CASE_DELAY = [
   'delay-[40ms]',
   'delay-[100ms]',
@@ -246,40 +246,7 @@ export default function ScannerS1Page() {
       <section className="py-[clamp(20px,2.8vh,30px)]">
         <div className={BODY_RAIL}>
           <SectionRule>Compatible Products</SectionRule>
-          <ul className="m-0 [display:grid] list-none grid-cols-3 gap-3.5 p-0 max-[900px]:grid-cols-1">
-            {S1_COMPATIBLE.map((p, i) => (
-              <li
-                key={p.name}
-                className={`reveal m-0 min-h-0 overflow-hidden rounded-2xl border-4 border-white bg-[#f1f7fe] p-0 shadow-none transition-[transform,border-color] duration-[280ms] ease-[cubic-bezier(.16,1,.3,1)] ${COMPAT_DELAY[i]} hover:-translate-y-1 hover:border-white motion-reduce:hover:translate-y-0`}
-              >
-                <Link
-                  href={p.href}
-                  className="group [display:grid] h-full min-h-[112px] grid-cols-[minmax(96px,44%)_minmax(0,1fr)] items-center gap-x-2.5 gap-y-1.5 py-2 pr-3.5 pl-1.5 no-underline text-inherit max-[640px]:min-h-[100px] max-[640px]:py-2 max-[640px]:pr-3 max-[640px]:pl-1.5"
-                >
-                  <span className="flex h-full min-h-24 w-full items-center justify-center overflow-visible bg-transparent p-0 max-[640px]:min-h-[88px]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`${p.img}?v=cut2`}
-                      alt=""
-                      loading="lazy"
-                      className="block h-full max-h-[100px] w-full bg-transparent object-contain object-bottom mix-blend-normal transition-transform duration-[400ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06] group-hover:-translate-y-0.5 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:translate-y-0 max-[640px]:max-h-[90px]"
-                    />
-                  </span>
-                  <span className="flex min-w-0 flex-col items-start justify-center gap-0.5 pr-0.5">
-                    <p className={`${DISPLAY} m-0 text-[.98rem] font-bold leading-tight tracking-[-0.015em] text-[#0d1b4d] transition-colors duration-[220ms] ease-[ease] group-hover:text-[#0050D8]`}>
-                      {p.name}
-                    </p>
-                    {p.category ? (
-                      <p className="m-0 text-[.8rem] font-medium leading-[1.25] text-[#6b7385]">{p.category}</p>
-                    ) : null}
-                    <span className="mt-1 inline-block text-[.82rem] font-semibold text-[#0050D8] transition-[color,transform] duration-[220ms] ease-[ease] group-hover:translate-x-[3px] group-hover:text-[#0041AF] motion-reduce:group-hover:translate-x-0">
-                      Learn more &gt;
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <CompatibleProductsGrid products={S1_COMPATIBLE} />
         </div>
       </section>
 
@@ -292,13 +259,13 @@ export default function ScannerS1Page() {
                 key={c.title}
                 className={`group reveal flex min-h-full flex-col overflow-hidden rounded-2xl border-4 border-white bg-[#f1f7fe] pb-4 shadow-none transition-transform duration-[280ms] ease-[cubic-bezier(.16,1,.3,1)] ${CASE_DELAY[i]} hover:-translate-y-1 motion-reduce:hover:translate-y-0`}
               >
-                <figure className="m-0 aspect-[16/11] overflow-hidden bg-[rgba(255,255,255,.5)]">
+                <figure className="m-0 flex aspect-[16/11] items-center justify-center overflow-hidden bg-white px-3 py-2.5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={c.img}
                     alt={c.title}
                     loading="lazy"
-                    className="block size-full object-cover transition-transform duration-[450ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105 motion-reduce:group-hover:scale-100"
+                    className="block max-h-full max-w-full object-contain object-center"
                   />
                 </figure>
                 <h3 className={`${DISPLAY} mx-4 mt-3.5 mb-1.5 text-base font-bold text-[#0d1b4d]`}>{c.title}</h3>
@@ -327,7 +294,7 @@ export default function ScannerS1Page() {
             </li>
           </ul>
           <div className="mt-[22px] flex justify-center">
-            <Link className={`${BTN_PRIMARY} min-w-[220px]`} href="/learning">
+            <Link className={`${BTN_PRIMARY} min-w-[220px]`} href="/solutions/cases">
               View More Cases
             </Link>
           </div>

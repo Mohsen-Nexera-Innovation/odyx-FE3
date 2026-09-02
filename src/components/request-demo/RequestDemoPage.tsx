@@ -49,9 +49,16 @@ import {
 import { cardClass, shellClass } from './formStyles';
 import { cn } from '@/lib/cn';
 
-export default function RequestDemoPage() {
+export default function RequestDemoPage({
+  initialProducts = [],
+}: {
+  initialProducts?: DemoProductId[];
+}) {
   const formId = useId();
-  const [form, setForm] = useState<DemoFormState>(INITIAL);
+  const [form, setForm] = useState<DemoFormState>(() => ({
+    ...INITIAL,
+    products: initialProducts,
+  }));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeStep, setActiveStep] = useState<DemoStepId>('contact');
   const [status, setStatus] = useState<DemoFormStatus>('idle');
@@ -68,6 +75,19 @@ export default function RequestDemoPage() {
   const summaryStickyTop =
     RD_HEADER_OFFSET_PX + progressHeight + RD_STICKY_STACK_GAP_PX;
   const sectionScrollMargin = summaryStickyTop;
+
+  const preselectedKey = initialProducts.join(',');
+
+  useEffect(() => {
+    if (initialProducts.length === 0) return;
+    setForm((prev) => {
+      const missing = initialProducts.filter(
+        (id) => !prev.products.includes(id),
+      );
+      if (missing.length === 0) return prev;
+      return { ...prev, products: [...prev.products, ...missing] };
+    });
+  }, [preselectedKey, initialProducts]);
 
   useEffect(() => {
     const sections = REQUEST_DEMO_STEPS.map((s) =>

@@ -209,7 +209,7 @@ export function PracticeSection({
                 onClick={() => toggleProduct(product.id)}
               >
                 <CheckMark on={selected} />
-                <span className="my-1 mb-0.5 flex h-14 w-full items-center justify-center overflow-hidden rounded-md sm:my-[0.35rem] sm:mb-[0.15rem] sm:h-[4.5rem]">
+                <span className="my-1 mb-0.5 flex h-14 w-full items-center justify-center overflow-hidden rounded-md bg-white sm:my-[0.35rem] sm:mb-[0.15rem] sm:h-[4.5rem]">
                   <Image
                     src={product.image}
                     alt=""

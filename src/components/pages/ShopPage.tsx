@@ -14,6 +14,7 @@ import {
 } from '@/content/shop';
 import { addItemAsync, fetchShopProducts } from '@/lib/commerce';
 import { readSession } from '@/lib/auth';
+import { requestDemoHref } from '@/content/request-demo';
 
 function isCategory(v: string | null): v is ShopCategory {
   return v === 'printer' || v === 'curing' || v === 'scanner' || v === 'resin';
@@ -178,7 +179,7 @@ export default function ShopPage() {
             <Link className="btn btn-ghost" href="/support#contact">
               Contact Sales
             </Link>
-            <Link className="btn btn-ghost" href="/support">
+            <Link className="btn btn-ghost" href={requestDemoHref(filter === 'all' ? undefined : filter)}>
               Request a Demo
             </Link>
           </PageActions>

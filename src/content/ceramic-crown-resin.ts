@@ -10,6 +10,7 @@ import {
   RESIN_DETAIL_CASES_CTA,
   RESIN_DETAIL_COMPATIBLE,
 } from '@/content/resin-detail-shared';
+import { requestDemoHref } from '@/content/request-demo';
 
 export const CERAMIC_CROWN_RESIN_SLUG = 'ceramic-crown-resin';
 
@@ -28,7 +29,7 @@ export const CERAMIC_CROWN_RESIN_HERO = {
   img: '/images/resin-hero-ceramic-crown-v2.png',
   imgAlt:
     'ODYX Ceramic Crown Resin bottle with a 3D-printed ceramic crown',
-  primaryCta: { label: 'Request a Demo', href: '/request-demo' },
+  primaryCta: { label: 'Request a Demo', href: requestDemoHref('resins') },
   secondaryCta: {
     label: 'Download Datasheet',
     href: '/docs/resins/resin-flyer.pdf',

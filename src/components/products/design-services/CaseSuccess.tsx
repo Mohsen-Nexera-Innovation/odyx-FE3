@@ -107,7 +107,7 @@ export default function CaseSuccess({
                 href="https://wa.me/201042077646"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-[6px] text-white text-[13px] font-bold no-underline transition-colors ${
+                className={`flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full text-white text-[13px] font-bold no-underline transition-colors ${
                   sendMethod === 'email'
                     ? 'bg-[#16A34A]/90 hover:bg-[#15803d]'
                     : 'bg-[#16A34A] hover:bg-[#15803d]'
@@ -118,7 +118,7 @@ export default function CaseSuccess({
               </Link>
               <Link
                 href="mailto:support@odyxegypt.net"
-                className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border-[1.5px] border-[#0050D8] rounded-[6px] bg-white !text-[#0050D8] text-[13px] font-bold no-underline transition-colors hover:bg-[#F3F7FF]"
+                className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border-[1.5px] border-[#0050D8] rounded-full bg-white !text-[#0050D8] text-[13px] font-bold no-underline transition-colors hover:bg-[#F3F7FF]"
               >
                 <Mail size={16} aria-hidden strokeWidth={2} />
                 Open Email
@@ -127,13 +127,13 @@ export default function CaseSuccess({
             <button
               type="button"
               onClick={onSubmitAnother}
-              className="w-full inline-flex items-center justify-center min-h-[44px] px-4 py-2.5 rounded-[6px] bg-[#0A1020] text-white text-[13px] font-bold border-0 cursor-pointer transition-colors hover:bg-[#1a2540]"
+              className="w-full inline-flex items-center justify-center min-h-[44px] px-4 py-2.5 rounded-full bg-[#0A1020] text-white text-[13px] font-bold border-0 cursor-pointer transition-colors hover:bg-[#1a2540]"
             >
               Submit another case
             </button>
             <Link
               href="/"
-              className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border-[1.5px] border-[#D1D5DB] rounded-[6px] bg-white !text-[#0A1020] text-[13px] font-bold no-underline transition-colors hover:bg-[#F7F9FB]"
+              className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border-[1.5px] border-[#D1D5DB] rounded-full bg-white !text-[#0A1020] text-[13px] font-bold no-underline transition-colors hover:bg-[#F7F9FB]"
             >
               <Home size={16} aria-hidden strokeWidth={2} />
               Back to Home

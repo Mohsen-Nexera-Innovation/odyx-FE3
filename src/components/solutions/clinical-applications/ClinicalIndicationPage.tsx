@@ -128,15 +128,16 @@ export default function ClinicalIndicationPage({ data }: { data: ClinicalIndicat
             <p className="mb-[26px] max-w-[36ch] text-[clamp(1rem,1.15vw,1.125rem)] font-normal leading-[1.55] text-[rgba(226,232,240,.78)]">
               {d.hero.body}
             </p>
-            <Link
+            <a
               href={d.hero.cta.href}
-              className={`${INTER} inline-flex max-w-full items-center gap-[9px] rounded-[10px] border-0 bg-[#0050D8] px-5 py-[13px] text-[0.9375rem] font-semibold tracking-[-0.01em] text-white no-underline shadow-[0_10px_24px_rgba(0,80,216,.28)] transition-[background,transform] duration-200 ease-in-out hover:-translate-y-px hover:bg-[#0041AF]`}
+              download={d.hero.cta.download ?? true}
+              className={`${INTER} inline-flex max-w-full items-center justify-center gap-[9px] rounded-full border-0 bg-[#0050D8] px-5 py-[13px] text-[0.9375rem] font-semibold tracking-[-0.01em] text-white no-underline shadow-[0_10px_24px_rgba(0,80,216,.28)] transition-[background,transform] duration-200 ease-in-out hover:-translate-y-px hover:bg-[#0041AF]`}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="size-4">
                 <path d="M12 4v10M8 10l4 4 4-4M5 18h14" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               {d.hero.cta.label}
-            </Link>
+            </a>
           </div>
           <figure className="relative m-0 w-full max-w-[620px] justify-self-end overflow-visible rounded-none bg-transparent shadow-none max-[1100px]:max-w-[480px] max-[1100px]:justify-self-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -90,7 +90,7 @@ export function DownloadsPage() {
                       <a
                         href={item.downloadHref}
                         aria-label={`Download ${item.name}`}
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-[8px] border border-[#E5E7EB] !text-[#4B5563] transition-colors hover:border-[#0050D8] hover:text-[#0050D8] hover:bg-[#F3F7FF] ml-auto"
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E5E7EB] !text-[#4B5563] transition-colors hover:border-[#0050D8] hover:text-[#0050D8] hover:bg-[#F3F7FF] ml-auto"
                       >
                         <Download size={16} strokeWidth={2} aria-hidden />
                       </a>

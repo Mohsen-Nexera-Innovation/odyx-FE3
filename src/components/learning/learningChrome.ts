@@ -20,16 +20,16 @@ export const LEARNING_H2 =
  *  `!text-*` beats global `a { color: inherit }` in odyx.css.
  */
 export const BTN_PRIMARY =
-  'inline-flex items-center justify-center gap-2 bg-[#0050D8] hover:bg-[#0040B0] !text-white text-[14px] font-semibold px-6 py-2.5 rounded-full transition-colors shadow-[0_4px_14px_rgba(0,80,216,0.35)]';
+  'inline-flex items-center justify-center gap-2 bg-[#0050D8] hover:bg-[#0040B0] !text-white text-[14px] font-semibold leading-none px-6 py-2.5 rounded-full transition-colors shadow-[0_4px_14px_rgba(0,80,216,0.35)] [&_svg]:block [&_svg]:size-[1em] [&_svg]:shrink-0';
 
 export const BTN_OUTLINE =
-  'inline-flex items-center justify-center gap-2 font-semibold text-[14px] px-6 py-2.5 rounded-full transition-colors border-[1.5px] border-[#0050D8] !text-[#0050D8] bg-white hover:bg-[#EEF4FF]';
+  'inline-flex items-center justify-center gap-2 font-semibold text-[14px] leading-none px-6 py-2.5 rounded-full transition-colors border-[1.5px] border-[#0050D8] !text-[#0050D8] bg-white hover:bg-[#EEF4FF] [&_svg]:block [&_svg]:size-[1em] [&_svg]:shrink-0';
 
 export const BTN_OUTLINE_SM =
-  'inline-flex items-center justify-center gap-1.5 font-semibold text-[13px] lg:text-[14px] px-5 py-2 rounded-full transition-colors border-[1.5px] border-[#0050D8] !text-[#0050D8] bg-white hover:bg-[#EEF4FF] shrink-0';
+  'inline-flex items-center justify-center gap-1.5 font-semibold text-[13px] lg:text-[14px] leading-none px-5 py-2 rounded-full transition-colors border-[1.5px] border-[#0050D8] !text-[#0050D8] bg-white hover:bg-[#EEF4FF] shrink-0 [&_svg]:block [&_svg]:size-[1em] [&_svg]:shrink-0';
 
 export const BTN_LINK =
-  'inline-flex items-center gap-1.5 !text-[#0050D8] text-[13px] font-bold hover:!text-[#0040B0] transition-colors';
+  'inline-flex items-center gap-1.5 !text-[#0050D8] text-[13px] font-bold leading-none hover:!text-[#0040B0] transition-colors [&_svg]:block [&_svg]:size-[1em] [&_svg]:shrink-0';
 
 export const BTN_ON_BLUE =
-  'inline-flex items-center justify-center gap-2 font-bold text-[14px] px-7 py-3 rounded-full transition-colors bg-white !text-[#0050D8] hover:bg-[#F3F7FF] shadow-[0_4px_16px_rgba(0,0,0,0.12)] shrink-0';
+  'inline-flex items-center justify-center gap-2 font-bold text-[14px] leading-none px-7 py-3 rounded-full transition-colors bg-white !text-[#0050D8] hover:bg-[#F3F7FF] shadow-[0_4px_16px_rgba(0,0,0,0.12)] shrink-0 [&_svg]:block [&_svg]:size-[1em] [&_svg]:shrink-0';

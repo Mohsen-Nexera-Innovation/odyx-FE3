@@ -4,9 +4,14 @@
  */
 
 import {
+  COMPATIBLE_PRODUCTS_TITLE,
+  compatibleProductsFor,
+} from '@/content/compatible-products';
+import {
   DIGITAL_WORKFLOW_LINKS,
   isDigitalWorkflowDimmed,
 } from '@/content/digital-workflow-links';
+import { requestDemoHref } from '@/content/request-demo';
 
 export const CURE_UV02_SLUG = 'curing-machines';
 
@@ -26,7 +31,7 @@ export const CURE_UV02_HERO = {
   outputAlignerImg: '/img/cure-uv02/hero/output-aligner-cutout.png',
   imgAlt: 'ODYX Cure dental curing station with cured models',
   imgVersion: '18',
-  primaryCta: { label: 'Request Demo', href: '/request-demo' },
+  primaryCta: { label: 'Request Demo', href: requestDemoHref('cure') },
   secondaryCta: { label: 'Download Brochure', href: '/docs/resins/curing-flyer.pdf' },
 };
 
@@ -103,33 +108,8 @@ export const CURE_UV02_ROI = {
 };
 
 export const CURE_UV02_ECOSYSTEM = {
-  title: 'Compatible with ODYX Ecosystem',
-  nodes: [
-    {
-      name: 'ODYX S1',
-      subtitle: 'Intra-oral Scanner',
-      href: '/products/odyx-s1',
-      img: '/img/scanner/s1-hero-cutout.png',
-    },
-    {
-      name: 'P1-26',
-      subtitle: '3D Printer',
-      href: '/products/odyx-p1-26',
-      img: '/img/printers/p126/eco/printer.png',
-    },
-    {
-      name: 'ODYX Dental Resins',
-      subtitle: 'High-Performance Resins',
-      href: '/products/resins',
-      img: '/img/hv2-hub/store-resins-cutout.png',
-    },
-    {
-      name: 'ODYX Cure',
-      subtitle: 'Curing Station',
-      href: '#top',
-      img: '/img/printers/p126/eco/cure.png',
-    },
-  ],
+  title: COMPATIBLE_PRODUCTS_TITLE,
+  nodes: compatibleProductsFor('cure'),
 };
 
 export const CURE_UV02_CASE_TABS = [

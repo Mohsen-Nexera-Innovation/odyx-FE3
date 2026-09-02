@@ -207,14 +207,14 @@ function ManualListItem({ manual }: { manual: ManualEntry }) {
       <div className="flex shrink-0 items-center gap-2 sm:pl-2">
         <a
           href={manual.previewHref}
-          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-[8px] border border-[#E5E7EB] bg-white px-4 text-[12.5px] font-bold !text-[#0050D8] transition-colors hover:border-[#0050D8]/40 hover:bg-[#F4F8FD]"
+          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-4 text-[12.5px] font-bold !text-[#0050D8] transition-colors hover:border-[#0050D8]/40 hover:bg-[#F4F8FD]"
         >
           <Eye size={14} aria-hidden />
           Preview
         </a>
         <a
           href={manual.downloadHref}
-          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-[8px] bg-[#0050D8] px-4 text-[12.5px] font-bold text-white transition-colors hover:bg-[#0040B0]"
+          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-[#0050D8] px-4 text-[12.5px] font-bold text-white transition-colors hover:bg-[#0040B0]"
         >
           Download
         </a>

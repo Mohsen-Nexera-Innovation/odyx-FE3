@@ -20,8 +20,11 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 export function WhyOdyxSection({ data }: { data: WhyOdyxData }) {
   return (
-    <section id="why" className={`${ABOUT_GUTTER} scroll-mt-[96px]`}>
-      <div className="w-full bg-white rounded-[16px] overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)] py-6 lg:py-8 px-4 lg:px-6 border border-gray-100/50">
+    <section id="who-we-are" className={`${ABOUT_GUTTER} scroll-mt-[96px]`}>
+      <div
+        id="why"
+        className="w-full scroll-mt-[96px] rounded-[16px] border border-gray-100/50 bg-white px-4 py-6 shadow-[0_4px_40px_rgba(0,0,0,0.03)] lg:px-6 lg:py-8"
+      >
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           
           {/* Left Column (Text & Icons) */}

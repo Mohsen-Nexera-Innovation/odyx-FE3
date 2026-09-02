@@ -48,16 +48,16 @@ const UPDATES: Update[] = [
     id: "aeedc",
     cat: "Event",
     tone: "navy",
-    title: "ODYX at AEEDC 2025",
+    title: "ODYX at AEEDC 2026",
     desc: ["Thank you for visiting", "our booth!"],
-    date: "May 10, 2025",
-    iso: "2025-05-10",
+    date: "August 10, 2026",
+    iso: "2026-08-10",
     href: "/about",
     art: {
       src: "/img/hv2-news/aeedc-event.webp",
       alt: "The ODYX exhibition booth lit in blue, with product counters under a glowing ODYX sign",
       w: 668,
-      h: 684,
+      h: 522,
     },
   },
   {
@@ -66,14 +66,14 @@ const UPDATES: Update[] = [
     tone: "light",
     title: "New Resin Line",
     desc: ["High performance", "resins now available."],
-    date: "May 5, 2025",
-    iso: "2025-05-05",
+    date: "August 5, 2026",
+    iso: "2026-08-05",
     href: "/products/resins",
     art: {
-      src: "/img/hv2-hub/store-resins-cutout.png",
+      src: "/img/hv2-news/resin-line.webp",
       alt: "ODYX resin collection — Ortho Model, Ceramic Crown, Crown & Bridge, Surgical Guide Pro, and Temporary Crown",
       w: 704,
-      h: 728,
+      h: 664,
     },
   },
   {
@@ -82,14 +82,14 @@ const UPDATES: Update[] = [
     tone: "beige",
     title: "Webinar: Integration",
     desc: ["Tips for a seamless", "digital workflow."],
-    date: "April 20, 2025",
-    iso: "2025-04-20",
+    date: "August 20, 2026",
+    iso: "2026-08-20",
     href: "/learning",
     art: {
       src: "/img/hv2-news/webinar.webp",
       alt: "A tablet on a warm beige surface showing the ODYX dashboard's grid of blue app tiles",
       w: 707,
-      h: 716,
+      h: 565,
     },
   },
   {
@@ -98,14 +98,14 @@ const UPDATES: Update[] = [
     tone: "navy",
     title: "New Partner Announcement",
     desc: ["Excited to welcome", "new partners to", "the ODYX family."],
-    date: "April 15, 2025",
-    iso: "2025-04-15",
+    date: "August 15, 2026",
+    iso: "2026-08-15",
     href: "/about",
     art: {
       src: "/img/hv2-news/partners.webp",
       alt: "Two people in dark suits shaking hands in front of a blue-lit modern skyline",
       w: 632,
-      h: 616,
+      h: 411,
     },
   },
   {
@@ -114,8 +114,8 @@ const UPDATES: Update[] = [
     tone: "navy",
     title: "Design Suite Update",
     desc: ["New tools across the", "ODYX design workflow."],
-    date: "April 8, 2025",
-    iso: "2025-04-08",
+    date: "August 8, 2026",
+    iso: "2026-08-08",
     href: "/design-services",
     fade: true,
     art: {
@@ -131,15 +131,15 @@ const UPDATES: Update[] = [
     tone: "light",
     title: "Open House Sessions",
     desc: ["Hands-on demos at the", "ODYX showroom."],
-    date: "March 27, 2025",
-    iso: "2025-03-27",
+    date: "August 27, 2026",
+    iso: "2026-08-27",
     href: "/support",
     fade: true,
     art: {
       src: "/img/hv2-news/open-house.webp",
       alt: "The ODYX showroom booth with a glowing blue logo, dental chair and product displays",
       w: 764,
-      h: 720,
+      h: 573,
     },
   },
   {
@@ -148,8 +148,8 @@ const UPDATES: Update[] = [
     tone: "beige",
     title: "Scan to Print, Live",
     desc: ["Join our clinical team", "for a full walkthrough."],
-    date: "March 14, 2025",
-    iso: "2025-03-14",
+    date: "August 14, 2026",
+    iso: "2026-08-14",
     href: "/learning",
     fade: true,
     art: {
@@ -348,11 +348,10 @@ const LU_CARD =
 
 const LU_MEDIA =
   "absolute top-0 inset-x-0 aspect-[var(--band)] overflow-hidden" +
-  // Fade into card field for repo placeholders only.
-  " [[data-fade]_&]:after:content-[''] [[data-fade]_&]:after:absolute [[data-fade]_&]:after:inset-x-0 [[data-fade]_&]:after:bottom-0 [[data-fade]_&]:after:h-[46%]" +
-  " [[data-fade]_&]:after:[background:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,var(--bg)_92%)]";
+  " after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-[42%] after:pointer-events-none" +
+  " after:[background:linear-gradient(to_bottom,transparent_0%,var(--bg)_90%)]";
 
-const LU_ART = "block w-full h-full object-cover object-[center_top]";
+const LU_ART = "block w-full h-full object-cover object-center";
 
 const LU_CAT =
   "absolute z-[2] m-0! top-[calc(1.341*var(--u))] start-[var(--lu-px)]" +

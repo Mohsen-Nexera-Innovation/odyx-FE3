@@ -26,7 +26,7 @@ export function FilterPills({
             role="tab"
             aria-selected={active}
             onClick={() => onSelect(item.id)}
-            className={`cursor-pointer inline-flex h-[44px] items-center gap-1.5 rounded-[8px] border px-4 text-sm font-bold transition-colors ${
+            className={`cursor-pointer inline-flex h-[44px] items-center gap-1.5 rounded-full border px-4 text-sm font-bold transition-colors ${
               active
                 ? 'border-[#0050D8] bg-[#0050D8] text-white'
                 : 'border-[#E5E7EB] bg-white text-[#374151] hover:border-[#0050D8]/40 hover:text-[#0050D8]'

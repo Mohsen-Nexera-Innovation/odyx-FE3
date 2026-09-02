@@ -121,13 +121,13 @@ function HeroMedia({
       <div className="flex h-[94%] items-end justify-center">
         <img
           src={item.bottles[0].src}
-          alt=""
-          className="relative z-[1] h-[88%] w-auto max-w-[46%] -me-5 object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,.4)]"
+          alt={item.bottles[0].alt}
+          className="relative z-[2] h-full w-auto max-w-[50%] -me-5 object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,.45)]"
         />
         <img
           src={item.bottles[1].src}
-          alt={item.bottles[1].alt}
-          className="relative z-[2] h-full w-auto max-w-[50%] -ms-5 object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,.45)]"
+          alt=""
+          className="relative z-[1] h-[88%] w-auto max-w-[46%] -ms-5 object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,.4)]"
         />
       </div>
     );
@@ -204,13 +204,13 @@ export default function ProductsLandingPage() {
                     <div className="flex h-[min(240px,48vw)] max-h-[360px] w-full max-w-[320px] items-end justify-center sm:h-[min(300px,42vw)] lg:h-[360px] lg:max-w-none">
                       <img
                         src={family.bottles[0].src}
-                        alt=""
-                        className="relative z-[1] h-[88%] w-auto max-w-[46%] -me-5 object-contain object-bottom drop-shadow-[0_18px_28px_rgba(10,16,32,.16)]"
+                        alt={family.bottles[0].alt}
+                        className="relative z-[2] h-full w-auto max-w-[50%] -me-5 object-contain object-bottom drop-shadow-[0_20px_32px_rgba(10,16,32,.18)]"
                       />
                       <img
                         src={family.bottles[1].src}
-                        alt={family.bottles[1].alt}
-                        className="relative z-[2] h-full w-auto max-w-[50%] -ms-5 object-contain object-bottom drop-shadow-[0_20px_32px_rgba(10,16,32,.18)]"
+                        alt=""
+                        className="relative z-[1] h-[88%] w-auto max-w-[46%] -ms-5 object-contain object-bottom drop-shadow-[0_18px_28px_rgba(10,16,32,.16)]"
                       />
                     </div>
                   ) : (
@@ -282,18 +282,18 @@ export default function ProductsLandingPage() {
                   href={step.href}
                   className="flex min-w-0 flex-1 flex-col items-center text-center no-underline !text-white"
                 >
-                  <span className="flex h-[72px] w-full items-end justify-center sm:h-[84px]">
+                  <span className="flex h-[72px] w-full items-end justify-center overflow-hidden sm:h-[84px]">
                     {'bottles' in step ? (
-                      <span className="flex h-full items-end justify-center">
+                      <span className="flex h-full w-[96px] max-w-full items-end justify-center sm:w-[110px]">
                         <img
                           src={step.bottles[0].src}
                           alt=""
-                          className="relative z-[1] h-[90%] w-auto max-w-[52px] -me-3 object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,.35)] sm:max-w-[64px] sm:-me-4"
+                          className="h-full w-auto max-w-[54%] object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,.35)]"
                         />
                         <img
                           src={step.bottles[1].src}
                           alt=""
-                          className="relative z-[2] h-full w-auto max-w-[56px] -ms-3 object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,.35)] sm:max-w-[68px] sm:-ms-4"
+                          className="-ms-2 h-[88%] w-auto max-w-[48%] object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,.35)] sm:-ms-2.5"
                         />
                       </span>
                     ) : (
@@ -313,7 +313,7 @@ export default function ProductsLandingPage() {
                 </Link>
                 {i < PRODUCTS_LANDING_WORKFLOW.steps.length - 1 ? (
                   <span
-                    className="my-1 flex rotate-90 items-center text-white lg:mt-[28px] lg:rotate-0 lg:px-[clamp(4px,1vw,14px)] rtl:lg:rotate-180"
+                    className="my-1 flex shrink-0 rotate-90 items-center text-white lg:mt-[28px] lg:rotate-0 lg:px-[clamp(12px,2.2vw,28px)] rtl:lg:rotate-180"
                     aria-hidden
                   >
                     <svg
@@ -386,13 +386,13 @@ export default function ProductsLandingPage() {
                 <div className="flex w-[18%] min-w-0 items-end justify-center">
                   <img
                     src={PRODUCTS_LANDING_CTA.collage[3].bottles[0].src}
-                    alt=""
-                    className="relative z-[1] h-auto w-[52%] -me-[10%] object-contain object-bottom drop-shadow-[0_10px_14px_rgba(0,0,0,.32)]"
+                    alt={PRODUCTS_LANDING_CTA.collage[3].bottles[0].alt}
+                    className="relative z-[2] h-auto w-[55%] -me-[10%] object-contain object-bottom drop-shadow-[0_10px_14px_rgba(0,0,0,.32)]"
                   />
                   <img
                     src={PRODUCTS_LANDING_CTA.collage[3].bottles[1].src}
-                    alt={PRODUCTS_LANDING_CTA.collage[3].bottles[1].alt}
-                    className="relative z-[2] h-auto w-[55%] object-contain object-bottom drop-shadow-[0_10px_14px_rgba(0,0,0,.32)]"
+                    alt=""
+                    className="relative z-[1] h-auto w-[52%] object-contain object-bottom drop-shadow-[0_10px_14px_rgba(0,0,0,.32)]"
                   />
                 </div>
               ) : null}

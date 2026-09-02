@@ -246,7 +246,7 @@ export function ScheduleSection({
         <button
           type="submit"
           className={`${PRODUCT_BTN_PRIMARY} w-full cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-60`}
-          disabled={status === 'submitting'}
+          disabled={status === 'submitting' || !form.privacy}
         >
           {status === 'submitting'
             ? 'Submitting…'

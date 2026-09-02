@@ -3,6 +3,9 @@
  * Specs/claims from scanner-s1.ts claims register only.
  */
 
+import { compatibleProductsFor } from '@/content/compatible-products';
+import { requestDemoHref } from '@/content/request-demo';
+
 export const S1_LANDING_HERO = {
   title: 'ODYX S1',
   subtitle: 'Intraoral Scanner',
@@ -10,7 +13,7 @@ export const S1_LANDING_HERO = {
   body: 'The ODYX S1 delivers high-precision scans with AI-driven features for a seamless digital workflow.',
   img: '/img/scanner/s1-hero-cutout.png',
   imgAlt: 'ODYX-S1 intraoral scanner on its charging base with soft signal waves',
-  primaryCta: { label: 'Request Demo', href: '/request-demo' },
+  primaryCta: { label: 'Request Demo', href: requestDemoHref('scanner') },
   secondaryCta: { label: 'Download Brochure', href: '/docs/resins/scanner-flyer.pdf' },
 };
 
@@ -59,27 +62,8 @@ export const S1_TECH_FEATURES = [
   { label: 'Warranty' },
 ] as const;
 
-/** Horizontal cards: transparent cutouts | name + category + Learn more > */
-export const S1_COMPATIBLE = [
-  {
-    name: 'P1-26',
-    category: '3D Printer',
-    href: '/products/odyx-p1-26',
-    img: '/img/scanner/compat/p126.png',
-  },
-  {
-    name: 'Odyx Resin',
-    category: '',
-    href: '/products/resins',
-    img: '/img/hv2-hub/store-resins-cutout.png',
-  },
-  {
-    name: 'Odyx Cure',
-    category: '',
-    href: '/products/curing-machines',
-    img: '/img/scanner/compat/cure.png',
-  },
-] as const;
+/** Peers in the ODYX workflow — excludes S1 (this page). */
+export const S1_COMPATIBLE = compatibleProductsFor('scanner');
 
 export const S1_CASES = [
   {

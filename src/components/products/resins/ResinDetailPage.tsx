@@ -67,9 +67,17 @@ export type ResinDetailContent = {
 };
 
 const BTN =
-  'inline-flex box-border h-[46px] min-h-[46px] items-center justify-center gap-2 whitespace-nowrap rounded-[9px] px-[18px] py-0 text-[14.5px] font-bold leading-none tracking-normal no-underline transition-[background,box-shadow,transform,border-color] duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0050d8] max-[639px]:max-w-full';
+  'inline-flex box-border h-[46px] min-h-[46px] items-center justify-center gap-2 whitespace-nowrap rounded-full px-[18px] py-0 text-[14.5px] font-bold leading-none [line-height:1] [text-box:trim-both_cap_alphabetic] tracking-normal no-underline transition-[background,box-shadow,transform,border-color] duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0050d8] max-[639px]:max-w-full [&_svg]:block [&_svg]:size-[1.05em] [&_svg]:shrink-0';
+const BTN_PRIMARY = `${BTN} border border-solid border-transparent bg-[#0050D8] !text-white hover:bg-[#0041AF]`;
 const BTN_SECONDARY = `${BTN} border border-solid border-[#6c6c6c] bg-white !text-[#1a1a1a] hover:border-[#404040]`;
 const BTN_CASES = `${BTN_SECONDARY} min-w-[220px] px-7 text-[16px] !text-[#0050D8] hover:border-[#0050D8] hover:bg-[rgba(0,80,216,0.04)] max-[1023px]:w-full max-[1023px]:min-w-0 max-[1023px]:max-w-[260px] max-[1023px]:px-[18px]`;
+
+const SPEC_LINE = 'border-solid border-[#CBD5E1]';
+const SPEC_ROW =
+  'grid min-h-[42px] grid-cols-2 gap-0 text-sm leading-snug';
+const SPEC_HEAD = 'flex items-center px-3 py-2 text-sm font-bold leading-snug text-[#1A2438]';
+const SPEC_PROP = 'flex items-center px-3 py-2 text-sm font-medium leading-snug text-[#4A5568]';
+const SPEC_VAL = 'flex items-center px-3 py-2 text-sm font-semibold leading-snug text-[#1A2438]';
 
 export default function ResinDetailPage({ content }: { content: ResinDetailContent }) {
   const { hero } = content;
@@ -119,6 +127,9 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
               {hero.body}
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-[18px]">
+              <Link href={hero.primaryCta.href} className={BTN_PRIMARY}>
+                {hero.primaryCta.label}
+              </Link>
               <a
                 href={hero.secondaryCta.href}
                 className={BTN_SECONDARY}
@@ -165,15 +176,23 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
                   className="block overflow-hidden rounded-xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition hover:border-blue-300 hover:shadow-[0_4px_14px_rgba(0,80,216,0.1)] focus-visible:outline-2 focus-visible:outline-offset-2"
                   style={{ outlineColor: BLUE }}
                 >
-                  <div className="relative h-[160px] w-full overflow-hidden bg-white">
-                    <Image
-                      src={application.img}
-                      alt={application.imgAlt}
-                      fill
-                      unoptimized
-                      sizes={`(max-width: 639px) 100vw, (max-width: 1023px) 50vw, ${Math.round(200 / content.appColumns)}vw`}
-                      className="object-contain object-center p-3"
-                    />
+                  <div
+                    className={[
+                      'box-border w-full bg-white',
+                      content.appColumns <= 3 ? 'h-[220px] p-5' : 'h-[168px] p-4',
+                    ].join(' ')}
+                  >
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={application.img}
+                        alt={application.imgAlt}
+                        fill
+                        unoptimized
+                        sizes={`(max-width: 639px) 100vw, (max-width: 1023px) 50vw, ${Math.round(200 / content.appColumns)}vw`}
+                        className="object-contain object-center"
+                        style={{ objectFit: 'contain' }}
+                      />
+                    </div>
                   </div>
                   <p className="flex min-h-9 items-center justify-center px-1 py-1.5 text-center text-sm font-bold leading-tight text-gray-900">
                     {application.label}
@@ -208,45 +227,31 @@ export default function ResinDetailPage({ content }: { content: ResinDetailConte
             <h2 className="mb-4 font-[inherit] text-lg font-bold leading-6" style={{ color: BLUE }}>
               Technical Specifications
             </h2>
-            <div className="overflow-hidden rounded-lg border border-gray-200 [display:grid] [gap:0] sm:[grid-template-columns:repeat(2,minmax(0,1fr))]">
+            <div
+              className={`overflow-hidden rounded-lg border ${SPEC_LINE} [display:grid] [gap:0] sm:[grid-template-columns:repeat(2,minmax(0,1fr))]`}
+            >
               {specColumns.map((column, columnIndex) => (
                 <div
                   key={columnIndex === 0 ? 'primary-specs' : 'secondary-specs'}
                   className={
                     columnIndex === 1
-                      ? 'border-t border-gray-200 sm:border-t-0 sm:border-l'
+                      ? `border-t ${SPEC_LINE} sm:border-t-0 sm:[border-inline-start-width:1px]`
                       : ''
                   }
                 >
-                  <div
-                    className={[
-                      'min-h-[38px] border-b border-gray-200 bg-gray-50/60 text-sm font-bold [display:grid] [gap:0]',
-                      columnIndex === 0
-                        ? '[grid-template-columns:48%_52%]'
-                        : '[grid-template-columns:64%_36%]',
-                    ].join(' ')}
-                  >
-                    <span className="flex items-center px-3">
-                      {columnIndex === 0 ? 'Property' : ''}
-                    </span>
-                    <span className="flex items-center px-3">Value</span>
+                  <div className={`${SPEC_ROW} border-b ${SPEC_LINE} bg-[#F7F8FA]`}>
+                    <span className={SPEC_HEAD}>Property</span>
+                    <span className={SPEC_HEAD}>Value</span>
                   </div>
-                  {column.map((spec) => (
+                  {column.map((spec, rowIndex) => (
                     <div
                       key={spec.property}
-                      className={[
-                        'min-h-[38px] border-b border-gray-200 text-sm last:border-b-0 [display:grid] [gap:0]',
-                        columnIndex === 0
-                          ? '[grid-template-columns:48%_52%]'
-                          : '[grid-template-columns:64%_36%]',
-                      ].join(' ')}
+                      className={`${SPEC_ROW} ${
+                        rowIndex < column.length - 1 ? `border-b ${SPEC_LINE}` : ''
+                      }`}
                     >
-                      <span className="flex items-center px-3 text-gray-700">
-                        {spec.property}
-                      </span>
-                      <span className="flex items-center px-3 font-semibold text-gray-900">
-                        {spec.value}
-                      </span>
+                      <span className={SPEC_PROP}>{spec.property}</span>
+                      <span className={SPEC_VAL}>{spec.value}</span>
                     </div>
                   ))}
                 </div>

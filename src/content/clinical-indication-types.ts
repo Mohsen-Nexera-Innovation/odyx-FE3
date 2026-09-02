@@ -55,7 +55,7 @@ export type ClinicalIndicationContent = {
     title: string;
     subtitle: string;
     body: string;
-    cta: { label: string; href: string };
+    cta: { label: string; href: string; download?: string };
     img: string;
     imgAlt: string;
   };

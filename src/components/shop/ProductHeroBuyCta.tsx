@@ -11,6 +11,7 @@ import {
   fetchShopProducts,
   resolveCartProductId,
 } from '@/lib/commerce';
+import { requestDemoHref } from '@/content/request-demo';
 
 export default function ProductHeroBuyCta({
   shopProductId,
@@ -78,7 +79,7 @@ export default function ProductHeroBuyCta({
       <Link className={ghostClass} href={workflowHref}>
         Related product <Arrow />
       </Link>
-      <Link className={ghostClass} href="/support">
+      <Link className={ghostClass} href={requestDemoHref(shopProductId)}>
         Request a Demo
       </Link>
     </PageActions>

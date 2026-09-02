@@ -364,7 +364,7 @@ export default function CaseSubmissionPage() {
                 {currentStep === 1 ? (
                   <Link
                     href="/"
-                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-[6px] bg-white !text-[#0A1020] text-sm font-bold transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8]"
+                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-full bg-white !text-[#0A1020] text-sm font-bold transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8]"
                   >
                     Cancel
                   </Link>
@@ -372,7 +372,7 @@ export default function CaseSubmissionPage() {
                   <button
                     type="button"
                     onClick={() => moveToStep(currentStep - 1)}
-                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-[6px] bg-white text-[#0A1020] text-sm font-bold cursor-pointer transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
+                    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-6 py-2.5 border-2 border-[#D1D5DB] rounded-full bg-white text-[#0A1020] text-sm font-bold cursor-pointer transition-colors hover:bg-[#F7F9FB] hover:border-[#9AA7B8] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
                   >
                     <ArrowLeft size={16} aria-hidden />
                     Back
@@ -383,7 +383,7 @@ export default function CaseSubmissionPage() {
                   <button
                     type="button"
                     onClick={continueToNextStep}
-                    className="inline-flex items-center justify-center gap-2 min-w-[160px] min-h-[42px] px-6 py-2.5 rounded-[6px] bg-[#0A1020] text-white text-sm font-bold cursor-pointer shadow-[0_4px_14px_rgba(10,16,32,.18)] transition-all hover:bg-[#1a2540] hover:shadow-[0_6px_18px_rgba(10,16,32,.22)] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
+                    className="inline-flex items-center justify-center gap-2 min-w-[160px] min-h-[42px] px-6 py-2.5 rounded-full bg-[#0A1020] text-white text-sm font-bold cursor-pointer shadow-[0_4px_14px_rgba(10,16,32,.18)] transition-all hover:bg-[#1a2540] hover:shadow-[0_6px_18px_rgba(10,16,32,.22)] focus-visible:outline-2 focus-visible:outline-[rgba(0,80,216,.2)] focus-visible:outline-offset-2 active:translate-y-px"
                   >
                     Next Step
                     <ArrowRight size={16} aria-hidden />
@@ -392,7 +392,7 @@ export default function CaseSubmissionPage() {
                   <button
                     type="submit"
                     disabled={!data.confirmed || submitting}
-                    className="inline-flex items-center justify-center gap-2.5 min-w-[154px] min-h-[42px] px-5 py-2.5 rounded-[6px] bg-[#16A34A] text-white text-sm font-bold cursor-pointer transition-all hover:bg-[#15803d] disabled:opacity-45 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-[rgba(22,163,74,.2)] focus-visible:outline-offset-2 active:translate-y-px"
+                    className="inline-flex items-center justify-center gap-2.5 min-w-[154px] min-h-[42px] px-5 py-2.5 rounded-full bg-[#16A34A] text-white text-sm font-bold cursor-pointer transition-all hover:bg-[#15803d] disabled:opacity-45 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-[rgba(22,163,74,.2)] focus-visible:outline-offset-2 active:translate-y-px"
                   >
                     {submitting ? 'Submitting…' : 'Submit Case'}
                     {!submitting ? <Check size={16} strokeWidth={2.5} aria-hidden /> : null}

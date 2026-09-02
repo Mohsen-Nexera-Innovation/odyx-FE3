@@ -34,10 +34,11 @@ export const HV2_BODY = "text-[14.5px] max-w-[36em]";
 /** Shared layout + fixed 46px height for every Home V2 CTA. */
 const HV2_BTN_BASE =
   "inline-flex items-center justify-center gap-[8px] cursor-pointer" +
-  " h-[46px] px-[18px] py-0 rounded-[9px] border-0" +
-  " font-bold text-[14.5px] leading-none" +
+  " box-border h-[46px] px-[18px] py-0 rounded-full border-0" +
+  " font-bold text-[14.5px] leading-none [line-height:1]!" +
+  " [text-box:trim-both_cap_alphabetic]" +
   " transition-[background,box-shadow,transform,color] duration-200 ease-in-out" +
-  " [&>svg]:w-[19px] [&>svg]:h-[19px] [&>svg]:flex-none";
+  " [&>svg]:block [&>svg]:h-[19px] [&>svg]:w-[19px] [&>svg]:flex-none";
 
 export const HV2_BTN =
   `${HV2_BTN_BASE}` +
@@ -56,8 +57,8 @@ export const HV2_BTN_GHOST =
 /** !important size lock for section CTAs that layer custom fills/widths
  *  on top of HV2_BTN (Apps / Cases / Hub / Products). */
 export const HV2_BTN_SIZE =
-  " w-auto! h-[46px]! [padding:0_18px]! rounded-[9px]! text-[14.5px]! font-bold!" +
-  " gap-[8px]! [&>svg]:w-[19px]! [&>svg]:h-[19px]! [&>svg]:flex-none";
+  " w-auto! h-[46px]! [padding:0_18px]! rounded-full! text-[14.5px]! font-bold!" +
+  " leading-none! [line-height:1]! gap-[8px]! [&>svg]:block [&>svg]:h-[19px]! [&>svg]:w-[19px]! [&>svg]:flex-none";
 
 /** Includes `hv2-nav` marker for PathCarousel `.closest(".hv2-nav")`. */
 export const HV2_NAV =

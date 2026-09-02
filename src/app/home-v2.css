@@ -62,6 +62,10 @@ body:has(.hv2) header#hdr.on-light.at-top{
 .about a,.about button{
   font-family:var(--font-tajawal),'Tajawal',sans-serif;
 }
+.about a[class*="rounded-full"],
+.about button[class*="rounded-full"]{
+  line-height:1;
+}
 .about :focus-visible{outline:2px solid var(--hv2-blue); outline-offset:2px; border-radius:4px}
 .about [id]{scroll-margin-top:calc(var(--hdr-h) + 16px)}
 

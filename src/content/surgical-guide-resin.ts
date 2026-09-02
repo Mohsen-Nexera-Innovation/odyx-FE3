@@ -9,6 +9,7 @@ import {
   RESIN_DETAIL_CASES_CTA,
   RESIN_DETAIL_COMPATIBLE,
 } from '@/content/resin-detail-shared';
+import { requestDemoHref } from '@/content/request-demo';
 
 export const SURGICAL_GUIDE_RESIN_SLUG = 'surgical-guide-resin-pro';
 
@@ -30,7 +31,7 @@ export const SURGICAL_GUIDE_RESIN_CONTENT: ResinDetailContent = {
     imgAlt: 'ODYX Surgical Guide Resin Pro bottle with a transparent surgical guide',
     imgWidth: 1024,
     imgHeight: 576,
-    primaryCta: { label: 'Request a Demo', href: '/request-demo' },
+    primaryCta: { label: 'Request a Demo', href: requestDemoHref('resins') },
     secondaryCta: {
       label: 'Download Datasheet',
       href: '/docs/resins/resin-flyer.pdf',

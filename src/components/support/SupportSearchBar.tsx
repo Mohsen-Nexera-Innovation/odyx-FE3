@@ -50,7 +50,7 @@ export function SupportSearchBar({
       {isLg && (
         <button
           type="submit"
-          className="inline-flex h-[52px] items-center justify-center gap-2 rounded-[10px] bg-[#0050D8] px-7 text-base font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0]"
+          className="inline-flex h-[52px] items-center justify-center gap-2 rounded-full bg-[#0050D8] px-7 text-base font-bold text-white shadow-[0_4px_14px_rgba(0,80,216,0.28)] transition-colors hover:bg-[#0040B0]"
         >
           Search
         </button>
