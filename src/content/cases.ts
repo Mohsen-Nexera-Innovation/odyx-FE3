@@ -168,7 +168,7 @@ export const casesData: CasesPageData = {
       },
       {
         id: 'denture',
-        title: 'Denture',
+        title: 'Prosthetic',
         countLabel: '0 Cases',
         href: '/solutions/cases/applications/denture',
         img: '/img/clinical/dentures/hero-cutout.png',
