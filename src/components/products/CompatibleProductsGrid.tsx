@@ -22,13 +22,13 @@ export default function CompatibleProductsGrid({
             href={product.href}
             className="group [display:grid] h-full min-h-[112px] grid-cols-[minmax(96px,44%)_minmax(0,1fr)] items-center gap-x-2.5 gap-y-1.5 py-2 pr-3.5 pl-1.5 no-underline text-inherit max-[640px]:min-h-[100px] max-[640px]:py-2 max-[640px]:pr-3 max-[640px]:pl-1.5"
           >
-            <span className="flex h-full min-h-24 w-full items-center justify-center overflow-visible bg-transparent p-0 max-[640px]:min-h-[88px]">
+            <span className="flex h-full min-h-24 w-full items-center justify-center overflow-visible bg-transparent px-1.5 py-0 max-[640px]:min-h-[88px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`${product.img}?v=compat1`}
                 alt=""
                 loading="lazy"
-                className="block h-full max-h-[100px] w-full bg-transparent object-contain object-bottom mix-blend-normal transition-transform duration-[400ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06] group-hover:-translate-y-0.5 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:translate-y-0 max-[640px]:max-h-[90px]"
+                className="block h-full max-h-[100px] w-full bg-transparent object-contain object-center mix-blend-normal transition-transform duration-[400ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06] group-hover:-translate-y-0.5 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:translate-y-0 max-[640px]:max-h-[90px]"
               />
             </span>
             <span className="flex min-w-0 flex-col items-start justify-center gap-0.5 pr-0.5">
