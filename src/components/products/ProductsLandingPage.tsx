@@ -282,7 +282,7 @@ export default function ProductsLandingPage() {
                   href={step.href}
                   className="flex min-w-0 flex-1 flex-col items-center text-center no-underline !text-white"
                 >
-                  <span className="flex h-[72px] w-full items-end justify-center overflow-hidden sm:h-[84px]">
+                  <span className="flex h-[72px] w-full items-center justify-center overflow-hidden sm:h-[84px]">
                     {'bottles' in step ? (
                       <span className="flex h-full w-[96px] max-w-full items-end justify-center sm:w-[110px]">
                         <img
@@ -300,7 +300,7 @@ export default function ProductsLandingPage() {
                       <img
                         src={step.img}
                         alt=""
-                        className="max-h-[72px] max-w-[96px] object-contain drop-shadow-[0_10px_16px_rgba(0,0,0,.35)] sm:max-h-[84px] sm:max-w-[110px]"
+                        className="max-h-full max-w-[96px] object-contain drop-shadow-[0_10px_16px_rgba(0,0,0,.35)] sm:max-w-[110px]"
                       />
                     )}
                   </span>
