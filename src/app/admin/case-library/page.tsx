@@ -18,7 +18,7 @@ const APPLICATIONS: { value: ShowcaseApplication; label: string }[] = [
   { value: 'RESTORATIVE', label: 'Restorative' },
   { value: 'IMPLANT', label: 'Implant' },
   { value: 'ORTHODONTIC', label: 'Orthodontic' },
-  { value: 'DENTURE', label: 'Denture' },
+  { value: 'DENTURE', label: 'Prosthetic' },
   { value: 'PROSTHETICS', label: 'Prosthetics' },
   { value: 'OTHER', label: 'Other' },
 ];

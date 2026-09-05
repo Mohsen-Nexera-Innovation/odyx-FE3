@@ -65,10 +65,11 @@ export function buildApplicationsFromLibrary(
   library: CaseLibraryPublic | null,
 ): BrowseSectionData {
   const base = casesData.applications;
+  const titlesById = new Map(base.items.map((item) => [item.id, item.title]));
   const fromApi = library?.applications?.length
     ? library.applications.map((a) => ({
         id: a.id,
-        title: a.title,
+        title: titlesById.get(a.id) ?? a.title,
         countLabel: a.countLabel,
         href: a.href,
         img: resolveMediaUrl(a.img),

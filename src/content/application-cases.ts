@@ -39,15 +39,15 @@ export const APPLICATION_CASE_META: Record<
     description: 'Real orthodontic clinical cases — aligners and retainers.',
   },
   denture: {
-    label: 'Denture',
-    title: 'Denture Cases | ODYX',
+    label: 'Prosthetic',
+    title: 'Prosthetic Cases | ODYX',
     description: 'Real prosthetic clinical cases — dentures and try-ins.',
   },
 };
 
 export const APPLICATION_CASES_META = {
   title: 'Cases by Application | ODYX',
-  description: 'Browse real clinical cases by clinical application — restorative, implant, orthodontic, and denture.',
+  description: 'Browse real clinical cases by clinical application — restorative, implant, orthodontic, and prosthetic.',
 };
 
 export const LEGACY_APPLICATION_LISTING: Record<string, ApplicationCaseSlug> = {

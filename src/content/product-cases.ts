@@ -101,7 +101,7 @@ const APPLICATION_LABEL: Record<ShowcaseApplication, string> = {
   RESTORATIVE: 'Restorative',
   IMPLANT: 'Implant',
   ORTHODONTIC: 'Orthodontic',
-  DENTURE: 'Denture',
+  DENTURE: 'Prosthetic',
   PROSTHETICS: 'Prosthetics',
   OTHER: 'Clinical',
 };
